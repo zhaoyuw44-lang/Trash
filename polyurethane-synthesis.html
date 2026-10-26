@@ -1,0 +1,1832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polyurethane Synthesis Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive two-step (prepolymer) synthesis of a segmented thermoplastic polyurethane: reagents, solvents, catalysts, glassware, kinetics, FTIR and mechanism.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: a lab bench read left to right (reagent shelf | apparatus | procedure), instruments below, reference last. */
+:root {
+  --bg: #edf1f2;
+  --surface: #ffffff;
+  --surface-2: #f5f8f9;
+  --ink: #13202a;
+  --ink-2: #44545f;
+  --muted: #6f7f8a;
+  --line: #d2dbe0;
+  --grid: #e4eaed;
+  --accent: #0b6e78;
+  --accent-ink: #ffffff;
+  --accent-soft: #d8eef0;
+  --amber: #b86f0e;
+  --amber-soft: #fbedd6;
+  --glass: rgba(150, 192, 208, 0.22);
+  --glass-stroke: #6f93a3;
+  --steel: #8a969e;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --good: #0ca30c;
+  --good-ink: #006300;
+  --warn: #fab219;
+  --warn-ink: #8a5a00;
+  --crit: #d03b3b;
+  --crit-soft: #fbe3e3;
+  --atom-o: #c8372d;
+  --atom-n: #2b63c4;
+  --atom-m: #8d6b12;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --r: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1418; --surface: #162027; --surface-2: #1b2830; --ink: #e3eaee; --ink-2: #aab8c1;
+    --muted: #82929c; --line: #2b3a44; --grid: #22313a; --accent: #43b6c1; --accent-ink: #052a2f;
+    --accent-soft: #12343a; --amber: #eaa23c; --amber-soft: #3a2a12; --glass: rgba(140, 190, 210, 0.13);
+    --glass-stroke: #7097a8; --steel: #9aa6ae; --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    --good-ink: #2fc42f; --warn-ink: #fab219; --crit-soft: #3b1d1d; --atom-o: #ff7d70; --atom-n: #82b1ff; --atom-m: #e2b64e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --surface-2: #1b2830; --ink: #e3eaee; --ink-2: #aab8c1;
+  --muted: #82929c; --line: #2b3a44; --grid: #22313a; --accent: #43b6c1; --accent-ink: #052a2f;
+  --accent-soft: #12343a; --amber: #eaa23c; --amber-soft: #3a2a12; --glass: rgba(140, 190, 210, 0.13);
+  --glass-stroke: #7097a8; --steel: #9aa6ae; --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --good-ink: #2fc42f; --warn-ink: #fab219; --crit-soft: #3b1d1d; --atom-o: #ff7d70; --atom-n: #82b1ff; --atom-m: #e2b64e; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.55 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1320px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.12; }
+h1 { font-size: clamp(2rem, 4.4vw, 3.3rem); font-weight: 800; font-stretch: 78%; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; font-weight: 700; font-stretch: 85%; }
+h3 { font-size: 1.05rem; font-weight: 700; font-stretch: 90%; }
+p { margin: 0; }
+sub, sup { font-size: 0.72em; line-height: 0; }
+.eyebrow, .label {
+  font-family: var(--font-display); font-stretch: 100%; font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+}
+.mono, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- header ---------- */
+.top { padding-block: 32px 22px; display: grid; gap: 14px; }
+.lede { max-width: 68ch; color: var(--ink-2); font-size: 1.02rem; }
+.overall {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); width: fit-content; max-width: 100%;
+  font-family: var(--font-mono); font-size: 0.9rem;
+}
+.overall .arrow { color: var(--muted); }
+.overall .hs { color: var(--amber); font-weight: 500; }
+.overall .ss { color: var(--accent); font-weight: 500; }
+
+/* ---------- generic panels ---------- */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
+.section { margin-top: 28px; display: grid; gap: 14px; }
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.section-head p { color: var(--ink-2); max-width: 70ch; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px;
+  padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2);
+  cursor: pointer; font-weight: 500; font-size: 0.9rem; white-space: nowrap;
+}
+.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn.small { min-height: 30px; padding: 3px 10px; font-size: 0.82rem; }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface-2); white-space: nowrap;
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.pill.ok .dot { background: var(--good); }
+.pill.warn .dot { background: var(--warn); }
+.pill.bad .dot { background: var(--crit); }
+
+/* ---------- recipe ---------- */
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px 14px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field select, .field input {
+  width: 100%; min-height: 36px; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface-2);
+}
+.field input[type="number"] { font-family: var(--font-mono); }
+.field .hint { font-size: 0.78rem; color: var(--muted); }
+.recipe-lock { font-size: 0.85rem; color: var(--warn-ink); }
+.table-scroll { overflow-x: auto; }
+table.amounts { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 640px; }
+table.amounts th, table.amounts td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+table.amounts th { font-family: var(--font-display); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+table.amounts td.num, table.amounts th.num { text-align: right; }
+table.amounts td .sub { color: var(--muted); font-size: 0.8rem; }
+.derived { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.88rem; color: var(--ink-2); }
+.derived b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
+
+/* ---------- bench ---------- */
+.bench { display: grid; gap: 14px; grid-template-columns: 250px minmax(0, 1fr) 350px; align-items: start; }
+.shelf { display: grid; gap: 8px; }
+.shelf-item {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 10px; align-items: center;
+  padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); position: relative;
+}
+.shelf-item .ctr { grid-row: span 2; width: 44px; height: 58px; }
+.shelf-item .nm { font-weight: 600; font-size: 0.9rem; line-height: 1.2; }
+.shelf-item .meta { font-size: 0.76rem; color: var(--muted); line-height: 1.3; }
+.shelf-item .row { grid-column: 1 / -1; display: flex; gap: 6px; align-items: center; justify-content: space-between; }
+.shelf-item .amt { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2); }
+.shelf-item.needed { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.shelf-item.used { opacity: 0.6; }
+.shelf-item.used .amt::after { content: " · added"; color: var(--good-ink); }
+.rig { display: grid; gap: 10px; min-width: 0; }
+.rig-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; justify-content: space-between; }
+.clock { font-family: var(--font-mono); font-size: 1.35rem; font-weight: 500; letter-spacing: 0.02em; }
+.rig-svg-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+#rigSvg { display: block; width: 100%; height: auto; max-height: 640px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 14px; }
+.ctl { display: grid; gap: 4px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); min-width: 0; }
+.ctl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.ctl-top output { font-family: var(--font-mono); font-size: 0.9rem; }
+.ctl input[type="range"] { width: 100%; accent-color: var(--accent); }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { flex: 1; padding: 6px 4px; border: 0; background: var(--surface-2); cursor: pointer; font-size: 0.84rem; min-height: 32px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.toast {
+  min-height: 2.6em; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2);
+  font-size: 0.88rem; color: var(--ink-2);
+}
+.toast.warn { border-color: var(--warn); background: var(--amber-soft); color: var(--ink); }
+.toast.bad { border-color: var(--crit); background: var(--crit-soft); color: var(--ink); }
+.toast.ok { border-color: var(--good); }
+
+/* procedure */
+.proc { display: grid; gap: 12px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: st; }
+.steps li {
+  counter-increment: st; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; align-items: start;
+  padding: 6px 8px; border-radius: 7px; font-size: 0.88rem; color: var(--ink-2);
+}
+.steps li::before {
+  content: counter(st); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.74rem; border: 1px solid var(--line); background: var(--surface);
+}
+.steps li.done { color: var(--muted); }
+.steps li.done::before { content: "✓"; background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.steps li.current { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+.steps li.current::before { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.step-card { display: grid; gap: 10px; }
+.step-card .detail { font-size: 0.92rem; color: var(--ink-2); }
+.step-card .detail b { color: var(--ink); font-weight: 600; }
+.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; font-size: 0.85rem; }
+.checks li { display: flex; gap: 8px; align-items: baseline; }
+.checks li::before { content: "○"; color: var(--muted); font-weight: 700; width: 1em; flex: none; }
+.checks li.met::before { content: "●"; color: var(--good); }
+.checks li.met { color: var(--ink); }
+.progress { height: 6px; border-radius: 3px; background: var(--grid); overflow: hidden; }
+.progress > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; }
+.step-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- instruments ---------- */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; }
+.tile { padding: 10px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); display: grid; gap: 2px; min-width: 0; }
+.tile .v { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 500; line-height: 1.2; }
+.tile .u { font-size: 0.78rem; color: var(--muted); }
+.tile.flag { border-color: var(--warn); }
+.tile.alarm { border-color: var(--crit); }
+.charts { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.chart-card { margin: 0; display: grid; gap: 8px; align-content: start; }
+.chart-card figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; }
+.chart-card .cap-note { font-size: 0.8rem; color: var(--muted); }
+.chart-box { position: relative; }
+.chart-box svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart-box canvas { display: block; width: 100%; height: auto; border-radius: 8px; background: var(--surface-2); }
+.tip {
+  position: absolute; pointer-events: none; z-index: 5; padding: 6px 9px; border-radius: 7px; font-size: 0.8rem;
+  background: var(--surface); border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); white-space: nowrap;
+}
+.tip b { font-family: var(--font-mono); font-weight: 500; }
+.tip .k { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.8rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend svg { flex: none; }
+.ax text { fill: var(--muted); font: 10.5px var(--font-mono); }
+.ax line, .ax path { stroke: var(--line); }
+.gridl { stroke: var(--grid); }
+
+/* ---------- mechanism ---------- */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 0.86rem; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.mech-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.mech-svg-box { overflow-x: auto; }
+.mech-svg-box svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.mech-text { display: grid; gap: 10px; font-size: 0.93rem; color: var(--ink-2); }
+.mech-text ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.mech-text li.on { color: var(--ink); font-weight: 600; }
+
+/* ---------- reference ---------- */
+.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.ref-card { display: grid; gap: 8px; align-content: start; }
+.ref-card .ref-top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.ref-card .role { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
+.ref-card .struct { background: var(--surface-2); border-radius: 8px; padding: 6px; display: grid; place-items: center; min-height: 96px; }
+.ref-card .struct svg { max-width: 100%; height: auto; }
+.ref-card dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 0.84rem; }
+.ref-card dt { color: var(--muted); }
+.ref-card dd { margin: 0; }
+.hz { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.hz-chip { font-size: 0.74rem; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); }
+.ghs { width: 26px; height: 26px; flex: none; }
+.ref-group { display: grid; gap: 10px; }
+.equip { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 16px; font-size: 0.88rem; }
+.equip div { display: grid; gap: 1px; padding-block: 6px; border-bottom: 1px solid var(--grid); }
+.equip b { font-weight: 600; }
+.equip span { color: var(--ink-2); font-size: 0.83rem; }
+.notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.notes-grid ul { margin: 0; padding-left: 1.1em; display: grid; gap: 5px; font-size: 0.89rem; color: var(--ink-2); }
+.result { display: grid; gap: 10px; }
+.result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+
+/* molecule drawings */
+.mol line, .mol path.b { stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; fill: none; }
+.mol text { fill: var(--ink); font: 500 12px var(--font-body); }
+.mol text.o { fill: var(--atom-o); }
+.mol text.n { fill: var(--atom-n); }
+.mol text.m { fill: var(--atom-m); }
+.mol .brk { stroke: var(--ink-2); stroke-width: 1.2; fill: none; }
+.mol .cap { fill: var(--muted); font: 10.5px var(--font-mono); }
+
+@media (max-width: 1180px) {
+  .bench { grid-template-columns: minmax(0, 1fr) 340px; }
+  .shelf { grid-column: 1 / -1; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}
+@media (max-width: 860px) {
+  .bench, .charts, .mech-grid { grid-template-columns: minmax(0, 1fr); }
+  .rig { order: 1; } .proc { order: 2; } .shelf { order: 3; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <p class="eyebrow">Interactive experiment · Step-growth polymerization</p>
+  <h1>Polyurethane Synthesis Bench</h1>
+  <p class="lede">Make a segmented thermoplastic polyurethane by the two-step prepolymer route. Dry the polyol, cap it with a diisocyanate under catalysis, then chain-extend with a diol. Every reagent, solvent, catalyst and piece of glassware is on the bench, and the flask, the thermometer, the FTIR and the molecular weight respond to what you do.</p>
+  <div class="overall" aria-label="Overall reaction">
+    <span><span class="ss">HO~~OH</span> <span class="label">polyol</span></span>
+    <span>+</span>
+    <span><span class="hs">OCN–R–NCO</span> <span class="label">diisocyanate</span></span>
+    <span>+</span>
+    <span><span class="hs">HO–(CH<sub>2</sub>)<sub>4</sub>–OH</span> <span class="label">extender</span></span>
+    <span class="arrow">—cat., solvent, N<sub>2</sub>→</span>
+    <span>–[O~~O–C(=O)NH–R–NH–C(=O)–O–]<sub>n</sub> <span class="label">urethane links</span></span>
+  </div>
+</header>
+
+<section class="wrap section" id="recipe" aria-labelledby="recipe-h">
+  <div class="section-head">
+    <h2 id="recipe-h">Recipe</h2>
+    <p id="recipeLock" class="recipe-lock" hidden>Recipe is locked while the experiment runs. Reset the bench to change it.</p>
+  </div>
+  <div class="panel" style="display:grid;gap:14px">
+    <div class="recipe-grid">
+      <label class="field"><span class="label">Diisocyanate</span>
+        <select id="selIso">
+          <option value="mdi">MDI (aromatic)</option>
+          <option value="tdi">2,4-TDI (aromatic)</option>
+          <option value="hdi">HDI (aliphatic)</option>
+          <option value="ipdi">IPDI (cycloaliphatic)</option>
+        </select></label>
+      <label class="field"><span class="label">Polyol</span>
+        <select id="selPolyol">
+          <option value="ptmeg1000">PTMEG 1000</option>
+          <option value="ptmeg2000">PTMEG 2000</option>
+        </select></label>
+      <label class="field"><span class="label">Catalyst</span>
+        <select id="selCat">
+          <option value="dbtdl">DBTDL (organotin)</option>
+          <option value="bi">Bismuth neodecanoate</option>
+          <option value="dabco">DABCO (tertiary amine)</option>
+          <option value="none">None</option>
+        </select></label>
+      <label class="field"><span class="label">Solvent</span>
+        <select id="selSolv">
+          <option value="dmac">DMAc</option>
+          <option value="dmf">DMF</option>
+          <option value="thf">THF</option>
+        </select></label>
+      <label class="field"><span class="label">Solvent grade</span>
+        <select id="selDry">
+          <option value="dry">Anhydrous, over 4 Å sieves (≤ 50 ppm H₂O)</option>
+          <option value="wet">Reagent grade, undried (~1000 ppm H₂O)</option>
+        </select></label>
+      <label class="field"><span class="label">Polyol mass (g)</span>
+        <input id="inMass" type="number" min="2" max="50" step="0.5" value="10">
+        <span class="hint">2–50 g in a 250 mL flask</span></label>
+      <label class="field"><span class="label">Hard-segment ratio</span>
+        <input id="inRatio" type="number" min="1.5" max="5" step="0.1" value="2">
+        <span class="hint">mol diisocyanate per mol polyol</span></label>
+      <label class="field"><span class="label">NCO index</span>
+        <input id="inIndex" type="number" min="0.9" max="1.15" step="0.01" value="1.02">
+        <span class="hint">NCO ÷ OH, 1.00 = stoichiometric</span></label>
+      <label class="field"><span class="label">Catalyst loading (wt %)</span>
+        <input id="inCat" type="number" min="0" max="0.5" step="0.01" value="0.03">
+        <span class="hint">of total solids</span></label>
+      <label class="field"><span class="label">Solids content (wt %)</span>
+        <input id="inSolids" type="number" min="15" max="60" step="1" value="25">
+        <span class="hint">polymer in final solution</span></label>
+    </div>
+    <div class="table-scroll">
+      <table class="amounts" id="amounts" aria-label="Reagent amounts">
+        <thead><tr><th>Reagent</th><th>Role</th><th class="num">mmol</th><th class="num">Mass</th><th class="num">Volume</th><th>How it goes in</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="derived" id="derived"></div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="bench-h">
+  <div class="section-head">
+    <h2 id="bench-h">Bench</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <label class="btn small" style="cursor:pointer"><input type="checkbox" id="chkLabels" checked> Glassware labels</label>
+      <button class="btn small" id="btnReset" type="button">Reset bench</button>
+    </div>
+  </div>
+  <div class="bench">
+    <aside class="shelf" id="shelf" aria-label="Reagent shelf"></aside>
+
+    <div class="rig">
+      <div class="rig-head">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span class="clock" id="clock" aria-label="Elapsed experiment time">0:00:00</span>
+          <span class="pill" id="phasePill"><span class="dot"></span><span>Bench idle</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="btn small" id="btnPlay" type="button" aria-pressed="false">Run clock</button>
+          <label class="label" for="selSpeed">Speed</label>
+          <select id="selSpeed" class="btn small">
+            <option value="10">×10</option>
+            <option value="60" selected>×60 (1 min/s)</option>
+            <option value="300">×300</option>
+            <option value="1200">×1200</option>
+          </select>
+        </div>
+      </div>
+      <div class="rig-svg-box"><svg id="rigSvg" viewBox="0 0 460 500" role="img" aria-label="Reaction apparatus: three-neck round-bottom flask in an oil bath with overhead stirrer, reflux condenser, thermocouple and nitrogen line"></svg></div>
+      <div class="controls">
+        <div class="ctl">
+          <div class="ctl-top"><label class="label" for="ctlTemp">Bath setpoint</label><output id="outTemp" for="ctlTemp">25 °C</output></div>
+          <input type="range" id="ctlTemp" min="20" max="150" step="1" value="25">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><label class="label" for="ctlStir">Overhead stirrer</label><output id="outStir" for="ctlStir">0 rpm</output></div>
+          <input type="range" id="ctlStir" min="0" max="500" step="10" value="0">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="label" id="atmLbl">Gas line</span><button class="btn small" id="btnDilute" type="button" title="Add 10 mL of the recipe solvent">+10 mL solvent</button></div>
+          <div class="seg" role="group" aria-labelledby="atmLbl" id="ctlAtm">
+            <button type="button" data-atm="air" aria-pressed="true">Open air</button>
+            <button type="button" data-atm="n2" aria-pressed="false">N₂</button>
+            <button type="button" data-atm="vac" aria-pressed="false">Vacuum</button>
+          </div>
+        </div>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite">Pick a recipe, then start with step 1 of the procedure.</div>
+    </div>
+
+    <div class="proc panel">
+      <h2>Procedure</h2>
+      <ol class="steps" id="steps"></ol>
+      <div class="step-card" id="stepCard"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="inst-h">
+  <div class="section-head">
+    <h2 id="inst-h">Instruments</h2>
+    <p>Live readings from the flask. The FTIR trace is an ATR spectrum of a drop of the reaction mixture with the solvent subtracted.</p>
+  </div>
+  <div class="tiles" id="tiles"></div>
+  <div class="charts">
+    <figure class="panel chart-card">
+      <figcaption><h3>FTIR spectrum</h3><span class="cap-note">%T vs wavenumber (cm⁻¹). Watch the NCO band at 2270.</span></figcaption>
+      <div class="chart-box" id="ftirBox"><svg id="ftir" viewBox="0 0 560 260" role="img" aria-label="Simulated FTIR spectrum"></svg><div class="tip" id="ftirTip" hidden></div></div>
+    </figure>
+    <figure class="panel chart-card">
+      <figcaption><h3>Reaction progress</h3><span class="cap-note">Two charts on a shared time axis</span></figcaption>
+      <div class="chart-box" id="trendBox"><svg id="trend" viewBox="0 0 560 300" role="img" aria-label="NCO content and number-average molecular weight versus time"></svg><div class="tip" id="trendTip" hidden></div></div>
+    </figure>
+    <figure class="panel chart-card" style="grid-column:1/-1">
+      <figcaption><h3>Molecular view</h3><span class="cap-note" id="molNote">Each bead is about 0.5 mmol of monomer. Bonds form as urethane links are made in the flask.</span></figcaption>
+      <div class="legend" id="molLegend"></div>
+      <div class="chart-box"><canvas id="molCanvas" width="1200" height="300" aria-label="Animated view of monomers linking into chains"></canvas></div>
+    </figure>
+  </div>
+  <div class="panel result" id="result" hidden></div>
+</section>
+
+<section class="wrap section" aria-labelledby="mech-h">
+  <div class="section-head">
+    <h2 id="mech-h">Mechanism</h2>
+    <p>The catalyst view follows the catalyst chosen in the recipe.</p>
+  </div>
+  <div class="panel" style="display:grid;gap:14px">
+    <div class="tabs" role="tablist" id="mechTabs">
+      <button role="tab" type="button" data-tab="cat" aria-selected="true">Catalysed urethane formation</button>
+      <button role="tab" type="button" data-tab="water" aria-selected="false">Water side reaction</button>
+      <button role="tab" type="button" data-tab="allo" aria-selected="false">Overheating: allophanate</button>
+      <button role="tab" type="button" data-tab="morph" aria-selected="false">Hard and soft segments</button>
+    </div>
+    <div class="mech-grid">
+      <div class="mech-svg-box"><svg id="mechSvg" viewBox="0 0 620 330" role="img" aria-label="Reaction mechanism"></svg></div>
+      <div class="mech-text" id="mechText"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="ref-h">
+  <div class="section-head">
+    <h2 id="ref-h">Reagent reference</h2>
+    <p>Structures, physical data and key hazards for every chemical on the bench, including the alternatives in the recipe menus. Pictograms are simplified; read the supplier SDS before handling.</p>
+  </div>
+  <div class="ref-grid" id="refGrid"></div>
+  <div class="panel ref-group">
+    <h3>Glassware and equipment</h3>
+    <div class="equip" id="equip"></div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="notes-h">
+  <div class="section-head"><h2 id="notes-h">Safety, waste and the model</h2></div>
+  <div class="notes-grid">
+    <div class="panel" style="display:grid;gap:8px">
+      <h3>Safety</h3>
+      <ul>
+        <li>Diisocyanates are respiratory sensitizers. A single over-exposure can cause lifelong asthma. Handle them only in a fume hood, with nitrile or butyl gloves, goggles and a lab coat.</li>
+        <li>DMAc and DMF are reproductive toxicants that pass through skin. Change gloves at once after a splash.</li>
+        <li>DBTDL is toxic and harmful to aquatic life. Dispense it as a dilute stock solution so you never handle neat milligram amounts.</li>
+        <li>Never heat a closed system. Keep the N₂ line vented through the oil bubbler, and release vacuum before you remove a stopper.</li>
+        <li>Methanol and THF are highly flammable. Keep them away from the hotplate surface.</li>
+      </ul>
+    </div>
+    <div class="panel" style="display:grid;gap:8px">
+      <h3>Waste and clean-up</h3>
+      <ul>
+        <li>Quench leftover isocyanate in a decontamination solution (for example 5–10 % sodium carbonate and 0.5 % detergent in water) for 48 h before disposal. Leave the container loosely capped, because it releases CO₂.</li>
+        <li>Collect DMAc, DMF and THF filtrates as non-halogenated organic waste.</li>
+        <li>Collect tin-containing residues separately as heavy-metal waste.</li>
+        <li>Soak glassware in the decontamination solution before washing. Polymer films come off with warm DMAc.</li>
+      </ul>
+    </div>
+    <div class="panel" style="display:grid;gap:8px">
+      <h3>How the simulation works</h3>
+      <ul>
+        <li>Second-order kinetics for NCO + OH and NCO + H₂O, with Arrhenius temperature dependence. Rate constants are illustrative values chosen to reproduce typical lab time scales, not measured data.</li>
+        <li>Molecular weight comes from counting molecules: every link formed removes one molecule (Carothers). Đ is taken as 1 + p for a linear step-growth polymer.</li>
+        <li>Viscosity uses the Martin equation with a Mark–Houwink estimate of intrinsic viscosity.</li>
+        <li>Allophanate branching switches on above about 110 °C. Gelation is flagged once there is more than one branch point per chain.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+"use strict";
+/* =====================================================================
+   1. CHEMICAL DATA
+   k values: illustrative second-order rate constants for NCO + primary OH
+   at 80 °C in DMAc, L mol⁻¹ s⁻¹, at the default catalyst loading.
+   ===================================================================== */
+const CHEM = {
+  ptmeg1000: { short: "PTMEG 1000", name: "Poly(tetramethylene ether) glycol, Mn ≈ 1000", role: "Polyol · soft segment", formula: "HO(C₄H₈O)ₙH, n ≈ 14", mw: 1000, density: 0.974, state: "Waxy white solid, mp 25–33 °C; OH number ≈ 112 mg KOH/g", storage: "Hygroscopic. Melt at 60 °C before weighing.", container: "jar", fill: "#efeadc", hazards: ["Low hazard", "Hygroscopic"], ghs: [], mol: "ptmeg", n: 14, water: 500 },
+  ptmeg2000: { short: "PTMEG 2000", name: "Poly(tetramethylene ether) glycol, Mn ≈ 2000", role: "Polyol · soft segment", formula: "HO(C₄H₈O)ₙH, n ≈ 27", mw: 2000, density: 0.974, state: "Waxy white solid, mp 28–40 °C; OH number ≈ 56 mg KOH/g", storage: "Hygroscopic. Melt at 60 °C before weighing.", container: "jar", fill: "#efeadc", hazards: ["Low hazard", "Hygroscopic"], ghs: [], mol: "ptmeg", n: 27, water: 500 },
+  mdi: { short: "MDI", name: "4,4′-Methylene diphenyl diisocyanate", role: "Diisocyanate · hard segment", formula: "C₁₅H₁₀N₂O₂", mw: 250.25, density: 1.18, liquid: false, state: "White to pale-yellow flakes, mp 40 °C", storage: "Keep at ≤ 5 °C under N₂. Dimerizes slowly at room temperature. Add molten (50 °C) by warm syringe.", container: "jar", fill: "#f5efc8", hazards: ["Respiratory sensitizer", "Skin sensitizer", "Suspected carcinogen", "Irritant"], ghs: ["health", "exclaim"], mol: "mdi", cls: "aromatic", aromatic: true, k: { none: 2.0e-3, dabco: 5e-3, bi: 1.0e-2, dbtdl: 1.5e-2 } },
+  tdi: { short: "2,4-TDI", name: "Toluene-2,4-diisocyanate", role: "Diisocyanate · hard segment", formula: "C₉H₆N₂O₂", mw: 174.16, density: 1.214, liquid: true, state: "Colourless to pale-yellow liquid, bp 251 °C, sharp odour", storage: "Moisture-sensitive. High vapour pressure for an isocyanate.", container: "bottle", fill: "#f3eec6", hazards: ["Fatal if inhaled", "Respiratory sensitizer", "Suspected carcinogen"], ghs: ["skull", "health", "exclaim"], mol: "tdi", cls: "aromatic", aromatic: true, k: { none: 1.6e-3, dabco: 4e-3, bi: 8e-3, dbtdl: 1.2e-2 } },
+  hdi: { short: "HDI", name: "Hexamethylene diisocyanate", role: "Diisocyanate · hard segment", formula: "C₈H₁₂N₂O₂", mw: 168.20, density: 1.047, liquid: true, state: "Colourless liquid, bp 255 °C", storage: "Moisture-sensitive. Gives light-stable (non-yellowing) polymers.", container: "bottle", fill: "#f4f4ee", hazards: ["Toxic if inhaled", "Respiratory sensitizer", "Skin sensitizer"], ghs: ["skull", "health", "exclaim"], mol: "hdi", cls: "aliphatic", aromatic: false, k: { none: 3e-5, dabco: 1.5e-4, bi: 4e-3, dbtdl: 8e-3 } },
+  ipdi: { short: "IPDI", name: "Isophorone diisocyanate", role: "Diisocyanate · hard segment", formula: "C₁₂H₁₈N₂O₂", mw: 222.29, density: 1.062, liquid: true, state: "Colourless to pale-yellow liquid, bp 158 °C at 10 mmHg", storage: "Moisture-sensitive. Its two NCO groups differ in reactivity.", container: "bottle", fill: "#f4f2e4", hazards: ["Toxic if inhaled", "Respiratory sensitizer", "Skin sensitizer", "Toxic to aquatic life"], ghs: ["skull", "health", "exclaim", "env"], mol: "ipdi", cls: "cycloaliphatic", aromatic: false, k: { none: 2e-5, dabco: 1e-4, bi: 3e-3, dbtdl: 6e-3 } },
+  bdo: { short: "1,4-BDO", name: "1,4-Butanediol", role: "Chain extender · hard segment", formula: "C₄H₁₀O₂", mw: 90.12, density: 1.017, liquid: true, state: "Colourless viscous liquid, mp 20 °C, bp 230 °C", storage: "Hygroscopic. Dry over 4 Å sieves. Freezes in a cold lab.", container: "bottle", fill: "#eef3f6", hazards: ["Harmful if swallowed", "May cause drowsiness"], ghs: ["exclaim"], mol: "bdo", water: 200 },
+  dmac: { short: "DMAc", name: "N,N-Dimethylacetamide (anhydrous)", role: "Solvent · polar aprotic", formula: "C₄H₉NO", mw: 87.12, density: 0.937, bp: 165, viscosity: 0.00092, kf: 1.0, state: "Colourless liquid, bp 165 °C", storage: "Sure/Seal bottle over 4 Å molecular sieves. Dissolves TPU well.", container: "sureseal", fill: "#e7f1f6", hazards: ["Reproductive toxicant", "Harmful on skin or if inhaled", "Eye irritant"], ghs: ["health", "exclaim"], mol: "dmac" },
+  dmf: { short: "DMF", name: "N,N-Dimethylformamide (anhydrous)", role: "Solvent · polar aprotic", formula: "C₃H₇NO", mw: 73.09, density: 0.944, bp: 153, viscosity: 0.00080, kf: 1.1, state: "Colourless liquid, bp 153 °C, faint amine odour", storage: "Sure/Seal bottle over 4 Å sieves. Slowly decomposes to dimethylamine, which reacts with NCO.", container: "sureseal", fill: "#e7f1f6", hazards: ["Reproductive toxicant", "Flammable liquid", "Harmful on skin or if inhaled"], ghs: ["flame", "health", "exclaim"], mol: "dmf" },
+  thf: { short: "THF", name: "Tetrahydrofuran (anhydrous, inhibitor-free)", role: "Solvent · ether", formula: "C₄H₈O", mw: 72.11, density: 0.889, bp: 66, viscosity: 0.00046, kf: 0.55, state: "Colourless liquid, bp 66 °C", storage: "Forms explosive peroxides. Test before heating. Refluxes at 66 °C, which caps the reaction temperature.", container: "sureseal", fill: "#e7f1f6", hazards: ["Highly flammable", "Forms explosive peroxides", "Suspected carcinogen", "Eye irritant"], ghs: ["flame", "health", "exclaim"], mol: "thf" },
+  dbtdl: { short: "DBTDL", name: "Dibutyltin dilaurate", role: "Catalyst · Lewis acid (gelling)", formula: "C₃₂H₆₄O₄Sn", mw: 631.56, density: 1.066, state: "Pale-yellow oily liquid, mp 22–24 °C", storage: "Dispense as a 1 wt % stock solution in dry solvent.", container: "vial", fill: "#f2e6a6", hazards: ["Reproductive toxicant", "Organ damage on repeated exposure", "Suspected mutagen", "Very toxic to aquatic life"], ghs: ["health", "exclaim", "env"], mol: "dbtdl", sel: 0.25, load: 0.03, Ea: 42000, mech: "lewis" },
+  bi: { short: "Bi(neodec)₃", name: "Bismuth(III) neodecanoate", role: "Catalyst · Lewis acid (gelling)", formula: "Bi(C₁₀H₁₉O₂)₃", mw: 722.7, density: 1.14, state: "Viscous amber liquid, supplied in neodecanoic acid", storage: "Hydrolyses with moisture and loses activity. Common tin-free replacement.", container: "vial", fill: "#e2b45c", hazards: ["Irritant", "Less toxic than organotins"], ghs: ["exclaim"], mol: "bi", sel: 0.15, load: 0.05, Ea: 44000, mech: "lewis" },
+  dabco: { short: "DABCO", name: "1,4-Diazabicyclo[2.2.2]octane (TEDA)", role: "Catalyst · tertiary amine (blowing)", formula: "C₆H₁₂N₂", mw: 112.17, density: 1.14, state: "White hygroscopic crystals, mp 156 °C", storage: "Keep tightly closed. Also speeds up the NCO + water reaction, which is why foam makers use it.", container: "vialSolid", fill: "#ffffff", hazards: ["Flammable solid", "Causes serious eye damage", "Harmful if swallowed"], ghs: ["flame", "corrosive", "exclaim"], mol: "dabco", sel: 1.2, load: 0.10, Ea: 46000, mech: "base" },
+  none: { short: "No catalyst", sel: 0.3, load: 0, Ea: 55000, mech: "none" },
+  meoh: { short: "Methanol", name: "Methanol", role: "Quench · end-capper", formula: "CH₄O", mw: 32.04, density: 0.792, bp: 64.7, state: "Colourless liquid, bp 64.7 °C", storage: "Caps residual NCO as methyl carbamate.", container: "bottle", fill: "#eef3f6", hazards: ["Highly flammable", "Toxic by any route", "Damages the optic nerve"], ghs: ["flame", "skull", "health"], mol: "meoh" },
+  n2: { short: "Nitrogen", name: "Nitrogen, dry (≥ 99.998 %)", role: "Inert atmosphere", formula: "N₂", state: "Compressed gas, fed through a Schlenk line and oil bubbler", storage: "Secure the cylinder upright with a chain.", container: "cylinder", fill: "#3d4a52", hazards: ["Gas under pressure", "Asphyxiant in confined spaces"], ghs: ["gas"] },
+  sieves: { short: "4 Å sieves", name: "Molecular sieves, 4 Å", role: "Drying agent", formula: "Na₁₂[(AlO₂)₁₂(SiO₂)₁₂]·xH₂O", state: "Beads 1.6–2.5 mm, activated at 300 °C under vacuum", storage: "Add 10–20 % w/v to solvent 48 h before use.", container: "jar", fill: "#d9cdb4", hazards: ["Dust irritant", "Heats up on wetting"], ghs: ["exclaim"], mol: null }
+};
+const MW_NCO = 42.02, MW_H2O = 18.02, MW_CO2 = 44.01;
+
+/* =====================================================================
+   2. MOLECULE DRAWINGS (skeletal formulas, generated as SVG)
+   ===================================================================== */
+const BL = 22, CX = BL * Math.cos(Math.PI / 6), SY = BL / 2;
+function M() { return { a: [], b: [], x: [] }; }
+function at(m, x, y, l, al) { m.a.push({ x, y, l: l || "", al: al || "c" }); return m.a.length - 1; }
+function bd(m, i, j, o, rc) { m.b.push({ i, j, o: o || 1, rc }); }
+function chain(m, pts) { const idx = pts.map(p => at(m, p[0], p[1], p[2], p[3])); for (let k = 1; k < idx.length; k++) bd(m, idx[k - 1], idx[k]); return idx; }
+// flat-top hexagon: vertex k at angle k*60°, aromatic → alternate inner double bonds
+function hex(m, cx, cy, aromatic, pointy) {
+  const idx = [];
+  for (let k = 0; k < 6; k++) { const t = (pointy ? 90 - k * 60 : k * 60) * Math.PI / 180; idx.push(at(m, cx + BL * Math.cos(t), cy - BL * Math.sin(t))); }
+  for (let k = 0; k < 6; k++) bd(m, idx[k], idx[(k + 1) % 6], aromatic && k % 2 === 0 ? 2 : 1, [cx, cy]);
+  return idx;
+}
+const CW = 7.3; // approximate label character width at 12px
+function labelText(l) { // digits become subscripts
+  let out = "", sub = false;
+  for (const ch of l) {
+    const d = /[0-9]/.test(ch);
+    if (d && !sub) { out += '<tspan dy="3.5" font-size="9">'; sub = true; }
+    if (!d && sub) { out += '</tspan><tspan dy="-3.5">'; sub = false; out += ch; out += "</tspan>"; continue; }
+    out += ch.replace("&", "&amp;").replace("<", "&lt;");
+  }
+  if (sub) out += "</tspan>";
+  return out;
+}
+function visLen(l) { let n = 0; for (const ch of l) n += /[0-9]/.test(ch) ? 0.7 : 1; return n; }
+function atomClass(l) { if (/^(O|OH|HO)$/.test(l)) return "o"; if (/^N/.test(l) || /NCO|OCN/.test(l)) return "n"; if (/^(Sn|Bi)$/.test(l)) return "m"; return ""; }
+function molSVG(m, opts) {
+  opts = opts || {};
+  let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+  const ext = (x, y) => { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); };
+  let s = "";
+  for (const b of m.b) {
+    const p = m.a[b.i], q = m.a[b.j];
+    let x1 = p.x, y1 = p.y, x2 = q.x, y2 = q.y;
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+    if (p.l) { x1 += ux * 7.5; y1 += uy * 7.5; }
+    if (q.l) { x2 -= ux * 7.5; y2 -= uy * 7.5; }
+    const nx = -uy, ny = ux;
+    if (b.o === 2 && b.rc) {
+      s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, side = Math.sign((b.rc[0] - mx) * nx + (b.rc[1] - my) * ny) || 1;
+      const o = 3.6 * side;
+      s += `<line x1="${(x1 + nx * o + ux * 3.5).toFixed(1)}" y1="${(y1 + ny * o + uy * 3.5).toFixed(1)}" x2="${(x2 + nx * o - ux * 3.5).toFixed(1)}" y2="${(y2 + ny * o - uy * 3.5).toFixed(1)}"/>`;
+    } else if (b.o === 2) {
+      for (const o of [-1.8, 1.8]) s += `<line x1="${(x1 + nx * o).toFixed(1)}" y1="${(y1 + ny * o).toFixed(1)}" x2="${(x2 + nx * o).toFixed(1)}" y2="${(y2 + ny * o).toFixed(1)}"/>`;
+    } else {
+      s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
+    }
+    ext(p.x, p.y); ext(q.x, q.y);
+  }
+  for (const a of m.a) {
+    ext(a.x, a.y);
+    if (!a.l) continue;
+    const w = visLen(a.l) * CW;
+    let tx = a.x, anchor = "middle";
+    if (a.al === "l") { tx = a.x - CW / 2; anchor = "start"; ext(a.x - CW / 2, a.y); ext(a.x - CW / 2 + w, a.y); }
+    else if (a.al === "r") { tx = a.x + CW / 2; anchor = "end"; ext(a.x + CW / 2 - w, a.y); ext(a.x + CW / 2, a.y); }
+    else { ext(a.x - w / 2, a.y); ext(a.x + w / 2, a.y); }
+    s += `<text x="${tx.toFixed(1)}" y="${a.y.toFixed(1)}" dy="0.36em" text-anchor="${anchor}" class="${atomClass(a.l)}">${labelText(a.l)}</text>`;
+  }
+  for (const e of m.x) {
+    if (e.t === "brk") {
+      const h = e.h, d = e.side === "l" ? 4 : -4;
+      s += `<path class="brk" d="M${e.x + d} ${e.y - h} H${e.x} V${e.y + h} H${e.x + d}"/>`;
+      if (e.sub) s += `<text x="${e.x + 2}" y="${e.y + h + 4}" class="cap" font-style="italic">${e.sub}</text>`;
+      ext(e.x, e.y - h); ext(e.x + 10, e.y + h + 6);
+    } else if (e.t === "txt") {
+      s += `<text x="${e.x}" y="${e.y}" class="cap" text-anchor="${e.anchor || "middle"}">${e.s}</text>`;
+      ext(e.x - (e.w || 30), e.y - 8); ext(e.x + (e.w || 30), e.y + 4);
+    }
+  }
+  const pad = opts.pad == null ? 8 : opts.pad;
+  const vb = [minX - pad, minY - pad - 4, maxX - minX + pad * 2, maxY - minY + pad * 2 + 8].map(v => v.toFixed(1)).join(" ");
+  const sc = opts.scale || 1.25, vw = maxX - minX + pad * 2, vh = maxY - minY + pad * 2 + 8;
+  return `<svg class="mol" viewBox="${vb}" width="${(vw * sc).toFixed(0)}" height="${(vh * sc).toFixed(0)}" role="img" aria-label="${opts.label || "Structure"}">${s}</svg>`;
+}
+const MOL = {
+  mdi() { const m = M(); const r1 = hex(m, 66, 50, true), r2 = hex(m, 148.1, 50, true);
+    const n1 = at(m, 22, 50, "OCN", "r"), n2 = at(m, 192.1, 50, "NCO", "l"), c = at(m, 107.05, 39);
+    bd(m, r1[3], n1); bd(m, r1[0], c); bd(m, c, r2[3]); bd(m, r2[0], n2); return m; },
+  tdi() { const m = M(); const r = hex(m, 60, 60, true);
+    bd(m, r[3], at(m, 16, 60)); bd(m, r[2], at(m, 38, 21.9, "OCN", "r")); bd(m, r[0], at(m, 104, 60, "NCO", "l")); return m; },
+  hdi() { const m = M(); const pts = []; for (let i = 0; i < 8; i++) pts.push([i * CX, i % 2 ? 0 : SY]);
+    pts[0].push("OCN", "r"); pts[7].push("NCO", "l"); chain(m, pts); return m; },
+  ipdi() { const m = M(); const r = hex(m, 60, 60, false, true);
+    bd(m, r[0], at(m, 60, 38 - BL, "NCO", "l"));
+    const c = at(m, m.a[r[2]].x + BL, m.a[r[2]].y); bd(m, r[2], c); bd(m, c, at(m, m.a[c].x + CX, m.a[c].y - SY, "NCO", "l"));
+    bd(m, r[2], at(m, m.a[r[2]].x + SY, m.a[r[2]].y + CX));
+    bd(m, r[4], at(m, m.a[r[4]].x - BL, m.a[r[4]].y)); bd(m, r[4], at(m, m.a[r[4]].x - SY, m.a[r[4]].y + CX)); return m; },
+  ptmeg(n) { const m = M(); chain(m, [[0, SY, "H"], [CX, 0, "O"], [2 * CX, SY], [3 * CX, 0], [4 * CX, SY], [5 * CX, 0], [6 * CX, SY, "OH", "l"]]);
+    m.x.push({ t: "brk", x: CX / 2, y: 5, h: 17, side: "l" }, { t: "brk", x: 5.5 * CX, y: 5, h: 17, side: "r", sub: "n" });
+    m.x.push({ t: "txt", x: 3 * CX, y: 42, s: `n ≈ ${n || 14}` }); return m; },
+  bdo() { const m = M(); chain(m, [[0, SY, "HO", "r"], [CX, 0], [2 * CX, SY], [3 * CX, 0], [4 * CX, SY], [5 * CX, 0, "OH", "l"]]); return m; },
+  dmac() { const m = M(); const me = at(m, 0, SY), c = at(m, CX, 0), o = at(m, CX, -BL, "O"), n = at(m, 2 * CX, SY, "N");
+    bd(m, me, c); bd(m, c, o, 2); bd(m, c, n); bd(m, n, at(m, 3 * CX, 0)); bd(m, n, at(m, 2 * CX, SY + BL)); return m; },
+  dmf() { const m = M(); const h = at(m, 0, SY, "H"), c = at(m, CX, 0), o = at(m, CX, -BL, "O"), n = at(m, 2 * CX, SY, "N");
+    bd(m, h, c); bd(m, c, o, 2); bd(m, c, n); bd(m, n, at(m, 3 * CX, 0)); bd(m, n, at(m, 2 * CX, SY + BL)); return m; },
+  thf() { const m = M(); const R = 18.7, idx = [];
+    for (let k = 0; k < 5; k++) { const t = (-90 + k * 72) * Math.PI / 180; idx.push(at(m, R * Math.cos(t), R * Math.sin(t), k === 0 ? "O" : "")); }
+    for (let k = 0; k < 5; k++) bd(m, idx[k], idx[(k + 1) % 5]); return m; },
+  dbtdl() { const m = M(); const sn = at(m, 0, 0, "Sn");
+    bd(m, sn, at(m, 0, -24, "Bu")); bd(m, sn, at(m, 0, 24, "Bu"));
+    for (const s of [-1, 1]) { const o = at(m, 24 * s, 0, "O"), c = at(m, (24 + CX) * s, -SY), o2 = at(m, (24 + CX) * s, -SY - BL, "O"), r = at(m, (24 + 2 * CX) * s, 0, "C11H23", s < 0 ? "r" : "l");
+      bd(m, sn, o); bd(m, o, c); bd(m, c, o2, 2); bd(m, c, r); }
+    return m; },
+  bi() { const m = M(); const b = at(m, 0, 0, "Bi"), o = at(m, 24, 0, "O"), c = at(m, 24 + CX, -SY), o2 = at(m, 24 + CX, -SY - BL, "O"), r = at(m, 24 + 2 * CX, 0, "C9H19", "l");
+    bd(m, b, o); bd(m, o, c); bd(m, c, o2, 2); bd(m, c, r);
+    m.x.push({ t: "brk", x: 12, y: -10, h: 24, side: "l" }, { t: "brk", x: 24 + 2 * CX + 36, y: -10, h: 24, side: "r", sub: "3" }); return m; },
+  dabco() { const m = M(); const n1 = at(m, 0, 0, "N"), n2 = at(m, 68, 0, "N");
+    const t1 = at(m, 17, -21), t2 = at(m, 51, -21), b1 = at(m, 17, 21), b2 = at(m, 51, 21), m1 = at(m, 25, 7), m2 = at(m, 43, -7);
+    bd(m, n1, t1); bd(m, t1, t2); bd(m, t2, n2); bd(m, n1, b1); bd(m, b1, b2); bd(m, b2, n2); bd(m, n1, m1); bd(m, m1, m2); bd(m, m2, n2); return m; },
+  meoh() { const m = M(); const c = at(m, 0, 0, "H3C", "r"), o = at(m, BL + 4, 0, "OH", "l"); bd(m, c, o); return m; },
+  urethane() { const m = M(); const r = at(m, 0, SY, "R"), n = at(m, CX, 0, "N"), h = at(m, CX, -BL + 4, "H"), c = at(m, 2 * CX, SY), o = at(m, 2 * CX, SY + BL, "O"), o2 = at(m, 3 * CX, 0, "O"), r2 = at(m, 4 * CX, SY, "R′");
+    bd(m, r, n); bd(m, n, h); bd(m, n, c); bd(m, c, o, 2); bd(m, c, o2); bd(m, o2, r2); return m; },
+  urea() { const m = M(); const r = at(m, 0, SY, "R"), n = at(m, CX, 0, "N"), h = at(m, CX, -BL + 4, "H"), c = at(m, 2 * CX, SY), o = at(m, 2 * CX, SY + BL, "O"), n2 = at(m, 3 * CX, 0, "N"), h2 = at(m, 3 * CX, -BL + 4, "H"), r2 = at(m, 4 * CX, SY, "R");
+    bd(m, r, n); bd(m, n, h); bd(m, n, c); bd(m, c, o, 2); bd(m, c, n2); bd(m, n2, h2); bd(m, n2, r2); return m; }
+};
+function structureOf(key) {
+  const c = CHEM[key]; if (!c || !c.mol || !MOL[c.mol]) return "";
+  return molSVG(MOL[c.mol](c.n), { label: "Structure of " + (c.name || c.short) });
+}
+
+/* =====================================================================
+   3. CONTAINERS AND HAZARD PICTOGRAMS
+   ===================================================================== */
+function containerSVG(type, fill) {
+  const g = 'fill="var(--glass)" stroke="var(--glass-stroke)" stroke-width="1.4"';
+  const cap = 'fill="var(--ink-2)"';
+  const lab = '<rect x="11" y="36" width="22" height="9" rx="1.5" fill="var(--surface)" stroke="var(--line)"/>';
+  let s = "";
+  if (type === "jar") s = `<rect x="6" y="16" width="32" height="38" rx="4" ${g}/><rect x="7.5" y="30" width="29" height="22.5" rx="3" fill="${fill}" stroke="none" opacity=".95"/><rect x="8" y="8" width="28" height="9" rx="2" ${cap}/>${lab}`;
+  else if (type === "bottle") s = `<path d="M17 8h10v9c6 2 9 5 9 10v24a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V27c0-5 3-8 9-10z" ${g}/><path d="M9.5 30h25v21a2.5 2.5 0 0 1-2.5 2.5H12a2.5 2.5 0 0 1-2.5-2.5z" fill="${fill}" opacity=".95"/><rect x="15" y="2" width="14" height="7" rx="1.5" ${cap}/>${lab}`;
+  else if (type === "sureseal") s = `<path d="M17 9h10v8c6 2 9 5 9 10v24a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V27c0-5 3-8 9-10z" ${g}/><path d="M9.5 24h25v27a2.5 2.5 0 0 1-2.5 2.5H12a2.5 2.5 0 0 1-2.5-2.5z" fill="${fill}" opacity=".95"/><rect x="14" y="2" width="16" height="8" rx="1.5" fill="var(--steel)"/><circle cx="22" cy="6" r="2.6" fill="#c0392b"/>${lab}`;
+  else if (type === "vial") s = `<rect x="13" y="22" width="18" height="32" rx="3" ${g}/><rect x="14.5" y="38" width="15" height="14.5" rx="2" fill="${fill}"/><rect x="12" y="13" width="20" height="10" rx="2" ${cap}/>`;
+  else if (type === "vialSolid") s = `<rect x="13" y="22" width="18" height="32" rx="3" ${g}/><g fill="${fill}" stroke="var(--glass-stroke)" stroke-width=".6"><circle cx="18" cy="49" r="2.6"/><circle cx="23" cy="50" r="2.6"/><circle cx="27" cy="48.5" r="2.4"/><circle cx="20.5" cy="45" r="2.4"/><circle cx="25.5" cy="44.5" r="2.4"/></g><rect x="12" y="13" width="20" height="10" rx="2" ${cap}/>`;
+  else if (type === "cylinder") s = `<rect x="13" y="12" width="18" height="44" rx="8" fill="${fill}" stroke="var(--glass-stroke)"/><rect x="13" y="20" width="18" height="5" fill="#f0f0f0" opacity=".8"/><rect x="19" y="5" width="6" height="8" fill="var(--steel)"/><rect x="15" y="3" width="14" height="4" rx="1" fill="var(--steel)"/><text x="22" y="44" text-anchor="middle" font-size="8" font-family="var(--font-mono)" fill="#f0f0f0">N₂</text>`;
+  return `<svg class="ctr" viewBox="0 0 44 58" aria-hidden="true">${s}</svg>`;
+}
+const GHS_NAMES = { flame: "Flammable", skull: "Acute toxicity", health: "Health hazard (CMR, sensitizer)", exclaim: "Irritant / harmful", corrosive: "Corrosive", env: "Aquatic toxicity", gas: "Gas under pressure" };
+function ghsSVG(k) {
+  const K = "#111";
+  const sym = {
+    flame: `<path d="M50 26c9 12 15 19 13 31-1 9-6 15-13 15s-13-6-13-14c0-8 6-12 7-20 4 6 5 10 7 12 2-6 2-14-1-24z" fill="${K}"/><rect x="34" y="75" width="32" height="4" fill="${K}"/>`,
+    skull: `<circle cx="50" cy="44" r="13" fill="${K}"/><rect x="43" y="52" width="14" height="9" rx="2" fill="${K}"/><circle cx="45" cy="44" r="3.4" fill="#fff"/><circle cx="55" cy="44" r="3.4" fill="#fff"/><path d="M33 62l34 12M67 62L33 74" stroke="${K}" stroke-width="4.5" stroke-linecap="round"/>`,
+    health: `<circle cx="50" cy="29" r="6" fill="${K}"/><path d="M38 76V48c0-6 5-10 12-10s12 4 12 10v28z" fill="${K}"/><path d="M50 46l2.6 6 6.4.4-5 4 1.7 6.2L50 59l-5.7 3.6 1.7-6.2-5-4 6.4-.4z" fill="#fff"/>`,
+    exclaim: `<rect x="45.5" y="28" width="9" height="30" rx="2" fill="${K}"/><circle cx="50" cy="67" r="5" fill="${K}"/>`,
+    corrosive: `<path d="M30 30l12-8 4 6-12 8z" fill="${K}"/><path d="M58 22l12 8-4 6-12-8z" fill="${K}"/><circle cx="38" cy="45" r="2.5" fill="${K}"/><circle cx="62" cy="45" r="2.5" fill="${K}"/><path d="M30 60h16v6H30zM52 58c4 0 14 2 18 6v4H52z" fill="${K}"/><rect x="28" y="72" width="44" height="4" fill="${K}"/>`,
+    env: `<rect x="35" y="44" width="3.5" height="20" fill="${K}"/><path d="M36.5 26l9 18h-18z" fill="${K}"/><path d="M48 62c6-7 14-7 20 0-6 7-14 7-20 0zM68 62l6-5v10z" fill="${K}"/><rect x="28" y="70" width="46" height="3" fill="${K}"/>`,
+    gas: `<rect x="30" y="44" width="40" height="16" rx="8" fill="${K}"/><rect x="70" y="48" width="6" height="8" fill="${K}"/>`
+  }[k] || "";
+  return `<svg class="ghs" viewBox="0 0 100 100" role="img" aria-label="${GHS_NAMES[k]}"><title>${GHS_NAMES[k]}</title><path d="M50 4L96 50 50 96 4 50z" fill="#fff" stroke="#d0201a" stroke-width="7" stroke-linejoin="round"/>${sym}</svg>`;
+}
+
+/* =====================================================================
+   4. RECIPE
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const fmt = (v, d) => (v == null || !isFinite(v)) ? "—" : Number(v).toFixed(d == null ? 2 : d);
+const recipe = { iso: "mdi", polyol: "ptmeg1000", cat: "dbtdl", solv: "dmac", dry: "dry", mass: 10, ratio: 2, index: 1.02, catLoad: 0.03, solids: 25 };
+
+function calc(r) {
+  const P = CHEM[r.polyol], I = CHEM[r.iso], E = CHEM.bdo, S = CHEM[r.solv], C = CHEM[r.cat];
+  const nP = r.mass / P.mw * 1000;                 // mmol polyol
+  const nE = Math.max(0, (r.ratio - 1) * nP);      // mmol BDO (balances at index 1.00)
+  const nI = r.index * (nP + nE);                  // mmol diisocyanate
+  const mI = nI * I.mw / 1000, mE = nE * E.mw / 1000;
+  const solids = r.mass + mI + mE;
+  const mS = solids * (100 - r.solids) / r.solids, vS = mS / S.density;
+  const vBdoSolv = Math.min(5, vS * 0.15);
+  const mCat = r.cat === "none" ? 0 : solids * r.catLoad / 100;
+  const ncoPre = (2 * nI - 2 * nP) * MW_NCO / 1000 / (r.mass + mI) * 100;
+  const ncoEnd = Math.max(0, 2 * nI - 2 * (nP + nE)) * MW_NCO / 1000 / solids * 100;   // left by the deliberate NCO excess
+  const rr = Math.min(2 * nI, 2 * (nP + nE)) / Math.max(2 * nI, 2 * (nP + nE));
+  const xnMax = rr >= 0.9999 ? Infinity : (1 + rr) / (1 - rr);
+  const M0 = solids / (nP + nI + nE) * 1000;
+  const waterPpm = r.dry === "dry" ? 50 : 1000;
+  return { P, I, E, S, C, nP, nE, nI, mI, mE, solids, mS, vS, vBdoSolv, mCat, ncoPre, ncoEnd, rr, xnMax, M0,
+    mnMax: xnMax * M0, hard: (mI + mE) / solids * 100, waterPpm, vMeOH: 1.0 };
+}
+
+function renderRecipe() {
+  const c = calc(recipe);
+  const rows = [
+    [c.P.short, "Polyol (soft segment)", c.nP, recipe.mass, null, "Melted, then dehydrated in the flask"],
+    [c.S.short, "Solvent", c.vS * c.S.density / c.S.mw * 1000, c.mS, c.vS, `${fmt(c.vS - c.vBdoSolv, 0)} mL by cannula, ${fmt(c.vBdoSolv, 0)} mL with the BDO`],
+    [c.I.short, "Diisocyanate", c.nI, c.mI, c.I.liquid ? c.mI / c.I.density : null, c.I.liquid ? "Dry syringe" : "Molten at 50 °C, warm syringe"],
+    [recipe.cat === "none" ? "—" : c.C.short, "Catalyst", recipe.cat === "none" ? 0 : c.mCat / c.C.mw * 1000, c.mCat, null, recipe.cat === "none" ? "No catalyst" : `${fmt(c.mCat * 100, 2)} g of a 1 wt % stock in ${c.S.short}`],
+    [c.E.short, "Chain extender", c.nE, c.mE, c.mE / c.E.density, "Dropwise over 10 min"],
+    ["Methanol", "Quench", c.vMeOH * 0.792 / 32.04 * 1000, c.vMeOH * 0.792, c.vMeOH, "Syringe, after the NCO band is gone"]
+  ];
+  const tb = $("amounts").tBodies[0];
+  tb.textContent = "";
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+    const cells = [r[0], r[1], fmt(r[2], r[2] < 1 ? 3 : 2), r[3] < 0.1 ? fmt(r[3] * 1000, 1) + " mg" : fmt(r[3], 3) + " g", r[4] == null ? "—" : fmt(r[4], r[4] < 2 ? 2 : 1) + " mL", r[5]];
+    cells.forEach((v, i) => { const td = document.createElement("td"); td.textContent = v; if (i >= 2 && i <= 4) td.className = "num"; tr.appendChild(td); });
+    tb.appendChild(tr);
+  }
+  const d = $("derived");
+  d.innerHTML = "";
+  const items = [
+    ["Molar ratio polyol : diisocyanate : BDO", `1 : ${fmt(c.nI / c.nP, 2)} : ${fmt(c.nE / c.nP, 2)}`],
+    ["Hard-segment content", `${fmt(c.hard, 1)} wt %`],
+    ["Prepolymer NCO (theory)", `${fmt(c.ncoPre, 2)} wt %`],
+    ["r = minority ÷ majority groups", fmt(c.rr, 3)],
+    ["Carothers limit at p = 1", isFinite(c.xnMax) ? `Xn ${fmt(c.xnMax, 0)}, Mn ≈ ${fmt(c.mnMax / 1000, 0)} kg/mol` : "unbounded (set by purity and moisture)"]
+  ];
+  for (const [k, v] of items) { const s = document.createElement("span"); s.append(k + ": "); const b = document.createElement("b"); b.textContent = v; s.append(b); d.append(s); }
+  renderShelf();
+}
+
+/* Shelf: what is physically on the bench for this recipe */
+function shelfKeys() { const k = [recipe.polyol, recipe.solv, recipe.iso]; if (recipe.cat !== "none") k.push(recipe.cat); k.push("bdo", "meoh", "n2", "sieves"); return k; }
+const SHELF_ROLE = () => ({ [recipe.polyol]: "polyol", [recipe.solv]: "solvent", [recipe.iso]: "iso", [recipe.cat]: "cat", bdo: "ext", meoh: "meoh" });
+function shelfAmount(key) {
+  const c = calc(recipe), role = SHELF_ROLE()[key];
+  if (role === "polyol") return `${fmt(recipe.mass, 2)} g`;
+  if (role === "solvent") return `${fmt(c.vS - c.vBdoSolv, 1)} mL`;
+  if (role === "iso") return `${fmt(c.mI, 2)} g` + (c.I.liquid ? ` · ${fmt(c.mI / c.I.density, 2)} mL` : "");
+  if (role === "cat") return `${fmt(c.mCat * 1000, 1)} mg`;
+  if (role === "ext") return `${fmt(c.mE, 3)} g · ${fmt(c.mE / c.E.density, 2)} mL`;
+  if (role === "meoh") return "1.0 mL";
+  if (key === "n2") return "1–2 bubbles/s";
+  return "in solvent bottle";
+}
+function renderShelf() {
+  const el = $("shelf"); el.textContent = "";
+  for (const key of shelfKeys()) {
+    const c = CHEM[key], role = SHELF_ROLE()[key];
+    const div = document.createElement("div");
+    div.className = "shelf-item"; div.dataset.key = key; if (role) div.dataset.role = role;
+    div.innerHTML = containerSVG(c.container, c.fill);
+    const nm = document.createElement("a"); nm.className = "nm"; nm.href = "#ref-" + key; nm.textContent = c.short; nm.style.color = "inherit"; nm.style.textDecoration = "none";
+    const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = c.role;
+    const row = document.createElement("div"); row.className = "row";
+    const amt = document.createElement("span"); amt.className = "amt"; amt.textContent = shelfAmount(key);
+    row.append(amt);
+    if (role) { const b = document.createElement("button"); b.type = "button"; b.className = "btn small primary"; b.textContent = "Add"; b.hidden = true; b.dataset.add = role; row.append(b); }
+    div.append(nm, meta, row);
+    el.append(div);
+  }
+  if (typeof syncShelf === "function") syncShelf();
+}
+
+/* Reference cards */
+function renderReference() {
+  const keys = ["ptmeg1000", "mdi", "tdi", "hdi", "ipdi", "bdo", "dmac", "dmf", "thf", "dbtdl", "bi", "dabco", "meoh", "n2", "sieves"];
+  const grid = $("refGrid"); grid.textContent = "";
+  for (const k of keys) {
+    const c = CHEM[k];
+    const card = document.createElement("article"); card.className = "panel ref-card"; card.id = "ref-" + k;
+    const st = structureOf(k);
+    card.innerHTML = `<div class="ref-top"><div><div class="role"></div><h3></h3></div>${containerSVG(c.container, c.fill)}</div>` +
+      (st ? `<div class="struct">${st}</div>` : "") + `<dl></dl><div class="hz"></div>`;
+    card.querySelector(".role").textContent = c.role;
+    card.querySelector("h3").textContent = c.name;
+    card.querySelector(".ctr").style.cssText = "width:34px;height:45px;flex:none";
+    const dl = card.querySelector("dl");
+    const add = (t, v) => { if (v == null) return; const dt = document.createElement("dt"); dt.textContent = t; const dd = document.createElement("dd"); dd.textContent = v; dl.append(dt, dd); };
+    add("Formula", c.formula);
+    add("Molar mass", c.mw ? (k.startsWith("ptmeg") ? `≈ ${c.mw} g/mol (Mn)` : `${c.mw} g/mol`) : null);
+    add("Density", c.density ? `${c.density} g/mL` : null);
+    add("Form", c.state);
+    add("Handling", c.storage);
+    if (c.k) add("Relative rate", `uncatalysed ${fmt(c.k.none / CHEM.mdi.k.none, 2)}× MDI; with DBTDL ${fmt(c.k.dbtdl / CHEM.mdi.k.dbtdl, 2)}× MDI`);
+    const hz = card.querySelector(".hz");
+    hz.innerHTML = c.ghs.map(ghsSVG).join("");
+    for (const h of c.hazards) { const s = document.createElement("span"); s.className = "hz-chip"; s.textContent = h; hz.append(s); }
+    grid.append(card);
+  }
+  const eq = [
+    ["250 mL three-neck round-bottom flask", "24/40 joints, oven-dried at 120 °C overnight and assembled hot."],
+    ["Overhead stirrer, PTFE crescent paddle", "A magnetic bar stalls once the solution turns viscous. A PTFE bearing seals the centre neck."],
+    ["Allihn reflux condenser", "Returns solvent vapour to the flask and carries the gas adapter on top."],
+    ["Thermocouple through a rubber septum", "Reads the internal temperature. The septum also takes the syringe needles."],
+    ["Gas-tight syringes, long needles", "Oven-dried, flushed with N₂. Warm the barrel for molten MDI."],
+    ["Silicone oil bath on a hotplate", "Safe to about 150 °C. The external probe controls the bath, not the flask."],
+    ["Schlenk line with oil bubbler", "Switches the flask between dry N₂ and vacuum. Bubbles show positive pressure."],
+    ["Vacuum pump with cold trap", "Takes the polyol melt down to ≤ 5 mbar for dehydration."],
+    ["Karl Fischer titrator", "Checks water in the polyol and solvent before you start."],
+    ["FTIR with ATR accessory", "Tracks the NCO stretch at 2270 cm⁻¹ until it disappears."],
+    ["Di-n-butylamine back-titration", "ASTM D2572. Measures the NCO content of the prepolymer."],
+    ["Precipitation beaker and vacuum oven", "10 volumes of stirred water or methanol, then drying at 60 °C."]
+  ];
+  const e = $("equip"); e.textContent = "";
+  for (const [a, b] of eq) { const d = document.createElement("div"); const x = document.createElement("b"); x.textContent = a; const y = document.createElement("span"); y.textContent = b; d.append(x, y); e.append(d); }
+}
+
+/* =====================================================================
+   5. SIMULATION STATE AND KINETICS
+   ===================================================================== */
+const R_GAS = 8.314, DH = 100;   // DH: urethane formation, kJ per mol NCO (exothermic)
+let S;
+function freshState() {
+  return {
+    t: 0, step: 0, stepStart: 0, running: false, speed: 60, started: false,
+    Tset: 25, Tbath: 22, Tint: 22, rpm: 0, atm: "air",
+    added: {}, nP: 0, nI: 0, nE: 0, mPoly: 0, Vsolv: 0, Vother: 0, catOn: false,
+    NCO: 0, NCOadded: 0, OH: 0, OHadded: 0, W: 0, Wadded: 0, MeOH: 0,
+    monomers: 0, links: 0, urethane: 0, urea: 0, allo: 0, CO2: 0,
+    solventLost: 0, gelled: false, bubbles: 0, vapor: 0,
+    hist: [], events: [], lastHist: -1e9, warnings: {}, finished: false
+  };
+}
+function volume() { return S.Vsolv + S.Vother; }              // mL of liquid in the flask
+function curSolvent() { return CHEM[recipe.solv]; }
+function derived() {
+  const reactedW = S.Wadded - S.W;                       // each reacted water joins two chains via urea
+  const mono = S.monomers + reactedW;
+  const nMol = Math.max(1e-9, mono - S.links);
+  const mass = S.mPoly + reactedW * MW_H2O / 1000 - S.CO2 * MW_CO2 / 1000;
+  const network = S.gelled || mono - S.links < 0.002 * mono;   // branched past the gel point
+  const Mn = S.monomers > 0 ? (network ? Infinity : Math.max(0, mass) / nMol * 1000) : 0;
+  const Xn = S.monomers > 0 ? (network ? Infinity : mono / nMol) : 0;
+  const B = S.OHadded + 2 * S.Wadded, A = S.NCOadded;
+  const minor = Math.min(A, B);
+  const p = minor > 0 ? Math.min(1, (S.links - S.allo) / minor) : 0;
+  const D = 1 + Math.max(0, Math.min(1, p));
+  const ncoPct = mass > 0 ? S.NCO * MW_NCO / 1000 / mass * 100 : 0;
+  const V = volume();
+  let eta = 0;
+  if (V > 0) {
+    if (S.Vsolv <= 0.01) eta = 0.15 * Math.exp(-0.03 * (S.Tint - 60)) * Math.max(1, Math.pow(Math.max(Mn, 1000) / 1000, 3.4));
+    else {
+      const c = mass / V, Mw = Mn * D;
+      const ietaV = 0.03 * Math.pow(Math.max(Mw, 100), 0.7);   // mL/g, Mark–Houwink estimate
+      const ci = c * ietaV;
+      eta = curSolvent().viscosity * (1 + ci * Math.exp(0.4 * ci)) * Math.exp(-0.015 * (S.Tint - 25));
+    }
+  }
+  if (S.gelled) eta = Infinity;
+  const ppm = mass + S.Vsolv * curSolvent().density > 0 ? S.W * MW_H2O / 1000 / (mass + S.Vsolv * curSolvent().density) * 1e6 : 0;
+  return { Mn, Xn, p, D, ncoPct, eta, mass, ppm, nMol, ncoConv: S.NCOadded > 0 ? 1 - S.NCO / S.NCOadded : 0 };
+}
+
+function rateConstants(T) {
+  const I = CHEM[recipe.iso], cat = S.catOn ? recipe.cat : "none", C = CHEM[cat];
+  const loadF = cat === "none" ? 1 : Math.max(0.05, recipe.catLoad / C.load);   // more catalyst, faster (sub-linear)
+  let k80 = I.k[cat];
+  if (cat !== "none") k80 = I.k.none + (I.k[cat] - I.k.none) * Math.sqrt(loadF);
+  const solvF = S.Vsolv > 0.01 ? curSolvent().kf : 1.3;
+  const kOH = k80 * solvF * Math.exp(-C.Ea / R_GAS * (1 / T - 1 / 353.15));
+  const kW = kOH * C.sel;
+  const kA = 2e-4 * Math.exp(-120000 / R_GAS * (1 / T - 1 / 413.15));
+  return { kOH, kW, kA, kMe: kOH * 1.4 };
+}
+
+function stepSim(dt) {
+  const d0 = derived();
+  // bath: power-limited heating, slow passive cooling
+  S.Tbath += Math.max(-0.03, Math.min(0.08, (S.Tset - S.Tbath) / 120)) * dt;
+  const V = volume();
+  if (V <= 0) { S.Tint += (S.Tbath - S.Tint) * Math.min(1, dt / 200); return; }
+  // stirring efficiency (falls when the motor cannot turn the solution)
+  let mix = S.rpm <= 0 ? 0.15 : Math.min(1, 0.35 + S.rpm / 250);
+  if (d0.eta > 300 && S.rpm > 0) mix *= 0.4;
+  if (S.gelled) mix = 0.05;
+  const T = S.Tint + 273.15, k = rateConstants(T), VL = V / 1000;
+  const cN = S.NCO / 1000 / VL, cO = S.OH / 1000 / VL, cW = S.W / 1000 / VL, cM = S.MeOH / 1000 / VL, cU = S.urethane / 1000 / VL;
+  const f = 1000 * VL * (0.3 + 0.7 * mix);            // mol L⁻¹ s⁻¹ → mmol s⁻¹
+  let rOH = k.kOH * cN * cO * f, rW = k.kW * cN * cW * f, rMe = k.kMe * cN * cM * f, rA = k.kA * cN * cU * f;
+  const demand = (rOH + 2 * rW + rMe + rA) * dt;
+  if (demand > S.NCO && demand > 0) { const s = S.NCO / demand; rOH *= s; rW *= s; rMe *= s; rA *= s; }
+  rOH = Math.min(rOH, S.OH / dt); rW = Math.min(rW, S.W / dt); rMe = Math.min(rMe, S.MeOH / dt);
+  S.NCO = Math.max(0, S.NCO - (rOH + 2 * rW + rMe + rA) * dt);
+  S.OH = Math.max(0, S.OH - rOH * dt); S.W = Math.max(0, S.W - rW * dt); S.MeOH = Math.max(0, S.MeOH - rMe * dt);
+  S.urethane += (rOH + rMe) * dt; S.urea += rW * dt; S.CO2 += rW * dt; S.allo += rA * dt;
+  S.links += (rOH + 2 * rW + rA) * dt;
+  S.bubbles = rW * 60;                                   // CO2 evolution, mmol per min
+  // heat balance of the flask contents
+  const q = (rOH + rMe + 2 * rW + rA) * DH;              // W (mmol/s × kJ/mol)
+  const cp = (S.mPoly + S.Vsolv * curSolvent().density + 5) * 2.0;
+  const UA = 0.9 * (0.6 + 0.6 * mix);
+  S.Tint += (UA * (S.Tbath - S.Tint) + q) / cp * dt;
+  // solvent boiling: reflux caps the temperature (or boils off under vacuum)
+  const bp = curSolvent().bp;
+  if (S.Vsolv > 0.5) {
+    const bpEff = S.atm === "vac" ? bp - 110 : bp;
+    if (S.Tint > bpEff) {
+      S.Tint = bpEff;
+      if (S.atm === "vac") { const lost = Math.min(S.Vsolv, 0.02 * dt); S.Vsolv -= lost; S.solventLost += lost; }
+    }
+  }
+  // polyol dehydration under vacuum (only before solvent is added)
+  S.vapor = 0;
+  if (S.atm === "vac" && S.added.polyol && S.Vsolv < 0.5 && S.W > 0) {
+    const kd = (1 / 1800) * Math.exp(0.045 * (S.Tint - 100)) * (S.rpm > 0 ? 1 : 0.45);
+    const dW = S.W * Math.min(1, kd * dt); S.W -= dW; S.Wadded -= dW; S.vapor = kd * 1800;
+  }
+  // humid air leaks in when the flask is open
+  if (S.atm === "air") { const dW = 0.03 / 3600 * dt; S.W += dW; S.Wadded += dW; }
+  // gelation from allophanate branching
+  if (!S.gelled && S.allo > 0.02 && S.allo > d0.nMol) { S.gelled = true; S.rpm = 0; event("Gel point"); say("The solution gelled into a crosslinked lump around the paddle. Allophanate branches formed above ~110 °C. The batch cannot be recovered.", "bad"); syncControls(); }
+  S.t += dt;
+  if (S.t - S.lastHist >= 30) recordHist();
+}
+function recordHist() {
+  const d = derived();
+  S.hist.push({ t: S.t, nco: d.ncoPct, Mn: Math.min(d.Mn, 1e6) });
+  if (S.hist.length > 4000) S.hist.splice(0, S.hist.length - 4000);
+  S.lastHist = S.t;
+}
+function event(label) { S.events.push({ t: S.t, label }); }
+function advance(seconds) {
+  const sub = 0.5;
+  let n = Math.ceil(seconds / sub);
+  while (n-- > 0) stepSim(sub);
+}
+
+/* Additions */
+function addReagent(role) {
+  const c = calc(recipe);
+  const P = c.P;
+  const map = {
+    polyol: () => { S.nP = c.nP; S.mPoly += recipe.mass; S.Vother += recipe.mass / P.density; S.OH += 2 * c.nP; S.OHadded += 2 * c.nP; S.monomers += c.nP;
+      const w = recipe.mass * P.water / 1e6 / MW_H2O * 1000; S.W += w; S.Wadded += w; S.Tint = Math.max(S.Tint, 55); return `${fmt(recipe.mass, 2)} g ${P.short} melted in. As received it holds about ${P.water} ppm water.`; },
+    solvent: () => { const v = c.vS - c.vBdoSolv; S.Vsolv += v; const w = v * c.S.density * c.waterPpm / 1e6 / MW_H2O * 1000; S.W += w; S.Wadded += w;
+      S.Tint = (S.Tint * (S.mPoly + 1) + 22 * v) / (S.mPoly + 1 + v); return `${fmt(v, 1)} mL ${c.S.short} added (${c.waterPpm} ppm water).`; },
+    iso: () => { S.nI = c.nI; S.mPoly += c.mI; S.Vother += c.mI / c.I.density; S.NCO += 2 * c.nI; S.NCOadded += 2 * c.nI; S.monomers += c.nI;
+      return `${fmt(c.mI, 2)} g ${c.I.short} added. NCO groups now outnumber OH by about 2 : 1, so each chain end gets capped.`; },
+    cat: () => { S.catOn = true; S.Vother += 0.5; return recipe.cat === "none" ? "" : `${fmt(c.mCat * 1000, 1)} mg ${c.C.short} injected as a 1 wt % stock solution.`; },
+    ext: () => { S.nE = c.nE; S.mPoly += c.mE; S.Vother += c.mE / c.E.density; S.Vsolv += c.vBdoSolv; S.OH += 2 * c.nE; S.OHadded += 2 * c.nE; S.monomers += c.nE;
+      const w = (c.mE * CHEM.bdo.water + c.vBdoSolv * c.S.density * c.waterPpm) / 1e6 / MW_H2O * 1000; S.W += w; S.Wadded += w;
+      return `${fmt(c.mE, 3)} g BDO in ${fmt(c.vBdoSolv, 1)} mL ${c.S.short} added dropwise. Chains now link end to end.`; },
+    meoh: () => { const n = c.vMeOH * 0.792 / 32.04 * 1000; S.MeOH += n; S.Vother += c.vMeOH; return `1.0 mL methanol added (${fmt(n, 1)} mmol), a large excess over the remaining NCO.`; }
+  };
+  const msg = map[role]();
+  S.added[role] = true;
+  event({ polyol: "Polyol", solvent: "Solvent", iso: CHEM[recipe.iso].short, cat: "Catalyst", ext: "BDO", meoh: "MeOH" }[role]);
+  startPour(role);
+  return msg;
+}
+function dilute() {
+  if (!S.started || volume() <= 0) return;
+  if (volume() + 10 > 230) { say("The flask is nearly full. A 250 mL flask should stay below about two-thirds full when stirred.", "warn"); return; }
+  S.Vsolv += 10; const w = 10 * curSolvent().density * calc(recipe).waterPpm / 1e6 / MW_H2O * 1000; S.W += w; S.Wadded += w;
+  event("+10 mL"); startPour("solvent");
+  say(`Added 10 mL ${curSolvent().short}. Lower concentration means lower viscosity, and the reaction slows a little.`, "ok");
+}
+
+/* =====================================================================
+   6. PROCEDURE
+   ===================================================================== */
+const rxT = () => recipe.solv === "thf" ? 65 : 80;
+const STEPS = [
+  { id: "setup", title: "Assemble dry glassware under N₂",
+    detail: () => `Oven-dry the flask, stirrer bearing, condenser and septum adapter at 120 °C overnight. Assemble them hot, clamp the flask in the oil bath and purge with dry N₂ while everything cools. The bubbler should show <b>1–2 bubbles per second</b>.`,
+    apply: { atm: "n2" }, applyLabel: "Assemble and purge with N₂",
+    checks: [["Glassware assembled and clamped", () => S.started], ["N₂ flowing through the bubbler", () => S.atm === "n2"]] },
+  { id: "polyol", title: "Charge the polyol", need: "polyol",
+    detail: c => `Melt the ${c.P.short} in a 60 °C oven, weigh <b>${fmt(recipe.mass, 2)} g (${fmt(c.nP, 2)} mmol)</b> and add it through the side neck with a warm syringe. Start the stirrer and set the bath to 60 °C to keep it molten.`,
+    apply: { rpm: 150, Tset: 60 }, applyLabel: "Stir at 150 rpm, bath 60 °C",
+    checks: [["Polyol in the flask", () => S.added.polyol], ["Stirring at ≥ 100 rpm", () => S.rpm >= 100]] },
+  { id: "dry", title: "Dehydrate the polyol under vacuum", duration: 90 * 60,
+    detail: () => `Switch the Schlenk line to <b>vacuum (≤ 5 mbar)</b>, heat the bath to <b>100 °C</b> and stir for <b>90 min</b>. Water boils out of the melt. Polyols pick up moisture from air, and every water molecule destroys two NCO groups and makes CO₂.`,
+    apply: { atm: "vac", Tset: 100, rpm: 200 }, applyLabel: "Vacuum, 100 °C, 200 rpm",
+    checks: [["Under vacuum", () => S.atm === "vac"], ["Melt at 95–105 °C", () => S.Tint >= 95 && S.Tint <= 106], ["Water ≤ 300 ppm (Karl Fischer)", () => derived().ppm <= 300]] },
+  { id: "solvent", title: "Backfill with N₂, cool and add solvent", need: "solvent",
+    detail: c => `Close the vacuum tap and backfill with N₂ before opening anything. Set the bath to 60 °C, then add <b>${fmt(c.vS - c.vBdoSolv, 1)} mL anhydrous ${c.S.short}</b> by cannula or dry syringe.` + (recipe.solv === "thf" ? " THF boils at 66 °C, so the whole reaction runs at reflux, below 66 °C." : ""),
+    apply: { atm: "n2", Tset: 60 }, applyLabel: "Backfill N₂, bath 60 °C",
+    checks: [["Backfilled with N₂", () => S.atm === "n2"], ["Solvent added", () => S.added.solvent], ["Polyol dissolved (stirring)", () => S.added.solvent && S.rpm > 0]] },
+  { id: "iso", title: "Add the diisocyanate", need: "iso",
+    detail: c => `Add <b>${fmt(c.mI, 3)} g ${c.I.short} (${fmt(c.nI, 2)} mmol)</b>` + (c.I.liquid ? ` by dry syringe (${fmt(c.mI / c.I.density, 2)} mL).` : " molten at 50 °C from a warm syringe.") + ` NCO groups now outnumber OH groups about two to one, so each polyol end gets capped with a diisocyanate. Set the bath to ${rxT()} °C.`,
+    apply: { Tset: rxT(), rpm: 250 }, applyLabel: () => `Bath ${rxT()} °C, 250 rpm`,
+    checks: [["Diisocyanate added", () => S.added.iso], ["Under N₂", () => S.atm === "n2"]] },
+  { id: "cat", title: "Catalyse and build the prepolymer", need: "cat", duration: 120 * 60,
+    detail: c => (recipe.cat === "none" ? `No catalyst in this recipe. Hold at <b>${rxT()} °C for 2 h</b> and watch how slowly the NCO content falls.` :
+      `Inject <b>${fmt(c.mCat * 100, 2)} g of a 1 wt % ${c.C.short} stock</b> (${fmt(c.mCat * 1000, 1)} mg catalyst) through the septum and hold at <b>${rxT()} °C for 2 h</b>. Watch the internal thermometer for the exotherm.`) +
+      ` The prepolymer is done when the NCO content reaches the theoretical <b>${fmt(c.ncoPre, 2)} wt %</b> (back-titration with di-n-butylamine).`,
+    apply: { Tset: rxT(), rpm: 250, atm: "n2" }, applyLabel: () => `Hold ${rxT()} °C under N₂`,
+    checks: [["Catalyst in", () => S.catOn || recipe.cat === "none"], ["Bath within 3 °C of target", () => Math.abs(S.Tbath - rxT()) <= 3], ["NCO at theory (within 0.3 wt %)", () => derived().ncoPct <= calc(recipe).ncoPre + 0.3]] },
+  { id: "ext", title: "Chain-extend with 1,4-butanediol", need: "ext", duration: 180 * 60,
+    detail: c => `Add <b>${fmt(c.mE, 3)} g BDO (${fmt(c.nE, 2)} mmol)</b> in ${fmt(c.vBdoSolv, 1)} mL ${c.S.short}, dropwise over 10 min. Viscosity climbs steeply as high polymer forms. If the solution starts climbing the stirrer shaft (the Weissenberg effect), add 10 mL solvent or slow the stirrer. Continue for about 3 h, until the 2270 cm⁻¹ band stops shrinking.` + (c.ncoEnd > 0.005 ? ` At an index of ${fmt(recipe.index, 2)} a small band stays, about <b>${fmt(c.ncoEnd, 2)} wt % NCO</b>, from the deliberate excess. The methanol quench removes it.` : ""),
+    apply: { Tset: rxT() }, applyLabel: () => `Hold ${rxT()} °C`,
+    checks: [["BDO added", () => S.added.ext], ["NCO down to its end point", () => derived().ncoPct < calc(recipe).ncoEnd + 0.03], ["Stirrer turning freely", () => derived().eta < 300 && S.rpm > 0]] },
+  { id: "quench", title: "Quench residual NCO with methanol", need: "meoh", duration: 20 * 60,
+    detail: () => `Add <b>1.0 mL methanol</b> and stir for 20 min. It caps any isocyanate that is left as a methyl carbamate, so the polymer cannot crosslink on storage. Then turn off the heat.`,
+    apply: { Tset: 25 }, applyLabel: "Heat off after quench",
+    checks: [["Methanol added", () => S.added.meoh], ["No free NCO left", () => S.NCO < 1e-3]] },
+  { id: "isolate", title: "Precipitate, wash and dry", final: true,
+    detail: () => `Pour the solution in a thin stream into <b>10 volumes of vigorously stirred water</b>. The polymer comes out as white fibres. Collect it, wash with water and methanol, and dry at 60 °C under vacuum for 24 h.`,
+    applyLabel: "Precipitate into water", checks: [] }
+];
+const ROLE_LABEL = { polyol: "polyol", solvent: "solvent", iso: "diisocyanate", cat: "catalyst", ext: "BDO", meoh: "methanol" };
+function curStep() { return STEPS[S.step]; }
+function stepNeed(st) { return st.need === "cat" && recipe.cat === "none" ? null : st.need; }
+function stepReady(st) { const n = stepNeed(st); return (n ? !!S.added[n] : true) && (st.id !== "setup" || S.started); }
+
+function renderSteps() {
+  const ol = $("steps"); ol.textContent = "";
+  STEPS.forEach((st, i) => {
+    const li = document.createElement("li");
+    li.textContent = st.id === "cat" && recipe.cat === "none" ? "Build the prepolymer (uncatalysed)" : st.title;
+    li.className = i < S.step ? "done" : i === S.step ? "current" : "";
+    if (i === S.step) li.setAttribute("aria-current", "step");
+    ol.append(li);
+  });
+  renderStepCard();
+}
+function renderStepCard() {
+  const st = curStep(), c = calc(recipe), card = $("stepCard");
+  const need = stepNeed(st);
+  const label = typeof st.applyLabel === "function" ? st.applyLabel() : st.applyLabel;
+  card.innerHTML = `<p class="label">Step ${S.step + 1} of ${STEPS.length}</p><h3></h3><p class="detail">${st.detail(c)}</p>` +
+    `<ul class="checks" id="stepChecks"></ul>` +
+    (st.duration ? `<div><div class="ctl-top"><span class="label">Time in step</span><span class="mono" id="stepTime"></span></div><div class="progress"><i id="stepBar"></i></div></div>` : "") +
+    `<div class="step-actions" id="stepActions"></div>`;
+  card.querySelector("h3").textContent = st.id === "cat" && recipe.cat === "none" ? "Build the prepolymer (uncatalysed)" : st.title;
+  const acts = card.querySelector("#stepActions");
+  const mk = (txt, cls, fn, id) => { const b = document.createElement("button"); b.type = "button"; b.className = "btn " + (cls || ""); b.textContent = txt; b.onclick = fn; if (id) b.id = id; acts.append(b); return b; };
+  if (st.final) mk(label, "primary", finish, "btnFinish");
+  else {
+    if (need) mk(`Add ${ROLE_LABEL[need]}`, "primary", () => doAdd(need), "btnAdd");
+    if (label) mk(label, need ? "" : "primary", () => applySettings(st), "btnApply");
+    if (st.duration) mk("Fast-forward", "", () => fastForward(st), "btnFF");
+    mk("Next step", "", nextStep, "btnNext");
+  }
+  updateStepCard();
+}
+function updateStepCard() {
+  const st = curStep();
+  const ul = $("stepChecks");
+  if (ul) {
+    if (ul.children.length !== st.checks.length) { ul.textContent = ""; st.checks.forEach(() => ul.append(document.createElement("li"))); }
+    st.checks.forEach((ch, i) => { const li = ul.children[i]; li.textContent = ch[0]; li.classList.toggle("met", !!ch[1]()); });
+  }
+  const need = stepNeed(st), el = (S.t - S.stepStart);
+  if (st.duration && $("stepTime")) {
+    $("stepTime").textContent = `${hms(el)} / ${hms(st.duration)}`;
+    $("stepBar").style.width = Math.min(100, el / st.duration * 100) + "%";
+  }
+  const add = $("btnAdd"); if (add) add.disabled = !!S.added[need] || !S.started;
+  const ff = $("btnFF"); if (ff) ff.disabled = !stepReady(st) || el >= st.duration || S.gelled;
+  const nx = $("btnNext"); if (nx) { nx.disabled = !stepReady(st); nx.textContent = st.duration && el < st.duration && stepReady(st) ? "Move on early" : "Next step"; nx.className = "btn" + (stepReady(st) && (!st.duration || el >= st.duration) ? " primary" : ""); }
+  const ap = $("btnApply"); if (ap) ap.disabled = st.id !== "setup" && !S.started;
+  syncShelf();
+}
+function syncShelf() {
+  if (!S) return;
+  const st = curStep(), need = stepNeed(st);
+  document.querySelectorAll(".shelf-item").forEach(el => {
+    const role = el.dataset.role;
+    el.classList.toggle("needed", !!role && role === need && !S.added[role] && S.started);
+    el.classList.toggle("used", !!role && !!S.added[role]);
+    const b = el.querySelector("[data-add]"); if (b) b.hidden = !(role === need && !S.added[role] && S.started);
+  });
+}
+function applySettings(st) {
+  const a = st.apply || {};
+  if (st.id === "setup") { S.started = true; S.running = true; lockRecipe(true); event("Start"); say("Glassware assembled and purged. The clock is running. Add the polyol next.", "ok"); }
+  if (a.atm) setAtm(a.atm, true);
+  if (a.Tset != null) S.Tset = a.Tset;
+  if (a.rpm != null && !S.gelled) S.rpm = a.rpm;
+  syncControls(); updateStepCard();
+}
+function doAdd(role) {
+  if (!S.started) { say("Assemble the glassware and start the N₂ purge first (step 1).", "warn"); return; }
+  if (S.added[role]) return;
+  if (S.atm === "vac" && role !== "polyol") { say("The flask is under vacuum. Backfill with N₂ before you add anything, or the solvent will flash off and pull air in through the septum.", "warn"); return; }
+  if (volume() + 10 > 240) { say("The flask would overflow. Use less polyol or a higher solids content.", "bad"); return; }
+  const msg = addReagent(role);
+  let extra = "";
+  if (S.atm === "air" && (role === "iso" || role === "ext")) extra = " The flask is open to humid air, so moisture keeps leaking in.";
+  if (role === "iso" && S.Vsolv <= 0) extra += " No solvent yet, so this is a bulk prepolymer.";
+  say(msg + extra, extra ? "warn" : "ok");
+  updateStepCard(); renderSteps();
+}
+function fastForward(st) {
+  const left = st.duration - (S.t - S.stepStart);
+  if (left > 0) { advance(left); recordHist(); say(`Skipped ahead ${Math.round(left / 60)} min of simulated time.`, ""); }
+  updateAll(); updateStepCard();
+}
+function nextStep() {
+  const st = curStep(), d = derived(), c = calc(recipe);
+  if (st.id === "dry" && d.ppm > 300) say(`Moving on with ${fmt(d.ppm, 0)} ppm water still in the polyol. Expect CO₂ bubbles, urea haze and a lower molecular weight.`, "warn");
+  else if (st.id === "cat" && d.ncoPct > c.ncoPre + 0.5) say(`The prepolymer is not finished (${fmt(d.ncoPct, 2)} wt % NCO against ${fmt(c.ncoPre, 2)} in theory). Free polyol will now compete with BDO, which broadens the hard-segment length distribution.`, "warn");
+  else if (st.id === "ext" && d.ncoPct > c.ncoEnd + 0.1) say(`NCO is still present (${fmt(d.ncoPct, 2)} wt %). Quenching now stops chain growth at Mn ≈ ${fmt(d.Mn / 1000, 1)} kg/mol.`, "warn");
+  else say("", "");
+  if (S.step < STEPS.length - 1) { S.step++; S.stepStart = S.t; renderSteps(); }
+}
+function hms(s) { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return `${h}:${String(m).padStart(2, "0")}:${String(x).padStart(2, "0")}`; }
+function say(msg, kind) { const t = $("toast"); if (!msg) return; t.textContent = msg; t.className = "toast" + (kind ? " " + kind : ""); }
+function lockRecipe(on) {
+  $("recipeLock").hidden = !on;
+  document.querySelectorAll("#recipe select, #recipe input").forEach(el => el.disabled = on);
+}
+function setAtm(a, silent) {
+  const prev = S.atm; S.atm = a;
+  document.querySelectorAll("#ctlAtm button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.atm === a)));
+  if (silent || prev === a) return;
+  if (a === "vac" && S.Vsolv > 0.5) say(`Vacuum on a solvent solution: ${curSolvent().short} will boil off. Switch back to N₂.`, "warn");
+  else if (a === "air" && S.added.iso) say("Open to air: moisture now diffuses into the isocyanate solution.", "warn");
+}
+function finish() {
+  const d = derived(), c = calc(recipe), res = $("result");
+  S.finished = true; S.running = false; event("Isolated");
+  let look, kind = "ok";
+  if (S.gelled) { look = "An insoluble, crosslinked gel that swells but will not dissolve in DMAc. The batch is lost."; kind = "bad"; }
+  else if (!S.added.ext) { look = "A sticky, low-molecular-weight prepolymer. Chain extension never happened."; kind = "bad"; }
+  else if (d.Mn < 8000) { look = "A weak, sticky paste. The molecular weight is far too low for useful strength."; kind = "bad"; }
+  else if (d.Mn < 20000) { look = "Short, brittle fibres that tear easily. Usable for analysis, too weak for a film."; kind = "warn"; }
+  else { look = "Tough, elastic white fibres. A cast film is clear and rubbery and snaps back after stretching."; }
+  if (S.CO2 > 0.3 && !S.gelled) look += ` About ${fmt(S.CO2 * 24.5, 0)} mL of CO₂ was released, so the product has voids and urea haze.`;
+  const tg = recipe.polyol === "ptmeg2000" ? "−70 to −75 °C" : "−55 to −65 °C";
+  res.hidden = false;
+  res.innerHTML = `<div class="section-head"><h3>Product</h3><span class="pill ${kind === "ok" ? "ok" : kind === "warn" ? "warn" : "bad"}"><span class="dot"></span><span>${kind === "ok" ? "Good polymer" : kind === "warn" ? "Low molecular weight" : "Failed batch"}</span></span></div><p></p><div class="result-grid"></div><p class="cap-note" style="color:var(--muted);font-size:.85rem">Try again with a change: skip the drying step, use undried solvent, leave the flask open to air, switch to DABCO, or set the index to 1.00 or 1.10 and compare the molecular weight.</p>`;
+  res.querySelector("p").textContent = look;
+  const g = res.querySelector(".result-grid");
+  const rows = [["Mn", `${fmt(d.Mn / 1000, 1)} kg/mol`], ["Mw (Đ ≈ 1 + p)", `${fmt(d.Mn * d.D / 1000, 1)} kg/mol`], ["Xn", fmt(d.Xn, 0)], ["Yield (after washing)", `${fmt(d.mass * 0.95, 2)} g`], ["Hard segment", `${fmt(c.hard, 1)} wt %`], ["Soft-segment Tg (DSC)", tg], ["Urea links", `${fmt(S.urea, 2)} mmol`], ["Allophanate", `${fmt(S.allo, 3)} mmol`]];
+  for (const [k, v] of rows) { const t = document.createElement("div"); t.className = "tile"; const a = document.createElement("span"); a.className = "label"; a.textContent = k; const b = document.createElement("span"); b.className = "v"; b.textContent = v; t.append(a, b); g.append(t); }
+  say("Product isolated. The result card under the instruments sums up the batch.", kind === "ok" ? "ok" : "warn");
+  $("btnFinish").disabled = true;
+  syncControls();
+}
+
+/* =====================================================================
+   7. APPARATUS (SVG)
+   ===================================================================== */
+const FX = 230, FY = 340, FR = 58, NECK = 22;
+function rot(x, y, deg) { const a = deg * Math.PI / 180, dx = x - FX, dy = y - FY; return [FX + dx * Math.cos(a) - dy * Math.sin(a), FY + dx * Math.sin(a) + dy * Math.cos(a)]; }
+function buildRig() {
+  const G = 'fill="var(--glass)" stroke="var(--glass-stroke)" stroke-width="1.6"';
+  const arm = rot(256, 76, NECK), lo = rot(262, 214, NECK), hi = rot(262, 124, NECK), tc = rot(226, 150, -NECK);
+  const lbl = (x, y, t, anchor, lx, ly) => `<g class="rlab"><text x="${x}" y="${y}" text-anchor="${anchor || "start"}">${t}</text>${lx != null ? `<path d="M${anchor === "end" ? x + 3 : x - 3} ${y - 4} L${lx} ${ly}"/>` : ""}</g>`;
+  $("rigSvg").innerHTML = `
+  <defs><clipPath id="flaskClip"><circle cx="${FX}" cy="${FY}" r="${FR - 2}"/></clipPath>
+    <clipPath id="bathClip"><path d="M141 362 H319 V420 a5 5 0 0 1 -5 5 H146 a5 5 0 0 1 -5 -5 Z"/></clipPath></defs>
+  <style>
+    #rigSvg .rlab text { font: 600 10.5px var(--font-display); letter-spacing: .04em; fill: var(--ink-2); }
+    #rigSvg .rlab path { stroke: var(--muted); stroke-width: .8; fill: none; stroke-dasharray: 2 2; }
+    #rigSvg .ro { font: 500 11px var(--font-mono); fill: var(--ink); }
+    #rigSvg .ro-s { font: 9px var(--font-mono); fill: var(--muted); }
+    #rigSvg.nolabels .rlab { display: none; }
+  </style>
+  <!-- stand -->
+  <rect x="12" y="480" width="130" height="10" rx="2" fill="var(--steel)"/>
+  <rect x="40" y="26" width="6" height="456" rx="2" fill="var(--steel)"/>
+  <rect x="46" y="60" width="152" height="6" rx="2" fill="var(--steel)"/>
+  <rect x="46" y="256" width="168" height="6" rx="2" fill="var(--steel)"/>
+  <!-- hotplate -->
+  <rect x="120" y="433" width="220" height="46" rx="6" fill="var(--ink-2)"/>
+  <rect x="128" y="425" width="204" height="9" rx="2" fill="var(--steel)"/>
+  <rect x="134" y="442" width="84" height="26" rx="3" fill="#0d1a12"/>
+  <text id="hpT" x="176" y="460" text-anchor="middle" font-family="var(--font-mono)" font-size="13" fill="#5ef08a">22 °C</text>
+  <text id="hpSet" x="226" y="452" font-family="var(--font-mono)" font-size="8.5" fill="var(--surface-2)">SET 25</text>
+  <text x="226" y="464" font-family="var(--font-mono)" font-size="8.5" fill="var(--surface-2)">BATH</text>
+  <circle cx="292" cy="455" r="10" fill="var(--steel)"/><circle id="heatLed" cx="314" cy="447" r="3" fill="#553"/>
+  <!-- oil bath -->
+  <g clip-path="url(#bathClip)"><rect id="oil" x="140" y="362" width="182" height="66" fill="#e8d596" opacity=".8"/></g>
+  <path d="M140 352 V420 a6 6 0 0 0 6 6 H314 a6 6 0 0 0 6 -6 V352" ${G} fill="none"/>
+  <!-- left neck: septum, thermocouple, syringe -->
+  <g transform="rotate(${-NECK} ${FX} ${FY})">
+    <rect x="220" y="244" width="20" height="50" ${G}/>
+    <rect x="219" y="244" width="22" height="12" fill="var(--glass-stroke)" opacity=".35"/>
+    <rect x="217" y="235" width="26" height="11" rx="2" fill="#b8402f"/>
+    <line x1="226" y1="186" x2="226" y2="372" stroke="var(--steel)" stroke-width="2.4"/>
+    <rect x="222" y="150" width="8" height="38" rx="2" fill="var(--steel)"/>
+    <g id="syringe" opacity="0">
+      <line x1="236" y1="160" x2="236" y2="306" stroke="var(--steel)" stroke-width="1.2"/>
+      <rect x="230" y="96" width="12" height="64" rx="2" ${G}/>
+      <rect id="syrFill" x="231.5" y="110" width="9" height="48" fill="#e9e3c8"/>
+      <g id="plunger"><rect x="234.5" y="62" width="3" height="48" fill="var(--ink-2)"/><rect x="229" y="60" width="14" height="4" rx="1" fill="var(--ink-2)"/><rect x="231" y="106" width="10" height="5" fill="var(--ink-2)"/></g>
+      <rect x="227" y="156" width="18" height="4" rx="1" fill="var(--glass-stroke)"/>
+    </g>
+  </g>
+  <!-- right neck: Allihn condenser and gas adapter -->
+  <g transform="rotate(${NECK} ${FX} ${FY})">
+    <rect x="220" y="244" width="20" height="50" ${G}/>
+    <rect x="219" y="244" width="22" height="12" fill="var(--glass-stroke)" opacity=".35"/>
+    <rect x="225" y="88" width="10" height="160" ${G}/>
+    <rect x="213" y="112" width="34" height="116" rx="9" ${G}/>
+    <rect id="jacketWater" x="215" y="114" width="30" height="112" rx="8" fill="#4f9fe0" opacity=".16"/>
+    <g fill="var(--glass)" stroke="var(--glass-stroke)" stroke-width="1.2">
+      <ellipse cx="230" cy="130" rx="9" ry="10"/><ellipse cx="230" cy="153" rx="9" ry="10"/><ellipse cx="230" cy="176" rx="9" ry="10"/><ellipse cx="230" cy="199" rx="9" ry="10"/>
+    </g>
+    <rect x="247" y="210" width="15" height="7" ${G}/><rect x="247" y="121" width="15" height="7" ${G}/>
+    <g id="reflux" fill="#7cc0f0"></g>
+    <g id="vaporR" fill="var(--muted)"></g>
+    <rect x="223" y="64" width="14" height="26" rx="2" ${G}/>
+    <rect x="237" y="72" width="19" height="7" ${G}/>
+  </g>
+  <!-- flask body -->
+  <rect x="218" y="236" width="24" height="54" ${G}/>
+  <rect x="217" y="236" width="26" height="12" fill="var(--glass-stroke)" opacity=".35"/>
+  <circle cx="${FX}" cy="${FY}" r="${FR}" fill="var(--surface)"/>
+  <circle cx="${FX}" cy="${FY}" r="${FR}" ${G}/>
+  <g clip-path="url(#flaskClip)">
+    <path id="liquid" d="" fill="#efe9d6" opacity=".85" stroke="var(--glass-stroke)" stroke-width="1.2"/>
+    <g id="bubbles"></g>
+  </g>
+  <circle cx="${FX}" cy="${FY}" r="${FR}" fill="none" stroke="var(--glass-stroke)" stroke-width="1.6"/>
+  <path d="M${FX - 34} ${FY - 34} a48 48 0 0 1 22 -14" stroke="#ffffff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- stirrer -->
+  <rect x="213" y="222" width="34" height="16" rx="3" fill="var(--surface-2)" stroke="var(--glass-stroke)"/>
+  <rect x="228" y="106" width="4" height="280" fill="var(--steel)"/>
+  <g id="paddleG" transform="translate(${FX} 386)"><path id="paddle" d="M-32 -5 H32 Q28 9 0 11 Q-28 9 -32 -5 Z" fill="#f4f4f0" stroke="var(--glass-stroke)" stroke-width="1"/></g>
+  <rect x="221" y="92" width="18" height="16" rx="2" fill="var(--steel)"/>
+  <rect x="196" y="38" width="68" height="56" rx="7" fill="var(--ink-2)"/>
+  <rect x="204" y="48" width="52" height="18" rx="2" fill="#0d1a12"/>
+  <text id="motorRpm" x="230" y="61" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="#5ef08a">0 rpm</text>
+  <circle cx="230" cy="80" r="6" fill="var(--steel)"/>
+  <!-- drops from syringe -->
+  <g id="drops" fill="#e9e3c8" stroke="var(--glass-stroke)" stroke-width=".5"></g>
+  <!-- thermocouple readout -->
+  <path d="M${tc[0].toFixed(1)} ${tc[1].toFixed(1)} C ${tc[0] - 10} ${tc[1] - 30}, 120 150, 108 150" stroke="var(--ink-2)" stroke-width="1.5" fill="none"/>
+  <rect x="56" y="128" width="56" height="36" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+  <text x="62" y="140" class="ro-s">T internal</text>
+  <text id="tcT" x="62" y="156" class="ro">22.0 °C</text>
+  <!-- water hoses -->
+  <path d="M${lo[0].toFixed(1)} ${lo[1].toFixed(1)} C 380 ${lo[1] + 6}, 410 262, 456 262" stroke="#4f9fe0" stroke-width="4" fill="none" opacity=".7"/>
+  <path d="M${hi[0].toFixed(1)} ${hi[1].toFixed(1)} C 390 ${hi[1] + 4}, 420 182, 456 182" stroke="#4f9fe0" stroke-width="4" fill="none" opacity=".45"/>
+  <text x="452" y="276" text-anchor="end" class="ro-s">H₂O in</text><text x="452" y="196" text-anchor="end" class="ro-s">H₂O out</text>
+  <!-- Schlenk line and bubbler -->
+  <rect x="300" y="22" width="156" height="8" rx="4" ${G}/>
+  <circle id="tapN2" cx="384" cy="26" r="5" fill="var(--steel)"/>
+  <path id="gasHose" d="M${arm[0].toFixed(1)} ${arm[1].toFixed(1)} C ${arm[0] + 30} ${arm[1] - 10}, 384 70, 384 31" stroke="var(--ink-2)" stroke-width="3.5" fill="none" opacity=".75"/>
+  <rect x="420" y="40" width="22" height="66" rx="8" ${G}/>
+  <rect x="422" y="78" width="18" height="26" rx="6" fill="#e3c66a" opacity=".55"/>
+  <line x1="431" y1="30" x2="431" y2="96" stroke="var(--glass-stroke)" stroke-width="2"/>
+  <g id="bubblerB" fill="var(--surface)" stroke="var(--glass-stroke)" stroke-width=".8"></g>
+  <text id="gasState" x="300" y="16" class="ro-s">open to air</text>
+  <!-- labels -->
+  ${lbl(230, 33, "Overhead stirrer", "middle")}
+  ${lbl(196, 214, "PTFE bearing", "end", 214, 228)}
+  ${lbl(84, 182, "Thermocouple", "middle")}
+  ${lbl(84, 194, "through septum", "middle")}
+  ${lbl(366, 222, "Allihn condenser", "start", 318, 196)}
+  ${lbl(132, 316, "250 mL 3-neck", "end", 174, 322)}
+  ${lbl(132, 328, "round-bottom flask", "end")}
+  ${lbl(132, 398, "PTFE paddle", "end", 196, 388)}
+  ${lbl(330, 392, "Silicone oil bath", "start")}
+  ${lbl(348, 458, "Stirring hotplate", "start")}
+  ${lbl(412, 122, "Oil bubbler", "start")}
+  ${lbl(302, 46, "Schlenk line", "start")}
+  <g id="syrLab" class="rlab" opacity="0"><text x="110" y="76" text-anchor="end">Syringe</text><path d="M113 72 L128 84"/></g>
+  <text id="rigBanner" x="230" y="210" text-anchor="middle" font-family="var(--font-display)" font-weight="700" font-size="13" fill="var(--crit)"></text>`;
+}
+
+/* animated layer state */
+const FX_STATE = { theta: 0, bubbles: [], drops: [], pour: 0, pourRole: null, bub: [], reflux: [], vapor: [] };
+function capFrac(h) { return h * h * (3 - h) / 4; }       // sphere cap volume fraction, h in radii (0–2)
+function levelY(V) {
+  const f = Math.min(0.98, V / 250); let lo = 0, hi = 2;
+  for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (capFrac(m) < f) lo = m; else hi = m; }
+  return FY + FR - lo * FR;
+}
+function liquidColor(d) {
+  if (volume() <= 0) return ["#efe9d6", 0];
+  let r = 238, g = 233, b = 216, a = 0.85;
+  if (S.Vsolv > 0.5) { r = 226; g = 236; b = 238; a = 0.5; }
+  if (S.added.iso && CHEM[recipe.iso].aromatic) { r = 242; g = 232; b = 180; a = 0.6; }
+  if (S.added.ext) { const k = Math.min(1, (isFinite(d.Mn) ? d.Mn : 4e4) / 40000); r = 244 - 4 * k; g = 236 - 14 * k; b = 196 - 36 * k; a = 0.6 + 0.25 * k; }
+  if (S.urea > 0.2) { const k = Math.min(1, S.urea / 2); r += (240 - r) * k; g += (240 - g) * k; b += (236 - b) * k; a = Math.min(0.95, a + 0.3 * k); }
+  if (S.gelled) { r = 226; g = 208; b = 160; a = 0.97; }
+  return [`rgb(${r | 0},${g | 0},${b | 0})`, a];
+}
+function startPour(role) { FX_STATE.pour = 1; FX_STATE.pourRole = role; }
+function drawRig(dtReal) {
+  const d = derived(), V = volume();
+  // liquid surface with vortex or rod climbing
+  const y = levelY(V);
+  let dip = 0, climb = 0;
+  if (S.rpm > 0 && !S.gelled && V > 0) {
+    if (d.eta > 25 && S.rpm >= 150) climb = Math.min(30, 6 + (d.eta / 25) * (S.rpm / 250) * 5);
+    else dip = Math.min(14, S.rpm / 500 * 16) / (1 + d.eta / 3);
+  }
+  const L = FX - FR - 4, Rr = FX + FR + 4;
+  let path = "";
+  if (V > 0) {
+    if (climb > 0) path = `M${L} ${y} L${FX - 26} ${y} C${FX - 8} ${y} ${FX - 6} ${y - climb} ${FX - 3} ${y - climb} L${FX + 3} ${y - climb} C${FX + 6} ${y - climb} ${FX + 8} ${y} ${FX + 26} ${y} L${Rr} ${y} V${FY + FR + 4} H${L} Z`;
+    else path = `M${L} ${y} C${FX - 30} ${y} ${FX - 14} ${y + dip} ${FX} ${y + dip} C${FX + 14} ${y + dip} ${FX + 30} ${y} ${Rr} ${y} V${FY + FR + 4} H${L} Z`;
+  }
+  const liq = $("liquid"); liq.setAttribute("d", path);
+  const [col, a] = liquidColor(d); liq.setAttribute("fill", col); liq.setAttribute("opacity", a.toFixed(2));
+  // paddle spin (visual rate scaled down so the eye can follow it)
+  const vis = S.gelled ? 0 : (d.eta > 300 ? S.rpm * 0.15 : S.rpm);
+  FX_STATE.theta += vis / 60 * 2 * Math.PI * dtReal * 0.22;
+  $("paddleG").setAttribute("transform", `translate(${FX} 386) scale(${Math.max(0.08, Math.abs(Math.cos(FX_STATE.theta))).toFixed(3)} 1)`);
+  // oil bath and displays
+  const k = Math.max(0, Math.min(1, (S.Tbath - 20) / 130));
+  $("oil").setAttribute("fill", `rgb(${232 - 36 * k | 0},${214 - 104 * k | 0},${150 - 120 * k | 0})`);
+  $("hpT").textContent = `${S.Tbath.toFixed(0)} °C`;
+  $("hpSet").textContent = `SET ${S.Tset}`;
+  $("heatLed").setAttribute("fill", S.Tset > S.Tbath + 0.5 ? "#ff6a3d" : "#553");
+  $("motorRpm").textContent = `${S.gelled ? 0 : S.rpm} rpm`;
+  $("tcT").textContent = `${S.Tint.toFixed(1)} °C`;
+  $("tcT").setAttribute("fill", S.Tint > 110 ? "var(--crit)" : "var(--ink)");
+  // gas line
+  $("gasHose").setAttribute("opacity", S.atm === "air" ? "0.12" : "0.75");
+  $("gasState").textContent = S.atm === "n2" ? "N₂ on · bubbler venting" : S.atm === "vac" ? "vacuum on · ≤ 5 mbar" : "open to air";
+  $("tapN2").setAttribute("fill", S.atm === "n2" ? "var(--s3)" : S.atm === "vac" ? "var(--s1)" : "var(--steel)");
+  $("rigBanner").textContent = S.gelled ? "GELLED" : (d.eta > 300 && S.rpm > 0 ? "Stirrer stalling" : "");
+  // syringe and drops during an addition
+  const syr = $("syringe");
+  if (FX_STATE.pour > 0) {
+    FX_STATE.pour = Math.max(0, FX_STATE.pour - dtReal / 1.8);
+    const p = 1 - FX_STATE.pour;
+    syr.setAttribute("opacity", "1"); $("syrLab").setAttribute("opacity", "1");
+    $("plunger").setAttribute("transform", `translate(0 ${(p * 44).toFixed(1)})`);
+    $("syrFill").setAttribute("y", (110 + p * 44).toFixed(1)); $("syrFill").setAttribute("height", Math.max(0, 48 - p * 44).toFixed(1));
+    if (Math.random() < 0.5) { const tip = rot(236, 306, -NECK); FX_STATE.drops.push({ x: tip[0], y: tip[1], vy: 20 }); }
+  } else { syr.setAttribute("opacity", "0"); $("syrLab").setAttribute("opacity", "0"); }
+  FX_STATE.drops = FX_STATE.drops.filter(dr => { dr.vy += 600 * dtReal; dr.y += dr.vy * dtReal; return dr.y < y; });
+  $("drops").innerHTML = FX_STATE.drops.map(dr => `<circle cx="${dr.x.toFixed(1)}" cy="${dr.y.toFixed(1)}" r="2"/>`).join("");
+  // bubbles: CO2 from water, steam during vacuum drying
+  const rateB = (S.bubbles > 0.0005 ? Math.min(1, S.bubbles * 40) : 0) + (S.vapor > 0.05 && S.Tint > 60 ? Math.min(0.8, S.vapor * 0.6) : 0);
+  if (V > 0 && S.running && Math.random() < rateB) FX_STATE.bub.push({ x: FX - 40 + Math.random() * 80, y: FY + FR - 6, r: 1.5 + Math.random() * 2.5 });
+  const rise = 40 / (1 + d.eta / 5);
+  FX_STATE.bub = FX_STATE.bub.filter(b => { b.y -= rise * dtReal; b.x += (Math.random() - 0.5) * 0.6; return b.y > y + 1; });
+  $("bubbles").innerHTML = FX_STATE.bub.map(b => `<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r.toFixed(1)}" fill="#ffffff" fill-opacity=".55" stroke="var(--glass-stroke)" stroke-width=".6"/>`).join("");
+  // bubbler (N2 flow) and reflux drips
+  if (S.atm === "n2" && Math.random() < 0.06) FX_STATE.bubbler = (FX_STATE.bubbler || []).concat([{ y: 96 }]);
+  FX_STATE.bubbler = (FX_STATE.bubbler || []).filter(b => (b.y -= 30 * dtReal) > 80);
+  $("bubblerB").innerHTML = FX_STATE.bubbler.map(b => `<circle cx="431" cy="${b.y.toFixed(1)}" r="2.6"/>`).join("");
+  const refluxing = S.Vsolv > 0.5 && S.atm !== "vac" && S.Tint >= curSolvent().bp - 0.5;
+  if (refluxing && Math.random() < 0.15) FX_STATE.reflux.push({ y: 130 });
+  FX_STATE.reflux = FX_STATE.reflux.filter(r => (r.y += 60 * dtReal) < 250);
+  $("reflux").innerHTML = FX_STATE.reflux.map(r => `<circle cx="230" cy="${r.y.toFixed(1)}" r="1.8"/>`).join("");
+  if (S.vapor > 0.05 && S.Tint > 60 && Math.random() < 0.2) FX_STATE.vapor.push({ y: 280, x: 230 + (Math.random() - 0.5) * 6 });
+  FX_STATE.vapor = FX_STATE.vapor.filter(v => (v.y -= 70 * dtReal) > 70);
+  $("vaporR").innerHTML = FX_STATE.vapor.map(v => `<circle cx="${v.x.toFixed(1)}" cy="${v.y.toFixed(1)}" r="1.4" opacity=".6"/>`).join("");
+}
+
+/* =====================================================================
+   8. INSTRUMENTS: tiles, FTIR, progress charts
+   ===================================================================== */
+const TILES = [
+  ["tBath", "Bath", "°C"], ["tInt", "Internal", "°C"], ["tConv", "NCO converted", "%"], ["tNco", "NCO content", "wt % of solids"],
+  ["tMn", "Mn", "kg/mol"], ["tXn", "Xn", "repeat units"], ["tEta", "Viscosity", "Pa·s"], ["tH2O", "Water", "ppm in flask"], ["tCO2", "CO₂ released", "mL at 25 °C"]
+];
+function buildTiles() {
+  const el = $("tiles"); el.textContent = "";
+  for (const [id, l, u] of TILES) {
+    const t = document.createElement("div"); t.className = "tile"; t.id = id;
+    t.innerHTML = `<span class="label"></span><span class="v">—</span><span class="u"></span>`;
+    t.querySelector(".label").textContent = l; t.querySelector(".u").textContent = u; el.append(t);
+  }
+}
+function setTile(id, v, state) { const t = $(id); t.querySelector(".v").textContent = v; t.classList.toggle("flag", state === "flag"); t.classList.toggle("alarm", state === "alarm"); }
+function updateTiles() {
+  const d = derived();
+  setTile("tBath", `${S.Tbath.toFixed(1)}`, null);
+  setTile("tInt", `${S.Tint.toFixed(1)}`, S.Tint > 110 ? "alarm" : S.Tint > S.Tbath + 4 ? "flag" : null);
+  setTile("tConv", S.NCOadded ? fmt(d.ncoConv * 100, 1) : "—", null);
+  setTile("tNco", S.NCOadded ? fmt(d.ncoPct, d.ncoPct < 0.1 ? 3 : 2) : "—", null);
+  setTile("tMn", !S.monomers ? "—" : isFinite(d.Mn) ? fmt(d.Mn / 1000, d.Mn < 10000 ? 2 : 1) : "∞ (gel)", isFinite(d.Mn) ? null : "alarm");
+  setTile("tXn", !S.monomers ? "—" : isFinite(d.Xn) ? fmt(d.Xn, d.Xn < 10 ? 1 : 0) : "∞", null);
+  $("tXn").querySelector(".u").textContent = S.monomers ? `repeat units · Đ ≈ ${fmt(d.D, 2)}` : "repeat units";
+  const eta = d.eta;
+  setTile("tEta", !volume() ? "—" : !isFinite(eta) ? "gel" : eta < 1 ? fmt(eta, 3) : fmt(eta, eta < 100 ? 1 : 0), !isFinite(eta) || eta > 300 ? "alarm" : eta > 25 ? "flag" : null);
+  setTile("tH2O", volume() ? fmt(d.ppm, 0) : "—", d.ppm > 300 ? "flag" : null);
+  setTile("tCO2", fmt(S.CO2 * 24.5, 1), S.CO2 > 0.1 ? "flag" : null);
+  $("clock").textContent = hms(S.t);
+  const pill = $("phasePill");
+  const st = curStep();
+  let txt = !S.started ? "Bench idle" : S.finished ? "Done" : S.gelled ? "Gelled" : (st.id === "cat" && S.added.iso) || (st.id === "ext" && S.added.ext) ? "Reacting" : st.id === "dry" ? (S.atm === "vac" ? "Dehydrating" : "Waiting for vacuum") : st.title.split(" ").slice(0, 3).join(" ");
+  pill.className = "pill " + (S.gelled ? "bad" : !S.started ? "" : S.running ? "ok" : "warn");
+  pill.lastChild.textContent = txt + (S.started && !S.running && !S.finished ? " · paused" : "");
+}
+
+/* FTIR */
+const FT = { x0: 44, x1: 548, y0: 16, y1: 222, nu0: 4000, nu1: 600 };
+const BANDS = [
+  { nu: 3450, w: 220, name: "O–H stretch (polyol, water)", tag: "O–H" },
+  { nu: 3320, w: 90, name: "N–H stretch (urethane, urea)", tag: "N–H" },
+  { nu: 2940, w: 50, name: "C–H stretch (CH₂ asym.)", tag: "C–H" },
+  { nu: 2855, w: 35, name: "C–H stretch (CH₂ sym.)" },
+  { nu: 2270, w: 40, name: "N=C=O asymmetric stretch", tag: "NCO" },
+  { nu: 1730, w: 22, name: "C=O stretch, free urethane", tag: "C=O" },
+  { nu: 1703, w: 22, name: "C=O stretch, H-bonded urethane" },
+  { nu: 1640, w: 24, name: "C=O stretch, urea (amide I)", tag: "urea" },
+  { nu: 1597, w: 12, name: "Aromatic C=C ring stretch" },
+  { nu: 1530, w: 22, name: "N–H bend + C–N stretch (amide II)" },
+  { nu: 1450, w: 18, name: "CH₂ scissoring" },
+  { nu: 1370, w: 15, name: "CH₂ wagging" },
+  { nu: 1220, w: 30, name: "C–O stretch, urethane" },
+  { nu: 1105, w: 40, name: "C–O–C stretch, polyether", tag: "C–O–C" },
+  { nu: 815, w: 14, name: "Aromatic C–H out-of-plane (para)" }
+];
+function bandAmps() {
+  const G = Math.max(1e-9, S.OHadded + S.NCOadded + 2 * S.Wadded);
+  const fOH = S.OH / G, fN = S.NCO / G, fU = S.urethane / G, fUr = S.urea / G, fW = S.W / G;
+  const mp = S.mPoly || 1, ether = S.added.polyol ? recipe.mass / mp : 0, isoF = S.added.iso ? calc(recipe).mI / mp : 0;
+  const aro = S.added.iso && CHEM[recipe.iso].aromatic ? 1 : 0;
+  const hb = 0.3 + 0.4 * Math.min(1, derived().Mn / 30000);
+  const any = S.mPoly > 0 ? 1 : 0;
+  return [1.6 * fOH + 3 * fW, 2.4 * fU + 2 * fUr, any * (0.55 * ether + 0.25), any * (0.4 * ether + 0.15), 3.4 * fN, 1.7 * fU * (1 - hb), 1.7 * fU * hb, 2.6 * fUr, aro * 0.9 * isoF,
+    1.3 * fU + 1.0 * fUr, any * 0.25, any * 0.15, 1.1 * fU, 1.3 * ether, aro * 0.7 * isoF];
+}
+function spectrum() {
+  const amps = bandAmps(), pts = [];
+  for (let nu = FT.nu0; nu >= FT.nu1; nu -= 4) {
+    let A = 0.008 + 0.01 * (nu < 1800 ? 1 : 0);
+    for (let i = 0; i < BANDS.length; i++) { const b = BANDS[i], z = (nu - b.nu) / b.w; if (Math.abs(z) < 4) A += amps[i] * Math.exp(-4 * Math.LN2 * z * z); }
+    pts.push([nu, 100 * Math.pow(10, -A)]);
+  }
+  return { pts, amps };
+}
+const ftX = nu => FT.x0 + (FT.nu0 - nu) / (FT.nu0 - FT.nu1) * (FT.x1 - FT.x0);
+const ftY = t => FT.y1 - t / 100 * (FT.y1 - FT.y0);
+let lastSpec = null;
+function drawFTIR() {
+  const { pts, amps } = spectrum(); lastSpec = pts;
+  let ax = "";
+  for (let nu = 4000; nu >= 1000; nu -= 500) ax += `<line class="gridl" x1="${ftX(nu)}" x2="${ftX(nu)}" y1="${FT.y0}" y2="${FT.y1}"/><text x="${ftX(nu)}" y="${FT.y1 + 14}" text-anchor="middle">${nu}</text>`;
+  for (const t of [0, 50, 100]) ax += `<line class="gridl" x1="${FT.x0}" x2="${FT.x1}" y1="${ftY(t)}" y2="${ftY(t)}"/><text x="${FT.x0 - 6}" y="${ftY(t) + 3.5}" text-anchor="end">${t}</text>`;
+  ax += `<text x="${(FT.x0 + FT.x1) / 2}" y="${FT.y1 + 32}" text-anchor="middle">wavenumber / cm⁻¹</text><text x="10" y="${(FT.y0 + FT.y1) / 2}" text-anchor="middle" transform="rotate(-90 10 ${(FT.y0 + FT.y1) / 2})">%T</text>`;
+  const d = pts.map((p, i) => (i ? "L" : "M") + ftX(p[0]).toFixed(1) + " " + ftY(p[1]).toFixed(1)).join("");
+  let tags = "";
+  BANDS.forEach((b, i) => {
+    if (!b.tag || amps[i] < 0.06) return;
+    const tmin = 100 * Math.pow(10, -amps[i]);
+    const yy = Math.max(FT.y0 + 10, ftY(tmin) + 14);
+    tags += `<text x="${ftX(b.nu)}" y="${Math.min(FT.y1 - 4, yy)}" text-anchor="middle" style="font:600 10px var(--font-display);fill:var(--ink-2)">${b.tag}</text>`;
+  });
+  const nco = amps[4] > 0.01;
+  $("ftir").innerHTML = `<g class="ax">${ax}</g>` +
+    (nco ? `<rect x="${ftX(2330)}" y="${FT.y0}" width="${ftX(2210) - ftX(2330)}" height="${FT.y1 - FT.y0}" fill="var(--amber)" opacity=".09"/>` : "") +
+    `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/>${tags}` +
+    `<line id="ftCross" x1="0" x2="0" y1="${FT.y0}" y2="${FT.y1}" stroke="var(--ink-2)" stroke-width="1" opacity="0"/><circle id="ftDot" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" opacity="0"/>` +
+    `<rect id="ftHit" x="${FT.x0}" y="${FT.y0}" width="${FT.x1 - FT.x0}" height="${FT.y1 - FT.y0}" fill="transparent" tabindex="0" aria-label="Hover or use arrow keys to read the spectrum"/>`;
+  wireHover("ftir", "ftHit", "ftirTip", FT, pt => {
+    const nu = Math.round((FT.nu0 - (pt - FT.x0) / (FT.x1 - FT.x0) * (FT.nu0 - FT.nu1)) / 4) * 4;
+    const p = lastSpec.find(q => q[0] === nu) || lastSpec[0];
+    let best = null; for (const b of BANDS) if (Math.abs(b.nu - nu) <= Math.max(25, b.w * 0.6) && (!best || Math.abs(b.nu - nu) < Math.abs(best.nu - nu))) best = b;
+    $("ftCross").setAttribute("x1", ftX(p[0])); $("ftCross").setAttribute("x2", ftX(p[0])); $("ftCross").setAttribute("opacity", ".6");
+    $("ftDot").setAttribute("cx", ftX(p[0])); $("ftDot").setAttribute("cy", ftY(p[1])); $("ftDot").setAttribute("opacity", "1");
+    return { x: ftX(p[0]), y: ftY(p[1]), rows: [[`${p[1].toFixed(1)} %T`, `${p[0]} cm⁻¹`], best ? [best.name, ""] : null].filter(Boolean) };
+  }, () => { $("ftCross").setAttribute("opacity", "0"); $("ftDot").setAttribute("opacity", "0"); });
+}
+
+/* Generic hover/keyboard wiring for an SVG chart. pick(xInViewBox) → {x, y, rows} */
+const HOVER = {};
+function wireHover(svgId, hitId, tipId, box, pick, leave) {
+  const svg = $(svgId), hit = $(hitId), tip = $(tipId);
+  let kx = null;
+  const show = vx => {
+    const r = pick(Math.max(box.x0, Math.min(box.x1, vx)));
+    tip.textContent = "";
+    r.rows.forEach((row, i) => { const div = document.createElement("div"); if (i === 0) { const b = document.createElement("b"); b.textContent = row[0]; div.append(b); if (row[1]) div.append(" · " + row[1]); } else { div.textContent = row[0] + (row[1] ? " " + row[1] : ""); div.style.color = "var(--ink-2)"; } tip.append(div); });
+    tip.hidden = false;
+    const sr = svg.getBoundingClientRect(), scale = sr.width / svg.viewBox.baseVal.width;
+    let left = r.x * scale + 12, top = r.y * scale - 10;
+    if (left + tip.offsetWidth > sr.width) left = r.x * scale - tip.offsetWidth - 12;
+    tip.style.left = Math.max(0, left) + "px"; tip.style.top = Math.max(0, top) + "px";
+  };
+  const toVB = e => { const sr = svg.getBoundingClientRect(); return (e.clientX - sr.left) / sr.width * svg.viewBox.baseVal.width; };
+  hit.addEventListener("pointermove", e => { kx = toVB(e); HOVER[svgId] = kx; show(kx); });
+  hit.addEventListener("pointerleave", () => { delete HOVER[svgId]; tip.hidden = true; leave(); });
+  if (HOVER[svgId] != null) show(HOVER[svgId]);   // charts redraw live; keep an active readout in place
+  hit.addEventListener("focus", () => { kx = kx == null ? (box.x0 + box.x1) / 2 : kx; show(kx); });
+  hit.addEventListener("blur", () => { tip.hidden = true; leave(); });
+  hit.addEventListener("keydown", e => { if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return; e.preventDefault(); kx = (kx == null ? box.x0 : kx) + (e.key === "ArrowRight" ? 6 : -6); show(kx); });
+}
+
+/* Progress: NCO wt % (top) and Mn (bottom) on a shared time axis */
+const TR = { x0: 52, x1: 548, a0: 18, a1: 122, b0: 164, b1: 268 };
+function niceMax(v) { if (v <= 0) return 1; const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e; }
+function drawTrend() {
+  const H = S.hist.length ? S.hist : [{ t: 0, nco: 0, Mn: 0 }];
+  const tRaw = Math.max(60, S.t / 60), tStep = [10, 15, 20, 30, 60, 90, 120, 180, 240].find(v => tRaw / v <= 7) || 360;
+  const tMax = Math.ceil(tRaw / tStep) * tStep, nT = tMax / tStep;
+  const ncoMax = niceMax(Math.max(1, ...H.map(h => h.nco)) * 1.05), mnMax = niceMax(Math.max(1, ...H.map(h => h.Mn / 1000)) * 1.05);
+  const X = t => TR.x0 + t / 60 / tMax * (TR.x1 - TR.x0);
+  const YA = v => TR.a1 - v / ncoMax * (TR.a1 - TR.a0), YB = v => TR.b1 - v / mnMax * (TR.b1 - TR.b0);
+  let g = "";
+  for (let i = 0; i <= nT; i++) { const t = i * tStep, x = TR.x0 + i / nT * (TR.x1 - TR.x0); g += `<line class="gridl" x1="${x}" x2="${x}" y1="${TR.a0}" y2="${TR.a1}"/><line class="gridl" x1="${x}" x2="${x}" y1="${TR.b0}" y2="${TR.b1}"/><text x="${x}" y="${TR.b1 + 14}" text-anchor="middle">${Math.round(t)}</text>`; }
+  for (const f of [0, 0.5, 1]) {
+    g += `<line class="gridl" x1="${TR.x0}" x2="${TR.x1}" y1="${YA(ncoMax * f)}" y2="${YA(ncoMax * f)}"/><text x="${TR.x0 - 6}" y="${YA(ncoMax * f) + 3.5}" text-anchor="end">${+(ncoMax * f).toFixed(2)}</text>`;
+    g += `<line class="gridl" x1="${TR.x0}" x2="${TR.x1}" y1="${YB(mnMax * f)}" y2="${YB(mnMax * f)}"/><text x="${TR.x0 - 6}" y="${YB(mnMax * f) + 3.5}" text-anchor="end">${+(mnMax * f).toFixed(1)}</text>`;
+  }
+  g += `<text x="${TR.x0}" y="${TR.a0 - 6}" style="font:600 10.5px var(--font-display);fill:var(--ink-2)">NCO content, wt % of solids</text>`;
+  g += `<text x="${TR.x0}" y="${TR.b0 - 6}" style="font:600 10.5px var(--font-display);fill:var(--ink-2)">Mn, kg/mol</text>`;
+  g += `<text x="${(TR.x0 + TR.x1) / 2}" y="${TR.b1 + 30}" text-anchor="middle">time / min</text>`;
+  let ev = "", lastX = -1e9, row = 0;
+  for (const e of S.events) {
+    if (e.label === "Start") continue; const x = X(e.t); if (x > TR.x1) continue;
+    row = x - lastX < 54 ? (row + 1) % 4 : 0; lastX = x;
+    ev += `<line x1="${x}" x2="${x}" y1="${TR.a0}" y2="${TR.b1}" stroke="var(--muted)" stroke-dasharray="2 3"/><text x="${x + 3}" y="${TR.a0 + 9 + row * 11}" style="font:9.5px var(--font-mono);fill:var(--muted)">${e.label}</text>`;
+  }
+  const la = H.map((h, i) => (i ? "L" : "M") + X(h.t).toFixed(1) + " " + YA(h.nco).toFixed(1)).join("");
+  const lb = H.map((h, i) => (i ? "L" : "M") + X(h.t).toFixed(1) + " " + YB(h.Mn / 1000).toFixed(1)).join("");
+  const last = H[H.length - 1];
+  $("trend").innerHTML = `<g class="ax">${g}</g>${ev}<path d="${la}" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/><path d="${lb}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>` +
+    (S.hist.length ? `<circle cx="${X(last.t)}" cy="${YA(last.nco)}" r="4" fill="var(--amber)" stroke="var(--surface)" stroke-width="2"/><circle cx="${X(last.t)}" cy="${YB(last.Mn / 1000)}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>` : "") +
+    `<line id="trCross" y1="${TR.a0}" y2="${TR.b1}" stroke="var(--ink-2)" opacity="0"/><rect id="trHit" x="${TR.x0}" y="${TR.a0}" width="${TR.x1 - TR.x0}" height="${TR.b1 - TR.a0}" fill="transparent" tabindex="0" aria-label="Hover or use arrow keys to read values"/>`;
+  wireHover("trend", "trHit", "trendTip", { x0: TR.x0, x1: TR.x1 }, vx => {
+    const t = (vx - TR.x0) / (TR.x1 - TR.x0) * tMax * 60;
+    let best = H[0]; for (const h of H) if (Math.abs(h.t - t) < Math.abs(best.t - t)) best = h;
+    const x = X(best.t); $("trCross").setAttribute("x1", x); $("trCross").setAttribute("x2", x); $("trCross").setAttribute("opacity", ".5");
+    return { x, y: YA(best.nco), rows: [[`${fmt(best.nco, 2)} wt % NCO`, `${fmt(best.Mn / 1000, 1)} kg/mol`], [`at ${fmt(best.t / 60, 0)} min`, ""]] };
+  }, () => $("trCross").setAttribute("opacity", "0"));
+}
+
+/* =====================================================================
+   9. MOLECULAR VIEW (canvas)
+   ===================================================================== */
+const MV = { beads: [], links: [], parent: [], scale: 2, co2: [], colors: {}, frame: 0 };
+function mvReset() {
+  const c = calc(recipe);
+  MV.beads = []; MV.links = []; MV.parent = []; MV.co2 = [];
+  MV.scale = 80 / Math.max(1, c.nP + c.nI + c.nE);
+  MV.counts = { P: 0, I: 0, E: 0 };
+  $("molNote").textContent = `Each bead is about ${fmt(1 / MV.scale, 2)} mmol of monomer. Links appear as urethane (or urea) bonds form in the flask.`;
+  renderMolLegend();
+}
+function mvFind(i) { while (MV.parent[i] !== i) { MV.parent[i] = MV.parent[MV.parent[i]]; i = MV.parent[i]; } return i; }
+function mvAdd(type, n) {
+  for (let k = 0; k < n; k++) {
+    MV.beads.push({ type, x: 30 + Math.random() * 1140, y: 30 + Math.random() * 240, vx: 0, vy: 0, ends: 2, deg: 0 });
+    MV.parent.push(MV.beads.length - 1);
+  }
+}
+function mvSync() {
+  const c = calc(recipe);
+  const want = { P: S.added.polyol ? Math.round(c.nP * MV.scale) : 0, I: S.added.iso ? Math.round(c.nI * MV.scale) : 0, E: S.added.ext ? Math.round(c.nE * MV.scale) : 0 };
+  for (const t of ["P", "I", "E"]) if (want[t] > MV.counts[t]) { mvAdd(t, want[t] - MV.counts[t]); MV.counts[t] = want[t]; }
+  // free water beads follow unreacted water
+  const freeW = MV.beads.filter(b => b.type === "W" && b.deg === 0).length, wantW = Math.round(S.W * MV.scale);
+  if (wantW > freeW) mvAdd("W", wantW - freeW);
+  else if (wantW < freeW && !S.added.iso) {
+    let drop = freeW - wantW;
+    const keep = [], map = [];
+    MV.beads.forEach((b, i) => { if (drop > 0 && b.type === "W" && b.deg === 0) { drop--; map[i] = -1; } else { map[i] = keep.length; keep.push(b); } });
+    MV.links = MV.links.map(l => [map[l[0]], map[l[1]]]); MV.beads = keep; MV.parent = keep.map((_, i) => i);
+    MV.links.forEach(l => { MV.parent[mvFind(l[0])] = mvFind(l[1]); });
+  }
+  // grow links toward the flask's link count
+  const target = Math.round(S.links * MV.scale);
+  let tries = 0;
+  while (MV.links.length < target && tries++ < 40) {
+    const nco = MV.beads.map((b, i) => i).filter(i => MV.beads[i].type === "I" && MV.beads[i].ends > 0);
+    const wantWaterLinks = Math.round((S.Wadded - S.W) * 2 * MV.scale), haveWaterLinks = MV.links.filter(l => MV.beads[l[1]].type === "W").length;
+    const useW = haveWaterLinks < wantWaterLinks;
+    if (useW && !MV.beads.some(b => b.type === "W" && b.ends > 0)) mvAdd("W", 1);
+    const oh = MV.beads.map((b, i) => i).filter(i => { const b = MV.beads[i]; return b.ends > 0 && (useW ? b.type === "W" : (b.type === "P" || b.type === "E")); });
+    if (!nco.length || !oh.length) break;
+    let made = false;
+    for (let a = 0; a < 12 && !made; a++) {
+      const i = nco[Math.random() * nco.length | 0], j = oh[Math.random() * oh.length | 0];
+      if (mvFind(i) === mvFind(j)) continue;
+      MV.links.push([i, j]); MV.beads[i].ends--; MV.beads[j].ends--; MV.beads[i].deg++; MV.beads[j].deg++;
+      MV.parent[mvFind(i)] = mvFind(j); made = true;
+      if (MV.beads[j].type === "W") MV.co2.push({ x: MV.beads[j].x, y: MV.beads[j].y, life: 1 });
+    }
+    if (!made) break;
+  }
+}
+function mvColors() {
+  const cs = getComputedStyle(document.documentElement);
+  for (const k of ["s1", "s2", "s3", "ink-2", "muted", "surface", "surface-2", "glass-stroke"]) MV.colors[k] = cs.getPropertyValue("--" + k).trim();
+}
+function drawMol(dt) {
+  const cv = $("molCanvas"), ctx = cv.getContext("2d");
+  if (MV.frame++ % 60 === 0) mvColors();
+  if (S.started) mvSync();
+  const d = derived();
+  const mob = S.gelled ? 0.05 : Math.min(1.2, (0.6 + (S.Tint - 20) / 100) / (1 + Math.log10(1 + (isFinite(d.eta) ? d.eta : 1e4) * 20) * 0.4));
+  const B = MV.beads, n = B.length;
+  for (const b of B) { b.vx += (Math.random() - 0.5) * 60 * mob * dt * 10; b.vy += (Math.random() - 0.5) * 60 * mob * dt * 10; }
+  for (const [i, j] of MV.links) {
+    const a = B[i], b = B[j], dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 1, f = (dist - 18) * 0.08;
+    a.vx += f * dx / dist; a.vy += f * dy / dist; b.vx -= f * dx / dist; b.vy -= f * dy / dist;
+  }
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    const a = B[i], b = B[j], dx = b.x - a.x, dy = b.y - a.y, d2 = dx * dx + dy * dy;
+    if (d2 < 400 && d2 > 0.01) { const dist = Math.sqrt(d2), f = (20 - dist) * 0.04; a.vx -= f * dx / dist; a.vy -= f * dy / dist; b.vx += f * dx / dist; b.vy += f * dy / dist; }
+  }
+  for (const b of B) {
+    b.vx *= 0.82; b.vy *= 0.82; b.x += b.vx; b.y += b.vy;
+    if (b.x < 12) { b.x = 12; b.vx = Math.abs(b.vx); } if (b.x > 1188) { b.x = 1188; b.vx = -Math.abs(b.vx); }
+    if (b.y < 12) { b.y = 12; b.vy = Math.abs(b.vy); } if (b.y > 288) { b.y = 288; b.vy = -Math.abs(b.vy); }
+  }
+  ctx.clearRect(0, 0, 1200, 300);
+  const C = MV.colors;
+  if (!n) {
+    ctx.fillStyle = C.muted || "#888"; ctx.font = "15px " + getComputedStyle(document.body).fontFamily; ctx.textAlign = "center";
+    ctx.fillText("Empty flask. Beads appear as you add the polyol, diisocyanate and extender.", 600, 154);
+    return;
+  }
+  ctx.strokeStyle = C["ink-2"]; ctx.lineWidth = 2; ctx.beginPath();
+  for (const [i, j] of MV.links) { ctx.moveTo(B[i].x, B[i].y); ctx.lineTo(B[j].x, B[j].y); }
+  ctx.stroke();
+  for (const b of B) {
+    ctx.beginPath();
+    if (b.type === "P") { ctx.fillStyle = C.s1; ctx.arc(b.x, b.y, 8, 0, 7); ctx.fill(); }
+    else if (b.type === "I") { ctx.fillStyle = C.s2; ctx.roundRect ? ctx.roundRect(b.x - 6, b.y - 6, 12, 12, 2) : ctx.rect(b.x - 6, b.y - 6, 12, 12); ctx.fill(); }
+    else if (b.type === "E") { ctx.fillStyle = C.s3; ctx.moveTo(b.x, b.y - 6.5); ctx.lineTo(b.x + 6.5, b.y); ctx.lineTo(b.x, b.y + 6.5); ctx.lineTo(b.x - 6.5, b.y); ctx.closePath(); ctx.fill(); }
+    else { ctx.strokeStyle = C.muted; ctx.lineWidth = 2; ctx.arc(b.x, b.y, 4, 0, 7); ctx.stroke(); }
+    ctx.strokeStyle = C["surface-2"]; ctx.lineWidth = 2; if (b.type !== "W") ctx.stroke();
+  }
+  MV.co2 = MV.co2.filter(c => (c.life -= dt * 0.5) > 0);
+  ctx.strokeStyle = C.muted; ctx.lineWidth = 1.2;
+  for (const c of MV.co2) { c.y -= 40 * dt; ctx.globalAlpha = c.life; ctx.beginPath(); ctx.arc(c.x, c.y, 5, 0, 7); ctx.stroke(); ctx.font = "10px monospace"; ctx.fillStyle = C.muted; ctx.fillText("CO₂", c.x + 7, c.y + 3); }
+  ctx.globalAlpha = 1;
+  // chain statistics, from the beads
+  const sizes = {}; for (let i = 0; i < n; i++) { const r = mvFind(i); sizes[r] = (sizes[r] || 0) + 1; }
+  const big = Math.max(...Object.values(sizes));
+  ctx.fillStyle = C["ink-2"]; ctx.font = "13px " + getComputedStyle(document.body).fontFamily; ctx.textAlign = "right";
+  ctx.fillText(`${Object.keys(sizes).length} molecules · largest has ${big} beads`, 1188, 294);
+}
+function renderMolLegend() {
+  const I = CHEM[recipe.iso].short, P = CHEM[recipe.polyol].short;
+  const items = [
+    [`<svg width="14" height="14"><circle cx="7" cy="7" r="6" fill="var(--s1)"/></svg>`, `Polyol (${P})`],
+    [`<svg width="14" height="14"><rect x="1.5" y="1.5" width="11" height="11" rx="2" fill="var(--s2)"/></svg>`, `Diisocyanate (${I})`],
+    [`<svg width="14" height="14"><path d="M7 1L13 7 7 13 1 7z" fill="var(--s3)"/></svg>`, "Chain extender (BDO)"],
+    [`<svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="none" stroke="var(--muted)" stroke-width="2"/></svg>`, "Water"],
+    [`<svg width="18" height="14"><line x1="1" y1="7" x2="17" y2="7" stroke="var(--ink-2)" stroke-width="2"/></svg>`, "Urethane or urea link"]
+  ];
+  const el = $("molLegend"); el.textContent = "";
+  for (const [sw, t] of items) { const s = document.createElement("span"); s.innerHTML = sw; s.append(t); el.append(s); }
+}
+
+/* =====================================================================
+   10. MECHANISM
+   ===================================================================== */
+const MECH = { tab: "cat", k: 0 };
+function nest(svgStr, x, y, w, h) { return svgStr.replace("<svg ", `<svg x="${x}" y="${y}" width="${w}" height="${h}" `); }
+function txt(x, y, s, o) { o = o || {}; return `<text x="${x}" y="${y}" text-anchor="${o.a || "middle"}" style="font:${o.w || 500} ${o.s || 11.5}px ${o.f || "var(--font-body)"};fill:${o.c || "var(--ink)"}">${s}</text>`; }
+function arrowDefs() { return `<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="var(--ink-2)"/></marker><marker id="ahA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="var(--accent)"/></marker></defs>`; }
+function cycleSVG(center, nodes, k, ins, outs) {
+  const cx = 210, cy = 168, R = 112, n = nodes.length;
+  let s = arrowDefs() + `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--line)" stroke-width="1.5"/>`;
+  s += txt(cx, cy - 4, center[0], { w: 700, s: 14, f: "var(--font-display)" }) + txt(cx, cy + 14, center[1], { s: 10.5, c: "var(--muted)" });
+  for (let i = 0; i < n; i++) {
+    const a0 = (-90 + i * 360 / n + 16) * Math.PI / 180, a1 = (-90 + (i + 1) * 360 / n - 16) * Math.PI / 180;
+    s += `<path d="M${cx + R * Math.cos(a0)} ${cy + R * Math.sin(a0)} A${R} ${R} 0 0 1 ${cx + R * Math.cos(a1)} ${cy + R * Math.sin(a1)}" fill="none" stroke="${i === k ? "var(--accent)" : "var(--ink-2)"}" stroke-width="${i === k ? 2.5 : 1.4}" marker-end="url(#${i === k ? "ahA" : "ah"})"/>`;
+  }
+  nodes.forEach((nd, i) => {
+    const a = (-90 + i * 360 / n) * Math.PI / 180, x = cx + R * Math.cos(a), y = cy + R * Math.sin(a), on = i === k || i === (k + 1) % n;
+    s += `<rect x="${x - 66}" y="${y - 21}" width="132" height="42" rx="8" fill="${i === (k + 1) % n ? "var(--accent-soft)" : "var(--surface)"}" stroke="${on ? "var(--accent)" : "var(--line)"}" stroke-width="${on ? 1.6 : 1}"/>`;
+    s += txt(x, y - 4, nd[0], { w: 600, s: 11 }) + txt(x, y + 11, nd[1], { s: 10, c: "var(--ink-2)", f: "var(--font-mono)" });
+  });
+  ins.forEach((t, i) => { s += txt(388, 40 + i * 18, "+ " + t, { a: "start", s: 11, f: "var(--font-mono)", c: "var(--ink-2)" }); });
+  s += txt(388, 26, "IN", { a: "start", s: 9.5, w: 600, c: "var(--muted)", f: "var(--font-display)" });
+  s += txt(388, 110, "OUT", { a: "start", s: 9.5, w: 600, c: "var(--muted)", f: "var(--font-display)" });
+  outs.forEach((t, i) => { s += txt(388, 124 + i * 18, "→ " + t, { a: "start", s: 11, f: "var(--font-mono)", c: "var(--ink-2)" }); });
+  s += nest(molSVG(MOL.urethane(), { label: "Urethane linkage" }), 392, 170, 200, 110) + txt(492, 296, "urethane (carbamate) linkage", { s: 10.5, c: "var(--muted)" });
+  return s;
+}
+function renderMech() {
+  const svg = $("mechSvg"), tx = $("mechText"), cat = recipe.cat, C = CHEM[cat];
+  let s = "", steps = [], intro = "";
+  if (MECH.tab === "cat") {
+    if (C.mech === "lewis") {
+      const M = cat === "bi" ? "Bi" : "Sn", L = cat === "bi" ? "(RCOO)₂Bi" : "Bu₂Sn(OOCR)";
+      const nodes = [["Catalyst", cat === "bi" ? "Bi(OOCR)₃" : "Bu₂Sn(OOCR)₂"], ["Metal alkoxide", `${L}–OR′`], ["NCO coordinated", `${M}···O=C=N–R`], ["Metal carbamate", `${M}–N(R)–C(=O)OR′`]];
+      steps = ["Alcoholysis of one carboxylate ligand gives a metal alkoxide and releases a carboxylic acid.", "The isocyanate binds the Lewis-acidic metal through N or O, which makes its central carbon more electrophilic.", "The alkoxide migrates onto the NCO carbon, forming a metal carbamate (an insertion into the N=C bond).", "A second alcohol protonates the carbamate nitrogen. The urethane leaves and the metal alkoxide is regenerated."];
+      intro = `${C.short} is a Lewis acid. It strongly favours the NCO + OH (gelling) reaction over NCO + water, which is why organotin and bismuth catalysts suit elastomers and coatings.`;
+      s = cycleSVG([cat === "bi" ? "Bi(III)" : "Sn(IV)", "Lewis-acid cycle"], nodes, MECH.k, ["R′–OH", "R–N=C=O"], ["R–NH–C(=O)–OR′"]);
+    } else if (C.mech === "base") {
+      const nodes = [["Free amine", "N(CH₂CH₂)₃N"], ["H-bonded alcohol", "≡N···H–OR′"], ["Attack on NCO", "R′O(δ−)→C(=O)=NR"], ["Proton transfer", "≡N–H⁺ → N⁻ of urethane"]];
+      steps = ["DABCO's unhindered bridgehead nitrogens are strong, accessible bases.", "The amine hydrogen-bonds to the alcohol, pulling electron density into the oxygen.", "The activated oxygen attacks the electrophilic NCO carbon.", "The proton moves to the nitrogen, the urethane forms and the amine is released."];
+      intro = "DABCO is a nucleophilic tertiary amine. It activates water just as well as alcohols, so it speeds up the blowing reaction (NCO + H₂O → CO₂). Foam makers pair it with a tin catalyst to balance gelling and blowing.";
+      s = cycleSVG(["DABCO", "general-base cycle"], nodes, MECH.k, ["R′–OH", "R–N=C=O"], ["R–NH–C(=O)–OR′"]);
+    } else {
+      const nodes = [["Alcohol dimer", "(R′OH)₂"], ["Six-ring TS", "R′OH·HOR′·NCO"], ["Concerted addition", "O–C bond, H to N"], ["Urethane catalyses", "autocatalysis"]];
+      steps = ["Alcohols self-associate by hydrogen bonding.", "A second alcohol (or a urethane already formed) shuttles the proton in a cyclic transition state.", "O–C bond formation and H transfer to nitrogen happen together.", "The urethane product is itself a weak catalyst, so the uncatalysed rate rises slowly as the reaction proceeds."];
+      intro = "Without a catalyst, aromatic isocyanates still react at a useful rate at 80 °C. Aliphatic ones (HDI, IPDI) are roughly 30–50 times slower and are rarely used uncatalysed.";
+      s = cycleSVG(["Uncatalysed", "alcohol-assisted"], nodes, MECH.k, ["R′–OH (×2)", "R–N=C=O"], ["R–NH–C(=O)–OR′"]);
+    }
+  } else if (MECH.tab === "water") {
+    s = arrowDefs();
+    const rows = [["R–N=C=O  +  H₂O", "R–NH–COOH", "carbamic acid (unstable)"], ["R–NH–COOH", "R–NH₂  +  CO₂↑", "decarboxylation: bubbles"], ["R–NH₂  +  O=C=N–R", "R–NH–C(=O)–NH–R", "urea: fast, no catalyst needed"]];
+    rows.forEach((r, i) => {
+      const y = 50 + i * 62, on = i === MECH.k % 3;
+      s += `<rect x="12" y="${y - 24}" width="596" height="46" rx="8" fill="${on ? "var(--accent-soft)" : "transparent"}" stroke="${on ? "var(--accent)" : "var(--line)"}"/>`;
+      s += txt(150, y + 4, r[0], { f: "var(--font-mono)", s: 12.5 }) + `<line x1="262" y1="${y}" x2="318" y2="${y}" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#ah)"/>` + txt(430, y + 4, r[1], { f: "var(--font-mono)", s: 12.5 }) + txt(430, y + 18, r[2], { s: 10, c: "var(--muted)" });
+    });
+    s += nest(molSVG(MOL.urea(), { label: "Urea linkage" }), 210, 228, 200, 90);
+    const lost = 2 * (S.Wadded - S.W);
+    steps = ["Water adds to NCO to give a carbamic acid.", "The carbamic acid loses CO₂ at once, leaving a primary amine.", "The amine reacts with another NCO about 100–1000 times faster than an alcohol, giving a urea."];
+    intro = `Each water molecule destroys <b>two</b> NCO groups. That shifts the stoichiometric ratio r and caps the molecular weight. In your flask so far: <b>${fmt(S.Wadded - S.W, 3)} mmol</b> water reacted, <b>${fmt(lost, 3)} mmol</b> NCO lost, <b>${fmt(S.CO2 * 24.5, 1)} mL</b> CO₂ released.`;
+  } else if (MECH.tab === "allo") {
+    s = arrowDefs();
+    s += txt(310, 34, "R–NH–C(=O)–OR′  +  R–N=C=O", { f: "var(--font-mono)", s: 13 });
+    s += `<line x1="310" y1="48" x2="310" y2="92" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#ah)"/>` + txt(322, 74, "> 110 °C, slow; reverses above ~150 °C", { a: "start", s: 10.5, c: "var(--muted)" });
+    s += txt(310, 118, "R′O–C(=O)–N(R)–C(=O)–NH–R", { f: "var(--font-mono)", s: 13, w: 600 }) + txt(310, 136, "allophanate: a branch point on the urethane nitrogen", { s: 10.5, c: "var(--muted)" });
+    // branching sketch
+    const y0 = 220;
+    s += `<path d="M60 ${y0} H560" stroke="var(--s1)" stroke-width="3" fill="none"/><path d="M200 ${y0} V${y0 - 52} M200 ${y0 - 52} H120 M200 ${y0 - 52} H300" stroke="var(--s1)" stroke-width="3" fill="none"/>`;
+    s += `<path d="M420 ${y0} V${y0 + 50} M420 ${y0 + 50} H340 M420 ${y0 + 50} H520" stroke="var(--s1)" stroke-width="3" fill="none"/>`;
+    for (const [x, y] of [[200, y0], [420, y0]]) s += `<circle cx="${x}" cy="${y}" r="7" fill="var(--s2)" stroke="var(--surface)" stroke-width="2"/>`;
+    s += txt(310, y0 + 92, "Branch points connect chains. More than about one per chain gives an insoluble network (gel).", { s: 11, c: "var(--ink-2)" });
+    steps = ["Above about 110 °C, excess NCO adds to the N–H of a urethane.", "The product, an allophanate, joins three chain ends: a branch point.", "Urea N–H reacts the same way to give biuret.", "Once branches outnumber chains the solution gels and the stirrer stalls."];
+    intro = `Keep the reaction at or below 80–90 °C and keep the NCO index close to 1.0. In your flask: <b>${fmt(S.allo, 4)} mmol</b> allophanate${S.gelled ? ", and the batch has gelled" : ""}.`;
+  } else {
+    s = "";
+    const hard = calc(recipe).hard;
+    // two domains of stacked hard segments with soft coils between them
+    let coils = "";
+    const coil = (x1, y1, x2, y2, k) => { let d = `M${x1} ${y1}`; const n = 7; for (let i = 1; i <= n; i++) { const t = i / n, x = x1 + (x2 - x1) * t, y = y1 + (y2 - y1) * t + (i % 2 ? -1 : 1) * (12 + k * 3); d += ` Q${x - (x2 - x1) / n / 2} ${y + (i % 2 ? -10 : 10)} ${x} ${y}`; } return `<path d="${d}" fill="none" stroke="var(--s1)" stroke-width="2.2"/>`; };
+    const doms = [[120, 80], [470, 110], [300, 240]];
+    doms.forEach(([x, y]) => { s += `<rect x="${x - 54}" y="${y - 38}" width="108" height="76" rx="14" fill="var(--amber-soft)" stroke="var(--amber)" stroke-dasharray="4 3"/>`; for (let i = 0; i < 4; i++) s += `<rect x="${x - 38}" y="${y - 26 + i * 15}" width="76" height="7" rx="2" fill="var(--s2)"/>`; for (let i = 0; i < 3; i++) s += `<line x1="${x - 20 + i * 20}" y1="${y - 18}" x2="${x - 20 + i * 20}" y2="${y + 26}" stroke="var(--ink-2)" stroke-dasharray="1.5 2.5"/>`; });
+    coils += coil(158, 70, 432, 104, 0) + coil(150, 102, 262, 226, 1) + coil(440, 130, 340, 226, 2) + coil(82, 98, 30, 200, 1) + coil(508, 96, 600, 40, 0) + coil(346, 258, 580, 290, 1);
+    s = coils + s + txt(120, 140, "hard domain", { s: 10.5, c: "var(--muted)" }) + txt(470, 170, "hard domain", { s: 10.5, c: "var(--muted)" }) + txt(300, 300, "hard domain", { s: 10.5, c: "var(--muted)" }) + txt(80, 250, "soft segment", { s: 10.5, c: "var(--muted)" });
+    steps = ["Soft segments (the polyether) are above their Tg at room temperature, so they are rubbery and give stretch.", `Hard segments (${CHEM[recipe.iso].short} + BDO urethanes) stack and hydrogen-bond into domains that act as physical crosslinks.`, "Heating above the hard-domain melting point dissolves the domains, which is why TPU can be melt-processed and re-formed.", "More hard segment means a stiffer, harder polymer with a higher Shore hardness."];
+    intro = `Your recipe has <b>${fmt(hard, 1)} wt %</b> hard segment. Around 30–40 % gives a soft elastomer; 50–60 % gives a hard, tough grade.`;
+  }
+  svg.innerHTML = s;
+  tx.innerHTML = `<p>${intro}</p><ol>${steps.map((t, i) => `<li class="${i === MECH.k % steps.length ? "on" : ""}">${t}</li>`).join("")}</ol>` +
+    (MECH.tab !== "morph" ? `<div class="step-actions"><button type="button" class="btn small" id="mechPrev">Previous</button><button type="button" class="btn small primary" id="mechNext">Next step</button></div>` : "");
+  const nx = $("mechNext"), pv = $("mechPrev"), N = steps.length;
+  if (nx) nx.onclick = () => { MECH.k = (MECH.k + 1) % N; renderMech(); };
+  if (pv) pv.onclick = () => { MECH.k = (MECH.k - 1 + N) % N; renderMech(); };
+}
+
+/* =====================================================================
+   11. CONTROLS, MAIN LOOP, INIT
+   ===================================================================== */
+function syncControls() {
+  $("ctlTemp").value = S.Tset; $("outTemp").textContent = `${S.Tset} °C`;
+  $("ctlStir").value = S.rpm; $("outStir").textContent = `${S.rpm} rpm`;
+  $("ctlStir").disabled = S.gelled;
+  document.querySelectorAll("#ctlAtm button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.atm === S.atm)));
+  $("btnPlay").textContent = S.running ? "Pause clock" : "Run clock";
+  $("btnPlay").setAttribute("aria-pressed", String(S.running));
+  $("btnPlay").disabled = !S.started || S.finished;
+  $("btnDilute").disabled = !S.started || !S.added.solvent || S.finished;
+}
+function updateAll() { updateTiles(); drawFTIR(); drawTrend(); }
+function resetBench() {
+  S = freshState(); S.speed = +$("selSpeed").value;
+  FX_STATE.bub = []; FX_STATE.drops = []; FX_STATE.pour = 0; FX_STATE.reflux = []; FX_STATE.vapor = [];
+  $("result").hidden = true; $("result").textContent = "";
+  lockRecipe(false); mvReset(); syncControls(); renderSteps(); updateAll(); renderMech();
+  say("Pick a recipe, then start with step 1 of the procedure.", "");
+}
+function readRecipe(changed) {
+  const num = (id, lo, hi, def) => { const v = parseFloat($(id).value); const c = isFinite(v) ? Math.min(hi, Math.max(lo, v)) : def; return c; };
+  recipe.iso = $("selIso").value; recipe.polyol = $("selPolyol").value; recipe.solv = $("selSolv").value; recipe.dry = $("selDry").value;
+  if (changed === "selCat") { recipe.cat = $("selCat").value; $("inCat").value = CHEM[recipe.cat].load; }
+  recipe.cat = $("selCat").value;
+  recipe.mass = num("inMass", 2, 50, 10); recipe.ratio = num("inRatio", 1.5, 5, 2); recipe.index = num("inIndex", 0.9, 1.15, 1.02);
+  recipe.catLoad = num("inCat", 0, 0.5, CHEM[recipe.cat].load); recipe.solids = num("inSolids", 15, 60, 25);
+  $("inCat").disabled = recipe.cat === "none";
+  renderRecipe(); renderSteps(); mvReset(); renderMech();
+}
+
+let lastT = performance.now(), slowAcc = 0, chartAcc = 0;
+function tick(now) {
+  const dtReal = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+  if (S.running && S.started && !S.finished) advance(dtReal * S.speed);
+  drawRig(dtReal);
+  drawMol(dtReal);
+  slowAcc += dtReal; chartAcc += dtReal;
+  if (slowAcc > 0.2) { slowAcc = 0; updateTiles(); updateStepCard(); }
+  if (chartAcc > 0.6) { chartAcc = 0; drawFTIR(); drawTrend(); if (MECH.tab !== "cat" && MECH.tab !== "morph") renderMechTextOnly(); }
+  requestAnimationFrame(tick);
+}
+function renderMechTextOnly() { const p = $("mechText").querySelector("p"); if (!p) return; const k = MECH.k; renderMech(); MECH.k = k; }
+
+function wire() {
+  ["selIso", "selPolyol", "selCat", "selSolv", "selDry", "inMass", "inRatio", "inIndex", "inCat", "inSolids"].forEach(id => $(id).addEventListener("change", () => readRecipe(id)));
+  $("ctlTemp").addEventListener("input", e => { S.Tset = +e.target.value; $("outTemp").textContent = `${S.Tset} °C`; if (S.Tset > 110 && S.added.iso) say("Above about 110 °C excess NCO starts adding to urethane N–H (allophanate). Branches build up and the batch can gel.", "warn"); });
+  $("ctlStir").addEventListener("input", e => { S.rpm = +e.target.value; $("outStir").textContent = `${S.rpm} rpm`; });
+  document.querySelectorAll("#ctlAtm button").forEach(b => b.addEventListener("click", () => { if (!S.started && b.dataset.atm !== "air") { say("Assemble the glassware first (step 1).", "warn"); return; } setAtm(b.dataset.atm); updateStepCard(); }));
+  $("btnDilute").addEventListener("click", dilute);
+  $("btnPlay").addEventListener("click", () => { S.running = !S.running; syncControls(); });
+  $("selSpeed").addEventListener("change", e => { S.speed = +e.target.value; });
+  $("chkLabels").addEventListener("change", e => $("rigSvg").classList.toggle("nolabels", !e.target.checked));
+  let armed = 0;
+  $("btnReset").addEventListener("click", e => {
+    if (!S.started || Date.now() - armed < 3000) { armed = 0; e.target.textContent = "Reset bench"; resetBench(); return; }
+    armed = Date.now(); e.target.textContent = "Click again to reset";
+    setTimeout(() => { if (armed && Date.now() - armed >= 2900) { armed = 0; e.target.textContent = "Reset bench"; } }, 3000);
+  });
+  $("shelf").addEventListener("click", e => { const b = e.target.closest("[data-add]"); if (b) doAdd(b.dataset.add); });
+  document.querySelectorAll("#mechTabs button").forEach(b => b.addEventListener("click", () => {
+    MECH.tab = b.dataset.tab; MECH.k = 0;
+    document.querySelectorAll("#mechTabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+    renderMech();
+  }));
+}
+
+buildRig(); buildTiles(); renderReference(); wire();
+S = freshState();
+readRecipe();
+resetBench();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
