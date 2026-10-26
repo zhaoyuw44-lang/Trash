@@ -1,0 +1,1373 @@
+<meta charset="utf-8">
+<title>序贯诊断论文导读</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+/* Layout: a case-record reading column (max 900px) under a sticky section index; the logic chain is a vertical spine of clickable nodes, and each later section is the evidence one node points to. */
+:root{
+  --paper:#F3F5F8; --surface:#FFFFFF; --sunk:#E9EDF2; --ink:#17202B; --muted:#55606F; --rule:#D5DBE3;
+  --dxo:#1D62A1; --dxo-soft:#E2EDF8; --gate:#8A1C3D; --gate-soft:#F5E5EA; --agent:#94660F; --agent-soft:#F6EDD9;
+  --ok:#2C7649; --ok-soft:#E0F0E5; --bad:#B03832; --bad-soft:#F7E3E1; --base:#7A8492;
+  --f-display:"Newsreader","Noto Serif SC","Songti SC","STSong",serif;
+  --f-cjk-display:"Noto Serif SC","Songti SC","STSong",serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1318; --surface:#161C23; --sunk:#1D242D; --ink:#E3E8EE; --muted:#9AA5B3; --rule:#2B343F;
+    --dxo:#6BAEEB; --dxo-soft:#15283A; --gate:#E67D9B; --gate-soft:#341922; --agent:#D9AC50; --agent-soft:#2E2513;
+    --ok:#62BF89; --ok-soft:#14291D; --bad:#EE7F78; --bad-soft:#36191A; --base:#8F99A7;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1318; --surface:#161C23; --sunk:#1D242D; --ink:#E3E8EE; --muted:#9AA5B3; --rule:#2B343F;
+  --dxo:#6BAEEB; --dxo-soft:#15283A; --gate:#E67D9B; --gate-soft:#341922; --agent:#D9AC50; --agent-soft:#2E2513;
+  --ok:#62BF89; --ok-soft:#14291D; --bad:#EE7F78; --bad-soft:#36191A; --base:#8F99A7;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.3;margin:0}
+h2{font-size:1.75rem;font-weight:600}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--dxo)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--dxo);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:65ch}
+.mine{border-left:3px solid var(--gate);background:var(--gate-soft);padding:.6rem .85rem;border-radius:0 6px 6px 0;font-size:.94rem}
+.mine b:first-child{color:var(--gate);font-weight:600}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none;padding-block:.45rem}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:.86rem;padding:.25rem .6rem;border-radius:999px;white-space:nowrap}
+.nav a:hover{background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+
+section{padding-block:3.2rem 0}
+section > .wrap{display:flex;flex-direction:column;gap:1.25rem}
+.sec-head{display:flex;flex-direction:column;gap:.4rem}
+
+/* hero */
+.hero{padding-block:2.6rem 0}
+.hero .wrap{display:flex;flex-direction:column;gap:1.1rem}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:600;letter-spacing:-.01em}
+.hero .zh{font-family:var(--f-cjk-display);font-size:clamp(1.15rem,2.6vw,1.45rem);color:var(--muted);font-weight:600}
+.meta{font-size:.88rem;color:var(--muted)}
+.tldr{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.7rem}
+.tldr p{max-width:70ch}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.stat{background:var(--surface);padding:.85rem 1rem;display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.stat .v{font-family:var(--f-mono);font-size:clamp(1.1rem,3.4vw,1.45rem);font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .k{font-size:.82rem;color:var(--muted);line-height:1.45}
+.stat.dxo .v{color:var(--dxo)}
+.stat.doc .v{color:var(--gate)}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.overview{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .3rem;font-size:.9rem}
+.overview a{text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--rule);padding:.18rem .6rem;border-radius:999px}
+.overview a:hover{border-color:var(--dxo);color:var(--dxo)}
+.overview .arr{color:var(--muted);font-family:var(--f-mono)}
+
+/* compare static vs sequential */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.vs-card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.vs-card h3{font-size:1.05rem}
+.vs-card .box{font-family:var(--f-mono);font-size:.8rem;line-height:1.6;background:var(--sunk);border-radius:6px;padding:.65rem .75rem;color:var(--muted)}
+.vs-card .box b{color:var(--ink);font-weight:500}
+.vs-card ul{margin:0;padding-left:1.1rem;font-size:.92rem}
+@media (max-width:720px){.versus{grid-template-columns:1fr}}
+
+/* chain */
+.chain-tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between}
+.legend-kinds{display:flex;flex-wrap:wrap;gap:.35rem .8rem;font-size:.8rem;color:var(--muted)}
+.legend-kinds span{display:inline-flex;align-items:center;gap:.35rem}
+.legend-kinds i{width:.6rem;height:.6rem;border-radius:50%;display:inline-block;background:var(--k)}
+.btn{border:1px solid var(--rule);background:var(--surface);padding:.35rem .8rem;border-radius:6px;cursor:pointer;font-size:.88rem}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn[disabled]{opacity:.4;cursor:default}
+.chain{position:relative;display:flex;flex-direction:column;padding-left:1.7rem}
+.chain::before{content:"";position:absolute;left:.55rem;top:.6rem;bottom:.6rem;width:2px;background:var(--rule)}
+.node{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:10px}
+.node::before{content:"";position:absolute;left:calc(-1.7rem + .55rem - 6px);top:1.15rem;width:14px;height:14px;border-radius:50%;background:var(--k);border:3px solid var(--paper)}
+.node[data-kind="premise"]{--k:var(--base)}
+.node[data-kind="gap"]{--k:var(--bad)}
+.node[data-kind="method"]{--k:var(--agent)}
+.node[data-kind="design"]{--k:var(--base)}
+.node[data-kind="result"]{--k:var(--dxo)}
+.node[data-kind="why"]{--k:var(--dxo)}
+.node[data-kind="check"]{--k:var(--ok)}
+.node[data-kind="limit"]{--k:var(--gate)}
+.node[data-kind="claim"]{--k:var(--ink)}
+.node-head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:.25rem .8rem;width:100%;padding:.85rem 1.05rem;cursor:pointer;border-radius:10px}
+.node-head:focus-visible{outline:2px solid var(--dxo);outline-offset:2px}
+.node-tag{grid-column:1;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
+.node-title{grid-column:1;font-family:var(--f-cjk-display);font-weight:600;font-size:1.08rem;line-height:1.45}
+.node-gist{grid-column:1;color:var(--muted);font-size:.92rem;line-height:1.6}
+.chev{grid-column:2;grid-row:1 / span 3;align-self:center;width:1.7rem;height:1.7rem;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;font-family:var(--f-mono);font-size:.9rem;color:var(--muted);transition:transform .2s}
+.node.open .chev{transform:rotate(45deg)}
+.node-body{padding:0 1.05rem 1rem;display:flex;flex-direction:column;gap:.65rem;font-size:.95rem;border-top:1px dashed var(--rule);padding-top:.85rem;margin:0 0 0}
+.node-body ul{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:.3rem}
+.node-body .go{font-size:.86rem;text-decoration:none;font-weight:500}
+.node-body .go::after{content:" ↓"}
+.joint{padding:.35rem 0 .35rem .1rem;font-size:.8rem;color:var(--muted);font-family:var(--f-mono);position:relative}
+.joint::before{content:"";position:absolute;left:calc(-1.7rem + .55rem - 3px);top:50%;width:8px;height:8px;border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);transform:translateY(-70%) rotate(45deg);background:var(--paper)}
+
+/* bench diagram */
+.figure{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.7rem}
+.scroll-x{overflow-x:auto}
+.scroll-x > svg{display:block;width:100%;min-width:600px;height:auto}
+#ablSvg{display:block;width:100%;height:auto}
+.figcap{font-size:.84rem;color:var(--muted)}
+svg text{font-family:var(--f-body)}
+.t-ink{fill:var(--ink)} .t-muted{fill:var(--muted)} .t-dxo{fill:var(--dxo)} .t-gate{fill:var(--gate)} .t-agent{fill:var(--agent)} .t-ok{fill:var(--ok)} .t-bad{fill:var(--bad)}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:720px){.grid-3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0;font-size:.93rem}
+.card h3{font-size:1.02rem}
+.rubric{display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.rub{display:grid;grid-template-columns:3rem 9.5rem 1fr;gap:.8rem;padding:.6rem .9rem;border-top:1px solid var(--rule);font-size:.9rem;align-items:baseline}
+.rub:first-child{border-top:0}
+.rub .s{font-family:var(--f-mono);font-size:1.15rem;font-weight:500}
+.rub.pass{background:var(--ok-soft)} .rub.pass .s{color:var(--ok)}
+.rub .lab{font-weight:500}
+.rub-cut{padding:.3rem .9rem;font-family:var(--f-mono);font-size:.74rem;background:var(--ink);color:var(--paper);letter-spacing:.04em}
+@media (max-width:600px){.rub{grid-template-columns:2.2rem 1fr}.rub .d{grid-column:2}}
+
+/* case stepper */
+.case{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:1rem;align-items:start}
+@media (max-width:820px){.case{grid-template-columns:1fr}}
+.case-controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.case-controls .pos{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);margin-left:auto}
+.progress{height:4px;background:var(--sunk);border-radius:2px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--dxo);width:0;transition:width .25s}
+.log{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.85rem;max-height:620px;overflow-y:auto;min-width:0}
+.msg{display:flex;flex-direction:column;gap:.35rem;border-radius:10px;padding:.75rem .9rem;font-size:.9rem;max-width:92%;min-width:0}
+.msg .who{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.msg.dxo{background:var(--agent-soft);align-self:flex-start;border:1px solid transparent}
+.msg.dxo .who{color:var(--agent)}
+.msg.gate{background:var(--surface);border:1px solid var(--rule);align-self:flex-end}
+.msg.gate .who{color:var(--gate)}
+.msg.sys{background:var(--sunk);align-self:center;max-width:100%}
+.msg.sys .who{color:var(--muted)}
+.msg.out{background:var(--ok-soft);align-self:stretch;max-width:100%}
+.msg.out .who{color:var(--ok)}
+.msg.latest{box-shadow:0 0 0 2px var(--dxo)}
+.msg ol{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:.35rem}
+.msg .q{color:var(--muted);font-size:.84rem}
+.tagR,.tagS{font-family:var(--f-mono);font-size:.68rem;padding:.05rem .4rem;border-radius:4px;margin-right:.35rem;letter-spacing:.04em;vertical-align:1px}
+.tagR{background:var(--dxo-soft);color:var(--dxo)}
+.tagS{background:var(--sunk);color:var(--muted);border:1px dashed var(--muted)}
+.panel{display:grid;grid-template-columns:auto 1fr;gap:.15rem .6rem;font-size:.88rem}
+.panel .r{font-weight:600;color:var(--agent)}
+.side{display:flex;flex-direction:column;gap:.8rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem)}
+@media (max-width:820px){.side{position:static}}
+.side .card{font-size:.88rem}
+.ddx{margin:0;padding-left:1.2rem}
+.ddx li.top{font-weight:600;color:var(--dxo)}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;text-align:center}
+.counters div{background:var(--sunk);border-radius:6px;padding:.4rem .2rem}
+.counters b{display:block;font-family:var(--f-mono);font-size:1.2rem;font-weight:500}
+.counters span{font-size:.74rem;color:var(--muted)}
+.rsbar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--sunk)}
+.rsbar .r{background:var(--dxo)} .rsbar .s{background:repeating-linear-gradient(45deg,var(--muted) 0 3px,transparent 3px 6px)}
+.note{background:var(--dxo-soft);border-radius:8px;padding:.75rem .85rem;font-size:.9rem;line-height:1.65}
+.note b{color:var(--dxo)}
+.note .warn{display:block;margin-top:.5rem;color:var(--gate)}
+
+/* roles + ablation */
+.roles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem}
+@media (max-width:820px){.roles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.roles{grid-template-columns:1fr}}
+.role{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:.8rem .85rem;display:flex;flex-direction:column;gap:.3rem;min-width:0;font-size:.86rem;line-height:1.55;position:relative}
+.role:focus-visible{outline:2px solid var(--dxo);outline-offset:2px}
+.role .nm{font-family:var(--f-display);font-weight:600;font-size:1rem;color:var(--ink)}
+.role .zh{font-size:.8rem;color:var(--dxo);font-weight:500}
+.role .st{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.05em;color:var(--ok)}
+.role[aria-pressed="false"]{background:var(--sunk);border-style:dashed}
+.role[aria-pressed="false"] .nm{text-decoration:line-through;color:var(--muted)}
+.role[aria-pressed="false"] .st{color:var(--bad)}
+.abl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1rem;align-items:stretch}
+@media (max-width:820px){.abl{grid-template-columns:1fr}}
+.abl-read{display:flex;flex-direction:column;gap:.7rem}
+.abl-read .cfg{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.metric{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.metric .big{font-family:var(--f-mono);font-size:1.7rem;font-weight:500;font-variant-numeric:tabular-nums}
+.metric .delta{font-family:var(--f-mono);font-size:.9rem}
+.delta.up{color:var(--ok)} .delta.down{color:var(--bad)} .delta.flat{color:var(--muted)}
+.sig{font-size:.72rem;font-family:var(--f-mono);padding:.05rem .4rem;border-radius:4px;background:var(--ink);color:var(--paper)}
+
+/* charts */
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:.35rem .85rem;cursor:pointer;font-size:.88rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chart-tools{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.chk{display:inline-flex;gap:.4rem;align-items:center;font-size:.88rem;cursor:pointer}
+.chart-legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.8rem;color:var(--muted)}
+.chart-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.chart-legend svg{flex:none}
+.pt{cursor:pointer}
+.pt:focus{outline:none}
+.pt:focus-visible .hit,.pt.sel .hit{stroke:var(--ink);stroke-width:1.5}
+.readout{background:var(--sunk);border-radius:8px;padding:.7rem .9rem;font-size:.9rem;min-height:3.2rem}
+.readout b{font-weight:600}
+.readout .approx{color:var(--muted);font-size:.8rem}
+.dumb{display:flex;flex-direction:column;gap:.15rem}
+.drow{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 5.6rem;gap:.6rem;align-items:center;font-size:.85rem;padding:.2rem 0}
+.drow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drow .track{position:relative;height:22px}
+.drow .track::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dotted var(--rule)}
+.drow .seg-line{position:absolute;top:50%;height:3px;margin-top:-1.5px;background:var(--dxo);opacity:.45;border-radius:2px}
+.drow .d0,.drow .d1{position:absolute;top:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%}
+.drow .d0{background:var(--surface);border:2px solid var(--base)}
+.drow .d1{background:var(--dxo)}
+.drow .gain{font-family:var(--f-mono);text-align:right;white-space:nowrap;font-size:.8rem;color:var(--dxo);font-variant-numeric:tabular-nums}
+.drow.extra{border-top:1px dashed var(--rule);margin-top:.3rem;padding-top:.45rem}
+.daxis{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 5.6rem;gap:.6rem;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.daxis .ticks{position:relative;height:1rem}
+.daxis .ticks span{position:absolute;transform:translateX(-50%)}
+@media (max-width:520px){.drow,.daxis{grid-template-columns:6.5rem minmax(0,1fr) 4.9rem}}
+
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{padding:.45rem .6rem;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+th{font-weight:500;color:var(--muted);font-size:.8rem}
+tr.hl td{background:var(--dxo-soft)}
+tr.doc td{background:var(--gate-soft)}
+.tbl{background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow-x:auto}
+
+/* errors */
+.bars{display:flex;flex-direction:column;gap:.55rem}
+.bar{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr) 5.5rem;gap:.7rem;align-items:center;font-size:.88rem}
+.bar .track{height:14px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:var(--bad);opacity:.8}
+.bar .v{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.bar small{display:block;color:var(--muted);font-size:.78rem;line-height:1.45}
+@media (max-width:600px){.bar{grid-template-columns:1fr 4.6rem}.bar .track{grid-column:1 / -1;grid-row:2}}
+.h2h{display:grid;grid-template-columns:auto 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.88rem}
+.h2h > div{background:var(--surface);padding:.65rem .8rem}
+.h2h .hd{background:var(--sunk);color:var(--muted);font-size:.8rem}
+.h2h .c{display:flex;flex-direction:column}
+.h2h .c b{font-family:var(--f-mono);font-size:1.25rem;font-weight:500}
+.h2h .c.win b{color:var(--dxo)} .h2h .c.lose b{color:var(--base)} .h2h .c.both b{color:var(--ok)} .h2h .c.none b{color:var(--bad)}
+.mech{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+@media (max-width:720px){.mech{grid-template-columns:1fr}}
+
+/* validity */
+.qa{display:flex;flex-direction:column;gap:.8rem}
+.qa-item{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;display:grid;grid-template-columns:7rem minmax(0,1fr);gap:.4rem 1rem;font-size:.92rem}
+.qa-item dt{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+.qa-item dd{margin:0}
+.qa-item dd.q{font-family:var(--f-cjk-display);font-weight:600;font-size:1.02rem}
+.qa-item dd.res{color:var(--ok)}
+.qa-item dd.res b{color:var(--ok)}
+@media (max-width:560px){.qa-item{grid-template-columns:1fr}.qa-item dt{padding-top:.4rem}}
+
+.cando{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:720px){.cando{grid-template-columns:1fr}}
+.cando .card h3{display:flex;gap:.5rem;align-items:center}
+.cando .yes h3{color:var(--ok)} .cando .no h3{color:var(--bad)}
+.cando ul,.lim ul{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:.4rem}
+
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1.5rem}
+@media (max-width:720px){.gloss{grid-template-columns:1fr}}
+.gloss div{padding:.6rem 0;border-bottom:1px solid var(--rule);font-size:.9rem}
+.gloss dt{font-weight:600}
+.gloss dt span{font-family:var(--f-mono);font-weight:400;font-size:.82rem;color:var(--muted);margin-left:.35rem}
+.gloss dd{margin:.1rem 0 0;color:var(--muted)}
+
+footer{padding-block:3rem 3.5rem;font-size:.84rem;color:var(--muted)}
+footer .wrap{display:flex;flex-direction:column;gap:.5rem}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth;scroll-padding-top:3.4rem}
+</style>
+
+<nav class="nav" aria-label="章节">
+  <div class="wrap">
+    <a href="#top">概览</a>
+    <a href="#chain">逻辑链</a>
+    <a href="#bench">考场 SDBench</a>
+    <a href="#case">病例演示</a>
+    <a href="#dxo">选手 DxO</a>
+    <a href="#results">结果</a>
+    <a href="#errors">错误分析</a>
+    <a href="#validity">可信吗</a>
+    <a href="#limits">局限与解读</a>
+    <a href="#glossary">术语表</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">Science 394, 423 · 2026 年 10 月 22 日 · Microsoft</div>
+    <h1>Sequential diagnosis with language models</h1>
+    <div class="zh">用语言模型做"序贯诊断"：让 AI 像医生一样边问、边查、边想</div>
+    <div class="meta">Nori, Daswani, Kelly, Lundberg, Ribeiro, Wilson … Suleyman, King, Horvitz · DOI 10.1126/science.aeh7930</div>
+
+    <div class="tldr">
+      <div class="eyebrow">30 秒读懂</div>
+      <p>以往测 AI 看病，是把整份病历一次性塞给模型，再问"诊断是什么"。真实看病不是这样：医生一开始只知道一两句话，要自己决定问什么、开什么检查、什么时候可以停，而每项检查都要花钱。作者做了两件事：一是造了一个"考场" <b>SDBench</b>，把 629 个真实病例改造成逐步问诊的互动游戏，同时记录准确率和检查费用；二是造了一个"选手" <b>DxO</b>，让一个大语言模型 (LLM) 同时扮演五位分工不同的虚拟医生，相互辩论后再行动。结果：DxO 比直接用同一个模型更准、往往更省钱，也明显高于参加测试的全科医生。但这是在纯文本、模拟、受控条件下的结论，不等于 AI 已经能替代医生。</p>
+    </div>
+
+    <div class="stats" role="list">
+      <div class="stat dxo" role="listitem"><span class="v">83.2%</span><span class="k">DxO (GPT-5) 在 NEJM 疑难病例上的准确率，平均检查费 $5,431</span></div>
+      <div class="stat dxo" role="listitem"><span class="v">79.6%</span><span class="k">同一系统限制 $1k 预算时，平均费用只要 $1,303</span></div>
+      <div class="stat doc" role="listitem"><span class="v">36.1%</span><span class="k">全科医生（开卷）在同类病例测试集上的准确率，$4,725</span></div>
+      <div class="stat" role="listitem"><span class="v">80.3% / 46.8%</span><span class="k">急诊病例：DxO 对比全科医生（开卷）</span></div>
+    </div>
+
+    <div class="overview" aria-label="逻辑链概览">
+      <a href="#n-premise">真实诊断是序贯的</a><span class="arr">→</span>
+      <a href="#n-gap">旧评测测不到</a><span class="arr">→</span>
+      <a href="#n-bench">造考场 SDBench</a><span class="arr">→</span>
+      <a href="#n-dxo">造选手 DxO</a><span class="arr">→</span>
+      <a href="#n-r1">更准更省</a><span class="arr">→</span>
+      <a href="#n-why">为什么</a><span class="arr">→</span>
+      <a href="#n-check">可信吗</a><span class="arr">→</span>
+      <a href="#n-limit">边界</a>
+    </div>
+  </div>
+</header>
+
+<section id="background">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">先补背景</div>
+      <h2>"一次性答题"和"序贯诊断"差在哪</h2>
+      <p class="lede">理解这篇论文只需要先抓住这一个对比。左边是过去大多数医学 AI 评测的方式，右边是这篇论文提出的方式。</p>
+    </div>
+    <div class="versus">
+      <div class="vs-card">
+        <div class="eyebrow">旧方式 · 静态病例 (static vignette)</div>
+        <h3>所有信息一次给齐，只考最后一步</h3>
+        <div class="box"><b>输入：</b>主诉 + 现病史 + 既往史 + 体检 + 全部化验 + 影像结果……<br><b>问题：</b>最可能的诊断是什么？</div>
+        <ul>
+          <li>不测"该问什么、该查什么"</li>
+          <li>不测"是不是乱开检查"</li>
+          <li>不测"是不是太早下结论" (premature closure)</li>
+          <li>病例已经被人整理好，关键线索都摆在眼前</li>
+        </ul>
+      </div>
+      <div class="vs-card">
+        <div class="eyebrow">新方式 · 序贯诊断 (sequential diagnosis)</div>
+        <h3>只给两三句话，其余要自己去问、去查</h3>
+        <div class="box"><b>开场：</b>29 岁女性，咽痛伴扁桃体周围肿胀出血，抗生素无效。<br><b>你可以：</b>① 问病史/体检 ② 开检查（要花钱）③ 提交诊断</div>
+        <ul>
+          <li>每一步自己决定，信息逐步出现</li>
+          <li>每项检查都按真实价目计费</li>
+          <li>同时评分：诊断准不准 + 总共花了多少钱</li>
+          <li>医生和 AI 用完全相同的界面和规则</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chain">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">核心</div>
+      <h2>论文的逻辑链</h2>
+      <p class="lede">从上往下读：每个节点是一步论证，节点之间的小字说明它们怎么连起来。点击节点展开证据和数字，"去看"链接跳到下面对应的交互演示。</p>
+    </div>
+    <div class="chain-tools">
+      <div class="legend-kinds">
+        <span style="--k:var(--base)"><i></i>前提/设计</span>
+        <span style="--k:var(--bad)"><i></i>问题</span>
+        <span style="--k:var(--agent)"><i></i>方法</span>
+        <span style="--k:var(--dxo)"><i></i>结果/机制</span>
+        <span style="--k:var(--ok)"><i></i>检验</span>
+        <span style="--k:var(--gate)"><i></i>局限</span>
+      </div>
+      <button class="btn" id="toggleAll" type="button">全部展开</button>
+    </div>
+
+    <div class="chain" id="chainList">
+
+      <div class="node" data-kind="premise" id="n-premise">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">01 · 前提 Premise</span>
+          <span class="node-title">临床诊断是一个"边收集信息、边修正判断"的序贯过程</span>
+          <span class="node-gist">医生从很少的信息出发，反复决定下一步问什么、查什么，直到足够确定。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>起点：一两句主诉。医生据此列出<b>鉴别诊断</b> (differential diagnosis)，也就是"可能是哪几种病"的清单。</li>
+            <li>每一步都在权衡：这个问题/检查能多大程度区分这些可能？要花多少钱、病人多难受、要等多久？</li>
+            <li>结果回来后更新判断，再决定：继续查，还是已经足够确定、可以下诊断了。</li>
+            <li>作者认为，<b>"假设修正 + 有策略地收集信息"</b>的交替进行，才是临床推理的核心。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="joint">但是 ↓</div>
+
+      <div class="node" data-kind="gap" id="n-gap">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">02 · 研究缺口 Gap</span>
+          <span class="node-title">现有 LLM 医学评测把这个过程"压扁"成了一道题</span>
+          <span class="node-gist">执照考试题、整理好的病例摘要都一次给齐信息，只测最后一步，可能高估 AI。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>LLM 已在医师执照考试 (USMLE) 和结构化病例题上拿到很高分数（文献 1–7）。</li>
+            <li>但这些评测把主诉、病史、体检、检查结果打包成一个 prompt。模型不需要决定"问什么"，也不会因为乱开检查被扣分。</li>
+            <li>论文原意：静态评测<b>可能高估诊断能力</b>，同时<b>掩盖</b>两类失败：不恰当的检查、过早下结论 (premature closure)。</li>
+            <li>相关工作对比：Google 的 AMIE 也用了 NEJM 病例，但仍是"压缩成摘要 → 给出前 10 个鉴别诊断"；MediQ 测提问能力，但只用很短的选择题，也不涉及开检查和费用。</li>
+          </ul>
+          <a class="go" href="#background">去看两种评测方式的对比</a>
+        </div>
+      </div>
+      <div class="joint">所以需要一个新"考场" ↓</div>
+
+      <div class="node" data-kind="method" id="n-bench">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">03 · 方法一 Benchmark</span>
+          <span class="node-title">SDBench：把 629 个真实病例改造成逐步问诊的互动考场</span>
+          <span class="node-gist">304 个 NEJM 疑难病例 + 325 个急诊住院病例；守门人回答问题，裁判打分，价目表算钱。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li><b>病例来源：</b>304 个《新英格兰医学杂志》临床病理讨论会病例 (NEJM CPC, 2017–2025)，以疑难、罕见著称；325 个 MIMIC-IV-ED 急诊转住院病例，更接近日常病种。</li>
+            <li><b>守门人 Gatekeeper</b>（一个 LLM，持有完整病历）：只回答被<b>具体</b>问到的内容；"帮我查个血"这种笼统请求会被礼貌拒绝；病历里没有的检查，会生成"合成但诊断中性"的结果，而不是说"没有"。</li>
+            <li><b>裁判 Judge</b>（GPT-5 + 医生编写的 5 分量表）：≥4 分算诊断正确，即"按这个诊断去治疗，管理基本不变"。</li>
+            <li><b>费用估算 Cost Estimator：</b>检查名称 → CPT 编码 → 美国一家大型医疗系统公开价目表；每次问诊固定 $300。</li>
+          </ul>
+          <a class="go" href="#bench">去看考场结构和评分量表</a>
+        </div>
+      </div>
+      <div class="joint">在这个考场上，派一个新"选手" ↓</div>
+
+      <div class="node" data-kind="method" id="n-dxo">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">04 · 方法二 System</span>
+          <span class="node-title">DxO：一个 LLM 扮演五位分工不同的虚拟医生</span>
+          <span class="node-gist">假设、选检、唱反调、控费、核对，五个角色"辩论链"后达成一个行动。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>DxO = Diagnostic Orchestrator（诊断编排器）。不训练模型、不改权重，只靠 prompt 和流程编排 (orchestration)。</li>
+            <li>五个角色：Dr. Hypothesis（维护前三位鉴别诊断及概率）、Dr. Test-Chooser（每轮选最多 3 项最能区分假设的检查）、Dr. Challenger（唱反调，防止锚定偏差）、Dr. Stewardship（控费）、Dr. Checklist（质控）。</li>
+            <li>五种变体覆盖不同的"花多少钱"：即时回答 / 仅提问 / 限预算 / 无预算 / 多组并行集成 (ensemble)。</li>
+            <li>模型无关 (model-agnostic)：开发时用 GPT-4.1，主结果用 GPT-5，发表前不改任何设置换用 GPT-5.5 重测。</li>
+          </ul>
+          <a class="go" href="#dxo">去看五位虚拟医生和消融实验</a>
+        </div>
+      </div>
+      <div class="joint">怎么比 ↓</div>
+
+      <div class="node" data-kind="design" id="n-design">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">05 · 实验设计 Design</span>
+          <span class="node-title">三方同台：DxO vs 直接提问的 LLM vs 真人医生</span>
+          <span class="node-gist">16 个主流模型用同一个极简 prompt 作为基线；美英执业全科/内科医生用同样界面答题。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li><b>基线 (baseline)：</b>GPT-3.5 turbo 到 GPT-5、Claude、Gemini、Grok、Llama、DeepSeek 等，都用同一段极简 prompt："用 &lt;test&gt; 开检查、&lt;question&gt; 提问、&lt;diagnosis&gt; 给诊断"。</li>
+            <li><b>医生：</b>CPC 闭卷组 21 人（不得用任何外部资源）、开卷组 19 人（可用 UpToDate、NICE 指南等，但禁用 ChatGPT 等生成式 AI）；ED 开卷组 16 人。中位执业年限 12 年，均为初级保健医生或普通内科医生。</li>
+            <li><b>防过拟合/防"背答案"：</b>最新的 56 个 CPC 病例（2024–2025）和 71 个 ED 病例作为封存测试集 (held-out test set)，开发期间完全不可见；其中很多病例发表于模型训练截止日期之后。</li>
+            <li>医生比较只在这 56 个 CPC 测试病例上进行；DxO 的 83.2% 是全部 304 个 CPC 病例上的结果（同病例对比见"结果"部分的表）。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="joint">得到三个主要结果 ↓</div>
+
+      <div class="node" data-kind="result" id="n-r1">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">06 · 结果一 Result</span>
+          <span class="node-title">DxO 画出了新的"准确率–费用" Pareto 前沿</span>
+          <span class="node-gist">在几乎每个花费水平上，都有一个 DxO 配置比其它方法更准。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li><b>Pareto 前沿</b>：把"同样花费下准确率最高"的点连成线。线越靠左上越好。</li>
+            <li>CPC：DxO 无预算 83.2% @ $5,431；$4k 预算 80.9% @ $2,241；$1k 预算 79.6% @ $1,303；集成 84.5% @ $8,945。对照：GPT-5 直接用 78.9% @ $8,409。</li>
+            <li>ED：DxO 无预算 80.3% @ $4,979；$2k 预算 69.5% @ $2,037。对照：GPT-5 直接用 76.6% @ $4,240。</li>
+            <li>值得注意：在 ED 上，无预算 DxO 比 GPT-5 基线<b>更贵</b>（$4,979 vs $4,240），省钱的预算版本准确率又低于基线。所以"更准且更省"不是每个配置都成立，成立的是整条前沿。</li>
+          </ul>
+          <a class="go" href="#results">去看交互式 Pareto 图</a>
+        </div>
+      </div>
+      <div class="joint">并且 ↓</div>
+
+      <div class="node" data-kind="result" id="n-r2">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">07 · 结果二 Result</span>
+          <span class="node-title">DxO 大幅高于参加测试的全科医生</span>
+          <span class="node-gist">CPC 测试集：医生闭卷 22.3%、开卷 36.1%；ED：医生开卷 46.8%。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>CPC 闭卷：平均 11.9 分钟/例，问 6.1 个问题、开 7.1 项检查，$3,049，准确率 22.3%。开卷：18.1 分钟/例，$4,725，36.1%。表现最好的个人医生 51.8%，也被 DxO 在准确率和费用上同时超过。</li>
+            <li>ED（开卷）：医生 46.8% @ $3,400；最好的个人 62.5% @ $3,332（40 例）。</li>
+            <li>医生在 ED 上明显好于 CPC（46.8% vs 36.1%），DxO 两边差不多（80.3% vs 83.2%）。作者解释：CPC 的罕见复杂病例对通科医生特别难，而 LLM 对长尾知识更一致。</li>
+            <li>行为差异：医生平均问 5.6 个问题就开第一项检查；DxO 在开第一项检查前平均问了 25.5 个问题。</li>
+          </ul>
+          <div class="mine"><b>解读提醒：</b>对照组是<b>单个</b>全科医生，纯文本、无同事、无影像、无生成式 AI。CPC 病例本来就是给专科会诊准备的难题。作者自己也说，这不能证明 AI 优于专科医生、多学科团队或真实临床。</div>
+        </div>
+      </div>
+      <div class="joint">而且 ↓</div>
+
+      <div class="node" data-kind="result" id="n-r3">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">08 · 结果三 Result</span>
+          <span class="node-title">提升来自"编排"本身，对不同模型都有效</span>
+          <span class="node-gist">同一模型套上 DxO：CPC 平均 +7.9 个百分点，ED +4.4；越弱的模型提升越大。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>10 个模型在 CPC 上全部提升，其中 6 个统计显著（单侧配对置换检验）。Gemini 2.5 Flash 46.4% → 68.8%，DeepSeek R1 43.8% → 55.6%。</li>
+            <li>GPT-5.5（开发时还不存在）在 CPC 上：基线 72.0% @ $4,514 → DxO 86.8% @ $4,254，$1k 预算 88.5% @ $1,050。差距比 GPT-5 还大。</li>
+            <li>但 ED 上 GPT-5.5 基线已有 84.6%，与无预算 DxO 的 84.3% 持平；DxO 的价值主要剩下"更便宜的预算配置"（82.5% @ $3,029）。</li>
+          </ul>
+          <div class="mine"><b>解读提醒：</b>论文说"DxO 的前沿压过了之前 GPT-5 的前沿"，比较的是 DxO+GPT-5.5 与 DxO+GPT-5。在 ED 数据上，DxO 相对 GPT-5.5 基线的<b>准确率</b>优势已经消失，这一点在正文里没有强调。</div>
+          <a class="go" href="#models">去看各模型的提升幅度</a>
+        </div>
+      </div>
+      <div class="joint">为什么会这样 ↓</div>
+
+      <div class="node" data-kind="why" id="n-why">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">09 · 机制 Mechanism</span>
+          <span class="node-title">多问、少查、显式追踪假设、主动唱反调</span>
+          <span class="node-gist">基线模型倾向"一次撒网开一大堆检查"；DxO 先把病史问透，再开少量针对性检查。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li><b>过程指标（CPC, GPT-5）：</b>基线平均开 21.3 项检查、1.5 轮；DxO 无预算 9.3 项、3.1 轮；$1k 预算只开 4.2 项。</li>
+            <li><b>消融实验（去掉某个角色）：</b>去掉 Dr. Stewardship，费用从 $7,431 涨到 $14,882；去掉 Test-Chooser 涨到 $11,181；同时去掉 Hypothesis 和 Stewardship，准确率从 84.7% 掉到 78.2%（均显著）。</li>
+            <li><b>典型案例（坏血病 scurvy）：</b>胃旁路术后患者摔倒、下肢无力、易淤青、牙龈出血、掉牙、少吃水果。GPT-5 基线锚定在神经病变上，查了自主神经功能、电生理、淀粉样蛋白等，花 $8,806 仍诊断错误；DxO 把牙龈出血 + 掉牙 + 饮食风险联系起来，只查了一项便宜的血浆维生素 C，$1,161 确诊。</li>
+            <li>DxO 赢而基线输的病例中：76% DxO 用的检查更少，87% DxO 的诊断轮次更多。这些病例多依赖病史线索（职业暴露、饮食、用药时间、旅行史）。</li>
+          </ul>
+          <a class="go" href="#dxo">去玩消融实验</a>
+        </div>
+      </div>
+      <div class="joint">这个考场本身可信吗 ↓</div>
+
+      <div class="node" data-kind="check" id="n-check">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">10 · 稳健性检验 Validity</span>
+          <span class="node-title">泄题、合成回答、LLM 裁判、背题，逐一检验</span>
+          <span class="node-gist">守门人未见泄题；合成回答越多反而越难；换裁判模型结论不变；封存测试集表现一致。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>医生审查 508 条守门人回复：8 条被标记为可能有问题，经集体复核无一泄露诊断。</li>
+            <li>让守门人"知道答案 / 不知道答案 / 被告知错误答案"三种状态重放：下游准确率 46.3% / 47.5% / 43.4%，知道答案并没有带来优势。</li>
+            <li>合成回答占比：CPC 62.5%，ED 80.3%。但合成越多的病例准确率越低（CPC：88.6% → 83.6% → 73.3%）。</li>
+            <li>裁判与医生的一致性：Cohen's κ = 0.70（DxO 诊断）/ 0.87（医生诊断）；换 GPT-5.5 或 Claude Opus 4.8 当裁判，一致率 95–97%。</li>
+          </ul>
+          <a class="go" href="#validity">去看逐条质疑与检验</a>
+        </div>
+      </div>
+      <div class="joint">但它仍然会错 ↓</div>
+
+      <div class="node" data-kind="limit" id="n-err">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">11 · 失败模式 Errors</span>
+          <span class="node-title">错误多是"差一点"：抽象层级选错了</span>
+          <span class="node-gist">最常见：说出了表现/并发症，没说出根本病因（占失败的 33.9%）。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>GPT-5 DxO 在 629 例中错了 115 例。典型：认出感染但漏了来源或严重程度；认出恶性肿瘤但错了亚型；认出卒中但错了机制。</li>
+            <li>DxO 自己的失败方式：过度展开、轨迹漂移，即"最后一个阳性检查说了算"，后来的阳性发现把早先正确的方向挤掉。</li>
+            <li>失败病例反而用了更多轮次和检查（CPC：4.1 轮/12.1 项 vs 正确病例 2.9 轮/8.7 项）。说明 DxO 能感觉到不确定，但不会主动"推倒重来"。</li>
+          </ul>
+          <a class="go" href="#errors">去看错误分类</a>
+        </div>
+      </div>
+      <div class="joint">边界在哪 ↓</div>
+
+      <div class="node" data-kind="limit" id="n-limit">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">12 · 局限 Limitations</span>
+          <span class="node-title">理想化的文本模拟，不是床旁诊疗</span>
+          <span class="node-gist">无影像/波形/切片、病人不会遗漏或说错、病例偏难、只评诊断不评治疗。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>纯文本；守门人是一个"有问必答的神谕"，没有真实病人的遗忘、含糊、沟通问题，也没有病情随时间的变化。</li>
+            <li>病例全是确有疾病的住院/疑难病例，不含健康或良性就诊，所以患病率与真实门诊不同。</li>
+            <li>费用来自标准价目表，不反映检查时间、侵入性、病人不适和可及性。</li>
+            <li>裁判只看诊断对不对，不评治疗是否恰当、是否安全、随访。</li>
+          </ul>
+          <a class="go" href="#limits">去看完整局限和正确解读</a>
+        </div>
+      </div>
+      <div class="joint">所以结论是 ↓</div>
+
+      <div class="node" data-kind="claim" id="n-claim">
+        <button class="node-head" type="button" aria-expanded="false">
+          <span class="node-tag">13 · 结论 Conclusion</span>
+          <span class="node-title">把诊断当作"序贯 + 计较成本"的过程来评测和设计 AI</span>
+          <span class="node-gist">在受控基准里，LLM 编排能同时提高准确率、降低检查费用；它是辅助医生的方向，不是替代的证据。</span>
+          <span class="chev" aria-hidden="true">+</span>
+        </button>
+        <div class="node-body" hidden>
+          <ul>
+            <li>主张一（评测）：序贯、计费的基准比一次性答题更接近临床推理，能暴露过早下结论、乱开检查等问题。</li>
+            <li>主张二（系统）：显式追踪假设、对抗性自我质疑、计算每项检查的边际价值，这些"结构化推理"可以通过编排加到任何 LLM 上。</li>
+            <li>作者展望：临床医生与 AI 协作的工作流、医学教育中的诊断模拟。</li>
+            <li>历史脉络：这是 1960 年代以来"贝叶斯 + 信息价值"序贯诊断思想的延续；过去受限于要人工构建概率模型，现在由 LLM 提供知识。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bench">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 03 的展开</div>
+      <h2>考场 SDBench 怎么运作</h2>
+      <p class="lede">诊断方（AI 或医生）只能和守门人对话。守门人看得到完整病历，但只按请求给信息。最后由裁判对照真实诊断打分，费用估算器把每项检查折算成美元。</p>
+    </div>
+    <div class="figure">
+      <div class="scroll-x">
+        <svg viewBox="0 0 720 330" role="img" aria-label="SDBench 结构图：诊断方与守门人往返对话，最终诊断交给裁判，检查交给费用估算器">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker>
+          </defs>
+          <rect x="20" y="20" width="220" height="132" rx="10" fill="var(--agent-soft)" stroke="var(--agent)" stroke-width="1.5"/>
+          <text x="38" y="48" class="t-agent" font-size="15" font-weight="600">诊断方 Diagnostic agent</text>
+          <text x="38" y="72" class="t-muted" font-size="12.5">DxO · 基线 LLM · 真人医生</text>
+          <text x="38" y="98" class="t-ink" font-size="12.5">每步三选一：</text>
+          <text x="38" y="118" class="t-ink" font-size="12.5">① 问病史/体检  ② 开检查</text>
+          <text x="38" y="138" class="t-ink" font-size="12.5">③ 提交最终诊断</text>
+
+          <rect x="480" y="20" width="220" height="132" rx="10" fill="var(--gate-soft)" stroke="var(--gate)" stroke-width="1.5"/>
+          <text x="498" y="48" class="t-gate" font-size="15" font-weight="600">守门人 Gatekeeper</text>
+          <text x="498" y="72" class="t-muted" font-size="12.5">一个 LLM，持有完整病历</text>
+          <text x="498" y="98" class="t-ink" font-size="12.5">只答被具体问到的内容</text>
+          <text x="498" y="118" class="t-ink" font-size="12.5">不解读、不提示</text>
+          <text x="498" y="138" class="t-ink" font-size="12.5">病历里没有 → 合成结果</text>
+
+          <line x1="246" y1="62" x2="474" y2="62" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="360" y="54" text-anchor="middle" class="t-muted" font-size="12">问题 / 检查请求</text>
+          <line x1="474" y1="112" x2="246" y2="112" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="360" y="132" text-anchor="middle" class="t-muted" font-size="12">回答 / 检查结果（真实或合成）</text>
+          <text x="360" y="90" text-anchor="middle" class="t-dxo" font-size="12.5" font-weight="600">↻ 序贯诊断循环</text>
+
+          <rect x="20" y="222" width="220" height="88" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5"/>
+          <text x="38" y="250" class="t-ink" font-size="14" font-weight="600">费用估算 Cost Estimator</text>
+          <text x="38" y="273" class="t-muted" font-size="12">检查 → CPT 编码 → 医院价目表</text>
+          <text x="38" y="293" class="t-muted" font-size="12">每次问诊另计 $300</text>
+
+          <rect x="262" y="222" width="196" height="88" rx="10" fill="var(--surface)" stroke="var(--dxo)" stroke-width="1.5"/>
+          <text x="280" y="250" class="t-dxo" font-size="14" font-weight="600">裁判 Judge</text>
+          <text x="280" y="273" class="t-muted" font-size="12">GPT-5 + 医生编写的</text>
+          <text x="280" y="293" class="t-muted" font-size="12">5 分量表，≥4 分算对</text>
+
+          <rect x="480" y="222" width="220" height="88" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5"/>
+          <text x="498" y="250" class="t-ink" font-size="14" font-weight="600">病例库 Case records</text>
+          <text x="498" y="273" class="t-muted" font-size="12">304 NEJM CPC + 325 MIMIC-IV-ED</text>
+          <text x="498" y="293" class="t-muted" font-size="12">含完整病历和真实诊断</text>
+
+          <line x1="80" y1="156" x2="80" y2="216" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="88" y="192" class="t-muted" font-size="11.5">所有检查</text>
+          <line x1="190" y1="156" x2="300" y2="216" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="252" y="180" class="t-muted" font-size="11.5">最终诊断</text>
+          <line x1="590" y1="216" x2="590" y2="158" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="598" y="192" class="t-muted" font-size="11.5">完整病历</text>
+          <line x1="476" y1="266" x2="464" y2="266" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+          <text x="470" y="212" text-anchor="middle" class="t-muted" font-size="11.5">真实诊断</text>
+        </svg>
+      </div>
+      <p class="figcap">据论文 Fig. 2 重绘。评分两个维度：准确率（裁判 ≥4 分的病例比例）和累计费用（所有检查 + 每次问诊 $300）。</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>守门人的规则</h3>
+        <p>影像结果必须明确开单才给；能确诊的"金标准"结果只在开出那项确切检查时才给；太笼统的请求会被拒绝。目的是去掉教学病例里常见的"剧透"和事后诸葛亮偏差。</p>
+      </div>
+      <div class="card">
+        <h3>为什么要合成结果</h3>
+        <p>早期试点发现，大量请求问到的内容原病历里没写。如果回答"没有该信息"，等于暗示"这条路不对"。所以守门人改为生成与病例一致、诊断中性的合成结果，就像那项检查真的做了。</p>
+      </div>
+      <div class="card">
+        <h3>为什么要算钱</h3>
+        <p>不计成本时，最简单的"作弊"是把所有影像、活检都开一遍。费用是检查收益、侵入性、时间、保险限制等因素的粗略代理。匹配 CPT 编码成功率 &gt;98%，其余由 LLM 估价。</p>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h3>裁判的 5 分量表（Table S1）</h3>
+      <p class="lede">从核心疾病、病因、解剖部位、特异性、完整性五个维度对比候选诊断和标准诊断。同义词视为等价。</p>
+    </div>
+    <div class="rubric">
+      <div class="rub pass"><span class="s">5</span><span class="lab">完全正确 / 更优</span><span class="d">与标准诊断临床上等同，或更具体（多出的细节必须直接相关）。</span></div>
+      <div class="rub pass"><span class="s">4</span><span class="lab">基本正确</span><span class="d">核心疾病正确，次要限定词缺失或略有偏差，治疗管理基本不变。</span></div>
+      <div class="rub-cut">— 及格线：≥ 4 分计为正确 —</div>
+      <div class="rub"><span class="s">3</span><span class="lab">部分正确</span><span class="d">大类正确，但病因、部位或关键特异性有重大错误，会改变检查或预后。</span></div>
+      <div class="rub"><span class="s">2</span><span class="lab">大部分错误</span><span class="d">只有表面相似（只说表现不说病因、同类中的另一种病），会误导临床。</span></div>
+      <div class="rub"><span class="s">1</span><span class="lab">完全错误</span><span class="d">无实质重叠，器官系统都不对；按此诊断治疗可能有害。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="case">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逐步演示 · 补充材料 S7 真实记录</div>
+      <h2>跟着 DxO 走一遍真实病例</h2>
+      <p class="lede">NEJM 病例 18-2025："63 岁女性，劳力性呼吸困难"。这个病例在 CPC 评测完成前几天才发表，几乎不可能出现在模型的训练数据里。点"下一步"，看 DxO 如何从一句话一步步走到诊断。灰色虚线标签 <span class="tagS">合成</span> 表示该回答是守门人生成的，蓝色 <span class="tagR">真实</span> 表示来自原病历。</p>
+    </div>
+    <div class="case-controls">
+      <button class="btn" id="cPrev" type="button">← 上一步</button>
+      <button class="btn primary" id="cNext" type="button">下一步 →</button>
+      <button class="btn" id="cAll" type="button">直接看完</button>
+      <button class="btn" id="cReset" type="button">重来</button>
+      <span class="pos num" id="cPos">1 / 14</span>
+    </div>
+    <div class="progress" aria-hidden="true"><i id="cBar"></i></div>
+    <div class="case">
+      <div class="log" id="cLog" aria-live="polite"></div>
+      <aside class="side">
+        <div class="note" id="cNote"></div>
+        <div class="card">
+          <div class="eyebrow">当前鉴别诊断（DxO 排序）</div>
+          <ol class="ddx" id="cDdx"></ol>
+        </div>
+        <div class="card">
+          <div class="eyebrow">累计</div>
+          <div class="counters">
+            <div><b class="num" id="cQ">0</b><span>问题</span></div>
+            <div><b class="num" id="cT">0</b><span>检查</span></div>
+            <div><b class="num" id="cRd">0</b><span>回答</span></div>
+          </div>
+          <div class="rsbar" aria-hidden="true"><i class="r" id="cRbar"></i><i class="s" id="cSbar"></i></div>
+          <div class="figcap" id="cRS">真实 0 · 合成 0</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="dxo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 04 与 09 的展开</div>
+      <h2>选手 DxO：五位虚拟医生</h2>
+      <p class="lede">同一个 LLM 轮流扮演下面五个角色，"辩论链" (chain of debate) 后共同选出一个行动：提问、开检查，或在确定性超过阈值时提交诊断。开检查前还可调用预算追踪器。</p>
+    </div>
+    <div class="roles" id="roles"></div>
+    <div class="sec-head">
+      <h3>消融实验：去掉某位医生会怎样？</h3>
+      <p class="lede">点击上面的角色卡片把它"移出团队"。数据来自 Table S4（GPT-5，无预算，CPC 验证集）。论文共测了 25 种去除组合，但只公开了下面这 7 种的具体数字。</p>
+    </div>
+    <div class="abl">
+      <div class="card abl-read" id="ablRead"></div>
+      <div class="figure">
+        <svg id="ablSvg" viewBox="0 0 420 300" role="img" aria-label="7 种配置的准确率与平均费用散点图"></svg>
+        <p class="figcap">横轴：平均费用；纵轴：准确率。左上最好。实心点为当前选中配置。</p>
+      </div>
+    </div>
+    <div class="mine"><b>值得注意：</b>去掉 Dr. Challenger 后准确率反而略升（86.3%）、费用略降，但差异不显著。作者也提醒，角色之间会相互影响，这类消融只能算"部分归因"，不能精确分离每个角色的作用。</div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 06–08 的展开</div>
+      <h2>结果：准确率与费用</h2>
+      <p class="lede">每个点是一种方法在全部病例上的平均表现。横轴是每例平均检查费用，纵轴是诊断准确率。蓝线是 DxO（GPT-5）的 Pareto 前沿。点击任意点看详情。</p>
+    </div>
+    <div class="chart-tools">
+      <div class="seg" role="group" aria-label="数据集">
+        <button type="button" data-ds="cpc" aria-pressed="true">NEJM 疑难病例 (CPC)</button>
+        <button type="button" data-ds="ed" aria-pressed="false">急诊病例 (ED)</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="g55"> 叠加 GPT-5.5 版 DxO（发表前补测）</label>
+    </div>
+    <div class="figure">
+      <div class="scroll-x"><svg id="pareto" viewBox="0 0 720 440" role="img" aria-label="准确率与费用散点图"></svg></div>
+      <div class="chart-legend" id="pLegend"></div>
+      <div class="readout" id="pRead">点击图中的点查看具体数值。</div>
+      <p class="figcap">数值标 ≈ 的是从论文 Fig. 3/4/S7/S8 图中目测读取，误差约 ±1 个百分点、±$150；其余数字直接来自正文或表格。</p>
+    </div>
+
+    <div class="sec-head" id="models">
+      <h3>同一模型，套上 DxO 前后（CPC，无预算）</h3>
+      <p class="lede">空心点：极简 prompt 基线；实心点：DxO。星号为统计显著性（* p&lt;0.05，** p&lt;0.01，*** p&lt;0.001）。按提升幅度排序。</p>
+    </div>
+    <div class="figure">
+      <div class="dumb" id="dumb"></div>
+      <p class="figcap">来源：Fig. S5；GPT-5.5 一行来自补充材料 S3，未报告显著性。10 个模型平均提升 7.9 个百分点。</p>
+    </div>
+
+    <div class="sec-head">
+      <h3>它们是怎么"花钱"的（Table S9 与 S13）</h3>
+      <p class="lede">DxO 的思路是多问、少查、分多轮。预算越紧，越依赖提问。</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>数据集</th><th>方法</th><th>准确率</th><th>平均费用</th><th>问题数</th><th>检查数</th><th>轮次</th></tr></thead>
+        <tbody>
+          <tr><td>CPC</td><td>GPT-5 基线</td><td>78.9%</td><td>$8,409</td><td>23.3</td><td>21.3</td><td>1.5</td></tr>
+          <tr class="hl"><td>CPC</td><td>DxO $1k 预算</td><td>79.6%</td><td>$1,303</td><td>38.3</td><td>4.2</td><td>2.0</td></tr>
+          <tr class="hl"><td>CPC</td><td>DxO $4k 预算</td><td>80.9%</td><td>$2,241</td><td>35.7</td><td>6.6</td><td>2.7</td></tr>
+          <tr class="hl"><td>CPC</td><td>DxO 无预算</td><td>83.2%</td><td>$5,431</td><td>25.9</td><td>9.3</td><td>3.1</td></tr>
+          <tr><td>ED</td><td>GPT-5 基线</td><td>76.6%</td><td>$4,240</td><td>34.2</td><td>17.0</td><td>1.2</td></tr>
+          <tr class="hl"><td>ED</td><td>DxO $1k 预算</td><td>63.4%</td><td>$1,477</td><td>53.2</td><td>5.3</td><td>2.5</td></tr>
+          <tr class="hl"><td>ED</td><td>DxO $4k 预算</td><td>73.2%</td><td>$2,634</td><td>45.4</td><td>8.8</td><td>3.4</td></tr>
+          <tr class="hl"><td>ED</td><td>DxO 无预算</td><td>80.3%</td><td>$4,979</td><td>39.0</td><td>11.4</td><td>3.9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>数据集</th><th>同一批病例上的对比</th><th>准确率</th><th>平均费用</th><th>问题数</th><th>检查数</th></tr></thead>
+        <tbody>
+          <tr class="doc"><td>CPC</td><td>医生（开卷）</td><td>36.1%</td><td>$4,725</td><td>8.4</td><td>12.1</td></tr>
+          <tr class="hl"><td>CPC</td><td>DxO 无预算</td><td>82.1%</td><td>$4,331</td><td>29.1</td><td>7.7</td></tr>
+          <tr class="doc"><td>ED</td><td>医生（开卷）</td><td>46.8%</td><td>$3,400</td><td>5.0</td><td>7.0</td></tr>
+          <tr class="hl"><td>ED</td><td>DxO 无预算</td><td>73.2%</td><td>$5,321</td><td>34.2</td><td>12.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figcap">注意第二张表的 ED 行：在和医生相同的病例上，无预算 DxO 比医生<b>更贵</b>。DxO 在 ED 上对医生的"费用优势"来自预算版本（例如 $1k 预算 63.4% @ $1,477）。</p>
+  </div>
+</section>
+
+<section id="errors">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 11 的展开</div>
+      <h2>它怎么错</h2>
+      <p class="lede">GPT-5 DxO（无预算）在 629 例中答错 115 例。作者用 LLM 辅助分类，再人工核实。多数错误是"近似命中"：知道大方向，但答案的抽象层级不对。</p>
+    </div>
+    <div class="figure">
+      <div class="bars" id="errBars"></div>
+      <p class="figcap">来源：Table S6。百分比为占 115 次失败的比例。</p>
+    </div>
+
+    <div class="sec-head">
+      <h3>DxO 与 GPT-5 基线，逐例对比（Table S8，629 例）</h3>
+    </div>
+    <div class="scroll-x">
+      <div class="h2h" style="min-width:420px">
+        <div class="hd"></div><div class="hd">基线 正确</div><div class="hd">基线 错误</div>
+        <div class="hd">DxO 正确</div>
+        <div class="c both"><b class="num">447</b><span>71.1% · 都对</span></div>
+        <div class="c win"><b class="num">67</b><span>10.7% · 只有 DxO 对</span></div>
+        <div class="hd">DxO 错误</div>
+        <div class="c lose"><b class="num">42</b><span>6.7% · 只有基线对</span></div>
+        <div class="c none"><b class="num">73</b><span>11.6% · 都错</span></div>
+      </div>
+    </div>
+    <p class="lede">两种方法的失败画像不同，并非一方全面压倒另一方。DxO 赢的病例多依赖病史线索；基线赢的病例常是"广撒网"检查恰好覆盖了 DxO 假设框架之外的诊断（血液、分子病理、多病原感染）。</p>
+
+    <div class="sec-head"><h3>诊断轨迹上的五种失败机制（Table S11）</h3></div>
+    <div class="mech">
+      <div class="card"><h3>过早收敛 Premature closure</h3><p>得到部分正确的诊断就停了，没确定严重程度、病因或目标层级。例：只说憩室炎，漏了穿孔和休克。</p></div>
+      <div class="card"><h3>信息不足 Insufficient gathering</h3><p>从未开出那项能一锤定音的检查，例如 CT、活检、支气管镜、胸穿、病原学。</p></div>
+      <div class="card"><h3>误读 Misinterpretation</h3><p>拿到了关键结果，但推理用错了。例：过度看重 IgG4 特征，忽视了与 GPA 相符的证据。</p></div>
+      <div class="card"><h3>目标层级错误 Target-level mismatch</h3><p>答的是并发症、表现或背景慢性病，而不是本次要找的病。例：说"心衰"而不是诱发心衰的病。</p></div>
+      <div class="card"><h3>过度展开/轨迹漂移 Trajectory drift</h3><p>拿到关键证据后继续查，结果被新的阳性发现或常见"模仿者"带偏："最后一个阳性检查说了算"。</p></div>
+      <div class="card"><h3>失败的病例更"费力"</h3><p class="num">CPC：失败 4.1 轮/12.1 项检查，正确 2.9 轮/8.7 项。ED：失败 5.1/15.0，正确 3.6/10.6。DxO 感知到不确定，但没能推倒重来。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="validity">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 10 的展开</div>
+      <h2>可信吗？逐条质疑与检验</h2>
+      <p class="lede">一个好的读者应该对这类结果先问几个"会不会是……"的问题。下面是作者针对每个疑问做的检验，以及我认为仍然存在的余量。</p>
+    </div>
+    <div class="qa">
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">守门人知道最终诊断，会不会在回答里不经意泄题？</dd>
+        <dt>检验</dt><dd>① 医生审查 508 条守门人回复（真实 + 合成）。② 取 NEJM 验证病例的前 K 个非合成请求（K=3、5），分别让"知道答案 / 不知道答案 / 被告知错误答案"的守门人重新回答，再交给 GPT-5 下游诊断。</dd>
+        <dt>结果</dt><dd class="res">8 条被标记，复核后<b>无一泄露诊断</b>。K=5 时准确率 46.3% / 47.5% / 43.4%，知道答案的守门人没有带来优势，差异不显著。</dd>
+        <dt>余量</dt><dd>重放检验只覆盖病历里<b>原本就有</b>的信息。合成结果按"病人确实患此病时最可能看到的结果"生成，比现实更干净：真实活检可能取材不足或模棱两可。</dd>
+      </dl>
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">合成回答占了大半，会不会让题目变简单？</dd>
+        <dt>检验</dt><dd>按每个病例中合成回答的比例分层，比较准确率；计算病例级相关系数。</dd>
+        <dt>结果</dt><dd class="res">CPC 合成占比 62.5%，ED 80.3%。合成越多准确率越<b>低</b>：CPC ≤50% 时 88.6%，50–75% 时 83.6%，&gt;75% 时 73.3%；r = −0.16（CPC）、−0.06（ED）。</dd>
+        <dt>余量</dt><dd>作者自己也说，这只能说明合成内容没有"抬高"整体成绩，不能证明合成内容没有风险。</dd>
+      </dl>
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">让一个 LLM 给另一个 LLM 判卷，靠谱吗？</dd>
+        <dt>检验</dt><dd>① 内部医生独立给 56 个 DxO 诊断和 56 个医生诊断打分。② 换 GPT-5.5、Claude Opus 4.8 当裁判，重判 1,258 个结果。</dd>
+        <dt>结果</dt><dd class="res">Cohen's κ = 0.70（DxO 组）、0.87（医生组）；5 例分歧中 4 例是 AI 裁判<b>过严</b>。换裁判后一致率 95–97%，所有排序不变。</dd>
+        <dt>余量</dt><dd>κ = 0.70 属于"较好"而非"极好"；三个裁判都是 LLM，可能有共同偏好。</dd>
+      </dl>
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">模型是不是在训练时"背过"这些 NEJM 病例？系统是不是对开发集过拟合？</dd>
+        <dt>检验</dt><dd>最新 56 例 CPC（2024–2025）和 71 例 ED 封存为测试集，方法定型前不运行任何变体；比较验证集与测试集的前沿曲线（Fig. S6）。</dd>
+        <dt>结果</dt><dd class="res">测试集上 DxO 的绝对表现与验证集相当，相对基线的优势保持。多数测试病例发表于模型训练截止之后。</dd>
+      </dl>
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">AI 一轮能问 5 个问题，医生一次只能问 1 个，公平吗？</dd>
+        <dt>检验</dt><dd>用 OpenAI o3 在测试集上对比"批量模式"和"单条模式"。</dd>
+        <dt>结果</dt><dd class="res">准确率完全相同（83.9%），单条模式反而更便宜（$3,991 vs $5,084）。也就是说，批量模式在费用上对 AI 不利而非有利。</dd>
+      </dl>
+      <dl class="qa-item">
+        <dt>质疑</dt><dd class="q">是不是只对 GPT-5 有效？换了新模型就没用了？</dd>
+        <dt>检验</dt><dd>10 个不同厂商的模型；发表前用 GPT-5.5 原样重跑，不改任何 prompt 或流程。</dd>
+        <dt>结果</dt><dd class="res">10 个模型在 CPC 上全部提升；GPT-5.5 在 CPC 上的提升更大（72.0% → 86.8%）。</dd>
+        <dt>余量</dt><dd>ED 上 GPT-5.5 基线已与无预算 DxO 持平（84.6% vs 84.3%），更强的模型可能会吃掉一部分编排带来的准确率收益。</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">逻辑链 12–13 的展开</div>
+      <h2>局限与正确解读</h2>
+    </div>
+    <div class="grid-3 lim">
+      <div class="card">
+        <h3>模拟环境</h3>
+        <ul>
+          <li>纯文本，无影像、心电波形、病理切片</li>
+          <li>守门人有问必答，没有病人遗忘、说错、沟通障碍</li>
+          <li>没有病情随时间变化，也没有对初步治疗的反应</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>病例与对照</h3>
+        <ul>
+          <li>只有确有疾病的病例，没有健康或良性就诊，患病率与真实门诊不同</li>
+          <li>CPC 偏难偏罕见</li>
+          <li>对照是单个全科/内科医生，不是专科医生或多学科团队</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>评价指标</h3>
+        <ul>
+          <li>费用来自一家医院的标准价目表，不含时间、侵入性、不适</li>
+          <li>只评诊断，不评治疗、安全、随访</li>
+          <li>作者均为 Microsoft 员工，部分人是相关专利申请的发明人</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cando">
+      <div class="card yes">
+        <h3>✓ 可以这样说</h3>
+        <ul>
+          <li>在一个文本模拟的序贯诊断基准上，LLM 编排系统比直接提示同一模型更准，且可以用更少的检查费用达到相近准确率。</li>
+          <li>在这种受控、纯文本条件下，DxO 的准确率显著高于参加测试的全科医生。</li>
+          <li>显式的假设追踪和控费角色，对降低检查费用有明确贡献。</li>
+          <li>序贯、计费的评测能暴露一次性答题测不出的问题。</li>
+        </ul>
+      </div>
+      <div class="card no">
+        <h3>✗ 不能这样说</h3>
+        <ul>
+          <li>"AI 看病已经比医生准四倍"：对照条件高度受限，且不是专科医生。</li>
+          <li>"可以直接用于临床"：没有前瞻性临床试验，也没有评估患者结局。</li>
+          <li>"能帮医院省一半检查费"：费用是价目表估算，不是真实账单。</li>
+          <li>"DxO 对任何模型、任何场景都能提高准确率"：GPT-5.5 在 ED 上已经追平。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">查词</div>
+      <h2>术语表</h2>
+    </div>
+    <dl class="gloss">
+      <div><dt>序贯诊断<span>Sequential diagnosis</span></dt><dd>信息逐步获取、判断逐步更新的诊断过程，与一次给齐信息的"静态诊断"相对。</dd></div>
+      <div><dt>鉴别诊断<span>Differential diagnosis</span></dt><dd>根据现有信息列出的"可能是哪几种病"的排序清单。</dd></div>
+      <div><dt>NEJM CPC<span>Clinicopathological Conference</span></dt><dd>《新英格兰医学杂志》长期刊登的麻省总医院疑难病例讨论，以复杂、罕见著称，最后公布病理确诊。</dd></div>
+      <div><dt>MIMIC-IV-ED</dt><dd>美国 Beth Israel Deaconess 医疗中心的公开急诊电子病历数据库（需认证使用）。</dd></div>
+      <div><dt>病例简述<span>Vignette</span></dt><dd>两三句话的开场病情描述，例如"63 岁女性因气短和水肿就诊"。</dd></div>
+      <div><dt>守门人<span>Gatekeeper</span></dt><dd>持有完整病历、按请求释放信息的 LLM，作用相当于"病人 + 病历系统 + 检验科"。</dd></div>
+      <div><dt>裁判<span>Judge</span></dt><dd>按 5 分量表比对候选诊断与标准诊断的 LLM。</dd></div>
+      <div><dt>编排<span>Orchestration</span></dt><dd>不改模型参数，只通过多次调用、角色分工和流程控制来组织模型的推理。</dd></div>
+      <div><dt>基线<span>Baseline</span></dt><dd>用于对比的最简做法：同一模型，只给一段极简 prompt。</dd></div>
+      <div><dt>Pareto 前沿<span>Pareto frontier</span></dt><dd>在两个目标（这里是准确率高、费用低）之间，不存在"另一方案两方面都更好"的那些方案连成的线。</dd></div>
+      <div><dt>消融实验<span>Ablation</span></dt><dd>逐个去掉系统组件，看性能如何变化，以判断各组件的贡献。</dd></div>
+      <div><dt>封存测试集<span>Held-out test set</span></dt><dd>开发全程不看、方法定型后才运行的数据，用来检验泛化能力。</dd></div>
+      <div><dt>集成<span>Ensemble</span></dt><dd>多个独立的 DxO 团队并行诊断，再由一个团队汇总；费用按所有团队的检查（去重）计算。</dd></div>
+      <div><dt>CPT 编码<span>Current Procedural Terminology</span></dt><dd>美国医疗服务和检查的标准编码，可对应到价目表价格。</dd></div>
+      <div><dt>价目表<span>Chargemaster</span></dt><dd>医院依美国价格透明法规公开的标准收费清单；本文用 Kaiser Permanente 华盛顿州中心医院 2023 版。</dd></div>
+      <div><dt>过早闭合<span>Premature closure</span></dt><dd>在充分验证前就锁定一个诊断、停止思考其它可能，是常见的诊断错误。</dd></div>
+      <div><dt>锚定偏差<span>Anchoring bias</span></dt><dd>过度依赖最初印象，后续信息难以改变判断。</dd></div>
+      <div><dt>Cohen's κ</dt><dd>扣除随机一致后的评分者一致性指标；0.6–0.8 通常视为较好，0.8 以上视为极好。</dd></div>
+      <div><dt>闭卷 / 开卷<span>Closed / open book</span></dt><dd>医生是否可以使用外部参考资料（开卷可用 UpToDate 等，禁用生成式 AI）。</dd></div>
+      <div><dt>合成回答<span>Synthetic response</span></dt><dd>病历中没有记载、由守门人按病例一致性生成的检查结果或病史回答。</dd></div>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>论文：H. Nori, M. Daswani, C. Kelly 等，"Sequential diagnosis with language models"，<i>Science</i> 394, 423–428 (2026)，DOI 10.1126/science.aeh7930，含 48 页补充材料。代码与数据：Zenodo 10.5281/zenodo.21286121，github.com/microsoft/sdbench。</p>
+    <p>本页为学习用导读。标为"解读提醒"或"值得注意"的段落是导读者的评注，不是论文原文观点。</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- logic chain ---------- */
+  const nodes = Array.from(document.querySelectorAll('.node'));
+  function setOpen(node, open){
+    node.classList.toggle('open', open);
+    node.querySelector('.node-head').setAttribute('aria-expanded', String(open));
+    node.querySelector('.node-body').hidden = !open;
+  }
+  nodes.forEach(n => n.querySelector('.node-head').addEventListener('click', () => {
+    setOpen(n, !n.classList.contains('open')); syncToggle();
+  }));
+  const toggleAll = document.getElementById('toggleAll');
+  function syncToggle(){
+    toggleAll.textContent = nodes.every(n => n.classList.contains('open')) ? '全部收起' : '全部展开';
+  }
+  toggleAll.addEventListener('click', () => {
+    const openAll = !nodes.every(n => n.classList.contains('open'));
+    nodes.forEach(n => setOpen(n, openAll)); syncToggle();
+  });
+  document.querySelectorAll('.overview a').forEach(a => a.addEventListener('click', () => {
+    const n = document.querySelector(a.getAttribute('href'));
+    if (n && n.classList.contains('node')) { setOpen(n, true); syncToggle(); }
+  }));
+
+  /* ---------- nav highlight ---------- */
+  const navLinks = Array.from(document.querySelectorAll('.nav a'));
+  const secs = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, {rootMargin: '-45% 0px -50% 0px'});
+    secs.forEach(s => io.observe(s));
+  }
+
+  /* ---------- case stepper ---------- */
+  const R = s => '<span class="tagR">真实</span>' + s;
+  const S = s => '<span class="tagS">合成</span>' + s;
+  const steps = [
+    {who:'gate', title:'守门人 · 开场 vignette',
+     html:'<p>63 岁女性，因呼吸困难 (dyspnea) 和水肿 (edema) 就诊。腹膜后、纵隔以及心脏和大血管周围发现软组织增厚。已作出诊断。</p>',
+     note:'<b>起点。</b>这两句话就是 DxO 一开始知道的全部。原病历有好几页，此刻全部隐藏在守门人那里。', ddx:null},
+    {who:'dxo', title:'DxO · 第 1 轮提问',
+     html:'<ol><li>用你自己的话说说主要问题，各自什么时候开始？</li><li>气短和肿胀怎么变化的？起病时间、进展速度、加重/缓解因素、现在多严重？</li><li>还有没有胸痛、咳嗽、心悸、发热、盗汗、体重变化、腹部不适、大小便变化？</li><li>列出所有处方药、非处方药、维生素、补充剂及起始时间。</li><li>做过哪些手术、住院、植入装置或导管操作？</li></ol>',
+     note:'<b>广撒网式病史采集。</b>一轮问 5 个问题，这是 SDBench 的批量模式（每轮最多 5 问或 3 项检查）。注意它还没开任何检查：问病史只算问诊费。', q:5, ddx:null},
+    {who:'gate', title:'守门人 · 回答',
+     html:'<ol><li>'+R('进行性劳力性呼吸困难 2 个月；干咳约 6 周；端坐呼吸（需垫 3 个枕头）；下肢水肿、腹胀、厌食、餐后恶心；口干、多饮、多尿 2 个月。')+'</li><li>'+R('气短 2 个月前出现，2 周内进展到轻微活动即发作；水肿随利尿剂加量部分改善。')+'</li><li>'+R('平卧时干咳加重，间歇性心悸；否认胸痛、发热、盗汗、体重变化、皮疹等。')+'</li><li>'+S('二甲双胍、碳酸钙、复合维生素、呋塞米（约 7 周前开始）、秋水仙碱、去氨加压素 desmopressin（8 天前开始）。')+'</li><li>'+S('多年前脑膜瘤切除、膝关节镜；6 个月前肩部激素注射；4 周前桡骨骨折复位。')+'</li></ol>',
+     note:'<b>合成回答登场。</b>原病历没写用药史和手术史，守门人没有说"没有该信息"（那本身就是提示），而是生成了与病例一致的合成回答。', real:3, syn:2, ddx:null},
+    {who:'dxo', title:'DxO · 第 2 轮提问',
+     html:'<ol><li>有没有眼干、唾液腺肿大或疼痛、吞咽干食困难、反复龋齿？</li><li>有没有关节痛、晨僵、肌无力、皮疹、雷诺现象、光敏、腮腺肿痛？</li><li>职业、爱好、旅行、居住环境（霉菌、新装修），有无化学品、粉尘、动物、感染接触？</li><li>吸烟、饮酒、吸毒吗？多少、多久？</li><li>家人有无自身免疫病、心肾疾病、癌症或类似症状？</li></ol>',
+     note:'<b>开始有方向。</b>"口干 + 多处软组织增厚"让它去排查干燥综合征、IgG4 相关疾病一类的自身免疫/炎症性疾病。', q:5, ddx:null},
+    {who:'gate', title:'守门人 · 回答',
+     html:'<ol><li>'+S('口干 2 个月，但否认眼干、唾液腺肿大、吞咽困难、龋齿。')+'</li><li>'+S('手指关节僵硬伴天鹅颈畸形，与原有类风湿关节炎一致；否认其余。')+'</li><li>'+S('办公室工作，住在新英格兰林区，近期无旅行，无特殊暴露。')+'</li><li>'+R('不吸烟不吸毒，每周喝 3 杯葡萄酒。')+'</li><li>'+R('父亲冠心病、结肠癌；儿子系统性红斑狼疮；多位亲属高血压、糖尿病。')+'</li></ol>',
+     note:'<b>阴性信息也有用。</b>这一轮大多是"否认"，它们在降低干燥综合征等诊断的可能性。', real:2, syn:3, ddx:null},
+    {who:'dxo', title:'DxO · 第 3 轮提问',
+     html:'<ol><li>每天尿量大概多少？8 天前为什么开去氨加压素，是诊断了尿崩症 (diabetes insipidus) 吗？</li><li>最近几个月做过胸、腹、盆腔 CT/MRI/超声吗？胰腺、肾、主动脉、淋巴结有什么发现？</li><li>有无腹痛、腰痛、早饱、黄疸、大便颜色变化、瘙痒、胰腺炎？</li><li>有没有被告知肝酶高、肾功能异常或蛋白尿？</li><li>眼周、唾液腺、甲状腺等处有无无痛性肿块？</li></ol>',
+     note:'<b>跨轮次整合。</b>它把第 1 轮用药里的"去氨加压素"与"多饮多尿"联系起来追问；同时去要已有的影像报告。', q:5, ddx:null},
+    {who:'gate', title:'守门人 · 回答',
+     html:'<ol><li>'+S('每天排尿 8–10 次，总量约 2.5–3 L；8 天前内分泌科确诊中枢性尿崩症，开了去氨加压素。')+'</li><li>'+R('8 天前腹盆 CT：双侧肾周液体与软组织增厚、少量心包积液、双侧胸腔积液。MRI：广泛软组织增厚包绕双肾、腹主动脉和降主动脉，胰头饱满。胸部 CT：升、降主动脉周围软组织增厚，心包增厚。')+'</li><li>'+S('均否认。')+'</li><li>'+S('均否认。')+'</li><li>'+S('均否认。')+'</li></ol>',
+     note:'<b>关键线索到手：</b>软组织包绕双肾和主动脉 + 尿崩症。（背景知识：肾周浸润和"主动脉被包裹"是 Erdheim-Chester 病的典型影像表现，尿崩症也是该病常见表现。）<span class="warn">值得留意：这里的"中枢性尿崩症"是合成的。它与病历中真实的多饮多尿一致，但守门人知道最终诊断，补出的细节恰好指向正确答案。这正是作者专门做泄题检验的原因，见"可信吗"。</span>', real:1, syn:4, ddx:null},
+    {who:'dxo', title:'DxO · 虚拟医生团队讨论 → 第一次开检查',
+     html:'<div class="panel"><span class="r">Dr. Hypothesis</span><span>① IgG4 相关疾病 ② Erdheim-Chester 病 ③ 浸润性淋巴瘤</span><span class="r">决定性检查</span><span>血清 IgG4：明显升高强烈支持 IgG4 相关疾病，而且便宜。</span><span class="r">Dr. Test-Chooser</span><span>加血常规、基础代谢、ESR/CRP：查血细胞减少、肝肾功能和炎症程度，一次抽血全搞定。</span><span class="r">Dr. Challenger</span><span>如果有骨骼受累，可能翻转为 Erdheim-Chester；但先查 IgG4 更快更省。</span><span class="r">Dr. Stewardship</span><span>无重复、不超过 3 项、都便宜，批准。</span></div><p class="q">开出：① 血清 IgG4 ② 血常规 + 分类 + 基础代谢 ③ ESR 和 CRP</p>',
+     note:'<b>"辩论链"现身。</b>Challenger 此时已经提出了最终正确答案 Erdheim-Chester 作为可能的"翻转"方向；Stewardship 确保先做最便宜的检查。', t:3,
+     ddx:['IgG4 相关疾病 (IgG4-RD)','Erdheim-Chester 病 (ECD)','浸润性淋巴瘤']},
+    {who:'gate', title:'守门人 · 检查结果',
+     html:'<ol><li>'+S('血清 IgG4：62 mg/dL（参考范围 4–86），正常。')+'</li><li>'+R('白细胞 7150/μl，分类正常；电解质、尿素氮、肌酐、血糖正常。')+'</li><li>'+R('血沉 ESR 70 mm/h，C 反应蛋白 CRP 47.1 mg/L，明显升高。')+'</li></ol>',
+     note:'<b>贝叶斯式更新。</b>IgG4 正常，IgG4 相关疾病的可能性下降；炎症指标高，说明确实有炎症性/浸润性过程在进行。', real:2, syn:1,
+     ddx:['IgG4 相关疾病 (IgG4-RD)','Erdheim-Chester 病 (ECD)','浸润性淋巴瘤']},
+    {who:'dxo', title:'DxO · 团队重排假设 → 第二次开检查',
+     html:'<div class="panel"><span class="r">Dr. Hypothesis</span><span>① Erdheim-Chester 病 ② 浸润性淋巴瘤 ③ IgG4 相关疾病</span><span class="r">决定性检查</span><span>肾周软组织活检 + 免疫组化：泡沫样 CD68+ CD1a− 组织细胞即可证实 ECD。</span><span class="r">Dr. Test-Chooser</span><span>加双侧股骨、胫骨 X 光（对称性骨干硬化高度提示 ECD）；同一活检标本加做 BRAF V600E。</span><span class="r">Dr. Challenger</span><span>若活检像淋巴瘤，首位就翻转；骨片仍能区分，因为淋巴瘤很少造成典型 ECD 骨改变。</span><span class="r">Dr. Stewardship</span><span>均不重复、不超过 3 项，活检符合"组织学确诊"原则，批准。</span></div><p class="q">开出：① CT 引导肾周软组织穿刺活检 + 组化（CD68、CD1a、S100、IgG4、XIIIa） ② 双侧股骨胫骨 X 光 ③ BRAF V600E 检测</p>',
+     note:'<b>选能"一锤定音"的检查。</b>一个阴性结果让排序重排。这次选的是能直接确诊的组织学检查，并且 Challenger 提前想好了结果不符时怎么翻转。', t:3,
+     ddx:['Erdheim-Chester 病 (ECD)','浸润性淋巴瘤','IgG4 相关疾病 (IgG4-RD)']},
+    {who:'gate', title:'守门人 · 检查结果',
+     html:'<ol><li>'+S('组织细胞样细胞增生，胞质嗜酸性至泡沫样；无肉芽肿。CD68 阳性，CD1a 阴性，S100 阴性；IgG4 阳性浆细胞 &lt;5/HPF；XIIIa 阳性。')+'</li><li>'+S('双侧股骨、胫骨对称性骨干皮质及髓质硬化，无溶骨性病变。')+'</li><li>'+R('BRAF V600E 免疫组化弥漫阳性，分子检测证实 BRAF V600E/D 突变。')+'</li></ol>',
+     note:'<b>证据闭环。</b>活检和 X 光是合成的，BRAF 突变是真实的。<span class="warn">合成结果按"病人确实得了这个病时最可能看到的结果"生成。这在模拟上说得通，但比真实世界"干净"：真实活检可能取材不足、结果模棱两可。</span>', real:1, syn:2,
+     ddx:['Erdheim-Chester 病 (ECD)','浸润性淋巴瘤','IgG4 相关疾病 (IgG4-RD)']},
+    {who:'dxo', title:'DxO · 提交诊断',
+     html:'<p class="mono">&lt;diagnosis&gt;Erdheim-Chester disease&lt;/diagnosis&gt;</p>',
+     note:'<b>提交。</b>DxO 判断确定性已超过阈值，选择"提交诊断"这个动作。', ddx:['Erdheim-Chester 病 (ECD)']},
+    {who:'sys', title:'DxO · 诊断确认环节',
+     html:'<p>你确定吗？还有没有能确认或排除的检查？所有鉴别诊断都考虑过了吗？有没有能澄清问题的追问？优先考虑问题和更便宜、创伤更小的检查；不要重复已开的检查。如果确定，请再次用 &lt;diagnosis&gt; 标签给出诊断。</p>',
+     note:'<b>强制自检。</b>这是 DxO 流程中的"诊断确认" (diagnosis confirmation) 步骤：提交前再追问自己一次，减少过早下结论。', ddx:['Erdheim-Chester 病 (ECD)']},
+    {who:'out', title:'结果 · 裁判判定',
+     html:'<p class="mono">&lt;diagnosis&gt;Erdheim-Chester disease&lt;/diagnosis&gt;</p><p><b>DxO 诊断：</b>Erdheim-Chester 病　<b>NEJM 真实诊断：</b>Erdheim-Chester 病　→ <b>正确</b></p>',
+     note:'<b>小结。</b>共 3 轮提问（15 个问题）、2 轮检查（6 项）。21 条回答中 12 条是合成的，比例约 57%，与 CPC 整体的 62.5% 接近。路径是"先把病史问透 → 便宜检查排除 → 一锤定音的活检"，正是论文想展示的模式。', ddx:['Erdheim-Chester 病 (ECD)']}
+  ];
+  let cur = 0;
+  const cLog = document.getElementById('cLog'), cNote = document.getElementById('cNote'), cDdx = document.getElementById('cDdx');
+  const who = {dxo:'DxO（诊断方）', gate:'Gatekeeper（守门人）', sys:'DxO 内部流程', out:'Judge（裁判）'};
+  function renderCase(){
+    let q=0,t=0,r=0,s=0, html='';
+    for (let i=0;i<=cur;i++){
+      const st = steps[i];
+      q += st.q||0; t += st.t||0; r += st.real||0; s += st.syn||0;
+      html += '<div class="msg '+st.who+(i===cur?' latest':'')+'"><span class="who">'+who[st.who]+' · '+st.title.split(' · ')[1]+'</span>'+st.html+'</div>';
+    }
+    cLog.innerHTML = html;
+    const last = cLog.lastElementChild;
+    if (last) cLog.scrollTop = last.offsetTop - 8;
+    cNote.innerHTML = steps[cur].note;
+    let d = null; for (let i=cur;i>=0;i--){ if (steps[i].ddx){ d = steps[i].ddx; break; } }
+    cDdx.innerHTML = d ? d.map((x,i)=>'<li'+(i===0?' class="top"':'')+'>'+x+'</li>').join('') : '<li style="list-style:none;margin-left:-1.2rem;color:var(--muted)">问诊阶段，记录中未显示排序</li>';
+    document.getElementById('cQ').textContent = q;
+    document.getElementById('cT').textContent = t;
+    document.getElementById('cRd').textContent = r+s;
+    const tot = r+s || 1;
+    document.getElementById('cRbar').style.width = (r/tot*100)+'%';
+    document.getElementById('cSbar').style.width = (s/tot*100)+'%';
+    document.getElementById('cRbar').style.display = r ? 'block':'none';
+    document.getElementById('cSbar').style.display = s ? 'block':'none';
+    document.getElementById('cRS').textContent = '真实 '+r+' · 合成 '+s;
+    document.getElementById('cPos').textContent = (cur+1)+' / '+steps.length;
+    document.getElementById('cBar').style.width = ((cur+1)/steps.length*100)+'%';
+    document.getElementById('cPrev').disabled = cur===0;
+    document.getElementById('cNext').disabled = cur===steps.length-1;
+  }
+  document.getElementById('cNext').addEventListener('click',()=>{ if(cur<steps.length-1){cur++;renderCase();} });
+  document.getElementById('cPrev').addEventListener('click',()=>{ if(cur>0){cur--;renderCase();} });
+  document.getElementById('cAll').addEventListener('click',()=>{ cur=steps.length-1; renderCase(); });
+  document.getElementById('cReset').addEventListener('click',()=>{ cur=0; renderCase(); });
+  renderCase();
+
+  /* ---------- roles + ablation ---------- */
+  const ROLES = [
+    {k:'H', nm:'Dr. Hypothesis', zh:'假设医生', d:'维护概率排序的前三位鉴别诊断，每有新发现就按贝叶斯方式更新。'},
+    {k:'T', nm:'Dr. Test-Chooser', zh:'选检医生', d:'每轮最多选 3 项最能区分领先假设的检查。'},
+    {k:'C', nm:'Dr. Challenger', zh:'挑战者', d:'唱反调：找锚定偏差和矛盾证据，提出能推翻当前首位诊断的检查。'},
+    {k:'S', nm:'Dr. Stewardship', zh:'费用管家', d:'诊断价值相当时选更便宜的；否决低收益的昂贵检查。'},
+    {k:'K', nm:'Dr. Checklist', zh:'核对员', d:'默默质控：检查名称是否有效、团队推理是否前后一致。'}
+  ];
+  const ABL = {
+    '':  {lab:'完整 DxO', a:84.7, c:7431},
+    'H': {lab:'去掉 Hypothesis', a:81.5, c:8415},
+    'C': {lab:'去掉 Challenger', a:86.3, c:7192},
+    'S': {lab:'去掉 Stewardship', a:81.9, c:14882, sc:true},
+    'T': {lab:'去掉 Test-Chooser', a:82.3, c:11181, sc:true},
+    'K': {lab:'去掉 Checklist', a:80.6, c:8051},
+    'HS':{lab:'去掉 Hypothesis + Stewardship', a:78.2, c:13484, sa:true, sc:true}
+  };
+  const off = new Set();
+  const rolesEl = document.getElementById('roles');
+  rolesEl.innerHTML = ROLES.map(r=>'<button type="button" class="role" aria-pressed="true" data-k="'+r.k+'"><span class="nm">'+r.nm+'</span><span class="zh">'+r.zh+'</span><span>'+r.d+'</span><span class="st">在团队中</span></button>').join('');
+  rolesEl.querySelectorAll('.role').forEach(b=>b.addEventListener('click',()=>{
+    const k=b.dataset.k; if(off.has(k)) off.delete(k); else off.add(k); renderAbl();
+  }));
+  const fmt$ = v => '$'+Math.round(v).toLocaleString('en-US');
+  function keyOf(){ return ['H','T','C','S','K'].filter(k=>off.has(k)).join(''); }
+  function renderAbl(){
+    rolesEl.querySelectorAll('.role').forEach(b=>{
+      const on=!off.has(b.dataset.k); b.setAttribute('aria-pressed',String(on));
+      b.querySelector('.st').textContent = on?'在团队中':'已移出';
+    });
+    const k = keyOf(), full = ABL[''], cfg = ABL[k];
+    const read = document.getElementById('ablRead');
+    if (!cfg){
+      read.innerHTML = '<div class="eyebrow">当前配置</div><div class="cfg">移出：'+Array.from(off).map(x=>ROLES.find(r=>r.k===x).nm).join(' + ')+'</div><p>论文测过这个组合，但没有公开具体数值（Table S4 只列出完整版、5 种单独去除和"Hypothesis + Stewardship"）。论文的总体结论是：25 种去除组合中，完整版在 20 种上<b>同时</b>更准且更省，没有任何简化版本显著优于完整版。</p><button type="button" class="btn" id="ablReset">恢复完整团队</button>';
+      document.getElementById('ablReset').addEventListener('click',()=>{off.clear();renderAbl();});
+    } else {
+      const da = cfg.a-full.a, dc = cfg.c-full.c;
+      const dA = k ? '<span class="delta '+(da>0?'up':da<0?'down':'flat')+'">'+(da>0?'+':'')+da.toFixed(1)+' 个百分点</span>'+(cfg.sa?'<span class="sig">显著</span>':'<span class="figcap">不显著</span>') : '';
+      const dC = k ? '<span class="delta '+(dc<0?'up':dc>0?'down':'flat')+'">'+(dc>0?'+':'−')+fmt$(Math.abs(dc))+'</span>'+(cfg.sc?'<span class="sig">显著</span>':'<span class="figcap">不显著</span>') : '';
+      let msg = '五个角色全部在场。这是对照基准。';
+      if (k==='S') msg = '没有费用管家，检查费几乎翻倍。这是对费用影响最大的单个角色。';
+      else if (k==='T') msg = '没有专门挑"最能区分假设"的检查，团队开了更多不必要的检查，费用多出约一半。';
+      else if (k==='HS') msg = '同时去掉"维护鉴别诊断"和"控费"，准确率下降最多，费用也大涨。说明二者共同支撑了 DxO 的表现。';
+      else if (k==='C') msg = '准确率略升、费用略降，但差异不显著。可能 Challenger 在这批验证病例上帮助有限，也可能只是随机波动。';
+      else if (k==='H') msg = '准确率下降 3.2 个百分点、费用上升，但统计上不显著。';
+      else if (k==='K') msg = '准确率下降 4.1 个百分点，按论文的检验同样未达显著。';
+      read.innerHTML = '<div class="eyebrow">当前配置</div><div class="cfg">'+cfg.lab+'</div>'+
+        '<div class="metric"><span class="big">'+cfg.a.toFixed(1)+'%</span>'+dA+'</div><div class="figcap">诊断准确率</div>'+
+        '<div class="metric"><span class="big">'+fmt$(cfg.c)+'</span>'+dC+'</div><div class="figcap">每例平均费用</div>'+
+        '<p>'+msg+'</p>'+(off.size===1&&k!=='S'&&k!=='H'?'<p class="figcap">提示：同时移出 Hypothesis 和 Stewardship 可以看到唯一一个准确率显著下降的组合。</p>':'');
+    }
+    drawAbl(cfg ? k : null);
+  }
+  function drawAbl(sel){
+    const svg = document.getElementById('ablSvg');
+    const W=420,H=300,L=50,Rr=16,T=16,B=40;
+    const x = c => L + (c-6000)/(16000-6000)*(W-L-Rr);
+    const y = a => T + (88-a)/(88-76)*(H-T-B);
+    let g='';
+    [76,79,82,85,88].forEach(a=>{ g+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(a)+'" y2="'+y(a)+'" stroke="var(--rule)"/><text x="'+(L-6)+'" y="'+(y(a)+4)+'" text-anchor="end" font-size="11" class="t-muted">'+a+'%</text>'; });
+    [6000,8000,10000,12000,14000,16000].forEach(c=>{ g+='<text x="'+x(c)+'" y="'+(H-B+16)+'" text-anchor="middle" font-size="11" class="t-muted">$'+(c/1000)+'k</text>'; });
+    g+='<text x="'+((L+W-Rr)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="11" class="t-muted">平均费用</text>';
+    const short = {'':'完整','H':'−Hyp','C':'−Chal','S':'−Stew','T':'−Test','K':'−Check','HS':'−Hyp−Stew'};
+    Object.keys(ABL).forEach(k=>{
+      const d=ABL[k], cx=x(d.c), cy=y(d.a), on=k===sel;
+      const col = k===''?'var(--dxo)':'var(--base)';
+      g+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(on?7:5)+'" fill="'+(on?col:'var(--surface)')+'" stroke="'+col+'" stroke-width="2"/>';
+      const anchor = cx>W-90?'end':'start', dx = anchor==='end'?-10:10;
+      g+='<text x="'+(cx+dx)+'" y="'+(cy+4)+'" text-anchor="'+anchor+'" font-size="11.5" class="'+(on?'t-ink':'t-muted')+'"'+(on?' font-weight="600"':'')+'>'+short[k]+'</text>';
+    });
+    svg.innerHTML = g;
+  }
+  renderAbl();
+
+  /* ---------- pareto chart ---------- */
+  // ex:true = number stated in text/tables; otherwise read from figure (≈)
+  const DATA = {
+    cpc:{xmax:10000, xt:[0,2000,4000,6000,8000,10000],
+      dxo:[{n:'即时回答 Instant answer',c:0,a:39.5},{n:'仅提问 Questions only',c:300,a:62.8,cx:true},{n:'$1k 预算',c:1303,a:79.6,ex:true},{n:'$4k 预算',c:2241,a:80.9,ex:true},{n:'无预算 No budget',c:5431,a:83.2,ex:true},{n:'集成 Ensemble',c:8945,a:84.5,ex:true}],
+      dxoOff:[{n:'$2k 预算',c:1700,a:77.3},{n:'$8k 预算',c:2750,a:79.3},{n:'$16k 预算',c:3500,a:80.7}],
+      base:[{n:'GPT-3.5 turbo',c:1600,a:22.4},{n:'GPT-4.1 nano',c:2150,a:26},{n:'Gemma 3',c:3000,a:30.6},{n:'DeepSeek R1',c:2600,a:43.8,ax:true},{n:'Gemini 2.5 Flash',c:5000,a:46.4,ax:true},{n:'GPT-4.1 mini',c:3000,a:52.5},{n:'Llama 4 Maverick',c:3450,a:56.6,ax:true},{n:'GPT-OSS 120B',c:6050,a:59.9,ax:true},{n:'GPT-4.1',c:4000,a:64},{n:'Claude 4.5 Sonnet',c:7300,a:69.4,ax:true},{n:'GPT-5 mini',c:6500,a:71.7,ax:true},{n:'Gemini 2.5 Pro',c:4550,a:73.0,ax:true},{n:'Claude 4.1 Opus',c:6900,a:74.0,ax:true},{n:'Grok 4',c:5050,a:76.6,ax:true},{n:'GPT-5',c:8409,a:78.9,ex:true,hl:true}],
+      doc:[{n:'医生 · 闭卷（平均）',c:3049,a:22.3,ex:true},{n:'医生 · 开卷（平均）',c:4725,a:36.1,ex:true}],
+      g55:[{n:'GPT-5.5 DxO 即时回答',c:0,a:48},{n:'GPT-5.5 DxO 仅提问',c:300,a:70.5,cx:true},{n:'GPT-5.5 DxO $1k 预算',c:1050,a:88.5,ex:true},{n:'GPT-5.5 DxO $2k 预算',c:1400,a:88.9},{n:'GPT-5.5 DxO $4k 预算',c:1750,a:89.2},{n:'GPT-5.5 DxO 集成',c:6850,a:89.8,ax:true}],
+      g55off:[{n:'GPT-5.5 DxO 无预算',c:4254,a:86.8,ex:true}],
+      g55base:{n:'GPT-5.5 基线',c:4514,a:72.0,ex:true},
+      note:'CPC 共 304 例。医生只做了其中 56 个测试病例；表现最好的个人医生为 51.8%（费用未单独报告）。'},
+    ed:{xmax:9000, xt:[0,1500,3000,4500,6000,7500,9000],
+      dxo:[{n:'即时回答 Instant answer',c:0,a:19.5},{n:'仅提问 Questions only',c:300,a:42,cx:true},{n:'$1k 预算',c:1477,a:63.4,ex:true},{n:'$2k 预算',c:2037,a:69.5,ex:true},{n:'$4k 预算',c:2634,a:73.2,ex:true},{n:'$8k 预算',c:3150,a:74.6},{n:'$16k 预算',c:3700,a:76.0},{n:'无预算 No budget',c:4979,a:80.3,ex:true},{n:'集成 Ensemble',c:7350,a:81.0}],
+      dxoOff:[],
+      base:[{n:'GPT-3.5 turbo',c:1250,a:35},{n:'GPT-4.1 nano',c:1750,a:40},{n:'Gemma 3',c:1850,a:43},{n:'Gemini 2.5 Flash',c:2600,a:47},{n:'Llama 4 Maverick',c:2450,a:58.5},{n:'GPT-4.1 mini',c:2200,a:60},{n:'GPT-OSS 120B',c:3750,a:63.5},{n:'Claude 4.5 Sonnet',c:3750,a:65.5},{n:'GPT-4.1',c:2250,a:67.5},{n:'Gemini 2.5 Pro',c:3250,a:68},{n:'Claude 4.1 Opus',c:3200,a:69},{n:'GPT-5 mini',c:4200,a:75},{n:'GPT-5',c:4240,a:76.6,ex:true,hl:true}],
+      doc:[{n:'医生 · 开卷（平均）',c:3400,a:46.8,ex:true},{n:'医生 · 开卷（最佳个人，40 例）',c:3332,a:62.5,ex:true,best:true}],
+      g55:[{n:'GPT-5.5 DxO 即时回答',c:0,a:20},{n:'GPT-5.5 DxO 仅提问',c:300,a:51.5,cx:true},{n:'GPT-5.5 DxO $1k 预算',c:1600,a:71.5},{n:'GPT-5.5 DxO $2k 预算',c:1950,a:73.5},{n:'GPT-5.5 DxO $4k 预算',c:2450,a:78},{n:'GPT-5.5 DxO $8k 预算',c:3029,a:82.5,ex:true},{n:'GPT-5.5 DxO 无预算',c:5650,a:84.3,ax:true},{n:'GPT-5.5 DxO 集成',c:7807,a:85.2,ex:true}],
+      g55off:[],
+      g55base:{n:'GPT-5.5 基线',c:5617,a:84.6,ex:true},
+      note:'ED 共 325 例。没有闭卷医生组。注意 GPT-5.5 基线（84.6%）与 GPT-5.5 无预算 DxO（84.3%）几乎重合。'}
+  };
+  let ds='cpc', sel=null;
+  const svgP = document.getElementById('pareto');
+  const pRead = document.getElementById('pRead');
+  const g55 = document.getElementById('g55');
+  function approxNote(p){
+    if (p.ex) return '';
+    if (p.ax) return ' <span class="approx">（准确率为原文数值，费用 ≈ 图中读取）</span>';
+    if (p.cx) return ' <span class="approx">（费用 = 一次问诊 $300，准确率 ≈ 图中读取）</span>';
+    return ' <span class="approx">（≈ 从图中读取）</span>';
+  }
+  function drawPareto(){
+    const D = DATA[ds], W=720,H=440,L=58,Rr=24,T=18,B=52;
+    const x = c => L + c/D.xmax*(W-L-Rr);
+    const y = a => T + (100-a)/100*(H-T-B);
+    const pts = [];
+    let g = '';
+    [0,20,40,60,80,100].forEach(a=>{ g+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(a)+'" y2="'+y(a)+'" stroke="var(--rule)"/><text x="'+(L-8)+'" y="'+(y(a)+4)+'" text-anchor="end" font-size="12" class="t-muted">'+a+'%</text>'; });
+    D.xt.forEach(c=>{ g+='<text x="'+x(c)+'" y="'+(H-B+20)+'" text-anchor="middle" font-size="12" class="t-muted">$'+c.toLocaleString('en-US')+'</text>'; });
+    g+='<text x="'+((L+W-Rr)/2)+'" y="'+(H-10)+'" text-anchor="middle" font-size="12.5" class="t-muted">每例平均检查费用（美元）</text>';
+    g+='<text transform="translate(16 '+((T+H-B)/2)+') rotate(-90)" text-anchor="middle" font-size="12.5" class="t-muted">诊断准确率</text>';
+    // baseline frontier hint: none; plot baselines
+    D.base.forEach(p=>{ pts.push(Object.assign({kind:'base'},p)); });
+    D.doc.forEach(p=>{ pts.push(Object.assign({kind:'doc'},p)); });
+    D.dxoOff.forEach(p=>{ pts.push(Object.assign({kind:'dxoOff',grp:'DxO (GPT-5) · 不在前沿上'},p)); });
+    const show55 = g55.checked;
+    if (show55){
+      g+='<polyline fill="none" stroke="var(--agent)" stroke-width="2.5" stroke-dasharray="6 4" points="'+D.g55.map(p=>x(p.c)+','+y(p.a)).join(' ')+'"/>';
+      D.g55.forEach(p=>pts.push(Object.assign({kind:'g55'},p)));
+      D.g55off.forEach(p=>pts.push(Object.assign({kind:'g55off'},p)));
+      pts.push(Object.assign({kind:'g55base'},D.g55base));
+    }
+    g+='<polyline fill="none" stroke="var(--dxo)" stroke-width="3" points="'+D.dxo.map(p=>x(p.c)+','+y(p.a)).join(' ')+'"/>';
+    D.dxo.forEach(p=>pts.push(Object.assign({kind:'dxo'},p)));
+    pts.forEach((p,i)=>{
+      const cx=x(p.c), cy=y(p.a); let m='';
+      if (p.kind==='dxo') m='<circle cx="'+cx+'" cy="'+cy+'" r="6.5" fill="var(--dxo)" stroke="var(--surface)" stroke-width="1.5"/>';
+      else if (p.kind==='dxoOff') m='<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="var(--surface)" stroke="var(--dxo)" stroke-width="2" opacity=".7"/>';
+      else if (p.kind==='base') m='<circle cx="'+cx+'" cy="'+cy+'" r="'+(p.hl?6.5:5)+'" fill="'+(p.hl?'var(--ink)':'var(--base)')+'" opacity="'+(p.hl?1:.6)+'"/>';
+      else if (p.kind==='doc') m='<path d="M'+(cx-7)+','+(cy-7)+' L'+(cx+7)+','+(cy+7)+' M'+(cx+7)+','+(cy-7)+' L'+(cx-7)+','+(cy+7)+'" stroke="var(--gate)" stroke-width="'+(p.best?2:3.5)+'" opacity="'+(p.best?.65:1)+'"/>';
+      else if (p.kind==='g55') m='<rect x="'+(cx-5.5)+'" y="'+(cy-5.5)+'" width="11" height="11" transform="rotate(45 '+cx+' '+cy+')" fill="var(--agent)"/>';
+      else if (p.kind==='g55off') m='<rect x="'+(cx-5)+'" y="'+(cy-5)+'" width="10" height="10" transform="rotate(45 '+cx+' '+cy+')" fill="var(--surface)" stroke="var(--agent)" stroke-width="2"/>';
+      else if (p.kind==='g55base') m='<circle cx="'+cx+'" cy="'+cy+'" r="7" fill="var(--surface)" stroke="var(--agent)" stroke-width="3"/>';
+      g+='<g class="pt'+(sel===p.n?' sel':'')+'" tabindex="0" role="button" data-i="'+i+'" aria-label="'+p.n+'：准确率 '+p.a+'%，费用 $'+p.c+'">'+m+'<circle class="hit" cx="'+cx+'" cy="'+cy+'" r="11" fill="transparent"/></g>';
+    });
+    // labels
+    const lab = (p,txt,cls,dx,dy,anchor)=>{ g+='<text x="'+(x(p.c)+dx)+'" y="'+(y(p.a)+dy)+'" font-size="12" font-weight="600" text-anchor="'+(anchor||'start')+'" class="'+cls+'" style="pointer-events:none">'+txt+'</text>'; };
+    const dxoLabels = ds==='cpc' ? [['即时回答',8,14],['仅提问',-8,-10,'end'],['$1k',-8,-10,'end'],['$4k',0,-12,'middle'],['无预算',0,-12,'middle'],['集成',0,-12,'middle']]
+                                 : [['即时回答',8,14],['仅提问',-8,-10,'end'],['$1k',-8,-10,'end'],['$2k',-8,-10,'end'],['$4k',-8,-10,'end'],['$8k',0,-12,'middle'],['$16k',0,-12,'middle'],['无预算',0,-12,'middle'],['集成',0,-12,'middle']];
+    D.dxo.forEach((p,i)=>{ const l=dxoLabels[i]; if(l) lab(p,l[0],'t-dxo',l[1],l[2],l[3]); });
+    const gp = D.base.find(p=>p.hl); lab(gp,'GPT-5 基线','t-ink',ds==='cpc'?-10:10,ds==='cpc'?18:16,ds==='cpc'?'end':'start');
+    lab(D.base[0], 'GPT-3.5', 't-muted', -8, 4, 'end');
+    D.doc.forEach(p=>{ lab(p, p.best?'最佳个人医生':(p.n.indexOf('闭卷')>-1?'医生·闭卷':'医生·开卷'), 't-gate', 11, 4); });
+    svgP.innerHTML = g;
+    svgP.querySelectorAll('.pt').forEach(el=>{
+      const p = pts[+el.dataset.i];
+      const pick = ()=>{ sel=p.n; svgP.querySelectorAll('.pt').forEach(e=>e.classList.remove('sel')); el.classList.add('sel'); showPt(p); };
+      el.addEventListener('click', pick);
+      el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+      el.addEventListener('mouseenter', ()=>showPt(p));
+    });
+    const legend = [
+      '<span><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="var(--dxo)" stroke-width="3"/></svg>DxO (GPT-5) 前沿</span>',
+      D.dxoOff.length?'<span><svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="none" stroke="var(--dxo)" stroke-width="2"/></svg>DxO 其它预算（不在前沿上）</span>':'',
+      '<span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="var(--base)" opacity=".6"/></svg>各 LLM 基线（极简 prompt）</span>',
+      '<span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--ink)"/></svg>GPT-5 基线</span>',
+      '<span><svg width="12" height="12"><path d="M1,1 L11,11 M11,1 L1,11" stroke="var(--gate)" stroke-width="2.5"/></svg>医生</span>',
+      show55?'<span><svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="var(--agent)" stroke-width="2.5" stroke-dasharray="5 3"/></svg>GPT-5.5 DxO 前沿 / ○ GPT-5.5 基线</span>':''
+    ];
+    document.getElementById('pLegend').innerHTML = legend.join('');
+    const still = pts.find(p=>p.n===sel);
+    if (still) showPt(still); else { sel=null; pRead.innerHTML = '点击图中的点查看具体数值。'+'<br><span class="approx">'+D.note+'</span>'; }
+  }
+  function showPt(p){
+    const kind = {dxo:'DxO (GPT-5) · Pareto 前沿', dxoOff:'DxO (GPT-5) · 不在前沿上', base:'LLM 基线（极简 prompt）', doc:'参加测试的医生', g55:'DxO (GPT-5.5) · 前沿', g55off:'DxO (GPT-5.5) · 不在前沿上', g55base:'GPT-5.5 基线（极简 prompt）'}[p.kind];
+    pRead.innerHTML = '<span class="eyebrow">'+kind+'</span><br><b>'+p.n+'</b>：准确率 <b class="num">'+(p.ex||p.ax?'':'≈')+p.a+'%</b>，每例平均费用 <b class="num">'+(p.ex||p.cx?'':'≈')+fmt$(p.c)+'</b>'+approxNote(p);
+  }
+  document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+    ds=b.dataset.ds; sel=null;
+    document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    drawPareto();
+  }));
+  g55.addEventListener('change', drawPareto);
+  drawPareto();
+
+  /* ---------- dumbbell ---------- */
+  const DB = [
+    ['Gemini 2.5 Flash',46.4,68.8,'***'],['Claude 4.5 Sonnet',69.4,81.9,'***'],['DeepSeek R1',43.8,55.6,'***'],
+    ['Llama 4 Maverick',56.6,64.5,'**'],['GPT-OSS 120B',59.9,67.1,'*'],['GPT-5',78.9,83.2,'*'],
+    ['Grok 4',76.6,80.9,''],['Claude 4.1 Opus',74.0,78.0,''],['Gemini 2.5 Pro',73.0,75.3,''],['GPT-5 mini',71.7,74.0,'']
+  ];
+  const lo=40, hi=90, pos = v => ((v-lo)/(hi-lo)*100)+'%';
+  const row = (d,extra)=>'<div class="drow'+(extra?' extra':'')+'"><span class="nm" title="'+d[0]+'">'+d[0]+'</span><span class="track" role="img" aria-label="'+d[0]+'：'+d[1]+'% 提升到 '+d[2]+'%"><span class="seg-line" style="left:'+pos(d[1])+';width:calc('+pos(d[2])+' - '+pos(d[1])+')"></span><span class="d0" style="left:'+pos(d[1])+'" title="基线 '+d[1]+'%"></span><span class="d1" style="left:'+pos(d[2])+'" title="DxO '+d[2]+'%"></span></span><span class="gain">+'+(d[2]-d[1]).toFixed(1)+(d[3]?' '+d[3]:'')+'</span></div>';
+  let dh = '<div class="daxis"><span></span><span class="ticks">'+[40,50,60,70,80,90].map(v=>'<span style="left:'+pos(v)+'">'+v+'%</span>').join('')+'</span><span></span></div>';
+  dh += DB.map(d=>row(d)).join('');
+  dh += row(['GPT-5.5（补测）',72.0,86.8,''],true);
+  document.getElementById('dumb').innerHTML = dh;
+
+  /* ---------- error bars ---------- */
+  const ERR = [
+    ['只说出表现，没说出病因','Manifestation rather than etiology','说了急性肾损伤、心衰、菌血症，没说背后的来源或诱因',39,33.9],
+    ['同一器官系统，选错了病','Wrong entity in same organ system','说结节病，实为炎症性肠病相关的肉芽肿性肺病',26,22.6],
+    ['病因或亚型错误','Wrong etiology or subtype','1 型 vs 2 型心肌梗死；恶性肿瘤细胞系判断错误',21,18.3],
+    ['多成分诊断不完整','Incomplete multicomponent','说了胆管炎，漏了同时存在的菌血症',16,13.9],
+    ['严重程度/特异性不符','Severity or specificity mismatch','肺炎但没指出继发呼吸衰竭；卒中但没指出血管或出血转化',9,7.8],
+    ['编造无依据的细节','Fabricated or unsupported detail','加上病历不支持的抗磷脂综合征、脓肿或具体病原体',4,3.5]
+  ];
+  document.getElementById('errBars').innerHTML = ERR.map(e=>'<div class="bar"><div>'+e[0]+'<small>'+e[1]+' · 例：'+e[2]+'</small></div><div class="track"><i style="width:'+(e[4]/35*100)+'%"></i></div><div class="v">'+e[3]+' · '+e[4]+'%</div></div>').join('');
+})();
+</script>
