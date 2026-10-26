@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polyurethane Precipitation Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive work-up of a TPU solution in DMAc: dilute, precipitate into a non-solvent, wash, filter, dry and check residual solvent by TGA and NMR.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: same visual family as the synthesis bench. Batch panel, then a work area (scene | procedure), live readouts, charts, reference. */
+:root {
+  --bg: #edf1f2;
+  --surface: #ffffff;
+  --surface-2: #f5f8f9;
+  --ink: #13202a;
+  --ink-2: #44545f;
+  --muted: #6f7f8a;
+  --line: #d2dbe0;
+  --grid: #e4eaed;
+  --accent: #0b6e78;
+  --accent-ink: #ffffff;
+  --accent-soft: #d8eef0;
+  --amber: #b86f0e;
+  --amber-soft: #fbedd6;
+  --glass: rgba(150, 192, 208, 0.22);
+  --glass-stroke: #6f93a3;
+  --steel: #8a969e;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --good: #0ca30c;
+  --good-ink: #006300;
+  --warn: #fab219;
+  --warn-ink: #8a5a00;
+  --crit: #d03b3b;
+  --crit-soft: #fbe3e3;
+  --atom-o: #c8372d;
+  --atom-n: #2b63c4;
+  --atom-m: #8d6b12;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --r: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1418; --surface: #162027; --surface-2: #1b2830; --ink: #e3eaee; --ink-2: #aab8c1;
+    --muted: #82929c; --line: #2b3a44; --grid: #22313a; --accent: #43b6c1; --accent-ink: #052a2f;
+    --accent-soft: #12343a; --amber: #eaa23c; --amber-soft: #3a2a12; --glass: rgba(140, 190, 210, 0.13);
+    --glass-stroke: #7097a8; --steel: #9aa6ae; --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    --good-ink: #2fc42f; --warn-ink: #fab219; --crit-soft: #3b1d1d; --atom-o: #ff7d70; --atom-n: #82b1ff; --atom-m: #e2b64e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #162027; --surface-2: #1b2830; --ink: #e3eaee; --ink-2: #aab8c1;
+  --muted: #82929c; --line: #2b3a44; --grid: #22313a; --accent: #43b6c1; --accent-ink: #052a2f;
+  --accent-soft: #12343a; --amber: #eaa23c; --amber-soft: #3a2a12; --glass: rgba(140, 190, 210, 0.13);
+  --glass-stroke: #7097a8; --steel: #9aa6ae; --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --good-ink: #2fc42f; --warn-ink: #fab219; --crit-soft: #3b1d1d; --atom-o: #ff7d70; --atom-n: #82b1ff; --atom-m: #e2b64e; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px;
+}
+.wrap { max-width: 1320px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.12; }
+h1 { font-size: clamp(2rem, 4.4vw, 3.3rem); font-weight: 800; font-stretch: 78%; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; font-weight: 700; font-stretch: 85%; }
+h3 { font-size: 1.05rem; font-weight: 700; font-stretch: 90%; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow, .label { font-family: var(--font-display); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.top { padding-block: 28px 18px; display: grid; gap: 12px; }
+.lede { max-width: 70ch; color: var(--ink-2); font-size: 1.02rem; }
+.crumb { font-size: 0.88rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
+.section { margin-top: 26px; display: grid; gap: 14px; }
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.section-head p { color: var(--ink-2); max-width: 70ch; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; font-weight: 500; font-size: 0.9rem; }
+.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.small { min-height: 30px; padding: 3px 10px; font-size: 0.82rem; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface-2); white-space: nowrap; }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.pill.ok .dot { background: var(--good); } .pill.warn .dot { background: var(--warn); } .pill.bad .dot { background: var(--crit); }
+.grid-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px 14px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field select, .field input[type="number"] { width: 100%; min-height: 36px; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface-2); }
+.field input[type="number"] { font-family: var(--font-mono); }
+.field .hint { font-size: 0.78rem; color: var(--muted); }
+.derived { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 0.88rem; color: var(--ink-2); }
+.derived b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
+.lock { font-size: 0.85rem; color: var(--warn-ink); }
+
+/* work area */
+.work { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 14px; align-items: start; }
+.scene-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+#scene { display: block; width: 100%; height: auto; }
+.scene-cap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--ink-2); }
+.proc { display: grid; gap: 12px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: st; }
+.steps li { counter-increment: st; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; align-items: start; padding: 6px 8px; border-radius: 7px; font-size: 0.88rem; color: var(--ink-2); }
+.steps li::before { content: counter(st); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.74rem; border: 1px solid var(--line); background: var(--surface); }
+.steps li.done { color: var(--muted); }
+.steps li.done::before { content: "✓"; background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.steps li.current { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+.steps li.current::before { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.card { display: grid; gap: 12px; }
+.card .detail { font-size: 0.92rem; color: var(--ink-2); }
+.card .detail b { color: var(--ink); font-weight: 600; }
+.ctl { display: grid; gap: 5px; }
+.ctl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ctl-top output { font-family: var(--font-mono); font-size: 0.9rem; }
+.ctl input[type="range"] { width: 100%; accent-color: var(--accent); }
+.seg { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { flex: 1 1 0; min-width: 0; padding: 6px 6px; border: 0; background: var(--surface-2); cursor: pointer; font-size: 0.84rem; min-height: 34px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.verdict { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); font-size: 0.88rem; }
+.verdict.ok { border-color: var(--good); } .verdict.warn { border-color: var(--warn); background: var(--amber-soft); } .verdict.bad { border-color: var(--crit); background: var(--crit-soft); }
+.toast { min-height: 2.6em; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); font-size: 0.88rem; color: var(--ink-2); }
+.toast.warn { border-color: var(--warn); background: var(--amber-soft); color: var(--ink); }
+.toast.bad { border-color: var(--crit); background: var(--crit-soft); color: var(--ink); }
+.toast.ok { border-color: var(--good); }
+.weigh { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.weigh th, .weigh td { padding: 4px 8px; border-bottom: 1px solid var(--grid); text-align: right; font-family: var(--font-mono); }
+.weigh th { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* readouts and charts */
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.tile { padding: 10px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); display: grid; gap: 2px; align-content: start; min-width: 0; }
+.tile .v { font-family: var(--font-mono); font-size: 1.15rem; font-weight: 500; line-height: 1.25; overflow-wrap: anywhere; }
+.tile .u { font-size: 0.78rem; color: var(--muted); }
+.tile.flag { border-color: var(--warn); } .tile.alarm { border-color: var(--crit); } .tile.good { border-color: var(--good); }
+.charts { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.chart-card { margin: 0; display: grid; gap: 8px; align-content: start; }
+.chart-card figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; }
+.cap-note { font-size: 0.8rem; color: var(--muted); }
+.chart-box { position: relative; }
+.chart-box svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart-box.wide { overflow-x: auto; }
+.chart-box.wide svg { min-width: 640px; }
+.tip { position: absolute; pointer-events: none; z-index: 5; padding: 6px 9px; border-radius: 7px; font-size: 0.8rem; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; }
+.tip b { font-family: var(--font-mono); font-weight: 500; }
+.tip .k { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.8rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.ax text { fill: var(--muted); font: 10.5px var(--font-mono); }
+.gridl { stroke: var(--grid); }
+.empty { fill: var(--muted); font: 13px var(--font-body); }
+
+/* reference */
+.good-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.good-grid .panel { display: grid; gap: 6px; align-content: start; }
+.good-grid ul, .notes ul { margin: 0; padding-left: 1.1em; display: grid; gap: 5px; font-size: 0.89rem; color: var(--ink-2); }
+.table-scroll { overflow-x: auto; }
+table.trouble { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 640px; }
+table.trouble th, table.trouble td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+table.trouble th { font-family: var(--font-display); font-weight: 600; font-size: 0.72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+table.trouble tr.okrow td:first-child { color: var(--good-ink); font-weight: 600; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.notes .panel { display: grid; gap: 8px; align-content: start; }
+
+@media (max-width: 980px) { .work, .charts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <p class="crumb"><a href="polyurethane-synthesis.html">← Polyurethane Synthesis Bench</a></p>
+  <p class="eyebrow">Interactive work-up · Non-solvent precipitation</p>
+  <h1>Polyurethane Precipitation Bench</h1>
+  <p class="lede">Turn the viscous TPU solution from the synthesis into a clean, dry polymer. Dilute it, pour it into a stirred non-solvent, wash out the DMAc, filter, dry to constant weight, then check the result by TGA and ¹H NMR. Every choice changes how the polymer comes out.</p>
+</header>
+
+<section class="wrap section" aria-labelledby="batch-h">
+  <div class="section-head">
+    <h2 id="batch-h">Batch from the reactor</h2>
+    <p id="batchLock" class="lock" hidden>The batch is fixed once you start pouring. Use Start over to change it.</p>
+  </div>
+  <div class="panel" style="display:grid;gap:12px">
+    <div class="grid-fields">
+      <label class="field"><span class="label">Preset</span>
+        <select id="selPreset">
+          <option value="good">Good batch (Mn 38 kg/mol)</option>
+          <option value="low">Wet run (Mn 7 kg/mol)</option>
+          <option value="mid">Uncatalysed run (Mn 13 kg/mol)</option>
+          <option value="custom">Custom</option>
+        </select></label>
+      <label class="field"><span class="label">Polymer in solution (g)</span><input id="inMass" type="number" min="2" max="60" step="0.1" value="16.0"><span class="hint">theoretical solids</span></label>
+      <label class="field"><span class="label">Mn (kg/mol)</span><input id="inMn" type="number" min="3" max="100" step="0.5" value="38"><span class="hint">from the synthesis</span></label>
+      <label class="field"><span class="label">Solids in DMAc (wt %)</span><input id="inSolids" type="number" min="10" max="45" step="1" value="25"><span class="hint">as it leaves the flask</span></label>
+      <label class="field"><span class="label">Hard segment (wt %)</span><input id="inHard" type="number" min="20" max="70" step="0.5" value="37.5"><span class="hint">MDI + BDO share</span></label>
+    </div>
+    <div class="derived" id="batchDerived"></div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="work-h">
+  <div class="section-head">
+    <h2 id="work-h">Work-up</h2>
+    <div class="actions"><span class="pill" id="statusPill"><span class="dot"></span><span>Ready</span></span><button type="button" class="btn small" id="btnRestart">Start over</button></div>
+  </div>
+  <div class="work">
+    <div class="scene-box">
+      <svg id="scene" viewBox="0 0 640 440" role="img" aria-label="Work-up apparatus for the current step"></svg>
+      <div class="scene-cap"><span id="sceneCap">Reaction flask with the TPU solution.</span><span class="mono" id="sceneClock">t = 0 h</span></div>
+    </div>
+    <div class="proc panel">
+      <h2>Procedure</h2>
+      <ol class="steps" id="steps"></ol>
+      <div class="card" id="card"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite">Start by thinning the solution so it pours as a thin stream.</div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="read-h">
+  <div class="section-head"><h2 id="read-h">Readouts</h2><p>What you would measure or estimate at the bench right now.</p></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="charts">
+    <figure class="panel chart-card" style="grid-column:1/-1">
+      <figcaption><h3>Volatiles left in the polymer</h3><span class="cap-note">wt % on dry polymer, log scale, through washing and drying</span></figcaption>
+      <div class="legend" id="volLegend"></div>
+      <div class="chart-box wide" id="volBox"><svg id="volChart" viewBox="0 0 900 280" role="img" aria-label="Residual DMAc, water and methanol in the polymer versus time"></svg><div class="tip" id="volTip" hidden></div></div>
+    </figure>
+    <figure class="panel chart-card">
+      <figcaption><h3>TGA of a sample taken now</h3><span class="cap-note">10 °C/min under N₂</span></figcaption>
+      <div class="chart-box" id="tgaBox"><svg id="tgaChart" viewBox="0 0 520 280" role="img" aria-label="Thermogravimetric curve"></svg><div class="tip" id="tgaTip" hidden></div></div>
+    </figure>
+    <figure class="panel chart-card">
+      <figcaption><h3>¹H NMR of a sample taken now</h3><span class="cap-note">400 MHz, DMSO-d₆</span></figcaption>
+      <div class="actions" style="align-items:center"><span class="label">Vertical zoom</span><div class="seg" id="nmrZoom" style="min-width:180px"><button type="button" data-z="1" aria-pressed="true">×1</button><button type="button" data-z="10" aria-pressed="false">×10</button><button type="button" data-z="50" aria-pressed="false">×50</button></div></div>
+      <div class="chart-box" id="nmrBox"><svg id="nmrChart" viewBox="0 0 520 280" role="img" aria-label="Proton NMR spectrum"></svg><div class="tip" id="nmrTip" hidden></div></div>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="good-h">
+  <div class="section-head"><h2 id="good-h">What a good precipitation looks like</h2><p>Check each stage against these signs. If something looks different, find it in the troubleshooting table below.</p></div>
+  <div class="good-grid">
+    <div class="panel"><p class="label">While pouring</p><ul>
+      <li>The stream turns opaque white the moment it hits the liquid.</li>
+      <li>It draws out into continuous threads, like cotton or thin noodles, that wind onto the stir bar or a glass rod.</li>
+      <li>The liquid stays clear, or at most slightly hazy. It never turns milky.</li></ul></div>
+    <div class="panel"><p class="label">In the beaker</p><ul>
+      <li>The fibres are white to cream (MDI grades are slightly off-white), firm and not tacky.</li>
+      <li>Squeezed, they spring back and do not fuse together or stick to the glass.</li>
+      <li>They settle fast when stirring stops, under a clear supernatant.</li></ul></div>
+    <div class="panel"><p class="label">On the filter</p><ul>
+      <li>Suction pulls the liquid through in seconds.</li>
+      <li>The cake is fluffy and fibrous, not a paste.</li>
+      <li>After washing there is no fishy, amine-like DMAc smell.</li></ul></div>
+    <div class="panel"><p class="label">After drying</p><ul>
+      <li>Fluffy white fibres or crumbs that stretch and snap back.</li>
+      <li>Constant weight, and 90–98 % of the theoretical solids.</li>
+      <li>Residual DMAc below 0.5 wt % by NMR, or below 0.1 wt % for cell or biomedical work.</li>
+      <li>It redissolves completely in DMAc to a clear solution with no gel specks.</li></ul></div>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="tr-h">
+  <div class="section-head"><h2 id="tr-h">Troubleshooting</h2></div>
+  <div class="panel table-scroll">
+    <table class="trouble">
+      <thead><tr><th>What you see</th><th>Likely cause</th><th>What to do</th></tr></thead>
+      <tbody>
+        <tr class="okrow"><td>White continuous fibres, clear liquid</td><td>Good molecular weight, thin solution, strong stirring</td><td>Nothing. Wash it 2–3 times and dry it.</td></tr>
+        <tr><td>One big lump, sticky inside</td><td>Solution too concentrated, poured too fast, or weak stirring</td><td>Dilute to 10–15 wt %, stir harder, pour slower. Cut the lump into small pieces and soak it longer.</td></tr>
+        <tr><td>Soft, sticky gum instead of fibres</td><td>Low molecular weight, or too little non-solvent so the bath holds too much DMAc</td><td>Use ice-cold non-solvent and at least 5–10 volumes. A low-Mn batch stays gummy; the fix is in the synthesis.</td></tr>
+        <tr><td>Milky dispersion that will not settle or filter</td><td>Very low molecular weight, or particles too fine</td><td>Centrifuge, or add a little NaCl to flocculate the particles.</td></tr>
+        <tr><td>Solution already a gel in the flask</td><td>Crosslinking, for example allophanate from overheating</td><td>It cannot be precipitated. The batch is lost.</td></tr>
+        <tr><td>Dry polymer still smells of DMAc, or NMR shows 2.94 / 2.78 ppm singlets</td><td>Too few washes, or lumps too thick to extract</td><td>Wash more instead of drying longer. DMAc binds to urethane groups and leaves the solid only slowly in the oven.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="wrap section" aria-labelledby="notes-h">
+  <div class="section-head"><h2 id="notes-h">Safety, waste and the model</h2></div>
+  <div class="notes">
+    <div class="panel"><h3>Safety</h3><ul>
+      <li>DMAc and DMF pass through skin and are reproductive toxicants. Nitrile gloves give only minutes of protection against them. Use butyl-rubber gloves for this work, or double nitrile changed at once after any splash.</li>
+      <li>Work in a fume hood. Methanol is flammable and toxic. Keep it away from the hotplate.</li>
+      <li>Vent the vacuum oven slowly, and never put a methanol-wet sample into a hot oven that is not under vacuum.</li></ul></div>
+    <div class="panel"><h3>Waste</h3><ul>
+      <li>The bath and wash liquids contain DMAc and traces of tin catalyst. Collect them as aqueous waste with organic solvent. Do not pour them down the drain.</li>
+      <li>Methanol washes go to non-halogenated organic waste.</li>
+      <li>The readouts track how much liquid waste you generate. More washes mean cleaner polymer and more waste.</li></ul></div>
+    <div class="panel"><h3>How the simulation works</h3><ul>
+      <li>Solution viscosity uses the Martin equation with a Mark–Houwink estimate of intrinsic viscosity, the same model as the synthesis bench.</li>
+      <li>The precipitate's form comes from a rule-based score built on viscosity, pour rate, stirring, molecular weight and how much DMAc ends up in the bath.</li>
+      <li>Washing is first-order exchange toward a partition equilibrium (K = 2), with a time constant that grows steeply with fibre or lump thickness.</li>
+      <li>Drying is first-order evaporation for each volatile. The temperature and vacuum factors are illustrative values, not measured data.</li></ul></div>
+  </div>
+</section>
+
+<script>
+"use strict";
+/* =====================================================================
+   1. MODEL
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const fmt = (v, d) => (v == null || !isFinite(v)) ? "—" : Number(v).toFixed(d == null ? 2 : d);
+const RHO_DMAC = 0.937, K_PART = 2.0;
+const PRESETS = { good: { Mn: 38, mass: 16.0, solids: 25 }, low: { Mn: 7, mass: 15.2, solids: 25 }, mid: { Mn: 13, mass: 15.9, solids: 25 } };
+const NS = { water: { name: "Deionized water", short: "water", strength: 1.0 }, meoh: { name: "Methanol", short: "methanol", strength: 0.85 }, mix: { name: "Water–methanol 1 : 1", short: "water–methanol", strength: 0.95 } };
+const RATES = { thin: { name: "Thin stream", note: "≈ 20 mL/min", r: 1, secs: 6 }, steady: { name: "Steady", note: "≈ 60 mL/min", r: 2.5, secs: 3.5 }, dump: { name: "All at once", note: "a few seconds", r: 8, secs: 1.2 } };
+const MORPH = {
+  fibres: { label: "Fine white fibres", L: 0.1, trap: 0.5, fines: 0.003, hold: 1.6, kind: "ok", desc: "Continuous white threads wind onto the stir bar and the liquid stays clear. This is what you want." },
+  strands: { label: "Thick strands", L: 0.4, trap: 0.8, fines: 0.002, hold: 1.3, kind: "ok", desc: "Ropes of polymer wrap around the stirrer. Usable, but they take longer to wash than fine fibres." },
+  lumps: { label: "Lumps", L: 3.0, trap: 1.8, fines: 0.002, hold: 0.9, kind: "warn", desc: "Large lumps with solution trapped inside. Cut them up and soak them for a long time." },
+  powder: { label: "Fine powder", L: 0.03, trap: 0.4, fines: 0.02, hold: 1.2, kind: "ok", desc: "The blender chops the polymer into a powder. It washes fast, but some fines pass the filter." },
+  gum: { label: "Sticky gum", L: 2.0, trap: 1.5, fines: 0.015, hold: 0.7, kind: "bad", desc: "A soft, tacky mass smears on the glass. The molecular weight is too low, or the bath holds too much DMAc." },
+  milky: { label: "Milky dispersion", L: 0.02, trap: 0.4, fines: 0.35, hold: 1.5, kind: "bad", desc: "Tiny particles stay suspended and slip through filter paper. The molecular weight is very low." }
+};
+let P;
+function fresh(keepBatch) {
+  const b = keepBatch || { m: 16.0, Mn: 38, solids: 25, hard: 37.5, round: 1, mTheory: 16.0 };
+  return {
+    stage: 0, b, Vadd: 0, Tsol: 25, ns: "water", Vbath: 1000, cold: false, stir: "mag", rpm: 600, rate: "steady",
+    pourProg: 0, pouring: false, morph: null, t: 0, wD: 0, wW: 0, wM: 0, cB: 0, VB: 0, bathNs: "water", L: 0.4, cut: false,
+    washes: 0, rinse: false, filtered: false, pressed: false, mRec: b.m, oligLoss: 0, finesLoss: 0,
+    waste: { aq: 0, org: 0, dmac: 0 }, Toven: 60, vac: true, airDried: false, hotHours: 0, weighings: [],
+    hist: [], events: [], queue: null, strands: [], anim: 0, filterAnim: 0, flash: 0
+  };
+}
+const V0 = () => P.b.m * (100 - P.b.solids) / P.b.solids / RHO_DMAC;          // mL DMAc from the reactor
+const Vdmac = () => V0() + P.Vadd;
+const Vsol = () => Vdmac() + P.b.m / 1.12;
+const wtPct = () => P.b.m / (P.b.m + Vdmac() * RHO_DMAC) * 100;
+function viscosity(T) {
+  const ieta = 0.03 * Math.pow(2 * P.b.Mn * 1000, 0.7);                       // mL/g, Mw ≈ 2 Mn
+  const ci = P.b.m / Vsol() * ieta;
+  return 0.00092 * (1 + ci * Math.exp(0.4 * ci)) * Math.exp(-0.015 * ((T == null ? P.Tsol : T) - 25));
+}
+function stirIntensity() {
+  if (P.stir === "blend") return 2.2;
+  if (P.rpm <= 0) return 0;
+  if (P.stir === "over") return Math.min(1.3, P.rpm / 450);
+  return Math.min(1.1, P.rpm / 600) * Math.min(1, Math.sqrt(800 / P.Vbath));
+}
+const bathFrac = () => Vdmac() / (Vdmac() + P.Vbath);
+function beakerSize() { const need = (P.Vbath + Vsol()) * 1.25; return [250, 600, 1000, 2000, 4000].find(v => v >= need) || null; }
+function predictMorph() {
+  const Mn = P.b.Mn, s = NS[P.ns].strength, S = stirIntensity(), f = bathFrac();
+  if (Mn < 6) return "milky";
+  if (Mn * s < (P.cold ? 9 : 12) || f > 0.3) return "gum";
+  if (S <= 0) return "lumps";
+  const idx = Math.sqrt(viscosity() / 3) * RATES[P.rate].r / S;
+  if (P.stir === "blend") return idx < 8 ? "powder" : "lumps";
+  return idx < 1.2 ? "fibres" : idx < 3 ? "strands" : "lumps";
+}
+function hardRatio() { const h = P.b.hard / 100; return (909.88 * h + 90.12) / (340.37 * (1 - h)); }
+
+/* washing: first-order exchange toward partition equilibrium with the bath */
+function washStep(dt) {
+  const tau = Math.max(0.002, 0.1 * Math.pow(P.L / 0.4, 1.5));
+  const weq = K_PART * P.cB;
+  const dw = (weq - P.wD) * (1 - Math.exp(-dt / tau));
+  P.wD += dw; P.cB = Math.max(0, P.cB - dw * P.mRec / Math.max(1, P.VB));
+}
+/* drying: first-order loss of each volatile */
+function dryStep(dt, T, vac) {
+  const g = Math.min(10, Math.max(0.3, Math.pow(P.L / 0.4, 1.5)));
+  P.wW *= Math.exp(-0.8 * Math.exp(0.04 * (T - 60)) * (vac ? 1 : 0.5) / g * dt);
+  P.wM *= Math.exp(-2.0 * Math.exp(0.03 * (T - 60)) * (vac ? 1 : 0.5) / g * dt);
+  P.wD *= Math.exp(-0.025 * Math.exp(0.045 * (T - 60)) * (vac ? 1 : 0.15) / g * dt);
+  if (T >= 90) P.hotHours += dt;
+}
+const sampleMass = () => P.mRec * (1 + P.wD + P.wW + P.wM);
+function record() { const h = P.hist[P.hist.length - 1]; if (h && Math.abs(h.t - P.t) < 1e-6) P.hist.pop(); P.hist.push({ t: P.t, D: P.wD * 100, W: P.wW * 100, M: P.wM * 100 }); }
+function event(label) { P.events.push({ t: P.t, label }); }
+/* run simulated hours, animated over ~1.2 s */
+function runHours(h, mode, T, vac) { P.queue = { left: h, rate: h / 1.2, mode, T, vac }; }
+function consumeQueue(dtReal) {
+  const q = P.queue; if (!q) return;
+  let use = Math.min(q.left, q.rate * dtReal);
+  q.left -= use;
+  while (use > 1e-9) { const d = Math.min(use, 0.02); if (q.mode === "wash") washStep(d); else dryStep(d, q.T, q.vac); P.t += d; use -= d; }
+  record();
+  if (q.left <= 1e-9) { P.queue = null; renderCard(); }
+}
+
+/* =====================================================================
+   2. PROCEDURE
+   ===================================================================== */
+const STEPS = ["Thin and warm the solution", "Set up the non-solvent bath", "Pour into the vortex", "Soak and wash", "Filter with suction", "Dry to constant weight", "Check the polymer"];
+function say(msg, kind) { if (!msg) return; const t = $("toast"); t.textContent = msg; t.className = "toast" + (kind ? " " + kind : ""); }
+function renderSteps() {
+  const ol = $("steps"); ol.textContent = "";
+  STEPS.forEach((s, i) => { const li = document.createElement("li"); li.textContent = s; li.className = i < P.stage ? "done" : i === P.stage ? "current" : ""; if (i === P.stage) li.setAttribute("aria-current", "step"); ol.append(li); });
+}
+function seg(id, opts, cur, onPick) {
+  const wrap = document.createElement("div"); wrap.className = "seg"; wrap.id = id; wrap.setAttribute("role", "group");
+  for (const [v, txt] of opts) { const b = document.createElement("button"); b.type = "button"; b.textContent = txt; b.setAttribute("aria-pressed", String(v === cur)); b.onclick = () => { onPick(v); }; wrap.append(b); }
+  return wrap;
+}
+function range(id, label, min, max, step, val, outFn, onInput) {
+  const d = document.createElement("div"); d.className = "ctl";
+  d.innerHTML = `<div class="ctl-top"><label class="label" for="${id}"></label><output for="${id}"></output></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}">`;
+  d.querySelector("label").textContent = label;
+  const out = d.querySelector("output"), inp = d.querySelector("input");
+  out.textContent = outFn(val);
+  inp.addEventListener("input", () => { onInput(+inp.value); out.textContent = outFn(+inp.value); });
+  return d;
+}
+function btn(txt, cls, fn, disabled) { const b = document.createElement("button"); b.type = "button"; b.className = "btn " + (cls || ""); b.textContent = txt; b.onclick = fn; b.disabled = !!disabled; return b; }
+function block(label, child) { const d = document.createElement("div"); d.className = "ctl"; const l = document.createElement("span"); l.className = "label"; l.textContent = label; d.append(l, child); return d; }
+function verdictBox(id) { const v = document.createElement("div"); v.className = "verdict"; v.id = id; return v; }
+function setVerdict(id, text, kind) { const v = $(id); if (!v) return; v.textContent = text; v.className = "verdict" + (kind ? " " + kind : ""); }
+function go(stage) { P.stage = stage; renderSteps(); renderCard(); }
+
+function streamVerdict() {
+  const eta = viscosity(), w = wtPct();
+  if (eta > 20) return [`${fmt(w, 1)} wt %, about ${fmt(eta, 0)} Pa·s. It barely flows off the rod. Pouring it now will give lumps.`, "bad"];
+  if (eta > 3) return [`${fmt(w, 1)} wt %, about ${fmt(eta, 1)} Pa·s. It falls as a thick rope. Thin it a little more.`, "warn"];
+  if (eta < 0.03 && w < 8) return [`${fmt(w, 1)} wt %, about ${fmt(eta * 1000, 0)} mPa·s. Pours easily, but this much solvent needs a very large bath and more waste.`, "warn"];
+  return [`${fmt(w, 1)} wt %, about ${eta < 1 ? fmt(eta * 1000, 0) + " mPa·s" : fmt(eta, 1) + " Pa·s"}. It runs off the rod as a thin, continuous thread. Good.`, "ok"];
+}
+function bathVerdict() {
+  const R = P.Vbath / Vsol(), f = bathFrac(), bk = beakerSize();
+  if (!bk) return [`${fmt(P.Vbath / 1000, 2)} L will not fit in a 4 L beaker with the solution. Split the batch into portions.`, "bad"];
+  if (f > 0.3) return [`Only ${fmt(R, 1)} volumes. The bath will end up ${fmt(f * 100, 0)} % DMAc, enough to keep the polymer swollen and sticky. Use 5–10 volumes.`, "bad"];
+  if (R < 5) return [`${fmt(R, 1)} volumes of ${NS[P.ns].short} in a ${bk} mL beaker. The bath ends up ${fmt(f * 100, 0)} % DMAc. Workable, but 5–10 volumes is safer.`, "warn"];
+  if (P.stir !== "blend" && stirIntensity() < 0.5) return [`${fmt(R, 1)} volumes in a ${bk} mL beaker, but the stirring is too weak to keep a vortex${P.stir === "mag" && P.Vbath > 1500 ? " in this much liquid. A stir bar struggles above about 1.5 L; use an overhead stirrer" : ""}.`, "warn"];
+  return [`${fmt(R, 1)} volumes of ${NS[P.ns].short} in a ${bk} mL beaker. The bath ends up ${fmt(f * 100, 1)} % DMAc. Good.`, "ok"];
+}
+
+function renderCard() {
+  const c = $("card"); c.textContent = "";
+  const head = document.createElement("p"); head.className = "label"; head.textContent = `Step ${P.stage + 1} of ${STEPS.length}`;
+  const h = document.createElement("h3"); h.textContent = STEPS[P.stage];
+  const det = document.createElement("p"); det.className = "detail";
+  c.append(head, h, det);
+  const acts = document.createElement("div"); acts.className = "actions";
+  const busy = !!P.queue || P.pouring;
+
+  if (P.stage === 0) {
+    const eta0 = (() => { const a = P.Vadd, t = P.Tsol; P.Vadd = 0; P.Tsol = 25; const e = viscosity(); P.Vadd = a; P.Tsol = t; return e; })();
+    det.innerHTML = `The solution leaves the reactor at <b>${fmt(P.b.solids, 0)} wt %</b> and about <b>${eta0 < 1 ? fmt(eta0 * 1000, 0) + " mPa·s" : fmt(eta0, 0) + " Pa·s"}</b> at 25 °C. Thin it with DMAc to <b>10–15 wt %</b>, and warm it to 40–50 °C if it is still stiff. Dip a glass rod in it: it should run off as a thin, continuous thread.`;
+    c.append(range("rVadd", "Add DMAc", 0, 250, 5, P.Vadd, v => `+${v} mL`, v => { P.Vadd = v; setVerdict("vStream", ...streamVerdict()); }));
+    c.append(range("rTsol", "Solution temperature", 20, 70, 1, P.Tsol, v => `${v} °C`, v => { P.Tsol = v; setVerdict("vStream", ...streamVerdict()); }));
+    c.append(verdictBox("vStream"));
+    acts.append(btn("Next: set up the bath", "primary", () => { go(1); say("Pick the non-solvent and how much of it to use.", ""); }));
+    c.append(acts); setVerdict("vStream", ...streamVerdict());
+  }
+  else if (P.stage === 1) {
+    det.innerHTML = `Use <b>5–10 volumes</b> of non-solvent per volume of solution. Water is cheap and gives clean white fibres. Methanol removes more low-molecular-weight material but can leave soft grades tacky. Stir hard enough to pull a deep vortex.`;
+    const upd = () => { setVerdict("vBath", ...bathVerdict()); };
+    c.append(block("Non-solvent", seg("sNs", [["water", "Water"], ["meoh", "Methanol"], ["mix", "1 : 1 mix"]], P.ns, v => { P.ns = v; renderCard(); })));
+    c.append(range("rBath", "Bath volume", 100, 3000, 50, P.Vbath, v => `${v} mL · ${fmt(v / Vsol(), 1)}× solution`, v => { P.Vbath = v; upd(); }));
+    c.append(block("Bath temperature", seg("sCold", [["rt", "Room temp."], ["ice", "Ice bath, ≈ 4 °C"]], P.cold ? "ice" : "rt", v => { P.cold = v === "ice"; renderCard(); })));
+    c.append(block("Stirring", seg("sStir", [["mag", "Stir bar"], ["over", "Overhead"], ["blend", "Blender"]], P.stir, v => { P.stir = v; renderCard(); })));
+    if (P.stir !== "blend") c.append(range("rRpm", "Stirrer speed", 0, 1000, 50, P.rpm, v => `${v} rpm`, v => { P.rpm = v; upd(); }));
+    c.append(verdictBox("vBath"));
+    acts.append(btn("Back", "", () => go(0)), btn("Next: pour", "primary", () => { if (!beakerSize()) { say("The bath does not fit in any beaker. Reduce the volume or split the batch.", "bad"); return; } go(2); say("Choose how fast to pour, then start.", ""); }));
+    c.append(acts); upd();
+  }
+  else if (P.stage === 2) {
+    det.innerHTML = P.morph ? `<b>${MORPH[P.morph].label}.</b> ${MORPH[P.morph].desc}` :
+      `Pour into the side of the vortex, not onto the stirrer shaft or the beaker wall. A slow, thin stream gives each drop time to skin over and draw out into a fibre before the next one lands.`;
+    if (!P.morph) {
+      c.append(block("Pour rate", seg("sRate", Object.entries(RATES).map(([k, v]) => [k, v.name]), P.rate, v => { P.rate = v; renderCard(); })));
+      const note = document.createElement("p"); note.className = "cap-note"; note.textContent = `${RATES[P.rate].name}: ${RATES[P.rate].note}. Solution: ${fmt(Vsol(), 0)} mL at ${fmt(wtPct(), 1)} wt %, ${P.Tsol} °C.`; c.append(note);
+      const pb = document.createElement("div"); pb.innerHTML = `<div class="ctl-top"><span class="label">Poured</span><span class="mono" id="pourPct">${fmt(P.pourProg * 100, 0)} %</span></div><div style="height:6px;border-radius:3px;background:var(--grid);overflow:hidden"><i id="pourBar" style="display:block;height:100%;width:${P.pourProg * 100}%;background:var(--accent)"></i></div>`; c.append(pb);
+      acts.append(btn("Back", "", () => go(1), busy), btn(P.pouring ? "Pouring…" : "Start pouring", "primary", startPour, busy));
+    } else {
+      setTimeout(() => setVerdict("vMorph", MORPH[P.morph].label + (MORPH[P.morph].kind === "ok" ? " · good" : MORPH[P.morph].kind === "warn" ? " · workable" : " · problem"), MORPH[P.morph].kind), 0);
+      c.append(verdictBox("vMorph"));
+      acts.append(btn("Next: soak and wash", "primary", () => { go(3); say("Let the DMAc diffuse out, then swap the liquid for fresh water.", ""); }));
+    }
+    c.append(acts);
+  }
+  else if (P.stage === 3) {
+    const bathNs = NS[P.bathNs].short;
+    det.innerHTML = `The polymer is still swollen with DMAc. It only leaves by diffusion, so soak, pour off the liquid, and refill with fresh ${bathNs}. Plan on <b>2–3 changes</b>, and a final methanol rinse to displace the water. Bath now: <b>${fmt(P.VB, 0)} mL</b> holding <b>${fmt(P.cB * 1000, 1)} g/L</b> DMAc. Liquid changes so far: <b>${P.washes}</b>.`;
+    acts.append(btn("Soak 30 min", "", () => soak(0.5), busy), btn("Soak 2 h", "", () => soak(2), busy), btn("Soak overnight (12 h)", "", () => soak(12), busy));
+    const a2 = document.createElement("div"); a2.className = "actions";
+    a2.append(btn(`Pour off and refill with ${P.ns === "meoh" ? "methanol" : "water"}`, "", decant, busy));
+    if ((P.morph === "lumps" || P.morph === "gum") && !P.cut) a2.append(btn("Cut the lumps with scissors", "", cutLumps, busy));
+    a2.append(btn("Final methanol rinse (30 min)", "", rinse, busy || P.rinse));
+    const a3 = document.createElement("div"); a3.className = "actions";
+    a3.append(btn("Next: filter", "primary", () => { go(4); say("Collect the polymer on a Büchner funnel.", ""); }, busy));
+    c.append(acts, a2, a3);
+  }
+  else if (P.stage === 4) {
+    det.innerHTML = P.filtered ? `Collected <b>${fmt(P.mRec, 2)} g</b> of polymer (dry basis). The cake still holds about <b>${fmt((P.wW + P.wM) * 100, 0)} %</b> of its weight in liquid.` + (P.morph === "milky" ? " Much of the milky dispersion went straight through the paper." : "") :
+      `Pour the slurry onto filter paper in a Büchner funnel under suction. Squeeze the cake with a spatula or a glass stopper to push out more liquid before drying.`;
+    acts.append(btn("Filter with suction", P.filtered ? "" : "primary", filterNow, P.filtered || busy));
+    acts.append(btn("Press the cake", "", pressCake, !P.filtered || P.pressed || busy));
+    acts.append(btn("Next: dry", P.filtered ? "primary" : "", () => { go(5); say("Air-dry first, then use the vacuum oven. Weigh it at intervals until the mass stops changing.", ""); }, !P.filtered || busy));
+    c.append(acts);
+  }
+  else if (P.stage === 5) {
+    det.innerHTML = `Spread the polymer thinly on a PTFE dish or watch glass. Air-dry it in the hood overnight, then dry it at <b>50–60 °C under vacuum</b>. It is dry when two weighings at least 6 h apart differ by less than 0.2 %.`;
+    acts.append(btn("Air-dry overnight in the hood (12 h)", "", () => { P.airDried = true; event("Air-dry"); runHours(12, "dry", 22, false); renderCard(); }, P.airDried || busy));
+    c.append(acts);
+    c.append(range("rOven", "Oven temperature", 25, 100, 5, P.Toven, v => `${v} °C`, v => { P.Toven = v; if (v > 80) say("Above about 80 °C a soft TPU starts to stick to the dish, and aromatic (MDI) grades can yellow.", "warn"); }));
+    c.append(block("Oven atmosphere", seg("sVac", [["vac", "Vacuum, ≤ 10 mbar"], ["air", "No vacuum"]], P.vac ? "vac" : "air", v => { P.vac = v === "vac"; renderCard(); })));
+    const a2 = document.createElement("div"); a2.className = "actions";
+    for (const hh of [6, 12, 24]) a2.append(btn(`Oven +${hh} h`, "", () => { event(`Oven ${P.Toven} °C`); runHours(hh, "dry", P.Toven, P.vac); renderCard(); }, busy));
+    a2.append(btn("Weigh", "", weigh, busy));
+    c.append(a2);
+    if (P.weighings.length) {
+      const tb = document.createElement("table"); tb.className = "weigh";
+      tb.innerHTML = `<thead><tr><th>Time</th><th>Mass</th><th>Change</th></tr></thead><tbody></tbody>`;
+      P.weighings.forEach((w, i) => { const tr = document.createElement("tr"); const prev = P.weighings[i - 1]; tr.innerHTML = `<td>${fmt(w.t, 1)} h</td><td>${w.m.toFixed(3)} g</td><td>${prev ? fmt((w.m - prev.m) / prev.m * 100, 2) + " %" : "—"}</td>`; tb.tBodies[0].append(tr); });
+      c.append(tb);
+    }
+    const cw = constantWeight();
+    c.append(Object.assign(verdictBox("vDry"), {}));
+    setTimeout(() => setVerdict("vDry", cw ? "Constant weight reached." : P.weighings.length < 2 ? "Weigh the sample, dry it further, then weigh again." : "Still losing mass between weighings. Keep drying.", cw ? "ok" : ""), 0);
+    const a3 = document.createElement("div"); a3.className = "actions";
+    a3.append(btn("Next: check", cw ? "primary" : "", () => { go(6); finishCheck(); }, busy));
+    c.append(a3);
+  }
+  else {
+    const d = P.wD * 100, y = P.mRec / P.b.mTheory * 100;
+    let v, kind;
+    if (d >= 2) { v = "Still full of solvent. Redissolve and reprecipitate, and wash more thoroughly."; kind = "bad"; }
+    else if (P.wW + P.wM > 0.01) { v = "Not dry yet: the sample still holds water or methanol."; kind = "warn"; }
+    else if (d < 0.1) { v = "Clean enough for cell culture and biomedical tests (DMAc < 0.1 wt %)."; kind = "ok"; }
+    else if (d < 0.5) { v = "Fine for GPC, DSC and tensile testing (DMAc < 0.5 wt %)."; kind = "ok"; }
+    else { v = "Residual DMAc will plasticize the polymer and lower its modulus. Wash it again."; kind = "warn"; }
+    det.innerHTML = `Recovered <b>${fmt(P.mRec, 2)} g</b>, <b>${fmt(y, 1)} %</b> of the ${fmt(P.b.mTheory, 1)} g theoretical solids. Residual DMAc <b>${fmt(d, d < 0.1 ? 3 : 2)} wt %</b>, water ${fmt(P.wW * 100, 2)} wt %, methanol ${fmt(P.wM * 100, 2)} wt %.` +
+      (P.hotHours > 4 ? " The polymer spent hours at 90 °C or above, so expect some sticking and yellowing." : "") +
+      ` Liquid waste: <b>${fmt((P.waste.aq + P.waste.org) / 1000, 2)} L</b> holding ${fmt(P.waste.dmac, 0)} g DMAc.`;
+    c.append(Object.assign(verdictBox("vFinal"), {}));
+    setTimeout(() => setVerdict("vFinal", v, kind), 0);
+    acts.append(btn("Purify again (reprecipitate)", "primary", reprecipitate), btn("Start over", "", () => restart(false)));
+    c.append(acts);
+  }
+}
+
+/* =====================================================================
+   3. ACTIONS
+   ===================================================================== */
+let pendingMorph = null;
+function recomputeRec() { P.mRec = P.b.m * (1 - P.oligLoss - P.finesLoss); }
+function holdFor(ns, hold) { return ns === "water" ? [hold, 0] : ns === "meoh" ? [0, hold] : [hold / 2, hold / 2]; }
+function startPour() {
+  pendingMorph = predictMorph(); P.pouring = true; P.pourProg = 0; P.strands = [];
+  lockBatch(true); renderCard();
+}
+function pourDone() {
+  const m = P.b.m, M = MORPH[pendingMorph], dm = Vdmac() * RHO_DMAC;
+  P.pouring = false; P.morph = pendingMorph;
+  P.L = M.L; P.wD = Math.min(dm / m, M.trap * 0.6);
+  P.VB = P.Vbath + Vsol(); P.bathNs = P.ns; P.cB = (dm - P.wD * m) / P.VB;
+  [P.wW, P.wM] = holdFor(P.ns, M.hold);
+  P.oligLoss = 0.008 + Math.max(0, 15 - P.b.Mn) * 0.006 + (P.ns === "meoh" ? 0.008 : P.ns === "mix" ? 0.004 : 0);
+  if (P.morph === "gum" && P.b.Mn < 12) P.oligLoss += 0.02;
+  recomputeRec(); P.t = 0; event("Pour"); record();
+  say(M.desc, M.kind === "ok" ? "ok" : M.kind);
+  renderCard(); updateStatus();
+}
+function soak(h) { runHours(h, "wash"); renderCard(); }
+function dumpBath() {
+  if (P.bathNs === "meoh") P.waste.org += P.VB; else P.waste.aq += P.VB;
+  P.waste.dmac += P.cB * P.VB;
+}
+function decant() {
+  dumpBath();
+  P.bathNs = P.ns === "meoh" ? "meoh" : "water"; P.VB = P.Vbath; P.cB = 0; P.washes++;
+  [P.wW, P.wM] = holdFor(P.bathNs, MORPH[P.morph].hold);
+  P.t += 0.05; P.flash = 1; event(`Change ${P.washes}`); record();
+  say(`Poured off the old liquid and added ${P.Vbath} mL fresh ${NS[P.bathNs].short}. Let it soak before the next change.`, "");
+  renderCard();
+}
+function cutLumps() { P.L = Math.min(P.L, 0.8); P.cut = true; P.t += 0.1; record(); say("Cut the lumps into pieces a few millimetres across. DMAc now has a much shorter path out.", "ok"); renderCard(); }
+function rinse() {
+  dumpBath();
+  P.bathNs = "meoh"; P.VB = Math.max(300, P.b.m * 20); P.cB = 0; P.rinse = true;
+  P.wW *= 0.15; P.wM = MORPH[P.morph].hold;
+  if (P.ns !== "meoh") { P.oligLoss += 0.006; recomputeRec(); }
+  event("MeOH rinse"); runHours(0.5, "wash");
+  say("Methanol displaces the water and pulls out more oligomers. The polymer will dry much faster.", "ok");
+  renderCard();
+}
+function filterNow() {
+  dumpBath(); P.VB = 0; P.cB = 0;
+  P.finesLoss = MORPH[P.morph].fines; recomputeRec();
+  const h = MORPH[P.morph].hold * 0.6;
+  if (P.bathNs === "meoh") { P.wM = h; P.wW *= 0.6; } else { P.wW = P.bathNs === "mix" ? h / 2 : h; P.wM = P.bathNs === "mix" ? h / 2 : P.wM * 0.6; }
+  P.filtered = true; P.filterAnim = 1; P.t += 0.15; event("Filter"); record();
+  say(P.morph === "milky" ? `Most of the fine dispersion went through the paper. Only ${fmt(P.mRec, 2)} g was collected.` : `Collected the polymer. ${fmt(P.finesLoss * 100, 1)} % passed the paper as fines.`, P.morph === "milky" ? "bad" : "ok");
+  renderCard();
+}
+function pressCake() { P.wW *= 0.6; P.wM *= 0.6; P.pressed = true; record(); say("Pressed out more liquid. Less to evaporate in the oven.", "ok"); renderCard(); }
+function weigh() {
+  const m = sampleMass() + (Math.random() - 0.5) * 0.0008;
+  P.weighings.push({ t: P.t, m }); say(`Balance reads ${m.toFixed(3)} g.`, ""); renderCard();
+}
+function constantWeight() {
+  const W = P.weighings, n = W.length; if (n < 2) return false;
+  const last = W[n - 1];
+  for (let i = n - 2; i >= 0; i--) if (last.t - W[i].t >= 6) return Math.abs(last.m - W[i].m) / last.m <= 0.002;
+  return false;
+}
+function finishCheck() { event("Analysed"); updateStatus(); say("Compare the TGA and NMR traces below with the targets.", ""); }
+function reprecipitate() {
+  const b = { m: +P.mRec.toFixed(2), Mn: +(P.b.Mn * 1.05).toFixed(1), solids: 10, hard: P.b.hard, round: P.b.round + 1, mTheory: P.b.mTheory };
+  P = fresh(b); writeBatchInputs(); lockBatch(false);
+  say(`Round ${b.round}: redissolved ${fmt(b.m, 2)} g in fresh DMAc at 10 wt %. The low-molecular-weight tail and most of the tin went with the first filtrate.`, "ok");
+  renderAll();
+}
+function restart() { P = fresh(readBatch()); lockBatch(false); say("Start by thinning the solution so it pours as a thin stream.", ""); renderAll(); }
+
+/* batch inputs */
+function readBatch() {
+  const n = (id, lo, hi, d) => { const v = parseFloat($(id).value); return isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d; };
+  const m = n("inMass", 2, 60, 16);
+  return { m, Mn: n("inMn", 3, 100, 38), solids: n("inSolids", 10, 45, 25), hard: n("inHard", 20, 70, 37.5), round: 1, mTheory: m };
+}
+function writeBatchInputs() { $("inMass").value = P.b.m; $("inMn").value = P.b.Mn; $("inSolids").value = P.b.solids; $("inHard").value = P.b.hard; }
+function lockBatch(on) { $("batchLock").hidden = !on; ["selPreset", "inMass", "inMn", "inSolids", "inHard"].forEach(id => $(id).disabled = on); }
+function renderBatch() {
+  const d = $("batchDerived"); d.textContent = "";
+  const eta = (() => { const a = P.Vadd, t = P.Tsol; P.Vadd = 0; P.Tsol = 25; const e = viscosity(); P.Vadd = a; P.Tsol = t; return e; })();
+  const items = [["DMAc in the flask", `${fmt(V0(), 0)} mL`], ["Solution volume", `≈ ${fmt(V0() + P.b.m / 1.12, 0)} mL`], ["Viscosity at 25 °C", eta < 1 ? `${fmt(eta * 1000, 0)} mPa·s` : `${fmt(eta, 0)} Pa·s`]];
+  if (P.b.round > 1) items.push(["Round", `${P.b.round} (reprecipitation)`]);
+  for (const [k, v] of items) { const s = document.createElement("span"); s.append(k + ": "); const b = document.createElement("b"); b.textContent = v; s.append(b); d.append(s); }
+}
+
+/* =====================================================================
+   4. READOUTS
+   ===================================================================== */
+const TILES = [["tConc", "Solution", "wt % polymer"], ["tEta", "Viscosity", "at pour temperature"], ["tBath", "Bath", "volumes · % DMAc"], ["tMorph", "Precipitate", "form"],
+  ["tD", "DMAc in polymer", "wt % of dry polymer"], ["tW", "Water", "wt % of dry polymer"], ["tM", "Methanol", "wt % of dry polymer"], ["tMass", "Sample on balance", "g"], ["tYield", "Recovered", "% of theory"], ["tWaste", "Liquid waste", "L"]];
+function buildTiles() { const el = $("tiles"); el.textContent = ""; for (const [id, l, u] of TILES) { const t = document.createElement("div"); t.className = "tile"; t.id = id; t.innerHTML = '<span class="label"></span><span class="v">—</span><span class="u"></span>'; t.querySelector(".label").textContent = l; t.querySelector(".u").textContent = u; el.append(t); } }
+function tile(id, v, state, unit) { const t = $(id); t.querySelector(".v").textContent = v; t.className = "tile" + (state ? " " + state : ""); if (unit) t.querySelector(".u").textContent = unit; }
+function updateTiles() {
+  const poured = !!P.morph, eta = viscosity();
+  tile("tConc", fmt(wtPct(), 1), wtPct() > 18 ? "flag" : null);
+  tile("tEta", eta < 1 ? fmt(eta * 1000, 0) : fmt(eta, 1), eta > 20 ? "alarm" : eta > 3 ? "flag" : null, eta < 1 ? "mPa·s at pour temperature" : "Pa·s at pour temperature");
+  tile("tBath", `${fmt(P.Vbath / Vsol(), 1)}× · ${fmt(bathFrac() * 100, 0)} %`, bathFrac() > 0.3 ? "alarm" : P.Vbath / Vsol() < 5 ? "flag" : null);
+  tile("tMorph", poured ? MORPH[P.morph].label : P.pouring ? "forming…" : "—", poured ? (MORPH[P.morph].kind === "ok" ? "good" : MORPH[P.morph].kind === "warn" ? "flag" : "alarm") : null);
+  const d = P.wD * 100;
+  tile("tD", poured ? fmt(d, d < 1 ? 3 : 1) : "—", !poured ? null : d < 0.1 ? "good" : d < 0.5 ? null : d < 2 ? "flag" : "alarm");
+  tile("tW", poured ? fmt(P.wW * 100, P.wW < 0.01 ? 3 : 0) : "—", null);
+  tile("tM", poured ? fmt(P.wM * 100, P.wM < 0.01 ? 3 : 0) : "—", null);
+  tile("tMass", P.filtered ? sampleMass().toFixed(3) : "—", null);
+  tile("tYield", poured ? fmt(P.mRec / P.b.mTheory * 100, 1) : "—", poured && P.mRec / P.b.mTheory < 0.85 ? "alarm" : null);
+  tile("tWaste", fmt((P.waste.aq + P.waste.org + (P.VB || 0)) / 1000, 2), null, P.VB ? "L, counting the bath in use" : "L");
+  $("sceneClock").textContent = poured ? `t = ${fmt(P.t, 1)} h` : "before pouring";
+}
+function updateStatus() {
+  const pill = $("statusPill");
+  const txt = ["Thinning", "Bath set-up", P.pouring ? "Pouring" : P.morph ? "Precipitated" : "Ready to pour", "Washing", "Filtering", "Drying", "Done"][P.stage];
+  const kind = P.morph ? (MORPH[P.morph].kind === "ok" ? "ok" : MORPH[P.morph].kind === "warn" ? "warn" : "bad") : "";
+  pill.className = "pill " + kind; pill.lastChild.textContent = txt + (P.b.round > 1 ? ` · round ${P.b.round}` : "");
+}
+
+/* =====================================================================
+   5. SCENE (SVG, redrawn each frame)
+   ===================================================================== */
+const G = 'fill="var(--glass)" stroke="var(--glass-stroke)" stroke-width="1.6"';
+const POLY = "#f6f3ea", WATER = "rgba(110,175,230,0.22)", MEOH = "rgba(150,200,235,0.18)";
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function lab(x, y, t, a) { return `<text x="${x}" y="${y}" text-anchor="${a || "start"}" style="font:600 11px var(--font-display);letter-spacing:.04em;fill:var(--ink-2)">${t}</text>`; }
+function small(x, y, t, a) { return `<text x="${x}" y="${y}" text-anchor="${a || "start"}" style="font:10px var(--font-mono);fill:var(--muted)">${t}</text>`; }
+function bench() { return `<rect x="0" y="404" width="640" height="36" fill="var(--surface-2)"/><line x1="0" y1="404" x2="640" y2="404" stroke="var(--line)"/>`; }
+function beakerDims(size) { return { 250: [92, 110], 600: [120, 140], 1000: [142, 170], 2000: [180, 212], 4000: [220, 258] }[size] || [142, 170]; }
+function beaker(cx, bottom, w, h, liquidFrac, liquidFill, dip, extra) {
+  const x0 = cx - w / 2, top = bottom - h, lvl = bottom - Math.max(0, Math.min(0.97, liquidFrac)) * h;
+  const id = "bk" + Math.round(cx);
+  let s = `<defs><clipPath id="${id}"><path d="M${x0 + 2} ${top} V${bottom - 8} q0 6 6 6 H${x0 + w - 8} q6 0 6 -6 V${top} Z"/></clipPath></defs>`;
+  s += `<g clip-path="url(#${id})">`;
+  if (liquidFrac > 0) s += `<path d="M${x0 - 4} ${lvl} C${cx - w * 0.3} ${lvl} ${cx - w * 0.14} ${lvl + dip} ${cx} ${lvl + dip} C${cx + w * 0.14} ${lvl + dip} ${cx + w * 0.3} ${lvl} ${x0 + w + 4} ${lvl} V${bottom + 4} H${x0 - 4} Z" fill="${liquidFill}" stroke="var(--glass-stroke)" stroke-width="1"/>`;
+  s += (extra || "") + `</g>`;
+  s += `<path d="M${x0 - 6} ${top - 4} q6 0 6 6 V${bottom - 8} q0 8 8 8 H${x0 + w - 8} q8 0 8 -8 V${top + 2}" ${G} fill="none"/>`;
+  for (let i = 1; i <= 4; i++) s += `<line x1="${x0 + w - 18}" x2="${x0 + w - 6}" y1="${bottom - h * i / 5}" y2="${bottom - h * i / 5}" stroke="var(--glass-stroke)" stroke-width="1"/>`;
+  return { s, lvl, top, x0 };
+}
+function erlenmeyer(cx, bottom, frac, fill, tilt) {
+  const H = 150, B = 74, N = 18, top = bottom - H;
+  const tf = tilt ? `transform="rotate(${tilt} ${cx} ${bottom - 40})"` : "";
+  const f = Math.max(0, Math.min(0.95, frac)), h = H * 0.85 * (1 - Math.pow(1 - f, 1 / 2.2));
+  const lv = bottom - h, halfAt = y => N + (B - N) * Math.min(1, Math.max(0, (y - (top + 40)) / (H - 40)));
+  const body = `M${cx - N} ${top} V${top + 40} L${cx - B} ${bottom - 6} q0 6 6 6 H${cx + B - 6} q6 0 6 -6 L${cx + N} ${top + 40} V${top}`;
+  return `<g ${tf}><defs><clipPath id="er${cx}"><path d="${body} Z"/></clipPath></defs>` +
+    (f > 0 ? `<g clip-path="url(#er${cx})"><rect x="${cx - B}" y="${lv}" width="${2 * B}" height="${bottom - lv}" fill="${fill}"/><line x1="${cx - halfAt(lv)}" x2="${cx + halfAt(lv)}" y1="${lv}" y2="${lv}" stroke="var(--glass-stroke)"/></g>` : "") +
+    `<path d="${body}" ${G} fill="none"/><rect x="${cx - N - 3}" y="${top - 4}" width="${2 * N + 6}" height="6" rx="2" ${G}/></g>`;
+}
+function solutionFill() { const k = Math.min(1, wtPct() / 30); return `rgba(236,${214 - 30 * k | 0},${150 - 60 * k | 0},${(0.45 + 0.4 * k).toFixed(2)})`; }
+function bathFill(ns) { return ns === "meoh" ? MEOH : WATER; }
+function polymer(morph, cx, bottom, w, prog, t, cut, opts) {
+  opts = opts || {};
+  const R = rng(morph.length * 97 + (cut ? 7 : 0)); let s = "";
+  const swirl = opts.swirl || 0;
+  if (morph === "fibres" || morph === "strands") {
+    const n = Math.round((morph === "fibres" ? 34 : 18) * prog), sw = morph === "fibres" ? 1.6 : 3.6;
+    for (let i = 0; i < n; i++) {
+      const x = cx + (R() - 0.5) * w * 0.75 + Math.sin(t * 2 + i) * swirl, y = bottom - 14 - R() * (opts.high || 60);
+      let d = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+      for (let k = 0; k < 4; k++) d += ` q${((R() - 0.5) * 30).toFixed(1)} ${((R() - 0.5) * 22).toFixed(1)} ${((R() - 0.3) * 26).toFixed(1)} ${((R() - 0.5) * 14).toFixed(1)}`;
+      s += `<path d="${d}" stroke="var(--glass-stroke)" stroke-width="${sw + 1.6}" fill="none" stroke-linecap="round" opacity=".6"/><path d="${d}" stroke="${POLY}" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`;
+    }
+    if (opts.wrap && prog > 0.3) s += `<ellipse cx="${opts.wrap[0]}" cy="${opts.wrap[1]}" rx="${10 + 14 * prog}" ry="${4 + 6 * prog}" fill="${POLY}" stroke="var(--glass-stroke)"/>`;
+  } else if (morph === "lumps" || morph === "gum") {
+    const n = Math.max(1, Math.round((cut ? 14 : morph === "gum" ? 2 : 5) * prog));
+    for (let i = 0; i < n; i++) {
+      const r = cut ? 5 + R() * 4 : morph === "gum" ? 26 : 12 + R() * 12;
+      const x = cx + (R() - 0.5) * w * 0.6, y = bottom - r * 0.6 - 4 - (cut ? R() * 14 : 0);
+      s += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(r * 1.3).toFixed(1)}" ry="${(r * 0.7).toFixed(1)}" fill="${morph === "gum" ? "#efe6c8" : POLY}" stroke="var(--glass-stroke)" opacity="${morph === "gum" ? 0.9 : 1}"/>`;
+    }
+  } else if (morph === "powder") {
+    const n = Math.round(160 * prog);
+    for (let i = 0; i < n; i++) s += `<circle cx="${(cx + (R() - 0.5) * w * 0.8 + Math.sin(t * 3 + i) * swirl).toFixed(1)}" cy="${(bottom - 6 - R() * (opts.high || 50) * (opts.settled ? 0.25 : 1)).toFixed(1)}" r="1.6" fill="${POLY}" stroke="var(--glass-stroke)" stroke-width=".4"/>`;
+  }
+  return s;
+}
+function milkyOverlay(x0, w, lvl, bottom, a) { return a > 0 ? `<rect x="${x0}" y="${lvl}" width="${w}" height="${bottom - lvl}" fill="#f4f4f0" opacity="${a.toFixed(2)}"/>` : ""; }
+function stirrer(kind, cx, bottom, w, h, t, S) {
+  if (kind === "mag") {
+    const sc = Math.abs(Math.cos(t * S * 9)) * 0.9 + 0.1;
+    return { under: `<rect x="${cx - w / 2 - 16}" y="${bottom}" width="${w + 32}" height="22" rx="4" fill="var(--ink-2)"/><circle cx="${cx + w / 2 + 2}" cy="${bottom + 11}" r="5" fill="var(--steel)"/>`,
+      inner: `<rect x="${cx - 18 * sc}" y="${bottom - 9}" width="${36 * sc}" height="6" rx="3" fill="#f1f1ec" stroke="var(--glass-stroke)"/>`, wrapAt: [cx, bottom - 12] };
+  }
+  if (kind === "over") {
+    const sc = Math.abs(Math.cos(t * S * 7)) * 0.9 + 0.1, top = bottom - h - 70;
+    return { under: "", over: `<rect x="${cx - 26}" y="${top - 40}" width="52" height="40" rx="6" fill="var(--ink-2)"/><rect x="${cx - 2}" y="${top}" width="4" height="${h + 52}" fill="var(--steel)"/>`,
+      inner: `<rect x="${cx - 2}" y="${bottom - h - 20}" width="4" height="${h + 4}" fill="var(--steel)"/><path d="M${cx - 26 * sc} ${bottom - 22} H${cx + 26 * sc} Q${cx + 22 * sc} ${bottom - 10} ${cx} ${bottom - 9} Q${cx - 22 * sc} ${bottom - 10} ${cx - 26 * sc} ${bottom - 22} Z" fill="#f4f4f0" stroke="var(--glass-stroke)"/>`, wrapAt: [cx, bottom - 40] };
+  }
+  const sc = Math.abs(Math.cos(t * 30)) * 0.9 + 0.1;
+  return { under: `<path d="M${cx - w / 2 - 10} ${bottom} H${cx + w / 2 + 10} L${cx + w / 2} ${bottom + 26} H${cx - w / 2} Z" fill="var(--ink-2)"/>`,
+    inner: `<path d="M${cx - 24 * sc} ${bottom - 14} L${cx + 24 * sc} ${bottom - 8} M${cx + 20 * sc} ${bottom - 15} L${cx - 20 * sc} ${bottom - 7}" stroke="var(--steel)" stroke-width="3"/>`, wrapAt: null };
+}
+function drawScene(dtReal) {
+  P.anim += dtReal; const t = P.anim;
+  let s = bench(), cap = "";
+  const st = P.stage;
+  if (st === 0) {
+    const warm = P.Tsol > 28;
+    if (warm) { const k = Math.min(1, (P.Tsol - 28) / 40); s += `<path d="M110 340 V396 q0 6 6 6 H294 q6 0 6 -6 V340" ${G}/><rect x="112" y="356" width="186" height="44" fill="rgba(${200 + 50 * k | 0},${150 - 40 * k | 0},${110 - 50 * k | 0},0.35)"/>`; s += lab(306, 380, `Warm water bath, ${P.Tsol} °C`); }
+    s += erlenmeyer(205, 402, Math.min(1, Vsol() / 500), solutionFill());
+    const eta = viscosity(), rx = 250, ry = 170;
+    s += `<line x1="${rx}" y1="${ry}" x2="${rx + 90}" y2="${ry - 70}" stroke="var(--glass-stroke)" stroke-width="5" stroke-linecap="round"/><line x1="${rx}" y1="${ry}" x2="${rx + 90}" y2="${ry - 70}" stroke="var(--glass)" stroke-width="3" stroke-linecap="round"/>`;
+    const col = solutionFill();
+    if (eta > 20) s += `<ellipse cx="${rx}" cy="${ry + 10 + Math.sin(t) * 1.5}" rx="8" ry="${11 + Math.sin(t) * 1.5}" fill="${col}" stroke="var(--glass-stroke)"/>`;
+    else if (eta > 3) { let d = `M${rx} ${ry + 2}`; for (let i = 0; i < 6; i++) d += ` q${(i % 2 ? 7 : -7)} 6 0 12`; s += `<path d="${d}" stroke="${col}" stroke-width="7" fill="none" stroke-linecap="round"/>`; }
+    else { s += `<line x1="${rx}" y1="${ry + 2}" x2="${rx - 30}" y2="270" stroke="${col}" stroke-width="${eta > 0.5 ? 2.6 : 1.6}"/>`; const y = ry + 10 + ((t * 120) % 90); s += `<circle cx="${rx - 30 * (y - ry) / 100}" cy="${y}" r="2.4" fill="${col}"/>`; }
+    s += lab(rx + 96, ry - 74, "Rod test");
+    const cyl = 1 - P.Vadd / 260;
+    s += `<rect x="470" y="190" width="40" height="210" rx="4" ${G}/><rect x="472" y="${190 + 210 * (1 - cyl)}" width="36" height="${210 * cyl - 2}" fill="rgba(225,236,240,.7)"/><rect x="460" y="398" width="60" height="6" rx="2" fill="var(--glass-stroke)"/>`;
+    for (let i = 1; i < 10; i++) s += `<line x1="498" x2="508" y1="${190 + 21 * i}" y2="${190 + 21 * i}" stroke="var(--glass-stroke)"/>`;
+    s += lab(490, 178, "DMAc, dry", "middle") + small(490, 420, `${P.Vadd} mL used`, "middle") + lab(205, 238, "TPU solution", "middle") + small(205, 252, `${fmt(Vsol(), 0)} mL · ${fmt(wtPct(), 1)} wt %`, "middle");
+    cap = "Thin the solution with dry DMAc. The rod test shows how it will pour.";
+  } else if (st <= 3) {
+    const size = beakerSize() || 4000, [w, h] = beakerDims(size), cx = 360, bottom = 380;
+    const S = stirIntensity(), stir = stirrer(P.stir, cx, bottom, w, h, t, S);
+    const bathVol = st === 3 ? P.VB : P.Vbath + (st === 2 ? Vsol() * (P.morph ? 1 : P.pourProg) : 0);
+    const frac = bathVol / size;
+    const morph = P.morph || (P.pouring ? pendingMorph : null), prog = P.morph ? 1 : P.pourProg;
+    const dip = st === 3 ? 4 : Math.min(30, S * 18);
+    let inner = stir.inner;
+    if (morph && st >= 2) inner += polymer(morph, cx, bottom, w, prog, t, P.cut, { swirl: st === 2 ? 5 * S : 1.5, wrap: (morph === "fibres" || morph === "strands") ? stir.wrapAt : null, high: st === 3 ? 34 : 70, settled: st === 3 });
+    let fill = st === 3 ? bathFill(P.bathNs) : bathFill(P.ns);
+    const bk = beaker(cx, bottom, w, h, frac * (P.flash > 0 ? 1 - 0.7 * P.flash : 1), fill, dip, inner);
+    s += (P.cold ? `<path d="${`M${cx - w / 2 - 30} ${bottom - h * 0.55} V${bottom + 2} H${cx + w / 2 + 30} V${bottom - h * 0.55}`}" ${G}/>` : "") + stir.under + bk.s + (stir.over || "");
+    if (P.cold) { const R = rng(5); for (let i = 0; i < 9; i++) { const x = (i % 2 ? cx + w / 2 + 6 : cx - w / 2 - 26) + R() * 14, y = bottom - 10 - (i >> 1) * 18; s += `<rect x="${x}" y="${y}" width="13" height="12" rx="3" fill="rgba(235,248,255,.85)" stroke="var(--glass-stroke)"/>`; } }
+    if (morph === "milky" && st >= 2) s += `<g clip-path="url(#bk${cx})">${milkyOverlay(bk.x0, w, bk.lvl, bottom, 0.65 * prog)}</g>`;
+    if (st === 3 && P.cB > 0.002) s += `<g clip-path="url(#bk${cx})"><rect x="${bk.x0}" y="${bk.lvl}" width="${w}" height="${bottom - bk.lvl}" fill="var(--amber)" opacity="${Math.min(0.25, P.cB * 2).toFixed(2)}"/></g>`;
+    s += lab(cx, bk.top - 14, `${size} mL beaker`, "middle") + small(cx, bottom + 34, st === 3 ? `${fmt(P.VB, 0)} mL ${NS[P.bathNs].short} · ${fmt(P.cB * 1000, 1)} g/L DMAc` : `${P.Vbath} mL ${NS[P.ns].short}${P.cold ? " on ice" : ""}`, "middle");
+    if (st <= 2) {
+      const left = P.morph ? 0 : 1 - P.pourProg;
+      if (st === 2 && P.pouring) {
+        s += erlenmeyer(150, 250, 0, solutionFill(), 62);
+        const thick = Math.min(9, RATES[P.rate].r * 1.2 + Math.sqrt(viscosity()) * 0.8);
+        s += `<path d="M232 158 Q ${cx - 40} 170 ${cx - w * 0.18} ${bk.lvl + dip * 0.6}" stroke="${solutionFill()}" stroke-width="${thick.toFixed(1)}" fill="none" stroke-linecap="round"/>`;
+      } else if (!P.morph) s += erlenmeyer(120, 402, Math.min(1, Vsol() / 500), solutionFill()) + small(120, 420, "solution, ready", "middle");
+    }
+    if (st === 3 && P.flash > 0) P.flash = Math.max(0, P.flash - dtReal * 1.2);
+    cap = st === 1 ? `${NS[P.ns].name}, ${fmt(P.Vbath / Vsol(), 1)} volumes, ${P.stir === "mag" ? "stir bar" : P.stir === "over" ? "overhead stirrer" : "blender"}.` :
+      st === 2 ? (P.morph ? MORPH[P.morph].label + "." : P.pouring ? "Pouring into the vortex…" : "Ready to pour.") :
+      `Soaking. DMAc diffuses out of the polymer into the ${NS[P.bathNs].short}.`;
+  } else if (st === 4) {
+    const fa = P.filterAnim; if (fa > 0) P.filterAnim = Math.max(0, fa - dtReal / 1.6);
+    s += `<path d="M250 300 h120 l-12 70 h-96 z" ${G}/>`;                            // filter flask (side-arm) body
+    s += `<path d="M280 300 v-40 h60 v40" ${G}/><path d="M340 276 h50" stroke="var(--glass-stroke)" stroke-width="5"/><path d="M390 276 C 440 276, 450 330, 520 330" stroke="var(--ink-2)" stroke-width="4" fill="none"/>`;
+    const filt = P.filtered ? (1 - fa) : 0;
+    s += `<rect x="257" y="${370 - 60 * filt}" width="106" height="${60 * filt}" fill="${P.morph === "milky" ? "rgba(244,244,240,.8)" : bathFill(P.bathNs)}"/>`;
+    s += `<rect x="232" y="196" width="156" height="50" rx="6" fill="#f2efe8" stroke="var(--glass-stroke)" stroke-width="1.6"/><path d="M300 246 v20 h20 v-20" ${G}/><rect x="236" y="236" width="148" height="6" fill="var(--surface)" stroke="var(--line)"/>`;
+    if (fa > 0) s += `<rect x="236" y="${206 + 30 * (1 - fa)}" width="148" height="${30 * fa}" fill="${bathFill(P.bathNs)}"/>`;
+    if (P.filtered) s += polymer(P.morph === "milky" ? "powder" : P.morph, 310, 236, 140, P.morph === "milky" ? 0.2 : 0.9, 0, P.cut, { high: 18, settled: true });
+    s += lab(310, 186, "Büchner funnel, filter paper", "middle") + lab(400, 360, "Filter flask") + small(520, 346, "to vacuum", "middle");
+    cap = P.filtered ? (P.pressed ? "Cake pressed. Ready for the oven." : "Filter cake on the paper. Press it to remove more liquid.") : "Pour the slurry onto the funnel under suction.";
+  } else if (st === 5) {
+    const q = P.queue, inOven = !(q && q.mode === "dry" && q.T === 22 && !q.vac);
+    s += `<rect x="70" y="140" width="330" height="262" rx="10" fill="var(--steel)" stroke="var(--glass-stroke)"/><rect x="96" y="170" width="220" height="190" rx="8" fill="var(--surface-2)" stroke="var(--glass-stroke)" stroke-width="2"/>`;
+    s += `<rect x="330" y="170" width="54" height="22" rx="3" fill="#0d1a12"/><text x="357" y="186" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="#5ef08a">${inOven ? P.Toven : 22}°</text>`;
+    const gx = 357, gy = 240, ang = (P.vac && inOven ? -40 : 80) * Math.PI / 180;
+    s += `<circle cx="${gx}" cy="${gy}" r="22" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"/><line x1="${gx}" y1="${gy}" x2="${gx + 17 * Math.cos(ang - Math.PI / 2)}" y2="${gy + 17 * Math.sin(ang - Math.PI / 2)}" stroke="var(--crit)" stroke-width="2"/>`;
+    s += small(gx, gy + 36, P.vac && inOven ? "≤ 10 mbar" : "1 atm", "middle");
+    s += `<ellipse cx="206" cy="330" rx="80" ry="10" fill="var(--surface)" stroke="var(--glass-stroke)"/>` + polymer(P.morph === "milky" ? "powder" : P.morph, 206, 330, 130, 0.9, 0, P.cut, { high: 22, settled: true });
+    if (P.wW + P.wM > 0.05 && q) { const R = rng(Math.floor(t * 4)); for (let i = 0; i < 5; i++) s += `<circle cx="${160 + R() * 90}" cy="${300 - ((t * 40 + i * 20) % 80)}" r="2" fill="none" stroke="var(--glass-stroke)" opacity=".7"/>`; }
+    const last = P.weighings[P.weighings.length - 1];
+    s += `<rect x="452" y="300" width="150" height="102" rx="8" fill="var(--ink-2)"/><rect x="470" y="282" width="114" height="18" rx="4" fill="var(--steel)"/><rect x="470" y="330" width="114" height="26" rx="3" fill="#0d1a12"/><text x="577" y="348" text-anchor="end" font-family="var(--font-mono)" font-size="13" fill="#5ef08a">${last ? last.m.toFixed(3) : "0.000"} g</text>`;
+    s += lab(235, 128, inOven ? "Vacuum oven" : "Air-drying in the hood", "middle") + lab(527, 268, "Analytical balance", "middle");
+    cap = q ? (inOven ? `Drying at ${q.T} °C${q.vac ? " under vacuum" : ""}…` : "Air-drying overnight in the hood…") : "Dry, then weigh. Repeat until the mass stops changing.";
+  } else {
+    s += `<ellipse cx="230" cy="372" rx="120" ry="16" fill="var(--surface)" stroke="var(--glass-stroke)"/>` + polymer(P.morph === "milky" ? "powder" : P.morph, 230, 372, 190, 1, 0, P.cut, { high: 26, settled: true });
+    const clear = P.morph !== "gum" || P.b.Mn >= 12;
+    s += `<rect x="440" y="250" width="56" height="140" rx="6" ${G}/><rect x="442" y="300" width="52" height="88" fill="${clear ? "rgba(236,232,210,.5)" : "rgba(236,226,190,.8)"}"/><rect x="436" y="238" width="64" height="16" rx="3" fill="var(--ink-2)"/>`;
+    s += lab(230, 330, `${fmt(P.mRec, 2)} g dry TPU`, "middle") + lab(468, 228, "Redissolved", "middle") + small(468, 410, "10 wt % in DMAc", "middle");
+    cap = "Dry polymer and a redissolution test for gel specks.";
+  }
+  $("scene").innerHTML = s; $("sceneCap").textContent = cap;
+}
+
+/* =====================================================================
+   6. CHARTS
+   ===================================================================== */
+const HOVER = {};
+function wireHover(svgId, hitId, tipId, box, pick, leave) {
+  const svg = $(svgId), hit = $(hitId), tip = $(tipId); if (!hit) return;
+  let kx = HOVER[svgId];
+  const show = vx => {
+    const r = pick(Math.max(box.x0, Math.min(box.x1, vx)));
+    tip.textContent = "";
+    r.rows.forEach((row, i) => { const div = document.createElement("div"); if (row.key) { const k = document.createElement("span"); k.className = "k"; k.style.background = row.key; div.append(k); } const b = document.createElement(i === 0 && !row.key ? "b" : "span"); b.textContent = row.v; if (row.key) { const bb = document.createElement("b"); bb.textContent = row.v; div.append(bb, " " + (row.l || "")); } else { div.append(b); if (row.l) div.append(" · " + row.l); } tip.append(div); });
+    tip.hidden = false;
+    const sr = svg.getBoundingClientRect(), sc = sr.width / svg.viewBox.baseVal.width;
+    let left = r.x * sc + 12; if (left + tip.offsetWidth > sr.width) left = r.x * sc - tip.offsetWidth - 12;
+    tip.style.left = Math.max(0, left) + "px"; tip.style.top = Math.max(0, r.y * sc - 12) + "px";
+  };
+  const toVB = e => { const sr = svg.getBoundingClientRect(); return (e.clientX - sr.left) / sr.width * svg.viewBox.baseVal.width; };
+  hit.addEventListener("pointermove", e => { kx = toVB(e); HOVER[svgId] = kx; show(kx); });
+  hit.addEventListener("pointerleave", () => { delete HOVER[svgId]; tip.hidden = true; leave(); });
+  hit.addEventListener("focus", () => { kx = kx == null ? (box.x0 + box.x1) / 2 : kx; HOVER[svgId] = kx; show(kx); });
+  hit.addEventListener("blur", () => { delete HOVER[svgId]; tip.hidden = true; leave(); });
+  hit.addEventListener("keydown", e => { if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return; e.preventDefault(); kx = (kx == null ? box.x0 : kx) + (e.key === "ArrowRight" ? 6 : -6); HOVER[svgId] = kx; show(kx); });
+  if (HOVER[svgId] != null) show(HOVER[svgId]);
+}
+const SERIES = [["D", "DMAc", "var(--s1)"], ["M", "Methanol", "var(--s2)"], ["W", "Water", "var(--s3)"]];
+function legend() {
+  const el = $("volLegend"); el.textContent = "";
+  for (const [, n, c] of SERIES) { const s = document.createElement("span"); s.innerHTML = `<svg width="18" height="10"><line x1="1" y1="5" x2="17" y2="5" stroke="${c}" stroke-width="2.4"/></svg>`; s.append(n); el.append(s); }
+  const r = document.createElement("span"); r.innerHTML = `<svg width="18" height="10"><line x1="1" y1="5" x2="17" y2="5" stroke="var(--muted)" stroke-dasharray="3 3"/></svg>`; r.append("DMAc targets: 0.5 % general use, 0.1 % biomedical"); el.append(r);
+}
+const VC = { x0: 56, x1: 770, y0: 16, y1: 236, lo: -2, hi: 2.5 };
+function drawVol() {
+  const svg = $("volChart");
+  if (!P.hist.length) { svg.innerHTML = `<text x="450" y="140" text-anchor="middle" class="empty">Pour the solution to start this chart. It follows the solvent in the polymer through washing and drying.</text>`; return; }
+  const H = P.hist, tMax = Math.max(2, P.t * 1.04);
+  const X = t => VC.x0 + t / tMax * (VC.x1 - VC.x0);
+  const Y = v => { const l = Math.log10(Math.max(1e-2, v)); return VC.y1 - (l - VC.lo) / (VC.hi - VC.lo) * (VC.y1 - VC.y0); };
+  let g = "";
+  for (const v of [0.01, 0.1, 1, 10, 100]) g += `<line class="gridl" x1="${VC.x0}" x2="${VC.x1}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${VC.x0 - 6}" y="${Y(v) + 3.5}" text-anchor="end">${v}</text>`;
+  const step = [0.5, 1, 2, 4, 6, 12, 24].find(s => tMax / s <= 8) || 48;
+  for (let tt = 0; tt <= tMax; tt += step) g += `<line class="gridl" x1="${X(tt)}" x2="${X(tt)}" y1="${VC.y0}" y2="${VC.y1}"/><text x="${X(tt)}" y="${VC.y1 + 14}" text-anchor="middle">${tt}</text>`;
+  g += `<text x="${(VC.x0 + VC.x1) / 2}" y="${VC.y1 + 32}" text-anchor="middle">process time after pouring / h</text><text x="14" y="${(VC.y0 + VC.y1) / 2}" text-anchor="middle" transform="rotate(-90 14 ${(VC.y0 + VC.y1) / 2})">wt % (log)</text>`;
+  let ref = "";
+  for (const [v, l] of [[0.5, "0.5 %"], [0.1, "0.1 %"]]) ref += `<line x1="${VC.x0}" x2="${VC.x1}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--muted)" stroke-dasharray="3 3"/><text x="${VC.x1 + 4}" y="${Y(v) + 3.5}" style="font:10px var(--font-mono);fill:var(--muted)">${l}</text>`;
+  let ev = "", lastX = -1e9, row = 0;
+  for (const e of P.events) { const x = X(e.t); row = x - lastX < 60 ? (row + 1) % 3 : 0; lastX = x; ev += `<line x1="${x}" x2="${x}" y1="${VC.y0}" y2="${VC.y1}" stroke="var(--line)" stroke-dasharray="2 3"/><text x="${x + 3}" y="${VC.y0 + 10 + row * 11}" style="font:9.5px var(--font-mono);fill:var(--muted)">${e.label}</text>`; }
+  let lines = "", ends = [];
+  for (const [k, n, c] of SERIES) {
+    const pts = H.map(h => [X(h.t), Y(h[k])]);
+    lines += `<path d="${pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join("")}" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"/>`;
+    const last = pts[pts.length - 1], v = H[H.length - 1][k];
+    lines += `<circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${c}" stroke="var(--surface)" stroke-width="2"/>`;
+    ends.push({ y: last[1], n: `${n} ${v < 0.01 ? "< 0.01" : fmt(v, v < 1 ? 2 : 0)} %` });
+  }
+  ends.sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 12) ends[i].y = ends[i - 1].y + 12;
+  const lx = X(H[H.length - 1].t) + 8;
+  const labels = ends.map(e => `<text x="${Math.min(lx, VC.x1 + 4)}" y="${e.y + 3.5}" style="font:10.5px var(--font-body);fill:var(--ink-2)">${e.n}</text>`).join("");
+  svg.innerHTML = `<g class="ax">${g}</g>${ref}${ev}${lines}${labels}<line id="volCross" y1="${VC.y0}" y2="${VC.y1}" stroke="var(--ink-2)" opacity="0"/><rect id="volHit" x="${VC.x0}" y="${VC.y0}" width="${VC.x1 - VC.x0}" height="${VC.y1 - VC.y0}" fill="transparent" tabindex="0" aria-label="Hover or use arrow keys to read values"/>`;
+  wireHover("volChart", "volHit", "volTip", { x0: VC.x0, x1: VC.x1 }, vx => {
+    const tt = (vx - VC.x0) / (VC.x1 - VC.x0) * tMax; let b = H[0]; for (const h of H) if (Math.abs(h.t - tt) < Math.abs(b.t - tt)) b = h;
+    const x = X(b.t); $("volCross").setAttribute("x1", x); $("volCross").setAttribute("x2", x); $("volCross").setAttribute("opacity", ".5");
+    return { x, y: Y(b.D), rows: [{ v: `t = ${fmt(b.t, 1)} h` }, ...SERIES.map(([k, n, c]) => ({ key: c, v: (b[k] < 0.01 ? "< 0.01" : fmt(b[k], b[k] < 1 ? 3 : 1)) + " %", l: n }))] };
+  }, () => { const c = $("volCross"); if (c) c.setAttribute("opacity", "0"); });
+}
+
+/* TGA: volatiles leave first, then hard and soft segments decompose */
+const TG = { x0: 50, x1: 500, y0: 16, y1: 226 };
+const sig = (T, c, w) => 1 / (1 + Math.exp(-(T - c) / w));
+function tgaCurve() {
+  const tot = 1 + P.wD + P.wW + P.wM, fD = P.wD / tot * 100, fW = P.wW / tot * 100, fM = P.wM / tot * 100, fp = 100 / tot, hard = P.b.hard / 100;
+  const pts = [];
+  for (let T = 25; T <= 600; T += 3) pts.push([T, 100 - fM * sig(T, 55, 9) - fW * sig(T, 85, 12) - fD * sig(T, 160, 16) - fp * 0.97 * (hard * sig(T, 335, 14) + (1 - hard) * sig(T, 410, 13))]);
+  return { pts, fD, fW, fM };
+}
+function drawTGA() {
+  const svg = $("tgaChart");
+  if (!P.morph) { svg.innerHTML = `<text x="275" y="130" text-anchor="middle" class="empty">No solid yet. Pour the solution first.</text>`; return; }
+  const { pts, fD, fW, fM } = tgaCurve();
+  const X = T => TG.x0 + (T - 25) / 575 * (TG.x1 - TG.x0), Y = m => TG.y1 - m / 100 * (TG.y1 - TG.y0);
+  let g = "";
+  for (const T of [100, 200, 300, 400, 500, 600]) g += `<line class="gridl" x1="${X(T)}" x2="${X(T)}" y1="${TG.y0}" y2="${TG.y1}"/><text x="${X(T)}" y="${TG.y1 + 14}" text-anchor="middle">${T}</text>`;
+  for (const m of [0, 25, 50, 75, 100]) g += `<line class="gridl" x1="${TG.x0}" x2="${TG.x1}" y1="${Y(m)}" y2="${Y(m)}"/><text x="${TG.x0 - 6}" y="${Y(m) + 3.5}" text-anchor="end">${m}</text>`;
+  g += `<text x="${(TG.x0 + TG.x1) / 2}" y="${TG.y1 + 32}" text-anchor="middle">temperature / °C</text><text x="12" y="${(TG.y0 + TG.y1) / 2}" text-anchor="middle" transform="rotate(-90 12 ${(TG.y0 + TG.y1) / 2})">mass %</text>`;
+  const d = pts.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join("");
+  const m200 = pts.find(p => p[0] >= 200)[1];
+  const note = `<text x="${X(205)}" y="${Y(m200) - 8}" style="font:10.5px var(--font-body);fill:var(--ink-2)">${fmt(100 - m200, 2)} % lost below 200 °C</text>` +
+    `<text x="${X(250)}" y="${Y(62)}" text-anchor="middle" style="font:10px var(--font-body);fill:var(--muted)">hard-segment step ≈ 335 °C</text><text x="${X(505)}" y="${Y(30)}" text-anchor="middle" style="font:10px var(--font-body);fill:var(--muted)">soft-segment step ≈ 410 °C</text>`;
+  svg.innerHTML = `<g class="ax">${g}</g><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2"/>${note}<line id="tgCross" y1="${TG.y0}" y2="${TG.y1}" stroke="var(--ink-2)" opacity="0"/><rect id="tgHit" x="${TG.x0}" y="${TG.y0}" width="${TG.x1 - TG.x0}" height="${TG.y1 - TG.y0}" fill="transparent" tabindex="0" aria-label="Hover to read the TGA curve"/>`;
+  wireHover("tgaChart", "tgHit", "tgaTip", TG, vx => {
+    const T = 25 + (vx - TG.x0) / (TG.x1 - TG.x0) * 575; let b = pts[0]; for (const p of pts) if (Math.abs(p[0] - T) < Math.abs(b[0] - T)) b = p;
+    const x = X(b[0]); $("tgCross").setAttribute("x1", x); $("tgCross").setAttribute("x2", x); $("tgCross").setAttribute("opacity", ".5");
+    const what = b[0] < 70 ? "methanol leaves" : b[0] < 120 ? "water leaves" : b[0] < 220 ? "DMAc leaves" : b[0] < 290 ? "stable plateau" : b[0] < 370 ? "urethane hard segment breaks down" : b[0] < 460 ? "polyether soft segment breaks down" : "char residue";
+    return { x, y: Y(b[1]), rows: [{ v: `${fmt(b[1], 1)} %`, l: `${b[0]} °C` }, { v: what }] };
+  }, () => { const c = $("tgCross"); if (c) c.setAttribute("opacity", "0"); });
+}
+
+/* ¹H NMR in DMSO-d6 */
+let nmrZoom = 1;
+const NM = { x0: 20, x1: 500, y0: 46, y1: 214, p0: 10, p1: 0.5 };
+function nmrPeaks() {
+  const R = hardRatio(), tot = 909.88 + 340.37 * R, nP = 1 / tot, nI = R / tot, nE = (R - 1) / tot;   // mol per g polymer
+  const dm = P.wD / 87.12, w = P.wW / 18.02, me = P.wM / 32.04;
+  const d = (ppm, nH, name, J) => J ? [[ppm - 0.0106, nH / 2, name], [ppm + 0.0106, nH / 2, name]] : [[ppm, nH, name]];
+  return [].concat(
+    d(9.48, 2 * nI, "N–H, urethane"), d(7.35, 4 * nI, "Ar–H, MDI", 1), d(7.08, 4 * nI, "Ar–H, MDI", 1),
+    d(4.07, 4 * nE, "O–CH₂, BDO urethane"), d(4.03, 4 * nP, "O–CH₂, PTMEG urethane end"), d(3.78, 2 * nI, "Ar–CH₂–Ar"),
+    d(3.30, 4 * 13 * nP, "O–CH₂, PTMEG backbone"), d(3.33, 2 * w + 0.00012, "H₂O in DMSO-d₆"), d(2.50, 0.00025, "DMSO-d₅ residual"),
+    d(2.94, 3 * dm, "DMAc N–CH₃"), d(2.78, 3 * dm, "DMAc N–CH₃"), d(1.96, 3 * dm, "DMAc CO–CH₃"),
+    d(3.16, 3 * me, "methanol CH₃"), d(4.08, me, "methanol O–H"),
+    d(1.66, 4 * nE, "C–CH₂–C, BDO"), d(1.60, 4 * nP, "C–CH₂–C, PTMEG end"), d(1.50, 4 * 14 * nP, "C–CH₂–C, PTMEG backbone"));
+}
+function drawNMR() {
+  const svg = $("nmrChart");
+  if (!P.morph) { svg.innerHTML = `<text x="260" y="120" text-anchor="middle" class="empty">No solid yet. Pour the solution first.</text>`; return; }
+  const peaks = nmrPeaks(), ref = 2 * hardRatio() / (909.88 + 340.37 * hardRatio()), hw = 0.006;
+  const X = p => NM.x0 + (NM.p0 - p) / (NM.p0 - NM.p1) * (NM.x1 - NM.x0);
+  const top = 1.15 / nmrZoom, Y = v => NM.y1 - Math.min(v, top) / top * (NM.y1 - NM.y0);
+  const pts = [];
+  for (let p = NM.p0; p >= NM.p1; p -= 0.004) { let v = 0; for (const [c, n] of peaks) { const z = (p - c) / hw; v += n / ref / (1 + z * z); } pts.push([p, v]); }
+  let g = "";
+  for (let p = 10; p >= 1; p -= 1) g += `<line class="gridl" x1="${X(p)}" x2="${X(p)}" y1="${NM.y1}" y2="${NM.y1 + 4}"/><text x="${X(p)}" y="${NM.y1 + 16}" text-anchor="middle">${p}</text>`;
+  g += `<line x1="${NM.x0}" x2="${NM.x1}" y1="${NM.y1}" y2="${NM.y1}" stroke="var(--line)"/><text x="${(NM.x0 + NM.x1) / 2}" y="${NM.y1 + 34}" text-anchor="middle">δ / ppm</text>`;
+  const d = pts.map((q, i) => (i ? "L" : "M") + X(q[0]).toFixed(1) + " " + Y(q[1]).toFixed(1)).join("");
+  const tags = [[9.48, "NH", 0], [7.22, "ArH", 0], [4.05, "OCH₂", 0], [3.78, "ArCH₂Ar", 1], [3.31, "OCH₂ + H₂O", 2], [2.50, "DMSO", 0], [1.55, "CH₂", 0]];
+  let tg = tags.map(([p, t, r]) => `<text x="${X(p)}" y="${12 + r * 11}" text-anchor="middle" style="font:600 9.5px var(--font-display);fill:var(--muted)">${t}</text>`).join("");
+  const dmH = 3 * P.wD / 87.12 / ref;
+  if (dmH * nmrZoom > 0.01) for (const p of [2.94, 2.78, 1.96]) tg += `<path d="M${X(p)} ${Y(dmH) - 6} v-8" stroke="var(--s1)" stroke-width="1.5"/><text x="${X(p)}" y="${Y(dmH) - 17}" text-anchor="middle" style="font:600 9.5px var(--font-display);fill:var(--s1)">DMAc</text>`;
+  const q = `DMAc ≈ ${fmt(P.wD * 100, P.wD < 0.01 ? 3 : 2)} wt % from the 2.94 ppm singlet against the 7.08 ppm Ar–H doublet`;
+  svg.innerHTML = `<g class="ax">${g}</g><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round"/>${tg}<text x="${NM.x1}" y="${NM.y1 + 52}" text-anchor="end" style="font:10.5px var(--font-body);fill:var(--ink-2)">${q}</text>` +
+    `<line id="nmCross" y1="${NM.y0}" y2="${NM.y1}" stroke="var(--ink-2)" opacity="0"/><rect id="nmHit" x="${NM.x0}" y="${NM.y0}" width="${NM.x1 - NM.x0}" height="${NM.y1 - NM.y0}" fill="transparent" tabindex="0" aria-label="Hover to read peak assignments"/>`;
+  wireHover("nmrChart", "nmHit", "nmrTip", { x0: NM.x0, x1: NM.x1 }, vx => {
+    const p = NM.p0 - (vx - NM.x0) / (NM.x1 - NM.x0) * (NM.p0 - NM.p1);
+    let b = null; for (const pk of peaks) if (pk[1] > 1e-7 && (!b || Math.abs(pk[0] - p) < Math.abs(b[0] - p))) b = pk;
+    const x = X(p); $("nmCross").setAttribute("x1", x); $("nmCross").setAttribute("x2", x); $("nmCross").setAttribute("opacity", ".5");
+    return { x, y: NM.y0 + 30, rows: [{ v: `${fmt(p, 2)} ppm` }, b && Math.abs(b[0] - p) < 0.12 ? { v: `${b[2]} (${fmt(b[0], 2)})` } : { v: "baseline" }] };
+  }, () => { const c = $("nmCross"); if (c) c.setAttribute("opacity", "0"); });
+}
+
+/* =====================================================================
+   7. LOOP AND INIT
+   ===================================================================== */
+function renderAll() { renderSteps(); renderCard(); renderBatch(); updateTiles(); updateStatus(); drawVol(); drawTGA(); drawNMR(); }
+let last = performance.now(), slow = 0;
+function tick(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (P.pouring) {
+    P.pourProg = Math.min(1, P.pourProg + dt / RATES[P.rate].secs);
+    const pb = $("pourBar"); if (pb) { pb.style.width = P.pourProg * 100 + "%"; $("pourPct").textContent = fmt(P.pourProg * 100, 0) + " %"; }
+    if (P.pourProg >= 1) pourDone();
+  }
+  consumeQueue(dt);
+  drawScene(dt);
+  slow += dt;
+  if (slow > 0.25) { slow = 0; updateTiles(); updateStatus(); drawVol(); drawTGA(); drawNMR(); }
+  requestAnimationFrame(tick);
+}
+function wire() {
+  $("selPreset").addEventListener("change", e => {
+    const p = PRESETS[e.target.value]; if (p) { $("inMass").value = p.mass; $("inMn").value = p.Mn; $("inSolids").value = p.solids; }
+    P = fresh(readBatch()); renderAll();
+  });
+  ["inMass", "inMn", "inSolids", "inHard"].forEach(id => $(id).addEventListener("change", () => { $("selPreset").value = "custom"; P = fresh(readBatch()); renderAll(); }));
+  $("btnRestart").addEventListener("click", restart);
+  document.querySelectorAll("#nmrZoom button").forEach(b => b.addEventListener("click", () => {
+    nmrZoom = +b.dataset.z; document.querySelectorAll("#nmrZoom button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); drawNMR();
+  }));
+}
+buildTiles(); legend(); wire();
+P = fresh(readBatch());
+renderAll();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
