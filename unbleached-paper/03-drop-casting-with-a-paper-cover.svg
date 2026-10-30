@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#2B2620">
+  <title>Drop casting under an unbleached-paper cover</title>
+  <desc>Drop-cast film dried under a loose unbleached-paper tent: slower, draft-free, dust-free drying gives a more even film than drying open in the fume hood, where fast edge evaporation drives a coffee ring.</desc>
+  <defs>
+    <marker id="arrO" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E07A3F"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2E6DA4"/>
+    </marker>
+    <marker id="arrV" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6E9CC6"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#A9B0B8"/>
+    </marker>
+    <marker id="arrK" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7A5233"/>
+    </marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#5A4630" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="#FBF8F2"/>
+
+  <!-- Title -->
+  <text x="60" y="76" font-size="42" font-weight="700">How I use unbleached paper for drop casting</text>
+  <text x="60" y="110" font-size="20" fill="#6B6259">I cover the wet drop with unbleached paper so it dries slowly, out of the hood draft and away from dust — for a more even film.</text>
+
+  <!-- ===== Steps ===== -->
+  <g filter="url(#sh)">
+    <rect x="60" y="140" width="352" height="240" rx="16" fill="#FFFFFF" stroke="#E6DED1"/>
+    <rect x="436" y="140" width="352" height="240" rx="16" fill="#FFFFFF" stroke="#E6DED1"/>
+    <rect x="812" y="140" width="352" height="240" rx="16" fill="#F6EBDC" stroke="#D9BC97"/>
+    <rect x="1188" y="140" width="352" height="240" rx="16" fill="#FFFFFF" stroke="#E6DED1"/>
+  </g>
+  <g font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">
+    <circle cx="90" cy="174" r="15" fill="#2B2620"/><text x="90" y="179.5">1</text>
+    <circle cx="466" cy="174" r="15" fill="#2B2620"/><text x="466" y="179.5">2</text>
+    <circle cx="842" cy="174" r="15" fill="#7A5233"/><text x="842" y="179.5">3</text>
+    <circle cx="1218" cy="174" r="15" fill="#2B2620"/><text x="1218" y="179.5">4</text>
+  </g>
+  <g font-size="20" font-weight="700">
+    <text x="116" y="181">Prep</text>
+    <text x="492" y="181">Drop cast</text>
+    <text x="868" y="181" fill="#7A5233">Cover</text>
+    <text x="1244" y="181">Dry, then reveal</text>
+  </g>
+
+  <!-- step 1 icon: clean substrate + tweezers -->
+  <line x1="100" y1="300" x2="372" y2="300" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="166" y="288" width="140" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <line x1="168" y1="290" x2="304" y2="290" stroke="#D5DCE3" stroke-width="1.5"/>
+  <g fill="#6E9CC6">
+    <path d="M196,252 l3,8 l8,3 l-8,3 l-3,8 l-3,-8 l-8,-3 l8,-3 z"/>
+    <path d="M246,236 l2,6 l6,2 l-6,2 l-2,6 l-2,-6 l-6,-2 l6,-2 z"/>
+    <path d="M276,262 l2,5 l5,2 l-5,2 l-2,5 l-2,-5 l-5,-2 l5,-2 z"/>
+  </g>
+  <g stroke="#6B7785" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M356,212 L312,284"/>
+    <path d="M364,218 L318,288"/>
+    <path d="M356,212 L364,218"/>
+  </g>
+
+  <!-- step 2 icon: micropipette -->
+  <line x1="476" y1="300" x2="748" y2="300" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="542" y="288" width="140" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M574,288 C582,270 642,270 650,288 Z" fill="#D6E8F7" stroke="#6E9CC6" stroke-width="1.5"/>
+  <rect x="606" y="186" width="12" height="10" rx="2" fill="#6B7785"/>
+  <rect x="600" y="194" width="24" height="42" rx="7" fill="#E9EEF2" stroke="#6B7785" stroke-width="1.5"/>
+  <polygon points="605,236 619,236 613.5,256 610.5,256" fill="#F7F9FB" stroke="#6B7785" stroke-width="1.2" stroke-linejoin="round"/>
+  <circle cx="612" cy="263" r="3.5" fill="#6E9CC6"/>
+
+  <!-- step 3 icon: paper tent -->
+  <path d="M898,300 L988,206 L1078,300 Z" fill="#D6E8F7" fill-opacity="0.45"/>
+  <line x1="852" y1="300" x2="1124" y2="300" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="918" y="288" width="140" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M953,288 C960,270 1016,270 1023,288 Z" fill="#D6E8F7" stroke="#6E9CC6" stroke-width="1.5"/>
+  <polyline points="893,300 988,202 1083,300" fill="none" stroke="#B07D4F" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="893,300 988,202 1083,300" fill="none" stroke="#D9BC97" stroke-width="1.5" stroke-dasharray="5 6" stroke-linejoin="round"/>
+
+  <!-- step 4 icon: clock + lifted paper + film -->
+  <line x1="1228" y1="300" x2="1500" y2="300" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="1294" y="288" width="140" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <rect x="1324" y="283" width="80" height="5" rx="1" fill="#5B6FA8"/>
+  <circle cx="1252" cy="230" r="22" fill="#FFFFFF" stroke="#2B2620" stroke-width="2.5"/>
+  <g stroke="#2B2620" stroke-linecap="round">
+    <line x1="1252" y1="230" x2="1252" y2="216" stroke-width="2.5"/>
+    <line x1="1252" y1="230" x2="1262" y2="236" stroke-width="2.5"/>
+    <line x1="1252" y1="211" x2="1252" y2="213" stroke-width="2"/>
+    <line x1="1271" y1="230" x2="1269" y2="230" stroke-width="2"/>
+    <line x1="1252" y1="249" x2="1252" y2="247" stroke-width="2"/>
+    <line x1="1233" y1="230" x2="1235" y2="230" stroke-width="2"/>
+  </g>
+  <polyline points="1312,262 1382,204 1452,262" fill="none" stroke="#B07D4F" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 6" opacity="0.8"/>
+  <line x1="1490" y1="262" x2="1490" y2="212" stroke="#7A5233" stroke-width="2.5" marker-end="url(#arrK)"/>
+
+  <!-- step text -->
+  <g font-size="15" fill="#4A423A">
+    <text x="84" y="330">Clean substrate (Si, glass, ITO…)</text>
+    <text x="84" y="351">on a level spot in the fume hood.</text>
+    <text x="460" y="330">Pipette a set volume onto the</text>
+    <text x="460" y="351">center; keep it clear of the edges.</text>
+    <text x="836" y="330">Tent unbleached paper over it (or</text>
+    <text x="836" y="351">use it as a Petri-dish lid) — never</text>
+    <text x="836" y="372">touching the drop.</text>
+    <text x="1212" y="330">Let it dry undisturbed, then lift</text>
+    <text x="1212" y="351">the paper — the film is ready.</text>
+  </g>
+
+  <!-- step connectors -->
+  <g>
+    <circle cx="424" cy="258" r="14" fill="#2B2620"/>
+    <circle cx="800" cy="258" r="14" fill="#2B2620"/>
+    <circle cx="1176" cy="258" r="14" fill="#2B2620"/>
+    <g fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="421,252 427,258 421,264"/>
+      <polyline points="797,252 803,258 797,264"/>
+      <polyline points="1173,252 1179,258 1173,264"/>
+    </g>
+  </g>
+
+  <!-- ===== Panel A: open ===== -->
+  <rect x="60" y="405" width="500" height="455" rx="16" fill="#FFFFFF" stroke="#E6DED1" filter="url(#sh)"/>
+  <text x="85" y="441" font-size="20" font-weight="700">Left open in the hood</text>
+  <text x="85" y="465" font-size="15" font-weight="700" fill="#C2453D">fast, uneven drying</text>
+
+  <text x="85" y="497" font-size="13" fill="#6B6259">hood draft</text>
+  <g fill="none" stroke="#A9B0B8" stroke-width="2" marker-end="url(#arrG)">
+    <path d="M85,512 C150,504 200,520 265,512 S390,504 528,512"/>
+    <path d="M85,532 C150,524 200,540 265,532 S390,524 528,532"/>
+  </g>
+
+  <g fill="#5A524A">
+    <circle cx="180" cy="556" r="2.5"/>
+    <circle cx="246" cy="570" r="2"/>
+    <circle cx="330" cy="552" r="2.5"/>
+    <circle cx="392" cy="576" r="2"/>
+    <circle cx="290" cy="585" r="2.2"/>
+  </g>
+  <text x="430" y="560" font-size="13" fill="#6B6259">dust settles</text>
+
+  <line x1="80" y1="668" x2="540" y2="668" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="130" y="650" width="360" height="18" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M170,650 C205,588 415,588 450,650 Z" fill="#D6E8F7" stroke="#6E9CC6" stroke-width="1.5"/>
+  <g fill="#5B6FA8">
+    <circle cx="262" cy="636" r="2"/>
+    <circle cx="300" cy="618" r="2"/>
+    <circle cx="352" cy="640" r="2"/>
+    <circle cx="182" cy="645" r="2"/>
+    <circle cx="189" cy="639" r="2"/>
+    <circle cx="196" cy="646" r="2"/>
+    <circle cx="203" cy="641" r="2"/>
+    <circle cx="438" cy="645" r="2"/>
+    <circle cx="431" cy="639" r="2"/>
+    <circle cx="424" cy="646" r="2"/>
+    <circle cx="417" cy="641" r="2"/>
+  </g>
+  <circle cx="338" cy="606" r="2.6" fill="#5A524A"/>
+  <g fill="none" stroke="#2E6DA4" stroke-width="2" marker-end="url(#arrB)">
+    <path d="M296,640 Q250,633 212,640"/>
+    <path d="M324,640 Q370,633 408,640"/>
+  </g>
+  <text x="310" y="630" font-size="12" fill="#2E6DA4" text-anchor="middle">outward flow</text>
+  <g fill="none" stroke="#E07A3F" stroke-linecap="round" marker-end="url(#arrO)">
+    <line x1="185" y1="633" x2="152" y2="602" stroke-width="3.2"/>
+    <line x1="224" y1="615" x2="215" y2="591" stroke-width="2.4"/>
+    <line x1="310" y1="603" x2="310" y2="588" stroke-width="1.8"/>
+    <line x1="396" y1="615" x2="405" y2="591" stroke-width="2.4"/>
+    <line x1="435" y1="633" x2="468" y2="602" stroke-width="3.2"/>
+  </g>
+  <text x="478" y="598" font-size="13" fill="#E07A3F">fastest at</text>
+  <text x="478" y="614" font-size="13" fill="#E07A3F">the edge</text>
+
+  <line x1="85" y1="694" x2="535" y2="694" stroke="#EEE7DC" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="85" y="722" font-size="14" font-weight="700" fill="#6B6259">After drying</text>
+  <rect x="130" y="772" width="360" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M170,772 C171,742 184,740 194,753 C212,767 408,767 426,753 C436,740 449,742 450,772 Z" fill="#5B6FA8"/>
+  <circle cx="352" cy="763" r="3" fill="#3A322B"/>
+  <circle cx="246" cy="765" r="2.4" fill="#3A322B"/>
+  <text x="310" y="815" font-size="15" font-weight="700" fill="#C2453D" text-anchor="middle">Coffee ring: thick rim, thin center</text>
+  <text x="310" y="837" font-size="13" fill="#6B6259" text-anchor="middle">+ dust trapped in the film</text>
+
+  <!-- ===== Panel B: covered ===== -->
+  <rect x="590" y="405" width="500" height="455" rx="16" fill="#FFFFFF" stroke="#E6DED1" filter="url(#sh)"/>
+  <text x="615" y="441" font-size="20" font-weight="700">Covered with unbleached paper</text>
+  <text x="615" y="465" font-size="15" font-weight="700" fill="#3E8E5E">slow, even drying</text>
+
+  <text x="615" y="552" font-size="13" fill="#6B6259">draft &amp; dust</text>
+  <text x="615" y="568" font-size="13" fill="#6B6259">kept out</text>
+  <path d="M615,522 C700,517 770,478 840,478 C910,478 980,517 1065,522" fill="none" stroke="#A9B0B8" stroke-width="2" marker-end="url(#arrG)"/>
+
+  <path d="M648,666 L840,508 L1032,666 Z" fill="#CFE3F5" fill-opacity="0.45"/>
+  <text x="840" y="566" font-size="13" font-style="italic" fill="#3D6E99" text-anchor="middle">solvent-rich air</text>
+
+  <line x1="610" y1="668" x2="1070" y2="668" stroke="#CDBFAE" stroke-width="2"/>
+  <rect x="660" y="650" width="360" height="18" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M700,650 C735,588 945,588 980,650 Z" fill="#D6E8F7" stroke="#6E9CC6" stroke-width="1.5"/>
+  <g fill="#5B6FA8">
+    <circle cx="722" cy="642" r="2"/>
+    <circle cx="752" cy="630" r="2"/>
+    <circle cx="784" cy="640" r="2"/>
+    <circle cx="812" cy="622" r="2"/>
+    <circle cx="840" cy="638" r="2"/>
+    <circle cx="868" cy="620" r="2"/>
+    <circle cx="896" cy="640" r="2"/>
+    <circle cx="928" cy="630" r="2"/>
+    <circle cx="958" cy="642" r="2"/>
+  </g>
+  <g fill="none" stroke="#E07A3F" stroke-width="1.8" stroke-linecap="round" marker-end="url(#arrO)">
+    <line x1="715" y1="633" x2="707" y2="623"/>
+    <line x1="754" y1="615" x2="750" y2="604"/>
+    <line x1="840" y1="603" x2="840" y2="592"/>
+    <line x1="926" y1="615" x2="930" y2="604"/>
+    <line x1="965" y1="633" x2="973" y2="623"/>
+  </g>
+
+  <polyline points="640,668 840,500 1040,668" fill="none" stroke="#B07D4F" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="640,668 840,500 1040,668" fill="none" stroke="#D9BC97" stroke-width="2" stroke-dasharray="6 7" stroke-linejoin="round"/>
+
+  <g fill="none" stroke="#6E9CC6" stroke-width="2" stroke-dasharray="2 3" marker-end="url(#arrV)">
+    <line x1="755" y1="582" x2="735" y2="557"/>
+    <line x1="809" y1="536" x2="789" y2="512"/>
+    <line x1="925" y1="582" x2="945" y2="557"/>
+    <line x1="871" y1="536" x2="891" y2="512"/>
+  </g>
+  <text x="966" y="548" font-size="13" fill="#3D6E99">vapor seeps</text>
+  <text x="966" y="564" font-size="13" fill="#3D6E99">out slowly</text>
+
+  <g fill="#5A524A">
+    <circle cx="818" cy="511" r="2.5"/>
+    <circle cx="866" cy="514" r="2.2"/>
+    <circle cx="777" cy="545" r="2.4"/>
+    <circle cx="905" cy="547" r="2"/>
+  </g>
+
+  <line x1="615" y1="694" x2="1065" y2="694" stroke="#EEE7DC" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="615" y="722" font-size="14" font-weight="700" fill="#6B6259">After drying</text>
+  <rect x="660" y="772" width="360" height="12" fill="#A8B3BE" stroke="#7D8A97" stroke-width="1.2"/>
+  <path d="M700,772 C701,763 707,762 714,763 L966,763 C973,762 979,763 980,772 Z" fill="#5B6FA8"/>
+  <text x="840" y="815" font-size="15" font-weight="700" fill="#3E8E5E" text-anchor="middle">More even film</text>
+  <text x="840" y="837" font-size="13" fill="#6B6259" text-anchor="middle">no dust, slower and more uniform drying</text>
+
+  <!-- ===== Why box ===== -->
+  <rect x="1120" y="405" width="420" height="455" rx="16" fill="#F6EBDC" stroke="#D9BC97" filter="url(#sh)"/>
+  <text x="1144" y="443" font-size="20" font-weight="700" fill="#7A5233">Why an unbleached-paper cover?</text>
+
+  <g font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">
+    <circle cx="1157" cy="479" r="13" fill="#B07D4F"/><text x="1157" y="484">1</text>
+    <circle cx="1157" cy="559" r="13" fill="#B07D4F"/><text x="1157" y="564">2</text>
+    <circle cx="1157" cy="639" r="13" fill="#B07D4F"/><text x="1157" y="644">3</text>
+    <circle cx="1157" cy="719" r="13" fill="#B07D4F"/><text x="1157" y="724">4</text>
+  </g>
+  <g font-size="17" font-weight="700" fill="#3A322B">
+    <text x="1182" y="485">Breathable</text>
+    <text x="1182" y="565">Absorbent</text>
+    <text x="1182" y="645">Shield</text>
+    <text x="1182" y="725">Clean</text>
+  </g>
+  <g font-size="15" fill="#4A423A">
+    <text x="1182" y="507">Vapor seeps out through the pores, so</text>
+    <text x="1182" y="527">drying slows down but never stalls.</text>
+    <text x="1182" y="587">Soaks up condensed solvent instead of</text>
+    <text x="1182" y="607">dripping it back (unlike a glass lid).</text>
+    <text x="1182" y="667">Keeps out dust and the hood draft that</text>
+    <text x="1182" y="687">makes drying fast and lopsided.</text>
+    <text x="1182" y="747">No optical brighteners or bleach</text>
+    <text x="1182" y="767">residue to shed onto the film.</text>
+  </g>
+  <line x1="1144" y1="792" x2="1516" y2="792" stroke="#D9BC97" stroke-width="1.5"/>
+  <text x="1144" y="818" font-size="15" fill="#4A423A"><tspan font-weight="700" fill="#7A5233">Tip:</tspan> keep the paper off the drop — contact</text>
+  <text x="1144" y="839" font-size="15" fill="#4A423A">wicks the solution away and leaves fibers.</text>
+</svg>

@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#2B2620">
+  <title>Unbleached paper in the organic lab</title>
+  <desc>Under a 365 nm TLC lamp, white paper glows blue because of optical brighteners while unbleached paper stays dark. Everyday uses in an organic lab, why the lack of brighteners matters, and the limits of paper.</desc>
+  <defs>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#5A4630" flood-opacity="0.10"/>
+    </filter>
+    <filter id="bigGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <linearGradient id="uvRays" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9C7CFF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#9C7CFF" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="glowSheet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E4F2FF"/>
+      <stop offset="1" stop-color="#A9D2FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#FBF8F2"/>
+
+  <!-- Title -->
+  <text x="60" y="76" font-size="42" font-weight="700">Unbleached paper in the organic lab</text>
+  <text x="60" y="110" font-size="20" fill="#6B6259">No optical brighteners means no blue glow under the TLC lamp — and less to leach into your solvents.</text>
+
+  <!-- UV-lamp test -->
+  <rect x="60" y="140" width="700" height="400" rx="16" fill="#FFFFFF" stroke="#E6DED1" filter="url(#sh)"/>
+  <text x="88" y="180" font-size="22" font-weight="700">The UV-lamp test</text>
+  <text x="732" y="180" font-size="15" fill="#6B6259" text-anchor="end">both sheets under a 365 nm TLC lamp</text>
+
+  <rect x="88" y="198" width="644" height="262" rx="12" fill="#1E1A2B"/>
+  <polygon points="292,254 528,254 720,446 100,446" fill="url(#uvRays)"/>
+  <rect x="270" y="210" width="280" height="46" rx="10" fill="#3A3452" stroke="#57507A"/>
+  <rect x="290" y="247" width="240" height="8" rx="3" fill="#B9A2FF"/>
+  <text x="410" y="238" font-size="15" font-weight="700" fill="#E8E2FF" text-anchor="middle" letter-spacing="1">UV LAMP · 365 nm</text>
+
+  <rect x="130" y="318" width="240" height="90" rx="4" fill="#4FA3FF" opacity="0.9" filter="url(#bigGlow)"/>
+  <rect x="130" y="318" width="240" height="90" rx="4" fill="url(#glowSheet)"/>
+  <rect x="450" y="318" width="240" height="90" rx="4" fill="#4A3A2C" stroke="#5E4A37"/>
+  <rect x="450" y="318" width="240" height="90" rx="4" fill="#8C6CFF" opacity="0.14"/>
+  <text x="250" y="438" font-size="16" font-weight="700" fill="#CFE6FF" text-anchor="middle">White paper: glows blue</text>
+  <text x="570" y="438" font-size="16" font-weight="700" fill="#E9D9C6" text-anchor="middle">Unbleached: stays dark</text>
+
+  <text x="88" y="494" font-size="16" fill="#4A423A">Optical brighteners (stilbene-type dyes) absorb UV at ~340–370 nm</text>
+  <text x="88" y="518" font-size="16" fill="#4A423A">and re-emit blue light at ~420–470 nm — that is the glow you see.</text>
+
+  <!-- Why it matters -->
+  <rect x="60" y="560" width="700" height="300" rx="16" fill="#FFFFFF" stroke="#E6DED1" filter="url(#sh)"/>
+  <text x="88" y="600" font-size="22" font-weight="700">Why that matters at the bench</text>
+
+  <g transform="translate(86,623)">
+    <rect width="44" height="44" rx="10" fill="#F3EDE3"/>
+    <rect x="12" y="5" width="20" height="34" rx="2" fill="#FFFFFF" stroke="#8D99A6" stroke-width="1.5"/>
+    <line x1="14" y1="33" x2="30" y2="33" stroke="#B8C2CE" stroke-width="1.2" stroke-dasharray="2 2"/>
+    <ellipse cx="18" cy="26" rx="3.5" ry="2.5" fill="#6A4CC2"/>
+    <ellipse cx="26" cy="14" rx="3.5" ry="2.5" fill="#6A4CC2"/>
+  </g>
+  <text x="146" y="642" font-size="17" font-weight="700">Checking TLC plates under UV</text>
+  <text x="146" y="664" font-size="15.5" fill="#4A423A">No glowing background, no false “spots” from the paper.</text>
+
+  <g transform="translate(86,695)">
+    <rect width="44" height="44" rx="10" fill="#F3EDE3"/>
+    <rect x="11" y="8" width="14" height="28" rx="2" fill="#E7F1FB" stroke="#5D6B78" stroke-width="1.5"/>
+    <g stroke="#3D8EF0" stroke-width="2" stroke-linecap="round">
+      <line x1="29" y1="15" x2="37" y2="11"/>
+      <line x1="29" y1="22" x2="38" y2="22"/>
+      <line x1="29" y1="29" x2="37" y2="33"/>
+    </g>
+  </g>
+  <text x="146" y="714" font-size="17" font-weight="700">Fluorescence / PL samples</text>
+  <text x="146" y="736" font-size="15.5" fill="#4A423A">Solvent can pick up brightener dye → fluorescent contamination.</text>
+
+  <g transform="translate(86,767)">
+    <rect width="44" height="44" rx="10" fill="#F3EDE3"/>
+    <path d="M22,7 C27,15 32,20 32,27 A10,10 0 0 1 12,27 C12,20 17,15 22,7 Z" fill="#9CC3E6" stroke="#6E9CC6" stroke-width="1.5"/>
+  </g>
+  <text x="146" y="786" font-size="17" font-weight="700">Fewer additives overall</text>
+  <text x="146" y="808" font-size="15.5" fill="#4A423A">Less extractable material when solvent soaks into the paper.</text>
+
+  <!-- Everyday uses -->
+  <rect x="790" y="140" width="750" height="490" rx="16" fill="#FFFFFF" stroke="#E6DED1" filter="url(#sh)"/>
+  <text x="818" y="180" font-size="22" font-weight="700">Everyday uses</text>
+  <text x="1512" y="180" font-size="15" fill="#6B6259" text-anchor="end">mostly brown paper towels and kraft rolls</text>
+
+  <!-- tile 1 -->
+  <rect x="810" y="200" width="340" height="200" rx="12" fill="#FBF8F2" stroke="#EDE5D8"/>
+  <g transform="translate(828,218)">
+    <rect width="72" height="72" rx="14" fill="#F1E4D1"/>
+    <polygon points="8,56 50,56 64,42 22,42" fill="#C89B6D" stroke="#9C6E42" stroke-linejoin="round"/>
+    <ellipse cx="22" cy="51" rx="5" ry="2" fill="#9C6E42"/>
+    <rect x="32" y="16" width="14" height="32" rx="3" fill="#EAF2F8" stroke="#5D6B78" stroke-width="1.5"/>
+    <rect x="33.5" y="32" width="11" height="14.5" rx="2" fill="#9CC3E6"/>
+    <rect x="31" y="11" width="16" height="7" rx="1.5" fill="#3D5266"/>
+  </g>
+  <text x="914" y="260" font-size="18" font-weight="700">Bench &amp; hood liner</text>
+  <g font-size="15" fill="#4A423A">
+    <text x="828" y="322">Catches drips and small spills;</text>
+    <text x="828" y="344">swap it out when it gets dirty.</text>
+    <text x="828" y="366">A clean surface that doesn’t glow.</text>
+  </g>
+
+  <!-- tile 2 -->
+  <rect x="1180" y="200" width="340" height="200" rx="12" fill="#FBF8F2" stroke="#EDE5D8"/>
+  <g transform="translate(1198,218)">
+    <rect width="72" height="72" rx="14" fill="#F1E4D1"/>
+    <line x1="12" y1="60" x2="50" y2="22" stroke="#8D99A6" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="55" cy="17" rx="9" ry="4.5" transform="rotate(-45 55 17)" fill="#B8C2CE" stroke="#8D99A6"/>
+    <polygon points="24,30 38,25 46,36 41,48 28,47 21,39" fill="#C89B6D" stroke="#9C6E42" stroke-linejoin="round"/>
+    <path d="M28,33 l8,6 M33,44 l6,-8" stroke="#9C6E42" stroke-width="1.2" fill="none"/>
+  </g>
+  <text x="1284" y="260" font-size="18" font-weight="700">Wiping &amp; blotting</text>
+  <g font-size="15" fill="#4A423A">
+    <text x="1198" y="322">Spatulas, tweezers and the outside</text>
+    <text x="1198" y="344">of flasks and vials, with no</text>
+    <text x="1198" y="366">brightener dye left behind.</text>
+  </g>
+
+  <!-- tile 3 -->
+  <rect x="810" y="415" width="340" height="200" rx="12" fill="#FBF8F2" stroke="#EDE5D8"/>
+  <g transform="translate(828,433)">
+    <rect width="72" height="72" rx="14" fill="#F1E4D1"/>
+    <rect x="8" y="46" width="56" height="16" rx="2" fill="#C89B6D" stroke="#9C6E42"/>
+    <rect x="24" y="16" width="24" height="40" rx="2" fill="#FFFFFF" stroke="#8D99A6" stroke-width="1.5"/>
+    <line x1="27" y1="50" x2="45" y2="50" stroke="#B8C2CE" stroke-width="1.2" stroke-dasharray="2 2"/>
+    <ellipse cx="31" cy="41" rx="3.5" ry="2.5" fill="#6A4CC2"/>
+    <ellipse cx="40" cy="27" rx="3.5" ry="2.5" fill="#6A4CC2"/>
+    <g stroke="#8C6CFF" stroke-width="2" stroke-linecap="round">
+      <line x1="12" y1="6" x2="19" y2="13"/>
+      <line x1="36" y1="4" x2="36" y2="11"/>
+      <line x1="60" y1="6" x2="53" y2="13"/>
+    </g>
+  </g>
+  <text x="914" y="463" font-size="18" font-weight="700">Backdrop for</text>
+  <text x="914" y="485" font-size="18" font-weight="700">TLC under UV</text>
+  <g font-size="15" fill="#4A423A">
+    <text x="828" y="537">Lay plates on it to check spots at</text>
+    <text x="828" y="559">365 nm — the paper stays dark, so</text>
+    <text x="828" y="581">faint spots are easier to see.</text>
+  </g>
+
+  <!-- tile 4 -->
+  <rect x="1180" y="415" width="340" height="200" rx="12" fill="#FBF8F2" stroke="#EDE5D8"/>
+  <g transform="translate(1198,433)">
+    <rect width="72" height="72" rx="14" fill="#F1E4D1"/>
+    <path d="M14,58 L36,24 L58,58" fill="#D6E8F7" fill-opacity="0.5"/>
+    <line x1="6" y1="58" x2="66" y2="58" stroke="#CDBFAE" stroke-width="2"/>
+    <rect x="20" y="52" width="32" height="6" fill="#A8B3BE"/>
+    <path d="M27,52 C29,46 43,46 45,52 Z" fill="#D6E8F7" stroke="#6E9CC6"/>
+    <polyline points="10,58 36,18 62,58" fill="none" stroke="#B07D4F" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <text x="1284" y="463" font-size="18" font-weight="700">Loose cover for</text>
+  <text x="1284" y="485" font-size="18" font-weight="700">drying samples</text>
+  <g font-size="15" fill="#4A423A">
+    <text x="1198" y="537">Keeps dust off while solvent</text>
+    <text x="1198" y="559">vapor escapes slowly — how I</text>
+    <text x="1198" y="581">use it for drop casting (fig. 3).</text>
+  </g>
+
+  <!-- Limits -->
+  <rect x="790" y="650" width="750" height="210" rx="16" fill="#FCEFEC" stroke="#EBC0B9"/>
+  <path d="M834,670 L852,700 L816,700 Z" fill="#C2453D" stroke="#C2453D" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="832.5" y="679" width="3" height="11" rx="1" fill="#FFFFFF"/>
+  <circle cx="834" cy="695" r="1.8" fill="#FFFFFF"/>
+  <text x="864" y="694" font-size="20" font-weight="700" fill="#A3362E">Know the limits</text>
+  <g font-size="15" fill="#4A2E2A">
+    <text x="818" y="732">• Not for oxidizers (conc. HNO₃, peroxides) or pyrophorics — it can ignite.</text>
+    <text x="818" y="762">• Solvent-soaked paper → contaminated solid waste, per your lab’s rules.</text>
+    <text x="818" y="792">• It sheds lint: don’t use it to dry the inside of clean glassware.</text>
+    <text x="818" y="822">• Unbleached ≠ pure: solvents can still extract trace organics from it.</text>
+  </g>
+</svg>
