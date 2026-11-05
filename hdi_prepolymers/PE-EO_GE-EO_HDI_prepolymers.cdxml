@@ -20,7 +20,7 @@
 </colortable><fonttable>
 <font id="3" charset="iso-8859-1" name="Arial"/>
 </fonttable><page
- id="603"
+ id="605"
  BoundingBox="0 0 540 720"
  HeaderPosition="36" FooterPosition="36" PrintTrimMarks="yes" HeightPages="1" WidthPages="1"
 >
@@ -67,328 +67,328 @@
 <b id="142" B="139" E="141"/>
 <b id="144" B="141" E="143"/>
 </fragment>
-<fragment id="180" BoundingBox="279.20 79.00 432.10 94.20">
-<n id="181" p="312.00 83.00" Element="7" NumHydrogens="0" color="4"><t p="308.39 86.58" BoundingBox="308.39 79.42 315.61 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="182" p="297.60 83.00" NumHydrogens="0" color="4"><t p="293.99 86.58" BoundingBox="293.99 79.42 301.21 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="184" p="283.20 83.00" Element="8" NumHydrogens="0" color="4"><t p="279.31 86.58" BoundingBox="279.31 79.42 287.09 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="186" p="324.47 90.20" color="4"/>
-<n id="188" p="336.94 83.00" color="4"/>
-<n id="190" p="349.41 90.20" color="4"/>
-<n id="192" p="361.88 83.00" color="4"/>
-<n id="194" p="374.35 90.20" color="4"/>
-<n id="196" p="386.82 83.00" color="4"/>
-<n id="198" p="399.30 90.20" Element="7" NumHydrogens="0" color="4"><t p="395.69 93.78" BoundingBox="395.69 86.62 402.91 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="200" p="413.70 90.20" NumHydrogens="0" color="4"><t p="410.09 93.78" BoundingBox="410.09 86.62 417.31 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="202" p="428.10 90.20" Element="8" NumHydrogens="0" color="4"><t p="424.21 93.78" BoundingBox="424.21 86.62 431.99 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<b id="183" B="181" E="182" Order="2" color="4"/>
-<b id="185" B="182" E="184" Order="2" color="4"/>
-<b id="187" B="181" E="186" color="4"/>
-<b id="189" B="186" E="188" color="4"/>
-<b id="191" B="188" E="190" color="4"/>
-<b id="193" B="190" E="192" color="4"/>
-<b id="195" B="192" E="194" color="4"/>
-<b id="197" B="194" E="196" color="4"/>
-<b id="199" B="196" E="198" color="4"/>
-<b id="201" B="198" E="200" Order="2" color="4"/>
-<b id="203" B="200" E="202" Order="2" color="4"/>
+<fragment id="181" BoundingBox="279.20 79.00 432.10 94.20">
+<n id="182" p="312.00 83.00" Element="7" NumHydrogens="0" color="4"><t p="308.39 86.58" BoundingBox="308.39 79.42 315.61 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="183" p="297.60 83.00" NumHydrogens="0" color="4"><t p="293.99 86.58" BoundingBox="293.99 79.42 301.21 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="185" p="283.20 83.00" Element="8" NumHydrogens="0" color="4"><t p="279.31 86.58" BoundingBox="279.31 79.42 287.09 86.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="187" p="324.47 90.20" color="4"/>
+<n id="189" p="336.94 83.00" color="4"/>
+<n id="191" p="349.41 90.20" color="4"/>
+<n id="193" p="361.88 83.00" color="4"/>
+<n id="195" p="374.35 90.20" color="4"/>
+<n id="197" p="386.82 83.00" color="4"/>
+<n id="199" p="399.30 90.20" Element="7" NumHydrogens="0" color="4"><t p="395.69 93.78" BoundingBox="395.69 86.62 402.91 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="201" p="413.70 90.20" NumHydrogens="0" color="4"><t p="410.09 93.78" BoundingBox="410.09 86.62 417.31 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="203" p="428.10 90.20" Element="8" NumHydrogens="0" color="4"><t p="424.21 93.78" BoundingBox="424.21 86.62 431.99 93.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<b id="184" B="182" E="183" Order="2" color="4"/>
+<b id="186" B="183" E="185" Order="2" color="4"/>
+<b id="188" B="182" E="187" color="4"/>
+<b id="190" B="187" E="189" color="4"/>
+<b id="192" B="189" E="191" color="4"/>
+<b id="194" B="191" E="193" color="4"/>
+<b id="196" B="193" E="195" color="4"/>
+<b id="198" B="195" E="197" color="4"/>
+<b id="200" B="197" E="199" color="4"/>
+<b id="202" B="199" E="201" Order="2" color="4"/>
+<b id="204" B="201" E="203" Order="2" color="4"/>
 </fragment>
-<fragment id="210" BoundingBox="72.63 188.19 467.37 299.81">
-<n id="211" p="270.00 244.00"/>
-<n id="212" p="277.20 231.53"/>
-<n id="214" p="291.60 231.53" Element="8" NumHydrogens="0"><t p="287.71 235.11" BoundingBox="287.71 227.95 295.49 235.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="216" p="304.07 224.33"/>
-<n id="218" p="316.54 231.53"/>
-<n id="220" p="329.01 224.33" Element="8" NumHydrogens="0"><t p="325.12 227.91" BoundingBox="325.12 220.75 332.90 227.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="222" p="336.21 211.86" color="4"/>
-<n id="224" p="329.01 199.39" Element="8" NumHydrogens="0" color="4"><t p="325.12 202.97" BoundingBox="325.12 195.81 332.90 202.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="226" p="350.61 211.86" Element="7" NumHydrogens="1" color="4"><t p="347.00 215.44" BoundingBox="347.00 208.28 361.44 215.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
-<n id="228" p="357.81 199.39" color="4"/>
-<n id="230" p="372.21 199.39" color="4"/>
-<n id="232" p="384.68 192.19" color="4"/>
-<n id="234" p="397.15 199.39" color="4"/>
-<n id="236" p="409.62 192.19" color="4"/>
-<n id="238" p="422.10 199.39" color="4"/>
-<n id="240" p="434.57 192.19" Element="7" NumHydrogens="0" color="4"><t p="430.96 195.77" BoundingBox="430.96 188.61 438.18 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="242" p="448.97 192.19" NumHydrogens="0" color="4"><t p="445.36 195.77" BoundingBox="445.36 188.61 452.58 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="244" p="463.37 192.19" Element="8" NumHydrogens="0" color="4"><t p="459.48 195.77" BoundingBox="459.48 188.61 467.26 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="246" p="262.80 231.53"/>
-<n id="248" p="248.40 231.53" Element="8" NumHydrogens="0"><t p="244.51 235.11" BoundingBox="244.51 227.95 252.29 235.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="250" p="235.93 224.33"/>
-<n id="252" p="223.46 231.53"/>
-<n id="254" p="210.99 224.33" Element="8" NumHydrogens="0"><t p="207.10 227.91" BoundingBox="207.10 220.75 214.88 227.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="256" p="203.79 211.86" color="4"/>
-<n id="258" p="210.99 199.39" Element="8" NumHydrogens="0" color="4"><t p="207.10 202.97" BoundingBox="207.10 195.81 214.88 202.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="260" p="189.39 211.86" Element="7" NumHydrogens="1" color="4"><t p="178.56 215.44" BoundingBox="178.56 208.28 193.00 215.44" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
-<n id="262" p="182.19 199.39" color="4"/>
-<n id="264" p="167.79 199.39" color="4"/>
-<n id="266" p="155.32 192.19" color="4"/>
-<n id="268" p="142.85 199.39" color="4"/>
-<n id="270" p="130.38 192.19" color="4"/>
-<n id="272" p="117.90 199.39" color="4"/>
-<n id="274" p="105.43 192.19" Element="7" NumHydrogens="0" color="4"><t p="101.82 195.77" BoundingBox="101.82 188.61 109.04 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="276" p="91.03 192.19" NumHydrogens="0" color="4"><t p="87.42 195.77" BoundingBox="87.42 188.61 94.64 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="278" p="76.63 192.19" Element="8" NumHydrogens="0" color="4"><t p="72.74 195.77" BoundingBox="72.74 188.61 80.52 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="280" p="277.20 256.47"/>
-<n id="282" p="291.60 256.47" Element="8" NumHydrogens="0"><t p="287.71 260.05" BoundingBox="287.71 252.89 295.49 260.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="284" p="304.07 263.67"/>
-<n id="286" p="316.54 256.47"/>
-<n id="288" p="329.01 263.67" Element="8" NumHydrogens="0"><t p="325.12 267.25" BoundingBox="325.12 260.09 332.90 267.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="290" p="336.21 276.14" color="4"/>
-<n id="292" p="329.01 288.61" Element="8" NumHydrogens="0" color="4"><t p="325.12 292.19" BoundingBox="325.12 285.03 332.90 292.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="294" p="350.61 276.14" Element="7" NumHydrogens="1" color="4"><t p="347.00 279.72" BoundingBox="347.00 272.56 361.44 279.72" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
-<n id="296" p="357.81 288.61" color="4"/>
-<n id="298" p="372.21 288.61" color="4"/>
-<n id="300" p="384.68 295.81" color="4"/>
-<n id="302" p="397.15 288.61" color="4"/>
-<n id="304" p="409.62 295.81" color="4"/>
-<n id="306" p="422.10 288.61" color="4"/>
-<n id="308" p="434.57 295.81" Element="7" NumHydrogens="0" color="4"><t p="430.96 299.39" BoundingBox="430.96 292.23 438.18 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="310" p="448.97 295.81" NumHydrogens="0" color="4"><t p="445.36 299.39" BoundingBox="445.36 292.23 452.58 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="312" p="463.37 295.81" Element="8" NumHydrogens="0" color="4"><t p="459.48 299.39" BoundingBox="459.48 292.23 467.26 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="314" p="262.80 256.47"/>
-<n id="316" p="248.40 256.47" Element="8" NumHydrogens="0"><t p="244.51 260.05" BoundingBox="244.51 252.89 252.29 260.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="318" p="235.93 263.67"/>
-<n id="320" p="223.46 256.47"/>
-<n id="322" p="210.99 263.67" Element="8" NumHydrogens="0"><t p="207.10 267.25" BoundingBox="207.10 260.09 214.88 267.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="324" p="203.79 276.14" color="4"/>
-<n id="326" p="210.99 288.61" Element="8" NumHydrogens="0" color="4"><t p="207.10 292.19" BoundingBox="207.10 285.03 214.88 292.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="328" p="189.39 276.14" Element="7" NumHydrogens="1" color="4"><t p="178.56 279.72" BoundingBox="178.56 272.56 193.00 279.72" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
-<n id="330" p="182.19 288.61" color="4"/>
-<n id="332" p="167.79 288.61" color="4"/>
-<n id="334" p="155.32 295.81" color="4"/>
-<n id="336" p="142.85 288.61" color="4"/>
-<n id="338" p="130.38 295.81" color="4"/>
-<n id="340" p="117.90 288.61" color="4"/>
-<n id="342" p="105.43 295.81" Element="7" NumHydrogens="0" color="4"><t p="101.82 299.39" BoundingBox="101.82 292.23 109.04 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="344" p="91.03 295.81" NumHydrogens="0" color="4"><t p="87.42 299.39" BoundingBox="87.42 292.23 94.64 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="346" p="76.63 295.81" Element="8" NumHydrogens="0" color="4"><t p="72.74 299.39" BoundingBox="72.74 292.23 80.52 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<b id="213" B="211" E="212"/>
-<b id="215" B="212" E="214"/>
-<b id="217" B="214" E="216"/>
-<b id="219" B="216" E="218"/>
-<b id="221" B="218" E="220"/>
-<b id="223" B="220" E="222"/>
-<b id="225" B="222" E="224" Order="2" color="4"/>
-<b id="227" B="222" E="226" color="4"/>
-<b id="229" B="226" E="228" color="4"/>
-<b id="231" B="228" E="230" color="4"/>
-<b id="233" B="230" E="232" color="4"/>
-<b id="235" B="232" E="234" color="4"/>
-<b id="237" B="234" E="236" color="4"/>
-<b id="239" B="236" E="238" color="4"/>
-<b id="241" B="238" E="240" color="4"/>
-<b id="243" B="240" E="242" Order="2" color="4"/>
-<b id="245" B="242" E="244" Order="2" color="4"/>
-<b id="247" B="211" E="246"/>
-<b id="249" B="246" E="248"/>
-<b id="251" B="248" E="250"/>
-<b id="253" B="250" E="252"/>
-<b id="255" B="252" E="254"/>
-<b id="257" B="254" E="256"/>
-<b id="259" B="256" E="258" Order="2" color="4"/>
-<b id="261" B="256" E="260" color="4"/>
-<b id="263" B="260" E="262" color="4"/>
-<b id="265" B="262" E="264" color="4"/>
-<b id="267" B="264" E="266" color="4"/>
-<b id="269" B="266" E="268" color="4"/>
-<b id="271" B="268" E="270" color="4"/>
-<b id="273" B="270" E="272" color="4"/>
-<b id="275" B="272" E="274" color="4"/>
-<b id="277" B="274" E="276" Order="2" color="4"/>
-<b id="279" B="276" E="278" Order="2" color="4"/>
-<b id="281" B="211" E="280"/>
-<b id="283" B="280" E="282"/>
-<b id="285" B="282" E="284"/>
-<b id="287" B="284" E="286"/>
-<b id="289" B="286" E="288"/>
-<b id="291" B="288" E="290"/>
-<b id="293" B="290" E="292" Order="2" color="4"/>
-<b id="295" B="290" E="294" color="4"/>
-<b id="297" B="294" E="296" color="4"/>
-<b id="299" B="296" E="298" color="4"/>
-<b id="301" B="298" E="300" color="4"/>
-<b id="303" B="300" E="302" color="4"/>
-<b id="305" B="302" E="304" color="4"/>
-<b id="307" B="304" E="306" color="4"/>
-<b id="309" B="306" E="308" color="4"/>
-<b id="311" B="308" E="310" Order="2" color="4"/>
-<b id="313" B="310" E="312" Order="2" color="4"/>
-<b id="315" B="211" E="314"/>
-<b id="317" B="314" E="316"/>
-<b id="319" B="316" E="318"/>
-<b id="321" B="318" E="320"/>
-<b id="323" B="320" E="322"/>
-<b id="325" B="322" E="324"/>
-<b id="327" B="324" E="326" Order="2" color="4"/>
-<b id="329" B="324" E="328" color="4"/>
-<b id="331" B="328" E="330" color="4"/>
-<b id="333" B="330" E="332" color="4"/>
-<b id="335" B="332" E="334" color="4"/>
-<b id="337" B="334" E="336" color="4"/>
-<b id="339" B="336" E="338" color="4"/>
-<b id="341" B="338" E="340" color="4"/>
-<b id="343" B="340" E="342" color="4"/>
-<b id="345" B="342" E="344" Order="2" color="4"/>
-<b id="347" B="344" E="346" Order="2" color="4"/>
+<fragment id="211" BoundingBox="72.63 188.19 467.37 299.81">
+<n id="212" p="270.00 244.00"/>
+<n id="213" p="277.20 231.53"/>
+<n id="215" p="291.60 231.53" Element="8" NumHydrogens="0"><t p="287.71 235.11" BoundingBox="287.71 227.95 295.49 235.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="217" p="304.07 224.33"/>
+<n id="219" p="316.54 231.53"/>
+<n id="221" p="329.01 224.33" Element="8" NumHydrogens="0"><t p="325.12 227.91" BoundingBox="325.12 220.75 332.90 227.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="223" p="336.21 211.86" color="4"/>
+<n id="225" p="329.01 199.39" Element="8" NumHydrogens="0" color="4"><t p="325.12 202.97" BoundingBox="325.12 195.81 332.90 202.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="227" p="350.61 211.86" Element="7" NumHydrogens="1" color="4"><t p="347.00 215.44" BoundingBox="347.00 208.28 361.44 215.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
+<n id="229" p="357.81 199.39" color="4"/>
+<n id="231" p="372.21 199.39" color="4"/>
+<n id="233" p="384.68 192.19" color="4"/>
+<n id="235" p="397.15 199.39" color="4"/>
+<n id="237" p="409.62 192.19" color="4"/>
+<n id="239" p="422.10 199.39" color="4"/>
+<n id="241" p="434.57 192.19" Element="7" NumHydrogens="0" color="4"><t p="430.96 195.77" BoundingBox="430.96 188.61 438.18 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="243" p="448.97 192.19" NumHydrogens="0" color="4"><t p="445.36 195.77" BoundingBox="445.36 188.61 452.58 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="245" p="463.37 192.19" Element="8" NumHydrogens="0" color="4"><t p="459.48 195.77" BoundingBox="459.48 188.61 467.26 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="247" p="262.80 231.53"/>
+<n id="249" p="248.40 231.53" Element="8" NumHydrogens="0"><t p="244.51 235.11" BoundingBox="244.51 227.95 252.29 235.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="251" p="235.93 224.33"/>
+<n id="253" p="223.46 231.53"/>
+<n id="255" p="210.99 224.33" Element="8" NumHydrogens="0"><t p="207.10 227.91" BoundingBox="207.10 220.75 214.88 227.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="257" p="203.79 211.86" color="4"/>
+<n id="259" p="210.99 199.39" Element="8" NumHydrogens="0" color="4"><t p="207.10 202.97" BoundingBox="207.10 195.81 214.88 202.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="261" p="189.39 211.86" Element="7" NumHydrogens="1" color="4"><t p="178.56 215.44" BoundingBox="178.56 208.28 193.00 215.44" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
+<n id="263" p="182.19 199.39" color="4"/>
+<n id="265" p="167.79 199.39" color="4"/>
+<n id="267" p="155.32 192.19" color="4"/>
+<n id="269" p="142.85 199.39" color="4"/>
+<n id="271" p="130.38 192.19" color="4"/>
+<n id="273" p="117.90 199.39" color="4"/>
+<n id="275" p="105.43 192.19" Element="7" NumHydrogens="0" color="4"><t p="101.82 195.77" BoundingBox="101.82 188.61 109.04 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="277" p="91.03 192.19" NumHydrogens="0" color="4"><t p="87.42 195.77" BoundingBox="87.42 188.61 94.64 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="279" p="76.63 192.19" Element="8" NumHydrogens="0" color="4"><t p="72.74 195.77" BoundingBox="72.74 188.61 80.52 195.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="281" p="277.20 256.47"/>
+<n id="283" p="291.60 256.47" Element="8" NumHydrogens="0"><t p="287.71 260.05" BoundingBox="287.71 252.89 295.49 260.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="285" p="304.07 263.67"/>
+<n id="287" p="316.54 256.47"/>
+<n id="289" p="329.01 263.67" Element="8" NumHydrogens="0"><t p="325.12 267.25" BoundingBox="325.12 260.09 332.90 267.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="291" p="336.21 276.14" color="4"/>
+<n id="293" p="329.01 288.61" Element="8" NumHydrogens="0" color="4"><t p="325.12 292.19" BoundingBox="325.12 285.03 332.90 292.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="295" p="350.61 276.14" Element="7" NumHydrogens="1" color="4"><t p="347.00 279.72" BoundingBox="347.00 272.56 361.44 279.72" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
+<n id="297" p="357.81 288.61" color="4"/>
+<n id="299" p="372.21 288.61" color="4"/>
+<n id="301" p="384.68 295.81" color="4"/>
+<n id="303" p="397.15 288.61" color="4"/>
+<n id="305" p="409.62 295.81" color="4"/>
+<n id="307" p="422.10 288.61" color="4"/>
+<n id="309" p="434.57 295.81" Element="7" NumHydrogens="0" color="4"><t p="430.96 299.39" BoundingBox="430.96 292.23 438.18 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="311" p="448.97 295.81" NumHydrogens="0" color="4"><t p="445.36 299.39" BoundingBox="445.36 292.23 452.58 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="313" p="463.37 295.81" Element="8" NumHydrogens="0" color="4"><t p="459.48 299.39" BoundingBox="459.48 292.23 467.26 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="315" p="262.80 256.47"/>
+<n id="317" p="248.40 256.47" Element="8" NumHydrogens="0"><t p="244.51 260.05" BoundingBox="244.51 252.89 252.29 260.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="319" p="235.93 263.67"/>
+<n id="321" p="223.46 256.47"/>
+<n id="323" p="210.99 263.67" Element="8" NumHydrogens="0"><t p="207.10 267.25" BoundingBox="207.10 260.09 214.88 267.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="325" p="203.79 276.14" color="4"/>
+<n id="327" p="210.99 288.61" Element="8" NumHydrogens="0" color="4"><t p="207.10 292.19" BoundingBox="207.10 285.03 214.88 292.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="329" p="189.39 276.14" Element="7" NumHydrogens="1" color="4"><t p="178.56 279.72" BoundingBox="178.56 272.56 193.00 279.72" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
+<n id="331" p="182.19 288.61" color="4"/>
+<n id="333" p="167.79 288.61" color="4"/>
+<n id="335" p="155.32 295.81" color="4"/>
+<n id="337" p="142.85 288.61" color="4"/>
+<n id="339" p="130.38 295.81" color="4"/>
+<n id="341" p="117.90 288.61" color="4"/>
+<n id="343" p="105.43 295.81" Element="7" NumHydrogens="0" color="4"><t p="101.82 299.39" BoundingBox="101.82 292.23 109.04 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="345" p="91.03 295.81" NumHydrogens="0" color="4"><t p="87.42 299.39" BoundingBox="87.42 292.23 94.64 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="347" p="76.63 295.81" Element="8" NumHydrogens="0" color="4"><t p="72.74 299.39" BoundingBox="72.74 292.23 80.52 299.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<b id="214" B="212" E="213"/>
+<b id="216" B="213" E="215"/>
+<b id="218" B="215" E="217"/>
+<b id="220" B="217" E="219"/>
+<b id="222" B="219" E="221"/>
+<b id="224" B="221" E="223"/>
+<b id="226" B="223" E="225" Order="2" color="4"/>
+<b id="228" B="223" E="227" color="4"/>
+<b id="230" B="227" E="229" color="4"/>
+<b id="232" B="229" E="231" color="4"/>
+<b id="234" B="231" E="233" color="4"/>
+<b id="236" B="233" E="235" color="4"/>
+<b id="238" B="235" E="237" color="4"/>
+<b id="240" B="237" E="239" color="4"/>
+<b id="242" B="239" E="241" color="4"/>
+<b id="244" B="241" E="243" Order="2" color="4"/>
+<b id="246" B="243" E="245" Order="2" color="4"/>
+<b id="248" B="212" E="247"/>
+<b id="250" B="247" E="249"/>
+<b id="252" B="249" E="251"/>
+<b id="254" B="251" E="253"/>
+<b id="256" B="253" E="255"/>
+<b id="258" B="255" E="257"/>
+<b id="260" B="257" E="259" Order="2" color="4"/>
+<b id="262" B="257" E="261" color="4"/>
+<b id="264" B="261" E="263" color="4"/>
+<b id="266" B="263" E="265" color="4"/>
+<b id="268" B="265" E="267" color="4"/>
+<b id="270" B="267" E="269" color="4"/>
+<b id="272" B="269" E="271" color="4"/>
+<b id="274" B="271" E="273" color="4"/>
+<b id="276" B="273" E="275" color="4"/>
+<b id="278" B="275" E="277" Order="2" color="4"/>
+<b id="280" B="277" E="279" Order="2" color="4"/>
+<b id="282" B="212" E="281"/>
+<b id="284" B="281" E="283"/>
+<b id="286" B="283" E="285"/>
+<b id="288" B="285" E="287"/>
+<b id="290" B="287" E="289"/>
+<b id="292" B="289" E="291"/>
+<b id="294" B="291" E="293" Order="2" color="4"/>
+<b id="296" B="291" E="295" color="4"/>
+<b id="298" B="295" E="297" color="4"/>
+<b id="300" B="297" E="299" color="4"/>
+<b id="302" B="299" E="301" color="4"/>
+<b id="304" B="301" E="303" color="4"/>
+<b id="306" B="303" E="305" color="4"/>
+<b id="308" B="305" E="307" color="4"/>
+<b id="310" B="307" E="309" color="4"/>
+<b id="312" B="309" E="311" Order="2" color="4"/>
+<b id="314" B="311" E="313" Order="2" color="4"/>
+<b id="316" B="212" E="315"/>
+<b id="318" B="315" E="317"/>
+<b id="320" B="317" E="319"/>
+<b id="322" B="319" E="321"/>
+<b id="324" B="321" E="323"/>
+<b id="326" B="323" E="325"/>
+<b id="328" B="325" E="327" Order="2" color="4"/>
+<b id="330" B="325" E="329" color="4"/>
+<b id="332" B="329" E="331" color="4"/>
+<b id="334" B="331" E="333" color="4"/>
+<b id="336" B="333" E="335" color="4"/>
+<b id="338" B="335" E="337" color="4"/>
+<b id="340" B="337" E="339" color="4"/>
+<b id="342" B="339" E="341" color="4"/>
+<b id="344" B="341" E="343" color="4"/>
+<b id="346" B="343" E="345" Order="2" color="4"/>
+<b id="348" B="345" E="347" Order="2" color="4"/>
 </fragment>
-<fragment id="383" BoundingBox="56.19 368.33 175.01 415.67">
-<n id="384" p="112.00 392.00"/>
-<n id="385" p="119.20 379.53"/>
-<n id="387" p="133.60 379.53" Element="8" NumHydrogens="0"><t p="129.71 383.11" BoundingBox="129.71 375.95 137.49 383.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="389" p="146.07 372.33"/>
-<n id="391" p="158.54 379.53"/>
-<n id="393" p="171.01 372.33" Element="8" NumHydrogens="1"><t p="167.12 375.91" BoundingBox="167.12 368.75 182.12 375.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">OH</s></t></n>
-<n id="395" p="119.20 404.47"/>
-<n id="397" p="133.60 404.47" Element="8" NumHydrogens="0"><t p="129.71 408.05" BoundingBox="129.71 400.89 137.49 408.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="399" p="146.07 411.67"/>
-<n id="401" p="158.54 404.47"/>
-<n id="403" p="171.01 411.67" Element="8" NumHydrogens="1"><t p="167.12 415.25" BoundingBox="167.12 408.09 182.12 415.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">OH</s></t></n>
-<n id="405" p="97.60 392.00" Element="8" NumHydrogens="0"><t p="93.71 395.58" BoundingBox="93.71 388.42 101.49 395.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="407" p="85.13 384.80"/>
-<n id="409" p="72.66 392.00"/>
-<n id="411" p="60.19 384.80" Element="8" NumHydrogens="1"><t p="49.08 388.38" BoundingBox="49.08 381.22 64.08 388.38" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="3" face="96">HO</s></t></n>
-<b id="386" B="384" E="385"/>
-<b id="388" B="385" E="387"/>
-<b id="390" B="387" E="389"/>
-<b id="392" B="389" E="391"/>
-<b id="394" B="391" E="393"/>
-<b id="396" B="384" E="395"/>
-<b id="398" B="395" E="397"/>
-<b id="400" B="397" E="399"/>
-<b id="402" B="399" E="401"/>
-<b id="404" B="401" E="403"/>
-<b id="406" B="384" E="405"/>
-<b id="408" B="405" E="407"/>
-<b id="410" B="407" E="409"/>
-<b id="412" B="409" E="411"/>
+<fragment id="384" BoundingBox="56.19 368.33 175.01 415.67">
+<n id="385" p="112.00 392.00"/>
+<n id="386" p="119.20 379.53"/>
+<n id="388" p="133.60 379.53" Element="8" NumHydrogens="0"><t p="129.71 383.11" BoundingBox="129.71 375.95 137.49 383.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="390" p="146.07 372.33"/>
+<n id="392" p="158.54 379.53"/>
+<n id="394" p="171.01 372.33" Element="8" NumHydrogens="1"><t p="167.12 375.91" BoundingBox="167.12 368.75 182.12 375.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">OH</s></t></n>
+<n id="396" p="119.20 404.47"/>
+<n id="398" p="133.60 404.47" Element="8" NumHydrogens="0"><t p="129.71 408.05" BoundingBox="129.71 400.89 137.49 408.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="400" p="146.07 411.67"/>
+<n id="402" p="158.54 404.47"/>
+<n id="404" p="171.01 411.67" Element="8" NumHydrogens="1"><t p="167.12 415.25" BoundingBox="167.12 408.09 182.12 415.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">OH</s></t></n>
+<n id="406" p="97.60 392.00" Element="8" NumHydrogens="0"><t p="93.71 395.58" BoundingBox="93.71 388.42 101.49 395.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="408" p="85.13 384.80"/>
+<n id="410" p="72.66 392.00"/>
+<n id="412" p="60.19 384.80" Element="8" NumHydrogens="1"><t p="49.08 388.38" BoundingBox="49.08 381.22 64.08 388.38" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="3" face="96">HO</s></t></n>
+<b id="387" B="385" E="386"/>
+<b id="389" B="386" E="388"/>
+<b id="391" B="388" E="390"/>
+<b id="393" B="390" E="392"/>
+<b id="395" B="392" E="394"/>
+<b id="397" B="385" E="396"/>
+<b id="399" B="396" E="398"/>
+<b id="401" B="398" E="400"/>
+<b id="403" B="400" E="402"/>
+<b id="405" B="402" E="404"/>
+<b id="407" B="385" E="406"/>
+<b id="409" B="406" E="408"/>
+<b id="411" B="408" E="410"/>
+<b id="413" B="410" E="412"/>
 </fragment>
-<fragment id="440" BoundingBox="279.20 385.00 432.10 400.20">
-<n id="441" p="312.00 389.00" Element="7" NumHydrogens="0" color="4"><t p="308.39 392.58" BoundingBox="308.39 385.42 315.61 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="442" p="297.60 389.00" NumHydrogens="0" color="4"><t p="293.99 392.58" BoundingBox="293.99 385.42 301.21 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="444" p="283.20 389.00" Element="8" NumHydrogens="0" color="4"><t p="279.31 392.58" BoundingBox="279.31 385.42 287.09 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="446" p="324.47 396.20" color="4"/>
-<n id="448" p="336.94 389.00" color="4"/>
-<n id="450" p="349.41 396.20" color="4"/>
-<n id="452" p="361.88 389.00" color="4"/>
-<n id="454" p="374.35 396.20" color="4"/>
-<n id="456" p="386.82 389.00" color="4"/>
-<n id="458" p="399.30 396.20" Element="7" NumHydrogens="0" color="4"><t p="395.69 399.78" BoundingBox="395.69 392.62 402.91 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="460" p="413.70 396.20" NumHydrogens="0" color="4"><t p="410.09 399.78" BoundingBox="410.09 392.62 417.31 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="462" p="428.10 396.20" Element="8" NumHydrogens="0" color="4"><t p="424.21 399.78" BoundingBox="424.21 392.62 431.99 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<b id="443" B="441" E="442" Order="2" color="4"/>
-<b id="445" B="442" E="444" Order="2" color="4"/>
-<b id="447" B="441" E="446" color="4"/>
-<b id="449" B="446" E="448" color="4"/>
+<fragment id="442" BoundingBox="279.20 385.00 432.10 400.20">
+<n id="443" p="312.00 389.00" Element="7" NumHydrogens="0" color="4"><t p="308.39 392.58" BoundingBox="308.39 385.42 315.61 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="444" p="297.60 389.00" NumHydrogens="0" color="4"><t p="293.99 392.58" BoundingBox="293.99 385.42 301.21 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="446" p="283.20 389.00" Element="8" NumHydrogens="0" color="4"><t p="279.31 392.58" BoundingBox="279.31 385.42 287.09 392.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="448" p="324.47 396.20" color="4"/>
+<n id="450" p="336.94 389.00" color="4"/>
+<n id="452" p="349.41 396.20" color="4"/>
+<n id="454" p="361.88 389.00" color="4"/>
+<n id="456" p="374.35 396.20" color="4"/>
+<n id="458" p="386.82 389.00" color="4"/>
+<n id="460" p="399.30 396.20" Element="7" NumHydrogens="0" color="4"><t p="395.69 399.78" BoundingBox="395.69 392.62 402.91 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="462" p="413.70 396.20" NumHydrogens="0" color="4"><t p="410.09 399.78" BoundingBox="410.09 392.62 417.31 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="464" p="428.10 396.20" Element="8" NumHydrogens="0" color="4"><t p="424.21 399.78" BoundingBox="424.21 392.62 431.99 399.78" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<b id="445" B="443" E="444" Order="2" color="4"/>
+<b id="447" B="444" E="446" Order="2" color="4"/>
+<b id="449" B="443" E="448" color="4"/>
 <b id="451" B="448" E="450" color="4"/>
 <b id="453" B="450" E="452" color="4"/>
 <b id="455" B="452" E="454" color="4"/>
 <b id="457" B="454" E="456" color="4"/>
 <b id="459" B="456" E="458" color="4"/>
-<b id="461" B="458" E="460" Order="2" color="4"/>
+<b id="461" B="458" E="460" color="4"/>
 <b id="463" B="460" E="462" Order="2" color="4"/>
+<b id="465" B="462" E="464" Order="2" color="4"/>
 </fragment>
-<fragment id="470" BoundingBox="83.83 494.19 471.37 605.81">
-<n id="471" p="274.00 550.00"/>
-<n id="472" p="281.20 537.53"/>
-<n id="474" p="295.60 537.53" Element="8" NumHydrogens="0"><t p="291.71 541.11" BoundingBox="291.71 533.95 299.49 541.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="476" p="308.07 530.33"/>
-<n id="478" p="320.54 537.53"/>
-<n id="480" p="333.01 530.33" Element="8" NumHydrogens="0"><t p="329.12 533.91" BoundingBox="329.12 526.75 336.90 533.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="482" p="340.21 517.86" color="4"/>
-<n id="484" p="333.01 505.39" Element="8" NumHydrogens="0" color="4"><t p="329.12 508.97" BoundingBox="329.12 501.81 336.90 508.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="486" p="354.61 517.86" Element="7" NumHydrogens="1" color="4"><t p="351.00 521.44" BoundingBox="351.00 514.28 365.44 521.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
-<n id="488" p="361.81 505.39" color="4"/>
-<n id="490" p="376.21 505.39" color="4"/>
-<n id="492" p="388.68 498.19" color="4"/>
-<n id="494" p="401.15 505.39" color="4"/>
-<n id="496" p="413.62 498.19" color="4"/>
-<n id="498" p="426.10 505.39" color="4"/>
-<n id="500" p="438.57 498.19" Element="7" NumHydrogens="0" color="4"><t p="434.96 501.77" BoundingBox="434.96 494.61 442.18 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="502" p="452.97 498.19" NumHydrogens="0" color="4"><t p="449.36 501.77" BoundingBox="449.36 494.61 456.58 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="504" p="467.37 498.19" Element="8" NumHydrogens="0" color="4"><t p="463.48 501.77" BoundingBox="463.48 494.61 471.26 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="506" p="281.20 562.47"/>
-<n id="508" p="295.60 562.47" Element="8" NumHydrogens="0"><t p="291.71 566.05" BoundingBox="291.71 558.89 299.49 566.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="510" p="308.07 569.67"/>
-<n id="512" p="320.54 562.47"/>
-<n id="514" p="333.01 569.67" Element="8" NumHydrogens="0"><t p="329.12 573.25" BoundingBox="329.12 566.09 336.90 573.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="516" p="340.21 582.14" color="4"/>
-<n id="518" p="333.01 594.61" Element="8" NumHydrogens="0" color="4"><t p="329.12 598.19" BoundingBox="329.12 591.03 336.90 598.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="520" p="354.61 582.14" Element="7" NumHydrogens="1" color="4"><t p="351.00 585.72" BoundingBox="351.00 578.56 365.44 585.72" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
-<n id="522" p="361.81 594.61" color="4"/>
-<n id="524" p="376.21 594.61" color="4"/>
-<n id="526" p="388.68 601.81" color="4"/>
-<n id="528" p="401.15 594.61" color="4"/>
-<n id="530" p="413.62 601.81" color="4"/>
-<n id="532" p="426.10 594.61" color="4"/>
-<n id="534" p="438.57 601.81" Element="7" NumHydrogens="0" color="4"><t p="434.96 605.39" BoundingBox="434.96 598.23 442.18 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="536" p="452.97 601.81" NumHydrogens="0" color="4"><t p="449.36 605.39" BoundingBox="449.36 598.23 456.58 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="538" p="467.37 601.81" Element="8" NumHydrogens="0" color="4"><t p="463.48 605.39" BoundingBox="463.48 598.23 471.26 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="540" p="259.60 550.00" Element="8" NumHydrogens="0"><t p="255.71 553.58" BoundingBox="255.71 546.42 263.49 553.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="542" p="247.13 542.80"/>
-<n id="544" p="234.66 550.00"/>
-<n id="546" p="222.19 542.80" Element="8" NumHydrogens="0"><t p="218.30 546.38" BoundingBox="218.30 539.22 226.08 546.38" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
-<n id="548" p="214.99 530.33" color="4"/>
-<n id="550" p="222.19 517.86" Element="8" NumHydrogens="0" color="4"><t p="218.30 521.44" BoundingBox="218.30 514.28 226.08 521.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<n id="552" p="200.59 530.33" Element="7" NumHydrogens="1" color="4"><t p="189.76 533.91" BoundingBox="189.76 526.75 204.20 533.91" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
-<n id="554" p="193.39 517.86" color="4"/>
-<n id="556" p="178.99 517.86" color="4"/>
-<n id="558" p="166.52 510.66" color="4"/>
-<n id="560" p="154.05 517.86" color="4"/>
-<n id="562" p="141.58 510.66" color="4"/>
-<n id="564" p="129.10 517.86" color="4"/>
-<n id="566" p="116.63 510.66" Element="7" NumHydrogens="0" color="4"><t p="113.02 514.24" BoundingBox="113.02 507.08 120.24 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
-<n id="568" p="102.23 510.66" NumHydrogens="0" color="4"><t p="98.62 514.24" BoundingBox="98.62 507.08 105.84 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
-<n id="570" p="87.83 510.66" Element="8" NumHydrogens="0" color="4"><t p="83.94 514.24" BoundingBox="83.94 507.08 91.72 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
-<b id="473" B="471" E="472"/>
-<b id="475" B="472" E="474"/>
+<fragment id="472" BoundingBox="83.83 494.19 471.37 605.81">
+<n id="473" p="274.00 550.00"/>
+<n id="474" p="281.20 537.53"/>
+<n id="476" p="295.60 537.53" Element="8" NumHydrogens="0"><t p="291.71 541.11" BoundingBox="291.71 533.95 299.49 541.11" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="478" p="308.07 530.33"/>
+<n id="480" p="320.54 537.53"/>
+<n id="482" p="333.01 530.33" Element="8" NumHydrogens="0"><t p="329.12 533.91" BoundingBox="329.12 526.75 336.90 533.91" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="484" p="340.21 517.86" color="4"/>
+<n id="486" p="333.01 505.39" Element="8" NumHydrogens="0" color="4"><t p="329.12 508.97" BoundingBox="329.12 501.81 336.90 508.97" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="488" p="354.61 517.86" Element="7" NumHydrogens="1" color="4"><t p="351.00 521.44" BoundingBox="351.00 514.28 365.44 521.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
+<n id="490" p="361.81 505.39" color="4"/>
+<n id="492" p="376.21 505.39" color="4"/>
+<n id="494" p="388.68 498.19" color="4"/>
+<n id="496" p="401.15 505.39" color="4"/>
+<n id="498" p="413.62 498.19" color="4"/>
+<n id="500" p="426.10 505.39" color="4"/>
+<n id="502" p="438.57 498.19" Element="7" NumHydrogens="0" color="4"><t p="434.96 501.77" BoundingBox="434.96 494.61 442.18 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="504" p="452.97 498.19" NumHydrogens="0" color="4"><t p="449.36 501.77" BoundingBox="449.36 494.61 456.58 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="506" p="467.37 498.19" Element="8" NumHydrogens="0" color="4"><t p="463.48 501.77" BoundingBox="463.48 494.61 471.26 501.77" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="508" p="281.20 562.47"/>
+<n id="510" p="295.60 562.47" Element="8" NumHydrogens="0"><t p="291.71 566.05" BoundingBox="291.71 558.89 299.49 566.05" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="512" p="308.07 569.67"/>
+<n id="514" p="320.54 562.47"/>
+<n id="516" p="333.01 569.67" Element="8" NumHydrogens="0"><t p="329.12 573.25" BoundingBox="329.12 566.09 336.90 573.25" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="518" p="340.21 582.14" color="4"/>
+<n id="520" p="333.01 594.61" Element="8" NumHydrogens="0" color="4"><t p="329.12 598.19" BoundingBox="329.12 591.03 336.90 598.19" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="522" p="354.61 582.14" Element="7" NumHydrogens="1" color="4"><t p="351.00 585.72" BoundingBox="351.00 578.56 365.44 585.72" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">NH</s></t></n>
+<n id="524" p="361.81 594.61" color="4"/>
+<n id="526" p="376.21 594.61" color="4"/>
+<n id="528" p="388.68 601.81" color="4"/>
+<n id="530" p="401.15 594.61" color="4"/>
+<n id="532" p="413.62 601.81" color="4"/>
+<n id="534" p="426.10 594.61" color="4"/>
+<n id="536" p="438.57 601.81" Element="7" NumHydrogens="0" color="4"><t p="434.96 605.39" BoundingBox="434.96 598.23 442.18 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="538" p="452.97 601.81" NumHydrogens="0" color="4"><t p="449.36 605.39" BoundingBox="449.36 598.23 456.58 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="540" p="467.37 601.81" Element="8" NumHydrogens="0" color="4"><t p="463.48 605.39" BoundingBox="463.48 598.23 471.26 605.39" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="542" p="259.60 550.00" Element="8" NumHydrogens="0"><t p="255.71 553.58" BoundingBox="255.71 546.42 263.49 553.58" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="544" p="247.13 542.80"/>
+<n id="546" p="234.66 550.00"/>
+<n id="548" p="222.19 542.80" Element="8" NumHydrogens="0"><t p="218.30 546.38" BoundingBox="218.30 539.22 226.08 546.38" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="3" face="96">O</s></t></n>
+<n id="550" p="214.99 530.33" color="4"/>
+<n id="552" p="222.19 517.86" Element="8" NumHydrogens="0" color="4"><t p="218.30 521.44" BoundingBox="218.30 514.28 226.08 521.44" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<n id="554" p="200.59 530.33" Element="7" NumHydrogens="1" color="4"><t p="189.76 533.91" BoundingBox="189.76 526.75 204.20 533.91" LabelJustification="Right" LabelAlignment="Right"><s font="3" size="10" color="4" face="96">HN</s></t></n>
+<n id="556" p="193.39 517.86" color="4"/>
+<n id="558" p="178.99 517.86" color="4"/>
+<n id="560" p="166.52 510.66" color="4"/>
+<n id="562" p="154.05 517.86" color="4"/>
+<n id="564" p="141.58 510.66" color="4"/>
+<n id="566" p="129.10 517.86" color="4"/>
+<n id="568" p="116.63 510.66" Element="7" NumHydrogens="0" color="4"><t p="113.02 514.24" BoundingBox="113.02 507.08 120.24 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">N</s></t></n>
+<n id="570" p="102.23 510.66" NumHydrogens="0" color="4"><t p="98.62 514.24" BoundingBox="98.62 507.08 105.84 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">C</s></t></n>
+<n id="572" p="87.83 510.66" Element="8" NumHydrogens="0" color="4"><t p="83.94 514.24" BoundingBox="83.94 507.08 91.72 514.24" LabelJustification="Left" LabelAlignment="Left"><s font="3" size="10" color="4" face="96">O</s></t></n>
+<b id="475" B="473" E="474"/>
 <b id="477" B="474" E="476"/>
 <b id="479" B="476" E="478"/>
 <b id="481" B="478" E="480"/>
 <b id="483" B="480" E="482"/>
-<b id="485" B="482" E="484" Order="2" color="4"/>
-<b id="487" B="482" E="486" color="4"/>
-<b id="489" B="486" E="488" color="4"/>
+<b id="485" B="482" E="484"/>
+<b id="487" B="484" E="486" Order="2" color="4"/>
+<b id="489" B="484" E="488" color="4"/>
 <b id="491" B="488" E="490" color="4"/>
 <b id="493" B="490" E="492" color="4"/>
 <b id="495" B="492" E="494" color="4"/>
 <b id="497" B="494" E="496" color="4"/>
 <b id="499" B="496" E="498" color="4"/>
 <b id="501" B="498" E="500" color="4"/>
-<b id="503" B="500" E="502" Order="2" color="4"/>
+<b id="503" B="500" E="502" color="4"/>
 <b id="505" B="502" E="504" Order="2" color="4"/>
-<b id="507" B="471" E="506"/>
-<b id="509" B="506" E="508"/>
+<b id="507" B="504" E="506" Order="2" color="4"/>
+<b id="509" B="473" E="508"/>
 <b id="511" B="508" E="510"/>
 <b id="513" B="510" E="512"/>
 <b id="515" B="512" E="514"/>
 <b id="517" B="514" E="516"/>
-<b id="519" B="516" E="518" Order="2" color="4"/>
-<b id="521" B="516" E="520" color="4"/>
-<b id="523" B="520" E="522" color="4"/>
+<b id="519" B="516" E="518"/>
+<b id="521" B="518" E="520" Order="2" color="4"/>
+<b id="523" B="518" E="522" color="4"/>
 <b id="525" B="522" E="524" color="4"/>
 <b id="527" B="524" E="526" color="4"/>
 <b id="529" B="526" E="528" color="4"/>
 <b id="531" B="528" E="530" color="4"/>
 <b id="533" B="530" E="532" color="4"/>
 <b id="535" B="532" E="534" color="4"/>
-<b id="537" B="534" E="536" Order="2" color="4"/>
+<b id="537" B="534" E="536" color="4"/>
 <b id="539" B="536" E="538" Order="2" color="4"/>
-<b id="541" B="471" E="540"/>
-<b id="543" B="540" E="542"/>
+<b id="541" B="538" E="540" Order="2" color="4"/>
+<b id="543" B="473" E="542"/>
 <b id="545" B="542" E="544"/>
 <b id="547" B="544" E="546"/>
 <b id="549" B="546" E="548"/>
-<b id="551" B="548" E="550" Order="2" color="4"/>
-<b id="553" B="548" E="552" color="4"/>
-<b id="555" B="552" E="554" color="4"/>
+<b id="551" B="548" E="550"/>
+<b id="553" B="550" E="552" Order="2" color="4"/>
+<b id="555" B="550" E="554" color="4"/>
 <b id="557" B="554" E="556" color="4"/>
 <b id="559" B="556" E="558" color="4"/>
 <b id="561" B="558" E="560" color="4"/>
 <b id="563" B="560" E="562" color="4"/>
 <b id="565" B="562" E="564" color="4"/>
 <b id="567" B="564" E="566" color="4"/>
-<b id="569" B="566" E="568" Order="2" color="4"/>
+<b id="569" B="566" E="568" color="4"/>
 <b id="571" B="568" E="570" Order="2" color="4"/>
+<b id="573" B="570" E="572" Order="2" color="4"/>
 </fragment>
 <graphic id="145" BoundingBox="124.01 59.33 124.01 80.53" GraphicType="Bracket" BracketType="Square"/>
 <graphic id="146" BoundingBox="163.52 80.53 163.52 59.33" GraphicType="Bracket" BracketType="Square"/>
@@ -398,82 +398,84 @@
 <graphic id="162" BoundingBox="163.52 112.67 163.52 91.47" GraphicType="Bracket" BracketType="Square"/>
 <graphic id="169" BoundingBox="60.48 91.47 60.48 112.67" GraphicType="Bracket" BracketType="Square"/>
 <graphic id="170" BoundingBox="99.99 112.67 99.99 91.47" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="348" BoundingBox="282.01 217.33 282.01 238.53" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="349" BoundingBox="321.52 238.53 321.52 217.33" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="356" BoundingBox="218.48 217.33 218.48 238.53" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="357" BoundingBox="257.99 238.53 257.99 217.33" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="364" BoundingBox="282.01 249.47 282.01 270.67" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="365" BoundingBox="321.52 270.67 321.52 249.47" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="372" BoundingBox="218.48 249.47 218.48 270.67" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="373" BoundingBox="257.99 270.67 257.99 249.47" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="413" BoundingBox="124.01 365.33 124.01 386.53" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="414" BoundingBox="163.52 386.53 163.52 365.33" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="421" BoundingBox="124.01 397.47 124.01 418.67" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="422" BoundingBox="163.52 418.67 163.52 397.47" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="429" BoundingBox="67.68 377.80 67.68 399.00" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="430" BoundingBox="107.19 399.00 107.19 377.80" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="572" BoundingBox="286.01 523.33 286.01 544.53" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="573" BoundingBox="325.52 544.53 325.52 523.33" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="580" BoundingBox="286.01 555.47 286.01 576.67" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="581" BoundingBox="325.52 576.67 325.52 555.47" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="588" BoundingBox="229.68 535.80 229.68 557.00" GraphicType="Bracket" BracketType="Square"/>
-<graphic id="589" BoundingBox="269.19 557.00 269.19 535.80" GraphicType="Bracket" BracketType="Square"/>
-<arrow id="206" BoundingBox="267.00 150.00 273.00 190.00" FillType="None" ArrowheadHead="Full" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="270.00 190.00 0" Tail3D="270.00 150.00 0"/>
-<arrow id="466" BoundingBox="267.00 456.00 273.00 496.00" FillType="None" ArrowheadHead="Full" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="270.00 496.00 0" Tail3D="270.00 456.00 0"/>
-<t id="101" p="0.00 14.00" BoundingBox="0.00 6.84 457.56 16.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="1">Scheme 1. </s><s font="3" size="10" color="3" face="0">NCO-terminated star prepolymers from ethoxylated polyols and excess HDI</s></t>
+<graphic id="349" BoundingBox="282.01 217.33 282.01 238.53" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="350" BoundingBox="321.52 238.53 321.52 217.33" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="357" BoundingBox="218.48 217.33 218.48 238.53" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="358" BoundingBox="257.99 238.53 257.99 217.33" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="365" BoundingBox="282.01 249.47 282.01 270.67" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="366" BoundingBox="321.52 270.67 321.52 249.47" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="373" BoundingBox="218.48 249.47 218.48 270.67" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="374" BoundingBox="257.99 270.67 257.99 249.47" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="414" BoundingBox="124.01 365.33 124.01 386.53" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="415" BoundingBox="163.52 386.53 163.52 365.33" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="422" BoundingBox="124.01 397.47 124.01 418.67" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="423" BoundingBox="163.52 418.67 163.52 397.47" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="430" BoundingBox="67.68 377.80 67.68 399.00" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="431" BoundingBox="107.19 399.00 107.19 377.80" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="574" BoundingBox="286.01 523.33 286.01 544.53" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="575" BoundingBox="325.52 544.53 325.52 523.33" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="582" BoundingBox="286.01 555.47 286.01 576.67" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="583" BoundingBox="325.52 576.67 325.52 555.47" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="590" BoundingBox="229.68 535.80 229.68 557.00" GraphicType="Bracket" BracketType="Square"/>
+<graphic id="591" BoundingBox="269.19 557.00 269.19 535.80" GraphicType="Bracket" BracketType="Square"/>
+<arrow id="207" BoundingBox="267.00 150.00 273.00 190.00" FillType="None" ArrowheadHead="Full" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="270.00 190.00 0" Tail3D="270.00 150.00 0"/>
+<arrow id="468" BoundingBox="267.00 456.00 273.00 496.00" FillType="None" ArrowheadHead="Full" ArrowheadType="Solid" HeadSize="1000" ArrowheadCenterSize="875" ArrowheadWidth="250" Head3D="270.00 496.00 0" Tail3D="270.00 456.00 0"/>
+<t id="101" p="0.00 14.00" BoundingBox="0.00 6.84 456.44 16.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="1">Scheme 1. </s><s font="3" size="10" color="3" face="0">NCO-terminated star prepolymers from ethoxylated polyols and excess HDI</s></t>
 <t id="102" p="0.00 40.00" BoundingBox="0.00 32.84 252.42 42.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="1">(a) </s><s font="3" size="10" color="3" face="1">Pentaerythritol ethoxylate (PE-EO, 4-arm)</s></t>
-<t id="152" p="164.72 85.73" BoundingBox="164.72 78.57 170.28 87.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="160" p="53.72 85.73" BoundingBox="53.72 78.57 59.28 87.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="168" p="164.72 117.87" BoundingBox="164.72 110.71 170.28 119.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="176" p="53.72 117.87" BoundingBox="53.72 110.71 59.28 119.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="152" p="164.72 85.73" BoundingBox="164.72 78.57 170.28 87.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">a</s></t>
+<t id="160" p="54.28 85.73" BoundingBox="54.28 78.57 59.28 87.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">c</s></t>
+<t id="168" p="164.72 117.87" BoundingBox="164.72 110.71 170.28 119.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">b</s></t>
+<t id="176" p="53.72 117.87" BoundingBox="53.72 110.71 59.28 119.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">d</s></t>
 <t id="177" p="112.00 132.00" BoundingBox="39.72 124.84 184.28 134.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">pentaerythritol ethoxylate</s></t>
-<t id="178" p="112.00 143.00" BoundingBox="22.77 135.84 201.23 145.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(15/4 EO/OH, M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~797; </s><s font="3" size="10" color="3" face="2">n</s><s font="3" size="10" color="3" face="0"> = 3.75)</s></t>
-<t id="179" p="228.00 90.00" BoundingBox="224.11 79.98 231.89 92.00" Justification="Center" InterpretChemically="no"><s font="3" size="14" color="3" face="0">+</s></t>
-<t id="204" p="356.00 110.00" BoundingBox="313.47 102.84 398.53 112.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="4" face="1">HDI, 100 equiv.</s></t>
-<t id="205" p="356.00 121.00" BoundingBox="278.16 113.84 433.84 123.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(hexamethylene diisocyanate)</s></t>
-<t id="207" p="280.00 160.00" BoundingBox="280.00 152.84 439.54 162.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO : OH = 200 : 4 = 50 : 1</s></t>
-<t id="208" p="280.00 171.00" BoundingBox="280.00 163.84 513.50 173.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">each OH capped by one HDI (urethane bond)</s></t>
-<t id="209" p="280.00 182.00" BoundingBox="280.00 174.84 465.14 184.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">excess HDI removed after reaction</s></t>
-<t id="355" p="322.72 243.73" BoundingBox="322.72 236.57 328.28 245.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="363" p="211.72 243.73" BoundingBox="211.72 236.57 217.28 245.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="371" p="322.72 275.87" BoundingBox="322.72 268.71 328.28 277.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="379" p="211.72 275.87" BoundingBox="211.72 268.71 217.28 277.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="380" p="270.00 309.00" BoundingBox="140.19 301.84 399.81 311.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="1">4-arm NCO-terminated prepolymer, PE-EO-(HDI)</s><s font="3" size="10" color="3" face="33">4</s></t>
-<t id="381" p="270.00 320.00" BoundingBox="103.22 312.84 436.78 322.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO functionality </s><s font="3" size="10" color="3" face="2">f</s><s font="3" size="10" color="3" face="0"> = 4</s><s font="3" size="10" color="3" face="0">;  M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1470;  11.4 wt% NCO (theor.)</s></t>
-<t id="382" p="0.00 346.00" BoundingBox="0.00 338.84 213.50 348.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="1">(b) </s><s font="3" size="10" color="3" face="1">Glycerol ethoxylate (GE-EO, 3-arm)</s></t>
-<t id="420" p="164.72 391.73" BoundingBox="164.72 384.57 170.28 393.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="428" p="164.72 423.87" BoundingBox="164.72 416.71 170.28 425.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="436" p="60.92 404.20" BoundingBox="60.92 397.04 66.48 406.20" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="437" p="112.00 438.00" BoundingBox="59.18 430.84 164.82 440.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">glycerol ethoxylate</s></t>
-<t id="438" p="112.00 449.00" BoundingBox="59.18 441.84 164.82 451.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(</s><s font="3" size="10" color="3" face="2">n</s><s font="3" size="10" color="3" face="0"> = 6-7, M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1000)</s></t>
-<t id="439" p="228.00 396.00" BoundingBox="224.11 385.98 231.89 398.00" Justification="Center" InterpretChemically="no"><s font="3" size="14" color="3" face="0">+</s></t>
-<t id="464" p="356.00 416.00" BoundingBox="313.47 408.84 398.53 418.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="4" face="1">HDI, 100 equiv.</s></t>
-<t id="465" p="356.00 427.00" BoundingBox="278.16 419.84 433.84 429.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(hexamethylene diisocyanate)</s></t>
-<t id="467" p="280.00 466.00" BoundingBox="280.00 458.84 461.78 468.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO : OH = 200 : 3 (ca. 67 : 1)</s></t>
-<t id="468" p="280.00 477.00" BoundingBox="280.00 469.84 513.50 479.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">each OH capped by one HDI (urethane bond)</s></t>
-<t id="469" p="280.00 488.00" BoundingBox="280.00 480.84 465.14 490.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">excess HDI removed after reaction</s></t>
-<t id="579" p="326.72 549.73" BoundingBox="326.72 542.57 332.28 551.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="587" p="326.72 581.87" BoundingBox="326.72 574.71 332.28 583.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="595" p="222.92 562.20" BoundingBox="222.92 555.04 228.48 564.20" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
-<t id="596" p="270.00 615.00" BoundingBox="140.19 607.84 399.81 617.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="1">3-arm NCO-terminated prepolymer, GE-EO-(HDI)</s><s font="3" size="10" color="3" face="33">3</s></t>
-<t id="597" p="270.00 626.00" BoundingBox="106.00 618.84 434.00 628.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO functionality </s><s font="3" size="10" color="3" face="2">f</s><s font="3" size="10" color="3" face="0"> = 3</s><s font="3" size="10" color="3" face="0">;  M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1505;  8.4 wt% NCO (theor.)</s></t>
-<t id="598" p="0.00 650.00" BoundingBox="0.00 643.56 442.35 652.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="2">n</s><s font="3" size="9" color="3" face="0"> = average number of EO units per arm (set by the commercial grade / M</s><s font="3" size="9" color="3" face="32">n</s><s font="3" size="9" color="3" face="0"> of the polyol).</s></t>
-<t id="599" p="0.00 661.00" BoundingBox="0.00 654.56 452.79 663.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">100 equiv. HDI per polyol molecule. </s><s font="3" size="9" color="4" face="1">Blue</s><s font="3" size="9" color="3" face="0"> = HDI-derived end group -C(=O)NH-(CH</s><s font="3" size="9" color="3" face="32">2</s><s font="3" size="9" color="3" face="0">)</s><s font="3" size="9" color="3" face="32">6</s><s font="3" size="9" color="3" face="0">-N=C=O;</s></t>
-<t id="600" p="0.00 672.00" BoundingBox="0.00 665.56 418.82 674.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">the new urethane bond links the terminal EO oxygen of every arm to an HDI carbonyl.</s></t>
-<t id="601" p="0.00 683.00" BoundingBox="0.00 676.56 491.87 685.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">The large HDI excess strongly suppresses chain extension (one HDI bridging two polyol OH groups);</s></t>
-<t id="602" p="0.00 694.00" BoundingBox="0.00 687.56 461.86 696.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">unreacted HDI must be removed (e.g. hexane extraction or thin-film distillation) before use.</s></t>
-<bracketedgroup id="147" BracketedObjectIDs="107 109 111" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="148" GraphicID="145"><crossingbond id="149" BondID="108" InnerAtomID="107"/></bracketattachment><bracketattachment id="150" GraphicID="146"><crossingbond id="151" BondID="114" InnerAtomID="111"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="155" BracketedObjectIDs="117 119 121" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="156" GraphicID="154"><crossingbond id="157" BondID="118" InnerAtomID="117"/></bracketattachment><bracketattachment id="158" GraphicID="153"><crossingbond id="159" BondID="124" InnerAtomID="121"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="163" BracketedObjectIDs="127 129 131" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="164" GraphicID="161"><crossingbond id="165" BondID="128" InnerAtomID="127"/></bracketattachment><bracketattachment id="166" GraphicID="162"><crossingbond id="167" BondID="134" InnerAtomID="131"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="171" BracketedObjectIDs="137 139 141" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="172" GraphicID="170"><crossingbond id="173" BondID="138" InnerAtomID="137"/></bracketattachment><bracketattachment id="174" GraphicID="169"><crossingbond id="175" BondID="144" InnerAtomID="141"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="350" BracketedObjectIDs="214 216 218" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="351" GraphicID="348"><crossingbond id="352" BondID="215" InnerAtomID="214"/></bracketattachment><bracketattachment id="353" GraphicID="349"><crossingbond id="354" BondID="221" InnerAtomID="218"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="358" BracketedObjectIDs="248 250 252" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="359" GraphicID="357"><crossingbond id="360" BondID="249" InnerAtomID="248"/></bracketattachment><bracketattachment id="361" GraphicID="356"><crossingbond id="362" BondID="255" InnerAtomID="252"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="366" BracketedObjectIDs="282 284 286" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="367" GraphicID="364"><crossingbond id="368" BondID="283" InnerAtomID="282"/></bracketattachment><bracketattachment id="369" GraphicID="365"><crossingbond id="370" BondID="289" InnerAtomID="286"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="374" BracketedObjectIDs="316 318 320" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="375" GraphicID="373"><crossingbond id="376" BondID="317" InnerAtomID="316"/></bracketattachment><bracketattachment id="377" GraphicID="372"><crossingbond id="378" BondID="323" InnerAtomID="320"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="415" BracketedObjectIDs="387 389 391" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="416" GraphicID="413"><crossingbond id="417" BondID="388" InnerAtomID="387"/></bracketattachment><bracketattachment id="418" GraphicID="414"><crossingbond id="419" BondID="394" InnerAtomID="391"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="423" BracketedObjectIDs="397 399 401" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="424" GraphicID="421"><crossingbond id="425" BondID="398" InnerAtomID="397"/></bracketattachment><bracketattachment id="426" GraphicID="422"><crossingbond id="427" BondID="404" InnerAtomID="401"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="431" BracketedObjectIDs="405 407 409" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="432" GraphicID="430"><crossingbond id="433" BondID="406" InnerAtomID="405"/></bracketattachment><bracketattachment id="434" GraphicID="429"><crossingbond id="435" BondID="412" InnerAtomID="409"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="574" BracketedObjectIDs="474 476 478" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="575" GraphicID="572"><crossingbond id="576" BondID="475" InnerAtomID="474"/></bracketattachment><bracketattachment id="577" GraphicID="573"><crossingbond id="578" BondID="481" InnerAtomID="478"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="582" BracketedObjectIDs="508 510 512" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="583" GraphicID="580"><crossingbond id="584" BondID="509" InnerAtomID="508"/></bracketattachment><bracketattachment id="585" GraphicID="581"><crossingbond id="586" BondID="515" InnerAtomID="512"/></bracketattachment></bracketedgroup>
-<bracketedgroup id="590" BracketedObjectIDs="540 542 544" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="591" GraphicID="589"><crossingbond id="592" BondID="541" InnerAtomID="540"/></bracketattachment><bracketattachment id="593" GraphicID="588"><crossingbond id="594" BondID="547" InnerAtomID="544"/></bracketattachment></bracketedgroup>
+<t id="178" p="112.00 143.00" BoundingBox="50.57 135.84 173.43 145.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(15/4 EO/OH, M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~797)</s></t>
+<t id="179" p="112.00 154.00" BoundingBox="11.09 146.84 212.91 156.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="2">a</s><s font="3" size="10" color="3" face="0"> + </s><s font="3" size="10" color="3" face="2">b</s><s font="3" size="10" color="3" face="0"> + </s><s font="3" size="10" color="3" face="2">c</s><s font="3" size="10" color="3" face="0"> + </s><s font="3" size="10" color="3" face="2">d</s><s font="3" size="10" color="3" face="0"> ~ 15 EO (3.75 per arm)</s></t>
+<t id="180" p="228.00 90.00" BoundingBox="224.11 79.98 231.89 92.00" Justification="Center" InterpretChemically="no"><s font="3" size="14" color="3" face="0">+</s></t>
+<t id="205" p="356.00 110.00" BoundingBox="313.47 102.84 398.53 112.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="4" face="1">HDI, 100 equiv.</s></t>
+<t id="206" p="356.00 121.00" BoundingBox="278.44 113.84 433.56 123.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(hexamethylene diisocyanate)</s></t>
+<t id="208" p="280.00 160.00" BoundingBox="280.00 152.84 439.54 162.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO : OH = 200 : 4 = 50 : 1</s></t>
+<t id="209" p="280.00 171.00" BoundingBox="280.00 163.84 512.38 173.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">each OH capped by one HDI (urethane bond)</s></t>
+<t id="210" p="280.00 182.00" BoundingBox="280.00 174.84 464.02 184.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">excess HDI removed after reaction</s></t>
+<t id="356" p="322.72 243.73" BoundingBox="322.72 236.57 328.28 245.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">a</s></t>
+<t id="364" p="212.28 243.73" BoundingBox="212.28 236.57 217.28 245.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">c</s></t>
+<t id="372" p="322.72 275.87" BoundingBox="322.72 268.71 328.28 277.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">b</s></t>
+<t id="380" p="211.72 275.87" BoundingBox="211.72 268.71 217.28 277.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">d</s></t>
+<t id="381" p="270.00 309.00" BoundingBox="140.19 301.84 399.81 311.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="1">4-arm NCO-terminated prepolymer, PE-EO-(HDI)</s><s font="3" size="10" color="3" face="33">4</s></t>
+<t id="382" p="270.00 320.00" BoundingBox="62.08 312.84 477.92 322.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO functionality </s><s font="3" size="10" color="3" face="2">f</s><s font="3" size="10" color="3" face="0"> = 4</s><s font="3" size="10" color="3" face="0">;  </s><s font="3" size="10" color="3" face="2">a</s><s font="3" size="10" color="3" face="0">+</s><s font="3" size="10" color="3" face="2">b</s><s font="3" size="10" color="3" face="0">+</s><s font="3" size="10" color="3" face="2">c</s><s font="3" size="10" color="3" face="0">+</s><s font="3" size="10" color="3" face="2">d</s><s font="3" size="10" color="3" face="0"> ~ 15;  M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1470;  11.4 wt% NCO (theor.)</s></t>
+<t id="383" p="0.00 346.00" BoundingBox="0.00 338.84 212.94 348.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="1">(b) </s><s font="3" size="10" color="3" face="1">Glycerol ethoxylate (GE-EO, 3-arm)</s></t>
+<t id="421" p="164.72 391.73" BoundingBox="164.72 384.57 170.28 393.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="429" p="164.72 423.87" BoundingBox="164.72 416.71 170.28 425.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="437" p="60.92 404.20" BoundingBox="60.92 397.04 66.48 406.20" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="438" p="112.00 438.00" BoundingBox="59.46 430.84 164.54 440.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">glycerol ethoxylate</s></t>
+<t id="439" p="112.00 449.00" BoundingBox="84.20 441.84 139.80 451.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1000)</s></t>
+<t id="440" p="112.00 460.00" BoundingBox="4.14 452.84 219.86 462.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s><s font="3" size="10" color="3" face="0"> = 6-7 EO per arm (~20.6 EO in total)</s></t>
+<t id="441" p="228.00 396.00" BoundingBox="224.11 385.98 231.89 398.00" Justification="Center" InterpretChemically="no"><s font="3" size="14" color="3" face="0">+</s></t>
+<t id="466" p="356.00 416.00" BoundingBox="313.47 408.84 398.53 418.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="4" face="1">HDI, 100 equiv.</s></t>
+<t id="467" p="356.00 427.00" BoundingBox="278.44 419.84 433.56 429.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">(hexamethylene diisocyanate)</s></t>
+<t id="469" p="280.00 466.00" BoundingBox="280.00 458.84 461.22 468.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO : OH = 200 : 3 (ca. 67 : 1)</s></t>
+<t id="470" p="280.00 477.00" BoundingBox="280.00 469.84 512.38 479.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">each OH capped by one HDI (urethane bond)</s></t>
+<t id="471" p="280.00 488.00" BoundingBox="280.00 480.84 464.02 490.00" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="0">excess HDI removed after reaction</s></t>
+<t id="581" p="326.72 549.73" BoundingBox="326.72 542.57 332.28 551.73" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="589" p="326.72 581.87" BoundingBox="326.72 574.71 332.28 583.87" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="597" p="222.92 562.20" BoundingBox="222.92 555.04 228.48 564.20" Justification="Left" InterpretChemically="no"><s font="3" size="10" color="3" face="2">n</s></t>
+<t id="598" p="270.00 615.00" BoundingBox="140.19 607.84 399.81 617.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="1">3-arm NCO-terminated prepolymer, GE-EO-(HDI)</s><s font="3" size="10" color="3" face="33">3</s></t>
+<t id="599" p="270.00 626.00" BoundingBox="78.48 618.84 461.52 628.00" Justification="Center" InterpretChemically="no"><s font="3" size="10" color="3" face="0">NCO functionality </s><s font="3" size="10" color="3" face="2">f</s><s font="3" size="10" color="3" face="0"> = 3</s><s font="3" size="10" color="3" face="0">;  </s><s font="3" size="10" color="3" face="2">n</s><s font="3" size="10" color="3" face="0"> = 6-7;  M</s><s font="3" size="10" color="3" face="32">n</s><s font="3" size="10" color="3" face="0"> ~1505;  8.4 wt% NCO (theor.)</s></t>
+<t id="600" p="0.00 650.00" BoundingBox="0.00 643.56 580.43 652.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="2">a</s><s font="3" size="9" color="3" face="0">, </s><s font="3" size="9" color="3" face="2">b</s><s font="3" size="9" color="3" face="0">, </s><s font="3" size="9" color="3" face="2">c</s><s font="3" size="9" color="3" face="0">, </s><s font="3" size="9" color="3" face="2">d</s><s font="3" size="9" color="3" face="0">, </s><s font="3" size="9" color="3" face="2">n</s><s font="3" size="9" color="3" face="0"> = EO repeat units per arm (averages; supplier specs): PE-EO 15/4 EO/OH, </s><s font="3" size="9" color="3" face="2">a</s><s font="3" size="9" color="3" face="0">+</s><s font="3" size="9" color="3" face="2">b</s><s font="3" size="9" color="3" face="0">+</s><s font="3" size="9" color="3" face="2">c</s><s font="3" size="9" color="3" face="0">+</s><s font="3" size="9" color="3" face="2">d</s><s font="3" size="9" color="3" face="0"> ~ 15; GE-EO </s><s font="3" size="9" color="3" face="2">n</s><s font="3" size="9" color="3" face="0"> = 6-7.</s></t>
+<t id="601" p="0.00 661.00" BoundingBox="0.00 654.56 452.29 663.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">100 equiv. HDI per polyol molecule. </s><s font="3" size="9" color="4" face="1">Blue</s><s font="3" size="9" color="3" face="0"> = HDI-derived end group -C(=O)NH-(CH</s><s font="3" size="9" color="3" face="32">2</s><s font="3" size="9" color="3" face="0">)</s><s font="3" size="9" color="3" face="32">6</s><s font="3" size="9" color="3" face="0">-N=C=O;</s></t>
+<t id="602" p="0.00 672.00" BoundingBox="0.00 665.56 418.32 674.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">the new urethane bond links the terminal EO oxygen of every arm to an HDI carbonyl.</s></t>
+<t id="603" p="0.00 683.00" BoundingBox="0.00 676.56 490.86 685.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">The large HDI excess strongly suppresses chain extension (one HDI bridging two polyol OH groups);</s></t>
+<t id="604" p="0.00 694.00" BoundingBox="0.00 687.56 460.85 696.00" Justification="Left" InterpretChemically="no"><s font="3" size="9" color="3" face="0">unreacted HDI must be removed (e.g. hexane extraction or thin-film distillation) before use.</s></t>
+<bracketedgroup id="147" BracketedObjectIDs="107 109 111" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="a"><bracketattachment id="148" GraphicID="145"><crossingbond id="149" BondID="108" InnerAtomID="107"/></bracketattachment><bracketattachment id="150" GraphicID="146"><crossingbond id="151" BondID="114" InnerAtomID="111"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="155" BracketedObjectIDs="117 119 121" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="c"><bracketattachment id="156" GraphicID="154"><crossingbond id="157" BondID="118" InnerAtomID="117"/></bracketattachment><bracketattachment id="158" GraphicID="153"><crossingbond id="159" BondID="124" InnerAtomID="121"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="163" BracketedObjectIDs="127 129 131" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="b"><bracketattachment id="164" GraphicID="161"><crossingbond id="165" BondID="128" InnerAtomID="127"/></bracketattachment><bracketattachment id="166" GraphicID="162"><crossingbond id="167" BondID="134" InnerAtomID="131"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="171" BracketedObjectIDs="137 139 141" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="d"><bracketattachment id="172" GraphicID="170"><crossingbond id="173" BondID="138" InnerAtomID="137"/></bracketattachment><bracketattachment id="174" GraphicID="169"><crossingbond id="175" BondID="144" InnerAtomID="141"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="351" BracketedObjectIDs="215 217 219" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="a"><bracketattachment id="352" GraphicID="349"><crossingbond id="353" BondID="216" InnerAtomID="215"/></bracketattachment><bracketattachment id="354" GraphicID="350"><crossingbond id="355" BondID="222" InnerAtomID="219"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="359" BracketedObjectIDs="249 251 253" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="c"><bracketattachment id="360" GraphicID="358"><crossingbond id="361" BondID="250" InnerAtomID="249"/></bracketattachment><bracketattachment id="362" GraphicID="357"><crossingbond id="363" BondID="256" InnerAtomID="253"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="367" BracketedObjectIDs="283 285 287" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="b"><bracketattachment id="368" GraphicID="365"><crossingbond id="369" BondID="284" InnerAtomID="283"/></bracketattachment><bracketattachment id="370" GraphicID="366"><crossingbond id="371" BondID="290" InnerAtomID="287"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="375" BracketedObjectIDs="317 319 321" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="d"><bracketattachment id="376" GraphicID="374"><crossingbond id="377" BondID="318" InnerAtomID="317"/></bracketattachment><bracketattachment id="378" GraphicID="373"><crossingbond id="379" BondID="324" InnerAtomID="321"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="416" BracketedObjectIDs="388 390 392" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="417" GraphicID="414"><crossingbond id="418" BondID="389" InnerAtomID="388"/></bracketattachment><bracketattachment id="419" GraphicID="415"><crossingbond id="420" BondID="395" InnerAtomID="392"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="424" BracketedObjectIDs="398 400 402" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="425" GraphicID="422"><crossingbond id="426" BondID="399" InnerAtomID="398"/></bracketattachment><bracketattachment id="427" GraphicID="423"><crossingbond id="428" BondID="405" InnerAtomID="402"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="432" BracketedObjectIDs="406 408 410" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="433" GraphicID="431"><crossingbond id="434" BondID="407" InnerAtomID="406"/></bracketattachment><bracketattachment id="435" GraphicID="430"><crossingbond id="436" BondID="413" InnerAtomID="410"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="576" BracketedObjectIDs="476 478 480" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="577" GraphicID="574"><crossingbond id="578" BondID="477" InnerAtomID="476"/></bracketattachment><bracketattachment id="579" GraphicID="575"><crossingbond id="580" BondID="483" InnerAtomID="480"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="584" BracketedObjectIDs="510 512 514" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="585" GraphicID="582"><crossingbond id="586" BondID="511" InnerAtomID="510"/></bracketattachment><bracketattachment id="587" GraphicID="583"><crossingbond id="588" BondID="517" InnerAtomID="514"/></bracketattachment></bracketedgroup>
+<bracketedgroup id="592" BracketedObjectIDs="542 544 546" BracketUsage="SRU" PolymerRepeatPattern="HeadToTail" SRULabel="n"><bracketattachment id="593" GraphicID="591"><crossingbond id="594" BondID="543" InnerAtomID="542"/></bracketattachment><bracketattachment id="595" GraphicID="590"><crossingbond id="596" BondID="549" InnerAtomID="546"/></bracketattachment></bracketedgroup>
 </page></CDXML>
