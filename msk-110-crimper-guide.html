@@ -1,0 +1,1265 @@
+<title>MSK-110 封口机指南</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  /* Layout: an equipment manual. Riveted nameplate header, sticky chapter rail, each chapter pairs a schematic figure with steps. ISO 7010 safety colours (yellow warning / red prohibition / blue mandatory) are reserved for hazards and required actions. */
+  --paper:#EDF0F3; --panel:#FAFBFC; --ink:#15202B; --muted:#55626F; --line:#C9D1D9;
+  --accent:#1A56A0; --accent-ink:#FFFFFF; --accent-soft:#DCE6F4;
+  --warn:#F2B705; --on-warn:#1B1B1B; --warn-soft:#FBF0C9;
+  --danger:#C4302B; --danger-soft:#F7DEDC;
+  --ok:#1D7F55; --ok-soft:#D9EFE4;
+  --m-body:#D7DEE5; --m-body2:#BAC5D0; --m-stroke:#2F3B47; --m-dark:#5B6875; --m-face:#F5F7F9;
+  --oil:#B5791A; --elec:#3E86D4;
+  --cell-pos:#AEB8C2; --cell-neg:#D2D9E0; --cathode:#30363C; --li:#E1E5E9; --sep:#FFFFFF; --gasket:#202326;
+  --f-display:"Barlow Condensed","Noto Sans SC",system-ui,sans-serif;
+  --f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E141A; --panel:#151D25; --ink:#E3E9EF; --muted:#9AA7B4; --line:#2A3540;
+    --accent:#6FA8EE; --accent-ink:#0B1622; --accent-soft:#1A2B40;
+    --warn:#F2C230; --on-warn:#1B1B1B; --warn-soft:#352D14;
+    --danger:#F06A62; --danger-soft:#3D1E1D;
+    --ok:#4CC48C; --ok-soft:#163327;
+    --m-body:#28323C; --m-body2:#38444F; --m-stroke:#B4C0CC; --m-dark:#8796A5; --m-face:#1B242D;
+    --oil:#E0A042; --elec:#6FA8EE;
+    --cell-pos:#7F8B97; --cell-neg:#A1ACB7; --cathode:#0A0C0E; --li:#C3CBD3; --sep:#E8EBEE; --gasket:#6A727B;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E141A; --panel:#151D25; --ink:#E3E9EF; --muted:#9AA7B4; --line:#2A3540;
+  --accent:#6FA8EE; --accent-ink:#0B1622; --accent-soft:#1A2B40;
+  --warn:#F2C230; --on-warn:#1B1B1B; --warn-soft:#352D14;
+  --danger:#F06A62; --danger-soft:#3D1E1D;
+  --ok:#4CC48C; --ok-soft:#163327;
+  --m-body:#28323C; --m-body2:#38444F; --m-stroke:#B4C0CC; --m-dark:#8796A5; --m-face:#1B242D;
+  --oil:#E0A042; --elec:#6FA8EE;
+  --cell-pos:#7F8B97; --cell-neg:#A1ACB7; --cathode:#0A0C0E; --li:#C3CBD3; --sep:#E8EBEE; --gasket:#6A727B;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.75 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px;
+  -webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:2px}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px}
+
+/* ---------- nameplate ---------- */
+.plate{position:relative;margin-top:20px;background:var(--m-body);border:1.5px solid var(--m-stroke);border-radius:8px;
+  padding:30px 32px 28px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end}
+.rv{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--m-body2);border:1px solid var(--m-stroke)}
+.maker{font:500 11px/1.4 var(--f-mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h1{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.model{font:700 clamp(64px,11vw,124px)/.84 var(--f-display);letter-spacing:.005em;color:var(--ink)}
+.h1zh{font:700 clamp(20px,2.6vw,26px)/1.4 var(--f-body)}
+.lede{margin-top:12px;max-width:58ch;color:var(--muted)}
+.plate-spec{margin:0;display:grid;border:1.5px solid var(--m-stroke);border-radius:4px;background:var(--m-face);min-width:260px}
+.plate-spec div{display:grid;grid-template-columns:78px 1fr;border-top:1px solid var(--line)}
+.plate-spec div:first-child{border-top:0}
+.plate-spec dt{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.1em;color:var(--muted);padding:9px 10px;border-right:1px solid var(--line);display:flex;align-items:center}
+.plate-spec dd{margin:0;padding:7px 12px;font:600 16px/1.3 var(--f-display);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.plate{grid-template-columns:1fr;padding:26px 20px 22px}.plate-spec{min-width:0}}
+
+/* ---------- red lines ---------- */
+.redlines{margin-top:14px;background:var(--warn-soft);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.stripe{height:8px;background:repeating-linear-gradient(-45deg,var(--warn) 0 12px,var(--on-warn) 12px 24px)}
+.redlines ul{list-style:none;margin:0;padding:16px 20px 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 24px}
+.redlines li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:0 10px;align-items:start}
+.redlines li svg{grid-row:span 2;width:30px;height:27px}
+.redlines b{font-weight:700;line-height:1.5}
+.redlines span{color:var(--muted);font-size:13.5px;line-height:1.5}
+.redlines .more{display:inline-block;margin:4px 20px 14px;font-weight:500;font-size:14px}
+@media (max-width:760px){.redlines ul{grid-template-columns:1fr}}
+
+/* ---------- rail ---------- */
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--paper);margin-top:22px;border-bottom:1px solid var(--line);
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail a{flex:none;padding:12px 12px 10px;text-decoration:none;color:var(--muted);font-weight:500;font-size:14px;border-bottom:2px solid transparent}
+.rail a:hover{color:var(--ink)}
+.rail a.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+section{padding-top:56px;scroll-margin-top:52px}
+.sh{display:grid;gap:8px;margin-bottom:22px;max-width:72ch}
+.eyebrow{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sh h2{font:700 clamp(24px,3.2vw,32px)/1.3 var(--f-body)}
+.sh p{color:var(--muted)}
+
+/* ---------- machine svg ---------- */
+svg{overflow:visible}
+.st{stroke:var(--m-stroke);stroke-width:1.4;stroke-linejoin:round}
+.f1{fill:var(--m-body)} .f2{fill:var(--m-body2)} .fc{fill:var(--m-face)} .fd{fill:var(--m-dark)} .grip{fill:var(--m-stroke)}
+.c-pos{fill:var(--cell-pos)} .c-neg{fill:var(--cell-neg)} .gk{fill:var(--gasket)}
+.thin{stroke:var(--m-stroke);stroke-width:.8;opacity:.35;fill:none}
+.tk{stroke:var(--m-stroke);stroke-width:1}
+.redarc{fill:none;stroke:var(--danger);stroke-width:3}
+.ndl-l{stroke:var(--danger);stroke-width:2;stroke-linecap:round}
+.hub{fill:var(--m-stroke)}
+.vptr-l{stroke:var(--m-stroke);stroke-width:2.6;stroke-linecap:round}
+.mtext{font:700 13px var(--f-display);fill:var(--m-stroke);letter-spacing:.12em}
+.mtext.sm{font-size:9px;letter-spacing:.06em}
+.mtext.xs{font:500 6.5px var(--f-mono);letter-spacing:0;fill:var(--muted)}
+.ram-g{transition:transform .28s ease}
+.hdl{transform-box:view-box;transform-origin:322px 332px;transform:rotate(-32deg);transition:transform .15s ease}
+.hdl.down{transform:rotate(-4deg)}
+.ndl{transform-box:view-box;transform-origin:220px 360px;transition:transform .3s ease}
+.vptr{transform-box:view-box;transform-origin:152px 396px;transition:transform .3s ease}
+.part{transition:opacity .2s}
+.has-hl .part:not(.is-hl){opacity:.36}
+.part.is-hl .st{stroke:var(--accent);stroke-width:2.6}
+.hz-mode .part.is-hl .st{stroke:var(--danger)}
+.is-int .part{cursor:pointer}
+.is-int .part:hover .st{stroke:var(--accent)}
+.part:focus{outline:none}
+.part:focus-visible .st{stroke:var(--accent);stroke-width:3.2}
+.badge{cursor:pointer}
+.badge circle{fill:var(--accent);stroke:var(--panel);stroke-width:2}
+.badge text{font:600 10px var(--f-mono);fill:var(--accent-ink)}
+.badge.on circle{fill:var(--ink)}
+.badge.on text{fill:var(--panel)}
+.mk{cursor:pointer;transition:opacity .2s}
+.mk .mk-t{fill:var(--warn);stroke:var(--on-warn);stroke-width:1.4;stroke-linejoin:round}
+.mk .mk-n{font:700 9.5px var(--f-mono);fill:var(--on-warn)}
+.mk.on .mk-t{stroke:var(--danger);stroke-width:3}
+.mk.dim{opacity:.22}
+.mk:focus{outline:none}
+.mk:focus-visible .mk-t{stroke:var(--accent);stroke-width:3}
+.ah{fill:var(--accent)}
+.arr{fill:none;stroke:var(--accent);stroke-width:2}
+.il-t{font:600 13px var(--f-body);fill:var(--ink)}
+.il-s{font:400 10.5px var(--f-mono);fill:var(--muted)}
+.il-w{font:600 12px var(--f-body);fill:var(--accent)}
+.pp{fill:var(--accent)}
+.oil{fill:var(--oil)}
+
+/* ---------- parts explorer ---------- */
+.explorer{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start}
+.fig{padding:10px 10px 4px}
+.fig > svg{display:block;width:100%;height:auto}
+.figcap{font-size:12.5px;line-height:1.5;color:var(--muted);padding:6px 8px 8px}
+.plist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.plist button{width:100%;display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:center;text-align:left;font-size:14px;line-height:1.35;
+  padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.plist button:hover{border-color:var(--accent)}
+.num{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font:600 11px/1 var(--f-mono)}
+.plist button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.plist button[aria-pressed="true"] .num{background:var(--accent);color:var(--accent-ink)}
+.plist small{display:block;color:var(--muted);font:400 11px/1.3 var(--f-mono)}
+.pdetail{margin-top:12px;padding:18px 20px}
+.pdetail h3{font-size:20px;line-height:1.35}
+.pdetail .en{font:500 12px/1.4 var(--f-mono);color:var(--muted);margin-top:2px}
+.pdetail p{margin-top:10px}
+.tip{margin-top:12px;display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;padding:10px 12px;border-radius:6px;background:var(--warn-soft);font-size:14px;line-height:1.6}
+.tip svg{width:20px;height:18px;margin-top:2px}
+@media (max-width:860px){.explorer{grid-template-columns:1fr}}
+
+/* ---------- install ---------- */
+.inst{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;align-items:start}
+.isteps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.isteps button{width:100%;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:center;text-align:left;padding:8px 10px;
+  border:1px solid transparent;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer;line-height:1.35}
+.isteps button small{display:block;font:400 11px/1.3 var(--f-mono)}
+.isteps button:hover{color:var(--ink)}
+.isteps button[aria-selected="true"]{background:var(--panel);border-color:var(--line);color:var(--ink)}
+.isteps button[aria-selected="true"] .num{background:var(--accent);color:var(--accent-ink)}
+.ipanel{padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.illus svg{width:100%;height:auto;display:block}
+.ist-n{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.1em;color:var(--accent)}
+.itext h3{font-size:21px;line-height:1.35;margin-top:6px}
+.itext h3 small{display:block;font:400 12px/1.4 var(--f-mono);color:var(--muted);margin-top:2px}
+.itext ul{margin:12px 0 0;padding-left:1.15em;display:grid;gap:6px}
+.conflict{margin-top:14px;padding:12px 14px;border-radius:6px;background:var(--accent-soft);font-size:14px;line-height:1.65}
+.conflict b{display:inline-block;font:600 11px/1 var(--f-body);padding:4px 7px;border-radius:4px;background:var(--accent);color:var(--accent-ink);margin-right:6px;vertical-align:1px}
+.inav{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:900px){
+  .inst{grid-template-columns:1fr}
+  .isteps{grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto;padding-bottom:4px}
+  .isteps button small{display:none}
+  .ipanel{grid-template-columns:1fr}
+}
+
+/* ---------- buttons ---------- */
+.btn{font-size:14px;line-height:1.3;padding:8px 12px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.bad{border-color:var(--danger);color:var(--danger)}
+.btn.big{padding:12px 18px;font-size:15px}
+
+/* ---------- checklist ---------- */
+.check{max-width:820px;overflow:hidden}
+.prog{display:flex;align-items:center;gap:14px;padding:14px 18px}
+.prog span{font:500 13px/1 var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.check label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;padding:11px 18px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
+.check input{width:18px;height:18px;margin:4px 0 0;accent-color:var(--ok)}
+.check label:has(input:checked) span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.check-done{padding:12px 18px;border-top:1px solid var(--line);background:var(--ok-soft);color:var(--ok);font-weight:600}
+
+/* ---------- coin stack ---------- */
+.stackw{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+.stack-fig{padding:12px 12px 8px}
+.stack-fig svg{display:block;width:100%;height:auto}
+.stack-ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 4px 4px}
+.stack-ctl label{font:500 12px/1 var(--f-mono);color:var(--muted)}
+input[type=range]{accent-color:var(--accent);flex:1;min-width:140px}
+.order{list-style:none;padding:0;margin:0;counter-reset:o}
+.order li{counter-increment:o;display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6}
+.order li::before{content:counter(o);font:600 11px/24px var(--f-mono);text-align:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent)}
+.order small{display:block;color:var(--muted);font-size:12.5px}
+.side{padding:16px 18px}
+.side h3{font-size:16px;margin-bottom:6px}
+.lbl-zh{font:700 13px var(--f-body);fill:var(--ink)}
+.lbl-en{font:400 10px var(--f-mono);fill:var(--muted)}
+.lead{stroke:var(--muted);stroke-width:.8;stroke-dasharray:2 2}
+.st2{stroke:var(--m-stroke);stroke-width:1.1;stroke-linejoin:round}
+.shade{fill:var(--m-stroke);opacity:.14}
+.spring{fill:none;stroke:var(--m-stroke);stroke-width:2.2}
+.drop{fill:var(--elec)}
+.dim-t{font:500 11px var(--f-mono);fill:var(--muted)}
+.dim-l{stroke:var(--muted);stroke-width:1}
+.orient{font:700 12.5px var(--f-body);fill:var(--accent)}
+@media (max-width:900px){.stackw{grid-template-columns:1fr}}
+
+/* ---------- simulator ---------- */
+.sim{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.sim-fig{padding:10px 10px 6px}
+.sim-fig > svg{display:block;width:100%;height:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:6px 6px 10px}
+.chip{font:500 12.5px/1 var(--f-body);padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper);display:inline-flex;gap:6px;align-items:center}
+.chip b{font:500 12px/1 var(--f-mono)}
+.chip.ok{border-color:var(--ok);color:var(--ok)}
+.chip.bad{border-color:var(--danger);color:var(--danger)}
+.chip.warn{border-color:var(--warn);background:var(--warn-soft)}
+.steps{list-style:none;margin:10px 0 0;padding:12px 16px;display:grid;gap:2px}
+.steps li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;padding:5px 0;color:var(--muted);line-height:1.45}
+.steps .k{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:600 11px/1 var(--f-mono)}
+.steps li.cur{color:var(--ink);font-weight:500}
+.steps li.cur .k{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.steps li.done .k{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.steps small{display:block;font-size:12px;font-weight:400;color:var(--muted)}
+.sim-panel{display:grid;gap:12px}
+.gauge-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:12px;align-items:center;padding:14px 16px}
+.gauge-row svg{width:100%;height:auto;display:block}
+.readout{font:500 clamp(40px,5vw,52px)/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.readout .u{font-size:15px;color:var(--muted);margin-left:6px}
+.conv{margin-top:8px;font:400 13px/1.6 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.seg{margin-top:14px;display:grid;gap:6px}
+.seg > span{font:500 11px/1.2 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.seg div{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font-size:12.5px;padding:6px 9px;border-radius:5px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;line-height:1.3}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.relnote{margin-top:8px;font-size:12px;line-height:1.5;color:var(--muted)}
+.g-face{fill:var(--m-face);stroke:var(--m-stroke);stroke-width:2}
+.gt{stroke:var(--m-stroke);stroke-width:1}
+.gt.maj{stroke-width:2}
+.gl{font:500 11px var(--f-mono);fill:var(--ink)}
+.band-ok{fill:none;stroke:var(--ok);stroke-width:8}
+.band-bad{fill:none;stroke:var(--danger);stroke-width:8;opacity:.85}
+.bg-ndl{transform-box:view-box;transform-origin:150px 150px;transition:transform .3s ease}
+.bg-ndl-p{fill:var(--danger)}
+.hub2{fill:var(--m-stroke)}
+.rel-l{stroke:var(--ink);stroke-width:2.5}
+.rel-t{font:500 10px var(--f-body);fill:var(--ink)}
+.g-unit{font:500 12px var(--f-mono);fill:var(--muted)}
+.ctrls{padding:14px 16px;display:grid;gap:12px}
+.cg{display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;align-items:center}
+.cg > span{font:500 11px/1.2 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.cg > div{display:flex;flex-wrap:wrap;gap:6px}
+.result{padding:14px 16px;border-radius:8px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;border:1px solid var(--line)}
+.result.good{background:var(--ok-soft)}
+.result.low{background:var(--warn-soft)}
+.result.over{background:var(--danger-soft)}
+.result h3{font-size:16px}
+.result p{font-size:14px;line-height:1.65;margin-top:4px}
+.result svg{width:100%;height:auto;display:block}
+.loghead{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 0;font:500 11px/1.2 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.log{list-style:none;margin:0;padding:8px 16px 14px;display:grid;gap:6px;font-size:13.5px;line-height:1.55;max-height:250px;overflow:auto}
+.log li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px}
+.log li::before{content:"";width:8px;height:8px;border-radius:50%;margin-top:6px;background:var(--muted)}
+.log li.ok::before{background:var(--ok)}
+.log li.warn::before{background:var(--warn)}
+.log li.danger::before{background:var(--danger)}
+.log li.info::before{background:var(--accent)}
+.log li.danger{color:var(--danger)}
+.cr-can{fill:none;stroke:var(--m-stroke);stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
+.cr-cap{fill:none;stroke:var(--m-dark);stroke-width:3;stroke-linejoin:round}
+.cr-gk{fill:none;stroke:var(--gasket);stroke-width:4}
+.cr-gkf{fill:var(--gasket)}
+.cr-in{stroke:var(--muted);stroke-width:1.2}
+.cr-bad{fill:none;stroke:var(--danger);stroke-width:1.6;stroke-dasharray:3 2}
+@media (max-width:900px){.sim{grid-template-columns:1fr}}
+@media (max-width:520px){.gauge-row{grid-template-columns:1fr}.result{grid-template-columns:1fr}.result svg{max-width:200px}}
+
+/* ---------- hazards ---------- */
+.ppe{display:flex;flex-wrap:wrap;gap:12px 22px;margin-bottom:18px;padding:14px 18px;align-items:center}
+.ppe > span{font:500 11px/1.2 var(--f-mono);letter-spacing:.08em;color:var(--muted);width:100%}
+.ppe div{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.35}
+.ppe div small{display:block;font:400 11px/1.3 var(--f-mono);color:var(--muted)}
+.ppe svg{width:36px;height:36px;flex:none}
+.mand{fill:var(--accent)}
+.mand-g{fill:none;stroke:var(--accent-ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hzw{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.hz-fig{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px);padding:10px 10px 4px}
+.hz-fig > svg{display:block;width:100%;height:auto}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.filters button{font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.hz-list{display:grid;gap:10px}
+.hz-card{padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--panel);cursor:pointer;scroll-margin-top:70px}
+.hz-card:hover{border-color:var(--m-dark)}
+.hz-card.on{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger)}
+.hz-card header{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center}
+.hz-card header svg{width:30px;height:27px}
+.hz-card h3{font-size:16.5px;line-height:1.35}
+.hz-card h3 small{display:block;font:400 11.5px/1.35 var(--f-mono);color:var(--muted)}
+.sev{font:600 12px/1 var(--f-body);padding:5px 8px;border-radius:4px;white-space:nowrap}
+.sev.high{background:var(--danger);color:var(--paper)}
+.sev.med{background:var(--warn);color:var(--on-warn)}
+.sev.low{background:var(--accent-soft);color:var(--accent)}
+.hz-card .what{margin-top:10px;font-size:14.5px}
+.hz-card ul{margin:8px 0 0;padding-left:1.15em;display:grid;gap:4px;font-size:14.5px}
+.hz-card .src{margin-top:10px;font:400 11.5px/1.45 var(--f-mono);color:var(--muted)}
+.hz-card .loc{font:400 11.5px/1.4 var(--f-mono);color:var(--muted)}
+@media (max-width:900px){.hzw{grid-template-columns:1fr}.hz-fig{position:static}}
+
+/* ---------- specs / sources ---------- */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;line-height:1.6}
+th,td{text-align:left;padding:10px 16px;border-top:1px solid var(--line);vertical-align:top}
+thead th{font:500 11px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-top:0;padding-top:14px}
+td:first-child{white-space:nowrap;font-weight:500}
+td.v{font-variant-numeric:tabular-nums}
+td.s{color:var(--muted);font-size:12.5px}
+.cf{display:inline-block;font:600 11px/1 var(--f-body);padding:4px 6px;border-radius:4px;background:var(--warn);color:var(--on-warn);margin-left:4px;vertical-align:1px}
+.units{margin-top:12px;font:400 12.5px/1.7 var(--f-mono);color:var(--muted)}
+.src-list{margin:0;padding:6px 20px 16px 2.2em;display:grid;gap:8px;font-size:14px;line-height:1.55}
+.src-list small{color:var(--muted)}
+.notice{padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px;line-height:1.65}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;line-height:1.6}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<div class="wrap">
+
+<header class="plate" id="top">
+  <i class="rv" style="top:10px;left:10px"></i><i class="rv" style="top:10px;right:10px"></i>
+  <i class="rv" style="bottom:10px;left:10px"></i><i class="rv" style="bottom:10px;right:10px"></i>
+  <div>
+    <p class="maker">MTI Corporation · Coin Cell Crimper</p>
+    <h1><span class="model">MSK-110</span><span class="h1zh">液压纽扣电池封口机：安装、使用与危险</span></h1>
+    <p class="lede">Hydraulic Crimper for CR20xx Coin Cells。在这里认识每个部件，按步骤完成安装，在模拟器里走一遍封口流程，并逐项了解它的危险。</p>
+  </div>
+  <dl class="plate-spec">
+    <div><dt>MODEL</dt><dd>MSK-110</dd></div>
+    <div><dt>PUMP</dt><dd>8 t 液压 · 自动泄压</dd></div>
+    <div><dt>CELLS</dt><dd>CR2016 · 2025 · 2032</dd></div>
+    <div><dt>NET WT</dt><dd>≈ 25 kg</dd></div>
+    <div><dt>CERT</dt><dd>CE</dd></div>
+  </dl>
+</header>
+
+<aside class="redlines" aria-label="三条底线">
+  <div class="stripe"></div>
+  <ul>
+    <li><svg viewBox="0 0 30 27" aria-hidden="true"><path d="M15 2 L28 25 H2 Z" fill="var(--warn)" stroke="var(--on-warn)" stroke-width="1.6" stroke-linejoin="round"/><rect x="13.6" y="9" width="2.8" height="9" rx="1" fill="var(--on-warn)"/><circle cx="15" cy="21.3" r="1.6" fill="var(--on-warn)"/></svg>
+      <b>手指远离模具</b><span>8 t 液压泵。放好电池、手离开之后再摇压杆。</span></li>
+    <li><svg viewBox="0 0 30 27" aria-hidden="true"><path d="M15 2 L28 25 H2 Z" fill="var(--warn)" stroke="var(--on-warn)" stroke-width="1.6" stroke-linejoin="round"/><rect x="13.6" y="9" width="2.8" height="9" rx="1" fill="var(--on-warn)"/><circle cx="15" cy="21.3" r="1.6" fill="var(--on-warn)"/></svg>
+      <b>到压即松阀</b><span>手册禁止过压和长时间保压，会损坏液压机构。</span></li>
+    <li><svg viewBox="0 0 30 27" aria-hidden="true"><path d="M15 2 L28 25 H2 Z" fill="var(--warn)" stroke="var(--on-warn)" stroke-width="1.6" stroke-linejoin="round"/><rect x="13.6" y="9" width="2.8" height="9" rx="1" fill="var(--on-warn)"/><circle cx="15" cy="21.3" r="1.6" fill="var(--on-warn)"/></svg>
+      <b>负极朝上，用绝缘镊子</b><span>防止电池放反和外部短路。</span></li>
+  </ul>
+  <a class="more" href="#hazards">查看全部 9 项危险 →</a>
+</aside>
+
+<nav class="rail" aria-label="章节">
+  <a href="#parts">部件</a><a href="#install">安装</a><a href="#check">使用前检查</a><a href="#stack">电池叠层</a><a href="#use">封口模拟</a><a href="#hazards">危险</a><a href="#specs">规格</a><a href="#sources">来源</a>
+</nav>
+
+<!-- ============ PARTS ============ -->
+<section id="parts">
+  <div class="sh">
+    <p class="eyebrow">Parts · 第 1 章</p>
+    <h2>认识部件</h2>
+    <p>点击图上的编号或右侧列表，查看每个部件的作用和使用注意。</p>
+  </div>
+  <div class="explorer">
+    <figure class="panel fig" style="margin:0">
+      <div id="hero-fig"></div>
+      <figcaption class="figcap">示意图，非实物外观与比例。不同批次的阀门、压力表位置可能不同，以随机手册为准。</figcaption>
+    </figure>
+    <div>
+      <ul class="plist" id="plist"></ul>
+      <div class="panel pdetail" id="pdetail" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section id="install">
+  <div class="sh">
+    <p class="eyebrow">Installation · 第 2 章</p>
+    <h2>安装与首次调试</h2>
+    <p>七个步骤，从开箱到确定本批电池壳的封口压力。MSK-110 是纯手动液压设备，不需要接电源或气源。</p>
+  </div>
+  <div class="inst">
+    <ol class="isteps" id="isteps" role="tablist" aria-label="安装步骤"></ol>
+    <div class="panel ipanel" id="ipanel" role="tabpanel"></div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="check">
+  <div class="sh">
+    <p class="eyebrow">Pre-use checklist · 第 3 章</p>
+    <h2>每次使用前检查</h2>
+    <p>勾选状态只保存在你自己的浏览器里，方便下次打开时接着用。</p>
+  </div>
+  <div class="panel check">
+    <div class="prog"><div class="bar"><i id="prog-bar"></i></div><span id="prog-txt">0 / 9</span><button class="btn" type="button" id="check-clear">清空</button></div>
+    <div id="check-list"></div>
+    <div class="check-done" id="check-done" hidden>全部完成，可以开始封口。</div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section id="stack">
+  <div class="sh">
+    <p class="eyebrow">Coin cell stack · 第 4 章</p>
+    <h2>封口前：电池叠层与朝向</h2>
+    <p>拖动滑块把 CR2032 半电池展开或合拢。放进封口机时，负极壳朝上、正极壳朝下（MTI 手册）。</p>
+  </div>
+  <div class="stackw">
+    <div class="panel stack-fig">
+      <div id="stack-svg"></div>
+      <div class="stack-ctl">
+        <button class="btn" type="button" id="stack-close">合拢</button>
+        <label for="stack-e">展开</label>
+        <input type="range" id="stack-e" min="0" max="100" value="100">
+        <button class="btn" type="button" id="stack-open">展开</button>
+      </div>
+    </div>
+    <div class="panel side">
+      <h3>装配顺序（从下往上）</h3>
+      <ol class="order">
+        <li><span>正极壳 Positive case<small>较大的壳，开口朝上放平</small></span></li>
+        <li><span>正极片 Cathode<small>涂层面朝上，放在正中</small></span></li>
+        <li><span>电解液 Electrolyte<small>适量滴加。过量会在封口时被挤出，腐蚀模具</small></span></li>
+        <li><span>隔膜 Separator<small>直径大于电极，完全盖住正极片</small></span></li>
+        <li><span>锂片或负极片 Li foil / anode<small>与正极片对正</small></span></li>
+        <li><span>垫片 Spacer<small>不锈钢片，均匀传递压力</small></span></li>
+        <li><span>弹片 Wave spring<small>保持层间接触压力</small></span></li>
+        <li><span>负极壳 Negative cap<small>带密封圈 (gasket)，盖上后整体放入下模</small></span></li>
+      </ol>
+      <p class="relnote" style="margin-top:12px">锂体系在氩气手套箱内装配。顺序和用量以课题组 SOP 为准；全电池把锂片换成负极片。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIMULATOR ============ -->
+<section id="use">
+  <div class="sh">
+    <p class="eyebrow">Operation · 第 5 章</p>
+    <h2>封口操作模拟器</h2>
+    <p>按真实顺序操作：放电池、拧紧阀门、摇压杆、看压力表、松阀泄压、取出检查、清洁收尾。故意做错一步，看看会发生什么。</p>
+  </div>
+  <div class="sim">
+    <div>
+      <div class="panel sim-fig">
+        <div id="sim-fig"></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <ol class="panel steps" id="steps"></ol>
+    </div>
+    <div class="sim-panel">
+      <div class="panel gauge-row">
+        <div id="biggauge"></div>
+        <div>
+          <div class="readout"><span id="r-psi">0</span><span class="u">psi</span></div>
+          <p class="conv"><span id="r-mpa">0.00</span> MPa · <span id="r-kg">0.0</span> kg/cm²</p>
+          <div class="seg">
+            <span>参考压力依据</span>
+            <div id="refseg">
+              <button type="button" data-ref="manual" aria-pressed="true">手册 500–600 psi</button>
+              <button type="button" data-ref="listing" aria-pressed="false">产品列表 850–1000 psi</button>
+            </div>
+          </div>
+          <p class="relnote" id="relnote"></p>
+        </div>
+      </div>
+      <div class="panel ctrls">
+        <div class="cg"><span>电池</span><div>
+          <button class="btn" type="button" id="b-neg">放入 · 负极朝上</button>
+          <button class="btn bad" type="button" id="b-pos">放入 · 正极朝上（错误示范）</button>
+          <button class="btn" type="button" id="b-remove">取出电池</button>
+        </div></div>
+        <div class="cg"><span>阀门</span><div>
+          <button class="btn" type="button" id="b-tight">↻ 顺时针拧紧</button>
+          <button class="btn" type="button" id="b-loose">↺ 逆时针松开</button>
+        </div></div>
+        <div class="cg"><span>压杆</span><div>
+          <button class="btn primary big" type="button" id="b-pump">摇一次压杆</button>
+        </div></div>
+        <div class="cg"><span>收尾</span><div>
+          <button class="btn" type="button" id="b-clean">乙醇清洁模具</button>
+          <button class="btn" type="button" id="b-lock">阀门置于 Lock</button>
+          <button class="btn" type="button" id="b-reset">重置</button>
+        </div></div>
+      </div>
+      <div class="result" id="result" hidden></div>
+      <div class="panel">
+        <div class="loghead"><span>操作记录</span><span id="log-n"></span></div>
+        <ol class="log" id="log" aria-live="polite"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HAZARDS ============ -->
+<section id="hazards">
+  <div class="sh">
+    <p class="eyebrow">Hazards · 第 6 章</p>
+    <h2>危险与预防</h2>
+    <p>黄色三角在图上标出危险所在的位置。点击三角或卡片，两边会同时高亮。</p>
+  </div>
+  <div class="panel ppe" aria-label="必须佩戴">
+    <span>MANDATORY · 操作时必须</span>
+    <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="mand" cx="20" cy="20" r="19"/><rect class="mand-g" x="7.5" y="16" width="10" height="8" rx="3.5"/><rect class="mand-g" x="22.5" y="16" width="10" height="8" rx="3.5"/><path class="mand-g" d="M17.5 19 Q20 17 22.5 19 M7.5 18 L5 16.5 M32.5 18 L35 16.5"/></svg><span>护目镜<small>Safety glasses</small></span></div>
+    <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="mand" cx="20" cy="20" r="19"/><path class="mand-g" d="M13 31 V18 M13 21 V12.5 a1.8 1.8 0 0 1 3.6 0 V19 M16.6 18 V10.5 a1.8 1.8 0 0 1 3.6 0 V18 M20.2 18 V11.5 a1.8 1.8 0 0 1 3.6 0 V19 M23.8 19 V14 a1.8 1.8 0 0 1 3.6 0 V24 Q27.4 31 21 31 H13"/></svg><span>丁腈手套<small>Nitrile gloves</small></span></div>
+    <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="mand" cx="20" cy="20" r="19"/><path class="mand-g" d="M20 7 L15 32 M20 7 L25 32 M15.6 29 L18.6 30 M24.4 29 L21.4 30"/></svg><span>塑料（绝缘）镊子<small>Insulated tweezers</small></span></div>
+    <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle class="mand" cx="20" cy="20" r="19"/><path class="mand-g" d="M15 8 L20 13 L25 8 L31 11 L31 31 L9 31 L9 11 Z M20 13 V31"/></svg><span>实验服<small>Lab coat</small></span></div>
+  </div>
+  <div class="hzw">
+    <figure class="panel hz-fig" style="margin:0">
+      <div id="hz-fig"></div>
+      <figcaption class="figcap">第 7 项（锂体系接触空气）与设备位置无关，未在图上标出。</figcaption>
+    </figure>
+    <div>
+      <div class="filters" id="filters">
+        <button type="button" data-f="all" aria-pressed="true">全部</button>
+        <button type="button" data-f="person" aria-pressed="false">人身安全</button>
+        <button type="button" data-f="equip" aria-pressed="false">设备损伤</button>
+        <button type="button" data-f="cell" aria-pressed="false">电池质量</button>
+      </div>
+      <div class="hz-list" id="hz-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPECS ============ -->
+<section id="specs">
+  <div class="sh">
+    <p class="eyebrow">Specifications · 第 7 章</p>
+    <h2>规格参数</h2>
+    <p>标有“来源不一”的项目，各公开资料给出的数值不同。以你设备随附的手册和铭牌为准。</p>
+  </div>
+  <div class="panel tbl">
+    <table>
+      <thead><tr><th>项目</th><th>数值</th><th>依据</th></tr></thead>
+      <tbody>
+        <tr><td>型号</td><td>MSK-110 手动液压纽扣电池封口机</td><td class="s">MTI 产品页</td></tr>
+        <tr><td>适用电池（随机模具）</td><td>CR2016 / CR2025 / CR2032，一套模具通用，不需要更换</td><td class="s">MTI 产品页</td></tr>
+        <tr><td>选配模具</td><td>CR2325、CR2450、AG3、AG5 等特殊尺寸（MSK-110-DS 系列替换模具组）</td><td class="s">MTI 产品页、经销商</td></tr>
+        <tr><td>液压泵</td><td class="v">额定 8 公吨 (8 metric tons)，带自动泄压</td><td class="s">MTI 产品页</td></tr>
+        <tr><td>过压保护</td><td class="v">内置过压保护阀，默认上限 50 kg/cm²（≈ 711 psi，≈ 4.9 MPa）</td><td class="s">MTI 操作手册</td></tr>
+        <tr><td>封口压力参考 <span class="cf">来源不一</span></td><td class="v">500–600 psi（&lt; 50 kg/cm²）<br>850–1000 psi</td><td class="s">MTI 操作手册<br>产品列表</td></tr>
+        <tr><td>净重 <span class="cf">来源不一</span></td><td class="v">25 kg<br>26 kg</td><td class="s">MTI 规格<br>经销商</td></tr>
+        <tr><td>运输重量</td><td class="v">35 kg</td><td class="s">MTI 规格</td></tr>
+        <tr><td>外形尺寸 <span class="cf">来源不一</span></td><td class="v">228 × 176 × 310 mm<br>280 × 280 × 333 mm（压杆水平时）</td><td class="s">MTI 规格<br>经销商</td></tr>
+        <tr><td>随机附件</td><td>100 个 CR2032 电池壳、铝托盘（防漏油）</td><td class="s">MTI 产品页</td></tr>
+        <tr><td>手套箱内使用 <span class="cf">来源不一</span></td><td>现行：不建议，长期使用有漏油风险<br>早期手册：可在 MTI 手套箱内操作</td><td class="s">MTI 产品页<br>MTI 操作手册</td></tr>
+        <tr><td>认证</td><td>CE</td><td class="s">MTI 产品页</td></tr>
+        <tr><td>保修</td><td>1 年有限保修</td><td class="s">MTI</td></tr>
+        <tr><td>专利</td><td class="v">中国专利 201120462024.0（2012 年 7 月授权）</td><td class="s">MTI</td></tr>
+        <tr><td>相关型号</td><td>MSK-110D 液压拆壳机（拆解 CR20xx）；MSK-PN110-S 气动封口机；MSK-160E 电动数显封口机（氩气手套箱兼容）</td><td class="s">MTI 产品页</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="units">换算：1 MPa = 145.04 psi · 1 kg/cm² = 14.22 psi · 500 psi ≈ 3.45 MPa ≈ 35.2 kg/cm² · 1000 psi ≈ 6.89 MPa ≈ 70.3 kg/cm²<br>
+  注意：850–1000 psi 高于手册所述过压阀默认上限 50 kg/cm²（≈ 711 psi）。这说明不同批次的阀门设定或表盘单位可能不同，按你设备的手册执行。</p>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section id="sources">
+  <div class="sh">
+    <p class="eyebrow">Sources · 第 8 章</p>
+    <h2>资料来源</h2>
+  </div>
+  <div class="panel">
+    <p class="notice">整理本页时，所在环境的网络策略阻止直接访问 mtixtl.com，内容来自搜索引擎收录的 MTI 产品页与操作手册摘录，以及经销商页面。安装、更换模具和维修以随机手册、厂家答复和本单位安全规程为准。</p>
+    <ol class="src-list">
+      <li><a href="https://mtixtl.com/products/msk-110" target="_blank" rel="noopener">MTI · Hydraulic Crimper for All Types of Coin Cells with 100 Pcs CR2032 Case (MSK-110)</a> <small>产品页</small></li>
+      <li><a href="https://ceat.okstate.edu/mmme/mse/research/srg/site_files/docs/equipment_manuals/crimping.pdf" target="_blank" rel="noopener">MSK-110 Operation Manual（MTI，Oklahoma State University 镜像 PDF）</a> <small>操作步骤、朝向、过压阀、运输</small></li>
+      <li><a href="https://mtixtl.com/products/msk-110d" target="_blank" rel="noopener">MTI · Hydraulic Disassembling Machine for CR20XX Button Cell (MSK-110D)</a></li>
+      <li><a href="https://mtixtl.com/products/msk-160e" target="_blank" rel="noopener">MTI · Digital Pressure Controlled Electric Crimper (MSK-160E)</a></li>
+      <li><a href="https://avtservices.com.au/shop/hydraulic-crimper-for-all-types-of-coin-cells-msk110/" target="_blank" rel="noopener">AVT Services · MSK-110 产品页</a> <small>手套箱建议</small></li>
+      <li><a href="https://shop.nanografi.com/battery-equipment/hydraulic-crimping-machine-for-all-coin-cells/" target="_blank" rel="noopener">Nanografi · Hydraulic Crimping Machine for All Coin Cells</a></li>
+      <li><a href="https://www.premier-sols.com/partners/item/hydraulic-crimper-for-all-types-of-coin-cells-with-100-pcs-cr2032-case-msk-110.html" target="_blank" rel="noopener">Premier Solutions · MSK-110</a> <small>尺寸、重量</small></li>
+      <li><a href="https://www.premier-sols.com/partners/item/msk-110-series-crimping-or-dis-assembling-die-set-replacement-msk-110-ds.html" target="_blank" rel="noopener">Premier Solutions · MSK-110-DS 替换模具组</a> <small>模具卡死说明</small></li>
+      <li><a href="https://www.youtube.com/watch?v=QilzQVG0R4Y" target="_blank" rel="noopener">YouTube · MSK-110 操作视频</a></li>
+    </ol>
+  </div>
+  <footer>整理于 2026-11-09。本页是学习辅助材料。图中设备为示意图，不代表实物外观与比例；模拟器中的压力增量、泄压阀动作值和保压提醒阈值仅用于演示。</footer>
+</section>
+
+</div>
+
+<script>
+(function(){
+document.documentElement.lang = 'zh-CN';
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- geometry helpers ---------- */
+const GMAX = 1200;
+const ang = p => -135 + 270 * Math.max(0, Math.min(p, GMAX)) / GMAX;
+const polar = (cx, cy, r, deg) => { const a = deg * Math.PI / 180; return [cx + r * Math.sin(a), cy - r * Math.cos(a)]; };
+const r1 = n => Math.round(n * 10) / 10;
+function arcPath(cx, cy, r, p0, p1){
+  const a0 = ang(p0), a1 = ang(p1);
+  const [x0, y0] = polar(cx, cy, r, a0), [x1, y1] = polar(cx, cy, r, a1);
+  return `M${r1(x0)} ${r1(y0)}A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${r1(x1)} ${r1(y1)}`;
+}
+function arcDeg(cx, cy, r, d0, d1, sweep){
+  const [x0, y0] = polar(cx, cy, r, d0), [x1, y1] = polar(cx, cy, r, d1);
+  return `M${r1(x0)} ${r1(y0)}A${r} ${r} 0 0 ${sweep} ${r1(x1)} ${r1(y1)}`;
+}
+const arrowDef = id => `<marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ah"/></marker>`;
+const warnTri = (n) => `<svg viewBox="0 0 30 27" aria-hidden="true"><path d="M15 2 L28 25 H2 Z" fill="var(--warn)" stroke="var(--on-warn)" stroke-width="1.6" stroke-linejoin="round"/><text x="15" y="21.5" text-anchor="middle" style="font:700 11px var(--f-mono);fill:var(--on-warn)">${n}</text></svg>`;
+
+/* ---------- parts ---------- */
+const PARTS = {
+  upperdie:{n:1, zh:'上模', en:'Upper crimping die', what:'固定在上横梁下方的成型模。下模顶起时，它把正极壳的边缘向内卷压到负极壳的密封圈 (gasket) 上，完成封口。随机模具通用 CR2016 / CR2025 / CR2032，不需要更换。', tip:'电解液腐蚀性强。每次实验后用乙醇擦净上下模。'},
+  lowerdie:{n:2, zh:'下模', en:'Lower die (cell seat)', what:'坐在柱塞顶部，中间的凹槽用来放电池。MTI 手册要求负极（带密封圈的小壳）朝上、正极壳朝下。', tip:'用塑料或绝缘头镊子放取电池。金属镊子同时碰到正负极壳会短路。'},
+  ram:{n:3, zh:'柱塞', en:'Ram / piston', what:'液压缸里的柱塞，带着下模向上运动。只有液压阀拧紧时，摇压杆才能让它上升。', tip:'加压过程中，手指不要伸进上下模之间。'},
+  frame:{n:4, zh:'机架', en:'Base, columns & crossbar', what:'底座、两根立柱和上横梁组成承力框架，承受封口时的反作用力。', tip:'整机约 25 kg，搬运时两人抬底座。'},
+  gauge:{n:5, zh:'压力表', en:'Pressure gauge', what:'显示液压系统压力。MTI 手册写 500–600 psi（< 50 kg/cm²）足以封口；另有产品列表写 850–1000 psi。最终以试压结果为准。', tip:'每摇一次压杆看一次读数，进入目标区间就停。'},
+  valve:{n:6, zh:'液压阀', en:'Hydraulic release valve', what:'顺时针拧紧，才能建立压力；逆时针松开，压力自动释放，下模回落。不用时把阀门置于 Lock 位置。', tip:'拧到位即可，不要拧得过紧。远距离运输前先泄压，再把阀门完全拧紧。'},
+  handle:{n:7, zh:'压杆', en:'Pump handle (compression rod)', what:'上下摇动压杆泵油，柱塞逐步上升，压力逐步增加。', tip:'平稳摇动，不要猛压。'},
+  relief:{n:8, zh:'过压保护阀', en:'Overpressure protection valve', what:'内置于液压机构。手册称默认上限 50 kg/cm²（≈ 711 psi）。图中位置为示意。', tip:'它是最后一道保护，不能代替看压力表。频繁触发会损伤液压机构。'},
+  body:{n:9, zh:'液压泵体', en:'Hydraulic pump body (8 t)', what:'油箱、泵和液压缸都在里面。额定 8 公吨，带自动泄压。', tip:'长期使用有漏油风险。发现油渍立即停用。'},
+  tray:{n:10, zh:'铝托盘', en:'Aluminum drip tray', what:'随机附带，垫在机器底部，接住意外漏出的液压油。', tip:'每次使用前看一眼托盘里有没有油。'}
+};
+const PART_ORDER = ['upperdie','lowerdie','ram','frame','gauge','valve','handle','relief','body','tray'];
+const BADGE = {upperdie:[264,156], lowerdie:[176,254], ram:[256,281], frame:[85,232], gauge:[256,334], valve:[129,396], handle:[420,250], relief:[286,277], body:[298,406], tray:[46,445]};
+
+/* ---------- hazards ---------- */
+const HAZ = [
+  {id:'pinch', sev:'high', cats:['person'], part:'lowerdie', mk:[168,205], zh:'挤压与夹手', en:'Crush / pinch point',
+   what:'液压泵额定 8 公吨。摇压杆时下模向上合拢，留在上下模之间的手指、手套或镊子会被压伤。',
+   prevent:['放好电池、手离开模具区域之后，再摇压杆。','只用镊子放取电池，不要用手指去扶正。','一个人操作。不要一人摇杆、另一人伸手调整。'],
+   src:'8 t 额定值：MTI 产品页 · 预防措施：通用机械安全'},
+  {id:'over', sev:'high', cats:['equip','cell'], part:'gauge', mk:[258,330], zh:'过压与长时间保压', en:'Over-pressure & pressure retention',
+   what:'MTI 手册：过压和长时间保持高压会损坏液压机构，属于禁止操作。对电池而言，过压会让壳体变形、密封圈被挤出，严重时内部短路。',
+   prevent:['每摇一次看一次压力表，进入目标区间就停。','达到压力后尽快逆时针松阀泄压，不要带压离开。','过压保护阀是最后一道保护，不要把它当作限位。'],
+   src:'MTI 操作手册'},
+  {id:'short', sev:'high', cats:['person','cell'], part:'lowerdie', mk:[272,232], zh:'短路与起火', en:'Short circuit & fire',
+   what:'金属镊子同时碰到正极壳和负极壳会造成外部短路；电池放反、过压或隔膜错位会造成内部短路。含锂金属的电池短路时可能发热甚至起火。',
+   prevent:['使用塑料或绝缘头镊子。','负极朝上、正极朝下放入下模（MTI 手册）。','封口后先测开路电压 (OCV)，异常电池隔离处理。','按本单位规定配备适用于锂金属火灾的灭火器材。'],
+   src:'朝向：MTI 操作手册 · 其余：通用电池安全'},
+  {id:'elec', sev:'med', cats:['person','equip'], part:'upperdie', mk:[170,150], zh:'电解液腐蚀', en:'Corrosive electrolyte',
+   what:'电解液腐蚀性强。常见的 LiPF₆ 碳酸酯电解液遇水分解会生成 HF。加注过量时，封口会把电解液挤出，沾到模具和手套上。',
+   prevent:['电解液适量，不要加满。','戴丁腈手套和护目镜。','每次实验后用乙醇清洁上下模，防止腐蚀。'],
+   src:'MTI 产品页 · HF 风险：通用化学安全'},
+  {id:'oil', sev:'med', cats:['equip','person'], part:'tray', mk:[62,444], zh:'液压油泄漏', en:'Hydraulic oil leak',
+   what:'MTI 指出长期使用后有漏油风险。漏油会污染台面、手套箱气氛和电池，台面油渍容易让人滑倒，压力也会建立不足。',
+   prevent:['始终垫着随机铝托盘。','使用前检查托盘和底部。','发现渗油立即停用，联系厂家维修。'],
+   src:'MTI 产品页'},
+  {id:'valve', sev:'med', cats:['equip'], part:'valve', mk:[128,396], zh:'阀门误操作', en:'Valve misuse',
+   what:'阀门拧得过紧会损伤阀座；带压存放或带压运输会损伤密封件。',
+   prevent:['顺时针拧到位即可，不要加力。','不用时先泄压，再把阀门置于 Lock 位置。','远距离运输前先泄压，再把阀门完全拧紧（MTI 手册）。'],
+   src:'MTI 操作手册、产品页'},
+  {id:'air', sev:'med', cats:['cell','person'], part:null, mk:null, zh:'锂体系接触空气', en:'Air exposure of Li cells',
+   what:'MTI 目前不建议把 MSK-110 放进手套箱。封口机在箱外时，未封口的电池要先拿出手套箱，锂和电解液会接触空气中的水分和氧气，数据变差，还可能生成 HF。',
+   prevent:['锂体系优先在手套箱内封口，选用手套箱兼容的封口机（MTI 推荐惰性气体驱动的气动版，或电动 MSK-160E）。','必须在箱外封口时，缩短转移时间，并按课题组 SOP 执行。'],
+   src:'MTI 产品页（手套箱建议） · 其余：通用电池实验规范'},
+  {id:'jam', sev:'low', cats:['equip'], part:'upperdie', mk:[274,150], zh:'模具卡死', en:'Die jam',
+   what:'电池壳边缘的小毛刺伸进模具间隙，会把上模卡住。',
+   prevent:['使用合格的电池壳。MTI 建议配合 MTI 品牌壳使用。','卡住时先完全泄压，再用非金属工具处理。不要在带压状态下撬。'],
+   src:'经销商说明 · MTI 产品页'},
+  {id:'heavy', sev:'low', cats:['person'], part:'frame', mk:[332,429], zh:'搬运重物', en:'Heavy lifting',
+   what:'净重约 25 kg，含包装约 35 kg。单人搬运容易扭伤或砸脚。',
+   prevent:['两人搬运，抬底座。','放在承重稳固的台面上，远离台面边缘。'],
+   src:'MTI 规格'}
+];
+HAZ.forEach((h,i) => h.n = i + 1);
+const SEV = {high:'严重', med:'中等', low:'一般'};
+
+/* ---------- machine drawing ---------- */
+function machineInner(o = {}){
+  const I = !!o.interactive, hl = o.hl || [];
+  const part = (k, inner) => `<g class="part${hl.includes(k) ? ' is-hl' : ''}" data-part="${k}"${I ? ` tabindex="0" role="button" aria-label="${PARTS[k].n} ${PARTS[k].zh}（${PARTS[k].en}）"` : ''}>${inner}</g>`;
+  let ticks = '';
+  for (let p = 0; p <= 1200; p += 100){
+    const a = ang(p), [x0,y0] = polar(220,360,25,a), [x1,y1] = polar(220,360,p % 200 ? 22 : 20,a);
+    ticks += `<line class="tk" x1="${r1(x0)}" y1="${r1(y0)}" x2="${r1(x1)}" y2="${r1(y1)}"/>`;
+  }
+  let s = '';
+  s += part('tray', `<rect class="st f2" x="34" y="440" width="372" height="11" rx="3"/><line class="thin" x1="46" y1="445" x2="394" y2="445"/>`);
+  s += part('frame', `<rect class="st f1" x="52" y="416" width="336" height="26" rx="3"/>
+    <rect class="st f2" x="76" y="100" width="18" height="318"/><rect class="st f2" x="346" y="100" width="18" height="318"/>
+    <line class="thin" x1="81" y1="128" x2="81" y2="412"/><line class="thin" x1="351" y1="128" x2="351" y2="412"/>
+    <rect class="st f1" x="58" y="78" width="324" height="46" rx="4"/>
+    <rect class="st f2" x="72" y="68" width="26" height="11" rx="2"/><rect class="st f2" x="342" y="68" width="26" height="11" rx="2"/>
+    <text class="mtext" x="220" y="106" text-anchor="middle">MTI</text>`);
+  s += part('upperdie', `<rect class="st f2" x="178" y="124" width="84" height="14"/><rect class="st fc" x="192" y="138" width="56" height="36" rx="2"/><rect class="f2" x="203" y="168" width="34" height="6"/>`);
+  s += `<g class="ram-g">`
+    + part('ram', `<rect class="st f2" x="198" y="270" width="44" height="100"/><line class="thin" x1="206" y1="273" x2="206" y2="298"/>`)
+    + part('lowerdie', `<rect class="st fc" x="190" y="236" width="60" height="34" rx="2"/><rect class="f2" x="203" y="236" width="34" height="5"/>`)
+    + `<g class="cell" data-o="neg-up"${o.cell === 'neg-up' ? '' : ' hidden'}><rect class="st c-pos" x="203" y="233" width="34" height="7" rx="1.2"/><rect class="st c-neg" x="207" y="229" width="26" height="5" rx="1"/><rect class="gk" x="205.5" y="232.3" width="29" height="1.6"/></g>`
+    + `<g class="cell" data-o="pos-up"${o.cell === 'pos-up' ? '' : ' hidden'}><rect class="st c-neg" x="207" y="235" width="26" height="5" rx="1"/><rect class="st c-pos" x="203" y="229" width="34" height="7" rx="1.2"/></g>`
+    + `</g>`;
+  s += part('body', `<rect class="st f2" x="184" y="290" width="72" height="12" rx="2"/><rect class="st f1" x="128" y="298" width="184" height="120" rx="6"/><rect class="st f2" x="310" y="322" width="22" height="20" rx="3"/><rect class="st fc" x="140" y="306" width="50" height="15" rx="2"/><text class="mtext sm" x="165" y="317" text-anchor="middle">MSK-110</text>`);
+  s += part('relief', `<rect class="st f2" x="276" y="289" width="18" height="10" rx="2"/><circle class="st fc" cx="285" cy="294" r="2.5"/>`);
+  s += part('gauge', `<circle class="st fc" cx="220" cy="360" r="30" style="stroke-width:2.2"/>${ticks}<path class="redarc" d="${arcPath(220,360,27.5,1000,1200)}"/><text class="mtext xs" x="220" y="381" text-anchor="middle">psi</text><g class="ndl" style="transform:rotate(-135deg)"><line class="ndl-l" x1="220" y1="364" x2="220" y2="337"/></g><circle class="hub" cx="220" cy="360" r="3"/>`);
+  s += part('valve', `<circle class="st f2" cx="152" cy="396" r="12"/><circle class="fc" cx="152" cy="396" r="7"/><g class="vptr" style="transform:rotate(${o.valveClosed ? 0 : -90}deg)"><line class="vptr-l" x1="152" y1="396" x2="152" y2="386"/></g>`);
+  s += `<g class="hdl">` + part('handle', `<rect class="st fd" x="322" y="327" width="100" height="10" rx="5"/><rect class="st grip" x="402" y="325" width="42" height="14" rx="7"/>`) + `</g>`;
+  if (o.badges){
+    PART_ORDER.forEach(k => { const [x,y] = BADGE[k];
+      s += `<g class="badge" data-part="${k}" aria-hidden="true"><circle cx="${x}" cy="${y}" r="9.5"/><text x="${x}" y="${y + 3.5}" text-anchor="middle">${PARTS[k].n}</text></g>`; });
+  }
+  if (o.markers){
+    HAZ.filter(h => h.mk).forEach(h => { const [x,y] = h.mk;
+      s += `<g class="mk" data-hz="${h.id}" tabindex="0" role="button" aria-label="危险 ${h.n}：${h.zh}"><path class="mk-t" d="M${x} ${y - 12} L${x + 12} ${y + 9} L${x - 12} ${y + 9} Z"/><text class="mk-n" x="${x}" y="${y + 6}" text-anchor="middle">${h.n}</text></g>`; });
+  }
+  return s;
+}
+function machineSVG(o = {}){
+  const cls = ['mach']; if (o.interactive) cls.push('is-int'); if (o.hl && o.hl.length) cls.push('has-hl'); if (o.markers) cls.push('hz-mode');
+  return `<svg class="${cls.join(' ')}" viewBox="${o.vb || '22 58 428 400'}" role="img" aria-label="${o.label || 'MSK-110 示意图'}">${o.defs ? `<defs>${o.defs}</defs>` : ''}${machineInner(o)}${o.extra || ''}</svg>`;
+}
+
+/* ---------- crimp cross-sections ---------- */
+function crimpInner(kind){
+  const inner = `<line class="cr-in" x1="38" y1="64" x2="122" y2="64"/><line class="cr-in" x1="38" y1="58" x2="122" y2="58"/><line class="cr-in" x1="40" y1="52" x2="120" y2="52"/>`;
+  if (kind === 'good') return inner
+    + `<path class="cr-gk" d="M28 36 L28 60 M132 36 L132 60"/><path class="cr-cap" d="M30 60 L30 38 L42 38 L42 27 L118 27 L118 38 L130 38 L130 60"/>`
+    + `<path class="cr-can" d="M38 32 Q24 32 24 41 L24 70 L136 70 L136 41 Q136 32 122 32"/>`;
+  if (kind === 'low') return inner
+    + `<path class="cr-gk" d="M28 36 L28 60 M132 36 L132 60"/><path class="cr-cap" d="M30 60 L30 38 L42 38 L42 27 L118 27 L118 38 L130 38 L130 60"/>`
+    + `<path class="cr-can" d="M19 28 L24 44 L24 70 L136 70 L136 44 L141 28"/>`
+    + `<circle class="cr-bad" cx="25" cy="33" r="9"/><circle class="cr-bad" cx="135" cy="33" r="9"/>`;
+  return inner
+    + `<path class="cr-gk" d="M28 38 L28 60 M132 38 L132 60"/><ellipse class="cr-gkf" cx="31" cy="30" rx="5" ry="2.6"/><ellipse class="cr-gkf" cx="129" cy="30" rx="5" ry="2.6"/>`
+    + `<path class="cr-cap" d="M30 60 L30 39 L42 39 L48 33 L112 33 L118 39 L130 39 L130 60"/>`
+    + `<path class="cr-can" d="M40 33 Q22 33 20 43 Q16 57 24 70 L136 70 Q144 57 140 43 Q138 33 120 33"/>`
+    + `<circle class="cr-bad" cx="18" cy="52" r="9"/><circle class="cr-bad" cx="142" cy="52" r="9"/>`;
+}
+const crimpSVG = kind => `<svg viewBox="0 0 160 90" role="img" aria-label="卷边截面示意">${crimpInner(kind)}</svg>`;
+
+/* ================= 1. PARTS EXPLORER ================= */
+const heroFig = $('#hero-fig');
+heroFig.innerHTML = machineSVG({interactive:true, badges:true, label:'MSK-110 部件示意图，可点击'});
+const plist = $('#plist');
+plist.innerHTML = PART_ORDER.map(k => `<li><button type="button" data-part="${k}" aria-pressed="false"><span class="num">${PARTS[k].n}</span><span>${PARTS[k].zh}<small>${PARTS[k].en}</small></span></button></li>`).join('');
+const tipIcon = `<svg viewBox="0 0 30 27" aria-hidden="true"><path d="M15 2 L28 25 H2 Z" fill="var(--warn)" stroke="var(--on-warn)" stroke-width="1.6" stroke-linejoin="round"/><rect x="13.6" y="9" width="2.8" height="9" rx="1" fill="var(--on-warn)"/><circle cx="15" cy="21.3" r="1.6" fill="var(--on-warn)"/></svg>`;
+function selectPart(k){
+  const svg = $('svg', heroFig);
+  svg.classList.add('has-hl');
+  $$('.part', svg).forEach(g => g.classList.toggle('is-hl', g.dataset.part === k));
+  $$('.badge', svg).forEach(b => b.classList.toggle('on', b.dataset.part === k));
+  $$('button', plist).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.part === k)));
+  const p = PARTS[k];
+  $('#pdetail').innerHTML = `<h3>${p.n} · ${p.zh}</h3><p class="en">${p.en}</p><p>${p.what}</p><div class="tip">${tipIcon}<span>${p.tip}</span></div>`;
+}
+heroFig.addEventListener('click', e => { const g = e.target.closest('[data-part]'); if (g) selectPart(g.dataset.part); });
+heroFig.addEventListener('keydown', e => { const g = e.target.closest('.part'); if (g && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); selectPart(g.dataset.part); } });
+plist.addEventListener('click', e => { const b = e.target.closest('button[data-part]'); if (b) selectPart(b.dataset.part); });
+selectPart('upperdie');
+
+/* ================= 2. INSTALL ================= */
+function illusUnpack(){
+  const item = (x, y, inner, label, sub) => `<g transform="translate(${x} ${y})">${inner}<text class="il-t" x="45" y="94" text-anchor="middle">${label}</text>${sub ? `<text class="il-s" x="45" y="108" text-anchor="middle">${sub}</text>` : ''}</g>`;
+  const mach = `<svg x="2" y="0" width="86" height="80" viewBox="22 58 428 400" class="mach">${machineInner({})}</svg>`;
+  const die = `<rect class="st f2" x="20" y="8" width="50" height="8"/><rect class="st fc" x="24" y="16" width="42" height="22" rx="2"/><rect class="f2" x="34" y="33" width="22" height="5"/><rect class="st fc" x="24" y="48" width="42" height="22" rx="2"/><rect class="f2" x="34" y="48" width="22" height="4"/><rect class="st f2" x="34" y="70" width="22" height="8"/>`;
+  const tray = `<path class="st f2" d="M6 48 L84 48 L77 64 L13 64 Z"/><line class="thin" x1="15" y1="53" x2="75" y2="53"/>`;
+  let coins = ''; [[30,30],[52,26],[42,44],[62,42],[28,54],[54,58]].forEach(([cx,cy]) => coins += `<ellipse class="st c-pos" cx="${cx}" cy="${cy}" rx="10" ry="4"/>`);
+  const cases = `<rect class="st fc" x="12" y="8" width="66" height="70" rx="8"/>${coins}<text class="il-s" x="45" y="74" text-anchor="middle">×100</text>`;
+  const manual = `<rect class="st fc" x="22" y="6" width="46" height="70" rx="2"/><text class="il-s" x="45" y="24" text-anchor="middle" style="font-size:8px">MSK-110</text><line class="thin" x1="30" y1="36" x2="60" y2="36" style="opacity:.6"/><line class="thin" x1="30" y1="44" x2="60" y2="44" style="opacity:.6"/><line class="thin" x1="30" y1="52" x2="54" y2="52" style="opacity:.6"/><line class="thin" x1="30" y1="60" x2="58" y2="60" style="opacity:.6"/>`;
+  return `<svg viewBox="0 0 460 250" role="img" aria-label="装箱物品示意">`
+    + item(40, 6, mach, '主机', 'MSK-110')
+    + item(185, 6, die, '通用模具', '通常已装在机上')
+    + item(330, 6, tray, '铝托盘', 'Drip tray')
+    + item(112, 126, cases, 'CR2032 电池壳', '100 个')
+    + item(258, 126, manual, '说明书', 'Manual')
+    + `</svg>`;
+}
+function illusSite(){
+  const person = (x, y) => `<circle class="pp" cx="${x}" cy="${y}" r="7"/><path class="pp" d="M${x - 11} ${y + 32} Q${x - 11} ${y + 10} ${x} ${y + 10} Q${x + 11} ${y + 10} ${x + 11} ${y + 32} Z"/>`;
+  return `<svg viewBox="0 0 460 250" role="img" aria-label="选位与搬运示意"><defs>${arrowDef('ah-site')}</defs>
+    <rect class="st f2" x="24" y="178" width="412" height="12" rx="2"/>
+    <rect class="st f1" x="44" y="190" width="12" height="54"/><rect class="st f1" x="404" y="190" width="12" height="54"/>
+    <svg x="150" y="40" width="150" height="140" viewBox="22 58 428 400" class="mach">${machineInner({})}</svg>
+    <rect class="st fc" x="58" y="160" width="74" height="16" rx="8"/><line class="thin" x1="88" y1="162" x2="88" y2="174" style="opacity:.8"/><line class="thin" x1="102" y1="162" x2="102" y2="174" style="opacity:.8"/>
+    <circle cx="95" cy="168" r="5" fill="var(--ok)" opacity=".75"/>
+    <text class="il-s" x="95" y="152" text-anchor="middle">台面水平</text>
+    ${person(44, 30)}${person(72, 30)}
+    <text class="il-t" x="96" y="44">2 人搬运</text>
+    <text class="il-s" x="96" y="60">净重 ≈ 25 kg</text>
+    <text class="il-s" x="96" y="74">含包装 ≈ 35 kg</text>
+    <path class="arr" d="M304 128 L436 128" marker-end="url(#ah-site)" marker-start="url(#ah-site)"/>
+    <text class="il-w" x="370" y="148" text-anchor="middle">压杆操作空间</text>
+  </svg>`;
+}
+function illusTray(){
+  return machineSVG({hl:['tray'], label:'铝托盘位置示意',
+    extra:`<path class="oil" d="M404 404 C410 414 412 420 404 424 C396 420 398 414 404 404 Z"/><path class="oil" d="M398 432 Q404 436 412 432 Q404 438 398 432 Z" opacity=".8"/>
+      <text class="il-w" x="404" y="392" text-anchor="middle" style="font-size:15px">接住漏油</text>`});
+}
+function illusDie(){
+  return `<svg viewBox="0 0 460 250" role="img" aria-label="模具检查与清洁示意"><defs>${arrowDef('ah-die')}</defs>
+    <rect class="st f2" x="128" y="16" width="134" height="20"/>
+    <rect class="st fc" x="140" y="36" width="110" height="56" rx="3"/><rect class="f2" x="162" y="82" width="66" height="10"/>
+    <rect class="st fc" x="140" y="150" width="110" height="56" rx="3"/><rect class="f2" x="162" y="150" width="66" height="8"/>
+    <rect class="st f2" x="168" y="206" width="54" height="30"/>
+    <rect class="st c-pos" x="164" y="141" width="62" height="12" rx="2"/><rect class="st c-neg" x="172" y="134" width="46" height="8" rx="2"/><rect class="gk" x="168" y="140" width="54" height="2.4"/>
+    <text class="il-t" x="128" y="68" text-anchor="end">上模</text><text class="il-s" x="128" y="82" text-anchor="end">Upper die</text>
+    <text class="il-t" x="128" y="182" text-anchor="end">下模</text><text class="il-s" x="128" y="196" text-anchor="end">Lower die</text>
+    <text class="il-s" x="195" y="118" text-anchor="middle">CR2016 · 2025 · 2032 通用</text>
+    <path class="st fc" d="M362 92 L362 80 L374 80 L374 92 Q392 100 392 118 L392 226 Q392 232 386 232 L350 232 Q344 232 344 226 L344 118 Q344 100 362 92 Z"/>
+    <rect class="st f2" x="360" y="70" width="16" height="10" rx="2"/>
+    <rect x="350" y="150" width="36" height="42" rx="3" fill="var(--accent-soft)"/>
+    <text class="il-t" x="368" y="168" text-anchor="middle" style="font-size:12px">EtOH</text><text class="il-s" x="368" y="183" text-anchor="middle">乙醇</text>
+    <path class="arr" d="M338 120 Q300 100 262 78" marker-end="url(#ah-die)"/>
+    <text class="il-w" x="300" y="136" text-anchor="middle">擦净 · 晾干</text>
+  </svg>`;
+}
+function illusValve(){
+  let knurl = '';
+  for (let d = 0; d < 360; d += 15){ const [x0,y0] = polar(150,125,50,d), [x1,y1] = polar(150,125,58,d); knurl += `<line class="tk" x1="${r1(x0)}" y1="${r1(y0)}" x2="${r1(x1)}" y2="${r1(y1)}"/>`; }
+  return `<svg viewBox="0 0 460 250" role="img" aria-label="阀门方向与压杆安装示意"><defs>${arrowDef('ah-valve')}</defs>
+    <circle class="st f2" cx="150" cy="125" r="58"/>${knurl}<circle class="st fc" cx="150" cy="125" r="40"/>
+    <line class="vptr-l" x1="150" y1="125" x2="150" y2="94" style="stroke-width:5"/><circle class="hub" cx="150" cy="125" r="5"/>
+    <path class="arr" d="${arcDeg(150,125,80,-50,50,1)}" marker-end="url(#ah-valve)"/>
+    <path class="arr" d="${arcDeg(150,125,80,230,130,0)}" marker-end="url(#ah-valve)"/>
+    <text class="il-w" x="150" y="30" text-anchor="middle">顺时针 = 拧紧（建压）</text>
+    <text class="il-w" x="150" y="234" text-anchor="middle">逆时针 = 松开（泄压）</text>
+    <rect class="st f1" x="292" y="150" width="54" height="56" rx="5"/><rect class="st f2" x="340" y="166" width="22" height="24" rx="3"/>
+    <rect class="st fd" x="376" y="172" width="70" height="12" rx="6"/>
+    <path class="arr" d="M420 154 L372 154" marker-end="url(#ah-valve)"/>
+    <text class="il-w" x="396" y="140" text-anchor="middle">插回压杆</text>
+    <text class="il-s" x="319" y="224" text-anchor="middle">泵座</text>
+  </svg>`;
+}
+function illusDry(){
+  return machineSVG({hl:['gauge','handle','ram'], label:'空载试压示意', defs:arrowDef('ah-dry'),
+    extra:`<path class="arr" d="M450 216 Q470 252 452 296" marker-end="url(#ah-dry)" marker-start="url(#ah-dry)"/>
+      <path class="arr" d="M172 296 L172 252" marker-end="url(#ah-dry)"/>`});
+}
+function illusTrial(){
+  const col = (x, kind, t, s, c) => `<svg x="${x}" y="22" width="140" height="80" viewBox="0 0 160 90">${crimpInner(kind)}</svg><text class="il-t" x="${x + 70}" y="126" text-anchor="middle" style="fill:var(--${c})">${t}</text><text class="il-s" x="${x + 70}" y="142" text-anchor="middle">${s}</text>`;
+  return `<svg viewBox="0 0 460 200" role="img" aria-label="试压结果对比示意"><defs>${arrowDef('ah-trial')}</defs>
+    ${col(8,'low','偏低','卷边未压紧 · 可能漏液','muted')}${col(160,'good','合适','卷边均匀 · 壳体平整','ok')}${col(312,'over','过高','壳体变形 · 密封圈挤出','danger')}
+    <path class="arr" d="M40 172 L420 172" marker-end="url(#ah-trial)"/><text class="il-s" x="430" y="190" text-anchor="end">压力增加 →</text>
+  </svg>`;
+}
+const INSTALL = [
+  {t:'开箱核对', en:'Unpack & inspect', illus:illusUnpack, body:`<ul>
+    <li>对照装箱单核对：主机（通用模具一套）、铝托盘、100 个 CR2032 电池壳 (coin cell cases)、说明书。具体以随机装箱单为准。</li>
+    <li>检查运输损伤：立柱是否歪斜、压力表是否破损、包装内和机器底部有没有油渍。</li>
+    <li>保留原包装，日后返修或搬迁时使用。</li></ul>`},
+  {t:'选位与搬运', en:'Site & lifting', illus:illusSite, body:`<ul>
+    <li>整机约 25 kg（含包装约 35 kg）。两人搬运，抬底座。</li>
+    <li>放在稳固、水平、耐溶剂的实验台上，压杆一侧留出摇动空间。</li>
+    <li>尽量靠近电池装配区，缩短未封口电池的转移距离。</li></ul>
+    <p class="conflict"><b>来源不一</b>能不能放进手套箱 (glovebox)？MTI 现行产品页不建议，原因是长期使用有漏油风险，手套箱内封口推荐惰性气体驱动的气动版或电动 MSK-160E。较早的操作手册写可在 MTI 手套箱内操作。建议按现行说法执行，并向厂家确认。</p>`},
+  {t:'垫铝托盘', en:'Drip tray', illus:illusTray, body:`<ul>
+    <li>把随机铝托盘放在主机正下方，托盘要完全盖过底座。</li>
+    <li>它用来接住意外漏出的液压油，避免污染台面或手套箱。</li>
+    <li>以后每次使用前看一眼托盘。有油说明需要检修。</li></ul>`},
+  {t:'检查模具', en:'Die set', illus:illusDie, body:`<ul>
+    <li>随机模具通用 CR2016 / CR2025 / CR2032，不需要更换。CR2325、CR2450、AG3、AG5 等需要选配模具（MSK-110-DS 系列）。</li>
+    <li>用无尘纸蘸乙醇 (ethanol) 擦净上下模，晾干。</li>
+    <li>检查模口没有毛刺、锈蚀和残留电解液。更换模具按随机手册的步骤进行。</li>
+    <li>MTI 建议使用 MTI 品牌电池壳。尺寸公差不匹配容易卡模或密封不良。</li></ul>`},
+  {t:'阀门与压杆', en:'Valve & handle', illus:illusValve, body:`<ul>
+    <li>如果运输时压杆是拆下的，把它插回泵座。</li>
+    <li>认清阀门方向：顺时针 (clockwise) 拧紧才能建压；逆时针 (anticlockwise) 松开，压力自动释放。</li>
+    <li>运输时阀门通常是完全拧紧的。首次使用前先逆时针松开，确认压力表回零。</li>
+    <li>拧紧时到位即可，不要用力过度。</li></ul>`},
+  {t:'空载试压', en:'Dry run', illus:illusDry, body:`<ul>
+    <li>不放电池。顺时针拧紧阀门，慢慢摇几下压杆。</li>
+    <li>观察柱塞是否平稳上升、上下模是否对正、压力表读数是否随之上升。只加到较低的压力即可，不要空压到高压。</li>
+    <li>逆时针松阀，确认压力回零、下模回落。</li>
+    <li>检查泵体、阀门和底部有没有渗油。发现渗油就停用，联系厂家。</li></ul>`},
+  {t:'试压定参', en:'Pressure trials', illus:illusTrial, body:`<ul>
+    <li>MTI 手册：根据所用电池壳的特性，通过试验找出最佳压力。</li>
+    <li>用空壳或报废电池，在几个压力下各压一个，检查卷边是否均匀、壳体是否平整、有没有裂纹。</li>
+    <li>把结果记在设备旁的记录卡上，同一批壳体用同一个压力。</li></ul>
+    <p class="conflict"><b>来源不一</b>手册写 500–600 psi（&lt; 50 kg/cm²，约 3.4–4.1 MPa）就够；部分产品列表写 850–1000 psi（约 5.9–6.9 MPa），后者高于手册所述过压阀的默认上限（≈ 711 psi）。以你设备的手册为准。</p>`}
+];
+let istep = 0;
+const isteps = $('#isteps'), ipanel = $('#ipanel');
+isteps.innerHTML = INSTALL.map((s, i) => `<li role="presentation"><button type="button" role="tab" id="itab-${i}" data-i="${i}" aria-selected="false"><span class="num">${i + 1}</span><span>${s.t}<small>${s.en}</small></span></button></li>`).join('');
+function renderInstall(){
+  $$('button', isteps).forEach((b, i) => { b.setAttribute('aria-selected', String(i === istep)); b.tabIndex = i === istep ? 0 : -1; });
+  const s = INSTALL[istep];
+  ipanel.setAttribute('aria-labelledby', `itab-${istep}`);
+  ipanel.innerHTML = `<div class="illus">${s.illus()}</div>
+    <div class="itext"><p class="ist-n">步骤 ${istep + 1} / ${INSTALL.length}</p><h3>${s.t}<small>${s.en}</small></h3>${s.body}</div>
+    <div class="inav"><button class="btn" type="button" data-go="-1" ${istep === 0 ? 'disabled' : ''}>← 上一步</button><button class="btn primary" type="button" data-go="1" ${istep === INSTALL.length - 1 ? 'disabled' : ''}>下一步 →</button></div>`;
+}
+isteps.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b){ istep = +b.dataset.i; renderInstall(); } });
+isteps.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  e.preventDefault(); const d = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
+  istep = (istep + d + INSTALL.length) % INSTALL.length; renderInstall(); $(`#itab-${istep}`).focus();
+});
+ipanel.addEventListener('click', e => { const b = e.target.closest('button[data-go]'); if (b){ istep = Math.max(0, Math.min(INSTALL.length - 1, istep + +b.dataset.go)); renderInstall(); } });
+renderInstall();
+
+/* ================= 3. CHECKLIST ================= */
+const CHECK = [
+  '设备放在稳固的水平台面上，下面垫着铝托盘',
+  '托盘和机器底部没有油渍',
+  '液压阀处于松开状态，压力表读数为 0',
+  '模具与电池型号一致（CR2016 / 2025 / 2032 用随机模具）',
+  '上下模已用乙醇擦净、晾干，没有毛刺和残留',
+  '已戴好丁腈手套和护目镜',
+  '准备好塑料（绝缘）镊子',
+  '电池已在手套箱内装配完成，电解液没有加过量',
+  '已知本批电池壳的目标压力（来自试压记录）'
+];
+const CK = 'msk110-checklist-v1';
+let ckState = [];
+try { ckState = JSON.parse(localStorage.getItem(CK) || '[]'); } catch (e) { ckState = []; }
+const ckList = $('#check-list');
+ckList.innerHTML = CHECK.map((t, i) => `<label for="ck-${i}"><input type="checkbox" id="ck-${i}" data-i="${i}" ${ckState[i] ? 'checked' : ''}><span>${t}</span></label>`).join('');
+function renderCheck(){
+  const n = $$('input', ckList).filter(x => x.checked).length;
+  $('#prog-bar').style.width = (n / CHECK.length * 100) + '%';
+  $('#prog-txt').textContent = `${n} / ${CHECK.length}`;
+  $('#check-done').hidden = n !== CHECK.length;
+}
+function saveCheck(){ try { localStorage.setItem(CK, JSON.stringify($$('input', ckList).map(x => x.checked))); } catch (e) {} }
+ckList.addEventListener('change', () => { renderCheck(); saveCheck(); });
+$('#check-clear').addEventListener('click', () => { $$('input', ckList).forEach(x => x.checked = false); renderCheck(); saveCheck(); });
+renderCheck();
+
+/* ================= 4. COIN STACK ================= */
+const STK = {cx:196, yB:372, G:38};
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function disc(cx, y, rx, h, fill){
+  const ry = rx * .28;
+  const band = `M${cx - rx} ${y} L${cx - rx} ${y + h} A${rx} ${ry} 0 0 0 ${cx + rx} ${y + h} L${cx + rx} ${y} A${rx} ${ry} 0 0 1 ${cx - rx} ${y} Z`;
+  return `<path class="st2" d="${band}" style="fill:${fill}"/><path class="shade" d="${band}"/><ellipse class="st2" cx="${cx}" cy="${y}" rx="${rx}" ry="${r1(ry)}" style="fill:${fill}"/>`;
+}
+function spring(cx, y, rx, h){
+  const ry = rx * .28; let d = '';
+  for (let i = 0; i <= 14; i++){ const th = Math.PI - Math.PI * i / 14; const x = cx + rx * Math.cos(th), yy = y + ry * Math.sin(th) + (i % 2 ? h : 0); d += (i ? 'L' : 'M') + r1(x) + ' ' + r1(yy); }
+  return `<ellipse class="spring" cx="${cx}" cy="${y}" rx="${rx}" ry="${r1(ry)}"/><ellipse class="spring" cx="${cx}" cy="${y + h}" rx="${rx}" ry="${r1(ry)}" opacity=".5"/><path class="spring" d="${d}"/>`;
+}
+function stackSVG(e){
+  const {cx, yB, G} = STK, ry = 118 * .28, yR = yB - 26;
+  const Y = (i, base) => base - e * G * i;
+  const lab = clamp((e - .45) / .35, 0, 1), col = clamp((.45 - e) / .35, 0, 1);
+  const L = [
+    {i:0, y:yB - 13, rx:118, zh:'正极壳', en:'Positive case (+)'},
+    {i:1, y:Y(1,362), rx:90, zh:'正极片', en:'Cathode'},
+    {i:2, y:Y(2,362) - 6, rx:40, zh:'电解液', en:'Electrolyte'},
+    {i:3, y:Y(3,359), rx:104, zh:'隔膜', en:'Separator'},
+    {i:4, y:Y(4,353), rx:86, zh:'锂片 / 负极片', en:'Li foil / anode'},
+    {i:5, y:Y(5,346), rx:96, zh:'垫片', en:'Spacer'},
+    {i:6, y:Y(6,336), rx:88, zh:'弹片', en:'Wave spring'},
+    {i:7, y:Y(7,330), rx:110, zh:'负极壳 + 密封圈', en:'Negative cap (−)'}
+  ];
+  let s = `<svg viewBox="0 0 560 430" role="img" aria-label="CR2032 半电池叠层示意">`;
+  s += `<ellipse class="st2" cx="${cx}" cy="${yB}" rx="118" ry="${r1(ry)}" style="fill:var(--cell-pos)"/>`;
+  s += `<ellipse class="st2" cx="${cx}" cy="${yR}" rx="118" ry="${r1(ry)}" style="fill:var(--m-body2)"/>`;
+  s += disc(cx, L[1].y, 90, 7, 'var(--cathode)');
+  const dy = L[2].y, dOp = clamp(e * 2, 0, 1);
+  [-34, 0, 34].forEach(dx => { const x = cx + dx; s += `<path class="drop" opacity="${dOp}" d="M${x} ${dy - 9} C${x + 6} ${dy - 1} ${x + 6} ${dy + 5} ${x} ${dy + 5} C${x - 6} ${dy + 5} ${x - 6} ${dy - 1} ${x} ${dy - 9} Z"/>`; });
+  s += disc(cx, L[3].y, 104, 3, 'var(--sep)');
+  s += disc(cx, L[4].y, 86, 6, 'var(--li)');
+  s += disc(cx, L[5].y, 96, 7, 'var(--cell-pos)');
+  s += spring(cx, L[6].y, 88, 10);
+  const cy7 = L[7].y;
+  s += disc(cx, cy7 + 14, 113, 6, 'var(--gasket)');
+  s += disc(cx, cy7, 110, 16, 'var(--cell-neg)');
+  s += `<path class="st2" style="fill:var(--cell-pos)" d="M${cx - 118} ${yR} L${cx - 118} ${yB} A118 ${r1(ry)} 0 0 0 ${cx + 118} ${yB} L${cx + 118} ${yR} A118 ${r1(ry)} 0 0 1 ${cx - 118} ${yR} Z"/>`;
+  s += `<g opacity="${lab}">`;
+  L.forEach(l => { s += `<line class="lead" x1="${cx + l.rx + 6}" y1="${r1(l.y)}" x2="352" y2="${r1(l.y)}"/><text class="lbl-zh" x="358" y="${r1(l.y + 2)}">${l.zh}</text><text class="lbl-en" x="358" y="${r1(l.y + 16)}">${l.en}</text>`; });
+  s += `</g><g opacity="${col}">`;
+  s += `<text class="orient" x="352" y="${cy7 + 4}">▲ 负极壳朝上（−）</text><text class="orient" x="352" y="${yB + 4}">▼ 正极壳朝下（+）</text>`;
+  s += `<line class="dim-l" x1="${cx - 118}" y1="414" x2="${cx + 118}" y2="414"/><line class="dim-l" x1="${cx - 118}" y1="408" x2="${cx - 118}" y2="420"/><line class="dim-l" x1="${cx + 118}" y1="408" x2="${cx + 118}" y2="420"/>`;
+  s += `<text class="dim-t" x="${cx}" y="428" text-anchor="middle">CR2032：Ø 20 mm × 3.2 mm（示意，未按比例）</text>`;
+  s += `</g></svg>`;
+  return s;
+}
+const stackBox = $('#stack-svg'), stackIn = $('#stack-e');
+const drawStack = () => { stackBox.innerHTML = stackSVG(stackIn.value / 100); };
+stackIn.addEventListener('input', drawStack);
+function animStack(to){
+  const from = stackIn.value / 100, T = REDUCE ? 1 : 650, st = performance.now();
+  (function fr(now){ const k = Math.min(1, (now - st) / T), ez = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    stackIn.value = Math.round((from + (to - from) * ez) * 100); drawStack(); if (k < 1) requestAnimationFrame(fr); })(st);
+}
+$('#stack-open').addEventListener('click', () => animStack(1));
+$('#stack-close').addEventListener('click', () => animStack(0));
+drawStack();
+
+/* ================= 5. SIMULATOR ================= */
+const REF = {
+  manual:{lo:500, hi:600, relief:711, note:'依据 MTI 操作手册：500–600 psi 足以封口。过压保护阀默认上限 50 kg/cm²（≈ 711 psi）。'},
+  listing:{lo:850, hi:1000, relief:1150, note:'依据产品列表：850–1000 psi。此模式下泄压阀动作值 1150 psi 为演示用假设值。'}
+};
+$('#sim-fig').innerHTML = machineSVG({label:'封口模拟器设备示意'});
+const simSvg = $('#sim-fig svg');
+const ramG = $('.ram-g', simSvg), hdl = $('.hdl', simSvg), ndl = $('.ndl', simSvg), vptr = $('.vptr', simSvg);
+
+function bigGauge(){
+  const cx = 150, cy = 150, R = 120; let t = '';
+  for (let p = 0; p <= 1200; p += 50){
+    const a = ang(p), maj = p % 200 === 0, mid = p % 100 === 0;
+    const [x0,y0] = polar(cx,cy,R - 10,a), [x1,y1] = polar(cx,cy,R - (maj ? 26 : mid ? 20 : 15),a);
+    t += `<line class="gt${maj ? ' maj' : ''}" x1="${r1(x0)}" y1="${r1(y0)}" x2="${r1(x1)}" y2="${r1(y1)}"/>`;
+    if (maj){ const [lx,ly] = polar(cx,cy,R - 40,a); t += `<text class="gl" x="${r1(lx)}" y="${r1(ly + 4)}" text-anchor="middle">${p}</text>`; }
+  }
+  return `<svg viewBox="0 0 300 262" role="img" aria-label="压力表，0 到 1200 psi">
+    <circle class="g-face" cx="${cx}" cy="${cy}" r="${R + 8}"/>
+    <path id="band-ok" class="band-ok" d=""/><path id="band-bad" class="band-bad" d=""/>
+    ${t}
+    <g id="rel-mk"><line id="rel-l" class="rel-l" x1="0" y1="0" x2="0" y2="0"/><text id="rel-t" class="rel-t" x="0" y="0" text-anchor="middle">泄压阀</text></g>
+    <text class="g-unit" x="${cx}" y="${cy + 46}" text-anchor="middle">psi</text>
+    <g id="bg-ndl" class="bg-ndl" style="transform:rotate(-135deg)"><path class="bg-ndl-p" d="M146.5 154 L150 44 L153.5 154 Z"/><circle class="hub2" cx="${cx}" cy="${cy}" r="8"/></g>
+  </svg>`;
+}
+$('#biggauge').innerHTML = bigGauge();
+const bgNdl = $('#bg-ndl');
+function updateBands(){
+  const r = REF[S.ref];
+  $('#band-ok').setAttribute('d', arcPath(150,150,124,r.lo,r.hi));
+  $('#band-bad').setAttribute('d', arcPath(150,150,124,r.hi,1200));
+  const a = ang(r.relief), [x0,y0] = polar(150,150,104,a), [x1,y1] = polar(150,150,130,a), [tx,ty] = polar(150,150,142,a);
+  const l = $('#rel-l'); l.setAttribute('x1', r1(x0)); l.setAttribute('y1', r1(y0)); l.setAttribute('x2', r1(x1)); l.setAttribute('y2', r1(y1));
+  const t = $('#rel-t'); t.setAttribute('x', r1(tx)); t.setAttribute('y', r1(ty + 4));
+  $('#relnote').textContent = r.note;
+  $$('#refseg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ref === S.ref)));
+}
+
+const STEPS = [
+  ['放入电池','负极朝上，正极朝下'],
+  ['拧紧液压阀','顺时针，到位即可'],
+  ['摇动压杆','柱塞上升，上下模合拢'],
+  ['加压到参考区间','每摇一次看一次压力表'],
+  ['松开液压阀','逆时针，压力自动释放'],
+  ['取出并检查','塑料镊子取出，测 OCV'],
+  ['清洁与收尾','乙醇擦模具，阀门置于 Lock']
+];
+let S;
+function freshState(ref){ return {ref: ref || 'manual', valve:'open', cell:null, t:0, p:0, pMaxCell:0, holdStart:null, holdWarned:false, crimpDone:false, result:null, cleaned:true, locked:false, releasing:false, log:[], n:0}; }
+function log(type, msg){ S.n++; S.log.unshift({type, msg, n:S.n}); if (S.log.length > 40) S.log.pop(); }
+function travel(){ return S.t * (S.cell ? 55 : 61) + Math.min(S.p / 1200, 1) * 1.5; }
+function renderMachine(){
+  ramG.style.transform = `translateY(${-r1(travel())}px)`;
+  ndl.style.transform = `rotate(${r1(ang(S.p))}deg)`;
+  bgNdl.style.transform = `rotate(${r1(ang(S.p))}deg)`;
+  vptr.style.transform = `rotate(${S.valve === 'closed' ? 0 : -90}deg)`;
+  $$('.cell', simSvg).forEach(c => c.toggleAttribute('hidden', c.dataset.o !== S.cell));
+  $('#r-psi').textContent = Math.round(S.p);
+  $('#r-mpa').textContent = (S.p / 145.038).toFixed(2);
+  $('#r-kg').textContent = (S.p / 14.2233).toFixed(1);
+}
+function stepIdx(){
+  if (S.result) return (S.cleaned && S.locked) ? 7 : 6;
+  if (!S.cell) return 0;
+  if (S.crimpDone) return 5;
+  if (S.valve !== 'closed') return 1;
+  if (S.t < 1) return 2;
+  if (S.pMaxCell < REF[S.ref].lo) return 3;
+  return 4;
+}
+function holdSec(){ return (S.valve === 'closed' && S.p > 0 && S.holdStart && !S.releasing) ? Math.floor((Date.now() - S.holdStart) / 1000) : 0; }
+function renderChips(){
+  const hs = holdSec(), r = REF[S.ref];
+  const cellTxt = !S.cell ? '无' : S.cell === 'neg-up' ? '负极朝上' : '正极朝上';
+  const pCls = S.p > r.hi ? 'bad' : S.p >= r.lo ? 'ok' : '';
+  $('#chips').innerHTML =
+    `<span class="chip${S.valve === 'closed' ? ' ok' : ''}">阀门 <b>${S.locked ? 'Lock' : S.valve === 'closed' ? '拧紧' : '松开'}</b></span>`
+    + `<span class="chip${S.cell === 'pos-up' ? ' bad' : S.cell ? ' ok' : ''}">电池 <b>${cellTxt}</b></span>`
+    + `<span class="chip ${pCls}">压力 <b>${Math.round(S.p)} psi</b></span>`
+    + `<span class="chip${hs >= 20 ? ' bad' : hs > 0 ? ' warn' : ''}">保压 <b>${hs} s</b></span>`;
+}
+function render(){
+  renderMachine(); renderChips();
+  const k = stepIdx();
+  $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${i < k ? 'done' : i === k ? 'cur' : ''}"><span class="k">${i < k ? '✓' : i + 1}</span><span>${s[0]}<small>${s[1]}</small></span></li>`).join('');
+  const busy = S.releasing;
+  $('#b-neg').disabled = $('#b-pos').disabled = busy || !!S.cell || S.t > 0 || S.p > 0 || S.locked;
+  $('#b-remove').disabled = busy || !S.cell || S.t > 0 || S.p > 0;
+  $('#b-tight').disabled = busy || S.valve === 'closed';
+  $('#b-loose').disabled = busy || S.valve === 'open';
+  $('#b-pump').disabled = busy || S.locked;
+  $('#b-clean').disabled = busy || !!S.cell || S.p > 0 || S.cleaned;
+  $('#b-lock').disabled = busy || !!S.cell || S.p > 0 || S.t > 0 || S.locked;
+  const res = $('#result');
+  if (S.result){
+    res.hidden = false; res.className = 'result ' + S.result.kind;
+    res.innerHTML = `${crimpSVG(S.result.kind === 'none' ? 'low' : S.result.kind)}<div><h3>${S.result.title}</h3><p>${S.result.text}</p></div>`;
+  } else res.hidden = true;
+  $('#log').innerHTML = S.log.map(l => `<li class="${l.type}"><span>${l.msg}</span></li>`).join('');
+  $('#log-n').textContent = S.n ? `${S.n} 条` : '';
+}
+function animateRelease(){
+  S.releasing = true;
+  const p0 = S.p, t0 = S.t, T = REDUCE ? 1 : 900, st = performance.now();
+  (function fr(now){
+    const k = Math.min(1, (now - st) / T), e = 1 - Math.pow(1 - k, 2);
+    S.p = p0 * (1 - e); S.t = t0 * (1 - e); renderMachine();
+    if (k < 1) requestAnimationFrame(fr); else { S.p = 0; S.t = 0; S.releasing = false; render(); }
+  })(st);
+}
+function pumpAnim(){ hdl.classList.add('down'); setTimeout(() => hdl.classList.remove('down'), REDUCE ? 0 : 170); }
+
+function placeCell(o){
+  S.cell = o; S.pMaxCell = 0; S.crimpDone = false; S.result = null; S.cleaned = false;
+  if (o === 'neg-up') log('ok', '用塑料镊子放入电池：负极朝上、正极朝下。手离开模具区域。');
+  else log('danger', '电池放反了（正极朝上）。MTI 手册要求负极朝上、正极朝下。先取出重放。');
+  render();
+}
+function tighten(){
+  S.valve = 'closed';
+  log('info', S.locked ? '阀门已处于 Lock。' : '顺时针拧紧液压阀，拧到位即可，不要过紧。');
+  render();
+}
+function loosen(){
+  const hadP = S.p > 0 || S.t > 0;
+  S.valve = 'open'; S.locked = false; S.holdStart = null; S.holdWarned = false;
+  if (hadP){
+    if (S.cell && S.pMaxCell > 0) S.crimpDone = true;
+    log('info', '逆时针松开液压阀：压力自动释放，下模回落。');
+    animateRelease();
+  } else log('info', '逆时针松开液压阀。');
+  render();
+}
+function pump(){
+  pumpAnim();
+  if (S.valve === 'open'){ log('warn', '液压阀没有拧紧：油直接回流，柱塞不动。先顺时针拧紧阀门。'); render(); return; }
+  if (S.t < 1){
+    S.t = Math.min(1, S.t + .25);
+    if (S.t >= 1) log('info', S.cell ? '上模压到电池，开始建压。' : '空载：上下模直接合拢，开始建压。空载只加到低压。');
+    else log('info', '柱塞上升，下模靠近上模。');
+    render(); return;
+  }
+  const r = REF[S.ref];
+  let np = S.p + 95 + Math.random() * 30;
+  if (!S.holdStart) S.holdStart = Date.now();
+  if (np >= r.relief){
+    np = r.relief;
+    log('danger', `过压保护阀开启，压力被限制在约 ${r.relief} psi。不要把它当作限位，频繁触发会损伤液压机构。立即松阀。`);
+  } else if (np > r.hi){
+    log('danger', `${Math.round(np)} psi：超过参考上限 ${r.hi} psi。电池可能变形，立即松阀泄压。`);
+  } else if (np >= r.lo){
+    log('ok', `${Math.round(np)} psi：已进入参考区间。停止摇杆，逆时针松阀泄压。`);
+  } else {
+    log('info', `${Math.round(np)} psi`);
+  }
+  S.p = np;
+  if (S.cell) S.pMaxCell = Math.max(S.pMaxCell, np);
+  else if (np > 300) log('warn', '空载试压只需低压。上下模直接对压到高压会损伤模具。');
+  render();
+}
+function removeCell(){
+  const r = REF[S.ref], m = Math.round(S.pMaxCell);
+  let kind, title, text;
+  if (!S.crimpDone || m === 0){ kind = 'none'; title = '电池未封口'; text = '这颗电池没有经过加压就被取出了。'; }
+  else if (S.cell === 'pos-up'){ kind = 'over'; title = '极性放反，封口失败'; text = `最大压力 ${m} psi。正极壳朝上时卷边方向错误，密封失败，并可能造成短路。按规定报废处理。`; }
+  else if (m < r.lo){ kind = 'low'; title = '压力偏低，卷边没有压紧'; text = `最大压力 ${m} psi，低于参考区间 ${r.lo}–${r.hi} psi。可能漏液或接触不良。按课题组 SOP 决定重新加压一次还是报废。`; }
+  else if (m <= r.hi){ kind = 'good'; title = '卷边均匀（模拟结果）'; text = `最大压力 ${m} psi，在参考区间 ${r.lo}–${r.hi} psi 内。下一步用万用表测开路电压 (OCV)，确认没有短路。`; }
+  else { kind = 'over'; title = '压力过高'; text = `最大压力 ${m} psi，高于参考区间 ${r.lo}–${r.hi} psi。壳体可能变形、密封圈被挤出，严重时内部短路。`; }
+  S.result = {kind, title, text};
+  log(kind === 'good' ? 'ok' : kind === 'over' ? 'danger' : 'warn', `用塑料镊子取出电池：${title}。`);
+  S.cell = null; S.pMaxCell = 0; S.crimpDone = false;
+  render();
+}
+function clean(){ S.cleaned = true; log('ok', '用无尘纸蘸乙醇擦拭上下模，去除残留电解液。'); render(); }
+function lock(){ S.valve = 'closed'; S.locked = true; log('ok', '不用时：确认无压后，把阀门顺时针拧到 Lock 位置。'); render(); }
+function reset(){
+  S = freshState(S ? S.ref : 'manual');
+  log('info', '准备就绪：模具已清洁，阀门松开，压力 0 psi。先放入电池。');
+  updateBands(); render();
+}
+$('#b-neg').addEventListener('click', () => placeCell('neg-up'));
+$('#b-pos').addEventListener('click', () => placeCell('pos-up'));
+$('#b-remove').addEventListener('click', removeCell);
+$('#b-tight').addEventListener('click', tighten);
+$('#b-loose').addEventListener('click', loosen);
+$('#b-pump').addEventListener('click', pump);
+$('#b-clean').addEventListener('click', clean);
+$('#b-lock').addEventListener('click', lock);
+$('#b-reset').addEventListener('click', reset);
+$('#refseg').addEventListener('click', e => {
+  const b = e.target.closest('button[data-ref]'); if (!b || b.dataset.ref === S.ref) return;
+  S.ref = b.dataset.ref; updateBands();
+  log('info', `参考压力改为 ${REF[S.ref].lo}–${REF[S.ref].hi} psi。`); render();
+});
+setInterval(() => {
+  const hs = holdSec();
+  if (hs >= 20 && !S.holdWarned){
+    S.holdWarned = true;
+    log('danger', '已保压 20 s 以上。MTI 手册：长时间保持高压会损坏液压机构，属于禁止操作。逆时针松阀泄压。');
+    render();
+  } else renderChips();
+}, 500);
+reset();
+
+/* ================= 6. HAZARDS ================= */
+$('#hz-fig').innerHTML = machineSVG({markers:true, label:'危险位置示意，可点击三角标记'});
+const hzSvg = $('#hz-fig svg'), hzList = $('#hz-list');
+const CATN = {person:'人身安全', equip:'设备损伤', cell:'电池质量'};
+hzList.innerHTML = HAZ.map(h => `<article class="hz-card" id="hz-${h.id}" data-hz="${h.id}" data-cats="${h.cats.join(' ')}" tabindex="0">
+  <header>${warnTri(h.n)}<h3>${h.zh}<small>${h.en}</small></h3><span class="sev ${h.sev}">${SEV[h.sev]}</span></header>
+  <p class="what">${h.what}</p>
+  <ul>${h.prevent.map(x => `<li>${x}</li>`).join('')}</ul>
+  <p class="src">${h.part ? `位置：${PARTS[h.part].zh} · ` : '位置：不在设备上 · '}${h.cats.map(c => CATN[c]).join(' / ')}<br>依据：${h.src}</p>
+</article>`).join('');
+function selectHaz(id, scroll){
+  const h = HAZ.find(x => x.id === id);
+  $$('.hz-card', hzList).forEach(c => c.classList.toggle('on', c.dataset.hz === id));
+  $$('.mk', hzSvg).forEach(m => m.classList.toggle('on', m.dataset.hz === id));
+  hzSvg.classList.toggle('has-hl', !!h.part);
+  $$('.part', hzSvg).forEach(g => g.classList.toggle('is-hl', g.dataset.part === h.part));
+  if (scroll){ const c = $('#hz-' + id); if (c && !c.hidden) c.scrollIntoView({block:'nearest', behavior: REDUCE ? 'auto' : 'smooth'}); }
+}
+hzSvg.addEventListener('click', e => { const m = e.target.closest('.mk'); if (m) selectHaz(m.dataset.hz, true); });
+hzSvg.addEventListener('keydown', e => { const m = e.target.closest('.mk'); if (m && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); selectHaz(m.dataset.hz, true); } });
+hzList.addEventListener('click', e => { const c = e.target.closest('.hz-card'); if (c && !e.target.closest('a')) selectHaz(c.dataset.hz, false); });
+hzList.addEventListener('keydown', e => { const c = e.target.closest('.hz-card'); if (c && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); selectHaz(c.dataset.hz, false); } });
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('button[data-f]'); if (!b) return;
+  const f = b.dataset.f;
+  $$('#filters button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  HAZ.forEach(h => {
+    const show = f === 'all' || h.cats.includes(f);
+    $('#hz-' + h.id).hidden = !show;
+    const m = $(`.mk[data-hz="${h.id}"]`, hzSvg); if (m) m.classList.toggle('dim', !show);
+  });
+});
+selectHaz('pinch', false);
+
+/* ================= rail highlight ================= */
+const links = $$('.rail a');
+if ('IntersectionObserver' in window){
+  const io = new IntersectionObserver(ents => {
+    ents.forEach(en => { if (en.isIntersecting){ links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id)); } });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  $$('section[id]').forEach(s => io.observe(s));
+}
+})();
+</script>
