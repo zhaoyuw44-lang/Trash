@@ -164,6 +164,85 @@ svg{overflow:visible}
 .tip svg{width:20px;height:18px;margin-top:2px}
 @media (max-width:860px){.explorer{grid-template-columns:1fr}}
 
+/* ---------- how it works ---------- */
+.sub-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:19px;line-height:1.4;margin:36px 0 14px}
+.sub-h:first-of-type{margin-top:0}
+.sub-h span{font:700 21px/1 var(--f-display);color:var(--accent)}
+.sub-h small{font:400 12px/1.4 var(--f-mono);color:var(--muted)}
+.how-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+.hyd-fig,.crimp-fig{padding:12px 12px 4px;margin:0}
+.hyd-fig svg,.crimp-fig svg{display:block;width:100%;height:auto}
+.hyd .il-s{font-size:12px}
+.hyd .il-t{font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:8px 8px 0;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg{display:inline-block;width:22px;height:6px;border-radius:3px}
+.lg.hp{background:var(--danger)}
+.lg.lp{background:var(--elec)}
+.lg.fl{height:3px;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 8px)}
+.hyd-side{padding:16px 18px}
+.phases{display:flex;flex-wrap:wrap;gap:4px}
+.phases button{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:5px 10px 5px 5px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.phases button .num{width:20px;height:20px;font-size:10.5px}
+.phases button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.phases button[aria-pressed="true"] .num{background:var(--accent);color:var(--accent-ink)}
+.hph-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.hph-head h4{margin:0;font-size:20px;line-height:1.3}
+.hph-k{font:500 12px/1.4 var(--f-mono);color:var(--muted);margin-top:2px}
+.hph-txt{margin-top:10px;font-size:14.5px}
+.hph-op{margin-top:10px;font-size:13.5px;line-height:1.6;padding:8px 12px;border-radius:6px;background:var(--m-face);border:1px solid var(--line)}
+.vstat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:12px}
+.vstat div{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;line-height:1.4}
+.vstat b{font-weight:600;white-space:nowrap}
+.vs-open{color:var(--accent)}
+.vs-shut{color:var(--muted)}
+.pipe-o{fill:none;stroke:var(--m-stroke);stroke-width:11;stroke-linejoin:round}
+.pipe-i{fill:none;stroke:var(--m-face);stroke-width:7.5;stroke-linejoin:round}
+.oil-line{fill:none;stroke-width:6;stroke-linejoin:round;transition:stroke .3s}
+.oil-hp{stroke:var(--danger)}
+.oil-lp{stroke:var(--elec)}
+.fill-hp{fill:var(--danger);opacity:.5;transition:opacity .3s}
+.fill-lp{fill:var(--elec);opacity:.35;transition:opacity .3s}
+.flow{fill:none;stroke:var(--m-face);stroke-width:2.4;stroke-dasharray:3 9;stroke-linecap:round;animation:hflow .7s linear infinite}
+@keyframes hflow{to{stroke-dashoffset:-12}}
+.lev{stroke:var(--m-dark);stroke-width:8;stroke-linecap:round}
+.ball{fill:var(--m-face);stroke:var(--m-stroke);stroke-width:1.6}
+.seat{stroke:var(--m-stroke);stroke-width:3;stroke-linecap:round;fill:none}
+.h-move{transition:transform .45s ease}
+.h-lev{transform-box:view-box;transform-origin:230px 98px;transition:transform .45s ease}
+#h-gn{transform-box:view-box;transform-origin:530px 160px;transition:transform .45s ease}
+#h-spr{transform-box:view-box;transform-origin:400px 356px;transition:transform .45s ease}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{padding:5px 9px;border-radius:5px;background:var(--m-face);border:1px solid var(--line);font-size:13px;line-height:1.4}
+.chain i{font-style:normal;color:var(--muted)}
+.formula{margin-top:14px;padding:12px 14px;border-radius:6px;background:var(--m-face);border:1px solid var(--line);font:500 14px/2 var(--f-mono);overflow-x:auto;white-space:nowrap}
+.formula small{font:400 12px var(--f-body);color:var(--muted);margin-left:10px}
+.how-p{margin-top:14px;font-size:14.5px}
+.calc{padding:16px 18px}
+.calc-h{margin:0;font-size:16px}
+.calc-h small{font:400 12px var(--f-mono);color:var(--muted);margin-left:8px}
+.crow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;margin-top:14px}
+.crow label{font-size:14px}
+.crow output{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums}
+.crow input{grid-column:1/-1;width:100%}
+.assume{font:600 10.5px/1 var(--f-body);padding:3px 6px;border-radius:4px;background:var(--warn);color:var(--on-warn);margin-left:6px;vertical-align:1px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.tiles div{padding:10px 12px;border-radius:6px;background:var(--m-face);border:1px solid var(--line)}
+.tiles b{display:block;font:500 22px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.tiles span{font-size:12px;color:var(--muted)}
+.cstage{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.cstage li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:9px 10px;border-radius:6px;color:var(--muted);font-size:14px;line-height:1.6}
+.cstage li b{display:block;color:var(--ink)}
+.cstage li.on{background:var(--accent-soft);color:var(--ink)}
+.cstage li.on .num{background:var(--accent);color:var(--accent-ink)}
+.cstage li.bad.on{background:var(--danger-soft)}
+.cstage li.bad.on .num{background:var(--danger);color:var(--paper)}
+.crimp-ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px 4px 4px}
+.crimp-ctl output{font:500 13px var(--f-mono);min-width:9ch;font-variant-numeric:tabular-nums}
+.cl{stroke:var(--muted);stroke-width:1;stroke-dasharray:10 3 2 3}
+@media (max-width:900px){.how-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.tiles{grid-template-columns:1fr}.vstat{grid-template-columns:1fr}}
+
 /* ---------- install ---------- */
 .inst{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;align-items:start}
 .isteps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
@@ -363,7 +442,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
   <div>
     <p class="maker">MTI Corporation · Coin Cell Crimper</p>
     <h1><span class="model">MSK-110</span><span class="h1zh">液压纽扣电池封口机：安装、使用与危险</span></h1>
-    <p class="lede">Hydraulic Crimper for CR20xx Coin Cells。在这里认识每个部件，按步骤完成安装，在模拟器里走一遍封口流程，并逐项了解它的危险。</p>
+    <p class="lede">Hydraulic Crimper for CR20xx Coin Cells。在这里认识每个部件，看懂它的工作原理，按步骤完成安装，在模拟器里走一遍封口流程，并逐项了解它的危险。</p>
   </div>
   <dl class="plate-spec">
     <div><dt>MODEL</dt><dd>MSK-110</dd></div>
@@ -388,7 +467,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 </aside>
 
 <nav class="rail" aria-label="章节">
-  <a href="#parts">部件</a><a href="#install">安装</a><a href="#check">使用前检查</a><a href="#stack">电池叠层</a><a href="#use">封口模拟</a><a href="#hazards">危险</a><a href="#specs">规格</a><a href="#sources">来源</a>
+  <a href="#parts">部件</a><a href="#how">原理</a><a href="#install">安装</a><a href="#check">使用前检查</a><a href="#stack">电池叠层</a><a href="#use">封口模拟</a><a href="#hazards">危险</a><a href="#specs">规格</a><a href="#sources">来源</a>
 </nav>
 
 <!-- ============ PARTS ============ -->
@@ -410,10 +489,85 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
   </div>
 </section>
 
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="sh">
+    <p class="eyebrow">How it works · 第 2 章</p>
+    <h2>工作原理</h2>
+    <p>MSK-110 由两套机构组成。手动液压泵把手的力放大成油压，卷边模具把这股推力变成封口动作。下面分三部分拆开看。</p>
+  </div>
+
+  <h3 class="sub-h"><span>2.1</span>液压回路<small>Hydraulic circuit</small></h3>
+  <div class="how-grid">
+    <figure class="panel hyd-fig">
+      <div id="hyd-svg"></div>
+      <div class="legend"><span><i class="lg hp"></i>高压油</span><span><i class="lg lp"></i>低压油 / 回油</span><span><i class="lg fl"></i>正在流动</span></div>
+      <figcaption class="figcap">手动液压泵的通用原理示意。MTI 未公开 MSK-110 的内部油路，实际结构和阀门位置可能不同。</figcaption>
+    </figure>
+    <div class="panel hyd-side">
+      <div class="phases" id="phases" role="group" aria-label="工作阶段">
+        <button type="button" data-ph="up" aria-pressed="false"><span class="num">1</span>吸油</button>
+        <button type="button" data-ph="down" aria-pressed="false"><span class="num">2</span>压油</button>
+        <button type="button" data-ph="hold" aria-pressed="false"><span class="num">3</span>保压</button>
+        <button type="button" data-ph="release" aria-pressed="false"><span class="num">4</span>泄压</button>
+        <button type="button" data-ph="relief" aria-pressed="false"><span class="num">5</span>过压保护</button>
+      </div>
+      <div class="hph-head">
+        <div><h4 id="hph-t"></h4><p class="hph-k" id="hph-k"></p></div>
+        <button class="btn" type="button" id="hyd-play" aria-pressed="false">▶ 自动循环</button>
+      </div>
+      <p class="hph-txt" id="hph-txt"></p>
+      <p class="hph-op" id="hph-op"></p>
+      <div class="vstat" id="vstat"></div>
+    </div>
+  </div>
+
+  <h3 class="sub-h"><span>2.2</span>推力从哪里来<small>Pascal's law</small></h3>
+  <div class="how-grid">
+    <div class="panel side">
+      <div class="chain"><span>手的力</span><i>→</i><span>杠杆放大</span><i>→</i><span>泵柱塞（小面积）</span><i>→</i><span>油压处处相等</span><i>→</i><span>大柱塞（大面积）</span><i>→</i><span>模具卷边</span></div>
+      <div class="formula">P = F₁ ÷ A₁<small>经杠杆放大的手力压在泵柱塞上</small><br>F₂ = P × A₂<small>同一油压推动大柱塞</small><br>F₂ ÷ F₁ = A₂ ÷ A₁ = (D₂ ÷ D₁)²</div>
+      <p class="how-p">帕斯卡原理 (Pascal's law) 指出，密闭液体中各处压强相等。泵柱塞面积很小，手通过杠杆施加不大的力，就能产生很高的油压。同样的油压作用在面积大得多的大柱塞上，推力按面积比放大。</p>
+      <p class="how-p">放大推力要用行程来换。泵柱塞每次只送出一小股油，大柱塞每次只上升一点，所以要连续摇很多下。</p>
+    </div>
+    <div class="panel calc">
+      <h4 class="calc-h">推力估算<small>F = P × A</small></h4>
+      <div class="crow"><label for="c-p">表压</label><output id="c-po" for="c-p">550 psi</output><input type="range" id="c-p" min="0" max="1200" step="10" value="550"></div>
+      <div class="crow"><label for="c-d">大柱塞直径<span class="assume">假设值</span></label><output id="c-do" for="c-d">30 mm</output><input type="range" id="c-d" min="20" max="60" step="1" value="30"></div>
+      <div class="tiles"><div><b id="c-kn">–</b><span>推力 kN</span></div><div><b id="c-kgf">–</b><span>推力 kgf</span></div><div><b id="c-pct">–</b><span>占额定 8 t</span></div></div>
+      <p class="relnote" id="c-area"></p>
+      <p class="relnote">MTI 没有公开 MSK-110 的柱塞直径，30 mm 只是用来说明量级的假设。计算还假定压力表测的是缸内油压。</p>
+      <p class="conflict"><b>8 t 是什么</b>8 t 是液压泵的额定能力，不是封口时的实际推力。以 30 mm 柱塞为例，手册的过压上限 50 kg/cm² 只对应约 0.35 t；要推到 8 t，油压需要约 1130 kg/cm²（≈ 16,000 psi），远高于封口用到的几百到一千 psi。</p>
+    </div>
+  </div>
+
+  <h3 class="sub-h"><span>2.3</span>卷边成形<small>How the die seals the cell</small></h3>
+  <div class="how-grid">
+    <figure class="panel crimp-fig">
+      <div id="crimp-svg"></div>
+      <div class="crimp-ctl">
+        <button class="btn" type="button" id="crimp-play">▶ 播放</button>
+        <input type="range" id="crimp-v" min="0" max="110" value="100" aria-label="柱塞行程，超过 100% 为过压">
+        <output id="crimp-o" for="crimp-v">行程 100%</output>
+      </div>
+      <figcaption class="figcap">放大剖面，只画电池右半边，左侧点划线是电池中心线。尺寸为示意。拖到 100% 以上看过压的后果。</figcaption>
+    </figure>
+    <div class="panel side">
+      <ol class="cstage" id="cstage">
+        <li><span class="num">1</span><span><b>上升 Approach</b>柱塞推着下模和电池上升，正极壳的竖直边缘进入上模的导向孔。</span></li>
+        <li><span class="num">2</span><span><b>接触 Contact</b>壳边顶到上模的成形圆角，圆角把它往中心方向推，边缘开始弯曲。</span></li>
+        <li><span class="num">3</span><span><b>卷边 Curling</b>电池继续上升，壳边沿着圆角向内卷，盖到密封圈上方。</span></li>
+        <li><span class="num">4</span><span><b>压紧 Sealing</b>卷边压住密封圈，聚合物密封圈被压缩，填满正负极壳之间的缝隙。松阀后卷边保持形状，电池被密封。</span></li>
+        <li class="bad"><span class="num">5</span><span><b>过压 Over-crimp</b>卷边已经到底，继续加压只会压坏电池：负极壳中心被压凹，密封圈被挤出，严重时内部短路。</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <!-- ============ INSTALL ============ -->
 <section id="install">
   <div class="sh">
-    <p class="eyebrow">Installation · 第 2 章</p>
+    <p class="eyebrow">Installation · 第 3 章</p>
     <h2>安装与首次调试</h2>
     <p>七个步骤，从开箱到确定本批电池壳的封口压力。MSK-110 是纯手动液压设备，不需要接电源或气源。</p>
   </div>
@@ -426,7 +580,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ CHECKLIST ============ -->
 <section id="check">
   <div class="sh">
-    <p class="eyebrow">Pre-use checklist · 第 3 章</p>
+    <p class="eyebrow">Pre-use checklist · 第 4 章</p>
     <h2>每次使用前检查</h2>
     <p>勾选状态只保存在你自己的浏览器里，方便下次打开时接着用。</p>
   </div>
@@ -440,7 +594,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ STACK ============ -->
 <section id="stack">
   <div class="sh">
-    <p class="eyebrow">Coin cell stack · 第 4 章</p>
+    <p class="eyebrow">Coin cell stack · 第 5 章</p>
     <h2>封口前：电池叠层与朝向</h2>
     <p>拖动滑块把 CR2032 半电池展开或合拢。放进封口机时，负极壳朝上、正极壳朝下（MTI 手册）。</p>
   </div>
@@ -474,7 +628,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ SIMULATOR ============ -->
 <section id="use">
   <div class="sh">
-    <p class="eyebrow">Operation · 第 5 章</p>
+    <p class="eyebrow">Operation · 第 6 章</p>
     <h2>封口操作模拟器</h2>
     <p>按真实顺序操作：放电池、拧紧阀门、摇压杆、看压力表、松阀泄压、取出检查、清洁收尾。故意做错一步，看看会发生什么。</p>
   </div>
@@ -533,7 +687,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ HAZARDS ============ -->
 <section id="hazards">
   <div class="sh">
-    <p class="eyebrow">Hazards · 第 6 章</p>
+    <p class="eyebrow">Hazards · 第 7 章</p>
     <h2>危险与预防</h2>
     <p>黄色三角在图上标出危险所在的位置。点击三角或卡片，两边会同时高亮。</p>
   </div>
@@ -564,7 +718,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ SPECS ============ -->
 <section id="specs">
   <div class="sh">
-    <p class="eyebrow">Specifications · 第 7 章</p>
+    <p class="eyebrow">Specifications · 第 8 章</p>
     <h2>规格参数</h2>
     <p>标有“来源不一”的项目，各公开资料给出的数值不同。以你设备随附的手册和铭牌为准。</p>
   </div>
@@ -597,11 +751,11 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
 <!-- ============ SOURCES ============ -->
 <section id="sources">
   <div class="sh">
-    <p class="eyebrow">Sources · 第 8 章</p>
+    <p class="eyebrow">Sources · 第 9 章</p>
     <h2>资料来源</h2>
   </div>
   <div class="panel">
-    <p class="notice">整理本页时，所在环境的网络策略阻止直接访问 mtixtl.com，内容来自搜索引擎收录的 MTI 产品页与操作手册摘录，以及经销商页面。安装、更换模具和维修以随机手册、厂家答复和本单位安全规程为准。</p>
+    <p class="notice">整理本页时，所在环境的网络策略阻止直接访问 mtixtl.com，内容来自搜索引擎收录的 MTI 产品页与操作手册摘录，以及经销商页面。第 2 章的液压回路和卷边过程是手动液压泵与纽扣电池卷边模具的通用原理示意，MTI 未公开 MSK-110 的内部结构图。安装、更换模具和维修以随机手册、厂家答复和本单位安全规程为准。</p>
     <ol class="src-list">
       <li><a href="https://mtixtl.com/products/msk-110" target="_blank" rel="noopener">MTI · Hydraulic Crimper for All Types of Coin Cells with 100 Pcs CR2032 Case (MSK-110)</a> <small>产品页</small></li>
       <li><a href="https://ceat.okstate.edu/mmme/mse/research/srg/site_files/docs/equipment_manuals/crimping.pdf" target="_blank" rel="noopener">MSK-110 Operation Manual（MTI，Oklahoma State University 镜像 PDF）</a> <small>操作步骤、朝向、过压阀、运输</small></li>
@@ -614,7 +768,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:v
       <li><a href="https://www.youtube.com/watch?v=QilzQVG0R4Y" target="_blank" rel="noopener">YouTube · MSK-110 操作视频</a></li>
     </ol>
   </div>
-  <footer>整理于 2026-11-09。本页是学习辅助材料。图中设备为示意图，不代表实物外观与比例；模拟器中的压力增量、泄压阀动作值和保压提醒阈值仅用于演示。</footer>
+  <footer>整理于 2026-11-09。本页是学习辅助材料。图中设备为示意图，不代表实物外观与比例；模拟器中的压力增量、泄压阀动作值和保压提醒阈值，以及推力估算中的柱塞直径，仅用于演示。</footer>
 </section>
 
 </div>
@@ -782,6 +936,195 @@ heroFig.addEventListener('click', e => { const g = e.target.closest('[data-part]
 heroFig.addEventListener('keydown', e => { const g = e.target.closest('.part'); if (g && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); selectPart(g.dataset.part); } });
 plist.addEventListener('click', e => { const b = e.target.closest('button[data-part]'); if (b) selectPart(b.dataset.part); });
 selectPart('upperdie');
+
+/* ================= HOW IT WORKS ================= */
+const HSEG = {
+  suc:'M165 300 V226', press1:'M178 212 H246', press2:'M246 212 H315 V262 H346',
+  rel1:'M346 286 H285', rel2:'M285 286 H261', relief1:'M400 299 V320', relief2:'M386 340 H261'
+};
+const HCOL_HELD = {suc:'lp', press1:'lp', press2:'hp', rel1:'hp', rel2:'lp', relief1:'hp', relief2:'lp'};
+const HPH = {
+  up:{t:'吸油', k:'压杆抬起 · Upstroke', lev:0, ram:158, p:300, v:[1,0,0,0], pump:'lp', cyl:'hp', col:HCOL_HELD, flow:['suc'],
+    txt:'压杆抬起，泵柱塞上行，泵腔变大、压力降低。油箱里的油顶开进油单向阀，被吸进泵腔。主缸里的高压油把出油单向阀压在阀座上，油不会倒流，所以大柱塞停在原位。',
+    op:'对应操作：摇压杆的上半程。'},
+  down:{t:'压油', k:'压杆压下 · Downstroke', lev:1, ram:156, p:450, v:[0,1,0,0], pump:'hp', cyl:'hp',
+    col:{suc:'lp', press1:'hp', press2:'hp', rel1:'hp', rel2:'lp', relief1:'hp', relief2:'lp'}, flow:['press1','press2'],
+    txt:'压杆压下，泵柱塞挤压泵腔里的油。进油单向阀被压紧关闭，油只能顶开出油单向阀流进主缸，推动大柱塞上升。泵柱塞每次只送出一小股油，所以要连续摇动。',
+    op:'对应操作：摇压杆的下半程。每摇一次，下模上升一小段，压力升高一点。'},
+  hold:{t:'保压', k:'停止摇杆 · Hold', lev:0, ram:156, p:550, v:[0,0,0,0], pump:'lp', cyl:'hp', col:HCOL_HELD, flow:[],
+    txt:'停止摇杆后，两个单向阀和释放阀都关闭，油被封在主缸里，压力保持不变。这也解释了为什么阀门没拧紧时摇杆无效：送进主缸的油会经释放阀直接流回油箱。',
+    op:'对应操作：压力到达目标值后停手。手册禁止长时间保压。'},
+  release:{t:'泄压', k:'逆时针松开释放阀 · Release', lev:0, ram:170, p:0, v:[0,0,1,0], pump:'lp', cyl:'lp',
+    col:{suc:'lp', press1:'lp', press2:'lp', rel1:'lp', rel2:'lp', relief1:'lp', relief2:'lp'}, flow:['rel1','rel2'],
+    txt:'释放阀打开，主缸与油箱接通。大柱塞和下模的重量（以及回位弹簧，如果有）把油推回油箱，压力表回零，下模回落。',
+    op:'对应操作：逆时针拧松液压阀。'},
+  relief:{t:'过压保护', k:'压力超过设定值 · Relief', lev:1, ram:155.5, p:711, v:[0,1,0,1], pump:'hp', cyl:'hp',
+    col:{suc:'lp', press1:'hp', press2:'hp', rel1:'hp', rel2:'lp', relief1:'hp', relief2:'lp'}, flow:['press1','press2','relief1','relief2'],
+    txt:'主缸压力超过设定值时，油压顶开过压保护阀的钢球、压缩弹簧，多余的油流回油箱，压力不再上升。手册称默认上限为 50 kg/cm²（≈ 711 psi）。频繁触发会损伤液压机构。',
+    op:'对应情况：到压后还在继续摇杆。这是保护动作，不是正常操作。'}
+};
+function hydSVG(){
+  let pipes = '', flows = '', ticks = '';
+  for (const d of Object.values(HSEG)) pipes += `<path class="pipe-o" d="${d}"/>`;
+  for (const [k, d] of Object.entries(HSEG)){
+    pipes += `<path class="pipe-i" d="${d}"/><path id="ho-${k}" class="oil-line oil-lp" d="${d}"/>`;
+    flows += `<path id="hf-${k}" class="flow" d="${d}" hidden/>`;
+  }
+  for (let p = 0; p <= 1200; p += 200){ const a = ang(p), [x0,y0] = polar(530,160,21,a), [x1,y1] = polar(530,160,17,a); ticks += `<line class="tk" x1="${r1(x0)}" y1="${r1(y0)}" x2="${r1(x1)}" y2="${r1(y1)}"/>`; }
+  let spr = 'M400 327'; for (let i = 1; i <= 8; i++) spr += ` L${i % 2 ? 394 : 406} ${r1(327 + i * 29 / 8)}`;
+  return `<svg class="hyd" viewBox="0 0 580 372" role="img" aria-label="手动液压泵回路示意">
+    <rect class="st f2" x="305" y="20" width="8" height="92"/><rect class="st f2" x="487" y="20" width="8" height="92"/>
+    <rect class="st f1" x="296" y="6" width="208" height="22" rx="3"/>
+    <rect class="st fc" x="372" y="28" width="56" height="24" rx="2"/>
+    <rect class="st f1" x="20" y="250" width="240" height="100" rx="4"/>
+    <rect class="fill-lp" x="22" y="280" width="236" height="68"/>
+    <rect class="st f1" x="128" y="222" width="74" height="30" rx="2"/>
+    <rect class="st f1" x="140" y="120" width="50" height="104" rx="2"/>
+    <rect class="st f2" x="186" y="116" width="50" height="8"/><rect class="st f2" x="224" y="98" width="12" height="22"/>
+    <rect class="st f1" x="330" y="120" width="140" height="180" rx="4"/>
+    ${pipes}
+    <path class="pipe-o" d="M470 160 H507" style="stroke-width:8"/><path id="ho-g" class="oil-line oil-hp" d="M470 160 H507" style="stroke-width:4"/>
+    <rect class="fc" x="152" y="124" width="26" height="100"/>
+    <rect id="h-pumpoil" class="fill-lp" x="152" y="146" width="26" height="78"/>
+    <rect class="fc" x="345" y="126" width="110" height="169"/>
+    <rect id="h-cyloil" class="fill-hp" x="345" y="140" width="110" height="155"/>
+    <g id="h-ramA" class="h-move"><rect class="fc" x="345" y="126" width="110" height="44"/><rect class="st f2" x="347" y="170" width="106" height="16" rx="2"/></g>
+    <rect class="st f1" x="326" y="110" width="148" height="16" rx="3"/>
+    <g id="h-ramB" class="h-move"><rect class="st f2" x="380" y="88" width="40" height="84"/><rect class="st fc" x="362" y="76" width="76" height="14" rx="2"/><rect class="st c-pos" x="380" y="70" width="40" height="7" rx="1"/><rect class="st c-neg" x="385" y="66" width="30" height="5" rx="1"/></g>
+    <g id="h-plg" class="h-move"><line class="st" x1="165" y1="81.6" x2="165" y2="100" style="stroke-width:3"/><rect class="st f2" x="154" y="99.6" width="22" height="48" rx="2"/><circle class="hub" cx="165" cy="81.6" r="3"/></g>
+    <g id="h-lev" class="h-lev"><line class="lev" x1="230" y1="98" x2="44" y2="51"/><circle class="grip" cx="40" cy="50" r="8"/></g>
+    <circle class="st fc" cx="230" cy="98" r="5"/>
+    <path class="seat" d="M157 240 H161 M169 240 H173"/><circle id="h-bin" class="ball h-move" cx="165" cy="234" r="4.5"/>
+    <path class="seat" d="M236 204 V208 M236 216 V220"/><circle id="h-bout" class="ball h-move" cx="241" cy="212" r="4.5"/>
+    <g id="h-ndl" class="h-move"><rect class="st f2" x="278" y="240" width="14" height="10" rx="2"/><path class="st fd" d="M283 250 V280 L285 286 L287 280 V250 Z"/></g>
+    <rect class="st f1" x="386" y="306" width="28" height="56" rx="3"/><rect class="fc" x="392" y="312" width="16" height="46"/>
+    <path class="seat" d="M392 314 H396 M404 314 H408"/>
+    <path id="h-spr" class="spring" d="${spr}"/><circle id="h-rball" class="ball h-move" cx="400" cy="320" r="6"/>
+    <circle class="st fc" cx="530" cy="160" r="24"/>${ticks}<g id="h-gn"><line class="ndl-l" x1="530" y1="163" x2="530" y2="142"/></g><circle class="hub" cx="530" cy="160" r="2.6"/>
+    ${flows}
+    <text class="il-t" x="22" y="30">压杆</text>
+    <text class="il-s" x="244" y="94">支点</text>
+    <text class="il-s" x="134" y="176" text-anchor="end">泵柱塞</text>
+    <text class="il-s" x="124" y="240" text-anchor="end">进油单向阀</text>
+    <text class="il-s" x="241" y="194" text-anchor="middle">出油单向阀</text>
+    <text class="il-s" x="285" y="308" text-anchor="middle">释放阀</text>
+    <text class="il-s" x="422" y="336">过压保护阀</text>
+    <text class="il-t" x="32" y="272">油箱</text>
+    <text class="il-t" x="480" y="236">液压缸</text><text class="il-s" x="480" y="252">大柱塞 Ram</text>
+    <text class="il-s" x="530" y="202" text-anchor="middle">压力表</text>
+    <text class="il-s" x="436" y="44">上模</text>
+  </svg>`;
+}
+$('#hyd-svg').innerHTML = hydSVG();
+const VNAME = ['进油单向阀','出油单向阀','释放阀','过压保护阀'];
+function setPhase(id){
+  const P = HPH[id];
+  $$('#phases button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ph === id)));
+  $('#h-lev').style.transform = P.lev ? 'rotate(-29.5deg)' : 'rotate(0deg)';
+  $('#h-plg').style.transform = `translateY(${P.lev ? 34.2 : 0}px)`;
+  $('#h-ramA').style.transform = $('#h-ramB').style.transform = `translateY(${P.ram - 170}px)`;
+  $('#h-bin').style.transform = `translateY(${P.v[0] ? -5 : 0}px)`;
+  $('#h-bout').style.transform = `translateX(${P.v[1] ? 6 : 0}px)`;
+  $('#h-ndl').style.transform = `translateY(${P.v[2] ? -12 : 0}px)`;
+  $('#h-rball').style.transform = `translateY(${P.v[3] ? 8 : 0}px)`;
+  $('#h-spr').style.transform = `scaleY(${P.v[3] ? .73 : 1})`;
+  $('#h-gn').style.transform = `rotate(${r1(ang(P.p))}deg)`;
+  for (const k of Object.keys(HSEG)){
+    $('#ho-' + k).setAttribute('class', 'oil-line oil-' + P.col[k]);
+    $('#hf-' + k).hidden = !P.flow.includes(k);
+  }
+  $('#ho-g').setAttribute('class', 'oil-line oil-' + P.cyl);
+  $('#h-pumpoil').setAttribute('class', 'fill-' + P.pump);
+  $('#h-cyloil').setAttribute('class', 'fill-' + P.cyl);
+  $('#hph-t').textContent = P.t;
+  $('#hph-k').textContent = `${P.k} · 表压 ≈ ${P.p} psi`;
+  $('#hph-txt').textContent = P.txt;
+  $('#hph-op').textContent = P.op;
+  $('#vstat').innerHTML = VNAME.map((n, i) => `<div><span>${n}</span><b class="${P.v[i] ? 'vs-open' : 'vs-shut'}">${P.v[i] ? '打开' : '关闭'}</b></div>`).join('');
+}
+const HSEQ = ['up','down','up','down','hold','release'];
+let hTimer = null, hIdx = 0;
+const hPlay = $('#hyd-play');
+function stopHyd(){ if (hTimer){ clearInterval(hTimer); hTimer = null; } hPlay.setAttribute('aria-pressed','false'); hPlay.textContent = '▶ 自动循环'; }
+hPlay.addEventListener('click', () => {
+  if (hTimer){ stopHyd(); return; }
+  hIdx = 0; setPhase(HSEQ[0]);
+  hTimer = setInterval(() => { hIdx = (hIdx + 1) % HSEQ.length; setPhase(HSEQ[hIdx]); }, 1700);
+  hPlay.setAttribute('aria-pressed','true'); hPlay.textContent = '■ 停止';
+});
+$('#phases').addEventListener('click', e => { const b = e.target.closest('button[data-ph]'); if (b){ stopHyd(); setPhase(b.dataset.ph); } });
+setPhase('down');
+
+function calcForce(){
+  const psi = +$('#c-p').value, d = +$('#c-d').value;
+  const A = Math.PI * Math.pow(d / 20, 2), kgcm = psi / 14.2233, kgf = kgcm * A, kN = kgf * 9.80665 / 1000;
+  $('#c-po').textContent = psi + ' psi';
+  $('#c-do').textContent = d + ' mm';
+  $('#c-kn').textContent = kN.toFixed(2);
+  $('#c-kgf').textContent = Math.round(kgf);
+  $('#c-pct').textContent = (kgf / 8000 * 100).toFixed(1) + '%';
+  $('#c-area').textContent = `${psi} psi ≈ ${kgcm.toFixed(1)} kg/cm²；直径 ${d} mm 的柱塞面积 ${A.toFixed(2)} cm²；推力 = ${kgcm.toFixed(1)} × ${A.toFixed(2)} ≈ ${Math.round(kgf)} kgf。`;
+}
+$('#c-p').addEventListener('input', calcForce);
+$('#c-d').addEventListener('input', calcForce);
+calcForce();
+
+const CRM = {s0:56, sMax:83};
+function crimpParams(v){
+  const s = Math.min(v, 100) / 100 * CRM.sMax, o = Math.max(0, (v - 100) / 10);
+  return {s, o, k: Math.max(0, Math.min(1, (s - CRM.s0) / (CRM.sMax - CRM.s0)))};
+}
+function crimpDetail(v){
+  const {s, o, k} = crimpParams(v);
+  const r = 9, Lr = 24, yB = 154, th = k * 110 * Math.PI / 180;
+  const ex = 251 + r * Math.cos(th), ey = yB - r * Math.sin(th);
+  const rem = Lr - r * th, tx = ex - Math.sin(th) * rem, ty = ey - Math.cos(th) * rem;
+  const can = `M40 200 H255 Q260 200 260 195 V${yB}` + (th > .001 ? ` A${r} ${r} 0 0 0 ${r1(ex)} ${r1(ey)}` : '') + ` L${r1(tx)} ${r1(ty)}`;
+  const gy = r1(150 + 2 * k + 1.5 * o), capY = r1(148 + 5 * o);
+  let spr = ''; for (let i = 0; i <= 10; i++) spr += (i ? 'L' : 'M') + r1(62 + i * 12.5) + ' ' + (i % 2 ? r1(153 + 4 * o) : 176);
+  let g = `<svg viewBox="0 0 430 250" style="overflow:hidden" role="img" aria-label="卷边过程放大剖面">`;
+  g += `<path class="st f1" d="M40 0 H300 V130 H268 V74 A14 14 0 0 0 254 60 H200 V40 H40 Z"/>`;
+  g += `<text class="il-t" x="120" y="26" text-anchor="middle">上模（固定）</text><text class="il-s" x="277" y="46" text-anchor="middle">成形圆角</text>`;
+  g += `<g transform="translate(0 ${r1(-s)})">`;
+  g += `<rect class="st f2" x="40" y="262" width="150" height="160"/><text class="il-s" x="56" y="290">柱塞 Ram ↑</text>`;
+  g += `<rect class="st f2" x="40" y="203" width="224" height="60"/><text class="il-s" x="56" y="228">下模 · 随柱塞上升 ↑</text>`;
+  g += `<line x1="58" y1="195" x2="200" y2="195" style="stroke:var(--cathode);stroke-width:5"/>`;
+  g += `<line x1="46" y1="190" x2="222" y2="190" style="stroke:var(--muted);stroke-width:1.5"/>`;
+  g += `<rect class="st2" x="60" y="184" width="138" height="4" style="fill:var(--li)"/>`;
+  g += `<rect class="st2" x="50" y="177" width="175" height="4" style="fill:var(--cell-pos)"/>`;
+  g += `<path class="spring" d="${spr}"/>`;
+  g += `<path d="M40 ${capY} H196 L210 156 H244 V186" style="fill:none;stroke:var(--m-dark);stroke-width:3.5;stroke-linejoin:round"/>`;
+  g += `<path d="M228 ${gy} H258 V190 H246 V156 H228 Z" style="fill:var(--gasket)"/>`;
+  g += `<path class="cr-can" d="${can}"/>`;
+  if (o > 0) g += `<circle class="cr-bad" cx="120" cy="${capY}" r="16" opacity="${r1(o)}"/><circle class="cr-bad" cx="236" cy="${gy}" r="9" opacity="${r1(o)}"/>`;
+  g += `<line class="lead" x1="186" y1="${capY}" x2="304" y2="136"/><text class="lbl-zh" x="308" y="140">负极壳 (−)</text>`;
+  g += `<line class="lead" x1="254" y1="172" x2="304" y2="162"/><text class="lbl-zh" x="308" y="166">密封圈</text>`;
+  g += `<line class="lead" x1="262" y1="196" x2="304" y2="190"/><text class="lbl-zh" x="308" y="194">正极壳 (+)</text>`;
+  g += `</g><line class="cl" x1="40" y1="0" x2="40" y2="250"/></svg>`;
+  return g;
+}
+function crimpStage(v){
+  const {k} = crimpParams(v);
+  if (v > 100) return 4;
+  if (k >= .98) return 3;
+  if (k >= .5) return 2;
+  if (k > 0) return 1;
+  return 0;
+}
+const crimpIn = $('#crimp-v');
+function drawCrimp(){
+  const v = +crimpIn.value;
+  $('#crimp-svg').innerHTML = crimpDetail(v);
+  $('#crimp-o').textContent = '行程 ' + v + '%';
+  const st = crimpStage(v);
+  $$('#cstage li').forEach((li, i) => li.classList.toggle('on', i === st));
+}
+crimpIn.addEventListener('input', drawCrimp);
+$('#crimp-play').addEventListener('click', () => {
+  const T = REDUCE ? 1 : 2600, st = performance.now();
+  (function fr(now){ const kk = Math.min(1, (now - st) / T); crimpIn.value = Math.round(kk * 100); drawCrimp(); if (kk < 1) requestAnimationFrame(fr); })(st);
+});
+drawCrimp();
 
 /* ================= 2. INSTALL ================= */
 function illusUnpack(){
