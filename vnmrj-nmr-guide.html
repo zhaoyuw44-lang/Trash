@@ -1,0 +1,1061 @@
+<title>VnmrJ 多核上机指南</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: instrument bench. Left: a working replica of the VnmrJ window that reacts to each step. Right: the step card for the chosen nucleus. Reference sheets follow in one reading column. */
+:root{
+  --bg:#ECEFF3; --surface:#FFFFFF; --sunk:#E3E8EE; --ink:#141C25; --muted:#536071; --rule:#CCD4DD;
+  --accent:#1C5BA6; --accent-ink:#FFFFFF; --accent-soft:#DCE7F5;
+  --ok:#1B7650; --ok-soft:#DDF0E6; --warn:#8F5208; --warn-soft:#F7E8CD; --crit:#A0322A; --crit-soft:#F5DFDB;
+  --hl:#F0A202; --hl-glow:rgba(240,162,2,.38); --pick:#2F6CB4;
+  /* VnmrJ replica: its own fixed Java-Swing palette, the same in both themes */
+  --vj-frame:#1D1E21; --vj-title-ink:#EDEDED; --vj-bg:#D5D5D5; --vj-face:#E7E7E7; --vj-face2:#F3F3F3; --vj-white:#FCFCFC;
+  --vj-line:#A6A6A6; --vj-line2:#C4C4C4; --vj-ink:#1D1D1D; --vj-mute:#6B6B6B; --vj-blue:#2E69B0; --vj-blue2:#4B8AD6;
+  --vj-blue-ink:#FFFFFF; --vj-link:#2A5A98; --vj-graph:#3A3A3C; --vj-axis:#C8C8C8; --vj-trace:#62D0F0; --vj-trace2:#F0A65A;
+  --vj-fid:#8BDA76; --vj-dim:#8D8D8D; --vj-red:#C8302A; --vj-filter:none;
+  --f-head:"IBM Plex Sans Condensed","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-vj:Arial,"Helvetica Neue",Helvetica,"Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151B; --surface:#171E27; --sunk:#1F2833; --ink:#E5EAF0; --muted:#9AA6B4; --rule:#2B3644;
+    --accent:#79ABEE; --accent-ink:#0D1724; --accent-soft:#1B2D45;
+    --ok:#5BC894; --ok-soft:#163126; --warn:#E3A74B; --warn-soft:#382912; --crit:#EE8A80; --crit-soft:#3A1E1B;
+    --hl-glow:rgba(240,162,2,.45); --vj-filter:brightness(.9);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151B; --surface:#171E27; --sunk:#1F2833; --ink:#E5EAF0; --muted:#9AA6B4; --rule:#2B3644;
+  --accent:#79ABEE; --accent-ink:#0D1724; --accent-soft:#1B2D45;
+  --ok:#5BC894; --ok-soft:#163126; --warn:#E3A74B; --warn-soft:#382912; --crit:#EE8A80; --crit-soft:#3A1E1B;
+  --hl-glow:rgba(240,162,2,.45); --vj-filter:brightness(.9);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+.wrap{max-width:1440px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--f-head);text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.2vw,44px);line-height:1.1;font-weight:600;letter-spacing:-.01em}
+h2{font-size:clamp(22px,2.6vw,28px);line-height:1.2;font-weight:600}
+h3{font-size:19px;line-height:1.3;font-weight:600}
+h4{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+code,.mono{font-family:var(--f-mono);font-size:.92em}
+b{font-weight:600}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+.top{padding-block:28px 20px}
+.eyebrow{font:500 12px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.lede{max-width:72ch;color:var(--muted);margin:10px 0 18px}
+.controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+.seg{display:inline-flex;flex-wrap:wrap;gap:3px;padding:3px;border:1px solid var(--rule);border-radius:9px;background:var(--surface)}
+.seg button{border:0;background:transparent;border-radius:6px;padding:6px 14px;min-width:58px;cursor:pointer;font:600 17px/1.2 var(--f-head)}
+.seg button:hover{background:var(--sunk)}
+.seg button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button small{display:block;font:500 10px/1.2 var(--f-mono);letter-spacing:.04em;opacity:.8}
+.fieldsel{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.fieldsel select{font:500 14px var(--f-mono);padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--ink)}
+
+/* bench */
+.bench{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:20px;align-items:start;padding-block:4px 8px}
+@media (max-width:1180px){.bench{grid-template-columns:minmax(0,1fr)}}
+.mockcol{min-width:0}
+.vj-wrap{width:100%;overflow-x:auto;overflow-y:hidden;border-radius:6px;box-shadow:0 1px 0 var(--rule),0 10px 30px -18px rgba(10,20,30,.45)}
+.vj-sizer{position:relative}
+.mocknote{font-size:12.5px;color:var(--muted);margin:8px 2px 0;max-width:90ch}
+
+.side{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;min-width:0}
+.sidetabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin:-4px -4px 14px;padding:0 4px}
+.sidetabs button{border:0;background:none;padding:8px 10px;cursor:pointer;font:600 14px var(--f-body);color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.sidetabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.sampleline{font-size:13px;color:var(--muted);margin:0 0 10px}
+.sampleline b{color:var(--ink)}
+.stepper{list-style:none;margin:0 0 14px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.stepper button{width:100%;border:1px solid var(--rule);background:var(--bg);border-radius:6px;padding:5px 2px 4px;cursor:pointer;text-align:center;line-height:1.2;position:relative}
+.stepper button .n{display:block;font:600 13px var(--f-mono)}
+.stepper button .t{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stepper button.done{background:var(--accent-soft);border-color:transparent}
+.stepper button[aria-current="step"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.stepper button[aria-current="step"] .t{color:var(--accent-ink)}
+.stepper .shot{position:absolute;top:-8px;right:-4px;font:600 9.5px/1 var(--f-body);background:var(--hl);color:#1D1D1D;border-radius:3px;padding:2px 4px}
+
+.card-h{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.card-h .num{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:600 15px var(--f-mono)}
+.card-h .en{font:500 12px var(--f-mono);color:var(--muted);letter-spacing:.03em}
+.path{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:4px 0 0;font:500 12px var(--f-mono)}
+.path span{background:var(--sunk);border-radius:4px;padding:1px 6px}
+.path i{font-style:normal;color:var(--muted)}
+.do{margin:0 0 12px;padding-left:20px;display:grid;gap:6px;font-size:14.5px}
+.do li::marker{font:600 13px var(--f-mono);color:var(--accent)}
+.ptab{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 12px;font-variant-numeric:tabular-nums}
+.ptab th{text-align:left;font-weight:500;color:var(--muted);padding:4px 8px 4px 0;white-space:nowrap;vertical-align:top}
+.ptab td{padding:4px 0;border-bottom:1px solid var(--rule)}
+.ptab tr:last-child td{border-bottom:0}
+.cmds{display:grid;gap:5px;margin:0 0 12px}
+.cmd{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--sunk);border-radius:6px;padding:5px 6px 5px 10px}
+.cmd code{font-weight:500;white-space:pre-wrap;word-break:break-all;color:var(--ink)}
+.cmd span{font-size:12.5px;color:var(--muted);min-width:0}
+.copy{border:1px solid var(--rule);background:var(--surface);border-radius:4px;font-size:11.5px;padding:2px 7px;cursor:pointer;color:var(--muted)}
+.copy:hover{color:var(--ink);border-color:var(--muted)}
+.nocmd{font-size:13px;color:var(--muted);margin:0 0 12px}
+.notes{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.notes li{font-size:13.5px;border-radius:6px;padding:7px 10px;line-height:1.55}
+.notes li b.tag{font:600 11px var(--f-mono);letter-spacing:.06em;margin-right:6px}
+.notes .warn{background:var(--warn-soft)} .notes .warn b.tag{color:var(--warn)}
+.notes .tip{background:var(--ok-soft)} .notes .tip b.tag{color:var(--ok)}
+.notes .crit{background:var(--crit-soft)} .notes .crit b.tag{color:var(--crit)}
+.stepnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
+.btn{border:1px solid var(--rule);background:var(--surface);border-radius:7px;padding:7px 14px;cursor:pointer;font-weight:500}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.stepcount{font:500 12px var(--f-mono);color:var(--muted)}
+#infoView h3{margin-bottom:6px}
+#infoView .where{font:500 12px var(--f-mono);color:var(--muted);margin:0 0 10px}
+#infoView .body{font-size:14.5px}
+#infoView .body p{margin:0 0 8px}
+.hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+/* sections */
+section.sheet{padding-block:36px 4px}
+section.sheet > header{max-width:80ch;margin-bottom:16px}
+section.sheet > header p{color:var(--muted);margin:6px 0 0}
+.obs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.obs article{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.obs .k{font:500 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.obs h3{font-size:16.5px}
+.obs p{margin:0;font-size:13.8px;flex:1}
+.obs button{align-self:flex-start;margin-top:6px;font-size:12.5px;padding:4px 10px}
+.next{margin:16px 0 0;background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.next ol{margin:0;padding-left:20px;display:flex;flex-wrap:wrap;gap:4px 22px;flex:1;min-width:0}
+.next ol li{font-size:14px}
+.next ol li::marker{font:600 12px var(--f-mono);color:var(--accent)}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:9px}
+table.ref{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums;min-width:860px}
+table.ref th,table.ref td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.ref thead th{font:600 12px var(--f-body);color:var(--muted);background:var(--sunk);position:sticky;top:0}
+table.ref tbody tr:last-child td{border-bottom:0}
+table.ref td.nuc{font:600 16px var(--f-head);white-space:nowrap}
+table.ref td.num{font-family:var(--f-mono);font-size:12.8px;white-space:nowrap}
+table.ref tr.cur td{background:var(--accent-soft)}
+table.small{min-width:560px}
+.cmdgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.cmdgrid article{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:12px 14px;min-width:0}
+.cmdgrid h3{font-size:16px;margin-bottom:8px}
+.trgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.trgrid article{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:12px 14px;min-width:0}
+.trgrid h3{font-size:16px;margin-bottom:6px}
+.trgrid dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:13.5px}
+.trgrid dt{font:600 11px/1.9 var(--f-mono);letter-spacing:.05em;color:var(--muted)}
+.trgrid dd{margin:0}
+.safety{background:var(--crit-soft);border-radius:10px;padding:16px 18px}
+.safety ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px}
+footer.foot{padding-block:28px 40px;color:var(--muted);font-size:12.5px}
+footer.foot p{margin:0 0 4px;max-width:100ch}
+
+/* ===== VnmrJ replica (design size 1060 px, scaled by JS) ===== */
+.vj{position:absolute;left:0;top:0;width:1060px;transform-origin:0 0;font:12px/1.25 var(--f-vj);color:var(--vj-ink);background:var(--vj-bg);border:1px solid var(--vj-frame);user-select:none;filter:var(--vj-filter);-webkit-user-select:none}
+.vj [data-id]{cursor:pointer}
+.vj [data-id]:hover{outline:1px dashed var(--vj-blue2);outline-offset:-1px}
+.vj .hl{outline:2.5px solid var(--hl)!important;outline-offset:1px!important;box-shadow:0 0 0 5px var(--hl-glow);position:relative;z-index:3;animation:pulse 1.6s ease-in-out infinite}
+.vj .hl[data-badge]::after{content:attr(data-badge);position:absolute;top:-10px;right:-10px;width:18px;height:18px;border-radius:50%;background:var(--hl);color:#1D1D1D;font:700 11px/18px var(--f-vj);text-align:center;z-index:4}
+.vj .picked{outline:2.5px dashed var(--pick)!important;outline-offset:1px}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px var(--hl-glow)}50%{box-shadow:0 0 0 8px var(--hl-glow)}}
+@media (prefers-reduced-motion: reduce){.vj .hl{animation:none}}
+.vj-titlebar{height:22px;background:var(--vj-frame);color:var(--vj-title-ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;position:relative}
+.vj-titlebar .ico{position:absolute;left:6px;top:4px;width:14px;height:14px;border:1px solid #7FA7D8;background:#3F6EA8}
+.vj-menu{height:22px;background:var(--vj-face);display:flex;align-items:center;gap:2px;padding:0 6px;border-bottom:1px solid var(--vj-line2)}
+.vj-menu span{padding:2px 7px}
+.vj-toolbar{height:34px;background:var(--vj-face);display:flex;align-items:center;gap:6px;padding:0 8px;border-bottom:1px solid var(--vj-line)}
+.vj-toolbar .ic{width:24px;height:24px;border:1px solid var(--vj-line);background:linear-gradient(var(--vj-white),var(--vj-face));border-radius:2px;display:grid;place-items:center;font-size:12px;color:var(--vj-link)}
+.vj-toolbar .stop{color:var(--vj-red);font-size:16px}
+.vj-toolbar .sp{flex:1}
+.vj-main{display:grid;grid-template-columns:330px 1fr;height:512px}
+.vj-left{display:flex;flex-direction:column;border-right:3px solid var(--vj-line2);min-height:0}
+.vj-ltabs{display:flex;gap:2px;padding:4px 4px 0;height:26px;background:var(--vj-bg)}
+.vj-ltabs span{padding:3px 8px;background:var(--vj-face);border:1px solid var(--vj-line);border-bottom:0;border-radius:3px 3px 0 0;font-weight:700;font-size:11.5px}
+.vj-ltabs span.on{background:var(--vj-face2)}
+.vj-panel{background:var(--vj-face2);border:1px solid var(--vj-line);margin:0 4px}
+.vj-ph{height:20px;background:linear-gradient(#CFCFCF,#BDBDBD);display:flex;align-items:center;justify-content:space-between;padding:0 6px;font-weight:700;font-size:11.5px}
+.vj-ph i{font-style:normal;color:var(--vj-mute);font-weight:400}
+.vj-subtabs{display:flex;gap:2px;padding:3px 4px 0}
+.vj-subtabs span{padding:2px 10px;background:var(--vj-face);border:1px solid var(--vj-line);border-bottom:0;border-radius:3px 3px 0 0;font-size:11.5px;color:var(--vj-mute)}
+.vj-subtabs span.on{background:var(--vj-white);color:var(--vj-ink)}
+.vj-esgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:46px;border-top:1px solid var(--vj-line);background:var(--vj-white);margin:0 4px 4px}
+.vj-esgrid span{display:grid;place-items:center;border-right:1px solid var(--vj-line2);border-bottom:1px solid var(--vj-line2);font-size:11.5px;color:#454545;background:linear-gradient(var(--vj-white),#ECECEC)}
+.vj-esgrid span.empty{cursor:default;background:var(--vj-white)}
+.vj-sq{flex:1;display:flex;flex-direction:column;margin-top:4px;margin-bottom:4px;min-height:0}
+.vj-radios{display:grid;grid-template-columns:auto auto;gap:3px 22px;justify-content:center;padding:6px 0;font-size:11.5px;color:#444}
+.rd{display:inline-flex;align-items:center;gap:5px}
+.rd::before{content:"";width:9px;height:9px;border-radius:50%;border:1px solid #888;background:var(--vj-white)}
+.rd.on::before{background:radial-gradient(circle,#333 0 2.5px,var(--vj-white) 3px)}
+.vj-sqbody{flex:1;background:var(--vj-white);margin:0 6px;border:1px solid var(--vj-line2)}
+.vj-sqbtns{display:flex;justify-content:center;gap:12px;padding:8px 0}
+.vbtn{display:inline-flex;align-items:center;justify-content:center;padding:3px 12px;border:1px solid var(--vj-line);border-radius:2px;background:linear-gradient(var(--vj-white),#E2E2E2);color:var(--vj-link);font-weight:700;font-size:11.5px;white-space:nowrap}
+.vj-right{display:flex;flex-direction:column;min-width:0;min-height:0}
+.vj-msg{height:62px;background:var(--vj-white);padding:3px 6px;font-size:11.5px;color:#333;line-height:15px;overflow:hidden;border-bottom:1px solid var(--vj-line2)}
+.vj-cmd{height:22px;background:var(--vj-white);border-bottom:2px solid var(--vj-line2);display:flex;align-items:center;gap:6px;padding:0 6px;font:12px var(--f-mono);color:#111}
+.vj-cmd .dd{font-size:9px;border:1px solid var(--vj-line);padding:0 3px;color:#333;font-family:var(--f-vj)}
+.vj-cmd .caret{width:1px;height:13px;background:#111;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.vj-cmd .caret{animation:none}}
+.vj-graph{height:198px;background:var(--vj-graph);display:flex;flex-direction:column;border-left:6px solid var(--vj-face)}
+.vj-gh{height:18px;background:var(--vj-blue);color:var(--vj-blue-ink);display:flex;gap:30px;align-items:center;padding:0 6px;font-size:11.5px;flex:none}
+.vj-graph svg{display:block;width:100%;height:180px}
+.vj-ctl{flex:1;display:flex;flex-direction:column;background:var(--vj-face);border-top:1px solid var(--vj-line);min-height:0}
+.vj-ctlbar{display:flex;align-items:flex-end;gap:3px;padding:5px 4px 0;height:30px;flex:none;white-space:nowrap}
+.vj-ctlbar .tab{padding:3px 8px;border:1px solid var(--vj-line);border-bottom:0;border-radius:3px 3px 0 0;background:var(--vj-face);font-weight:700;font-size:11.5px;color:#555}
+.vj-ctlbar .tab.on{background:var(--vj-face2);color:var(--vj-ink)}
+.vj-ctlbar .gap{width:5px}
+.vj-ctlbar .vbtn{align-self:center;padding:2px 6px;font-size:10.5px}
+.vj-ctlbody{flex:1;display:grid;grid-template-columns:90px 1fr;background:var(--vj-face2);border-top:1px solid var(--vj-line);min-height:0}
+.vj-nav{border-right:1px solid var(--vj-line2);padding:3px 0;display:flex;flex-direction:column}
+.vj-nav span{padding:2px 5px;font-weight:700;font-size:11.5px;color:#333}
+.vj-nav span.on{background:#DCE6F4}
+.vj-page{position:relative;padding:8px 10px;min-width:0;overflow:hidden}
+.vfld{display:inline-block;min-width:60px;height:18px;line-height:16px;border:1px solid var(--vj-line);background:var(--vj-white);padding:0 4px;font-size:11.5px;color:#222;vertical-align:middle}
+.vlbl{color:#555;font-size:11.5px}
+.vrow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.vrow .vlbl{width:84px}
+.cb{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:#444}
+.cb .box{width:11px;height:11px;border:1px solid #777;background:var(--vj-white);display:grid;place-items:center;font-size:9px;line-height:1;color:#222}
+.lk{display:grid;grid-template-columns:150px 1fr 128px;gap:10px;height:100%}
+.lk-left{display:flex;flex-direction:column;gap:9px;font-size:11.5px;color:#555}
+.lk-left .vbtn{width:140px;font-size:11px}
+.lk-sl{display:flex;flex-direction:column;gap:6px}
+.sl{display:grid;grid-template-columns:62px 40px 1fr;gap:6px;align-items:center}
+.sl .nm{border:1px solid var(--vj-line2);padding:1px 3px;font-size:10px;color:#777;line-height:11px;height:28px;display:flex;flex-direction:column;justify-content:center}
+.sl .nm b{font-weight:400;display:flex;justify-content:space-between}
+.sl .track{height:3px;background:#BDBDBD;position:relative;border-radius:2px}
+.sl .thumb{position:absolute;top:-6px;width:9px;height:14px;margin-left:-4px;background:linear-gradient(#FFF,#CCC);border:1px solid #888;border-radius:2px 2px 4px 4px}
+.lk-auto{border:1px solid var(--vj-line2);padding:4px 8px 6px;display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:#555}
+.lk-auto .lg{font-weight:700;color:#333;margin-bottom:1px}
+.lk-auto .vbtn{margin-top:4px;font-size:11px}
+.pg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 16px;font-size:11.5px}
+.pg-grid div{display:flex;justify-content:space-between;gap:6px;border-bottom:1px dotted var(--vj-line2);padding:2px 0}
+.pg-grid div span:first-child{color:#555}
+.pg-grid div span:last-child{color:#111;font-family:var(--f-mono);font-size:11px}
+.pg-acts{display:flex;gap:8px;margin-top:9px;align-items:center;flex-wrap:wrap}
+.pg-acts .tm{font-size:11px;color:#555;margin-left:auto}
+.vbtn.big{padding:4px 16px;font-size:12px}
+.vj-status{height:42px;background:var(--vj-face);border-top:1px solid var(--vj-line);display:flex;align-items:center;gap:4px;padding:0 6px}
+.vj-status .trash{width:30px;height:30px;border:1px solid var(--vj-line2);display:grid;place-items:center;color:#888;font-size:14px}
+.vj-status .sb{min-width:54px;padding:2px 6px;border:1px solid var(--vj-line2);background:var(--vj-face2);text-align:center;font-size:11px;line-height:13px;color:var(--vj-link);font-weight:700}
+.vj-status .sb em{display:block;font-style:normal;font-weight:400;color:var(--vj-blue)}
+.vj-status .probe{min-width:110px}
+.vj-status .stat{display:flex;align-items:center;gap:6px;margin-left:10px}
+.vj-status .stat .tri{font-size:11px;color:#333}
+.vj-status .stat .box{background:var(--vj-blue2);color:var(--vj-blue-ink);width:200px;height:20px;line-height:20px;text-align:center;font-weight:700;font-size:11.5px}
+.vj-status .prog{display:flex;align-items:center;gap:3px;margin-left:12px;flex:1;min-width:0}
+.vj-status .prog i{width:9px;height:9px;background:var(--vj-blue)}
+.vj-status .prog .box{flex:1;background:var(--vj-blue);color:var(--vj-blue-ink);height:20px;line-height:20px;padding:0 6px;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Agilent / Varian VnmrJ · 液体 NMR 手动上机</p>
+    <h1>VnmrJ 多核上机指南</h1>
+    <p class="lede">左边是按你照片还原的 VnmrJ 界面（示意），右边是所选核的逐步流程。点“下一步”时，左边会高亮该点的按钮（数字表示点击顺序），在命令行显示等效命令，并在图形区显示这一步应该看到的图形。点界面上任何部件，可查看它是做什么的。</p>
+    <div class="controls">
+      <div class="seg" role="tablist" aria-label="观测核" id="nucTabs"></div>
+      <label class="fieldsel" for="field">谱仪 ¹H 频率
+        <select id="field">
+          <option value="400" selected>400 MHz</option>
+          <option value="500">500 MHz</option>
+          <option value="600">600 MHz</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="bench" aria-label="交互演示">
+    <div class="mockcol">
+      <div class="vj-wrap" id="vjWrap"><div class="vj-sizer" id="vjSizer"><div class="vj" id="vj" aria-label="VnmrJ 界面示意"></div></div></div>
+      <p class="mocknote">界面为示意。按钮和页面名称会因 VnmrJ 版本和站点配置略有不同，以你机器上的实际界面为准；命令行命令在各版本间更稳定。图形区的谱图均为模拟示例。</p>
+    </div>
+    <aside class="side" aria-label="操作步骤">
+      <div class="sidetabs" role="tablist">
+        <button role="tab" id="tabProc" aria-selected="true" aria-controls="procView">操作流程</button>
+        <button role="tab" id="tabInfo" aria-selected="false" aria-controls="infoView">部件说明</button>
+      </div>
+      <div id="procView" role="tabpanel">
+        <p class="sampleline" id="sampleLine"></p>
+        <ol class="stepper" id="stepper"></ol>
+        <article id="stepCard"></article>
+        <div class="stepnav">
+          <button class="btn" id="prev">上一步</button>
+          <span class="stepcount" id="stepCount"></span>
+          <button class="btn primary" id="next">下一步</button>
+        </div>
+      </div>
+      <div id="infoView" role="tabpanel" hidden>
+        <h3 id="infoTitle"></h3>
+        <p class="where" id="infoWhere"></p>
+        <div class="body" id="infoBody"></div>
+        <button class="btn" id="backProc">回到操作流程</button>
+        <p class="hint">提示：在左边界面上点任意按钮、面板或状态栏，这里会显示说明。</p>
+      </div>
+    </aside>
+  </section>
+
+  <section class="sheet" id="screen">
+    <header>
+      <h2>你照片里的屏幕在做什么</h2>
+      <p>照片里 VnmrJ 的状态：PROTON 参数已载入 exp27，正在运行 findz0，还没有锁场。下面逐项解读，点“定位”可在示意图中看到对应位置。</p>
+    </header>
+    <div class="obs" id="obs"></div>
+    <div class="next">
+      <h4>从照片这一步往下</h4>
+      <ol>
+        <li>等 findz0 结束</li>
+        <li>Autolock 改 Automatic → Auto lock</li>
+        <li>Gradient shim</li>
+        <li>换核时 Auto tune</li>
+        <li><code>ga</code> 采样</li>
+        <li><code>wft aph vsadj</code> + 定标</li>
+        <li>保存</li>
+      </ol>
+      <button class="btn primary" id="jumpLock">打开第 4 步：锁场</button>
+    </div>
+  </section>
+
+  <section class="sheet" id="nuclei">
+    <header>
+      <h2>核参数速查</h2>
+      <p>频率按上方所选的谱仪场强计算：ν(X) = ν(¹H) × Ξ / 100%。Ξ 为 IUPAC 推荐的频率比；X 核在宽带探头的 X 通道上测（¹⁹F 一般在高频通道）。当前所选的核以底色标出。</p>
+    </header>
+    <div class="tbl"><table class="ref" id="nucTable"></table></div>
+  </section>
+
+  <section class="sheet" id="solvents">
+    <header>
+      <h2>常用氘代溶剂的残留峰</h2>
+      <p>用于 ¹H / ¹³C 定标（25 °C，相对 TMS）。水峰位置会随温度和浓度移动。</p>
+    </header>
+    <div class="tbl"><table class="ref small" id="solvTable"></table></div>
+  </section>
+
+  <section class="sheet" id="commands">
+    <header>
+      <h2>命令速查</h2>
+      <p>在命令行输入后回车。命令区分大小写：PROTON、CARBON 是大写宏，其余多为小写。多条命令可以用空格隔开写在同一行。</p>
+    </header>
+    <div class="cmdgrid" id="cmdGrid"></div>
+  </section>
+
+  <section class="sheet" id="trouble">
+    <header>
+      <h2>常见问题</h2>
+      <p>按现象查找可能原因和处理方法。</p>
+    </header>
+    <div class="trgrid" id="trGrid"></div>
+  </section>
+
+  <section class="sheet" id="safety">
+    <div class="safety">
+      <h3>安全与公共规范</h3>
+      <ul>
+        <li>强磁场：装心脏起搏器或金属植入物的人不得靠近磁体；工具、钥匙、气瓶等铁磁性物品远离磁体。</li>
+        <li>只用合格、无裂纹的 NMR 管和 spinner，用深度规定位。</li>
+        <li>碎管时按显示器上贴纸的流程处理：清理碎玻璃并报告负责人。</li>
+        <li>不要擅自修改 tpwr 上限、探头文件或 shim 文件；不确定就先问管理员。</li>
+        <li>离开前：保存数据、取出样品、按规定恢复调谐（¹H / ¹³C），然后 Logout。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>溶剂残留峰：Fulmer et al., <i>Organometallics</i> 2010, 29, 2176。频率比 Ξ 与参考物：Harris et al., IUPAC Recommendations, <i>Pure Appl. Chem.</i> 2001, 73, 1795。</p>
+    <p>参数为常规起点，不是唯一正确值；以你所在平台的 SOP 和管理员要求为准。模拟谱中的化学位移仅作示意。</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- nucleus data ---------- */
+const NUC={
+  H1:{sup:'¹H',tn:'H1',xi:100.0,proto:'PROTON',solvent:'CDCl3',solv:'CDCl₃',sample:'polyHDI_01',
+    desc:'HDI 封端聚醚 / CDCl₃',
+    acq:{sw:16,at:2.5,d1:1,nt:16,pulse:'45°',dec:'无'},lb:0.3,
+    spec:{range:[8.4,-0.4],peaks:[[7.26,.10,1.2],[4.84,.05,14],[4.21,.22,1.4,'t',4.7],[3.64,1,1.6],[3.29,.24,1.4,'t',6.8],[3.16,.17,1.6,'q',6.6],[1.61,.16,2.5,'p',7.1],[1.50,.15,2.5,'p',7.1],[1.36,.24,3,'p',3.5]],
+      labels:[[7.26,'CHCl₃',0],[4.84,'NH',0],[4.21,'CH₂OC(O)',1],[3.64,'OCH₂CH₂O',0],[3.22,'CH₂N',1],[1.48,'(CH₂)₄',0]]}},
+  C13:{sup:'¹³C',tn:'C13',xi:25.145020,proto:'CARBON',solvent:'CDCl3',solv:'CDCl₃',sample:'polyHDI_01',
+    desc:'HDI 封端聚醚 / CDCl₃',
+    acq:{sw:250,at:1.0,d1:2,nt:512,pulse:'30°',dec:'¹H 去耦 (WALTZ-16) + NOE'},lb:1.0,
+    spec:{range:[172,8],peaks:[[156.6,.30,3],[122.1,.10,4],[77.16,.45,2.5,'t111',32.0],[70.6,1,3],[69.6,.32,3],[63.9,.34,3],[43.0,.36,3],[40.9,.36,3],[31.3,.33,3],[29.8,.33,3],[26.4,.32,3],[26.2,.32,3]],
+      labels:[[156.6,'C=O',0],[122.1,'N=C=O',0],[77.16,'CDCl₃',0],[70.6,'OCH₂CH₂O',1],[63.9,'CH₂OC(O)',0],[42,'CH₂N',1],[28.5,'CH₂',0]]}},
+  F19:{sup:'¹⁹F',tn:'F19',xi:94.094011,proto:'FLUORINE',solvent:'DMSO',solv:'DMSO-d₆',sample:'LiTFSI_01',
+    desc:'LiTFSI + PhCF₃ 内标 / DMSO-d₆',
+    acq:{sw:250,at:0.6,d1:1.5,nt:32,pulse:'30°',dec:"不去耦 (dm='nnn')"},lb:1.0,
+    spec:{range:[-45,-100],peaks:[[-61.6,.55,2],[-78.8,1,2]],labels:[[-61.6,'PhCF₃ 内标',0],[-78.8,'TFSI⁻ 的 CF₃',0]]}},
+  Li7:{sup:'⁷Li',tn:'Li7',xi:38.863797,proto:'PROTON',solvent:'DMSO',solv:'DMSO-d₆',sample:'LiTFSI_01',
+    desc:'LiTFSI / DMSO-d₆，同轴内管装 LiCl / D₂O 外标',
+    acq:{sw:40,at:1.5,d1:5,nt:32,pulse:'90°（已校准）',dec:"不去耦 (dm='nnn')"},lb:2.0,
+    spec:{range:[4,-4],peaks:[[0,.40,3],[-0.95,1,18]],labels:[[0,'LiCl/D₂O 外标',1],[-0.95,'样品 Li⁺',0]]}},
+  P31:{sup:'³¹P',tn:'P31',xi:40.480742,proto:'PHOSPHORUS',solvent:'DMSO',solv:'DMSO-d₆',sample:'LiPF6_01',
+    desc:'LiPF₆ / DMSO-d₆',
+    acq:{sw:300,at:0.6,d1:2,nt:128,pulse:'30°',dec:'¹H 去耦 (WALTZ-16)'},lb:1.0,
+    spec:{range:[-118,-171],peaks:[[-144.6,1,6,'sept',708]],labels:[[-144.6,'PF₆⁻ 七重峰',0],[-128,'¹J(P,F) ≈ 708 Hz',1]]}}
+};
+const ORDER=['H1','C13','F19','Li7','P31'];
+const PAT={s:[1],d:[1,1],t:[1,2,1],q:[1,3,3,1],p:[1,4,6,4,1],t111:[1,1,1],sept:[1,6,15,20,15,6,1]};
+const STEPS=['insert','info','load','lock','shim','tune','params','acquire','process','save'];
+const SHORT=['放样','样品信息','载入实验','锁场','匀场','调谐','设参数','采样','处理','保存收尾'];
+const S={nuc:'H1',step:0,field:400,view:'proc',timers:[]};
+
+const sf=k=>S.field*NUC[k].xi/100;
+const sfs=k=>sf(k).toFixed(2);
+const swHz=k=>Math.round(NUC[k].acq.sw*sf(k));
+function fmtT(t){t=Math.round(t);if(t<60)return t+' s';const m=Math.floor(t/60),s=t%60;return m+' min'+(s?' '+s+' s':'');}
+const expT=k=>{const a=NUC[k].acq;return fmtT(a.nt*(a.d1+a.at));};
+
+/* ---------- step content ---------- */
+function content(k,i){
+  const n=NUC[k],a=n.acq,f=sfs(k),sw=swHz(k);
+  const key=STEPS[i];
+  if(key==='insert'){
+    const extra={
+      H1:['tip','¹H 通常 1–10 mg / 0.6 mL 就够；太浓会让谱线变宽，并容易导致接收器溢出。'],
+      C13:['tip','¹³C 天然丰度只有 1.07%，灵敏度约为 ¹H 的 1/5900。样品尽量浓（常规 10–50 mg / 0.6 mL）。'],
+      F19:['tip','做定量 ¹⁹F 时，制样时称量加入含氟内标（如 PhCF₃），并确认它与样品峰不重叠。'],
+      Li7:['tip','非氘代的 Li 电解液或聚合物：放一根同轴内管 (coaxial insert)，内装 D₂O + LiCl。它同时提供 ²H 锁场信号和 ⁷Li 的 0 ppm 外标，本例模拟谱就是这种装法。'],
+      P31:['tip','³¹P 常用 85% H₃PO₄ 作 0 ppm 外标：装在同轴内管里，或另测一次参考样品。']}[k];
+    return {title:'放入样品',en:'Eject / Insert',path:['按钮条','Eject','Insert'],
+      doList:['用深度规 (depth gauge) 把 spinner 调到正确位置。溶液高度约 4–5 cm（5 mm 管约 0.55–0.65 mL），无气泡、无颗粒。',
+        '用无尘纸擦净管外壁，管帽压紧。',
+        '点 <b>Eject</b>：等气流把上一个样品托出后取走，把你的样品（带 spinner）轻放在气垫上。',
+        '点 <b>Insert</b>，样品缓慢降入探头。等状态栏的 <i>Spin Regulating</i> 消失。'],
+      cmds:[['e','弹出样品 (eject)'],['i','放入样品 (insert)']],
+      notes:[['warn','磁体周围禁止铁磁性物品（工具、钥匙、手表、银行卡）。碎管按显示器贴纸上的流程处理并报告负责人。'],extra]};
+  }
+  if(key==='info'){
+    return {title:'填写样品信息',en:'Sample Info',path:['Start','Sample Info'],
+      doList:['在 <b>Sample name</b> 填样品名。保存时文件名会用到它，建议只用字母、数字和下划线。',
+        `在 <b>Solvent</b> 下拉菜单选实际使用的氘代溶剂（本例 ${n.solv}）。`,
+        'Notebook / Page / Comment 按课题组习惯填写，可留空。'],
+      cmds:[[`solvent='${n.solvent}'`,'在命令行设定溶剂']],
+      notes:[['warn','Solvent 选错是锁不上和定标错误最常见的原因。它决定锁场的 ²H 频率、Find z0 的搜索目标和 setref 的定标值。']]};
+  }
+  if(key==='load'){
+    const L={
+      H1:{path:['Experiment Selector','Common','PROTON'],
+        doList:['在左上 Experiment Selector 的 <b>Common</b> 页点 <b>PROTON</b>。',
+          '消息区出现 <i>Executing PROTON</i>：标准 ¹H 参数（脉冲序列 s2pul）载入当前工作区。你照片里的第一行消息就是这一步。',
+          '下一次采样会覆盖这个工作区里的旧数据，旧数据要先保存。'],
+        cmds:[['PROTON','载入标准 ¹H 参数（大写）'],['jexp(27)','切换到工作区 exp27（需要时）']],notes:[]},
+      C13:{path:['Experiment Selector','Common','CARBON'],
+        doList:['建议先在同一样品上跑一张 PROTON，确认匀场、浓度和溶剂都没问题。',
+          '然后点 <b>CARBON</b>：载入 ¹H 去耦的 ¹³C 参数（s2pul，WALTZ-16 去耦，带 NOE 增强）。',
+          '¹³C 观测在 X 通道，¹H 去耦在高频通道。'],
+        cmds:[['CARBON','载入标准 ¹³C{¹H} 参数']],notes:[]},
+      F19:{path:['Experiment Selector','Liquids','FLUORINE'],
+        doList:['切到 Experiment Selector 的 <b>Liquids</b> 页，点 <b>FLUORINE</b>（也可在命令行直接输入 FLUORINE）。',
+          '如果你的站点没有 FLUORINE：先 PROTON，再输入 <code>tn=\'F19\'</code>，并在第 7 步重设 sw。¹⁹F 的化学位移范围比 ¹H 宽得多，沿用 ¹H 的 sw 会漏峰。',
+          `本机 ¹⁹F 频率约 ${f} MHz。`],
+        cmds:[['FLUORINE','载入标准 ¹⁹F 参数（视站点配置）'],["tn='F19'",'备选：把观测核改为 ¹⁹F']],notes:[]},
+      Li7:{path:['Common','PROTON','命令行改 tn'],
+        doList:['VnmrJ 一般没有现成的 ⁷Li 按钮。管理员如果做过 Li7 参数集，优先用它。',
+          '否则先点 <b>PROTON</b> 载入单脉冲 s2pul 模板，再在命令行把观测核改为 ⁷Li。',
+          `⁷Li 在宽带探头的 X 通道上测，本机频率约 ${f} MHz。`],
+        cmds:[['PROTON','载入 s2pul 单脉冲模板'],["tn='Li7'",'观测核改为 ⁷Li'],["dn='H1' dm='nnn'",'不去耦']],
+        notes:[['warn','探头文件里往往没有 Li7 的 pw90，第 7 步需要自己校准。']]},
+      P31:{path:['Experiment Selector','Liquids','PHOSPHORUS'],
+        doList:['切到 <b>Liquids</b> 页点 <b>PHOSPHORUS</b>（或命令行输入 PHOSPHORUS）：载入 ¹H 去耦的 ³¹P 参数。',
+          `³¹P 在 X 通道上测，本机频率约 ${f} MHz。`],
+        cmds:[['PHOSPHORUS','载入标准 ³¹P{¹H} 参数（视站点配置）']],notes:[]}
+    }[k];
+    return Object.assign({title:'载入实验参数',en:'Load parameter set'},L);
+  }
+  if(key==='lock'){
+    const notes=[['warn','你照片里 Autolock 选的是 <b>Unlocked</b>。氘代样品请改为 <b>Automatic</b>，否则之后采样时可能不锁场。']];
+    if(k==='Li7')notes.push(['tip','没有氘代溶剂也没有同轴内管：Autolock 选 Unlocked 或 Not used，跳过锁场。短时间采样影响不大；长时间采样会因场漂移使峰变宽。']);
+    return {title:'锁场',en:'Lock',path:['Start','Lock','Find z0','Auto lock'],
+      doList:['打开 Start ▸ <b>Lock</b> 页（你照片停在这一页）。先确认 Spin 已稳定。',
+        '点 <b>Find z0</b>：运行 findz0 序列，把 Z0 调到让溶剂 ²H 信号落在锁场频率上。图形区标题显示 <i>Seq: findz0</i>。',
+        '完成后把右侧 Autolock 选为 <b>Automatic</b>，再点按钮条的 <b>Auto lock</b>（或 Run autolock）。系统会同时优化 Power、Gain、Phase。',
+        '锁上的标志：Lock 复选框被勾上，Lock status 不再是 Off，状态栏 Lock 电平升到几十并保持稳定。',
+        '手动兜底：点 <b>Lock scan</b>，拖 Z0 让正弦拍频 (beat) 变慢直到平直 → 勾 Lock → 调 Phase 使电平最大 → 把 Power 降到电平不再缓慢下滑为止。'],
+      cmds:[],notes};
+  }
+  if(key==='shim'){
+    const notes=[['tip','样品高度不足、有气泡或颗粒、管子质量差时，怎么匀都匀不好，先检查样品。']];
+    if(k==='Li7')notes.push(['tip','不锁场的样品：在 Shim 页把梯度匀场的核改为 H1（用溶剂的 ¹H 信号）。界面里没有这个选项就请管理员协助。']);
+    if(k==='C13')notes.push(['tip','¹³C 线宽主要由 lb 决定，对匀场的要求比 ¹H 宽松，但匀场差仍会降低信噪比。']);
+    return {title:'匀场',en:'Gradient shim',path:['按钮条','Gradient shim'],
+      doList:['锁稳后点 <b>Gradient shim</b>（命令 gmapshim）：用 Z 梯度测量 B₀ 分布，自动优化轴向 (Z) shims。',
+        '结束后 Lock 电平通常会升高。效果不理想可以再运行一次。',
+        '检验方法：采一张快速 ¹H，看孤立单峰（CHCl₃ 7.26 或 TMS）是否对称，半高宽约 1 Hz 以内，底部没有肩峰。',
+        '需要时在 Start ▸ Shim 页手动微调 Z1、Z2，以 Lock 电平最大为准。'],
+      cmds:[['gmapshim','梯度匀场']],notes};
+  }
+  if(key==='tune'){
+    const line={
+      H1:'¹H：常规有机溶剂下探头一般已调好（按站点规定）。水溶液、高盐或离子液体样品建议调。',
+      C13:'¹³C：如果上一位用户测过 ³¹P、⁷Li 等其他 X 核，X 通道需要调回 ¹³C。',
+      F19:'¹⁹F：必须调。很多宽带探头的 ¹H 与 ¹⁹F 共用高频通道，需要从 H1 调到 F19。测完要调回 H1，后面的用户依赖它。',
+      Li7:`⁷Li：必须调到约 ${f} MHz（X 通道）。不调谐时信号很弱甚至看不到，pw90 也会偏离。`,
+      P31:`³¹P：必须调到约 ${f} MHz（X 通道）。`}[k];
+    return {title:'调谐与匹配',en:'Auto tune (tune & match)',path:['按钮条','Auto tune'],
+      doList:['确认第 3 步已把观测核设好：Auto tune 按当前参数里的 tn（观测核）和 dn（去耦核）调探头。',
+        '点 <b>Auto tune</b>（ProTune 自动 tune & match）。图中反射曲线的凹陷 (dip) 应移到目标频率并尽量深。',line],
+      cmds:[],notes:[['warn','高盐或高介电常数的样品 dip 可能不够深，这属正常。调谐失败就报给管理员，不要反复强行运行。']]};
+  }
+  if(key==='params'){
+    const rows=[['观测核 tn',`${n.tn} · ${f} MHz`],['谱宽 sw',`${a.sw} ppm (${sw.toLocaleString('en-US')} Hz)`],['采样时间 at',a.at+' s'],['弛豫延迟 d1',a.d1+' s'],['脉冲角',a.pulse],['扫描次数 nt',String(a.nt)],['去耦',a.dec],['预计时间',expT(k)]];
+    const D={
+      H1:{doList:['在 Acquire ▸ <b>Defaults</b> 页确认参数，常规 ¹H 用默认值即可。','nt 取 8–16；d1 约 1 s；at 2–3 s。输入 <b>time</b> 查看预计时间。','Receiver gain 一般由自动增益设定。'],
+        cmds:[['nt=16','扫描次数'],['d1=1','弛豫延迟 (s)'],['time','显示预计实验时间']],
+        notes:[['tip','做 gCOSY、HSQCAD、gHMBCAD、NOESY1D 等 2D/选择性实验时，在 Spin/Temp 页关闭旋转。'],['tip','定量 ¹H：90° 脉冲，d1 + at ≥ 5 × 最慢的 T₁。']]},
+      C13:{doList:['浓度低就加 nt：信噪比 ∝ √nt，nt 增加 4 倍信噪比才翻倍。','d1 约 2 s；先输入 <b>time</b> 看时间是否可接受。'],
+        cmds:[['nt=512','扫描次数'],['d1=2','弛豫延迟 (s)'],['time','显示预计实验时间']],
+        notes:[['tip',"定量 ¹³C：dm='nny'（inverse-gated 去耦，消除 NOE）+ 90° 脉冲 + d1 ≥ 5 × T₁。季碳的 T₁ 可达几十秒。"]]},
+      F19:{doList:['先用宽谱宽（约 250 ppm）扫一张找到所有峰。','之后把 tof 移到目标区中心（第 8 步 movetof）并缩窄 sw：激发更均匀，数字分辨率更高。','输入 <b>time</b> 查看预计时间。'],
+        cmds:[[`sw=${sw}`,'250 ppm 对应的谱宽 (Hz)'],['nt=32','扫描次数'],['time','显示预计实验时间']],
+        notes:[['tip',"¹⁹F{¹H} 去耦需要硬件能同时在 ¹H 和 ¹⁹F 上工作；不确定时先采耦合谱 (dm='nnn')。"],['tip','定量 ¹⁹F：90° 脉冲，d1 ≥ 5 × T₁，目标峰和内标都尽量靠近 tof。']]},
+      Li7:{doList:['设谱宽：溶液中抗磁性 Li 的化学位移多在 ±5 ppm 以内，40 ppm 足够；不确定时先用更宽的 sw。',
+          '<b>校准 pw90</b>：nt=1，d1 设长（如 20 s），用 array 让 pw 从 2 到 32 µs 变化，ga 采样后用 dssh 并排显示。',
+          '找信号由正变负的过零点，即 180° 脉冲：pw90 = pw(180°) / 2。图中示例的零点约 18 µs，所以 pw90 ≈ 9 µs。',
+          '把 pw 设为校准值，再设正式采样参数。定性比较时可用 30° 脉冲（pw = pw90 / 3）以缩短 d1。'],
+        cmds:[[`sw=${sw}`,'40 ppm 对应的谱宽 (Hz)'],['nt=1 d1=20','校准用：单次扫描、长弛豫'],["array('pw',16,2,2)",'pw = 2, 4 … 32 µs'],['ga','采阵列'],['dssh','并排显示阵列谱'],['pw=9','填入校准值（示例）'],['nt=32 d1=5','正式采样参数']],
+        notes:[['warn','tpwr（发射功率）不要超过管理员给的上限，过高会损坏探头。'],['tip','⁷Li 的 T₁ 可达数秒到十几秒；定量时 d1 ≥ 5 × T₁。']]},
+      P31:{doList:['默认 ³¹P{¹H} 带 ¹H 去耦与 NOE。','nt 64–256，d1 约 2 s。输入 <b>time</b> 查看预计时间。'],
+        cmds:[['nt=128','扫描次数'],['d1=2','弛豫延迟 (s)'],['time','显示预计实验时间']],
+        notes:[['tip',"定量 ³¹P：dm='nny'（inverse-gated）并加长 d1。"]]}
+    }[k];
+    return Object.assign({title:'设置采样参数',en:'Acquisition parameters',path:['Acquire','Defaults'],rows},D);
+  }
+  if(key==='acquire'){
+    const doList=['输入 <b>ga</b>（采样，结束后自动 wft）或点 Acquire 面板的 <b>Acquire</b>。消息区出现 <i>Experiment started</i>。',
+      '采样中可输入 <b>wft</b> 查看已累加的结果；信噪比够了就 <b>sa</b> 提前停止（<b>ra</b> 可继续），参数错了用 <b>aa</b> 中止。',
+      '看一眼 FID：开头被削平或消息区报 ADC overflow，就降低 gain 重采。'];
+    if(k==='F19'||k==='Li7'||k==='P31')doList.push('首张谱出来后，把光标放在目标峰上输入 <b>movetof</b>，把发射频率移到峰附近，再按需要缩窄 sw 重采。');
+    return {title:'开始采样',en:'Acquire',path:['Acquire','Acquire 按钮'],doList,
+      cmds:[['ga','采样，结束后自动 wft'],['go','只采样'],['wft','采样中途查看'],['sa','停止（保留已采数据）'],['ra','继续'],['aa','中止']].concat(k==='H1'||k==='C13'?[]:[['movetof','把 tof 移到光标处']]),
+      notes:[]};
+  }
+  if(key==='process'){
+    const ref={
+      H1:{t:'定标：已锁场的样品输入 <b>setref</b>（按溶剂自动定标），或光标放到 CHCl₃ 峰附近输入 <b>nl rl(7.26p)</b>。',c:[['setref','按溶剂自动定标'],['nl rl(7.26p)','CHCl₃ 残留峰 = 7.26 ppm']]},
+      C13:{t:'定标：光标放到 CDCl₃ 三重峰的中间线，输入 <b>nl rl(77.16p)</b>；或用 setref。',c:[['nl rl(77.16p)','CDCl₃ 中间线 = 77.16 ppm'],['setref','按溶剂自动定标']]},
+      F19:{t:'定标：<b>setref</b> 按频率比 Ξ 间接定标（CFCl₃ = 0 ppm）；有内标时光标放在内标峰上用 rl 设为其文献值（文献值随溶剂不同，需查对应数据）。',c:[['setref','间接定标，CFCl₃ = 0 ppm'],['nl rl(-63.72p)','例：PhCF₃ 在 CDCl₃ 中的值']]},
+      Li7:{t:'定标：光标放在同轴内管的 LiCl 峰上输入 <b>nl rl(0p)</b>；没有外标时用 setref 间接定标。',c:[['nl rl(0p)','LiCl / D₂O 外标 = 0 ppm'],['setref','间接定标']]},
+      P31:{t:'定标：<b>setref</b> 间接定标（85% H₃PO₄ = 0 ppm），或光标放在 H₃PO₄ 外标峰上 nl rl(0p)。',c:[['setref','间接定标，H₃PO₄ = 0 ppm'],['nl rl(0p)','有 H₃PO₄ 外标峰时']]}
+    }[k];
+    const notes=[];
+    if(k==='F19')notes.push(['tip','¹⁹F 谱常带有探头含氟部件产生的宽背景峰 (background hump)：先 bc；必要时用反向线性预测 (backward linear prediction) 重建 FID 开头几个点。']);
+    if(k==='Li7')notes.push(['tip','Li⁺ 在高粘度聚合物中峰较宽，lb 可取 1–5 Hz；互相比较的谱要用同一个 lb。']);
+    if(k==='C13')notes.push(['tip','常规 ¹³C{¹H} 谱带 NOE，峰面积不能直接定量。']);
+    return {title:'处理谱图',en:'Process',path:['Process','Basic'],
+      doList:[`设线宽展宽 lb = ${n.lb} Hz，输入 <b>wft</b>（加窗 + 傅里叶变换）。`,
+        '<b>aph</b> 自动相位；不理想时用相位工具手动调（零阶 rp、一阶 lp）。',ref.t,
+        '<b>bc</b> 基线校正；用积分工具积分，<b>dpf</b> 显示峰位，<b>dpir</b> 显示积分值，<b>vsadj</b> 调纵向比例。'],
+      cmds:[[`lb=${n.lb}`,'线宽展宽 (Hz)'],['wft aph vsadj','变换、自动相位、纵向缩放']].concat(ref.c,[['bc','基线校正'],['dpf','显示峰位']]),notes};
+  }
+  /* save */
+  const notes=[];
+  if(k!=='H1'&&k!=='C13')notes.push(['warn','测过 ¹⁹F / ⁷Li / ³¹P 之后，按站点规定把探头调回 ¹H / ¹³C（载入 PROTON 或 CARBON 后 Auto tune）。']);
+  notes.push(['tip','exp27 这类工作区只是临时空间，下一次采样会覆盖。每张谱采完立即保存。']);
+  return {title:'保存与收尾',en:'Save & finish',path:['File','Save As…','Eject','Logout'],
+    doList:['<b>File ▸ Save As…</b> 或命令 svf：保存 FID 和全部参数（生成 .fid 文件夹）。',
+      '需要出图时用 Process ▸ Plot 页，或 pl pscale pap page（需已配置打印机 / PDF）。',
+      '<b>Eject</b> 取出样品。站点要求放回标准样品的，放回并 Insert。',
+      '最后 <b>Logout</b>。'],
+    cmds:[[`svf('${n.sample}_${n.tn}')`,'保存到当前目录（也可写完整路径）'],['e','弹出样品']],notes};
+}
+
+/* ---------- mock state per step ---------- */
+const SHOT={tab:'start',page:'lock',es:'common',hl:[],cmd:'',msgs:['Executing PROTON','Set hardware: operation complete','Finding z0','exp27:  Experiment started'],
+  exp:27,seq:'findz0',graph:'blank',lock:{on:false,level:'0.6',status:'Off',z0:-261,power:29,gain:39,phase:323,mode:'unlocked'},
+  spinOn:true,spin:25,temp:'25.0',status:'Spin Regulating',progress:'exp27:  Experiment started',solvent:'CDCl3',sampleName:'',nuc:'H1'};
+const LOCKED={on:true,level:'82',status:'Regulated',z0:-248,power:24,gain:30,phase:318,mode:'automatic'};
+
+function stepState(k,i){
+  const n=NUC[k],a=n.acq,key=STEPS[i];
+  const st={tab:'start',page:'sampleinfo',es:'common',hl:[],cmd:'',msgs:[],exp:27,seq:'s2pul',graph:'blank',
+    lock:{on:false,level:'0.0',status:'Off',z0:-261,power:29,gain:39,phase:323,mode:'unlocked'},
+    spinOn:true,spin:20,temp:'25.0',status:'Idle',progress:'',solvent:n.solvent,sampleName:n.sample,nuc:k,anim:null};
+  if(i>=4)st.lock=Object.assign({},LOCKED);
+  if(i>=2&&i<3)st.seq='s2pul';
+  switch(key){
+    case 'insert': st.hl=['eject','insert'];st.cmd='e';st.seq='—';st.status='Spin Regulating';st.solvent='';st.sampleName='';
+      st.msgs=['Eject: sample ejected','Insert: sample inserted'];st.progress='Sample inserted';st.graphNote='放入样品，等转速稳定';break;
+    case 'info': st.hl=['nav-sampleinfo','samplename','solvent'];st.cmd=`solvent='${n.solvent}'`;st.seq='—';
+      st.msgs=[`solvent = ${n.solvent}`];st.progress='Sample info set';st.graphNote='Start ▸ Sample Info';break;
+    case 'load': {
+      const liq=(k==='F19'||k==='P31');st.es=liq?'liquids':'common';
+      st.hl=liq?['es-liquids','es-'+n.proto]:['es-'+n.proto];
+      if(k==='Li7')st.hl.push('cmd');
+      st.cmd=k==='Li7'?"tn='Li7' dn='H1' dm='nnn'":n.proto;
+      st.msgs=['Executing '+n.proto,'Set hardware: operation complete'];
+      if(k==='Li7')st.msgs.push(`tn = Li7   sfrq = ${sfs(k)} MHz`);
+      st.progress='Executing '+n.proto;st.graphNote=`参数已载入：${n.tn}，序列 s2pul`;break;}
+    case 'lock': st.page='lock';st.hl=['nav-lock','findz0','autolockbox','autolock'];st.seq='findz0';
+      st.lock=Object.assign({},LOCKED,{level:'72'});st.graph='locked';
+      st.anim={from:{on:false,level:0.6,status:'Off',mode:'unlocked'},to:72,graphFrom:'lockscan'};
+      st.msgs=['Finding z0','z0 found','Autolock: lock established'];st.progress='Lock established';break;
+    case 'shim': st.page='shim';st.hl=['gradshim'];st.cmd='gmapshim';st.seq='gmapz';st.graph='shim';
+      st.msgs=['Gradient shimming (gmapshim) …','gmapshim: done'];st.progress='Gradient shim done';break;
+    case 'tune': st.page='lock';st.hl=['autotune'];st.graph='tune';
+      st.msgs=[`ProTune: tuning ${n.tn}  ${sfs(k)} MHz`,'ProTune: done'];st.status='Idle';st.progress='Tuning done';break;
+    case 'params': st.tab='acquire';st.page='defaults';st.hl=['tab-acquire','acq-params'];
+      st.cmd=k==='Li7'?"array('pw',16,2,2)":(k==='F19'?`sw=${swHz(k)} nt=32 time`:`nt=${a.nt} d1=${a.d1} time`);
+      st.graph=k==='Li7'?'array':'blank';st.graphNote='Acquire ▸ Defaults：检查参数';
+      st.msgs=[`nt = ${a.nt}   d1 = ${a.d1}   sw = ${swHz(k)}`,`Exp time: ${expT(k)}`];st.progress='Parameters set';break;
+    case 'acquire': st.tab='acquire';st.page='defaults';st.hl=['acq-go'];st.cmd='ga';st.graph='fid';st.status='Acquiring';
+      st.msgs=['exp27:  Experiment started'];st.progress=`exp27:  Acquiring   scan ${Math.max(1,Math.round(a.nt/2))} / ${a.nt}`;break;
+    case 'process': st.tab='process';st.page='basic';st.hl=['tab-process','proc-btns'];st.cmd='wft aph vsadj';st.graph='spectrum';
+      st.msgs=['wft  aph  vsadj','Reference set'];st.progress='exp27:  Acquisition complete';break;
+    case 'save': st.tab='process';st.page='basic';st.hl=['menu-file','eject','logout'];st.cmd=`svf('${n.sample}_${n.tn}')`;st.graph='spectrum';
+      st.msgs=['Data saved: '+n.sample+'_'+n.tn+'.fid'];st.progress='Data saved';break;
+  }
+  return st;
+}
+
+/* ---------- drawing ---------- */
+const GW=640,GH=180;
+function niceStep(span){const c=[0.5,1,2,5,10,20,50];for(const s of c){if(span/s<=10)return s;}return 100;}
+function rnd(seed){let x=seed;return()=>{x=(x*16807)%2147483647;return x/2147483647-0.5;};}
+function txt(x,y,s,o={}){return `<text x="${x}" y="${y}" fill="${o.fill||'var(--vj-axis)'}" font-size="${o.size||10.5}" font-family="Arial, Noto Sans SC, sans-serif" text-anchor="${o.anchor||'start'}">${s}</text>`;}
+function specSVG(k){
+  const n=NUC[k],d=n.spec,F=sf(k),lines=[];
+  for(const p of d.peaks){const [ppm,h,w,m='s',J=0]=p;const pat=PAT[m],mx=Math.max(...pat);
+    pat.forEach((c,i)=>lines.push({p:ppm+(i-(pat.length-1)/2)*J/F,h:h*c/mx,w:Math.max(w,0.6)/F}));}
+  const [hi,lo]=d.range,x0=16,x1=GW-16,N=x1-x0,top=40,base=138;
+  const fn=p=>{let s=0;for(const L of lines){const u=(p-L.p)/(L.w/2);s+=L.h/(1+u*u);}return s;};
+  const vals=[];
+  for(let i=0;i<=N;i++){const pA=hi-(hi-lo)*(i-0.5)/N,pB=hi-(hi-lo)*(i+0.5)/N;let v=0;
+    for(let s=0;s<4;s++)v=Math.max(v,fn(pA+(pB-pA)*s/3));
+    for(const L of lines){if(L.p<=pA&&L.p>=pB)v=Math.max(v,fn(L.p));}
+    vals.push(v);}
+  const mx=Math.max(...vals),r=rnd(7);
+  let path='';vals.forEach((v,i)=>{const y=base-(base-top)*(v/mx+0.006*r());path+=(i?'L':'M')+(x0+i)+' '+y.toFixed(1)+' ';});
+  const X=p=>x0+(hi-p)/(hi-lo)*N;
+  let g=`<line x1="${x0}" y1="${base+6}" x2="${x1}" y2="${base+6}" stroke="var(--vj-axis)" stroke-width="1"/>`;
+  const st=niceStep(hi-lo);
+  for(let t=Math.ceil(lo/st)*st;t<=hi+1e-9;t+=st){const x=X(t);if(x>x1-24)continue;g+=`<line x1="${x}" y1="${base+6}" x2="${x}" y2="${base+10}" stroke="var(--vj-axis)"/>`+txt(x,base+21,(Math.round(t*10)/10).toString(),{anchor:'middle',size:10});}
+  g+=txt(x1,base+21,'ppm',{anchor:'end',size:10,fill:'var(--vj-dim)'});
+  let lab='';
+  for(const [p,t,row] of d.labels){const x=X(p),idx=Math.round(x-x0),py=base-(base-top)*(vals[Math.max(0,Math.min(N,idx))]/mx),ly=row?27:14;
+    lab+=txt(x,ly,t,{anchor:'middle',size:10.5,fill:'var(--vj-trace2)'});
+    if(py-(ly+4)>8)lab+=`<line x1="${x}" y1="${ly+4}" x2="${x}" y2="${py-4}" stroke="var(--vj-trace2)" stroke-width=".7" stroke-dasharray="2 2" opacity=".7"/>`;}
+  const cap=txt(x1,GH-4,`模拟 · ${n.sup} ${sfs(k)} MHz · ${n.desc}`,{anchor:'end',size:9.5,fill:'var(--vj-dim)'});
+  return g+`<path d="${path}" fill="none" stroke="var(--vj-trace)" stroke-width="1.1"/>`+lab+cap;
+}
+function fidSVG(k){
+  const a=NUC[k].acq,x0=16,x1=GW-16,N=x1-x0,c=86,r=rnd(3);let path='';
+  for(let i=0;i<=N;i++){const t=i/N;const y=(Math.cos(2*Math.PI*9*t)+.6*Math.cos(2*Math.PI*23.5*t+.6)+.45*Math.cos(2*Math.PI*41*t+1.1))*Math.exp(-t/.33)/2.05;
+    path+=(i?'L':'M')+(x0+i)+' '+(c-62*y+1.2*r()).toFixed(1)+' ';}
+  return `<line x1="${x0}" y1="${c}" x2="${x1}" y2="${c}" stroke="var(--vj-dim)" stroke-width=".6" stroke-dasharray="3 3"/>`+
+    `<path d="${path}" fill="none" stroke="var(--vj-fid)" stroke-width="1"/>`+
+    txt(x0,14,`FID · scan ${Math.max(1,Math.round(a.nt/2))} / ${a.nt}`,{fill:'var(--vj-fid)'})+
+    txt(x1,GH-4,'时间 →（at = '+a.at+' s）',{anchor:'end',size:9.5,fill:'var(--vj-dim)'});
+}
+function lockSVG(locked){
+  const x0=16,x1=GW-16,N=x1-x0;let path='';const r=rnd(11);
+  for(let i=0;i<=N;i++){const t=i/N;const y=locked?(52+1.2*r()):(90-58*Math.sin(2*Math.PI*7*t)*Math.exp(-t*.4));path+=(i?'L':'M')+(x0+i)+' '+y.toFixed(1)+' ';}
+  const note=locked?'锁定：信号平直，Lock 电平稳定':'未锁定：Z0 偏离 → 正弦拍频；调 Z0 使波形变慢变平';
+  return `<path d="${path}" fill="none" stroke="${locked?'var(--vj-fid)':'var(--vj-trace2)'}" stroke-width="1.3"/>`+
+    txt(x0,14,locked?'LOCK SCAN · LOCKED':'LOCK SCAN',{fill:locked?'var(--vj-fid)':'var(--vj-trace2)'})+txt(x1,GH-4,note,{anchor:'end',size:9.5,fill:'var(--vj-dim)'});
+}
+function shimSVG(){
+  const x0=16,x1=GW-16,N=x1-x0,base=150,top=26,lo=-15,hi=15;
+  const L=(x,c,w)=>1/(1+((x-c)/(w/2))**2);
+  const before=x=>.42*L(x,.6,4.2)+.22*L(x,-3,5)+.05*L(x,4,9);
+  const after=x=>L(x,0,.9);
+  let p1='',p2='';
+  for(let i=0;i<=N;i++){const x=lo+(hi-lo)*i/N;p1+=(i?'L':'M')+(x0+i)+' '+(base-(base-top)*before(x)).toFixed(1)+' ';p2+=(i?'L':'M')+(x0+i)+' '+(base-(base-top)*after(x)).toFixed(1)+' ';}
+  let ax=`<line x1="${x0}" y1="${base+6}" x2="${x1}" y2="${base+6}" stroke="var(--vj-axis)"/>`;
+  for(let t=-15;t<=15;t+=5){const x=x0+(t-lo)/(hi-lo)*N;ax+=`<line x1="${x}" y1="${base+6}" x2="${x}" y2="${base+10}" stroke="var(--vj-axis)"/>`+txt(x,base+22,t,{anchor:'middle',size:10});}
+  return ax+`<path d="${p1}" fill="none" stroke="var(--vj-dim)" stroke-width="1.2" stroke-dasharray="4 3"/><path d="${p2}" fill="none" stroke="var(--vj-trace)" stroke-width="1.3"/>`+
+    txt(x0,14,'匀场前：宽、不对称、有肩峰',{fill:'var(--vj-dim)'})+txt(x0,28,'gmapshim 后：窄而对称（半高宽 ≈ 1 Hz）',{fill:'var(--vj-trace)'})+txt(x1,base+22,'Hz',{anchor:'end',size:10,fill:'var(--vj-dim)'});
+}
+function tuneSVG(k){
+  const f0=sf(k),span=Math.max(6,f0*0.04),lo=f0-span,hi=f0+span,x0=16,x1=GW-16,N=x1-x0,top=30,base=146;
+  const L=(x,c,w)=>1/(1+((x-c)/(w/2))**2);
+  const bef=x=>1-.35*L(x,f0+span*.45,span*.35),aft=x=>1-.93*L(x,f0,span*.22);
+  let p1='',p2='';
+  for(let i=0;i<=N;i++){const x=lo+(hi-lo)*i/N;p1+=(i?'L':'M')+(x0+i)+' '+(base-(base-top)*bef(x)).toFixed(1)+' ';p2+=(i?'L':'M')+(x0+i)+' '+(base-(base-top)*aft(x)).toFixed(1)+' ';}
+  const xm=x0+(f0-lo)/(hi-lo)*N;
+  return `<line x1="${xm}" y1="18" x2="${xm}" y2="${base+8}" stroke="var(--vj-trace2)" stroke-dasharray="3 3"/>`+
+    `<path d="${p1}" fill="none" stroke="var(--vj-dim)" stroke-width="1.2" stroke-dasharray="4 3"/><path d="${p2}" fill="none" stroke="var(--vj-trace)" stroke-width="1.4"/>`+
+    txt(xm+6,base+4,`${NUC[k].tn}  ${f0.toFixed(2)} MHz`,{fill:'var(--vj-trace2)'})+
+    txt(x0,14,'Auto tune：反射曲线 (reflection)',{fill:'var(--vj-axis)'})+txt(x0,base+26,'虚线 = 调谐前；实线 = 调谐后，dip 对准目标频率且足够深',{size:9.5,fill:'var(--vj-dim)'})+
+    txt(x1,base+26,`${lo.toFixed(1)} – ${hi.toFixed(1)} MHz`,{anchor:'end',size:9.5,fill:'var(--vj-dim)'});
+}
+function arraySVG(){
+  const x0=16,x1=GW-16,N=x1-x0,n=16,slot=N/n,base=96,amp=56;let g=`<line x1="${x0}" y1="${base}" x2="${x1}" y2="${base}" stroke="var(--vj-dim)" stroke-width=".6"/>`;
+  for(let j=0;j<n;j++){const pw=2+2*j,th=pw/9*Math.PI/2,A=Math.sin(th),cx=x0+slot*(j+.5);let p='';
+    for(let s=-slot/2+3;s<=slot/2-3;s+=1){const y=base-amp*A/(1+(s/2.2)**2);p+=(p?'L':'M')+(cx+s).toFixed(1)+' '+y.toFixed(1)+' ';}
+    g+=`<path d="${p}" fill="none" stroke="${pw===18?'var(--vj-trace2)':'var(--vj-trace)'}" stroke-width="1.2"/>`;
+    if(j%2===1||pw===18)g+=txt(cx,GH-22,pw,{anchor:'middle',size:9.5,fill:pw===18?'var(--vj-trace2)':'var(--vj-axis)'});}
+  const xn=x0+slot*8.5;
+  return g+txt(x0,14,'pw 阵列（µs）· dssh 并排显示',{})+txt(xn,base+50,'180° 零点',{anchor:'middle',size:10,fill:'var(--vj-trace2)'})+
+    txt(x1,GH-4,'示例：零点 ≈ 18 µs → pw90 ≈ 9 µs',{anchor:'end',size:9.5,fill:'var(--vj-dim)'});
+}
+function graphSVG(type,st){
+  let inner='';
+  if(type==='spectrum')inner=specSVG(st.nuc);
+  else if(type==='fid')inner=fidSVG(st.nuc);
+  else if(type==='lockscan')inner=lockSVG(false);
+  else if(type==='locked')inner=lockSVG(true);
+  else if(type==='shim')inner=shimSVG();
+  else if(type==='tune')inner=tuneSVG(st.nuc);
+  else if(type==='array')inner=arraySVG();
+  else if(st.graphNote)inner=txt(GW/2,GH/2+4,st.graphNote,{anchor:'middle',size:11.5,fill:'var(--vj-dim)'});
+  return `<svg viewBox="0 0 ${GW} ${GH}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${inner}</svg>`;
+}
+
+/* ---------- mock markup ---------- */
+const ES_COMMON=['PROTON','CARBON','(H)PRESAT','(H)wet1D','(HH)gCOSY','(HC)HSQCAD','(HC)gHMBCAD','(H)NOESY1D','Studies ▽',''];
+const ES_LIQ=['PROTON','CARBON','FLUORINE','PHOSPHORUS','DEPT','APT','(HH)gCOSY','(HC)HSQCAD','More ▽',''];
+const NAV={start:[['sampleinfo','Sample Info'],['lock','Lock'],['shim','Shim'],['spintemp','Spin/Temp']],
+  acquire:[['defaults','Defaults'],['acquisition','Acquisition'],['pulseseq','Pulse Sequence'],['channels','Channels'],['future','Future Actions']],
+  process:[['basic','Basic'],['weighting','Weighting'],['cursors','Cursors/Line Lists'],['plot','Plot']]};
+function slider(name,val,step,pos,id){
+  return `<div class="sl"><div class="nm"><b><span>${name}</span><span>±${step}</span></b><span>${val}</span></div><span class="vfld" style="min-width:0">${val}</span><div class="track"><span class="thumb" style="left:${pos}%"></span></div></div>`;
+}
+function pageHTML(st){
+  const n=NUC[st.nuc],a=n.acq;
+  if(st.tab==='start'&&st.page==='sampleinfo'){
+    return `<div class="vrow" data-id="samplename"><span class="vlbl">Sample name</span><span class="vfld" style="width:200px">${st.sampleName||''}</span></div>
+    <div class="vrow" data-id="solvent"><span class="vlbl">Solvent</span><span class="vfld" style="width:120px">${st.solvent||''} <span style="float:right">▾</span></span></div>
+    <div class="vrow"><span class="vlbl">Notebook</span><span class="vfld" style="width:120px"></span><span class="vlbl" style="width:auto">Page</span><span class="vfld" style="width:60px"></span></div>
+    <div class="vrow"><span class="vlbl">Comment</span><span class="vfld" style="width:300px"></span></div>`;
+  }
+  if(st.tab==='start'&&st.page==='lock'){
+    const L=st.lock,m=L.mode;
+    const r=(v,t)=>`<span class="rd ${m===v?'on':''}">${t}</span>`;
+    return `<div class="lk">
+      <div class="lk-left">
+        <span class="cb" data-id="spin"><span class="box">${st.spinOn?'✓':''}</span>Spin <span style="margin-left:22px">${st.spin} Hz</span></span>
+        <span class="cb" data-id="lockcb"><span class="box js-lockbox">${L.on?'✓':''}</span>Lock <span style="margin-left:22px" class="js-locklvl">${L.level}</span></span>
+        <span data-id="lockstatus">Lock status <span style="margin-left:10px" class="js-lockstat">${L.status}</span></span>
+        <span class="vbtn" data-id="sellock">Select lock signal...</span>
+        <span class="vbtn" data-id="findz0">Find z0</span>
+      </div>
+      <div class="lk-sl" data-id="locksliders">
+        ${slider('Z0',L.z0,100,50+L.z0/1000*20,'z0')}${slider('Power',L.power,1,L.power/68*100)}${slider('Gain',L.gain,1,L.gain/48*100)}${slider('Phase',L.phase,1,L.phase/360*100)}
+      </div>
+      <div class="lk-auto" data-id="autolockbox"><span class="lg">Autolock</span>${r('automatic','Automatic')}${r('sample','Sample')}${r('z0','z0 only')}${r('unlocked','Unlocked')}${r('notused','Not used')}
+        <span class="vbtn" data-id="runautolock">Run autolock</span></div>
+    </div>`;
+  }
+  if(st.tab==='start'&&st.page==='shim'){
+    return `<div class="vrow" data-id="shimnuc"><span class="vlbl">Gradient shim on</span><span class="rd on">Lock (²H)</span><span class="rd">H1</span></div>
+    <div class="vrow"><span class="vbtn" data-id="gshimpage">Gradient Autoshim on Z</span><span class="vlbl" style="width:auto;margin-left:10px">Lock level</span><span class="vfld js-locklvl" style="min-width:40px">${st.lock.level}</span></div>
+    <div class="lk-sl" data-id="manualshim" style="max-width:360px">${slider('Z1',-312,1,42)}${slider('Z2',1045,1,63)}</div>`;
+  }
+  if(st.tab==='start'&&st.page==='spintemp'){
+    return `<div class="vrow" data-id="spin"><span class="cb"><span class="box">✓</span>Spin on</span><span class="vlbl" style="width:auto;margin-left:14px">Rate</span><span class="vfld">${st.spin}</span><span class="vlbl" style="width:auto">Hz</span></div>
+    <div class="vrow" data-id="temp"><span class="cb"><span class="box"></span>Regulate temperature</span><span class="vfld">${st.temp}</span><span class="vlbl" style="width:auto">°C</span></div>`;
+  }
+  if(st.tab==='acquire'){
+    const F=sfs(st.nuc);
+    return `<div class="pg-grid" data-id="acq-params">
+      <div><span>Observe nucleus</span><span>${n.tn}  ${F} MHz</span></div><div><span>Number of scans</span><span>${a.nt}</span></div>
+      <div><span>Spectral width</span><span>${a.sw} ppm / ${swHz(st.nuc)} Hz</span></div><div><span>Relaxation delay</span><span>${a.d1} s</span></div>
+      <div><span>Acquisition time</span><span>${a.at} s</span></div><div><span>Pulse angle</span><span>${a.pulse.replace(/（.*）/,'')}</span></div>
+      <div><span>Decoupling</span><span>${st.nuc==='C13'||st.nuc==='P31'?'H1 waltz16':'none'}</span></div><div><span>Receiver gain</span><span>auto</span></div>
+    </div>
+    <div class="pg-acts"><span class="vbtn big" data-id="acq-go">Acquire</span><span class="vbtn" data-id="acq-array">Arrays…</span><span class="tm">Experiment time: ${expT(st.nuc)}</span></div>`;
+  }
+  if(st.tab==='process'){
+    return `<div class="vrow"><span class="vlbl">Line broadening</span><span class="vfld" style="min-width:50px">${n.lb}</span><span class="vlbl" style="width:auto">Hz</span><span class="vlbl" style="width:auto;margin-left:16px">Solvent</span><span class="vfld">${st.solvent}</span></div>
+    <div class="pg-acts" data-id="proc-btns"><span class="vbtn">Transform</span><span class="vbtn">Autophase</span><span class="vbtn">Baseline correct</span><span class="vbtn">Reference</span><span class="vbtn">Integrate</span><span class="vbtn">Peak pick</span></div>
+    <div class="vrow" style="margin-top:10px"><span class="vlbl" style="width:auto">Display</span><span class="vbtn">Full</span><span class="vbtn">Vertical scale</span><span class="vbtn">Plot…</span></div>`;
+  }
+  return '';
+}
+function mockHTML(st){
+  const es=(st.es==='liquids'?ES_LIQ:ES_COMMON).map(t=>t?`<span data-id="es-${t.replace(/[^A-Za-z0-9()]/g,'')}">${t}</span>`:'<span class="empty"></span>').join('');
+  const nav=NAV[st.tab].map(([id,t])=>`<span data-id="nav-${id}" class="${st.page===id?'on':''}">${t}</span>`).join('');
+  const msgs=st.msgs.slice(-4).map(m=>`<div>${m}</div>`).join('');
+  return `<div class="vj-titlebar"><span class="ico"></span>VnmrJ</div>
+  <div class="vj-menu" data-id="menu"><span data-id="menu-file">File</span><span>Edit</span><span>View</span><span>Experiments</span><span>Acquisition</span><span>Automation</span><span>Process</span><span>Tools</span><span>Help</span></div>
+  <div class="vj-toolbar" data-id="toolbar"><span class="ic">▤</span><span class="ic">▭</span><span class="ic">▣</span><span class="ic">▦</span><span class="ic">✕</span><span class="ic stop" data-id="abort">◉</span><span class="ic" style="margin-left:28px">▥</span><span class="ic">▥</span><span class="sp"></span><span class="ic" data-id="fidspec">∿</span><span class="ic" data-id="fidspec2">⋀</span></div>
+  <div class="vj-main">
+    <div class="vj-left">
+      <div class="vj-ltabs" data-id="lefttabs"><span class="on">Protocols</span><span>QuickSubmit</span><span>Frame</span><span>Viewport</span><span>ProcessPlot</span></div>
+      <div class="vj-panel">
+        <div class="vj-ph" data-id="es">Experiment Selector <i>▫ ✕</i></div>
+        <div class="vj-subtabs"><span data-id="es-common" class="${st.es==='common'?'on':''}">Common</span><span data-id="es-liquids" class="${st.es==='liquids'?'on':''}">Liquids</span><span data-id="es-calib">Calibration</span></div>
+        <div class="vj-esgrid">${es}</div>
+      </div>
+      <div class="vj-panel vj-sq" data-id="sq">
+        <div class="vj-ph">Study Queue <i>▫ ✕</i></div>
+        <div class="vj-radios"><span class="rd on">Sample</span><span class="rd">Active sample</span><span class="rd">Spectrometer</span><span class="rd">Study cluster</span></div>
+        <div class="vj-sqbody"></div>
+        <div class="vj-sqbtns"><span class="vbtn">New study</span><span class="vbtn">Continue study</span></div>
+      </div>
+    </div>
+    <div class="vj-right">
+      <div class="vj-msg" data-id="msg">${msgs}</div>
+      <div class="vj-cmd" data-id="cmd"><span class="dd">▼</span><span class="ct" id="vjCmd">${st.cmd}</span><span class="caret"></span></div>
+      <div class="vj-graph" data-id="graph"><div class="vj-gh"><span>Exp:${st.exp}</span><span>Seq: ${st.seq}</span><span>Index: 1</span></div><div id="vjSvg">${graphSVG(st.graph,st)}</div></div>
+      <div class="vj-ctl">
+        <div class="vj-ctlbar">
+          <span class="tab ${st.tab==='start'?'on':''}" data-id="tab-start">Start</span><span class="tab ${st.tab==='acquire'?'on':''}" data-id="tab-acquire">Acquire</span><span class="tab ${st.tab==='process'?'on':''}" data-id="tab-process">Process</span>
+          <span class="gap"></span><span class="vbtn" data-id="insert">Insert</span><span class="vbtn" data-id="eject">Eject</span>
+          <span class="gap"></span><span class="vbtn" data-id="lockscan">Lock scan</span>
+          <span class="gap"></span><span class="vbtn" data-id="setuphw">Setup hardware</span><span class="vbtn" data-id="autolock">Auto lock</span><span class="vbtn" data-id="autotune">Auto tune</span><span class="vbtn" data-id="gradshim">Gradient shim</span>
+          <span class="gap"></span><span class="vbtn" data-id="logout">Logout</span>
+        </div>
+        <div class="vj-ctlbody"><div class="vj-nav">${nav}</div><div class="vj-page">${pageHTML(st)}</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="vj-status">
+    <span class="trash" data-id="trash"><svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path d="M1 3.5h12M5 3.5V1.8h4v1.7M2.6 3.5l.9 11h7l.9-11" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
+    <span class="sb" data-id="st-temp">Temp<em>${st.temp} C</em></span>
+    <span class="sb" data-id="st-spin">Spin<em>${st.spin} Hz</em></span>
+    <span class="sb" data-id="st-lock">Lock<em class="js-locklvl">${st.lock.level}</em></span>
+    <span class="sb" data-id="st-sample">Sample<em>&nbsp;</em></span>
+    <span class="sb probe" data-id="st-probe">Probe<em>Op-7-5-23</em></span>
+    <span class="stat" data-id="st-status"><span class="tri">▲</span><span class="box">${st.status}</span></span>
+    <span class="prog" data-id="st-prog"><i></i><i></i><span class="box">${st.progress}</span></span>
+  </div>`;
+}
+
+/* ---------- component info (explore mode) ---------- */
+const INFO={
+  menu:['菜单栏','Menu bar','File 里有 Save As / Open（保存、打开数据）；Experiments 可载入各类实验参数集；Acquisition、Process 是对应面板的另一个入口；Tools 里一般有标准校准等工具。'],
+  'menu-file':['File 菜单','File ▸ Save As…','采完谱后用 Save As… 保存数据（等同命令 svf）。工作区（如 exp27）只是临时空间，下一次采样会覆盖它。'],
+  toolbar:['工具栏','Toolbar','新建、打开、保存、打印、关闭等快捷按钮。右侧两个按钮用于在 FID 与谱图显示之间切换。'],
+  abort:['红色停止按钮','Abort','中止当前采样，作用与命令 aa 相近。正常结束采样请用 sa（会保留已采数据）。'],
+  fidspec:['显示切换','FID / Spectrum','切换图形区显示 FID（时域）或谱图（频域）。'],
+  fidspec2:['显示切换','FID / Spectrum','切换图形区显示 FID（时域）或谱图（频域）。'],
+  lefttabs:['左侧面板标签','Protocols / QuickSubmit / Frame …','Protocols = 实验选择器 + 研究队列（照片中打开的就是它）；QuickSubmit 用于快速提交；Frame、Viewport 管理图形区布局；ProcessPlot 用于处理和出图。'],
+  es:['实验选择器','Experiment Selector','单击按钮 = 在当前工作区载入该实验的标准参数集，消息区会显示 “Executing PROTON” 之类的提示。Common 是最常用的 1D/2D；Liquids 是完整的液体实验列表（¹⁹F、³¹P 一般在这里）；Calibration 是脉冲校准等实验。'],
+  'es-common':['Common 页','Experiment Selector ▸ Common','最常用的实验：PROTON、CARBON、溶剂抑制 (PRESAT、wet1D)、gCOSY、HSQCAD、gHMBCAD、NOESY1D。'],
+  'es-liquids':['Liquids 页','Experiment Selector ▸ Liquids','完整的液体实验列表。FLUORINE、PHOSPHORUS 等异核 1D 一般在这里，具体内容随站点配置不同（此处按钮为示意）。'],
+  'es-calib':['Calibration 页','Experiment Selector ▸ Calibration','脉冲宽度 (pw90) 等校准实验。'],
+  sq:['研究队列','Study Queue','用于排队和自动化：New study 为新样品建立队列，Continue study 在同一样品上追加实验。用 Study 时数据会按 study 自动保存。本页的手动流程可以不用它。'],
+  msg:['消息区','Message area','系统反馈和报错都显示在这里，例如 Executing PROTON、Finding z0、Experiment started、ADC overflow。遇到问题先看这几行。'],
+  cmd:['命令行','Command line','输入 VnmrJ 命令或宏并回车。区分大小写：PROTON 要大写，ga、wft 小写。多条命令可以用空格隔开写在一行，例如 wft aph vsadj。参数赋值写成 nt=16、tn=\'Li7\'。'],
+  graph:['图形区','Graphics area','显示 FID、谱图、锁场扫描、阵列等。蓝色标题行：Exp = 当前工作区编号；Seq = 当前脉冲序列（findz0 表示正在找 Z0）；Index = 阵列中第几个谱。'],
+  'tab-start':['Start 面板','Start','样品相关设置：Sample Info（名称、溶剂）、Lock（锁场）、Shim（匀场）、Spin/Temp（旋转、温度）。'],
+  'tab-acquire':['Acquire 面板','Acquire','采样参数：谱宽 sw、扫描次数 nt、弛豫延迟 d1、采样时间 at、脉冲角、去耦，以及开始采样的按钮。'],
+  'tab-process':['Process 面板','Process','处理：加窗、傅里叶变换、相位、基线、定标、积分、峰列表和出图。'],
+  insert:['Insert','放入样品','关闭弹出气流，让样品缓慢降入探头。命令：i。'],
+  eject:['Eject','弹出样品','打开气流把样品托出磁体。命令：e。等听到气流稳定后再取放样品。'],
+  lockscan:['Lock scan','锁场扫描','打开锁场信号的实时显示，用于手动锁场：未锁时是正弦拍频；调 Z0 使拍频变慢、波形变平，然后勾选 Lock。'],
+  setuphw:['Setup hardware','设置硬件','把当前参数里的硬件设置（旋转、温度、锁场等）发送到谱仪，但不采样。命令 su。照片中的 “Set hardware: operation complete” 就是这类消息。'],
+  autolock:['Auto lock','自动锁场','搜索并锁定溶剂 ²H 信号，同时优化 lock power / gain / phase。锁场前确认 Sample Info 的溶剂正确。'],
+  autotune:['Auto tune','自动调谐 (ProTune)','按当前参数的 tn（观测核）和 dn（去耦核）自动调谐与匹配 (tune & match) 探头。换核（¹⁹F、⁷Li、³¹P 等）后必须运行。'],
+  gradshim:['Gradient shim','梯度匀场','用 Z 梯度测量 B₀ 分布，自动调整轴向 shims，命令 gmapshim。一般在锁场后运行 1–2 次。'],
+  gshimpage:['Gradient Autoshim on Z','梯度匀场','与按钮条的 Gradient shim 相同。'],
+  logout:['Logout','退出','退出当前用户。离开前先保存数据、取出样品，并按规定恢复调谐。'],
+  'nav-sampleinfo':['Sample Info 页','Start ▸ Sample Info','填写样品名和溶剂。Solvent 必须与实际氘代溶剂一致：它决定锁场的 ²H 频率、Find z0 的搜索目标和 setref 的定标值。'],
+  'nav-lock':['Lock 页','Start ▸ Lock','你照片停在这一页。左边是 Spin / Lock 开关和 Find z0，中间是 Z0 / Power / Gain / Phase 滑条，右边是 Autolock 模式。'],
+  'nav-shim':['Shim 页','Start ▸ Shim','梯度匀场和手动 shims（Z1、Z2 …）。'],
+  'nav-spintemp':['Spin/Temp 页','Start ▸ Spin/Temp','设置旋转速率和样品温度。1D 常用约 20 Hz；2D（gCOSY、HSQCAD、gHMBCAD）和 NOESY1D 建议关闭旋转。'],
+  'nav-defaults':['Defaults 页','Acquire ▸ Defaults','最常改的采样参数都在这一页。'],
+  'nav-basic':['Basic 页','Process ▸ Basic','变换、相位、基线、定标、积分等常用处理。'],
+  samplename:['Sample name','样品名','保存数据时会用到。建议只用字母、数字和下划线。'],
+  solvent:['Solvent','溶剂','必须选实际使用的氘代溶剂。选错会导致锁不上或化学位移定标错误。命令行写法：solvent=\'CDCl3\'。'],
+  spin:['Spin','旋转','勾选 = 样品旋转，右边是设定转速（照片中为 25 Hz）。状态栏的 Spin Regulating 表示转速还在稳定。'],
+  lockcb:['Lock 复选框与电平','Lock level','勾选 = 锁场环路开启，右边数字是锁场电平。照片中未勾选、电平 0.6，说明还没锁上。锁上后电平应升到几十并保持稳定。'],
+  lockstatus:['Lock status','锁场状态','Off 表示未锁场。锁上后显示锁定状态（具体措辞依版本）。'],
+  sellock:['Select lock signal…','选择锁场信号','手动选择或确认锁场信号（溶剂）。常规情况不需要动。'],
+  findz0:['Find z0','寻找 Z0','运行 findz0 序列：自动找到让溶剂 ²H 信号落在锁场频率上的 Z0 值。照片中图形区标题 “Seq: findz0” 就是它在运行。结束后再点 Auto lock。'],
+  locksliders:['Z0 / Power / Gain / Phase','锁场参数','Z0：锁场频率偏移（场强微调）。Power：锁场发射功率，过高会饱和，表现为电平缓慢下降且不稳。Gain：锁场接收增益，只影响显示的电平高低。Phase：锁场相位，调到电平最大。照片中的值：Z0 −261，Power 29，Gain 39，Phase 323。'],
+  autolockbox:['Autolock 模式','Autolock','Automatic：自动寻找并锁场，氘代样品推荐。Unlocked / Not used：不锁场，用于非氘代样品。Sample、z0 only：只做部分优化，具体行为取决于站点设置。照片中选的是 Unlocked。'],
+  runautolock:['Run autolock','执行锁场','按上方选定的 Autolock 模式立即锁场。'],
+  shimnuc:['梯度匀场用的核','Lock (²H) / H1','默认用锁场的 ²H 信号；不锁场的样品可改用溶剂的 ¹H 信号（视版本和配置）。'],
+  manualshim:['手动 shims','Z1 / Z2','以 Lock 电平最大为准，交替微调 Z1、Z2。'],
+  temp:['温度','Temperature','需要控温时勾选并设定温度，等温度稳定后再锁场匀场。'],
+  'acq-params':['采样参数','Acquire ▸ Defaults','观测核、谱宽、采样时间、弛豫延迟、脉冲角、扫描次数、去耦、接收增益。改完可用命令 time 看预计时间。'],
+  'acq-go':['Acquire','开始采样','开始采样，与命令 go 相同；ga = 采样后自动 wft。'],
+  'acq-array':['Arrays…','参数阵列','把某个参数设成一组值依次采样，例如校准 pw90 时阵列 pw。命令 array。'],
+  'proc-btns':['处理按钮','Process ▸ Basic','Transform（wft）、Autophase（aph）、Baseline correct（bc）、Reference（定标）、Integrate（积分）、Peak pick（峰列表）。'],
+  'st-temp':['状态栏 Temp','温度','当前样品温度（照片中 25.0 °C）。'],
+  'st-spin':['状态栏 Spin','转速','当前转速（照片中 25 Hz）。'],
+  'st-lock':['状态栏 Lock','锁场电平','照片中为 0.6，未锁。锁上后应稳定在几十以上。'],
+  'st-sample':['状态栏 Sample','样品位置','自动进样器的样品位号；手动放样时一般为空。'],
+  'st-probe':['状态栏 Probe','探头文件','当前探头 / 探头文件名（照片中为 Op-7-5-23）。各核的 pw90、功率等校准值存在这里。测 ⁷Li 等不常用核时文件中可能没有校准值。'],
+  'st-status':['谱仪状态','Status','显示谱仪当前在做什么：Idle、Acquiring、Spin Regulating 等。照片中为 Spin Regulating：转速还在稳定。'],
+  'st-prog':['进度与最近消息','Progress','显示当前实验的进度或最近一条消息，如 “exp27: Experiment started”。'],
+  trash:['回收站','Trash','用于拖拽删除队列中的实验等。']
+};
+const ES_INFO={PROTON:'标准 ¹H 1D（s2pul）。',CARBON:'¹H 去耦的 ¹³C 1D。','(H)PRESAT':'¹H 溶剂峰预饱和抑制（如水峰）。','(H)wet1D':'WET 多峰溶剂抑制的 ¹H 1D。','(HH)gCOSY':'梯度 COSY：¹H–¹H 耦合关联。','(HC)HSQCAD':'¹H–¹³C 单键相关（绝热脉冲版本）。','(HC)gHMBCAD':'¹H–¹³C 多键（2–3 键）相关。','(H)NOESY1D':'选择性 1D NOESY：空间邻近关系。','Studies ▽':'预设的实验组合。',FLUORINE:'标准 ¹⁹F 1D（视站点配置）。',PHOSPHORUS:'¹H 去耦的 ³¹P 1D（视站点配置）。',DEPT:'¹³C DEPT：区分 CH / CH₂ / CH₃。',APT:'¹³C APT：按氢数给出正负峰。','More ▽':'更多实验。'};
+
+/* ---------- rendering ---------- */
+const vj=$('#vj'),wrap=$('#vjWrap'),sizer=$('#vjSizer');
+let cur=null;
+const DW=1060;
+function fit(){const w=wrap.clientWidth;if(!w)return;const s=Math.max(0.5,Math.min(1,w/DW));vj.style.transform=`scale(${s})`;sizer.style.width=(DW*s)+'px';sizer.style.height=(vj.offsetHeight*s)+'px';}
+function clearTimers(){S.timers.forEach(t=>clearTimeout(t));S.timers=[];}
+function renderMock(st,opts={}){
+  clearTimers();cur=st;
+  vj.innerHTML=mockHTML(st);
+  vj.querySelectorAll('[data-id]').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');});
+  st.hl.forEach((id,i)=>{const el=vj.querySelector(`[data-id="${id}"]`);if(el){el.classList.add('hl');if(st.hl.length>1)el.dataset.badge=String(i+1);}});
+  fit();
+  if(opts.animate&&!reduce){
+    const c=$('#vjCmd');
+    if(c&&st.cmd){const full=st.cmd;c.textContent='';let j=0;const tick=()=>{j++;c.textContent=full.slice(0,j);if(j<full.length)S.timers.push(setTimeout(tick,28));};S.timers.push(setTimeout(tick,120));}
+    if(st.anim){
+      const A=st.anim;setLock(A.from.level.toFixed(1),A.from.status,false);$('#vjSvg').innerHTML=graphSVG(A.graphFrom,st);
+      const t0=performance.now(),dur=1400;
+      const step=()=>{const p=Math.min(1,(performance.now()-t0)/dur);const v=A.from.level+(A.to-A.from.level)*(p<.55?0:(p-.55)/.45);
+        if(p>=.55&&p<1)setLock(v.toFixed(1),'Off',false);
+        if(p>=1){setLock(String(A.to),st.lock.status,true);$('#vjSvg').innerHTML=graphSVG(st.graph,st);}
+        else S.timers.push(setTimeout(step,40));};
+      S.timers.push(setTimeout(step,40));
+    }
+  }
+}
+function setLock(level,status,on){
+  vj.querySelectorAll('.js-locklvl').forEach(e=>e.textContent=level);
+  vj.querySelectorAll('.js-lockstat').forEach(e=>e.textContent=status);
+  vj.querySelectorAll('.js-lockbox').forEach(e=>e.textContent=on?'✓':'');
+}
+
+function renderTabs(){
+  $('#nucTabs').innerHTML=ORDER.map(k=>`<button role="tab" aria-selected="${S.nuc===k}" data-nuc="${k}">${NUC[k].sup}<small>${sfs(k)} MHz</small></button>`).join('');
+}
+function renderStepper(){
+  $('#stepper').innerHTML=SHORT.map((t,i)=>`<li><button data-step="${i}" class="${i<S.step?'done':''}" ${i===S.step?'aria-current="step"':''} title="${t}"><span class="n">${i+1}</span><span class="t">${t}</span>${i===3?'<span class="shot">照片</span>':''}</button></li>`).join('');
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderCard(){
+  const k=S.nuc,c=content(k,S.step);
+  $('#sampleLine').innerHTML=`观测核 <b>${NUC[k].sup}</b> · ${sfs(k)} MHz · 示例样品：${NUC[k].desc}`;
+  let h=`<div class="card-h"><span class="num">${S.step+1}</span><div><h3>${c.title}</h3><div class="en">${c.en}</div>
+    <div class="path">${c.path.map(p=>`<span>${p}</span>`).join('<i>▸</i>')}</div></div></div>`;
+  h+=`<ol class="do">${c.doList.map(d=>`<li>${d}</li>`).join('')}</ol>`;
+  if(c.rows)h+=`<table class="ptab"><tbody>${c.rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</tbody></table>`;
+  if(c.cmds&&c.cmds.length){h+=`<h4 style="margin:0 0 6px">命令行等效</h4><div class="cmds">${c.cmds.map(([cmd,d])=>`<div class="cmd"><code>${esc(cmd)}</code><span>${d}</span><button class="copy" data-copy="${esc(cmd).replace(/"/g,'&quot;')}">复制</button></div>`).join('')}</div>`;}
+  else h+=`<p class="nocmd">这一步用界面按钮完成（左图中高亮的位置）。</p>`;
+  const notes=(c.notes||[]).filter(Boolean);
+  if(notes.length)h+=`<ul class="notes">${notes.map(([lv,t])=>`<li class="${lv}"><b class="tag">${lv==='warn'?'注意':lv==='crit'?'警告':'提示'}</b>${t}</li>`).join('')}</ul>`;
+  $('#stepCard').innerHTML=h;
+  $('#stepCount').textContent=`${S.step+1} / ${STEPS.length}`;
+  $('#prev').disabled=S.step===0;
+  $('#next').textContent=S.step===STEPS.length-1?'回到第 1 步':'下一步';
+}
+function showView(v){
+  S.view=v;$('#procView').hidden=v!=='proc';$('#infoView').hidden=v!=='info';
+  $('#tabProc').setAttribute('aria-selected',v==='proc');$('#tabInfo').setAttribute('aria-selected',v==='info');
+}
+function go(i,animate=true){
+  S.step=(i+STEPS.length)%STEPS.length;
+  renderStepper();renderCard();renderMock(stepState(S.nuc,S.step),{animate});showView('proc');
+}
+function showInfo(id){
+  let t,w,b;
+  if(INFO[id]){[t,w,b]=INFO[id];}
+  else if(id.startsWith('es-')){const lab=[...ES_COMMON,...ES_LIQ].find(x=>x&&('es-'+x.replace(/[^A-Za-z0-9()]/g,''))===id)||id.slice(3);t=lab;w='Experiment Selector 按钮';b=(ES_INFO[lab]||'实验按钮。')+'单击即把该实验的标准参数载入当前工作区。';}
+  else if(id.startsWith('nav-')){t=id.slice(4);w='面板页面';b='参数面板中的一个页面。';}
+  else {t=id;w='';b='界面部件。';}
+  $('#infoTitle').textContent=t;$('#infoWhere').textContent=w;$('#infoBody').innerHTML=`<p>${b}</p>`;
+  vj.querySelectorAll('.picked').forEach(e=>e.classList.remove('picked'));
+  const el=vj.querySelector(`[data-id="${id}"]`);if(el)el.classList.add('picked');
+  showView('info');
+}
+
+/* ---------- reference sheets ---------- */
+const OBS=[
+  ['msg','消息区','PROTON 已载入，findz0 正在运行','四行依次是：Executing PROTON（标准 ¹H 参数载入 exp27）→ Set hardware: operation complete → Finding z0 → exp27: Experiment started。这里启动的是 findz0，还不是 ¹H 采样。'],
+  ['graph','图形区标题','Exp:27 · Seq: findz0 · Index: 1','当前工作区是 exp27，正在运行的序列是 findz0，所以图形区暂时是空的。'],
+  ['lockcb','Lock','还没锁上','Lock 复选框未勾，Lock status 为 Off，锁场电平 0.6。findz0 结束后点 Auto lock；锁上后电平应升到几十并保持稳定。'],
+  ['autolockbox','Autolock','模式是 Unlocked','氘代溶剂样品建议改选 Automatic，再点 Run autolock 或上方的 Auto lock。Unlocked 用于没有氘代溶剂、需要不锁场采样的情况。'],
+  ['locksliders','锁场参数','Z0 −261 · Power 29 · Gain 39 · Phase 323','这是当前（或上一次锁场留下）的值，自动锁场会重新优化。手动锁场时：Z0 找共振，Phase 调到电平最大，Power 不要过高以免饱和。'],
+  ['st-spin','状态栏','Spin 25 Hz · Spin Regulating','转速还在稳定，等提示消失再继续。1D 可以旋转；gCOSY、HSQCAD、gHMBCAD、NOESY1D 建议关闭旋转。'],
+  ['st-probe','Probe','Op-7-5-23','当前探头 / 探头文件名，里面存有各核的 pw90、功率等校准值。测 ⁷Li 这类不常用核时可能没有校准值，需要自己校准（⁷Li 第 7 步）。'],
+  ['es','Experiment Selector','Common 页','可直接点 PROTON、CARBON、PRESAT、wet1D、gCOSY、HSQCAD、gHMBCAD、NOESY1D。¹⁹F、³¹P 一般在 Liquids 页；⁷Li 通常要在命令行改 tn。']
+];
+function renderObs(){
+  $('#obs').innerHTML=OBS.map(([id,k,t,d])=>`<article><span class="k">${k}</span><h3>${t}</h3><p>${d}</p><button class="btn" data-locate="${id}">在示意图中定位</button></article>`).join('');
+}
+const NUCROWS=[
+  ['¹H','H1','1/2','99.99%','5.87 × 10³',100.000000,'TMS（常用残留溶剂峰）','约 −1 ~ 13','灵敏度最高；先跑 ¹H 检查样品和匀场'],
+  ['²H','H2','1','0.012%','0.0065',15.350609,'—','同 ¹H','锁场用核；Solvent 决定锁场频率'],
+  ['¹³C','C13','1/2','1.07%','1.00',25.145020,'TMS（CDCl₃ 77.16）','约 0 ~ 230','¹H 去耦；常规谱带 NOE，不能直接定量'],
+  ['¹⁹F','F19','1/2','100%','4.89 × 10³',94.094011,'CFCl₃（二级：PhCF₃ ≈ −63.7，C₆F₆ ≈ −164.9）','约 +50 ~ −250','需从 H1 调谐到 F19；谱宽大；探头有宽背景'],
+  ['⁷Li','Li7','3/2','92.41%','1.59 × 10³',38.863797,'LiCl / D₂O（IUPAC 用 9.7 mol/kg；常用 1 M）外标','抗磁性溶液约 ±5','X 通道，需调谐和校准 pw90；四极核但峰通常较窄'],
+  ['¹¹B','B11','3/2','80.1%','777',32.083974,'BF₃·OEt₂','约 +90 ~ −130','硼硅玻璃管和探头有宽背景峰，可用石英管'],
+  ['²³Na','Na23','3/2','100%','545',26.451900,'NaCl / D₂O 外标','窄','四极核，峰宽随配位环境变化'],
+  ['²⁹Si','Si29','1/2','4.68%','2.16',19.867187,'TMS','约 +50 ~ −200','γ 为负，NOE 为负，用 inverse-gated 去耦；玻璃 / 探头在 ≈ −110 ppm 有宽背景；T₁ 长'],
+  ['³¹P','P31','1/2','100%','391',40.480742,'85% H₃PO₄ 外标','约 +250 ~ −250','¹H 去耦；定量用 inverse-gated']
+];
+function renderNucTable(){
+  const cur=NUC[S.nuc].tn;
+  $('#nucTable').innerHTML=`<thead><tr><th>核</th><th>自旋 I</th><th>天然丰度</th><th>相对灵敏度<br>(¹³C = 1)</th><th>Ξ / %</th><th>频率 @ ${S.field} MHz</th><th>0 ppm 参考</th><th>常见范围 / ppm</th><th>要点</th></tr></thead><tbody>`+
+    NUCROWS.map(r=>`<tr class="${r[1]===cur?'cur':''}"><td class="nuc">${r[0]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td class="num">${r[5].toFixed(6)}</td><td class="num">${(S.field*r[5]/100).toFixed(2)} MHz</td><td>${r[6]}</td><td class="num">${r[7]}</td><td>${r[8]}</td></tr>`).join('')+'</tbody>';
+}
+const SOLV=[['CDCl₃','CDCl3','7.26','1.56','77.16'],['DMSO-d₆','DMSO','2.50','3.33','39.52'],['CD₃CN','—','1.94','2.13','1.32, 118.26'],['CD₃OD','—','3.31','4.87','49.00'],['Acetone-d₆','—','2.05','2.84','29.84, 206.26'],['C₆D₆','—','7.16','0.40','128.06'],['CD₂Cl₂','—','5.32','1.52','53.84'],['THF-d₈','—','1.72, 3.58','2.46','25.31, 67.21'],['D₂O','D2O','4.79 (HDO)','—','—']];
+function renderSolv(){
+  $('#solvTable').innerHTML='<thead><tr><th>溶剂</th><th>¹H 残留峰 / ppm</th><th>H₂O / HDO / ppm</th><th>¹³C / ppm</th></tr></thead><tbody>'+
+    SOLV.map(r=>`<tr><td><b>${r[0]}</b></td><td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td></tr>`).join('')+'</tbody>';
+}
+const CMDS=[
+  ['样品与工作区',[['e','弹出样品'],['i','放入样品'],['su','把硬件设置发送到谱仪（不采样）'],['jexp(27)','切换到工作区 exp27']]],
+  ['载入实验与换核',[['PROTON','标准 ¹H'],['CARBON','标准 ¹³C{¹H}'],['FLUORINE','标准 ¹⁹F（视站点配置）'],['PHOSPHORUS','标准 ³¹P{¹H}（视站点配置）'],["tn='Li7'",'改观测核（H1、C13、F19、Li7、P31、B11 …）'],["dn='H1' dm='nnn'",'去耦核与去耦模式']]],
+  ['匀场与参数',[['gmapshim','梯度匀场'],['nt=16','扫描次数'],['d1=1','弛豫延迟 (s)'],['sw=6400','谱宽 (Hz)'],['time','预计实验时间'],["array('pw',16,2,2)",'参数阵列：16 个值，从 2 起步长 2'],['da','显示当前的阵列参数']]],
+  ['采样控制',[['ga','采样，结束后自动 wft'],['go','只采样'],['sa','停止（保留数据）'],['ra','继续采样'],['aa','中止']]],
+  ['处理与定标',[['wft','加窗 + 傅里叶变换'],['lb=0.3','线宽展宽 (Hz)'],['aph','自动相位'],['vsadj','纵向自动缩放'],['f full','显示全谱'],['bc','基线校正'],['setref','按溶剂 / Ξ 自动定标'],['nl rl(7.26p)','光标所在峰定为 7.26 ppm'],['movetof','把 tof 移到光标处'],['dpf','显示峰位'],['dpir','显示积分值'],['dssh','阵列谱并排显示'],['ds','显示谱图'],['df','显示 FID']]],
+  ['保存与出图',[["svf('sample01_H1')",'保存 FID 和参数'],['pl pscale pap page','绘谱、刻度、参数并输出']]]
+];
+function renderCmds(){
+  $('#cmdGrid').innerHTML=CMDS.map(([t,list])=>`<article><h3>${t}</h3><div class="cmds">${list.map(([c,d])=>`<div class="cmd"><code>${esc(c)}</code><span>${d}</span><button class="copy" data-copy="${esc(c).replace(/"/g,'&quot;')}">复制</button></div>`).join('')}</div></article>`).join('');
+}
+const TR=[
+  ['锁不上 / Find z0 失败','Solvent 选错；样品不含氘代溶剂；样品太少或位置不对。','核对 Sample Info 的 Solvent；检查样品高度和深度规；非氘代样品改 Unlocked，用 ¹H 匀场或加同轴内管。'],
+  ['Lock 电平波动或缓慢下降','Lock power 过高导致饱和；转速或温度未稳定。','把 Power 降几个单位；等 Spin、Temp 稳定后再锁。'],
+  ['峰宽、拖尾、有肩峰','匀场差；气泡、颗粒、液面不够高；管子质量差。','重新 Gradient shim；过滤样品，补足液面高度；换好一点的管。'],
+  ['ADC overflow / FID 开头被削平','接收增益过高或样品太浓。','降低 gain（例如 gain=20）后重采；必要时减小脉冲角或稀释。'],
+  ['X 核（¹⁹F、⁷Li、³¹P）完全没信号','没调谐；tn 写错；峰在谱宽之外；pw 不对；d1 太短。','Auto tune；检查 tn；先用宽 sw 扫；校准 pw90；加长 d1。'],
+  ['基线起伏（¹⁹F 尤其常见）','探头含氟部件的背景；FID 开头几点失真。','bc 基线校正；反向线性预测；适当增大 lb。'],
+  ['主峰两侧有等距小峰','旋转边带：间距等于转速 (Hz)，非旋转 shims（X、Y）不好。','调 X、Y shims，或关闭旋转。'],
+  ['化学位移整体偏了','Solvent 选错，或没锁场就用了 setref。','改正 Solvent 后再 setref，或用 nl + rl 按已知峰手动定标。'],
+  ['采完后找不到数据','只留在 exp 工作区里，被下一次采样覆盖。','每张谱采完立即 svf 或 File ▸ Save As…。']
+];
+function renderTR(){
+  $('#trGrid').innerHTML=TR.map(([s,c,f])=>`<article><h3>${s}</h3><dl><dt>原因</dt><dd>${c}</dd><dt>处理</dt><dd>${f}</dd></dl></article>`).join('');
+}
+
+/* ---------- events ---------- */
+$('#nucTabs').addEventListener('click',e=>{const b=e.target.closest('[data-nuc]');if(!b)return;S.nuc=b.dataset.nuc;renderTabs();renderNucTable();go(S.step);});
+$('#field').addEventListener('change',e=>{S.field=+e.target.value;renderTabs();renderNucTable();go(S.step,false);});
+$('#stepper').addEventListener('click',e=>{const b=e.target.closest('[data-step]');if(b)go(+b.dataset.step);});
+$('#prev').addEventListener('click',()=>go(S.step-1));
+$('#next').addEventListener('click',()=>go(S.step+1));
+$('#tabProc').addEventListener('click',()=>{showView('proc');vj.querySelectorAll('.picked').forEach(e=>e.classList.remove('picked'));});
+$('#tabInfo').addEventListener('click',()=>{if(!$('#infoTitle').textContent)showInfo('nav-lock');else showView('info');});
+$('#backProc').addEventListener('click',()=>{showView('proc');vj.querySelectorAll('.picked').forEach(e=>e.classList.remove('picked'));});
+vj.addEventListener('click',e=>{const el=e.target.closest('[data-id]');if(el)showInfo(el.dataset.id);});
+vj.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const el=e.target.closest('[data-id]');if(el){e.preventDefault();showInfo(el.dataset.id);}}});
+document.addEventListener('keydown',e=>{if(e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight'&&!e.target.closest('.vj'))go(S.step+1);if(e.key==='ArrowLeft'&&!e.target.closest('.vj'))go(S.step-1);});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-copy]');
+  if(b){const t=b.dataset.copy.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+    const done=()=>{b.textContent='已复制';setTimeout(()=>b.textContent='复制',1200);};
+    const fallback=()=>{const code=b.parentElement.querySelector('code');const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已选中';setTimeout(()=>b.textContent='复制',1500);};
+    try{navigator.clipboard.writeText(t).then(done,fallback);}catch(err){fallback();}
+    return;}
+  const l=e.target.closest('[data-locate]');
+  if(l){renderMock(Object.assign({},SHOT));showInfo(l.dataset.locate);
+    const el=vj.querySelector(`[data-id="${l.dataset.locate}"]`);if(el){el.classList.add('hl');}
+    $('.bench').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
+});
+$('#jumpLock').addEventListener('click',()=>{go(3);$('.bench').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});});
+if(window.ResizeObserver)new ResizeObserver(fit).observe(wrap);else window.addEventListener('resize',fit);
+
+/* ---------- boot ---------- */
+renderTabs();renderObs();renderNucTable();renderSolv();renderCmds();renderTR();
+go(0,false);
+})();
+</script>
