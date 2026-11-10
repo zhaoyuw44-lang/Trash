@@ -585,6 +585,65 @@ def install_07():
     return f
 
 
+def install_08():
+    f = Fig('install-08-expected', 600, 392,
+            '测试后的正常状态：Power 灯常亮蓝色，USB 灯常绿，Cell On 灯熄灭，Overload 灯通常熄灭；Framework 中仪器为绿色；校准结果 0 个错误并已保存，生成摘要和备份文件；校准池和屏蔽盒已收好。')
+    # front panel with LEDs in their expected state
+    f.rect(20, 30, 150, 300, 10, 'panel-edge')
+    f.rect(28, 38, 134, 284, 6, 'panel')
+    f.text(95, 66, 'Reference 620', 12.5, 'middle', 700, 'panel-ink')
+    f.text(95, 80, 'Potentiostat/Galvanostat/ZRA', 7.5, 'middle', color='panel-ink')
+    f.text(122, 124, 'Cell On', 9.5, 'end', color='panel-ink')
+    f.circle(134, 121, 4.5, 'led-off')
+    f.text(122, 142, 'Overload', 9.5, 'end', color='panel-ink')
+    f.circle(134, 139, 4.5, 'led-off')
+    f.rect(127, 162, 14, 84, 4, 'panel-edge', 'panel-ink', 1.5)
+    f.text(120, 208, 'Cell Cable', 9.5, 'end', color='panel-ink')
+    f.rect(38, 264, 50, 16, 2, 'accent')
+    f.text(63, 276, '序列号', 9, 'middle', 700, 'accent-ink')
+    f.circle(44, 296, 6, 'led-blue')
+    f.circle(44, 296, 9, 'none', 'led-blue', 1.5)
+    f.text(56, 299.5, 'Power', 9.5, color='panel-ink')
+    f.circle(44, 314, 6, 'led-green')
+    f.circle(44, 314, 9, 'none', 'led-green', 1.5)
+    f.text(56, 317.5, 'USB', 9.5, color='panel-ink')
+    f.text(95, 346, '前面板', 11.5, 'middle', 600, 'muted')
+    # callouts
+    f.path('M140 121 L186 104', 'muted', 1)
+    f.text(190, 104, 'Cell On：熄灭', 12, weight=700)
+    f.text(190, 120, '没有在做实验', 10.5, color='muted')
+    f.path('M140 139 L186 150', 'muted', 1)
+    f.text(190, 150, 'Overload：通常熄灭', 12, weight=700)
+    f.text(190, 166, '导线悬空时亮也属正常', 10.5, color='muted')
+    f.path('M54 290 L186 262', 'muted', 1)
+    f.text(190, 262, 'Power：常亮蓝色', 12, weight=700, color='ok')
+    f.text(190, 278, '自检通过（亮→闪 3 次→常亮）', 10.5, color='muted')
+    f.path('M54 318 L186 312', 'muted', 1)
+    f.text(190, 312, 'USB：常绿', 12, weight=700, color='ok')
+    f.text(190, 328, '收发数据时闪烁', 10.5, color='muted')
+    # software side
+    f.rect(390, 30, 200, 70, 8, 'sunk')
+    f.text(400, 50, '设备状态栏 / GIM', 11, weight=700)
+    f.circle(408, 74, 5, 'led-green', 'wire', 1)
+    f.text(418, 78, '仪器为绿色 = 可用', 11)
+    f.rect(390, 112, 200, 96, 8, 'sunk')
+    f.text(400, 132, 'Calibration Results', 11, weight=700, mono=True)
+    f.text(400, 156, '错误数：0', 13, weight=700, color='ok')
+    f.text(400, 178, 'Save → Yes', 11)
+    f.text(400, 196, 'Done → OK', 11)
+    f.rect(390, 220, 200, 110, 8, 'sunk')
+    f.text(400, 240, '生成的文件', 11, weight=700)
+    f.text(400, 258, 'My Gamry Data 中：', 10.5)
+    f.text(400, 274, 'Calibration Results PC5-#####.txt', 9, mono=True)
+    f.text(400, 294, 'CalBackup 中：', 10.5)
+    f.text(400, 310, 'REF620-#####_FW…_日期.CalData', 9, mono=True)
+    # physical state after the tests
+    for x, w, t in [(20, 180, '校准池、屏蔽盒已收好'), (210, 170, '导线空着，待接电解池'), (390, 200, '电解池接地时拆掉机壳接地线')]:
+        f.rect(x, 352, w, 30, 8, 'ok-soft', 'ok', 1)
+        f.text(x + w / 2, 372, t, 11.5, 'middle', 600)
+    return f
+
+
 # ================================================================== use
 def use_01():
     f = Fig('use-01-three-electrode', 600, 362,
@@ -837,7 +896,7 @@ def hazard_grounding():
     return f
 
 
-FIGS = [install_00, install_01, install_02, install_03, install_04, install_05, install_06, install_07,
+FIGS = [install_00, install_01, install_02, install_03, install_04, install_05, install_06, install_07, install_08,
         use_01, use_02, use_03, use_04, use_05, hazard_grounding]
 
 
