@@ -442,7 +442,7 @@ def install_06():
 
 def install_07():
     f = Fig('install-07-calibration', 600, 468,
-            'Calibrate Instrument：先把后面板 Chassis Ground 接可靠大地，电缆按颜色接 200 Ω 校准池，放进校准屏蔽盒盖好，黑线接盒上接地柱，再从 Framework 的 Experiment › Utilities 启动并按提示保存结果。')
+            'Calibrate Instrument：尽可能把后面板 Chassis Ground 接可靠大地，电缆按颜色接 200 Ω 校准池上标注的插孔，放进校准屏蔽盒盖好，黑线接盒上接地柱，再从 Framework 的 Experiment › Utilities 启动；出现警告先复查接线并 Retry，仍失败就把摘要文件附在技术支持表单中。')
     f.rect(20, 92, 84, 72, 6, 'panel', 'panel-edge')
     f.text(62, 126, 'R620', 13, 'middle', 700, 'panel-ink')
     f.text(62, 146, '后面板', 10, 'middle', color='panel-ink')
@@ -456,44 +456,52 @@ def install_07():
     f.rect(182, 54, 186, 10, 3, 'ink')
     f.text(275, 44, '盖好屏蔽盒盖', 11.5, 'middle', color='muted')
     f.rect(188, 64, 174, 148, 4, 'sunk', 'ink', 2)
-    f.rect(245, 100, 92, 74, 6, 'bg', 'accent', 2)
-    f.text(291, 130, '校准池', 13, 'middle', 700)
-    f.text(291, 154, '200 Ω · 0.02 %', 12.5, 'middle', 700, 'accent')
-    for i, k in enumerate(['we', 'ws', 're', 'ce', 'cs']):
-        y = 110 + i * 14
-        f.wire(f'M140 128 C 190 128, 200 {y}, 245 {y}', k, 2.5)
+    # 200 ohm calibration cell, receptacles labelled as on the QSG photo
+    f.rect(198, 94, 158, 100, 6, 'bg', 'accent', 2)
+    f.text(277, 116, '200 Ω 校准池', 12.5, 'middle', 700, 'accent')
+    jacks = [(212, 'we', 'WE'), (238, 'ws', 'WS'), (277, 're', 'RE'), (314, 'cs', 'CS'), (340, 'ce', 'CE')]
+    for x, k, lab in jacks:
+        f.wire(f'M140 128 C 175 128, {x} 100, {x} 144', k, 2.4)
+    for x, k, lab in jacks:
+        f.circle(x, 152, 8, 'wire')
+        f.circle(x, 152, 5.5, k)
+        f.text(x, 178, lab, 9.5, 'middle', 700)
     f.path('M182 196 H188', 'ink', 2)
     f.circle(176, 196, 6, 'sunk', 'ink', 2)
     f.wire('M140 128 C 150 176, 156 196, 170 196', 'gnd', 2.5)
     f.text(168, 224, '黑线接盒上接地柱', 11, 'end', color='muted')
     f.text(275, 234, '校准屏蔽盒', 12, 'middle', 700)
     f.text(275, 250, 'Calibration Shield', 10.5, 'middle', color='muted')
-    f.badge(245, 100, 2)
+    f.badge(198, 94, 2)
     f.badge(372, 59, 3)
     f.text(400, 40, 'Framework：Experiment › Utilities', 11, color='muted')
-    steps = ['Calibrate Instrument', 'Performance Tips → OK', 'Cell Required → OK', '结果窗口：Save → Yes']
+    steps = ['Calibrate Instrument', 'Performance Tips → OK', 'Cell Required → OK', '自动运行，提示是否成功',
+             'Save：Yes 新数据 / No 原数据']
     for i, t in enumerate(steps):
-        y = 56 + i * 48
-        f.rect(400, y, 190, 34, 6, 'accent-soft' if i == 0 else 'sunk', 'accent' if i == 0 else 'rule', 1.2)
-        f.text(495, y + 22, t, 11.5, 'middle', 700 if i == 0 else 500, mono=(i == 0))
-        if i < 3:
-            f.arrow(f'M495 {y+34} V{y+46}')
+        y = 56 + i * 44
+        f.rect(400, y, 190, 32, 6, 'accent-soft' if i == 0 else 'sunk', 'accent' if i == 0 else 'rule', 1.2)
+        f.text(495, y + 21, t, 11.5, 'middle', 700 if i == 0 else 500, mono=(i == 0))
+        if i < 4:
+            f.arrow(f'M495 {y+32} V{y+42}')
     f.badge(400, 56, 4)
-    f.badge(400, 104, 5)
-    f.arrow('M495 234 V248')
-    f.rect(400, 250, 190, 26, 5, 'sunk')
-    f.text(408, 267, '.CalData 备份 → CalBackup', 10.5, mono=False)
-    f.rect(400, 282, 190, 26, 5, 'sunk')
-    f.text(408, 299, '摘要 .txt → My Gamry Data', 10.5)
-    f.legend([(1, '后面板 Chassis Ground 接可靠大地'), (2, '电缆按颜色接 200 Ω 校准池'),
+    f.badge(400, 100, 5)
+    f.arrow('M495 264 V274')
+    f.rect(400, 276, 190, 24, 5, 'sunk')
+    f.text(408, 292, '.CalData 备份 → CalBackup', 10.5)
+    f.rect(400, 304, 190, 24, 5, 'sunk')
+    f.text(408, 320, '摘要 .txt → My Gamry Data', 10.5)
+    f.text(400, 344, '成功或失败都会生成摘要文件', 10.5, color='muted')
+    f.legend([(1, '尽可能把后面板 Chassis Ground 接可靠大地'), (2, '电缆按颜色接 200 Ω 校准池对应插孔'),
               (3, '放入屏蔽盒并盖好；黑线接盒上接地柱'), (4, 'Experiment › Utilities › Calibrate Instrument'),
-              (5, '确认 Performance Tips、Cell Required，结果选 Save')], 20, 284, 20)
-    f.text(20, 396, '其他用户校准', 12, weight=700, color='muted')
-    for x, a, b in [(20, 'Low I DC', 'pA 级测量前；先做完整校准'), (213, '电缆电容', '20 kΩ 校准池；EIS 相位毛刺时'),
-                    (406, '温度', 'K 型热电偶；冰水 + 沸水两点')]:
-        f.rect(x, 406, 184, 52, 8, 'sunk', 'rule', 1)
-        f.text(x + 92, 428, a, 12, 'middle', 700)
-        f.text(x + 92, 448, b, 10.5, 'middle', color='muted')
+              (5, '确认提示后自动运行；结果选 Save')], 20, 284, 20)
+    f.text(20, 396, '出现警告或失败时（警告不一定是严重故障）', 12, weight=700, color='muted')
+    for n, x, a, b in [(1, 20, '复查接线', '200 Ω 池、黑线、机壳接地'),
+                       (2, 213, '点 Retry', '重跑剩余部分；其他警告 Ignore'),
+                       (3, 406, '仍失败', '摘要文件附在技术支持表单中')]:
+        f.rect(x, 406, 184, 52, 8, 'warn-soft', 'warn', 1)
+        f.badge(x + 18, 424, n, 8, 'warn')
+        f.text(x + 32, 428, a, 12, weight=700)
+        f.text(x + 12, 448, b, 10.5, color='muted')
     return f
 
 
