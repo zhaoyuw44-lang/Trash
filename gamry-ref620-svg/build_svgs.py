@@ -8,8 +8,9 @@ fallbacks (style="fill:var(--token,#hex)"), so a figure follows the page theme
 when inlined and still renders on its own as a standalone file.
 
 Run from anywhere:  python3 gamry-ref620-svg/build_svgs.py
-It rewrites the .svg files next to this script and replaces each
-<!--SVG:name-->...<!--/SVG--> block in gamry-reference-620-guide.html.
+It rewrites the .svg files next to this script, writes English versions to en/
+(text from strings_en.py), and replaces each <!--SVG:name-->...<!--/SVG-->
+block in gamry-reference-620-guide.html with the Chinese version.
 """
 import html
 import os
@@ -40,6 +41,20 @@ C = {
 FONT = "var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"
 MONO = "var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)"
 
+# Output language: 'zh' (default, inlined into the guide page) or 'en' (written to en/).
+LANG = 'zh'
+_CJK = re.compile(r'[\u3000-\u9fff\uff00-\uffef]')
+_EN = None
+
+
+def _en():
+    global _EN
+    if _EN is None:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import strings_en
+        _EN = strings_en
+    return _EN
+
 
 def col(c):
     return C.get(c, c)
@@ -49,6 +64,7 @@ class Fig:
     def __init__(self, key, w, h, label):
         self.key, self.w, self.h, self.label = key, w, h, label
         self.parts, self.markers = [], {}
+        self.lang = LANG
 
     def add(self, s):
         self.parts.append(s)
@@ -96,6 +112,11 @@ class Fig:
         self.path(d, stroke=color, sw=sw, end=color, start=color if both else None, dash=dash)
 
     def text(self, x, y, t, size=12.5, anchor='start', weight=400, color='ink', mono=False, raw=False):
+        if self.lang == 'en':
+            v = _en().TEXT.get(t, t)
+            t, size = v if isinstance(v, tuple) else (v, size)
+            if _CJK.search(t):
+                raise KeyError(f'no English text for {t!r} in {self.key}')
         body = t if raw else html.escape(t)
         fam = f';font-family:{MONO}' if mono else ''
         self.add(f'<text x="{x}" y="{y}" style="fill:{col(color)};font-size:{size}px;font-weight:{weight}{fam}" '
@@ -144,15 +165,74 @@ class Fig:
 
     def svg(self):
         defs = f'<defs>{"".join(self.markers.values())}</defs>' if self.markers else ''
-        lab = html.escape(self.label, quote=True)
+        label = _en().LABELS[self.key] if self.lang == 'en' else self.label
+        lab = html.escape(label, quote=True)
         return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {self.w} {self.h}" width="{self.w}" '
                 f'height="{self.h}" role="img" aria-label="{lab}" style="font-family:{FONT}">'
-                f'<title>{html.escape(self.label)}</title>{defs}'
+                f'<title>{html.escape(label)}</title>{defs}'
                 f'<rect x="0" y="0" width="{self.w}" height="{self.h}" style="fill:{col("bg")}"/>'
                 + ''.join(self.parts) + '</svg>\n')
 
 
 # ================================================================== install
+def install_00():
+    f = Fig('install-00-box-contents', 600, 430,
+            '开箱物品去向：电源适配器、USB 线和电解池电缆一直接在主机上；200 Ω 校准池和校准屏蔽盒只在校准时使用，黑色接地线校准时把机壳接大地；校准完成后电缆另一端改接电解池，校准池收好。')
+    f.path('M20 30 H44', 'accent', 3)
+    f.text(52, 34, '一直连接', 11)
+    f.path('M150 30 H174', 'warn', 3, dash='6 4')
+    f.text(182, 34, '校准时', 11)
+    f.path('M290 30 H314', 'ok', 3)
+    f.text(322, 34, '实验时', 11)
+    f.text(225, 102, '后面板', 11, color='muted')
+    f.text(375, 102, '前面板', 11, 'end', color='muted')
+    f.rect(225, 110, 150, 170, 8, 'panel', 'panel-edge')
+    f.text(300, 196, 'Reference 620', 13, 'middle', 700, 'panel-ink')
+    f.text(300, 214, '主机', 11, 'middle', color='panel-ink')
+    f.rect(217, 133, 12, 14, 2, 'sunk', 'ink', 1)
+    f.text(235, 144, 'Power In', 9.5, color='panel-ink')
+    f.rect(217, 174, 12, 12, 2, 'sunk', 'ink', 1)
+    f.text(235, 184, 'USB', 9.5, color='panel-ink')
+    f.circle(223, 222, 5, 'sunk', 'ink', 1.5)
+    f.text(235, 226, 'Chassis Ground', 9.5, color='panel-ink')
+    f.rect(217, 249, 12, 16, 2, 'ok', 'ink', 1)
+    f.text(235, 261, 'Power 开关', 9.5, color='panel-ink')
+    f.rect(372, 176, 12, 60, 3, 'ink')
+    f.text(366, 160, 'Cell Cable', 9.5, 'end', color='panel-ink')
+    # rear-panel items
+    items = [(118, 46, '电源适配器 + 电源线', '电源线另一端接墙插', 'accent', 140),
+             (174, 40, 'USB A/B 线', '另一端接电脑', 'accent', 180),
+             (224, 44, '1.2 m 黑色接地线', '另一端接可靠大地', 'warn', 222)]
+    for y, h, a, b, c, ty in items:
+        f.rect(20, y, 150, h, 8, 'bg', c, 1.5, None if c == 'accent' else '6 4')
+        f.text(30, y + 18, a, 12, weight=700)
+        f.text(30, y + 35, b, 10, color='muted')
+        f.arrow(f'M170 {ty} H{215 if ty != 222 else 216}', c, 2, dash=None if c == 'accent' else '6 4')
+    # cell cable on the front
+    f.rect(430, 180, 150, 50, 8, 'bg', 'accent', 1.5)
+    f.text(440, 200, '60 cm 电解池电缆', 12, weight=700)
+    f.text(440, 218, '拧紧两颗螺丝', 10, color='muted')
+    f.arrow('M428 205 H388', 'accent', 2)
+    # where the cable's free end goes
+    f.arrow('M480 230 C 480 280, 375 280, 375 326', 'warn', 2, dash='6 4')
+    f.arrow('M540 230 V326', 'ok', 2)
+    f.rect(290, 330, 170, 84, 8, 'warn-soft', 'warn', 1.2)
+    f.text(300, 350, '校准时', 11.5, weight=700, color='warn')
+    f.text(300, 369, '200 Ω 校准池放进屏蔽盒', 10.5)
+    f.text(300, 386, '黑线接盒上接地柱', 10.5)
+    f.text(300, 403, '机壳接地线接大地', 10.5)
+    f.rect(470, 330, 110, 84, 8, 'ok-soft', 'ok', 1.2)
+    f.text(480, 350, '实验时', 11.5, weight=700, color='ok')
+    f.text(480, 369, '接电解池', 10.5)
+    f.text(480, 386, '校准池收好', 10.5)
+    f.rect(20, 330, 258, 84, 8, 'sunk')
+    f.text(30, 350, '其他随机物品', 11.5, weight=700)
+    f.text(30, 369, '20 kΩ 校准池：只用于电缆电容校准', 10.5)
+    f.text(30, 386, '配件包：参比电极针式插头转接头', 10.5)
+    f.text(30, 403, '标签纸：插在前面板标签区（可选）', 10.5)
+    return f
+
+
 def install_01():
     f = Fig('install-01-inspect', 600, 330,
             '开箱检查：有运输损坏就不上电，通知 Gamry 和承运人并保留包装箱；没有损坏但从低温处运来的仪器，先在室温放置至少 1 小时。')
@@ -757,7 +837,7 @@ def hazard_grounding():
     return f
 
 
-FIGS = [install_01, install_02, install_03, install_04, install_05, install_06, install_07,
+FIGS = [install_00, install_01, install_02, install_03, install_04, install_05, install_06, install_07,
         use_01, use_02, use_03, use_04, use_05, hazard_grounding]
 
 
@@ -777,7 +857,15 @@ def main():
         page, k = pat.subn(lambda m: f'<!--SVG:{key}-->{svg}<!--/SVG-->', page)
         n += k
     open(PAGE, 'w', encoding='utf-8').write(page)
-    print(f'wrote {len(built)} svgs, inlined {n}')
+    global LANG
+    LANG = 'en'
+    os.makedirs(os.path.join(OUT, 'en'), exist_ok=True)
+    for fn in FIGS:
+        fig = fn()
+        with open(os.path.join(OUT, 'en', fig.key + '.svg'), 'w', encoding='utf-8') as fh:
+            fh.write(fig.svg())
+    LANG = 'zh'
+    print(f'wrote {len(built)} svgs (+ {len(FIGS)} in en/), inlined {n}')
 
 
 if __name__ == '__main__':
