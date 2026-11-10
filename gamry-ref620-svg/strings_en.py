@@ -289,6 +289,23 @@ TEXT = {
     '快速 CV、EIS 慎用': 'Slows fast CV and EIS',
     '参比电极阻抗超过 20 kΩ 更易振荡；避免细口或 Vycor 头鲁金毛细管、双盐桥参比。':
         ('Reference impedance > 20 kΩ invites oscillation; avoid narrow/Vycor Luggins, double junctions.', 10.5),
+    # use-06-after-experiment
+    '实验已结束，可以拆线': 'run finished; safe to unwire',
+    'Overload：熄灭': 'Overload: off',
+    '实验中不应持续常亮': 'should not stay lit in a run',
+    '设备状态栏': 'Status bar',
+    '运行中：橙色': 'Running: orange',
+    '结束后：恢复绿色': 'Finished: back to green',
+    '数据文件': 'Data file',
+    '.DTA 已存入 My Gamry Data': '.DTA saved in My Gamry Data',
+    '用 Echem Analyst 2 打开': 'opens in Echem Analyst 2',
+    '检查数据曲线': 'Check the curve',
+    '平滑连续': 'Smooth',
+    '突跳、断点': 'Spikes/gaps',
+    '→ 查振荡或重新校准': '→ oscillation or recalibrate',
+    '黄灯熄灭后再拆线': 'Unwire after the LED is off',
+    '金属头不互碰，电缆仍拧紧': 'Tips apart; cable still screwed',
+    '溶液远离仪器': 'Solutions away from unit',
     # hazard-grounding
     '仪器保持浮地': 'Instrument floating',
     '高压釜': 'Autoclave',
@@ -324,5 +341,6 @@ LABELS = {
     'use-03-zra': 'ZRA: the instrument holds 0 V between the blue and orange leads so both metals sit at the same potential, and measures the galvanic current Ig between them; the white lead goes to a reference electrode.',
     'use-04-low-current': 'Low current: a continuous Faraday shield encloses the cell and connects to the black floating-ground lead; with an isolated cell the shield and floating ground may also be earthed; keep cables short and leads apart.',
     'use-05-stability': 'Oscillation fixes: slow the control amplifier and raise I/E stability first; then try a fast combination reference, a capacitor between the red and white leads, or a resistor in the counter lead.',
+    'use-06-after-experiment': 'Expected state after an experiment: Cell On and Overload off, Power steady blue, USB solid green; the Framework status bar back from orange to green; the .DTA file saved; a smooth curve without spikes or breaks; leads removed only after the yellow LED goes off.',
     'hazard-grounding': 'Grounding: with an earthed sample, a floating instrument has no loop; earthing the chassis too closes a loop through earth, so the cell discharges through the instrument and the cable fuse blows. Auxiliary equipment can also earth the instrument.',
 }

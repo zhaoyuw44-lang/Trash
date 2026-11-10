@@ -850,6 +850,78 @@ def use_05():
     return f
 
 
+def _cv(f, x0, y0, bad):
+    f.path(f'M{x0+2} {y0+2} V{y0+66} H{x0+88}', 'muted', 1.2)
+    f.text(x0 + 7, y0 + 11, 'i', 9, color='muted')
+    f.text(x0 + 87, y0 + 62, 'E', 9, 'end', color='muted')
+    fwd = (f'M{x0+8} {y0+38} C {x0+30} {y0+38}, {x0+40} {y0+8}, {x0+55} {y0+16} '
+           f'S {x0+78} {y0+28}, {x0+84} {y0+28}')
+    rev = (f'M{x0+84} {y0+28} C {x0+70} {y0+40}, {x0+55} {y0+62}, {x0+40} {y0+54} '
+           f'S {x0+15} {y0+42}, {x0+8} {y0+38}')
+    f.path(fwd, 'accent', 2)
+    f.path(rev, 'accent', 2)
+    if bad:
+        f.path(f'M{x0+56} {y0+16} L{x0+59} {y0+4} L{x0+62} {y0+26} L{x0+65} {y0+6} '
+               f'L{x0+68} {y0+30} L{x0+71} {y0+12} L{x0+74} {y0+24}', 'danger', 1.6)
+        f.path(f'M{x0+30} {y0+46} V{y0+60}', 'danger', 2)
+
+
+def use_06():
+    f = Fig('use-06-after-experiment', 600, 392,
+            '实验结束后的正常状态：Cell On 灯熄灭，Overload 灯熄灭，Power 常亮蓝色，USB 常绿；Framework 状态栏从橙色恢复绿色；.DTA 数据已保存；曲线平滑、没有突跳或断点；黄灯熄灭后再拆线。')
+    f.rect(20, 30, 150, 300, 10, 'panel-edge')
+    f.rect(28, 38, 134, 284, 6, 'panel')
+    f.text(95, 66, 'Reference 620', 12.5, 'middle', 700, 'panel-ink')
+    f.text(95, 80, 'Potentiostat/Galvanostat/ZRA', 7.5, 'middle', color='panel-ink')
+    f.text(122, 124, 'Cell On', 9.5, 'end', color='panel-ink')
+    f.circle(134, 121, 4.5, 'led-off')
+    f.text(122, 142, 'Overload', 9.5, 'end', color='panel-ink')
+    f.circle(134, 139, 4.5, 'led-off')
+    f.rect(127, 162, 14, 84, 4, 'panel-edge', 'panel-ink', 1.5)
+    f.text(120, 208, 'Cell Cable', 9.5, 'end', color='panel-ink')
+    f.circle(44, 296, 6, 'led-blue')
+    f.circle(44, 296, 9, 'none', 'led-blue', 1.5)
+    f.text(56, 299.5, 'Power', 9.5, color='panel-ink')
+    f.circle(44, 314, 6, 'led-green')
+    f.circle(44, 314, 9, 'none', 'led-green', 1.5)
+    f.text(56, 317.5, 'USB', 9.5, color='panel-ink')
+    f.path('M140 121 L186 104', 'muted', 1)
+    f.text(190, 104, 'Cell On：熄灭', 12, weight=700, color='ok')
+    f.text(190, 120, '实验已结束，可以拆线', 10.5, color='muted')
+    f.path('M140 139 L186 150', 'muted', 1)
+    f.text(190, 150, 'Overload：熄灭', 12, weight=700, color='ok')
+    f.text(190, 166, '实验中不应持续常亮', 10.5, color='muted')
+    f.path('M54 290 L186 262', 'muted', 1)
+    f.text(190, 262, 'Power：常亮蓝色', 12, weight=700, color='ok')
+    f.path('M54 318 L186 300', 'muted', 1)
+    f.text(190, 300, 'USB：常绿', 12, weight=700, color='ok')
+    f.text(190, 316, '收发数据时闪烁', 10.5, color='muted')
+    # software and data
+    f.rect(390, 30, 200, 70, 8, 'sunk')
+    f.text(400, 50, '设备状态栏', 11, weight=700)
+    f.circle(408, 68, 5, 'led-orange', 'wire', 1)
+    f.text(418, 72, '运行中：橙色', 11)
+    f.circle(408, 88, 5, 'led-green', 'wire', 1)
+    f.text(418, 92, '结束后：恢复绿色', 11, weight=700, color='ok')
+    f.rect(390, 112, 200, 66, 8, 'sunk')
+    f.text(400, 132, '数据文件', 11, weight=700)
+    f.text(400, 152, '.DTA 已存入 My Gamry Data', 10.5)
+    f.text(400, 169, '用 Echem Analyst 2 打开', 10.5)
+    f.rect(390, 190, 200, 140, 8, 'sunk')
+    f.text(400, 210, '检查数据曲线', 11, weight=700)
+    _cv(f, 396, 218, False)
+    _cv(f, 494, 218, True)
+    f.icon(408, 304, 'ok')
+    f.text(422, 308, '平滑连续', 11, weight=700, color='ok')
+    f.icon(506, 304, 'bad')
+    f.text(520, 308, '突跳、断点', 11, weight=700, color='danger')
+    f.text(490, 324, '→ 查振荡或重新校准', 10, 'middle', color='muted')
+    for x, w, t in [(20, 170, '黄灯熄灭后再拆线'), (200, 200, '金属头不互碰，电缆仍拧紧'), (410, 180, '溶液远离仪器')]:
+        f.rect(x, 352, w, 30, 8, 'ok-soft', 'ok', 1)
+        f.text(x + w / 2, 372, t, 11.5, 'middle', 600)
+    return f
+
+
 # ================================================================== hazard
 def hazard_grounding():
     f = Fig('hazard-grounding', 600, 404,
@@ -897,7 +969,7 @@ def hazard_grounding():
 
 
 FIGS = [install_00, install_01, install_02, install_03, install_04, install_05, install_06, install_07, install_08,
-        use_01, use_02, use_03, use_04, use_05, hazard_grounding]
+        use_01, use_02, use_03, use_04, use_05, use_06, hazard_grounding]
 
 
 def main():
