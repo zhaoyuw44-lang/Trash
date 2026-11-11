@@ -1,4 +1,4 @@
-// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures and the after-test steps of
+// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps and the PP-film figures of
 // ionic-conductivity-ref620.html as standalone SVG files with inlined colours.
 // Run from the repository root:  node ionic-conductivity-svg/export_svgs.js
 const { chromium } = require('playwright');
@@ -24,7 +24,8 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
   const svgs = await page.evaluate((PROPS) => {
     const bg = getComputedStyle(document.body).getPropertyValue('--surface').trim() || '#FFFFFF';
     const pick = [...document.querySelectorAll('#steps .stepfig svg'), document.querySelector('#wire svg'), document.querySelector('#cell svg'),
-      ...document.querySelectorAll('#coin .figsvg svg'), ...document.querySelectorAll('#after .stepfig svg')];
+      ...document.querySelectorAll('#coin .figsvg svg'), ...document.querySelectorAll('#after .stepfig svg'),
+      ...document.querySelectorAll('#pp .figsvg svg'), ...document.querySelectorAll('#pp .stepfig svg')];
     return pick.map(svg => {
       const clone = svg.cloneNode(true);
       const src = [svg, ...svg.querySelectorAll('*')];
@@ -48,7 +49,10 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
   }, PROPS);
   const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring',
     'after-01-unplug', 'after-02-record', 'after-03-inspect', 'after-04-route-by-type',
-    'after-05-decrimp', 'after-06-check-membrane', 'after-07-sort-waste', 'after-08-clean-up'];
+    'after-05-decrimp', 'after-06-check-membrane', 'after-07-sort-waste', 'after-08-clean-up',
+    'pp-01-identify', 'pp-02-dense-film-ring',
+    'pp-step-01-punch-dry', 'pp-step-02-thickness', 'pp-step-03-assemble', 'pp-step-04-wetting',
+    'pp-step-05-multilayer', 'pp-step-06-calculate'];
   svgs.forEach((s, i) => {
     const file = path.join(OUT, names[i] + '.svg');
     fs.writeFileSync(file, '<?xml version="1.0" encoding="UTF-8"?>\n' + s + '\n');

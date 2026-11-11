@@ -1,4 +1,4 @@
-"""Generate the step, coin-cell and after-test illustrations for ionic-conductivity-ref620.html.
+"""Generate the step, coin-cell, after-test and PP-film illustrations for ionic-conductivity-ref620.html.
 
 Rewrites the <ol class="steps"> block between the STEPS markers. Each step gets
 its own inline SVG drawn with the page's CSS classes, so light/dark themes work.
@@ -716,7 +716,233 @@ def build_after():
     print('after-test steps written:', len(items))
 
 
+
+# ================================================================ PP film section
+import math as _m
+
+
+def ms(parts, size):
+    """Text with several subscripts: parts = [(text, is_sub), ...]."""
+    d = round(size * .28, 1)
+    o, low = '', False
+    for t, sub in parts:
+        if sub and not low:
+            o += f'<tspan dy="{d}" font-size="{round(size * .72, 1)}">{t}</tspan>'
+            low = True
+        elif not sub and low:
+            o += f'<tspan dy="-{d}">{t}</tspan>'
+            low = False
+        else:
+            o += t
+    return o
+
+
+def print_lines(x1, x2, y1, y2, step=10):
+    return ''.join(f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" class="print"/>' for y in range(y1, y2 + 1, step))
+
+
+def wet_disc(cx, cy, r, y1, y2, step=10, outline=True):
+    """Wetted (translucent) area: background shows plus the print lines behind it."""
+    o = C(cx, cy, r, 'sep-wet')
+    for y in range(y1, y2 + 1, step):
+        if abs(y - cy) < r:
+            h = _m.sqrt(r * r - (y - cy) ** 2) - 1
+            o += f'<line x1="{cx - h:.1f}" y1="{y}" x2="{cx + h:.1f}" y2="{y}" class="print"/>'
+    if outline:
+        o += C(cx, cy, r, 'sep-edge')
+    return o
+
+
+def pp_identify():
+    o = [R(10, 10, 305, 240, 'sunk-r', 8), T(26, 34, '微孔 PP 隔膜', 13, None, 700),
+         T(26, 52, '例如 Celgard 一类的电池隔膜', 10, None, None, 't-mut'),
+         print_lines(44, 196, 80, 170), R(36, 70, 168, 112, 'sep', 3),
+         wet_disc(120, 126, 30, 80, 170),
+         T(120, 88, '滴一滴乙醇', 10, 'middle', 600),
+         T(214, 90, '白色、不透明', 11.5, None, 700),
+         T(214, 118, '滴乙醇：', 11), T(214, 134, '吸进去，', 11), T(214, 150, '变成半透明', 11, None, 700, 't-acc'),
+         T(26, 210, '用途：浸液体电解液，测有效电导率', 11, None, 700),
+         T(26, 228, '也是 Li 对称电池、全电池的隔膜', 10, None, None, 't-mut')]
+    o += [R(325, 10, 305, 240, 'sunk-r', 8), T(341, 34, '致密 PP 薄膜', 13, None, 700),
+          T(341, 52, '没有孔的透明薄膜', 10, None, None, 't-mut'),
+          print_lines(354, 506, 80, 170), R(350, 70, 168, 112, 'film-clear', 3),
+          P('M362 172 L404 78', 'gloss'), P('M376 172 L418 78', 'gloss2'),
+          '<ellipse cx="452" cy="128" rx="26" ry="16" class="droplet"/>',
+          T(528, 90, '透明、有光泽', 11.5, None, 700),
+          T(528, 118, '滴乙醇：', 11), T(528, 134, '摊在表面，', 11), T(528, 150, '膜本身不变', 11, None, 700),
+          T(341, 210, '用途：剪成环形垫片，限定 L 和 A', 11, None, 700),
+          T(341, 228, '适合软的聚合物电解质', 10, None, None, 't-mut')]
+    return svgw(640, 260, '分辨两种 PP 膜：微孔 PP 隔膜是白色不透明的，滴乙醇后被吸进去、变成半透明，用来浸液体电解液；致密 PP 薄膜是透明有光泽的，乙醇只摊在表面、膜不变，适合剪成环形垫片。', ''.join(o))
+
+
+def pp_ring():
+    cx, cy = 120, 112
+    o = [C(cx, cy, 76, 'film-clear'), C(cx, cy, 64, 'hidden-edge'), C(cx, cy, 44, 'sample'),
+         dim_h(cx - 44, cx + 44, cy), T(cx, cy - 8, 'd（孔径）', 11, 'middle', 700),
+         f'<line x1="{cx + 58}" y1="{cy - 50}" x2="214" y2="34" class="lead"/>', T(218, 32, 'PP 环', 11, None, 700),
+         f'<line x1="{cx + 20}" y1="{cy + 30}" x2="214" y2="196" class="lead"/>', T(218, 200, '电解质填满孔', 11, None, 700),
+         T(cx, 222, 'A = π d² / 4', 12.5, 'middle', 700), T(cx, 240, '虚线：垫片边缘', 10, 'middle', None, 't-mut'),
+         R(330, 60, 260, 14, 'steel', 2), R(330, 74, 90, 16, 'film-clear'), R(500, 74, 90, 16, 'film-clear'),
+         R(420, 74, 80, 16, 'sample'), R(330, 90, 260, 14, 'steel', 2),
+         T(375, 86, 'PP 环', 10, 'middle', 600), T(545, 86, 'PP 环', 10, 'middle', 600), T(460, 86, '电解质', 10, 'middle', 700),
+         T(460, 52, '不锈钢垫片', 10, 'middle', None, 't-mut'), T(460, 118, '不锈钢垫片', 10, 'middle', None, 't-mut'),
+         '<line x1="594" y1="74" x2="622" y2="74" class="dim"/>', '<line x1="594" y1="90" x2="622" y2="90" class="dim"/>',
+         '<line x1="614" y1="56" x2="614" y2="74" class="dim"/>', P('M614 74 L610 66 L618 66 Z', 'arr'),
+         '<line x1="614" y1="90" x2="614" y2="108" class="dim"/>', P('M614 90 L610 98 L618 98 Z', 'arr'),
+         T(600, 134, 'L = PP 环的厚度', 11, 'end', 700),
+         T(330, 166, '① 冲出外圆和内孔，量环的厚度', 11),
+         T(330, 188, '② 电解质填满孔，刮平到和环齐平', 11),
+         T(330, 210, '③ 盖上垫片：压力由 PP 环承担', 11),
+         T(330, 234, 'PP 长时间高于约 100 °C 会软化、变形', 10, None, None, 't-warn')]
+    return svgw(640, 252, '致密 PP 薄膜做环形垫片：俯视图中 PP 环外圆不小于垫片，中心孔填满电解质，孔径 d 决定面积 A；截面图中两片不锈钢垫片压在 PP 环上，L 等于 PP 环厚度。', ''.join(o))
+
+
+def p1():
+    o = [C(100, 98, 62, 'sep'), C(100, 98, 52, 'hidden-edge'),
+         T(100, 94, '隔膜 Ø19 mm', 11.5, 'middle', 700), T(100, 112, '虚线：垫片 Ø16 mm', 10, 'middle', None, 't-mut'),
+         T(100, 186, '隔膜比垫片大一圈', 11, 'middle', 700), T(100, 203, '垫片边缘才不会碰到', 10, 'middle', None, 't-mut'),
+         R(226, 36, 146, 104, 'oven', 8), R(236, 48, 92, 80, 'chamber', 4),
+         R(334, 54, 32, 16, 'panel', 3), T(350, 66, '60°C', 8.5, 'middle', 600, 't-panel tm'),
+         C(350, 92, 7, 'knob-s'), C(350, 114, 7, 'knob-s'),
+         R(246, 92, 72, 4, 'sep', 1), R(246, 100, 72, 4, 'sep', 1), R(246, 108, 72, 4, 'sep', 1),
+         T(282, 72, '真空', 10, 'middle', 600, 't-mut'),
+         T(299, 164, '干燥后进手套箱', 11, 'middle', 700),
+         T(299, 182, '温度按课题组规程', 10, 'middle', None, 't-mut'),
+         T(299, 198, '（PP 不耐高温，常用 60 °C 左右）', 9.5, 'middle', None, 't-mut')]
+    return svg('冲片和干燥：PP 隔膜冲成直径 19 毫米、比 16 毫米垫片大一圈的圆片；真空干燥后放进手套箱，温度按课题组规程，常用 60 度左右。', ''.join(o))
+
+
+def p2():
+    o = [P('M59 104 V130 Q59 156 85 156 H165 Q191 156 191 130 V104', 'frame-out'),
+         P('M59 104 V130 Q59 156 85 156 H165 Q191 156 191 130 V104', 'frame'),
+         R(50, 78, 18, 26, 'steel', 2)]
+    o += [R(68 + 3 * i, 70, 3, 42, 'sep') for i in range(4)]
+    o += [R(80, 84, 90, 14, 'steel'), R(168, 78, 46, 26, 'steel'), R(212, 72, 36, 38, 'steel', 4), R(248, 80, 14, 22, 'steel', 3),
+          '<line x1="74" y1="68" x2="74" y2="46" class="lead"/>', T(60, 40, '4 层隔膜叠在一起', 11.5, None, 700),
+          T(125, 176, '千分尺：用棘轮轻轻接触', 10.5, 'middle', None, 't-mut'),
+          T(330, 64, '读数 0.100 mm', 12, 'middle', 600),
+          T(330, 90, '÷ 4 层', 12, 'middle', 600),
+          T(330, 122, ms([('L', False), ('1', True), (' = 25 µm', False)], 16), 16, 'middle', 700, 't-acc'),
+          T(330, 150, '单层太薄，直接量误差大', 10, 'middle', None, 't-mut'),
+          T(16, 206, '也可以先用说明书上的厚度，但最好自己复核', 10.5, None, 600)]
+    return svg('量厚度：把 4 层隔膜叠在一起用千分尺量，读数 0.100 毫米除以 4 层，单层厚度 L1 等于 25 微米。', ''.join(o))
+
+
+def p3():
+    o = [R(30, 166, 160, 32, 'steel', 5), R(37, 166, 146, 24, 'cavity', 3),
+         R(46, 150, 128, 7, 'steel', 1.5), R(38, 138, 144, 4, 'sep', 1),
+         R(102, 36, 16, 54, 'pipette', 3), P('M103 90 L117 90 L111 118 L109 118 Z', 'pipette'),
+         P('M110 122 q4 6 0 9 q-4 -3 0 -9 Z', 'droplet'),
+         T(128, 58, '滴加电解液', 11, None, 700), T(128, 74, '浸透整片隔膜', 10, None, None, 't-mut'),
+         T(110, 214, '先放下面这几层', 10, 'middle', None, 't-mut'),
+         T(232, 36, '组装顺序（从下往上）', 11.5, None, 700)]
+    items = [('① 正极壳', False), ('② 不锈钢垫片', False), ('③ PP 隔膜，放平居中', True), ('④ 滴加电解液', True),
+             ('⑤ 不锈钢垫片', False), ('⑥ 弹片、负极盖', False), ('⑦ 封口', False)]
+    for i, (t, hi) in enumerate(items):
+        o.append(T(232, 62 + i * 22, t, 11, None, 700 if hi else None, 't-acc' if hi else None))
+    return svg('组装和加液：从下往上依次放正极壳、不锈钢垫片、PP 隔膜，滴加电解液浸透整片隔膜，再放不锈钢垫片、弹片和负极盖，最后封口。', ''.join(o))
+
+
+def p4():
+    o = [T(200, 24, '静置，让电解液浸透', 12, 'middle', 700)]
+    for cx in (70, 200, 330):
+        for y in range(66, 119, 10):
+            h = _m.sqrt(max(0, 41 ** 2 - (y - 92) ** 2))
+            o.append(f'<line x1="{cx - h:.1f}" y1="{y}" x2="{cx + h:.1f}" y2="{y}" class="print"/>')
+    o += [C(70, 92, 42, 'sep'),
+          C(200, 92, 42, 'sep'), wet_disc(200, 92, 24, 66, 118, outline=False), C(200, 92, 42, 'sep-edge'),
+          wet_disc(330, 92, 42, 66, 118),
+          '<line x1="118" y1="92" x2="144" y2="92" class="dim"/>', P('M152 92 L143 87 L143 97 Z', 'arr'),
+          '<line x1="248" y1="92" x2="274" y2="92" class="dim"/>', P('M282 92 L273 87 L273 97 Z', 'arr'),
+          T(70, 152, '刚加液', 11, 'middle', 700), T(200, 152, '浸润中', 11, 'middle', 700), T(330, 152, '浸透', 11, 'middle', 700, 't-acc'),
+          T(70, 168, '白色、不透明', 9.5, 'middle', None, 't-mut'), T(200, 168, '中间先变透明', 9.5, 'middle', None, 't-mut'),
+          T(330, 168, '整片半透明', 9.5, 'middle', None, 't-mut'),
+          T(200, 196, 'PP 疏水，浸润慢：静置几小时再测', 11, 'middle', 700),
+          T(200, 213, '或隔一段时间测一次，截距不再变化再取值', 9.5, 'middle', None, 't-mut')]
+    return svg('静置浸润：刚加液时隔膜白色不透明，浸润中从中间开始变透明，浸透后整片半透明；PP 疏水，静置几小时再测，或截距不再变化再取值。', ''.join(o))
+
+
+PP_PTS = [(1, 1.85), (2, 3.22), (3, 4.69), (4, 6.07)]
+
+
+def p5():
+    X = lambda n: 60 + n * 68
+    Y = lambda r: 180 - r * 20
+    n = len(PP_PTS)
+    mx = sum(a for a, _ in PP_PTS) / n
+    my = sum(b for _, b in PP_PTS) / n
+    sl = sum((a - mx) * (b - my) for a, b in PP_PTS) / sum((a - mx) ** 2 for a, _ in PP_PTS)
+    ic = my - sl * mx
+    o = [T(60, 22, '1–4 层分别装电池，测高频截距 R', 11.5, None, 700)]
+    for r in (0, 2, 4, 6):
+        o += [f'<line x1="60" y1="{Y(r)}" x2="372" y2="{Y(r)}" class="grid"/>', T(52, Y(r) + 4, str(r), 10, 'end', None, 't-mut')]
+    for k in range(5):
+        o.append(T(X(k), 196, str(k), 10, 'middle', None, 't-mut'))
+    o += [P('M60 36 V180 H372', 'axis'), T(56, 34, 'R (Ω)', 10, 'end', None, 't-mut'), T(372, 212, '隔膜层数 n', 10, 'end', None, 't-mut'),
+          f'<line x1="{X(0)}" y1="{Y(ic):.1f}" x2="{X(4.4)}" y2="{Y(ic + sl * 4.4):.1f}" class="fit"/>']
+    o += [C(X(a), round(Y(b), 1), 5, 'mark') for a, b in PP_PTS]
+    o += [C(X(0), round(Y(ic), 1), 6, 'ring-warn'),
+          T(78, 177, f'截距 ≈ {ic:.2f} Ω = 接触电阻', 10.5, None, 700, 't-warn'),
+          P(f'M{X(2)} {Y(ic + sl * 2):.1f} H{X(3)} V{Y(ic + sl * 3):.1f}', 'slope'),
+          T(X(3) + 8, Y(ic + sl * 2.5) + 4, f'斜率 ≈ {sl:.2f} Ω/层', 10.5, None, 700),
+          T(X(3) + 8, Y(ic + sl * 2.5) + 20, '= 每层隔膜的电阻', 10, None, None, 't-mut'),
+          T(372, 22, '示例', 10, 'end', 600, 't-warn')]
+    return svg(f'多层法：1 到 4 层隔膜的高频截距对层数作直线，斜率约 {sl:.2f} 欧姆每层，是每层隔膜的电阻；截距约 {ic:.2f} 欧姆，是壳体和接触电阻。', ''.join(o))
+
+
+def p6():
+    o = [T(200, 34, ms([('σ', False), ('eff', True), (' = L', False), ('1', True), (' / (R', False), ('层', True), (' · A)', False)], 16), 16, 'middle', 700),
+         T(200, 58, '= 0.0025 cm ÷ (1.41 Ω × 2.01 cm²)', 11, 'middle', None, 'tm'),
+         T(200, 82, '= 8.8 × 10⁻⁴ S/cm = 0.88 mS/cm', 13.5, 'middle', 700, 't-acc'),
+         '<line x1="40" y1="100" x2="360" y2="100" class="grid"/>',
+         T(200, 128, ms([('N', False), ('M', True), (' = σ', False), ('0', True), (' / σ', False), ('eff', True)], 15), 15, 'middle', 700),
+         T(200, 150, ms([('σ', False), ('0', True), ('：电解液本身的电导率（用电导率仪测）', False)], 10), 10, 'middle', None, 't-mut'),
+         T(200, 176, ms([('例：σ', False), ('0', True), (' = 10 mS/cm → N', False), ('M', True), (' ≈ 11', False)], 12), 12, 'middle', 700),
+         T(200, 196, '隔膜让电阻变大的倍数（孔隙率、曲折度）', 10, 'middle', None, 't-mut'),
+         R(14, 198, 64, 18, 'tagbox', 9), T(46, 211, '示例数值', 10, 'middle', 700, 't-warn')]
+    return svg('计算：有效电导率 σeff 等于单层厚度除以每层电阻乘面积，示例 0.0025 厘米除以 1.41 欧姆乘 2.01 平方厘米，约 0.88 毫西每厘米；MacMullin 数 NM 等于电解液本身电导率除以 σeff，示例约 11。', ''.join(o))
+
+
+PP_STEPS = [
+    (p1, """<p>把隔膜冲成比垫片大一圈的圆片（例如垫片 16 mm、隔膜 19 mm），干燥后放进手套箱。<span class="src gen">通用方法</span></p>
+          <ul><li>隔膜比垫片大，两片垫片的边缘才不会碰到一起。</li>
+          <li>PP 不耐高温，干燥温度按课题组规程，常用 60 °C 左右真空干燥。</li>
+          <li>用镊子拿，不要用手直接碰，手上的油脂会影响浸润。薄膜容易带静电，可以用防静电镊子或离子风扇。</li></ul>"""),
+    (p2, """<p>PP 隔膜很薄（常见 20–25 µm），把几层叠在一起量，再除以层数，得到单层厚度 L<sub>1</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>说明书上的厚度可以先用，但最好自己复核。</li></ul>"""),
+    (p3, """<p>组装：正极壳 → 不锈钢垫片 → PP 隔膜 → 滴加电解液 → 不锈钢垫片 → 弹片和负极盖 → 封口。<span class="src gen">通用方法</span></p>
+          <ul><li>电解液要足够把整片隔膜浸透，常用几十 µL；同一批电池用同样的量。</li>
+          <li>隔膜放平、居中，不要有褶皱或气泡。</li></ul>"""),
+    (p4, """<p>封口后静置几小时（常见做法是过夜）再测。PP 是疏水的，电解液浸润需要时间。<span class="src gen">通用方法</span></p>
+          <ul><li>浸透的隔膜由白色变成半透明，可以拆一个试做的电池看一下。</li>
+          <li>也可以隔一段时间测一次 EIS，高频截距不再变化后再取值。</li>
+          <li>离子液体、水系或高浓度电解液可能浸不透 PP，测到的电阻会偏大；这时改用玻璃纤维等容易浸润的隔膜。</li></ul>"""),
+    (p5, """<p>多层法：分别组装 1、2、3、4 层隔膜的电池，测各自的高频截距 R，对层数 n 作直线。斜率是每层隔膜的电阻，截距是壳体和接触电阻。<span class="src gen">通用方法</span></p>
+          <ul><li>这样不需要空白池，接触电阻自动扣除。</li>
+          <li>每个层数最好装 2 个以上电池取平均。</li></ul>"""),
+    (p6, """<p>用斜率算有效电导率 σ<sub>eff</sub>。知道电解液本身的电导率 σ<sub>0</sub> 时，还可以算 MacMullin 数 N<sub>M</sub> = σ<sub>0</sub> / σ<sub>eff</sub>，它表示隔膜（孔隙率、曲折度）让电阻变大了多少倍。<span class="src gen">通用方法</span></p>
+          <ul><li>σ<sub>eff</sub> 是“隔膜 + 电解液”的有效值，不等于电解液本身的电导率。</li>
+          <li>下面的计算器可以直接算。</li></ul>"""),
+]
+
+
+PP_FIGS = {'pp-identify': pp_identify, 'pp-ring': pp_ring}
+
+
+def build_pp():
+    s = PAGE.read_text(encoding='utf-8')
+    items = [f"""        <li><div class="step"><div class="step-text">{text}</div>
+          <figure class="stepfig">{fn()}</figure></div></li>""" for fn, text in PP_STEPS]
+    block = '<!--PPSTEPS-->\n      <ol class="steps">\n' + '\n'.join(items) + '\n      </ol>\n      <!--/PPSTEPS-->'
+    s = re.sub(r'<!--PPSTEPS-->.*?<!--/PPSTEPS-->', lambda m: block, s, flags=re.S)
+    for k, fn in PP_FIGS.items():
+        s = re.sub(rf'<!--FIG:{k}-->.*?<!--/FIG:{k}-->', lambda m: f'<!--FIG:{k}-->{fn()}<!--/FIG:{k}-->', s, flags=re.S)
+    PAGE.write_text(s, encoding='utf-8')
+    print('pp section written:', len(items), 'steps +', len(PP_FIGS), 'figures')
+
+
 if __name__ == '__main__':
     build()
     fill_figs()
     build_after()
+    build_pp()

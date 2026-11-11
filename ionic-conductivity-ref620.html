@@ -177,6 +177,15 @@ svg .li{fill:#C9CED4;stroke:var(--steel-edge);stroke-width:1.2} svg .cloth{fill:
 svg .bottle{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.2}
 svg .gbox{fill:var(--sunk);stroke:var(--steel-edge);stroke-width:1.5} svg .gwin{fill:var(--accent-soft);stroke:var(--steel-edge);stroke-width:1}
 svg .gport{fill:var(--panel);stroke:var(--steel-edge);stroke-width:1.5} svg .grip{fill:#D9822B;stroke:var(--wire-outline);stroke-width:1}
+svg .sep{fill:#FFFFFF;stroke:var(--steel-edge);stroke-width:1.2}
+svg .sep-wet{fill:var(--sunk)} svg .sep-edge{fill:none;stroke:var(--steel-edge);stroke-width:1.2}
+svg .print{stroke:var(--muted);stroke-width:2;opacity:.55}
+svg .film-clear{fill:var(--accent-soft);fill-opacity:.55;stroke:var(--accent);stroke-width:1.2}
+svg .gloss{stroke:#FFFFFF;stroke-width:5;opacity:.7} svg .gloss2{stroke:#FFFFFF;stroke-width:2;opacity:.6}
+svg .droplet{fill:#BFD8F2;fill-opacity:.8;stroke:var(--accent);stroke-width:1}
+svg .pipette{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1.3}
+svg .ring-warn{fill:var(--surface);stroke:var(--warn);stroke-width:2}
+svg .slope{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 3}
 svg .spark{fill:none;stroke:var(--danger);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 
 /* table */
@@ -289,6 +298,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
     <a href="#calc">算电导率</a>
     <a href="#arr">变温测量</a>
     <a href="#coin">纽扣电池</a>
+    <a href="#pp">PP 膜</a>
     <a href="#after">测后处理</a>
     <a href="#trouble">问题排查</a>
   </div>
@@ -735,10 +745,122 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   </div>
 </section>
 
+<section id="pp">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">10 · PP film</div>
+      <h2>纽扣电池里的 PP 膜怎么用</h2>
+      <p>纽扣电池常用的 PP（聚丙烯 Polypropylene）膜有两种：微孔 PP 隔膜和致密 PP 薄膜。两者用法完全不同，先分清手上是哪一种。本节内容都是通用实验方法，Gamry 手册没有涉及。</p>
+    </div>
+
+    <div class="block">
+      <h3>先分清是哪一种</h3>
+      <figure class="fig" style="margin-top:12px">
+        <div class="figsvg"><!--FIG:pp-identify--><svg viewBox="0 0 640 260" role="img" aria-label="分辨两种 PP 膜：微孔 PP 隔膜是白色不透明的，滴乙醇后被吸进去、变成半透明，用来浸液体电解液；致密 PP 薄膜是透明有光泽的，乙醇只摊在表面、膜不变，适合剪成环形垫片。"><rect x="10" y="10" width="305" height="240" rx="8" class="sunk-r"/><text x="26" y="34" font-size="13" font-weight="700">微孔 PP 隔膜</text><text x="26" y="52" font-size="10" class="t-mut">例如 Celgard 一类的电池隔膜</text><line x1="44" y1="80" x2="196" y2="80" class="print"/><line x1="44" y1="90" x2="196" y2="90" class="print"/><line x1="44" y1="100" x2="196" y2="100" class="print"/><line x1="44" y1="110" x2="196" y2="110" class="print"/><line x1="44" y1="120" x2="196" y2="120" class="print"/><line x1="44" y1="130" x2="196" y2="130" class="print"/><line x1="44" y1="140" x2="196" y2="140" class="print"/><line x1="44" y1="150" x2="196" y2="150" class="print"/><line x1="44" y1="160" x2="196" y2="160" class="print"/><line x1="44" y1="170" x2="196" y2="170" class="print"/><rect x="36" y="70" width="168" height="112" rx="3" class="sep"/><circle cx="120" cy="126" r="30" class="sep-wet"/><line x1="106.0" y1="100" x2="134.0" y2="100" class="print"/><line x1="95.6" y1="110" x2="144.4" y2="110" class="print"/><line x1="91.6" y1="120" x2="148.4" y2="120" class="print"/><line x1="91.3" y1="130" x2="148.7" y2="130" class="print"/><line x1="94.5" y1="140" x2="145.5" y2="140" class="print"/><line x1="103.0" y1="150" x2="137.0" y2="150" class="print"/><circle cx="120" cy="126" r="30" class="sep-edge"/><text x="120" y="88" font-size="10" text-anchor="middle" font-weight="600">滴一滴乙醇</text><text x="214" y="90" font-size="11.5" font-weight="700">白色、不透明</text><text x="214" y="118" font-size="11">滴乙醇：</text><text x="214" y="134" font-size="11">吸进去，</text><text x="214" y="150" font-size="11" font-weight="700" class="t-acc">变成半透明</text><text x="26" y="210" font-size="11" font-weight="700">用途：浸液体电解液，测有效电导率</text><text x="26" y="228" font-size="10" class="t-mut">也是 Li 对称电池、全电池的隔膜</text><rect x="325" y="10" width="305" height="240" rx="8" class="sunk-r"/><text x="341" y="34" font-size="13" font-weight="700">致密 PP 薄膜</text><text x="341" y="52" font-size="10" class="t-mut">没有孔的透明薄膜</text><line x1="354" y1="80" x2="506" y2="80" class="print"/><line x1="354" y1="90" x2="506" y2="90" class="print"/><line x1="354" y1="100" x2="506" y2="100" class="print"/><line x1="354" y1="110" x2="506" y2="110" class="print"/><line x1="354" y1="120" x2="506" y2="120" class="print"/><line x1="354" y1="130" x2="506" y2="130" class="print"/><line x1="354" y1="140" x2="506" y2="140" class="print"/><line x1="354" y1="150" x2="506" y2="150" class="print"/><line x1="354" y1="160" x2="506" y2="160" class="print"/><line x1="354" y1="170" x2="506" y2="170" class="print"/><rect x="350" y="70" width="168" height="112" rx="3" class="film-clear"/><path d="M362 172 L404 78" class="gloss"/><path d="M376 172 L418 78" class="gloss2"/><ellipse cx="452" cy="128" rx="26" ry="16" class="droplet"/><text x="528" y="90" font-size="11.5" font-weight="700">透明、有光泽</text><text x="528" y="118" font-size="11">滴乙醇：</text><text x="528" y="134" font-size="11">摊在表面，</text><text x="528" y="150" font-size="11" font-weight="700">膜本身不变</text><text x="341" y="210" font-size="11" font-weight="700">用途：剪成环形垫片，限定 L 和 A</text><text x="341" y="228" font-size="10" class="t-mut">适合软的聚合物电解质</text></svg><!--/FIG:pp-identify--></div>
+        <figcaption>用一小块边角料测试：滴一滴乙醇或异丙醇，看膜会不会变透明。</figcaption>
+      </figure>
+      <ul class="b">
+        <li><strong>微孔 PP 隔膜</strong>：白色不透明是因为里面有大量微孔散射光；乙醇填满微孔后，这一处就变成半透明。光看白色还不够，滴乙醇后变透明才能确认。<span class="src gen">通用方法</span></li>
+        <li><strong>致密 PP 薄膜</strong>：本来就透明，乙醇只会在表面摊开、挥发，膜本身没有变化。</li>
+        <li>两种膜都是绝缘体，本身不导离子；微孔隔膜要浸了电解液才导电。</li>
+      </ul>
+    </div>
+
+    <div class="block" style="margin-top:16px">
+      <h3>微孔 PP 隔膜：浸液体电解液，测有效电导率</h3>
+      <p class="note" style="margin:6px 0 16px">隔膜夹在两片不锈钢垫片之间，组成 SS | 隔膜 + 电解液 | SS 的阻塞电池。谱图通常只看到低频尖峰（半圆在 5 MHz 以上），R 取尖峰和实轴的交点。</p>
+      <!--PPSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>把隔膜冲成比垫片大一圈的圆片（例如垫片 16 mm、隔膜 19 mm），干燥后放进手套箱。<span class="src gen">通用方法</span></p>
+          <ul><li>隔膜比垫片大，两片垫片的边缘才不会碰到一起。</li>
+          <li>PP 不耐高温，干燥温度按课题组规程，常用 60 °C 左右真空干燥。</li>
+          <li>用镊子拿，不要用手直接碰，手上的油脂会影响浸润。薄膜容易带静电，可以用防静电镊子或离子风扇。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="冲片和干燥：PP 隔膜冲成直径 19 毫米、比 16 毫米垫片大一圈的圆片；真空干燥后放进手套箱，温度按课题组规程，常用 60 度左右。"><circle cx="100" cy="98" r="62" class="sep"/><circle cx="100" cy="98" r="52" class="hidden-edge"/><text x="100" y="94" font-size="11.5" text-anchor="middle" font-weight="700">隔膜 Ø19 mm</text><text x="100" y="112" font-size="10" text-anchor="middle" class="t-mut">虚线：垫片 Ø16 mm</text><text x="100" y="186" font-size="11" text-anchor="middle" font-weight="700">隔膜比垫片大一圈</text><text x="100" y="203" font-size="10" text-anchor="middle" class="t-mut">垫片边缘才不会碰到</text><rect x="226" y="36" width="146" height="104" rx="8" class="oven"/><rect x="236" y="48" width="92" height="80" rx="4" class="chamber"/><rect x="334" y="54" width="32" height="16" rx="3" class="panel"/><text x="350" y="66" font-size="8.5" text-anchor="middle" font-weight="600" class="t-panel tm">60°C</text><circle cx="350" cy="92" r="7" class="knob-s"/><circle cx="350" cy="114" r="7" class="knob-s"/><rect x="246" y="92" width="72" height="4" rx="1" class="sep"/><rect x="246" y="100" width="72" height="4" rx="1" class="sep"/><rect x="246" y="108" width="72" height="4" rx="1" class="sep"/><text x="282" y="72" font-size="10" text-anchor="middle" font-weight="600" class="t-mut">真空</text><text x="299" y="164" font-size="11" text-anchor="middle" font-weight="700">干燥后进手套箱</text><text x="299" y="182" font-size="10" text-anchor="middle" class="t-mut">温度按课题组规程</text><text x="299" y="198" font-size="9.5" text-anchor="middle" class="t-mut">（PP 不耐高温，常用 60 °C 左右）</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>PP 隔膜很薄（常见 20–25 µm），把几层叠在一起量，再除以层数，得到单层厚度 L<sub>1</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>说明书上的厚度可以先用，但最好自己复核。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="量厚度：把 4 层隔膜叠在一起用千分尺量，读数 0.100 毫米除以 4 层，单层厚度 L1 等于 25 微米。"><path d="M59 104 V130 Q59 156 85 156 H165 Q191 156 191 130 V104" class="frame-out"/><path d="M59 104 V130 Q59 156 85 156 H165 Q191 156 191 130 V104" class="frame"/><rect x="50" y="78" width="18" height="26" rx="2" class="steel"/><rect x="68" y="70" width="3" height="42" class="sep"/><rect x="71" y="70" width="3" height="42" class="sep"/><rect x="74" y="70" width="3" height="42" class="sep"/><rect x="77" y="70" width="3" height="42" class="sep"/><rect x="80" y="84" width="90" height="14" class="steel"/><rect x="168" y="78" width="46" height="26" class="steel"/><rect x="212" y="72" width="36" height="38" rx="4" class="steel"/><rect x="248" y="80" width="14" height="22" rx="3" class="steel"/><line x1="74" y1="68" x2="74" y2="46" class="lead"/><text x="60" y="40" font-size="11.5" font-weight="700">4 层隔膜叠在一起</text><text x="125" y="176" font-size="10.5" text-anchor="middle" class="t-mut">千分尺：用棘轮轻轻接触</text><text x="330" y="64" font-size="12" text-anchor="middle" font-weight="600">读数 0.100 mm</text><text x="330" y="90" font-size="12" text-anchor="middle" font-weight="600">÷ 4 层</text><text x="330" y="122" font-size="16" text-anchor="middle" font-weight="700" class="t-acc">L<tspan dy="4.5" font-size="11.5">1</tspan><tspan dy="-4.5"> = 25 µm</tspan></text><text x="330" y="150" font-size="10" text-anchor="middle" class="t-mut">单层太薄，直接量误差大</text><text x="16" y="206" font-size="10.5" font-weight="600">也可以先用说明书上的厚度，但最好自己复核</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>组装：正极壳 → 不锈钢垫片 → PP 隔膜 → 滴加电解液 → 不锈钢垫片 → 弹片和负极盖 → 封口。<span class="src gen">通用方法</span></p>
+          <ul><li>电解液要足够把整片隔膜浸透，常用几十 µL；同一批电池用同样的量。</li>
+          <li>隔膜放平、居中，不要有褶皱或气泡。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="组装和加液：从下往上依次放正极壳、不锈钢垫片、PP 隔膜，滴加电解液浸透整片隔膜，再放不锈钢垫片、弹片和负极盖，最后封口。"><rect x="30" y="166" width="160" height="32" rx="5" class="steel"/><rect x="37" y="166" width="146" height="24" rx="3" class="cavity"/><rect x="46" y="150" width="128" height="7" rx="1.5" class="steel"/><rect x="38" y="138" width="144" height="4" rx="1" class="sep"/><rect x="102" y="36" width="16" height="54" rx="3" class="pipette"/><path d="M103 90 L117 90 L111 118 L109 118 Z" class="pipette"/><path d="M110 122 q4 6 0 9 q-4 -3 0 -9 Z" class="droplet"/><text x="128" y="58" font-size="11" font-weight="700">滴加电解液</text><text x="128" y="74" font-size="10" class="t-mut">浸透整片隔膜</text><text x="110" y="214" font-size="10" text-anchor="middle" class="t-mut">先放下面这几层</text><text x="232" y="36" font-size="11.5" font-weight="700">组装顺序（从下往上）</text><text x="232" y="62" font-size="11">① 正极壳</text><text x="232" y="84" font-size="11">② 不锈钢垫片</text><text x="232" y="106" font-size="11" font-weight="700" class="t-acc">③ PP 隔膜，放平居中</text><text x="232" y="128" font-size="11" font-weight="700" class="t-acc">④ 滴加电解液</text><text x="232" y="150" font-size="11">⑤ 不锈钢垫片</text><text x="232" y="172" font-size="11">⑥ 弹片、负极盖</text><text x="232" y="194" font-size="11">⑦ 封口</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>封口后静置几小时（常见做法是过夜）再测。PP 是疏水的，电解液浸润需要时间。<span class="src gen">通用方法</span></p>
+          <ul><li>浸透的隔膜由白色变成半透明，可以拆一个试做的电池看一下。</li>
+          <li>也可以隔一段时间测一次 EIS，高频截距不再变化后再取值。</li>
+          <li>离子液体、水系或高浓度电解液可能浸不透 PP，测到的电阻会偏大；这时改用玻璃纤维等容易浸润的隔膜。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="静置浸润：刚加液时隔膜白色不透明，浸润中从中间开始变透明，浸透后整片半透明；PP 疏水，静置几小时再测，或截距不再变化再取值。"><text x="200" y="24" font-size="12" text-anchor="middle" font-weight="700">静置，让电解液浸透</text><line x1="38.3" y1="66" x2="101.7" y2="66" class="print"/><line x1="32.3" y1="76" x2="107.7" y2="76" class="print"/><line x1="29.4" y1="86" x2="110.6" y2="86" class="print"/><line x1="29.2" y1="96" x2="110.8" y2="96" class="print"/><line x1="31.5" y1="106" x2="108.5" y2="106" class="print"/><line x1="36.8" y1="116" x2="103.2" y2="116" class="print"/><line x1="168.3" y1="66" x2="231.7" y2="66" class="print"/><line x1="162.3" y1="76" x2="237.7" y2="76" class="print"/><line x1="159.4" y1="86" x2="240.6" y2="86" class="print"/><line x1="159.2" y1="96" x2="240.8" y2="96" class="print"/><line x1="161.5" y1="106" x2="238.5" y2="106" class="print"/><line x1="166.8" y1="116" x2="233.2" y2="116" class="print"/><line x1="298.3" y1="66" x2="361.7" y2="66" class="print"/><line x1="292.3" y1="76" x2="367.7" y2="76" class="print"/><line x1="289.4" y1="86" x2="370.6" y2="86" class="print"/><line x1="289.2" y1="96" x2="370.8" y2="96" class="print"/><line x1="291.5" y1="106" x2="368.5" y2="106" class="print"/><line x1="296.8" y1="116" x2="363.2" y2="116" class="print"/><circle cx="70" cy="92" r="42" class="sep"/><circle cx="200" cy="92" r="42" class="sep"/><circle cx="200" cy="92" r="24" class="sep-wet"/><line x1="183.1" y1="76" x2="216.9" y2="76" class="print"/><line x1="177.8" y1="86" x2="222.2" y2="86" class="print"/><line x1="177.3" y1="96" x2="222.7" y2="96" class="print"/><line x1="181.5" y1="106" x2="218.5" y2="106" class="print"/><circle cx="200" cy="92" r="42" class="sep-edge"/><circle cx="330" cy="92" r="42" class="sep-wet"/><line x1="298.0" y1="66" x2="362.0" y2="66" class="print"/><line x1="292.2" y1="76" x2="367.8" y2="76" class="print"/><line x1="289.4" y1="86" x2="370.6" y2="86" class="print"/><line x1="289.2" y1="96" x2="370.8" y2="96" class="print"/><line x1="291.4" y1="106" x2="368.6" y2="106" class="print"/><line x1="296.5" y1="116" x2="363.5" y2="116" class="print"/><circle cx="330" cy="92" r="42" class="sep-edge"/><line x1="118" y1="92" x2="144" y2="92" class="dim"/><path d="M152 92 L143 87 L143 97 Z" class="arr"/><line x1="248" y1="92" x2="274" y2="92" class="dim"/><path d="M282 92 L273 87 L273 97 Z" class="arr"/><text x="70" y="152" font-size="11" text-anchor="middle" font-weight="700">刚加液</text><text x="200" y="152" font-size="11" text-anchor="middle" font-weight="700">浸润中</text><text x="330" y="152" font-size="11" text-anchor="middle" font-weight="700" class="t-acc">浸透</text><text x="70" y="168" font-size="9.5" text-anchor="middle" class="t-mut">白色、不透明</text><text x="200" y="168" font-size="9.5" text-anchor="middle" class="t-mut">中间先变透明</text><text x="330" y="168" font-size="9.5" text-anchor="middle" class="t-mut">整片半透明</text><text x="200" y="196" font-size="11" text-anchor="middle" font-weight="700">PP 疏水，浸润慢：静置几小时再测</text><text x="200" y="213" font-size="9.5" text-anchor="middle" class="t-mut">或隔一段时间测一次，截距不再变化再取值</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>多层法：分别组装 1、2、3、4 层隔膜的电池，测各自的高频截距 R，对层数 n 作直线。斜率是每层隔膜的电阻，截距是壳体和接触电阻。<span class="src gen">通用方法</span></p>
+          <ul><li>这样不需要空白池，接触电阻自动扣除。</li>
+          <li>每个层数最好装 2 个以上电池取平均。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="多层法：1 到 4 层隔膜的高频截距对层数作直线，斜率约 1.41 欧姆每层，是每层隔膜的电阻；截距约 0.43 欧姆，是壳体和接触电阻。"><text x="60" y="22" font-size="11.5" font-weight="700">1–4 层分别装电池，测高频截距 R</text><line x1="60" y1="180" x2="372" y2="180" class="grid"/><text x="52" y="184" font-size="10" text-anchor="end" class="t-mut">0</text><line x1="60" y1="140" x2="372" y2="140" class="grid"/><text x="52" y="144" font-size="10" text-anchor="end" class="t-mut">2</text><line x1="60" y1="100" x2="372" y2="100" class="grid"/><text x="52" y="104" font-size="10" text-anchor="end" class="t-mut">4</text><line x1="60" y1="60" x2="372" y2="60" class="grid"/><text x="52" y="64" font-size="10" text-anchor="end" class="t-mut">6</text><text x="60" y="196" font-size="10" text-anchor="middle" class="t-mut">0</text><text x="128" y="196" font-size="10" text-anchor="middle" class="t-mut">1</text><text x="196" y="196" font-size="10" text-anchor="middle" class="t-mut">2</text><text x="264" y="196" font-size="10" text-anchor="middle" class="t-mut">3</text><text x="332" y="196" font-size="10" text-anchor="middle" class="t-mut">4</text><path d="M60 36 V180 H372" class="axis"/><text x="56" y="34" font-size="10" text-anchor="end" class="t-mut">R (Ω)</text><text x="372" y="212" font-size="10" text-anchor="end" class="t-mut">隔膜层数 n</text><line x1="60" y1="171.5" x2="359.20000000000005" y2="47.2" class="fit"/><circle cx="128" cy="143" r="5" class="mark"/><circle cx="196" cy="115.6" r="5" class="mark"/><circle cx="264" cy="86.2" r="5" class="mark"/><circle cx="332" cy="58.6" r="5" class="mark"/><circle cx="60" cy="171.5" r="6" class="ring-warn"/><text x="78" y="177" font-size="10.5" font-weight="700" class="t-warn">截距 ≈ 0.43 Ω = 接触电阻</text><path d="M196 115.0 H264 V86.7" class="slope"/><text x="272" y="104.85" font-size="10.5" font-weight="700">斜率 ≈ 1.41 Ω/层</text><text x="272" y="120.85" font-size="10" class="t-mut">= 每层隔膜的电阻</text><text x="372" y="22" font-size="10" text-anchor="end" font-weight="600" class="t-warn">示例</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>用斜率算有效电导率 σ<sub>eff</sub>。知道电解液本身的电导率 σ<sub>0</sub> 时，还可以算 MacMullin 数 N<sub>M</sub> = σ<sub>0</sub> / σ<sub>eff</sub>，它表示隔膜（孔隙率、曲折度）让电阻变大了多少倍。<span class="src gen">通用方法</span></p>
+          <ul><li>σ<sub>eff</sub> 是“隔膜 + 电解液”的有效值，不等于电解液本身的电导率。</li>
+          <li>下面的计算器可以直接算。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="计算：有效电导率 σeff 等于单层厚度除以每层电阻乘面积，示例 0.0025 厘米除以 1.41 欧姆乘 2.01 平方厘米，约 0.88 毫西每厘米；MacMullin 数 NM 等于电解液本身电导率除以 σeff，示例约 11。"><text x="200" y="34" font-size="16" text-anchor="middle" font-weight="700">σ<tspan dy="4.5" font-size="11.5">eff</tspan><tspan dy="-4.5"> = L</tspan><tspan dy="4.5" font-size="11.5">1</tspan><tspan dy="-4.5"> / (R</tspan><tspan dy="4.5" font-size="11.5">层</tspan><tspan dy="-4.5"> · A)</tspan></text><text x="200" y="58" font-size="11" text-anchor="middle" class="tm">= 0.0025 cm ÷ (1.41 Ω × 2.01 cm²)</text><text x="200" y="82" font-size="13.5" text-anchor="middle" font-weight="700" class="t-acc">= 8.8 × 10⁻⁴ S/cm = 0.88 mS/cm</text><line x1="40" y1="100" x2="360" y2="100" class="grid"/><text x="200" y="128" font-size="15" text-anchor="middle" font-weight="700">N<tspan dy="4.2" font-size="10.8">M</tspan><tspan dy="-4.2"> = σ</tspan><tspan dy="4.2" font-size="10.8">0</tspan><tspan dy="-4.2"> / σ</tspan><tspan dy="4.2" font-size="10.8">eff</tspan></text><text x="200" y="150" font-size="10" text-anchor="middle" class="t-mut">σ<tspan dy="2.8" font-size="7.2">0</tspan><tspan dy="-2.8">：电解液本身的电导率（用电导率仪测）</tspan></text><text x="200" y="176" font-size="12" text-anchor="middle" font-weight="700">例：σ<tspan dy="3.4" font-size="8.6">0</tspan><tspan dy="-3.4"> = 10 mS/cm → N</tspan><tspan dy="3.4" font-size="8.6">M</tspan><tspan dy="-3.4"> ≈ 11</tspan></text><text x="200" y="196" font-size="10" text-anchor="middle" class="t-mut">隔膜让电阻变大的倍数（孔隙率、曲折度）</text><rect x="14" y="198" width="64" height="18" rx="9" class="tagbox"/><text x="46" y="211" font-size="10" text-anchor="middle" font-weight="700" class="t-warn">示例数值</text></svg></figure></div></li>
+      </ol>
+      <!--/PPSTEPS-->
+    </div>
+
+    <div class="block arr-grid" style="margin-top:16px">
+      <div>
+        <h3>多层法计算</h3>
+        <p style="margin:8px 0"><span class="tag">示例数据</span> <span class="note">换成你的测量值</span></p>
+        <table class="rows" id="ppTable">
+          <thead><tr><th>层数 n</th><th>高频截距 R (Ω)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button type="button" class="btn" id="ppAdd">添加一行</button>
+          <button type="button" class="btn" id="ppDel">删除最后一行</button>
+        </div>
+        <div class="fields" style="margin-top:14px">
+          <div class="row2">
+            <div class="field"><label for="ppL">单层厚度 L<sub>1</sub> (µm)</label><input id="ppL" type="number" min="0" step="any" value="25"></div>
+            <div class="field"><label for="ppS0">电解液本身 σ<sub>0</sub> (mS/cm，可不填)</label><input id="ppS0" type="number" min="0" step="any" value="10"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="ppDs">垫片直径 (mm)</label><input id="ppDs" type="number" min="0" step="any" value="16"></div>
+            <div class="field"><label for="ppDm">隔膜直径 (mm)</label><input id="ppDm" type="number" min="0" step="any" value="19"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="chartbox" id="ppBox">
+          <svg id="ppPlot" viewBox="0 0 400 260" role="img" aria-label="多层法：高频截距 R 对隔膜层数 n 的直线拟合"></svg>
+          <div class="tip" id="ppTip" hidden></div>
+        </div>
+        <dl class="outs" style="margin-top:12px">
+          <div><dt>每层电阻（斜率）</dt><dd id="ppSlope">—</dd></div>
+          <div><dt>接触电阻（截距）</dt><dd id="ppIc">—</dd></div>
+          <div><dt>有效电导率 σ<sub>eff</sub></dt><dd id="ppSig">—</dd></div>
+          <div><dt>MacMullin 数 N<sub>M</sub></dt><dd id="ppNm">—</dd></div>
+        </dl>
+        <div class="msgs" id="ppMsgs" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="block split" style="margin-top:16px">
+      <h3>致密 PP 薄膜：做环形垫片，测软的聚合物电解质</h3>
+      <figure class="fig">
+        <div class="figsvg"><!--FIG:pp-ring--><svg viewBox="0 0 640 252" role="img" aria-label="致密 PP 薄膜做环形垫片：俯视图中 PP 环外圆不小于垫片，中心孔填满电解质，孔径 d 决定面积 A；截面图中两片不锈钢垫片压在 PP 环上，L 等于 PP 环厚度。"><circle cx="120" cy="112" r="76" class="film-clear"/><circle cx="120" cy="112" r="64" class="hidden-edge"/><circle cx="120" cy="112" r="44" class="sample"/><line x1="76" y1="112" x2="164" y2="112" class="dim"/><path d="M76 112 L83 108 L83 116 Z M164 112 L157 108 L157 116 Z" class="arr"/><text x="120" y="104" font-size="11" text-anchor="middle" font-weight="700">d（孔径）</text><line x1="178" y1="62" x2="214" y2="34" class="lead"/><text x="218" y="32" font-size="11" font-weight="700">PP 环</text><line x1="140" y1="142" x2="214" y2="196" class="lead"/><text x="218" y="200" font-size="11" font-weight="700">电解质填满孔</text><text x="120" y="222" font-size="12.5" text-anchor="middle" font-weight="700">A = π d² / 4</text><text x="120" y="240" font-size="10" text-anchor="middle" class="t-mut">虚线：垫片边缘</text><rect x="330" y="60" width="260" height="14" rx="2" class="steel"/><rect x="330" y="74" width="90" height="16" class="film-clear"/><rect x="500" y="74" width="90" height="16" class="film-clear"/><rect x="420" y="74" width="80" height="16" class="sample"/><rect x="330" y="90" width="260" height="14" rx="2" class="steel"/><text x="375" y="86" font-size="10" text-anchor="middle" font-weight="600">PP 环</text><text x="545" y="86" font-size="10" text-anchor="middle" font-weight="600">PP 环</text><text x="460" y="86" font-size="10" text-anchor="middle" font-weight="700">电解质</text><text x="460" y="52" font-size="10" text-anchor="middle" class="t-mut">不锈钢垫片</text><text x="460" y="118" font-size="10" text-anchor="middle" class="t-mut">不锈钢垫片</text><line x1="594" y1="74" x2="622" y2="74" class="dim"/><line x1="594" y1="90" x2="622" y2="90" class="dim"/><line x1="614" y1="56" x2="614" y2="74" class="dim"/><path d="M614 74 L610 66 L618 66 Z" class="arr"/><line x1="614" y1="90" x2="614" y2="108" class="dim"/><path d="M614 90 L610 98 L618 98 Z" class="arr"/><text x="600" y="134" font-size="11" text-anchor="end" font-weight="700">L = PP 环的厚度</text><text x="330" y="166" font-size="11">① 冲出外圆和内孔，量环的厚度</text><text x="330" y="188" font-size="11">② 电解质填满孔，刮平到和环齐平</text><text x="330" y="210" font-size="11">③ 盖上垫片：压力由 PP 环承担</text><text x="330" y="234" font-size="10" class="t-warn">PP 长时间高于约 100 °C 会软化、变形</text></svg><!--/FIG:pp-ring--></div>
+        <figcaption>左：俯视图；右：截面图。PP 环把两片垫片撑开，软的电解质不会被压薄。</figcaption>
+      </figure>
+      <ul class="b">
+        <li>先冲外圆，直径不小于垫片；再在中心冲孔，孔径小于垫片，例如 10–12 mm。<span class="src gen">通用方法</span></li>
+        <li>L 等于环的厚度。PP 是硬的，可以用千分尺准确量；A 等于孔的面积。</li>
+        <li>电解质填满孔，刮平到和环齐平，再盖上垫片。多出来的电解质如果留在环和垫片之间，垫片就贴不到环上，L 会比环厚。</li>
+        <li>弹片的压力由 PP 环承担，软而粘的电解质不再被压薄，也不容易挤出或短路。</li>
+        <li>温度：PP 熔点约 160 °C，长时间高于约 100 °C 会软化、变形，变温测量的上限要低于这个范围。</li>
+        <li>环很薄（例如 25 µm 以下）时 R<sub>b</sub> 很小，接触电阻占比大：用空白池扣除，或把几层环叠起来、换厚一点的膜。</li>
+        <li>把软电解质灌进微孔 PP 隔膜里测，得到的是“电解质 + 隔膜”复合膜的电导率，不是电解质本身的电导率。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section id="after">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">10 · After the test</div>
+      <div class="eyebrow">11 · After the test</div>
       <h2>纽扣电池测完之后</h2>
       <p>从取下电池、记录数据，到拆壳、检查电解质膜、分类处理废物和清理工位，每一步配一张示意图。仪器部分依据手册，其余是通用的实验室做法；废物处理以所在单位的安全规定为准。</p>
     </div>
@@ -790,7 +912,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
 <section id="trouble">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">11 · Troubleshooting</div>
+      <div class="eyebrow">12 · Troubleshooting</div>
       <h2>问题排查</h2>
     </div>
     <div class="block tablewrap">
@@ -806,6 +928,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
           <tr><td>Overload 灯持续常亮</td><td>导线断开或夹子松脱</td><td>检查五个夹子；Cell On 熄灭后再动线<span class="src">手册 Ch 7</span></td></tr>
           <tr><td>电导率比预期低很多</td><td>L 量大了或 A 取大了；接触不良</td><td>重新核对 L、A 的取法（第 03 节）；检查样品与不锈钢的接触</td></tr>
           <tr><td>纽扣电池谱图只是实轴附近一个点</td><td>弹片压穿了膜，或垫片错位，两片垫片直接接触</td><td>拆开检查；软的膜外加 PTFE 环形垫片限定厚度<span class="src gen">通用方法</span></td></tr>
+          <tr><td>PP 隔膜电池的截距一直在变</td><td>电解液还没浸透隔膜</td><td>延长静置时间，截距稳定后再取值；浸不透时换容易浸润的隔膜<span class="src gen">通用方法</span></td></tr>
           <tr><td>纽扣电池重复性差</td><td>接触电阻、封口压力不一致；鳄鱼夹位置不同</td><td>用纽扣电池夹具；用空白池测接触电阻并扣除；同一封口机、同一压力<span class="src gen">通用方法</span></td></tr>
         </tbody>
       </table>
@@ -1144,6 +1267,115 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
     msgs.innerHTML = m.join('');
   }
   ['#kR', '#kRb', '#kL', '#kDs', '#kDm'].forEach(id => $(id).addEventListener('input', update));
+  update();
+})();
+</script>
+
+<script>
+/* PP separator multilayer calculator */
+(function(){
+  const $ = s => document.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const SUP = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const sci = x => {
+    const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e);
+    if (e >= -2 && e <= 3) return (+x.toPrecision(3)).toString();
+    return `${m.toFixed(2)} × 10${String(e).split('').map(c => SUP[c] || c).join('')}`;
+  };
+  const msg = (k, h) => `<div class="msg ${k}">${h}</div>`;
+  function el(tag, attrs, parent, text){
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    parent.appendChild(n); return n;
+  }
+  const tbody = $('#ppTable tbody');
+  function addRow(n, R){
+    const i = tbody.children.length;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><input type="number" min="1" step="1" aria-label="层数 ${i + 1}" value="${n ?? ''}"></td><td><input type="number" min="0" step="any" aria-label="截距 ${i + 1}" value="${R ?? ''}"></td>`;
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input').forEach(x => x.addEventListener('input', update));
+  }
+  [[1, 1.85], [2, 3.22], [3, 4.69], [4, 6.07]].forEach(r => addRow(r[0], r[1]));
+  $('#ppAdd').addEventListener('click', () => { addRow(tbody.children.length + 1); update(); });
+  $('#ppDel').addEventListener('click', () => { if (tbody.lastElementChild) tbody.removeChild(tbody.lastElementChild); update(); });
+  ['#ppL', '#ppS0', '#ppDs', '#ppDm'].forEach(id => $(id).addEventListener('input', update));
+
+  const svg = $('#ppPlot'), tip = $('#ppTip');
+  const X0 = 56, Y0 = 220, W = 324, H = 190;
+  let pts = [], hover = null;
+  function update(){
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const rows = [...tbody.children].map(tr => {
+      const [a, b] = tr.querySelectorAll('input');
+      const n = parseFloat(a.value), R = parseFloat(b.value);
+      return n > 0 && R > 0 ? {n, R} : null;
+    }).filter(Boolean);
+    const ids = ['#ppSlope', '#ppIc', '#ppSig', '#ppNm'];
+    const distinct = new Set(rows.map(r => r.n)).size;
+    if (distinct < 2){
+      ids.forEach(id => $(id).textContent = '—');
+      $('#ppMsgs').innerHTML = msg('info', '至少填两种不同层数的数据才能拟合。');
+      el('text', {x:200, y:130, 'font-size':13, 'text-anchor':'middle', class:'t-mut'}, svg, '填入至少两种层数的截距后显示直线');
+      pts = []; return;
+    }
+    const k = rows.length;
+    const mx = rows.reduce((s, r) => s + r.n, 0) / k, my = rows.reduce((s, r) => s + r.R, 0) / k;
+    let sxy = 0, sxx = 0, syy = 0;
+    rows.forEach(r => { sxy += (r.n - mx) * (r.R - my); sxx += (r.n - mx) ** 2; syy += (r.R - my) ** 2; });
+    const slope = sxy / sxx, ic = my - slope * mx;
+    const r2 = syy > 0 ? sxy * sxy / (sxx * syy) : 1;
+    const L = parseFloat($('#ppL').value), ds = parseFloat($('#ppDs').value), dm = parseFloat($('#ppDm').value);
+    const s0 = parseFloat($('#ppS0').value);
+    const A = Math.PI * Math.pow(Math.min(ds, dm) / 20, 2);
+    const sig = slope > 0 && L > 0 && A > 0 ? (L * 1e-4) / (slope * A) : NaN;
+    $('#ppSlope').textContent = `${(+slope.toPrecision(3))} Ω`;
+    $('#ppIc').textContent = `${(+ic.toPrecision(3))} Ω`;
+    $('#ppSig').textContent = isFinite(sig) ? `${sci(sig)} S/cm` : '—';
+    $('#ppNm').textContent = isFinite(sig) && s0 > 0 ? `${(+(s0 * 1e-3 / sig).toPrecision(3))}` : '—';
+    const m = [];
+    if (isFinite(sig)) m.push(msg('ok', `σ<sub>eff</sub> = ${(+(L * 1e-4).toPrecision(3))} cm ÷ (${(+slope.toPrecision(3))} Ω × ${A.toPrecision(3)} cm²) = ${(+(sig * 1e3).toPrecision(3))} mS/cm；R² = ${r2.toFixed(4)}`));
+    if (slope <= 0) m.push(msg('warn', '斜率不是正的：检查数据，层数越多电阻应该越大。'));
+    if (ic < 0) m.push(msg('warn', '截距为负：数据分散，或某个电池没有浸透；每个层数多装几个电池再拟合。'));
+    if (k >= 3 && r2 < 0.98) m.push(msg('info', 'R² 低于 0.98：点不在一条直线上，可能有电池没浸透或接触不一致。'));
+    $('#ppMsgs').innerHTML = m.join('');
+    // chart
+    const nmax = Math.max(...rows.map(r => r.n)) + 0.5;
+    const Rmax = Math.max(...rows.map(r => r.R), ic) * 1.15;
+    const X = n => X0 + n / nmax * W, Y = R => Y0 - Math.max(0, R) / Rmax * H;
+    const stepR = (() => { const raw = Rmax / 4, e = Math.pow(10, Math.floor(Math.log10(raw))), q = raw / e; return (q < 1.5 ? 1 : q < 3.5 ? 2 : q < 7.5 ? 5 : 10) * e; })();
+    for (let v = 0; v <= Rmax + 1e-9; v += stepR){
+      el('line', {x1:X0, y1:Y(v), x2:X0 + W, y2:Y(v), class:'grid'}, svg);
+      el('text', {x:X0 - 8, y:Y(v) + 4, 'font-size':11, 'text-anchor':'end', class:'t-mut'}, svg, String(+v.toPrecision(3)));
+    }
+    for (let n = 0; n <= Math.floor(nmax); n++) el('text', {x:X(n), y:Y0 + 18, 'font-size':11, 'text-anchor':'middle', class:'t-mut'}, svg, String(n));
+    el('path', {d:`M${X0} ${Y0 - H - 6} V${Y0} H${X0 + W}`, class:'axis'}, svg);
+    el('text', {x:X0 + W, y:Y0 + 36, 'font-size':11.5, 'text-anchor':'end', class:'t-mut'}, svg, '隔膜层数 n');
+    el('text', {x:X0, y:Y0 - H - 12, 'font-size':11.5, class:'t-mut'}, svg, 'R (Ω)');
+    el('line', {x1:X(0), y1:Y(ic), x2:X(nmax), y2:Y(ic + slope * nmax), class:'fit'}, svg);
+    if (ic >= 0){
+      el('circle', {cx:X(0), cy:Y(ic), r:6, class:'ring-warn'}, svg);
+      el('text', {x:X(0) + 16, y:Y0 - 5, 'font-size':11, class:'t-warn'}, svg, '截距 = 接触电阻');
+    }
+    pts = rows.map(r => ({...r, x:X(r.n), y:Y(r.R)}));
+    pts.forEach(p => el('circle', {cx:p.x, cy:p.y, r:5, class:'mark'}, svg));
+    hover = el('circle', {cx:-20, cy:-20, r:7, class:'hover'}, svg);
+  }
+  svg.addEventListener('pointermove', e => {
+    if (!pts.length) return;
+    const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal, sx = r.width / vb.width;
+    const px = (e.clientX - r.left) / sx, py = (e.clientY - r.top) / sx;
+    let best = null, bd = 1e9;
+    pts.forEach(p => { const d = Math.hypot(p.x - px, p.y - py); if (d < bd){ bd = d; best = p; } });
+    if (!best || bd > 30){ tip.hidden = true; hover.setAttribute('cx', -20); return; }
+    hover.setAttribute('cx', best.x); hover.setAttribute('cy', best.y);
+    tip.hidden = false;
+    tip.innerHTML = `${best.n} 层 · R = ${best.R} Ω`;
+    tip.style.left = (best.x * sx + 8) + 'px';
+    tip.style.top = (best.y * sx + 8) + 'px';
+  });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; if (hover) hover.setAttribute('cx', -20); });
   update();
 })();
 </script>
