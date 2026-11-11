@@ -162,12 +162,21 @@ svg .no-bar{stroke:var(--danger);stroke-width:3.5;stroke-linecap:round}
 svg .circ{fill:none;stroke:var(--ink);stroke-width:1.5}
 svg .res{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
 svg .tagbox{fill:var(--warn-soft)}
+svg .gasket{fill:#2B2F33;stroke:var(--steel-edge);stroke-width:1}
+svg .gasket-line{fill:none;stroke:var(--steel-edge);stroke-width:1.5}
+svg .spring{fill:none;stroke:var(--steel-edge);stroke-width:2.5;stroke-linejoin:round}
+svg .cavity{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1}
+svg .ext{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+svg .cable-thick{fill:none;stroke:var(--wire-outline);stroke-width:10;stroke-linecap:round}
+svg .spark{fill:none;stroke:var(--danger);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 
 /* table */
 .tablewrap{overflow-x:auto}
 table.p{width:100%;border-collapse:collapse;font-size:14px}
 table.p th,table.p td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--rule)}
 table.p thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.p.keepcase thead th{text-transform:none;letter-spacing:0}
+table.p.wrap1 td:first-child{white-space:normal;min-width:7em}
 table.p td:first-child{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
 
 /* steps */
@@ -270,6 +279,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
     <a href="#sim">预测谱图</a>
     <a href="#calc">算电导率</a>
     <a href="#arr">变温测量</a>
+    <a href="#coin">纽扣电池</a>
     <a href="#trouble">问题排查</a>
   </div>
 </nav>
@@ -614,10 +624,111 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   </div>
 </section>
 
+<section id="coin">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">09 · Coin cell</div>
+      <h2>用纽扣电池测 EIS</h2>
+      <p>纽扣电池（如 CR2032）也可以接到 Reference 620 上测 EIS。测离子电导率时，用两片不锈钢垫片当阻塞电极，原理和前面的夹层池一样。不同的是面积和厚度的取法、接线方式，以及电池带电时的安全问题。</p>
+    </div>
+
+    <div class="block">
+      <h3>先确认装的是哪种纽扣电池</h3>
+      <div class="tablewrap" style="margin-top:10px">
+        <table class="p wrap1">
+          <thead><tr><th>电池结构</th><th>能得到什么</th><th>谱图特征</th></tr></thead>
+          <tbody>
+            <tr><td>SS | 电解质 | SS</td><td>离子电导率 σ（本页的方法）</td><td>高频半圆 + 低频尖峰，和夹层池一样</td></tr>
+            <tr><td>Li | 电解质 | Li</td><td>界面阻抗；配合直流极化可测锂离子迁移数</td><td>本体截距之后是界面半圆。界面半圆常和本体部分重叠，不宜用来算电导率</td></tr>
+            <tr><td>正极 | 电解液 | 负极</td><td>电池内阻、SEI、电荷转移、扩散</td><td>欧姆截距、一到两个压扁的半圆，再接约 45° 的扩散尾</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="fig" style="margin-top:16px">
+        <div class="figsvg"><!--FIG:coin-types--><svg viewBox="0 0 640 272" role="img" aria-label="三种纽扣电池的 Nyquist 图示意：不锈钢阻塞电池是半圆加低频尖峰，用来测离子电导率；锂对称电池是本体截距加界面半圆；半电池或全电池是欧姆截距、SEI 和电荷转移半圆，再接 45 度扩散尾。"><rect x="8" y="8" width="204" height="256" rx="8" class="sunk-r"/><text x="20" y="28" font-size="12" font-weight="700">SS | 电解质 | SS</text><text x="20" y="45" font-size="10" class="t-mut">阻塞电极</text><path d="M26 60 V190 H202" class="axis"/><text x="30" y="70" font-size="9" class="t-mut">−Z″</text><text x="202" y="204" font-size="9" text-anchor="end" class="t-mut">Z′</text><text x="110" y="254" font-size="11" text-anchor="middle" font-weight="700" class="t-acc">→ 离子电导率 σ</text><path d="M34 190 A42 42 0 0 1 118 190 L136 66" class="curve"/><line x1="34" y1="216" x2="118" y2="216" class="dim"/><path d="M34 216 L41 212 L41 220 Z M118 216 L111 212 L111 220 Z" class="arr"/><text x="76" y="232" font-size="11" text-anchor="middle" font-weight="700">R<tspan dy="3.1" font-size="7.9">b</tspan></text><rect x="218" y="8" width="204" height="256" rx="8" class="sunk-r"/><text x="230" y="28" font-size="12" font-weight="700">Li | 电解质 | Li</text><text x="230" y="45" font-size="10" class="t-mut">对称锂电池</text><path d="M236 60 V190 H412" class="axis"/><text x="240" y="70" font-size="9" class="t-mut">−Z″</text><text x="412" y="204" font-size="9" text-anchor="end" class="t-mut">Z′</text><text x="320" y="254" font-size="11" text-anchor="middle" font-weight="700" class="t-acc">→ 界面阻抗、迁移数</text><path d="M244 190 A8 8 0 0 1 260 190 A48 48 0 0 1 356 190 L376 172" class="curve"/><text x="252" y="206" font-size="10" text-anchor="middle" font-weight="600">R<tspan dy="2.8" font-size="7.2">b</tspan></text><line x1="260" y1="216" x2="356" y2="216" class="dim"/><path d="M260 216 L267 212 L267 220 Z M356 216 L349 212 L349 220 Z" class="arr"/><text x="308" y="232" font-size="11" text-anchor="middle" font-weight="700">R<tspan dy="3.1" font-size="7.9">界面</tspan></text><rect x="428" y="8" width="204" height="256" rx="8" class="sunk-r"/><text x="440" y="28" font-size="12" font-weight="700">正极 | 电解液 | 负极</text><text x="440" y="45" font-size="10" class="t-mut">半电池 / 全电池</text><path d="M446 60 V190 H622" class="axis"/><text x="450" y="70" font-size="9" class="t-mut">−Z″</text><text x="622" y="204" font-size="9" text-anchor="end" class="t-mut">Z′</text><text x="530" y="254" font-size="11" text-anchor="middle" font-weight="700" class="t-acc">→ 内阻、界面、扩散</text><path d="M458 190 A16 12 0 0 1 490 190 A34 26 0 0 1 558 190 L614 134" class="curve"/><text x="458" y="206" font-size="10" text-anchor="middle" font-weight="600">R<tspan dy="2.8" font-size="7.2">Ω</tspan></text><line x1="458" y1="216" x2="558" y2="216" class="dim"/><path d="M458 216 L465 212 L465 220 Z M558 216 L551 212 L551 220 Z" class="arr"/><text x="508" y="232" font-size="10.5" text-anchor="middle" font-weight="700">R<tspan dy="2.8" font-size="7.5">SEI</tspan><tspan dy="-2.8"> + R</tspan><tspan dy="2.8" font-size="7.5">ct</tspan></text><text x="622" y="124" font-size="9.5" text-anchor="end" class="t-mut">45° 扩散尾</text></svg><!--/FIG:coin-types--></div>
+        <figcaption>三种纽扣电池的 Nyquist 图示意，形状经过简化，不是实测数据。测离子电导率用左边的阻塞电极电池。<span class="src gen">通用方法</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="block split" style="margin-top:16px">
+      <figure class="fig">
+        <div class="figsvg"><!--FIG:coin-exploded--><svg viewBox="0 0 540 276" role="img" aria-label="CR2032 纽扣电池分层图，从下往上：正极壳、不锈钢垫片（下电极）、电解质膜或浸液隔膜（厚度 L）、不锈钢垫片（上电极）、弹片、密封圈、负极盖；面积 A 按垫片直径 d 计算。"><rect x="102" y="26" width="196" height="22" rx="5" class="steel"/><rect x="96" y="60" width="16" height="12" rx="2" class="gasket"/><rect x="288" y="60" width="16" height="12" rx="2" class="gasket"/><path d="M112 61 H288 M112 71 H288" class="gasket-line"/><path d="M120 91 l10 -7 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14" class="spring"/><rect x="112" y="110" width="176" height="8" rx="1.5" class="steel"/><rect x="95.5" y="129" width="209" height="6" class="sample"/><rect x="112" y="146" width="176" height="8" rx="1.5" class="steel"/><rect x="90" y="166" width="220" height="40" rx="6" class="steel"/><rect x="97" y="166" width="206" height="32" rx="3" class="cavity"/><line x1="302" y1="37" x2="322" y2="37" class="lead"/><text x="328" y="41.5" font-size="12" font-weight="600">负极盖 (−)</text><line x1="308" y1="66" x2="322" y2="66" class="lead"/><text x="328" y="70.5" font-size="12" font-weight="600">密封圈：绝缘，隔开正负极</text><line x1="284" y1="91" x2="322" y2="91" class="lead"/><text x="328" y="95.5" font-size="12" font-weight="600">弹片：提供压力</text><line x1="292" y1="114" x2="322" y2="114" class="lead"/><text x="328" y="118.5" font-size="12" font-weight="600">不锈钢垫片：上电极</text><line x1="308.5" y1="132" x2="322" y2="132" class="lead"/><text x="328" y="136.5" font-size="12" font-weight="600">电解质膜或浸液隔膜（厚度 L）</text><line x1="292" y1="150" x2="322" y2="150" class="lead"/><text x="328" y="154.5" font-size="12" font-weight="600">不锈钢垫片：下电极</text><line x1="314" y1="186" x2="322" y2="186" class="lead"/><text x="328" y="190.5" font-size="12" font-weight="600">正极壳 (+)</text><line x1="40" y1="206" x2="40" y2="40" class="dim"/><path d="M40 32 L35 42 L45 42 Z" class="arr"/><text x="40" y="226" font-size="11" text-anchor="middle" font-weight="600">从下往上组装</text><line x1="112" y1="156" x2="112" y2="232" class="ext"/><line x1="288" y1="156" x2="288" y2="232" class="ext"/><line x1="112" y1="226" x2="288" y2="226" class="dim"/><path d="M112 226 L119 222 L119 230 Z M288 226 L281 222 L281 230 Z" class="arr"/><text x="200" y="248" font-size="12.5" text-anchor="middle" font-weight="700">d（垫片直径）→ A = π d² / 4</text><text x="200" y="266" font-size="10.5" text-anchor="middle" class="t-mut">膜比垫片大时，A 按垫片算</text></svg><!--/FIG:coin-exploded--></div>
+        <figcaption>CR2032 分层图（示意）。测电导率时，两个电极是两片不锈钢垫片。</figcaption>
+      </figure>
+      <ul class="b">
+        <li><strong>组装顺序</strong>（从下往上）：正极壳 → 不锈钢垫片 → 电解质膜或浸了电解液的隔膜 → 不锈钢垫片 → 弹片 → 密封圈和负极盖，最后用封口机封口。<span class="src gen">通用方法</span></li>
+        <li><strong>A</strong>：取垫片和电解质膜中较小的那个的面积。常见垫片直径 15.5–16 mm（A ≈ 1.9–2.0 cm²），以实际用的为准。</li>
+        <li><strong>L</strong>：膜厚。封口和弹片的压力会把软的聚合物膜压薄，测完拆开再量一次；需要固定厚度时，可以在膜外套一个已知厚度的 PTFE 环形垫片。<span class="src gen">通用方法</span></li>
+        <li><strong>空白池</strong>：装一个不放电解质、两片垫片直接接触的电池，其余部件相同。它的高频电阻 R<sub>blank</sub> 就是壳体、弹片和接触电阻，计算时扣掉。样品电阻只有几欧到几十欧时，这一步很重要。<span class="src gen">通用方法</span></li>
+        <li><strong>液体电解液浸隔膜</strong>：测到的是有效电导率，会比液体本身低，因为隔膜的孔隙率和曲折度会降低它。要测液体本身的电导率，用电导率仪或已知池常数的电导池。<span class="src gen">通用方法</span></li>
+        <li>含锂盐或锂金属的电池在手套箱里组装。封口后用万用表量正极壳和负极盖：SS 阻塞电池读数接近 0 Ω 说明垫片短路，要重装。</li>
+      </ul>
+    </div>
+
+    <div class="block two" style="margin-top:16px">
+      <div class="fields">
+        <h3>纽扣电池电导率计算</h3>
+        <div class="row2">
+          <div class="field"><label for="kR">实测高频截距 R (Ω)</label><input id="kR" type="number" min="0" step="any" value="25"></div>
+          <div class="field"><label for="kRb">空白池电阻 R<sub>blank</sub> (Ω)</label><input id="kRb" type="number" min="0" step="any" value="0.3"></div>
+        </div>
+        <div class="field"><label for="kL">膜厚 L (µm)</label><input id="kL" type="number" min="0" step="any" value="100"></div>
+        <div class="row2">
+          <div class="field"><label for="kDs">垫片直径 (mm)</label><input id="kDs" type="number" min="0" step="any" value="16"></div>
+          <div class="field"><label for="kDm">膜直径 (mm)</label><input id="kDm" type="number" min="0" step="any" value="19"></div>
+        </div>
+        <p class="note" style="margin:0">示例数值是虚构的，换成你自己的测量值。</p>
+      </div>
+      <div class="sigma" aria-live="polite">
+        <div class="note">离子电导率</div>
+        <div class="big" id="kOut">—</div>
+        <div class="note" id="kDetail">—</div>
+        <div class="msgs" id="kMsgs"></div>
+      </div>
+    </div>
+
+    <div class="block split" style="margin-top:16px">
+      <figure class="fig">
+        <div class="figsvg"><!--FIG:coin-wiring--><svg viewBox="0 0 640 280" role="img" aria-label="纽扣电池接线：绿、蓝接正极壳，白、红、橙接负极盖；四线夹具每面一个电流触点、一个感应触点；用鳄鱼夹时只夹两个平面中心，夹子咬住边缘会把正负极短路。"><path d="M16 150 H96" class="cable-thick"/><text x="16" y="132" font-size="11" class="t-mut">电解池电缆</text><rect x="150" y="128" width="180" height="36" rx="6" class="steel"/><rect x="160" y="118" width="160" height="12" rx="2" class="gasket"/><rect x="170" y="110" width="140" height="18" rx="4" class="steel"/><rect x="150" y="118" width="16" height="12" rx="3" class="steel"/><rect x="314" y="118" width="16" height="12" rx="3" class="steel"/><text x="240" y="123.5" font-size="11" text-anchor="middle" font-weight="700">负极盖 (−)</text><text x="240" y="151" font-size="11" text-anchor="middle" font-weight="700">正极壳 (+)</text><rect x="198" y="92" width="12" height="18" rx="2" class="steel"/><rect x="262" y="92" width="18" height="18" rx="2" class="steel"/><rect x="198" y="164" width="12" height="18" rx="2" class="steel"/><rect x="262" y="164" width="18" height="18" rx="2" class="steel"/><path d="M96 134 C 124 134, 136 40, 176 40 H263 Q275 40 275 52 V92" class="w-out"/><path d="M96 134 C 124 134, 136 40, 176 40 H263 Q275 40 275 52 V92" class="w re"/><path d="M96 138 C 128 138, 142 52, 182 52 H256 Q268 52 268 64 V92" class="w-out"/><path d="M96 138 C 128 138, 142 52, 182 52 H256 Q268 52 268 64 V92" class="w cs"/><path d="M96 142 C 132 142, 150 66, 188 66 H194 Q204 66 204 76 V92" class="w-out"/><path d="M96 142 C 132 142, 150 66, 188 66 H194 Q204 66 204 76 V92" class="w ce"/><path d="M96 156 C 130 156, 150 212, 190 212 H194 Q204 212 204 202 V182" class="w-out"/><path d="M96 156 C 130 156, 150 212, 190 212 H194 Q204 212 204 202 V182" class="w we"/><path d="M96 162 C 126 162, 140 228, 180 228 H259 Q271 228 271 216 V182" class="w-out"/><path d="M96 162 C 126 162, 140 228, 180 228 H259 Q271 228 271 216 V182" class="w ws"/><path d="M96 168 C 112 192, 104 252, 132 262" class="w-out"/><path d="M96 168 C 112 192, 104 252, 132 262" class="w gnd"/><circle cx="138" cy="263" r="5" style="fill:var(--surface);stroke:var(--wire-outline);stroke-width:1.5"/><text x="150" y="267" font-size="10.5" class="t-mut">黑（浮地）：悬空</text><text x="192" y="104" font-size="9.5" text-anchor="end" class="t-mut">电流</text><text x="286" y="104" font-size="9.5" class="t-mut">感应</text><text x="192" y="178" font-size="9.5" text-anchor="end" class="t-mut">电流</text><text x="286" y="178" font-size="9.5" class="t-mut">感应</text><text x="300" y="46" font-size="12" font-weight="700">白 + 红 + 橙</text><text x="300" y="62" font-size="12" font-weight="700">→ 负极盖 (−)</text><text x="300" y="214" font-size="12" font-weight="700">绿 + 蓝</text><text x="300" y="230" font-size="12" font-weight="700">→ 正极壳 (+)</text><rect x="420" y="14" width="212" height="126" rx="8" class="sunk-r"/><circle cx="437" cy="34" r="8" class="ic-ok"/><path d="M433.4 34.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="451" y="38.5" font-size="11.5" font-weight="700">夹在两个平面的中心</text><rect x="470" y="80" width="110" height="22" rx="4" class="steel"/><rect x="476" y="74" width="98" height="8" rx="2" class="gasket"/><rect x="482" y="70" width="86" height="12" rx="3" class="steel"/><rect x="470" y="74" width="10" height="8" rx="2" class="steel"/><rect x="570" y="74" width="10" height="8" rx="2" class="steel"/><path d="M517 44 H533 L531 70 H519 Z" class="clip"/><path d="M519 102 H531 L533 128 H517 Z" class="clip"/><text x="622" y="126" font-size="10" text-anchor="end" class="t-mut">或用夹具</text><rect x="420" y="150" width="212" height="126" rx="8" class="sunk-r"/><circle cx="437" cy="170" r="8" class="ic-bad"/><path d="M434.0 167.0 L440.0 173.0 M440.0 167.0 L434.0 173.0" class="ic-mark"/><text x="451" y="174.5" font-size="11.5" font-weight="700" class="t-bad">夹子咬住边缘：短路</text><rect x="470" y="216" width="110" height="22" rx="4" class="steel"/><rect x="476" y="210" width="98" height="8" rx="2" class="gasket"/><rect x="482" y="206" width="86" height="12" rx="3" class="steel"/><rect x="470" y="210" width="10" height="8" rx="2" class="steel"/><rect x="570" y="210" width="10" height="8" rx="2" class="steel"/><path d="M432 194 L488 203 L488 208 L446 220 L446 224 L488 236 L488 241 L432 250 Z" class="clip"/><path d="M498 212 l7 6 l-5 2 l8 8" class="spark"/><text x="436" y="266" font-size="9.5" class="t-mut">正负极接通，带电电池会大电流放电、发热</text></svg><!--/FIG:coin-wiring--></div>
+        <figcaption>接线示意。左：四线 (Kelvin) 纽扣电池夹具；右：用鳄鱼夹时的正确和错误夹法。</figcaption>
+      </figure>
+      <ul class="b">
+        <li><strong style="color:var(--lead-we)">绿</strong>（WE）+ <strong style="color:var(--lead-ws)">蓝</strong>（WS）→ 正极壳，就是底部较大、通常标 “+” 的那一面；<strong>白</strong>（RE）+ <strong style="color:var(--lead-ce)">红</strong>（CE）+ <strong style="color:var(--lead-cs)">橙</strong>（CS）→ 负极盖。这就是手册的两电极接法。<span class="src">手册 Ch 6</span></li>
+        <li>SS 阻塞电池和 Li 对称电池不分正负。全电池按这个约定接，软件里显示的电位就是正的电池电压。<span class="src gen">通用方法</span></li>
+        <li>最好用纽扣电池夹具。四线 (Kelvin) 夹具每面有两个触点：红、绿接电流触点，白/橙、蓝接感应触点，这样夹具的接触电阻就不计入结果。普通两触点夹具把同一面的导线都接在同一个触点上。</li>
+        <li>用鳄鱼夹时只夹两个平面的中心。正极壳的翻边和负极盖之间只隔着很薄的密封圈，夹子咬到边缘就会把正负极短路。</li>
+        <li>黑线（浮地）照常悬空。夹具放在金属恒温箱里时，确认电池和夹具不碰到箱体：电池一端接了大地时，不能再把 Reference 620 机壳接地。<span class="src">手册 Ch 1</span></li>
+        <li>高阻样品怕导线电容，所以前面让两组导线分开走；阻抗只有零点几欧到几欧的全电池更怕导线电感，导线要尽量短，电流线（绿、红）并在一起走，减小回路面积。<span class="src gen">通用方法</span></li>
+        <li>手册提到 Gamry 有专门用于低阻抗 EIS 的电缆，而且每种电缆有各自的 AC 校准；换电缆后要用对应的校准。<span class="src">手册 Ch 4、5</span></li>
+      </ul>
+    </div>
+
+    <div class="block" style="margin-top:16px">
+      <h3>EIS 参数：三种电池的差别</h3>
+      <div class="tablewrap" style="margin-top:10px">
+        <table class="p keepcase">
+          <thead><tr><th>参数</th><th>SS | 电解质 | SS</th><th>Li | 电解质 | Li</th><th>半电池 / 全电池</th></tr></thead>
+          <tbody>
+            <tr><td>Technique</td><td>Potentiostatic EIS</td><td>Potentiostatic EIS</td><td>Potentiostatic EIS；阻抗很低时也可以用 Galvanostatic EIS</td></tr>
+            <tr><td>DC Voltage</td><td>0 V vs E<sub>oc</sub></td><td>0 V vs E<sub>oc</sub></td><td><strong>0 V vs E<sub>oc</sub></strong>（一定要选 vs E<sub>oc</sub>）</td></tr>
+            <tr><td>AC Voltage</td><td>10 mV rms</td><td>5–10 mV rms</td><td>5–10 mV rms</td></tr>
+            <tr><td>Initial Freq.</td><td>1 MHz</td><td>1 MHz</td><td>100 kHz–1 MHz</td></tr>
+            <tr><td>Final Freq.</td><td>0.1–1 Hz</td><td>10–100 mHz</td><td>10–100 mHz（看到扩散尾即可）</td></tr>
+            <tr><td>测之前</td><td>恒温</td><td>静置、恒温</td><td>静置到开路电压稳定，记录电压和荷电状态 (SOC)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin:10px 0 0">表中数值是常用起步值。<span class="src gen">通用方法</span></p>
+      <div class="callout warn"><strong>带电电池：DC Voltage 必须选 “vs E<sub>oc</sub>”。</strong>半电池和全电池的开路电压有 3–4 V。如果误选 “vs E<sub>ref</sub>” 并填 0 V，仪器会试图把电池电压拉到 0 V，相当于用大电流给电池放电。这时 Overload 红灯会亮（电流试图超过 ±600 mA 时就是 Control Overload），电池也可能发热、损坏。<span class="src">手册 Ch 7</span> <span class="src gen">通用方法</span></div>
+      <div class="callout warn">接线时不要让两个夹子互相碰到，也不要让夹子咬到电池边缘：充了电的纽扣电池短路时电流很大，会发热、鼓胀。锂金属电池和含有机电解液的电池升温测量时，不要超过电解液和隔膜允许的温度。<span class="src gen">通用方法</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="trouble">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">09 · Troubleshooting</div>
+      <div class="eyebrow">10 · Troubleshooting</div>
       <h2>问题排查</h2>
     </div>
     <div class="block tablewrap">
@@ -632,6 +743,8 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
           <tr><td>数据跳动、重复性差</td><td>测量中导线被移动；温度没有稳定</td><td>测量中不要碰导线；延长控温平衡时间<span class="src">手册 Ch 9</span></td></tr>
           <tr><td>Overload 灯持续常亮</td><td>导线断开或夹子松脱</td><td>检查五个夹子；Cell On 熄灭后再动线<span class="src">手册 Ch 7</span></td></tr>
           <tr><td>电导率比预期低很多</td><td>L 量大了或 A 取大了；接触不良</td><td>重新核对 L、A 的取法（第 03 节）；检查样品与不锈钢的接触</td></tr>
+          <tr><td>纽扣电池谱图只是实轴附近一个点</td><td>弹片压穿了膜，或垫片错位，两片垫片直接接触</td><td>拆开检查；软的膜外加 PTFE 环形垫片限定厚度<span class="src gen">通用方法</span></td></tr>
+          <tr><td>纽扣电池重复性差</td><td>接触电阻、封口压力不一致；鳄鱼夹位置不同</td><td>用纽扣电池夹具；用空白池测接触电阻并扣除；同一封口机、同一压力<span class="src gen">通用方法</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -931,5 +1044,44 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   updateSim();
   updateCalc();
   drawArr();
+})();
+</script>
+
+<script>
+/* coin-cell conductivity calculator */
+(function(){
+  const $ = s => document.querySelector(s);
+  const SUP = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const sci = x => {
+    const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e);
+    if (e >= -2 && e <= 3) return (+x.toPrecision(3)).toString();
+    return `${m.toFixed(2)} × 10${String(e).split('').map(c => SUP[c] || c).join('')}`;
+  };
+  const msg = (k, h) => `<div class="msg ${k}">${h}</div>`;
+  function update(){
+    const R = parseFloat($('#kR').value), Rb = parseFloat($('#kRb').value) || 0;
+    const L = parseFloat($('#kL').value), ds = parseFloat($('#kDs').value), dm = parseFloat($('#kDm').value);
+    const out = $('#kOut'), det = $('#kDetail'), msgs = $('#kMsgs');
+    if (!(R > 0 && L > 0 && ds > 0 && dm > 0) || Rb < 0){
+      out.textContent = '—'; det.textContent = 'R、L 和两个直径都要大于 0，R_blank 不能为负。'; msgs.innerHTML = ''; return;
+    }
+    const net = R - Rb;
+    if (net <= 0){
+      out.textContent = '—'; det.textContent = '';
+      msgs.innerHTML = msg('warn', '扣掉空白池电阻后不剩电阻：检查电池是否短路，或空白池电阻是否填错。'); return;
+    }
+    const d = Math.min(ds, dm), A = Math.PI * Math.pow(d / 20, 2);
+    const s = (L * 1e-4) / (net * A);
+    out.textContent = `${sci(s)} S/cm`;
+    det.innerHTML = `R<sub>b</sub> = ${+R.toPrecision(4)} − ${+Rb.toPrecision(3)} = ${+net.toPrecision(4)} Ω<br>` +
+      `A 按${ds <= dm ? '垫片' : '膜'}直径 ${d} mm 计算 = ${A.toPrecision(3)} cm²<br>` +
+      `σ = ${(L * 1e-4).toPrecision(3)} cm ÷ (${+net.toPrecision(4)} Ω × ${A.toPrecision(3)} cm²) = ${(+(s * 1e3).toPrecision(3))} mS/cm`;
+    const m = [];
+    if (Rb / R > 0.1) m.push(msg('warn', `空白池电阻占截距的 ${(Rb / R * 100).toFixed(0)}%：样品电阻太小，结果对接触电阻很敏感。可以换更厚的膜，或用夹层池测。`));
+    if (dm < ds) m.push(msg('info', '膜比垫片小：A 按膜的面积算，同时要确认两片垫片在膜外面没有互相接触。'));
+    msgs.innerHTML = m.join('');
+  }
+  ['#kR', '#kRb', '#kL', '#kDs', '#kDm'].forEach(id => $(id).addEventListener('input', update));
+  update();
 })();
 </script>

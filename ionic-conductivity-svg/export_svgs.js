@@ -1,4 +1,4 @@
-// Export the step illustrations (and the wiring / cross-section diagrams) of
+// Export the step illustrations, the wiring / cross-section diagrams and the coin-cell figures of
 // ionic-conductivity-ref620.html as standalone SVG files with inlined colours.
 // Run from the repository root:  node ionic-conductivity-svg/export_svgs.js
 const { chromium } = require('playwright');
@@ -23,7 +23,8 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
   await page.waitForTimeout(500);
   const svgs = await page.evaluate((PROPS) => {
     const bg = getComputedStyle(document.body).getPropertyValue('--surface').trim() || '#FFFFFF';
-    const pick = [...document.querySelectorAll('.stepfig svg'), document.querySelector('#wire svg'), document.querySelector('#cell svg')];
+    const pick = [...document.querySelectorAll('.stepfig svg'), document.querySelector('#wire svg'), document.querySelector('#cell svg'),
+      ...document.querySelectorAll('#coin .figsvg svg')];
     return pick.map(svg => {
       const clone = svg.cloneNode(true);
       const src = [svg, ...svg.querySelectorAll('*')];
@@ -45,7 +46,7 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
       return clone.outerHTML;
     });
   }, PROPS);
-  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section'];
+  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring'];
   svgs.forEach((s, i) => {
     const file = path.join(OUT, names[i] + '.svg');
     fs.writeFileSync(file, '<?xml version="1.0" encoding="UTF-8"?>\n' + s + '\n');

@@ -1,4 +1,4 @@
-"""Generate the per-step illustrations for ionic-conductivity-ref620.html.
+"""Generate the per-step and coin-cell illustrations for ionic-conductivity-ref620.html.
 
 Rewrites the <ol class="steps"> block between the STEPS markers. Each step gets
 its own inline SVG drawn with the page's CSS classes, so light/dark themes work.
@@ -399,5 +399,120 @@ def build():
     print('steps written:', len(items))
 
 
+# ================================================================ coin-cell section figures
+def svgw(w, h, label, body):
+    return f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="{label}">' + body + '</svg>'
+
+
+def coin_exploded():
+    cx = 200
+    o = [R(cx - 98, 26, 196, 22, 'steel', 5),
+         R(cx - 104, 60, 16, 12, 'gasket', 2), R(cx + 88, 60, 16, 12, 'gasket', 2),
+         P(f'M{cx - 88} 61 H{cx + 88} M{cx - 88} 71 H{cx + 88}', 'gasket-line')]
+    z = f'M{cx - 80} 91'
+    for i in range(16):
+        z += f' l10 {-7 if i % 2 == 0 else 7}' if i == 0 else f' l10 {14 if i % 2 else -14}'
+    o += [P(z, 'spring'),
+          R(cx - 88, 110, 176, 8, 'steel', 1.5),
+          R(cx - 104.5, 129, 209, 6, 'sample'),
+          R(cx - 88, 146, 176, 8, 'steel', 1.5),
+          R(cx - 110, 166, 220, 40, 'steel', 6),
+          R(cx - 103, 166, 206, 32, 'cavity', 3)]
+    labels = [(37, cx + 98, '负极盖 (−)'), (66, cx + 104, '密封圈：绝缘，隔开正负极'),
+              (91, cx + 80, '弹片：提供压力'), (114, cx + 88, '不锈钢垫片：上电极'),
+              (132, cx + 104.5, '电解质膜或浸液隔膜（厚度 L）'), (150, cx + 88, '不锈钢垫片：下电极'),
+              (186, cx + 110, '正极壳 (+)')]
+    for y, x1, t in labels:
+        o += [f'<line x1="{x1 + 4}" y1="{y}" x2="322" y2="{y}" class="lead"/>', T(328, y + 4.5, t, 12, None, 600)]
+    o += [f'<line x1="40" y1="206" x2="40" y2="40" class="dim"/>', P('M40 32 L35 42 L45 42 Z', 'arr'),
+          T(40, 226, '从下往上组装', 11, 'middle', 600),
+          f'<line x1="{cx - 88}" y1="156" x2="{cx - 88}" y2="232" class="ext"/>',
+          f'<line x1="{cx + 88}" y1="156" x2="{cx + 88}" y2="232" class="ext"/>',
+          dim_h(cx - 88, cx + 88, 226),
+          T(cx, 248, 'd（垫片直径）→ A = π d² / 4', 12.5, 'middle', 700),
+          T(cx, 266, '膜比垫片大时，A 按垫片算', 10.5, 'middle', None, 't-mut')]
+    return svgw(540, 276, 'CR2032 纽扣电池分层图，从下往上：正极壳、不锈钢垫片（下电极）、电解质膜或浸液隔膜（厚度 L）、不锈钢垫片（上电极）、弹片、密封圈、负极盖；面积 A 按垫片直径 d 计算。', ''.join(o))
+
+
+def coin_wiring():
+    o = [P('M16 150 H96', 'cable-thick'), T(16, 132, '电解池电缆', 11, None, None, 't-mut'),
+         R(150, 128, 180, 36, 'steel', 6), R(160, 118, 160, 12, 'gasket', 2),
+         R(170, 110, 140, 18, 'steel', 4),
+         R(150, 118, 16, 12, 'steel', 3), R(314, 118, 16, 12, 'steel', 3),
+         T(240, 123.5, '负极盖 (−)', 11, 'middle', 700), T(240, 151, '正极壳 (+)', 11, 'middle', 700),
+         R(198, 92, 12, 18, 'steel', 2), R(262, 92, 18, 18, 'steel', 2),
+         R(198, 164, 12, 18, 'steel', 2), R(262, 164, 18, 18, 'steel', 2)]
+    o += [wire('M96 134 C 124 134, 136 40, 176 40 H263 Q275 40 275 52 V92', 're'),
+          wire('M96 138 C 128 138, 142 52, 182 52 H256 Q268 52 268 64 V92', 'cs'),
+          wire('M96 142 C 132 142, 150 66, 188 66 H194 Q204 66 204 76 V92', 'ce'),
+          wire('M96 156 C 130 156, 150 212, 190 212 H194 Q204 212 204 202 V182', 'we'),
+          wire('M96 162 C 126 162, 140 228, 180 228 H259 Q271 228 271 216 V182', 'ws'),
+          wire('M96 168 C 112 192, 104 252, 132 262', 'gnd'),
+          '<circle cx="138" cy="263" r="5" style="fill:var(--surface);stroke:var(--wire-outline);stroke-width:1.5"/>',
+          T(150, 267, '黑（浮地）：悬空', 10.5, None, None, 't-mut'),
+          T(192, 104, '电流', 9.5, 'end', None, 't-mut'), T(286, 104, '感应', 9.5, None, None, 't-mut'),
+          T(192, 178, '电流', 9.5, 'end', None, 't-mut'), T(286, 178, '感应', 9.5, None, None, 't-mut'),
+          T(300, 46, '白 + 红 + 橙', 12, None, 700), T(300, 62, '→ 负极盖 (−)', 12, None, 700),
+          T(300, 214, '绿 + 蓝', 12, None, 700), T(300, 230, '→ 正极壳 (+)', 12, None, 700)]
+
+    def small_cell(y):
+        return (R(470, y + 10, 110, 22, 'steel', 4) + R(476, y + 4, 98, 8, 'gasket', 2) +
+                R(482, y, 86, 12, 'steel', 3) + R(470, y + 4, 10, 8, 'steel', 2) + R(570, y + 4, 10, 8, 'steel', 2))
+    o += [R(420, 14, 212, 126, 'sunk-r', 8), ok(437, 34), T(451, 38.5, '夹在两个平面的中心', 11.5, None, 700),
+          small_cell(70), P('M517 44 H533 L531 70 H519 Z', 'clip'), P('M519 102 H531 L533 128 H517 Z', 'clip'),
+          T(622, 126, '或用夹具', 10, 'end', None, 't-mut')]
+    o += [R(420, 150, 212, 126, 'sunk-r', 8), bad(437, 170), T(451, 174.5, '夹子咬住边缘：短路', 11.5, None, 700, 't-bad'),
+          small_cell(206),
+          P('M432 194 L488 203 L488 208 L446 220 L446 224 L488 236 L488 241 L432 250 Z', 'clip'),
+          P('M498 212 l7 6 l-5 2 l8 8', 'spark'),
+          T(436, 266, '正负极接通，带电电池会大电流放电、发热', 9.5, None, None, 't-mut')]
+    return svgw(640, 280, '纽扣电池接线：绿、蓝接正极壳，白、红、橙接负极盖；四线夹具每面一个电流触点、一个感应触点；用鳄鱼夹时只夹两个平面中心，夹子咬住边缘会把正负极短路。', ''.join(o))
+
+
+def coin_types():
+    def sub2(a, b):
+        return f'R<tspan dy="2.8" font-size="7.5">{a}</tspan><tspan dy="-2.8"> + R</tspan><tspan dy="2.8" font-size="7.5">{b}</tspan>'
+    o = []
+    panels = [
+        ('SS | 电解质 | SS', '阻塞电极', '→ 离子电导率 σ'),
+        ('Li | 电解质 | Li', '对称锂电池', '→ 界面阻抗、迁移数'),
+        ('正极 | 电解液 | 负极', '半电池 / 全电池', '→ 内阻、界面、扩散'),
+    ]
+    for i, (t, st, use) in enumerate(panels):
+        x0 = 8 + i * 210
+        ox, oy = x0 + 18, 190
+        o += [R(x0, 8, 204, 256, 'sunk-r', 8), T(x0 + 12, 28, t, 12, None, 700), T(x0 + 12, 45, st, 10, None, None, 't-mut'),
+              P(f'M{ox} 60 V{oy} H{x0 + 194}', 'axis'),
+              T(ox + 4, 70, '−Z″', 9, None, None, 't-mut'), T(x0 + 194, oy + 14, 'Z′', 9, 'end', None, 't-mut'),
+              T(x0 + 102, 254, use, 11, 'middle', 700, 't-acc')]
+        if i == 0:
+            o += [P(f'M{x0 + 26} {oy} A42 42 0 0 1 {x0 + 110} {oy} L{x0 + 128} 66', 'curve'),
+                  dim_h(x0 + 26, x0 + 110, 216), T(x0 + 68, 232, sb('R', 'b', 11), 11, 'middle', 700)]
+        elif i == 1:
+            o += [P(f'M{x0 + 26} {oy} A8 8 0 0 1 {x0 + 42} {oy} A48 48 0 0 1 {x0 + 138} {oy} L{x0 + 158} 172', 'curve'),
+                  T(x0 + 34, 206, sb('R', 'b', 10), 10, 'middle', 600),
+                  dim_h(x0 + 42, x0 + 138, 216), T(x0 + 90, 232, sb('R', '界面', 11), 11, 'middle', 700)]
+        else:
+            o += [P(f'M{x0 + 30} {oy} A16 12 0 0 1 {x0 + 62} {oy} A34 26 0 0 1 {x0 + 130} {oy} L{x0 + 186} 134', 'curve'),
+                  T(x0 + 30, 206, sb('R', 'Ω', 10), 10, 'middle', 600),
+                  dim_h(x0 + 30, x0 + 130, 216), T(x0 + 80, 232, sub2('SEI', 'ct'), 10.5, 'middle', 700),
+                  T(x0 + 194, 124, '45° 扩散尾', 9.5, 'end', None, 't-mut')]
+    return svgw(640, 272, '三种纽扣电池的 Nyquist 图示意：不锈钢阻塞电池是半圆加低频尖峰，用来测离子电导率；锂对称电池是本体截距加界面半圆；半电池或全电池是欧姆截距、SEI 和电荷转移半圆，再接 45 度扩散尾。', ''.join(o))
+
+
+FIGS = {'coin-types': coin_types, 'coin-exploded': coin_exploded, 'coin-wiring': coin_wiring}
+
+
+def fill_figs():
+    s = PAGE.read_text(encoding='utf-8')
+    for k, fn in FIGS.items():
+        pat = re.compile(rf'<!--FIG:{k}-->.*?<!--/FIG:{k}-->', re.S)
+        if pat.search(s):
+            s = pat.sub(lambda m: f'<!--FIG:{k}-->{fn()}<!--/FIG:{k}-->', s)
+    PAGE.write_text(s, encoding='utf-8')
+    print('figures filled:', ', '.join(FIGS))
+
+
 if __name__ == '__main__':
     build()
+    fill_figs()
