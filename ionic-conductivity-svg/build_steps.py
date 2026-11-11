@@ -1,4 +1,4 @@
-"""Generate the per-step and coin-cell illustrations for ionic-conductivity-ref620.html.
+"""Generate the step, coin-cell and after-test illustrations for ionic-conductivity-ref620.html.
 
 Rewrites the <ol class="steps"> block between the STEPS markers. Each step gets
 its own inline SVG drawn with the page's CSS classes, so light/dark themes work.
@@ -513,6 +513,210 @@ def fill_figs():
     print('figures filled:', ', '.join(FIGS))
 
 
+
+# ================================================================ after coin-cell tests
+def warn(x, y, r=8):
+    return (P(f'M{x} {y - r} L{x + r * .95:.1f} {y + r * .8:.1f} L{x - r * .95:.1f} {y + r * .8:.1f} Z', 'ic-warn') +
+            T(x, round(y + r * .62, 1), '!', round(r * 1.2, 1), 'middle', 700, 't-onwarn'))
+
+
+def coin(x, y, w=110, swollen=False):
+    o = R(x, y + 12, w, 20, 'steel', 5) + R(x + 7, y + 6, w - 14, 10, 'gasket', 2)
+    if swollen:
+        o += P(f'M{x + 14} {y + 16} V{y + 6} Q{x + w / 2} {y - 16} {x + w - 14} {y + 6} V{y + 16} Z', 'steel')
+    else:
+        o += R(x + 14, y, w - 28, 16, 'steel', 4)
+    return o + R(x, y + 6, 12, 10, 'steel', 2) + R(x + w - 12, y + 6, 12, 10, 'steel', 2)
+
+
+def a1():
+    o = [panel(12, 16),
+         T(160, 30, '实验结束', 12, None, 700),
+         coin(214, 104, 128),
+         wire('M250 66 V60 Q250 56 246 56 H186', 'ce'), wire('M307 66 V54 Q307 48 301 48 H186', 're'),
+         wire('M250 152 V160 Q250 164 246 164 H186', 'we'), wire('M307 152 V166 Q307 172 301 172 H186', 'ws'),
+         R(244, 66, 12, 18, 'steel', 2), R(300, 66, 14, 18, 'steel', 2),
+         R(244, 136, 12, 16, 'steel', 2), R(300, 136, 14, 16, 'steel', 2),
+         f'<line x1="279" y1="100" x2="279" y2="78" class="dim"/>', P('M279 72 L274 81 L284 81 Z', 'arr'),
+         T(330, 82, '松开', 10.5, None, 600),
+         f'<line x1="348" y1="120" x2="382" y2="120" class="dim"/>', P('M390 120 L381 115 L381 125 Z', 'arr'),
+         T(366, 112, '取出', 10.5, 'middle', 600),
+         ok(172, 196), T(186, 200.5, '先等黄灯熄灭，再松开触点', 11, None, 700)]
+    return svg('实验结束：Cell On 黄灯熄灭后，松开夹具触点，取出纽扣电池。', ''.join(o))
+
+
+def a2():
+    o = [C(70, 96, 48, 'steel'), C(70, 96, 40, 'steel'), T(70, 101.5, 'S3-1', 15, 'middle', 700),
+         T(70, 166, '壳上写编号', 10.5, 'middle', None, 't-mut'),
+         R(138, 14, 252, 192, 'sunk-r', 8), T(150, 36, '记录', 12, None, 700), T(380, 36, '示例', 10, 'end', 600, 't-warn')]
+    rows = [('编号', 'S3-1'), ('样品', 'PEO-LiTFSI，批次 2'), ('L / A', '100 µm / 2.01 cm²'),
+            ('温度', '60 °C，降温段'), ('文件', 'S3-1_60C_EIS.DTA'), ('开路电压', '2.9 mV')]
+    for i, (k, v) in enumerate(rows):
+        y = 60 + i * 21
+        o += [T(150, y, k, 10.5, None, None, 't-mut'), T(214, y, v, 11, None, 700, 'tm' if k == '文件' else None)]
+    o += [ok(156, 188), T(170, 192.5, '重复测两次，谱图基本重合', 10.5, None, 600)]
+    return svg('记录：在电池壳上写编号；记下编号、样品批次、L 和 A、温度、数据文件名和开路电压；重复测两次，谱图应基本重合。', ''.join(o))
+
+
+def a3():
+    o = [T(200, 28, '拆之前先看外观', 12, 'middle', 700), T(200, 46, '摸起来发热也算异常', 10, 'middle', None, 't-mut'),
+         coin(20, 72, 100), coin(150, 72, 100, swollen=True), coin(280, 72, 100),
+         C(288, 79, 3.5, 'crystal'), C(295, 74, 3, 'crystal'), C(372, 80, 3.5, 'crystal'),
+         P('M380 100 q5 9 0 13 q-5 -4 0 -13 Z', 'drip'),
+         ok(44, 128), T(58, 132.5, '平整、干净', 11.5, None, 700),
+         bad(176, 128), T(190, 132.5, '鼓胀', 11.5, None, 700, 't-bad'),
+         bad(298, 128), T(312, 132.5, '漏液、结晶', 11.5, None, 700, 't-bad'),
+         T(70, 150, '可以继续', 10, 'middle', None, 't-mut'),
+         T(200, 150, '负极盖被顶起', 10, 'middle', None, 't-mut'),
+         T(330, 150, '边缘有白色结晶', 10, 'middle', None, 't-mut'),
+         R(14, 166, 372, 44, 'warnbox', 8),
+         T(200, 185, '异常电池不要拆：放进防火容器隔离', 11.5, 'middle', 700),
+         T(200, 201, '（例如装沙的金属罐），并报告负责人', 10, 'middle', None, 't-mut')]
+    return svg('外观检查：平整干净的电池可以继续；鼓胀、漏液或边缘有白色结晶、发热的电池不要拆，放进防火容器隔离并报告负责人。', ''.join(o))
+
+
+def a4():
+    rows = [('SS | 电解质 | SS', '不带电', '无锂金属', ok, 'okbox', '可以直接拆', '怕水样品进手套箱'),
+            ('Li | 电解质 | Li', '含锂金属', '', warn, 'warnbox', '手套箱里拆', '锂片按规程处理'),
+            ('半电池 / 全电池', '带电', '3–4 V', warn, 'warnbox', '先放电', '两极贴绝缘胶带')]
+    o = []
+    for i, (t, p1, p2, ic, box, a1_, a2_) in enumerate(rows):
+        y0 = 14 + i * 68
+        o += [R(10, y0, 124, 56, 'sunk-r', 6), T(72, y0 + 32, t, 11, 'middle', 700),
+              f'<line x1="138" y1="{y0 + 28}" x2="150" y2="{y0 + 28}" class="dim"/>', P(f'M157 {y0 + 28} L149 {y0 + 24} L149 {y0 + 32} Z', 'arr'),
+              T(206, y0 + (25 if p2 else 32), p1, 11.5, 'middle', 700)]
+        if p2:
+            o.append(T(206, y0 + 42, p2, 10, 'middle', None, 't-mut'))
+        o += [f'<line x1="256" y1="{y0 + 28}" x2="268" y2="{y0 + 28}" class="dim"/>', P(f'M275 {y0 + 28} L267 {y0 + 24} L267 {y0 + 32} Z', 'arr'),
+              R(278, y0, 114, 56, box, 6), ic(292, y0 + 20), T(304, y0 + 24.5, a1_, 11.5, None, 700),
+              T(290, y0 + 44, a2_, 9.5, None, None, 't-mut')]
+    return svg('按电池类型处理：不锈钢阻塞电池不带电、无锂金属，可以直接拆；锂对称电池含锂金属，在手套箱里拆；半电池和全电池带电，先放电并用绝缘胶带包住两极。', ''.join(o))
+
+
+def a5():
+    o = [R(60, 132, 150, 24, 'steel', 5), R(68, 124, 134, 10, 'gasket', 2),
+         P('M60 132 L48 116 L56 112 L68 126 Z', 'steel'), R(198, 124, 12, 10, 'steel', 2),
+         R(80, 86, 110, 16, 'steel', 4),
+         f'<line x1="135" y1="121" x2="135" y2="110" class="dim"/>', P('M135 104 L130 112 L140 112 Z', 'arr'),
+         P('M14 98 L50 108 L48 114 L14 110 Z', 'clip'), P('M14 150 L54 132 L58 137 L14 162 Z', 'clip'),
+         R(0, 96, 16, 16, 'grip', 3), R(0, 148, 16, 16, 'grip', 3),
+         T(135, 186, '专用拆壳器或绝缘钳撬开翻边', 11, 'middle', 700),
+         T(135, 204, '工具不要同时碰到盖和壳', 10, 'middle', 600, 't-warn'),
+         R(244, 22, 144, 96, 'gbox', 6), R(252, 30, 128, 48, 'gwin', 4),
+         T(316, 59, '手套箱', 12, 'middle', 700, 't-acc'),
+         C(284, 98, 13, 'gport'), C(348, 98, 13, 'gport'),
+         T(244, 140, sb('含锂金属或 LiPF', '6', 10.5, ' 电解液'), 10.5, None, 700),
+         T(244, 157, '→ 在手套箱里拆', 10.5, None, 600),
+         T(244, 177, sb('LiPF', '6', 10, ' 遇水会产生 HF'), 10, None, None, 't-mut'),
+         T(244, 195, '戴护目镜和手套', 10, None, None, 't-mut')]
+    return svg('拆壳：用专用拆壳器或绝缘钳撬开翻边，取下负极盖，工具不要同时碰到盖和壳；含锂金属或 LiPF6 电解液的电池在手套箱里拆，LiPF6 遇水会产生 HF，戴护目镜和手套。', ''.join(o))
+
+
+def a6():
+    o = [C(70, 72, 42, 'sample'), C(70, 72, 35, 'hidden-edge'),
+         C(200, 72, 42, 'sample'), P('M232 92 C 262 96, 262 122, 232 116 C 220 114, 214 104, 222 96 Z', 'sample'), C(200, 72, 35, 'hidden-edge'),
+         C(330, 72, 42, 'sample'), C(330, 72, 35, 'hidden-edge'), C(343, 63, 8, 'steel'), C(316, 86, 3.5, 'pt'),
+         ok(40, 136), T(54, 140.5, '完整', 11.5, None, 700),
+         bad(170, 136), T(184, 140.5, '挤出', 11.5, None, 700, 't-bad'),
+         bad(300, 136), T(314, 140.5, '破孔', 11.5, None, 700, 't-bad'),
+         T(70, 156, '和装池时一样', 10, 'middle', None, 't-mut'),
+         T(200, 156, '流到垫片外面', 10, 'middle', None, 't-mut'),
+         T(330, 156, '露出不锈钢', 10, 'middle', None, 't-mut'),
+         R(14, 168, 372, 42, 'sunk-r', 8),
+         T(26, 186, '复测 L：装池前 100 µm → 拆开后 82 µm', 11, None, 700),
+         T(374, 186, '示例', 10, 'end', 600, 't-warn'),
+         T(26, 202, '相差明显：测量中膜被压薄，这批数据要谨慎使用', 10, None, None, 't-mut')]
+    return svg('检查电解质膜：完整的膜和装池时一样；挤出到垫片外面或有破孔都要记录；拆开后复测厚度，和装池前相差明显说明测量中膜被压薄。', ''.join(o))
+
+
+def a7():
+    bins = [('电池废物', '放电后', '两极贴胶带'), ('化学废物', '膜、隔膜', '沾液擦拭纸'),
+            ('锂金属', '钝化后处理', '不进垃圾、不碰水'), ('可复用', 'SS 垫片', '清洗、烘干')]
+    o = []
+    for i, (t, l1, l2) in enumerate(bins):
+        x0 = 10 + i * 98
+        cx = x0 + 43
+        o += [T(cx, 30, t, 11.5, 'middle', 700),
+              P(f'M{x0 + 6} 48 H{x0 + 80} L{x0 + 74} 128 H{x0 + 12} Z', 'bin'), R(x0 + 2, 42, 82, 8, 'binlid', 2)]
+        if i == 0:
+            o += [C(cx, 88, 20, 'steel'), C(cx, 88, 15, 'steel'), R(cx - 25, 84, 50, 8, 'tape', 1), R(cx - 4, 63, 8, 50, 'tape', 1)]
+        elif i == 1:
+            o += [R(cx - 22, 72, 44, 28, 'sample', 3), P(f'M{cx - 18} 108 h36', 'lead'), P(f'M{cx - 18} 114 h30', 'lead')]
+        elif i == 2:
+            o += [R(cx - 22, 76, 44, 24, 'li', 2), T(cx, 93, 'Li', 12, 'middle', 700, 't-onlight')]
+        else:
+            o += [C(cx - 8, 92, 15, 'steel'), C(cx + 9, 84, 15, 'steel')]
+        o += [T(cx, 148, l1, 10.5, 'middle', 700), T(cx, 164, l2, 9.5, 'middle', None, 't-mut')]
+    o += [T(200, 198, '具体分类以单位 EHS 规定为准', 10.5, 'middle', 600, 't-warn')]
+    return svg('分类处理：放电并贴胶带的电池进电池废物；电解质膜、隔膜和沾电解液的擦拭纸进化学废物；锂金属钝化后处理，不进普通垃圾、不碰水；不锈钢垫片清洗烘干后可复用；以单位 EHS 规定为准。', ''.join(o))
+
+
+def a8():
+    o = [T(70, 30, '夹具触点', 11.5, 'middle', 700),
+         R(46, 52, 12, 32, 'steel', 2), R(78, 52, 12, 32, 'steel', 2),
+         P('M30 94 H100 L94 112 H36 Z', 'cloth'),
+         P('M40 124 l10 -6 l10 6 l10 -6 l10 6 l10 -6', 'turn'),
+         R(108, 70, 18, 36, 'bottle', 4), R(112, 62, 10, 9, 'bottle', 2),
+         T(117, 92, 'IPA', 7.5, 'middle', 700),
+         T(70, 148, '无尘纸蘸异丙醇', 10.5, 'middle', 700), T(70, 164, '擦掉电解液残留', 9.5, 'middle', None, 't-mut'),
+         T(200, 30, '电缆导线', 11.5, 'middle', 700),
+         R(160, 46, 80, 6, 'steel', 2)]
+    for x, k in [(170, 'we'), (182, 'ws'), (194, 're'), (206, 'ce'), (218, 'cs'), (230, 'gnd')]:
+        o += [wire(f'M{x} 52 V108', k), R(x - 4, 108, 8, 12, 'clip', 1)]
+    o += [T(200, 148, '分开挂好', 10.5, 'middle', 700), T(200, 164, '金属头不互碰', 9.5, 'middle', None, 't-mut'),
+          T(330, 30, '仪器', 11.5, 'middle', 700),
+          R(286, 46, 88, 84, 'panel', 6), T(330, 66, 'Reference 620', 9, 'middle', 700, 't-panel'),
+          C(300, 114, 7.5, 'glow-b'), C(300, 114, 4.5, 'led-b'), T(311, 117.5, 'Power', 8.5, None, None, 't-panel'),
+          T(330, 148, '当天不用：', 10.5, 'middle', 700), T(330, 164, '按使用 SOP 关机', 9.5, 'middle', None, 't-mut'),
+          R(14, 180, 372, 30, 'okbox', 8), T(200, 199.5, '工位干净，电缆整理好，仪器状态写进记录本', 10.5, 'middle', 600)]
+    return svg('清理：夹具触点用无尘纸蘸异丙醇擦掉电解液残留；电解池电缆导线分开挂好，金属头不互碰；当天不用仪器时按使用 SOP 关机。', ''.join(o))
+
+
+AFTER = [
+    (a1, '''<p>等实验结束、Cell On 黄灯熄灭，再松开夹具或鳄鱼夹，取下电池。<span class="src">手册 Ch 7</span></p>
+          <ul><li>带电的半电池、全电池：取下的夹子分开放，不要互相碰到，也不要碰到电池的另一极。</li>
+          <li>接着测下一个电池时，导线留在夹具上即可。</li></ul>'''),
+    (a2, '''<p>确认 .DTA 文件已经保存，把电池信息和数据一一对应记下来。</p>
+          <ul><li>记录电池编号、样品和批次、L 和 A、温度（升温段还是降温段）和文件名；全电池再记开路电压。</li>
+          <li>同一温度重复测两次，谱图应基本重合；不重合说明体系还没稳定，或者几何形状在变。<span class="src gen">通用方法</span></li>
+          <li>用记号笔在壳上写编号，拆开以后才对得上。</li></ul>'''),
+    (a3, '''<p>拆之前先看外观：平整、干净、不发热才继续。<span class="src gen">通用方法</span></p>
+          <ul><li>鼓胀、漏液、边缘有白色结晶或发热的电池不要拆，放进防火容器（例如装沙的金属罐）隔离，并报告实验室负责人。</li></ul>'''),
+    (a4, '''<p>按电池类型决定怎么处理。<span class="src gen">通用方法</span></p>
+          <ul><li><strong>SS | 电解质 | SS</strong>：不储能、没有锂金属，可以直接拆；样品含锂盐或怕水时，仍在手套箱里拆。</li>
+          <li><strong>Li | 电解质 | Li</strong>：含锂金属，在手套箱里拆，锂片按课题组规程处理。</li>
+          <li><strong>半电池、全电池</strong>：先放电，例如用恒电流放电到截止电压，或按单位规定的方法；不要用导线直接短路放电。放电后用绝缘胶带包住两极。</li></ul>'''),
+    (a5, '''<p>拆壳：用专用拆壳器 (decrimper) 或绝缘钳撬开翻边，取出负极盖、弹片和垫片。<span class="src gen">通用方法</span></p>
+          <ul><li>戴护目镜和手套。工具不要同时碰到负极盖和正极壳，否则电池会经工具短路。</li>
+          <li>含锂金属或 LiPF<sub>6</sub> 类电解液的电池在手套箱里拆：LiPF<sub>6</sub> 遇水分解会产生 HF。</li></ul>'''),
+    (a6, '''<p>检查电解质膜，并复测厚度 L。<span class="src gen">通用方法</span></p>
+          <ul><li>看膜有没有流到垫片外面、有没有破孔；Li 对称电池还要看锂表面有没有枝晶 (dendrite) 或变色。拍照存档。</li>
+          <li>拆开后的厚度和装池前相差明显，说明测量中膜被压薄，这批数据要谨慎使用；软的电解质改用 PTFE 环形垫片。</li></ul>'''),
+    (a7, '''<p>拆下的部件分类处理。分类和交接方式以所在单位的 EHS（环境健康安全）规定为准。<span class="src gen">通用方法</span></p>
+          <ul><li><strong>电池废物</strong>：放电后、两极贴了胶带的电池。</li>
+          <li><strong>化学废物</strong>：电解质膜、隔膜、沾了电解液的擦拭纸。</li>
+          <li><strong>锂金属</strong>：不要扔进普通垃圾，也不要碰水（锂遇水剧烈反应、放出氢气）。按规程钝化后再处理；常见做法之一是在通风橱里让少量锂和异丙醇缓慢反应，同样会放出氢气，要远离火源，并且只在规程允许、有人指导时做。</li>
+          <li><strong>可复用</strong>：课题组允许时，不锈钢垫片用溶剂清洗、烘干后再用；壳、盖、弹片一般一次性使用。</li></ul>'''),
+    (a8, '''<p>清理夹具和工位。<span class="src gen">通用方法</span></p>
+          <ul><li>夹具触点用无尘纸蘸异丙醇擦干净：电解液残留会腐蚀触点，增大接触电阻。</li>
+          <li>电解池电缆的导线分开挂好，金属头不要互相碰到。</li>
+          <li>当天不再使用仪器时，按使用 SOP 的步骤关机。</li></ul>'''),
+]
+
+
+def build_after():
+    items = []
+    for fn, text in AFTER:
+        items.append(f'''        <li><div class="step"><div class="step-text">{text}</div>
+          <figure class="stepfig">{fn()}</figure></div></li>''')
+    block = '<!--AFTER-->\n      <ol class="steps">\n' + '\n'.join(items) + '\n      </ol>\n      <!--/AFTER-->'
+    s = PAGE.read_text(encoding='utf-8')
+    s = re.sub(r'<!--AFTER-->.*?<!--/AFTER-->', lambda m: block, s, flags=re.S)
+    PAGE.write_text(s, encoding='utf-8')
+    print('after-test steps written:', len(items))
+
+
 if __name__ == '__main__':
     build()
     fill_figs()
+    build_after()
