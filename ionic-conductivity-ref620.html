@@ -1,0 +1,852 @@
+<meta charset="utf-8">
+<title>Reference 620 离子电导率</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: same instrument-datasheet family as the Reference 620 guide; one reading column (max 1040px) under a sticky index, where each step pairs an inline drawing or a working calculator with short bullet text. */
+:root{
+  --bg:#ECEFF2; --surface:#FFFFFF; --sunk:#E2E7EC; --ink:#131C26; --muted:#56616E; --rule:#C9D1DA;
+  --accent:#1E5BA8; --accent-soft:#DCE7F5; --accent-ink:#FFFFFF;
+  --danger:#B42318; --danger-soft:#F8E1DE; --warn:#965800; --warn-soft:#F6EAD3; --ok:#2B7346; --ok-soft:#DDEFE3;
+  --lead-we:#2E9A55; --lead-ws:#2F6FD6; --lead-re:#F4F4F0; --lead-ce:#D3342C; --lead-cs:#EE7B1A; --lead-gnd:#1D1F22; --wire-outline:#3A4450;
+  --steel:#A9B3BD; --steel-edge:#6F7A86; --ptfe:#FAFAF7; --sample:#F2D7A6; --grid:#E4E9EE;
+  --f-display:"Barlow Semi Condensed","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1318; --surface:#151C23; --sunk:#1C252E; --ink:#E4E9EE; --muted:#9AA6B3; --rule:#2C3742;
+    --accent:#7AAEEE; --accent-soft:#1A2B40; --accent-ink:#0E1318;
+    --danger:#F28B7F; --danger-soft:#3A1D1A; --warn:#E6AE55; --warn-soft:#352812; --ok:#72C793; --ok-soft:#16301F;
+    --lead-we:#3DB46A; --lead-ws:#4F8BEA; --lead-re:#F4F4F0; --lead-ce:#E5544B; --lead-cs:#F38C34; --lead-gnd:#1D1F22; --wire-outline:#AEB9C4;
+    --steel:#6E7883; --steel-edge:#9AA6B3; --ptfe:#D9DDE1; --sample:#8A6A35; --grid:#222C36;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1318; --surface:#151C23; --sunk:#1C252E; --ink:#E4E9EE; --muted:#9AA6B3; --rule:#2C3742;
+  --accent:#7AAEEE; --accent-soft:#1A2B40; --accent-ink:#0E1318;
+  --danger:#F28B7F; --danger-soft:#3A1D1A; --warn:#E6AE55; --warn-soft:#352812; --ok:#72C793; --ok-soft:#16301F;
+  --lead-we:#3DB46A; --lead-ws:#4F8BEA; --lead-re:#F4F4F0; --lead-ce:#E5544B; --lead-cs:#F38C34; --lead-gnd:#1D1F22; --wire-outline:#AEB9C4;
+  --steel:#6E7883; --steel-edge:#9AA6B3; --ptfe:#D9DDE1; --sample:#8A6A35; --grid:#222C36;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.hero{background:var(--surface);border-bottom:1px solid var(--rule)}
+.hero .wrap{padding-block:36px 28px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,7vw,64px);line-height:1;margin:6px 0 0;color:var(--accent);text-wrap:balance}
+.lede{margin:0;max-width:70ch;color:var(--muted)}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;background:var(--sunk);border-radius:12px;padding:14px 18px}
+.formula .eq{font-family:var(--f-display);font-weight:600;font-size:clamp(26px,4.4vw,36px);line-height:1}
+.formula .eq i{font-style:italic}
+.formula dl{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;font-size:13.5px;color:var(--muted)}
+.formula dt{display:inline;font-weight:600;color:var(--ink)}
+.formula dd{display:inline;margin:0 0 0 4px}
+.note{font-size:13.5px;color:var(--muted)}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:8px}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--sunk)}
+
+main section{padding-block:44px 6px}
+.sec-head{display:grid;gap:6px;margin-bottom:18px}
+.sec-head .eyebrow{color:var(--accent)}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,36px);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:20px;line-height:1.25;margin:0}
+.sec-head p{margin:0;max-width:70ch;color:var(--muted)}
+.block{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.split{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.split .fig{justify-items:center}
+.split .figsvg{width:100%;max-width:820px}
+.split figcaption{max-width:820px;width:100%}
+.split ul.b{display:block;columns:2;column-gap:36px;margin:0}
+.split ul.b li{break-inside:avoid;margin-bottom:8px}
+ul.b{margin:8px 0 0;padding-left:20px;display:grid;gap:6px}
+ul.b li{padding-left:2px}
+.src{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--rule);color:var(--muted);vertical-align:2px;white-space:nowrap}
+.src.gen{border-style:dashed}
+.callout{border-radius:8px;padding:10px 12px;font-size:14px;margin-top:12px}
+.callout.warn{background:var(--warn-soft);border-left:3px solid var(--warn)}
+.callout.info{background:var(--accent-soft);border-left:3px solid var(--accent)}
+
+/* figures */
+.fig{margin:0;display:grid;gap:8px;min-width:0}
+.figsvg{overflow-x:auto}
+.figsvg svg{display:block;width:100%;height:auto}
+figcaption{font-size:13.5px;color:var(--muted)}
+svg text{font-family:var(--f-body);fill:var(--ink)}
+svg .t-mut{fill:var(--muted)}
+svg .t-acc{fill:var(--accent)}
+svg .t-onlight{fill:#3A4450}
+svg .steel{fill:var(--steel);stroke:var(--steel-edge);stroke-width:1.5}
+svg .ptfe{fill:var(--ptfe);stroke:var(--steel-edge);stroke-width:1}
+svg .sample{fill:var(--sample);stroke:var(--steel-edge);stroke-width:1}
+svg .nylon{fill:var(--ptfe);stroke:var(--steel-edge);stroke-width:1.2}
+svg .nut{fill:var(--steel);stroke:var(--steel-edge);stroke-width:1.2}
+svg .w-out{fill:none;stroke:var(--wire-outline);stroke-width:6;stroke-linecap:round}
+svg .w{fill:none;stroke-width:3.5;stroke-linecap:round}
+svg .we{stroke:var(--lead-we)} svg .ws{stroke:var(--lead-ws)} svg .re{stroke:var(--lead-re)}
+svg .ce{stroke:var(--lead-ce)} svg .cs{stroke:var(--lead-cs)} svg .gnd{stroke:var(--lead-gnd)}
+svg .clip{fill:var(--steel);stroke:var(--wire-outline);stroke-width:1.2}
+svg .dim{stroke:var(--ink);stroke-width:1.3;fill:none}
+svg .arr{fill:var(--ink)}
+svg .ion{fill:var(--accent);stroke:var(--surface);stroke-width:1.5}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--muted);stroke-width:1.2;fill:none}
+svg .curve{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round}
+svg .curve-out{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:4 4}
+svg .mark{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+svg .rb{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 3}
+svg .fit{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .hover{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+
+/* table */
+.tablewrap{overflow-x:auto}
+table.p{width:100%;border-collapse:collapse;font-size:14px}
+table.p th,table.p td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--rule)}
+table.p thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.p td:first-child{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+
+/* steps */
+ol.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px}
+ol.steps>li::before{content:counter(s);font-family:var(--f-display);font-weight:700;font-size:18px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+ol.steps p{margin:0}
+ol.steps ul{margin:4px 0 0;padding-left:18px;font-size:14.5px}
+
+/* tool */
+.tool{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
+.fields{display:grid;gap:12px}
+.field{display:grid;gap:4px;min-width:0}
+.field label{font-size:13px;color:var(--muted)}
+.field .val{font-family:var(--f-mono);font-size:13.5px;color:var(--ink)}
+.field input[type=number]{font:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;width:100%;min-width:0;padding:7px 9px;border:1px solid var(--rule);border-radius:7px;background:var(--bg);color:var(--ink)}
+.field input[type=range]{width:100%;accent-color:var(--accent)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.outs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.outs div{background:var(--surface);padding:10px 12px;min-width:0}
+.outs dt{font-size:12px;color:var(--muted)}
+.outs dd{margin:2px 0 0;font-family:var(--f-display);font-weight:600;font-size:19px;font-variant-numeric:tabular-nums}
+.msgs{display:grid;gap:8px;margin-top:12px}
+.msg{font-size:14px;padding:8px 12px;border-radius:8px;border-left:3px solid var(--rule);background:var(--sunk)}
+.msg.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.msg.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.msg.info{border-left-color:var(--accent);background:var(--accent-soft)}
+.chartbox{position:relative;border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:8px}
+.chartbox svg{display:block;width:100%;height:auto;touch-action:none}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12.5px;line-height:1.45;padding:6px 9px;border-radius:6px;white-space:nowrap;font-variant-numeric:tabular-nums;transform:translate(-50%,-100%);margin-top:-12px}
+.key{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted);margin:8px 2px 0}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.key i{display:inline-block;flex:none}
+.k-line{width:18px;height:0;border-top:2px solid var(--accent)}
+.k-dash{width:18px;height:0;border-top:2px dashed var(--muted)}
+.k-ring{width:10px;height:10px;border:2px solid var(--warn);border-radius:50%}
+.k-dot{width:8px;height:8px;background:var(--accent);border-radius:50%}
+.big{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,5vw,40px);line-height:1.1;font-variant-numeric:tabular-nums}
+.sigma{display:grid;gap:10px}
+
+.arr-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px;align-items:start}
+table.rows{width:100%;border-collapse:collapse;font-size:14px}
+table.rows th{font-size:12px;color:var(--muted);font-weight:600;text-align:left;padding:4px 6px}
+table.rows td{padding:3px 4px}
+table.rows input{font:inherit;font-size:14px;font-variant-numeric:tabular-nums;width:100%;min-width:0;padding:5px 7px;border:1px solid var(--rule);border-radius:6px;background:var(--bg);color:var(--ink)}
+table.rows td.out{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+.btn{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
+footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
+
+@media (max-width:860px){
+  .two,.tool,.arr-grid{grid-template-columns:minmax(0,1fr)}
+  .split ul.b{columns:1}
+}
+@media (max-width:560px){
+  body{font-size:15px}
+  .figsvg svg{min-width:520px}
+  .outs{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Reference 620 · 电化学阻抗谱 EIS · 不锈钢阻塞电极</div>
+      <h1>测离子电导率</h1>
+    </div>
+    <p class="lede">把样品夹在两块不锈钢板之间，用 Reference 620 测电化学阻抗谱 (EIS)，从 Nyquist 图读出样品的本体电阻 R<sub>b</sub>，再按下式算离子电导率。下面按你照片里的夹层电解池和电缆，一步步说明怎么接线、设参数、读谱和计算。</p>
+    <div class="formula">
+      <div class="eq"><i>σ</i> = <i>L</i> / (<i>R</i><sub>b</sub> · <i>A</i>)</div>
+      <dl>
+        <div><dt>σ</dt><dd>离子电导率，S/cm</dd></div>
+        <div><dt>L</dt><dd>样品厚度，cm</dd></div>
+        <div><dt>R<sub>b</sub></dt><dd>本体电阻，Ω</dd></div>
+        <div><dt>A</dt><dd>样品与电极的接触面积，cm²</dd></div>
+      </dl>
+    </div>
+    <p class="note">仪器部分（接线颜色、频率上限、|Z|·f 规则、屏蔽与校准）依据 Gamry《Reference 620 Operator's Manual》（988-00086，Rev 1.5.0）。阻塞电极测电导率的方法和读谱规则是通用电化学方法，页面中标为“通用方法”。</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="页面目录">
+  <div class="wrap">
+    <a href="#have">你手上的东西</a>
+    <a href="#wire">接线</a>
+    <a href="#cell">L 与 A</a>
+    <a href="#steps">测量步骤</a>
+    <a href="#params">EIS 参数</a>
+    <a href="#sim">预测谱图</a>
+    <a href="#calc">算电导率</a>
+    <a href="#arr">变温测量</a>
+    <a href="#trouble">问题排查</a>
+  </div>
+</nav>
+
+<main>
+<section id="have">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 · What you have</div>
+      <h2>你手上的东西</h2>
+      <p>根据两张照片辨认。照片看不清的地方列在下面，装池前请对照实物确认。</p>
+    </div>
+    <div class="two">
+      <div class="block">
+        <h3>夹层电解池（不锈钢阻塞电极）</h3>
+        <ul class="b">
+          <li>两块不锈钢板：上板在左侧伸出一个接线片，下板在右侧伸出一个接线片。两块板就是两个电极。</li>
+          <li>中间一层白色材料，多半是 PTFE（聚四氟乙烯）垫片或绝缘片。</li>
+          <li>两根白色尼龙螺栓加金属螺母夹紧。尼龙绝缘，保证两块板之间只能通过样品导电。</li>
+          <li>不锈钢不和锂离子等反应，离子到达表面后不能穿过界面，所以叫“阻塞电极” (blocking electrode)。<span class="src gen">通用方法</span></li>
+        </ul>
+        <div class="callout warn">请拆开确认白色层的作用：如果是中间开孔的垫片，样品放在孔里，孔的直径和垫片厚度决定 A 和 L；如果白色层本身就是样品，L 就是它被压紧后的厚度。</div>
+      </div>
+      <div class="block">
+        <h3>Gamry 电解池电缆</h3>
+        <ul class="b">
+          <li>导线颜色：绿、蓝、白、两根偏红的、黑（带鳄鱼夹）。</li>
+          <li>两根偏红的插头里，颜色较亮的一根应该是橙色的对电极感应线 (Counter Sense)，照片里看起来偏红。下面的接法让这两根接到同一块板上，分不清也不影响。</li>
+          <li>插头是 2 mm 香蕉插头。要夹到电解池的接线片上，需要给每根线装回鳄鱼夹。手册说每根导线都配有可拆的鳄鱼夹。<span class="src">手册 Ch 6</span></li>
+          <li>电缆另一端是 25 针插头，插在 Reference 620 前面板的 Cell Cable 接口上，拧紧螺丝。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="wire">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 · Wiring</div>
+      <h2>接线：两电极接法</h2>
+      <p>夹层池只有两个电极，所以用手册中的两电极接法：没有参比电极时，把白色参比线接到对电极上。<span class="src">手册 Ch 6</span></p>
+    </div>
+    <div class="block split">
+      <figure class="fig">
+        <div class="figsvg">
+          <svg viewBox="0 0 680 340" role="img" aria-label="接线图：绿色和蓝色导线从左上方各用一个鳄鱼夹夹在上板接线片；白色、红色、橙色导线从下方绕到右边，各用一个鳄鱼夹夹在下板接线片；黑色浮地线悬空或接法拉第屏蔽。">
+            <text x="16" y="146" font-size="12" class="t-mut">电解池电缆</text>
+            <text x="16" y="162" font-size="11" class="t-mut">另一端接仪器</text>
+            <path d="M16 175 H118" style="fill:none;stroke:var(--wire-outline);stroke-width:10;stroke-linecap:round"/>
+            <!-- cell -->
+            <rect class="nylon" x="318" y="96" width="10" height="118" rx="2"/>
+            <rect class="nylon" x="492" y="96" width="10" height="118" rx="2"/>
+            <rect class="nut" x="310" y="108" width="26" height="12" rx="2"/>
+            <rect class="nut" x="484" y="108" width="26" height="12" rx="2"/>
+            <rect class="steel" x="226" y="127" width="80" height="16" rx="2"/>
+            <rect class="steel" x="300" y="120" width="220" height="30" rx="3"/>
+            <rect class="ptfe" x="294" y="150" width="232" height="8"/>
+            <rect class="steel" x="514" y="165" width="84" height="16" rx="2"/>
+            <rect class="steel" x="300" y="158" width="220" height="30" rx="3"/>
+            <text x="410" y="140" font-size="12.5" text-anchor="middle" font-weight="600">上板</text>
+            <text x="410" y="178" font-size="12.5" text-anchor="middle" font-weight="600">下板</text>
+            <text x="410" y="90" font-size="11" text-anchor="middle" class="t-mut">尼龙螺栓（绝缘）</text>
+            <!-- working group: from the upper left onto the upper tab -->
+            <path class="w-out" d="M118 166 C 150 166, 150 70, 190 70 H266 Q276 70 276 80 V102"/><path class="w we" d="M118 166 C 150 166, 150 70, 190 70 H266 Q276 70 276 80 V102"/>
+            <path class="w-out" d="M118 171 C 158 171, 160 88, 200 88 H236 Q246 88 246 98 V102"/><path class="w ws" d="M118 171 C 158 171, 160 88, 200 88 H236 Q246 88 246 98 V102"/>
+            <path class="clip" d="M240 100 H252 L251 131 H241 Z"/>
+            <path class="clip" d="M270 100 H282 L281 131 H271 Z"/>
+            <text x="232" y="56" font-size="12" text-anchor="middle" font-weight="700">绿 + 蓝 → 上板接线片</text>
+            <!-- counter group: around the bottom onto the lower tab -->
+            <path class="w-out" d="M118 176 C 160 176, 170 250, 230 250 H520 Q530 250 530 240 V212"/><path class="w re" d="M118 176 C 160 176, 170 250, 230 250 H520 Q530 250 530 240 V212"/>
+            <path class="w-out" d="M118 181 C 155 183, 160 262, 230 262 H546 Q556 262 556 252 V212"/><path class="w ce" d="M118 181 C 155 183, 160 262, 230 262 H546 Q556 262 556 252 V212"/>
+            <path class="w-out" d="M118 186 C 150 190, 150 274, 230 274 H572 Q582 274 582 264 V212"/><path class="w cs" d="M118 186 C 150 190, 150 274, 230 274 H572 Q582 274 582 264 V212"/>
+            <path class="clip" d="M525 179 H535 L536 212 H524 Z"/>
+            <path class="clip" d="M551 179 H561 L562 212 H550 Z"/>
+            <path class="clip" d="M577 179 H587 L588 212 H576 Z"/>
+            <text x="420" y="298" font-size="12" text-anchor="middle" font-weight="700">白 + 红 + 橙 → 下板接线片</text>
+            <!-- floating ground -->
+            <path class="w-out" d="M118 191 C 135 206, 130 300, 170 312"/><path class="w gnd" d="M118 191 C 135 206, 130 300, 170 312"/>
+            <circle cx="176" cy="313" r="5" style="fill:var(--surface);stroke:var(--wire-outline);stroke-width:1.5"/>
+            <text x="188" y="326" font-size="11.5" class="t-mut">黑（浮地）：悬空，或接法拉第屏蔽</text>
+          </svg>
+        </div>
+        <figcaption>示意图，按照片简化：上板接线片在左，下板接线片在右。两组导线从不同方向接近电解池，彼此不并排。</figcaption>
+      </figure>
+      <div>
+        <ul class="b">
+          <li><strong style="color:var(--lead-we)">绿</strong>（工作电极 WE）+ <strong style="color:var(--lead-ws)">蓝</strong>（工作感应 WS）→ 各用自己的鳄鱼夹，夹在<strong>上板接线片</strong>。<span class="src">手册 Ch 6</span></li>
+          <li><strong>白</strong>（参比 RE）+ <strong style="color:var(--lead-ce)">红</strong>（对电极 CE）+ <strong style="color:var(--lead-cs)">橙</strong>（对电极感应 CS）→ 各用自己的鳄鱼夹，夹在<strong>下板接线片</strong>。没有参比电极时白线接对电极，就是手册的两电极接法。<span class="src">手册 Ch 6</span></li>
+          <li>橙线只在 ZRA 模式下使用，手册允许悬空，但悬空时金属头不能碰到其他电极。接到下板上最省心。<span class="src">手册 Ch 6</span></li>
+          <li>接线片太窄、夹不下三个夹子时：红线一定直接夹接线片；白、橙可以夹在红线夹子的金属部分上。感应线几乎不走电流，多一个接触点影响很小。<span class="src gen">通用方法</span></li>
+          <li>黑色插针是仪器浮地 (Floating Ground)：多数情况下悬空，金属头不要碰到任何电极；测很小电流时，用金属屏蔽盒（法拉第屏蔽）罩住电解池，黑线接屏蔽盒。<span class="src">手册 Ch 6</span></li>
+          <li>两组导线分开走、从不同方向接近电解池：鳄鱼夹并排时彼此有 10 pF 以上的电容，而这种池子的几何电容只有几十 pF。<span class="src">手册 Ch 9</span></li>
+          <li>池子是对称的，哪块板接绿线都不影响 R<sub>b</sub>。</li>
+          <li>只在 Cell On 黄灯熄灭时接线和拆线；测量中不要移动导线。<span class="src">手册 Ch 7、9</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cell">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 · Geometry</div>
+      <h2>电解池里面：L 和 A 从哪里来</h2>
+      <p>电导率的准确度主要取决于 L 和 A 量得准不准，R<sub>b</sub> 本身通常很容易读准。</p>
+    </div>
+    <div class="block split">
+      <figure class="fig">
+        <div class="figsvg">
+          <svg viewBox="0 0 640 260" role="img" aria-label="截面图：上下两块不锈钢板之间是开孔 PTFE 垫片，孔里是厚度为 L 的样品；孔的直径 d 决定面积 A；离子在样品中迁移，到不锈钢表面被阻挡。">
+            <rect class="steel" x="110" y="40" width="400" height="48" rx="3"/>
+            <rect class="ptfe" x="110" y="88" width="140" height="30"/>
+            <rect class="ptfe" x="370" y="88" width="140" height="30"/>
+            <rect class="sample" x="250" y="88" width="120" height="30"/>
+            <rect class="steel" x="110" y="118" width="400" height="48" rx="3"/>
+            <rect class="nylon" x="126" y="28" width="12" height="150" rx="2"/>
+            <rect class="nylon" x="482" y="28" width="12" height="150" rx="2"/>
+            <text x="310" y="69" font-size="12.5" text-anchor="middle" font-weight="600">不锈钢板 1（阻塞电极）</text>
+            <text x="310" y="147" font-size="12.5" text-anchor="middle" font-weight="600">不锈钢板 2（阻塞电极）</text>
+            <text x="310" y="107" font-size="12" text-anchor="middle" font-weight="700">样品</text>
+            <text x="180" y="107" font-size="11.5" text-anchor="middle" class="t-onlight">PTFE 垫片</text>
+            <text x="440" y="107" font-size="11.5" text-anchor="middle" class="t-onlight">PTFE 垫片</text>
+            <circle class="ion" cx="272" cy="103" r="5"/><circle class="ion" cx="352" cy="103" r="5"/>
+            <!-- L dimension -->
+            <path class="dim" d="M528 88 H560 M528 118 H560 M552 70 V88 M552 118 V136"/>
+            <path class="arr" d="M552 88 L548 80 L556 80 Z M552 118 L548 126 L556 126 Z"/>
+            <text x="566" y="108" font-size="13" font-weight="700">L 厚度</text>
+            <!-- d dimension -->
+            <path class="dim" d="M250 172 V196 M370 172 V196 M250 188 H370"/>
+            <path class="arr" d="M250 188 L258 184 L258 192 Z M370 188 L362 184 L362 192 Z"/>
+            <text x="310" y="212" font-size="13" text-anchor="middle" font-weight="700">d → A = π d² / 4</text>
+            <text x="310" y="236" font-size="11.5" text-anchor="middle" class="t-mut">离子在交流电场下穿过厚度 L 来回迁移，到不锈钢表面被挡住、在界面积累</text>
+            <text x="132" y="196" font-size="11" text-anchor="middle" class="t-mut">尼龙螺栓</text>
+          </svg>
+        </div>
+        <figcaption>截面示意（比例夸大了样品厚度）。蓝色圆点代表可移动的离子。</figcaption>
+      </figure>
+      <div>
+        <ul class="b">
+          <li><strong>L</strong>：用千分尺量样品厚度，最好量装池压紧后的厚度，或用垫片厚度（样品填满垫片孔时）。取多点平均。<span class="src gen">通用方法</span></li>
+          <li><strong>A</strong>：样品真正与两块不锈钢都接触的面积。用开孔垫片时取孔的面积；样品比电极小时取样品面积；样品比电极大时取电极面积。</li>
+          <li>单位换算：L 用 cm（100 µm = 0.01 cm），A 用 cm²。直径 10 mm 的圆片 A = 0.785 cm²。</li>
+          <li>样品要和不锈钢接触良好、没有气泡；含锂盐等怕水的样品在手套箱里装池，并保证测量时密封。<span class="src gen">通用方法</span></li>
+          <li>装好后用万用表量两个接线片：读数接近 0 Ω 说明两块板直接短路（样品破了或垫片错位），要重装。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 · Procedure</div>
+      <h2>测量步骤</h2>
+      <p>以一个温度、一个样品为例。变温测量就在每个温度重复第 5–8 步。</p>
+    </div>
+    <div class="block">
+      <ol class="steps">
+        <li><div><p>确认仪器已上电自检、完成 Calibrate Instrument（见安装 SOP）。</p>
+          <ul><li>样品阻抗很高（膜厚、电导率低）时，先做 Low I DC 校准；手册指出高阻样品的 EIS 对它敏感。<span class="src">手册 Ch 5</span></li>
+          <li>高阻样品的谱图出现相位毛刺时，做电缆电容校准（20 kΩ 校准池）。<span class="src">手册 Ch 5</span></li></ul></div></li>
+        <li><div><p>量样品厚度 L，确定接触面积 A（第 03 节）。</p></div></li>
+        <li><div><p>装池：放好样品，对角交替、均匀拧紧两根尼龙螺栓。不要拧得过紧，尼龙螺纹容易滑丝，样品也会被压薄。<span class="src gen">通用方法</span></p></div></li>
+        <li><div><p>用万用表检查两块板没有短路，然后按第 02 节接线。</p></div></li>
+        <li><div><p>控温：把电解池放进恒温箱或加热台，等温度稳定后再测。需要记录温度时，可用 Reference 620 后面板的 K 型热电偶输入。<span class="src">手册 Ch 7</span></p></div></li>
+        <li><div><p>在 Gamry Framework 的 <code>Experiment</code> 菜单中选恒电位 EIS (Potentiostatic EIS)，按第 05 节填参数。</p></div></li>
+        <li><div><p>运行。对称不锈钢池的开路电位接近 0 V。Cell On 黄灯亮时不要碰导线；Overload 灯持续常亮时，检查夹子是否松脱。<span class="src">手册 Ch 7</span></p></div></li>
+        <li><div><p>在 Echem Analyst 2 中打开 .DTA 文件，看 Nyquist 图，读出 R<sub>b</sub> 或用等效电路拟合（第 06 节）。</p></div></li>
+        <li><div><p>用第 07 节计算 σ。同一样品最好装 2–3 个池重复测量，报告平均值。<span class="src gen">通用方法</span></p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="params">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 · EIS settings</div>
+      <h2>EIS 参数</h2>
+      <p>下面是起步值。第 06 节的预测工具会按你的样品估算 R<sub>b</sub>，给出更合适的频率范围。</p>
+    </div>
+    <div class="block tablewrap">
+      <table class="p">
+        <thead><tr><th>参数</th><th>建议值</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>Initial Freq.</td><td>1 MHz（最高 5 MHz）</td><td>Reference 620 的阻抗测量上限是 5 MHz。手册的经验规则是 |Z|·f &lt; 10<sup>9</sup> Ω·Hz，超出的高频点可能不够准；第 06 节会标出这个频率。<span class="src">手册 Ch 2、9</span></td></tr>
+          <tr><td>Final Freq.</td><td>0.1–1 Hz</td><td>能看到低频尖峰（阻塞电极的电容响应）就够了，更低只会延长时间。</td></tr>
+          <tr><td>Points/decade</td><td>10</td><td>每十倍频程 10 个点，读截距足够。</td></tr>
+          <tr><td>AC Voltage</td><td>10 mV rms</td><td>高阻样品可适当加大，手册建议用样品能承受的最大激励；但要保持线性响应。<span class="src">手册 Ch 9</span></td></tr>
+          <tr><td>DC Voltage</td><td>0 V vs E<sub>oc</sub></td><td>对称池不需要直流偏压。</td></tr>
+          <tr><td>Area</td><td>1 cm²</td><td>先填 1，读出的就是未归一化的 R<sub>b</sub>（Ω），面积在计算 σ 时再用；如果填实际面积，注意数据是否被换算成 Ω·cm²。</td></tr>
+          <tr><td>Estimated Z</td><td>预计的 R<sub>b</sub></td><td>用第 06 节的估算值，帮助软件选择初始量程。</td></tr>
+          <tr><td>Optimize for</td><td>Normal</td><td>高阻样品、低频噪声大时可改为 Low Noise（更慢）。</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin:10px 0 0">参数名按 Gamry Framework 的恒电位 EIS 设置窗口；不同软件版本可能略有差异。</p>
+    </div>
+  </div>
+</section>
+
+<section id="sim">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">06 · Predict &amp; read</div>
+      <h2>预测谱图，并学会读 R<sub>b</sub></h2>
+      <p>输入预计的电导率和样品尺寸，看 Nyquist 图大概长什么样，以及在 5 MHz 以内能看到哪一部分。曲线是示意模型，不是你的数据。</p>
+    </div>
+    <div class="block tool">
+      <div>
+        <div class="fields">
+          <div class="field">
+            <label for="sLog">预计电导率 σ</label>
+            <input id="sLog" type="range" min="-9" max="-2" step="0.1" value="-5">
+            <span class="val" id="sVal">1.0 × 10⁻⁵ S/cm</span>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="sL">厚度 L (µm)</label><input id="sL" type="number" min="1" step="any" value="100"></div>
+            <div class="field"><label for="sD">直径 d (mm)</label><input id="sD" type="number" min="0.1" step="any" value="10"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="sEps">相对介电常数 ε<sub>r</sub></label><input id="sEps" type="number" min="1" step="any" value="8"></div>
+            <div class="field"><label for="sRs">导线与接触电阻 R<sub>s</sub> (Ω)</label><input id="sRs" type="number" min="0" step="any" value="2"></div>
+          </div>
+        </div>
+        <dl class="outs" style="margin-top:14px">
+          <div><dt>面积 A</dt><dd id="oA">—</dd></div>
+          <div><dt>本体电阻 R<sub>b</sub></dt><dd id="oRb">—</dd></div>
+          <div><dt>几何电容 C<sub>g</sub></dt><dd id="oCg">—</dd></div>
+          <div><dt>半圆顶点频率</dt><dd id="oF">—</dd></div>
+          <div><dt>建议 Initial Freq.</dt><dd id="oFi">—</dd></div>
+          <div><dt>建议 Final Freq.</dt><dd id="oFf">—</dd></div>
+        </dl>
+        <div class="msgs" id="sMsgs" aria-live="polite"></div>
+        <p class="note" style="margin:10px 0 0">模型：R<sub>s</sub> + (R<sub>b</sub> ∥ C<sub>g</sub>) + 阻塞界面 CPE（10 µF/cm²，n = 0.85）。C<sub>g</sub> = ε<sub>0</sub>ε<sub>r</sub>A/L；聚环氧乙烷类聚合物 ε<sub>r</sub> 约 5–10。<span class="src gen">通用方法</span></p>
+      </div>
+      <div>
+        <div class="chartbox" id="nyqBox">
+          <svg id="nyq" viewBox="0 0 600 400" role="img" aria-label="预测的 Nyquist 图"></svg>
+          <div class="tip" id="nyqTip" hidden></div>
+        </div>
+        <div class="key" aria-hidden="true">
+          <span><i class="k-line"></i>5 MHz 以内，可测</span>
+          <span><i class="k-dash"></i>5 MHz 以上，测不到</span>
+          <span><i class="k-ring"></i>|Z|·f = 10⁹ Ω·Hz</span>
+          <span><i class="k-dot"></i>整十倍频率点</span>
+        </div>
+        <ul class="b">
+          <li><strong>高频半圆</strong>：样品本体电阻 R<sub>b</sub> 与几何电容 C<sub>g</sub> 并联。半圆右端与实轴的交点是 R<sub>s</sub> + R<sub>b</sub>。</li>
+          <li><strong>低频尖峰</strong>：离子在不锈钢表面被挡住，形成双电层电容。越接近竖直越理想，实际常倾斜。</li>
+          <li><strong>只有尖峰、没有半圆</strong>：电导率高，半圆在 5 MHz 以上（灰色虚线部分），R<sub>b</sub> 取尖峰向下延伸到实轴的截距。</li>
+          <li><strong>橙色圈</strong>：手册经验规则 |Z|·f = 10<sup>9</sup> Ω·Hz 的位置，圈的左边（频率更高）的点可能不够准。<span class="src">手册 Ch 9</span></li>
+          <li><strong>更准的做法</strong>：在 Echem Analyst 2 中用等效电路 R<sub>s</sub> + (R<sub>b</sub> ∥ CPE) + CPE 拟合，取拟合出的 R<sub>b</sub>。</li>
+          <li>R<sub>s</sub> 是导线和接触电阻，通常远小于 R<sub>b</sub>；样品电阻很小时，把两个夹子直接夹在一起测一次高频阻抗作为 R<sub>s</sub>，再从截距中减去。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">07 · Calculate</div>
+      <h2>用实测 R<sub>b</sub> 算电导率</h2>
+      <p>厚度和直径沿用上面填的数值；也可以在这里改。</p>
+    </div>
+    <div class="block two">
+      <div class="fields">
+        <div class="field"><label for="cRb">实测本体电阻 R<sub>b</sub> (Ω)</label><input id="cRb" type="number" min="0" step="any" value="1273"></div>
+        <div class="row2">
+          <div class="field"><label for="cL">厚度 L (µm)</label><input id="cL" type="number" min="0" step="any" value="100"></div>
+          <div class="field"><label for="cD">直径 d (mm)</label><input id="cD" type="number" min="0" step="any" value="10"></div>
+        </div>
+        <p class="note" style="margin:0">示例数值：R<sub>b</sub> = 1273 Ω 是虚构的，换成你从谱图读出的值。</p>
+      </div>
+      <div class="sigma" aria-live="polite">
+        <div class="note">离子电导率</div>
+        <div class="big" id="cOut">—</div>
+        <div class="note" id="cDetail">—</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="arr">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">08 · Temperature series</div>
+      <h2>变温测量与活化能</h2>
+      <p>每个温度测一次 R<sub>b</sub>，填进表里，页面算出各温度的 σ，并按阿伦尼乌斯 (Arrhenius) 关系拟合活化能 E<sub>a</sub>。L 和 d 沿用第 07 节。</p>
+    </div>
+    <div class="block arr-grid">
+      <div>
+        <p style="margin:0 0 8px"><span class="tag">示例数据</span> <span class="note">换成你的测量值</span></p>
+        <table class="rows" id="arrTable">
+          <thead><tr><th>T (°C)</th><th>R<sub>b</sub> (Ω)</th><th>σ (S/cm)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button type="button" class="btn" id="addRow">添加一行</button>
+          <button type="button" class="btn" id="delRow">删除最后一行</button>
+        </div>
+        <div class="msgs" id="arrOut" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="chartbox" id="arrBox">
+          <svg id="arrPlot" viewBox="0 0 600 380" role="img" aria-label="阿伦尼乌斯图：log σ 对 1000/T"></svg>
+          <div class="tip" id="arrTip" hidden></div>
+        </div>
+        <p class="note" style="margin:8px 0 0">聚环氧乙烷 (PEO) 类聚合物电解质的曲线常常是弯的（VTF 行为），这时阿伦尼乌斯拟合只是近似，宜分温区拟合或改用 VTF 方程。<span class="src gen">通用方法</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trouble">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">09 · Troubleshooting</div>
+      <h2>问题排查</h2>
+    </div>
+    <div class="block tablewrap">
+      <table class="p">
+        <thead><tr><th>现象</th><th>可能原因</th><th>处理</th></tr></thead>
+        <tbody>
+          <tr><td>谱图只是实轴附近的一个小点</td><td>两块不锈钢板直接接触，短路</td><td>拆开检查样品是否破裂、垫片是否错位；重装后先用万用表确认不短路</td></tr>
+          <tr><td>阻抗极大、曲线杂乱、没有半圆</td><td>夹子或样品接触不良；样品电导率极低</td><td>重新夹紧夹子、压紧样品；用法拉第屏蔽并做 Low I DC 校准；以 |Z|·f &lt; 10<sup>9</sup> Ω·Hz 范围内的数据为准<span class="src">手册 Ch 5、9</span></td></tr>
+          <tr><td>高频端曲线跑到实轴下方</td><td>导线电感，样品电阻很小时明显</td><td>导线尽量短、分开放；读 R<sub>b</sub> 取曲线与实轴的交点<span class="src gen">通用方法</span></td></tr>
+          <tr><td>高阻样品的相位有尖锐毛刺</td><td>电缆电容差异</td><td>做电缆电容校准（20 kΩ 校准池）<span class="src">手册 Ch 5</span></td></tr>
+          <tr><td>高频半圆偏小、C<sub>g</sub> 拟合值偏大</td><td>导线之间的寄生电容（鳄鱼夹并排可达 10 pF 以上）</td><td>两组导线分开、从不同方向接近电解池；极端情况下手册建议去掉鳄鱼夹<span class="src">手册 Ch 9</span></td></tr>
+          <tr><td>数据跳动、重复性差</td><td>测量中导线被移动；温度没有稳定</td><td>测量中不要碰导线；延长控温平衡时间<span class="src">手册 Ch 9</span></td></tr>
+          <tr><td>Overload 灯持续常亮</td><td>导线断开或夹子松脱</td><td>检查五个夹子；Cell On 熄灭后再动线<span class="src">手册 Ch 7</span></td></tr>
+          <tr><td>电导率比预期低很多</td><td>L 量大了或 A 取大了；接触不良</td><td>重新核对 L、A 的取法（第 03 节）；检查样品与不锈钢的接触</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">非官方学习笔记。仪器相关内容依据 Gamry Reference 620 Operator's Manual（988-00086，Rev 1.5.0）；标为“通用方法”的内容来自常规电化学实践，具体做法以课题组方法为准。</div>
+</footer>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const EPS0 = 8.854e-12, KB = 8.617333e-5, RG = 8.314;
+  const SUP = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const sup = n => String(n).split('').map(c => SUP[c] || c).join('');
+  const sci = (x, d=2) => {
+    if (!isFinite(x) || x <= 0) return '—';
+    const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e);
+    if (e >= -2 && e <= 3) return (+x.toPrecision(3)).toString();
+    return `${m.toFixed(d - 1)} × 10${sup(e)}`;
+  };
+  const eng = (x, unit) => {
+    if (!isFinite(x)) return '—';
+    const a = Math.abs(x);
+    if (a === 0) return `0 ${unit}`;
+    const P = [[1e9,'G'],[1e6,'M'],[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n'],[1e-12,'p'],[1e-15,'f']];
+    for (const [s,p] of P){ if (a >= s*0.9995) return `${(+(x/s).toPrecision(3))} ${p}${unit}`; }
+    return `${(+(x/1e-15).toPrecision(3))} f${unit}`;
+  };
+  const hz = f => eng(f, 'Hz');
+  const nice = f => { // round to 1/2/5 × 10^n
+    const e = Math.floor(Math.log10(f)); const m = f / Math.pow(10, e);
+    const s = m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10;
+    return s * Math.pow(10, e);
+  };
+  function el(tag, attrs, parent, text){
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  const num = id => { const v = parseFloat($(id).value); return isFinite(v) ? v : NaN; };
+
+  /* ---------------- impedance model ---------------- */
+  function model(p){
+    const A = Math.PI * Math.pow(p.dmm / 20, 2);          // cm²
+    const Lcm = p.Lum * 1e-4;
+    const Rb = Lcm / (p.sigma * A);
+    const Cg = EPS0 * p.eps * (A * 1e-4) / (p.Lum * 1e-6);
+    const Q = 10e-6 * A, n = 0.85;
+    const fap = 1 / (2 * Math.PI * Rb * Cg);
+    const pts = [];
+    for (let lg = 7; lg >= -2.0001; lg -= 1/30){
+      const f = Math.pow(10, lg), w = 2 * Math.PI * f;
+      const d = 1 + Math.pow(w * Rb * Cg, 2);
+      const zr = p.Rs + Rb / d + Math.cos(n * Math.PI / 2) / (Q * Math.pow(w, n));
+      const zi = (w * Rb * Rb * Cg) / d + Math.sin(n * Math.PI / 2) / (Q * Math.pow(w, n)); // −Z''
+      pts.push({f, zr, zi});
+    }
+    // frequency where the spike reaches 3×Rb
+    const wSpike = Math.pow(1 / (3 * Rb * Q), 1 / n);
+    // manual rule of thumb |Z|·f < 1e9 Ω·Hz: highest frequency (≤ 5 MHz) that still satisfies it
+    let fLim = 5e6, prev = null;
+    for (let i = pts.length - 1; i >= 0; i--){
+      const q = pts[i]; if (q.f > 5e6) break;
+      if (Math.hypot(q.zr, q.zi) * q.f >= 1e9){ fLim = prev ? prev.f : q.f; break; }
+      prev = q;
+    }
+    return {A, Rb, Cg, fap, pts, fLim, fSpike: wSpike / (2 * Math.PI)};
+  }
+
+  /* ---------------- Nyquist plot ---------------- */
+  const nyq = $('#nyq'), nyqTip = $('#nyqTip'), nyqBox = $('#nyqBox');
+  const NX0 = 70, NY0 = 340, NW = 500, NH = 300; // plot area (equal aspect)
+  let nyqPts = [], nyqScale = 1;
+  function ticks(max){
+    const step = nice(max / 4); const t = [];
+    for (let v = 0; v <= max * 1.0001; v += step) t.push(v);
+    return t;
+  }
+  function drawNyq(m, Rs){
+    while (nyq.firstChild) nyq.removeChild(nyq.firstChild);
+    const xmax = (Rs + m.Rb) * 1.75;
+    const ymax = xmax * NH / NW;
+    nyqScale = NW / xmax;
+    const X = v => NX0 + v * nyqScale, Y = v => NY0 - v * nyqScale;
+    // grid + axes
+    for (const t of ticks(xmax)){
+      el('line', {x1:X(t), y1:NY0, x2:X(t), y2:NY0 - NH, class:'grid'}, nyq);
+      el('text', {x:X(t), y:NY0 + 18, 'font-size':11.5, 'text-anchor':'middle', class:'t-mut'}, nyq, eng(t, 'Ω'));
+    }
+    for (const t of ticks(ymax)){
+      el('line', {x1:NX0, y1:Y(t), x2:NX0 + NW, y2:Y(t), class:'grid'}, nyq);
+      el('text', {x:NX0 - 8, y:Y(t) + 4, 'font-size':11.5, 'text-anchor':'end', class:'t-mut'}, nyq, eng(t, 'Ω'));
+    }
+    el('path', {d:`M${NX0} ${NY0 - NH} V${NY0} H${NX0 + NW}`, class:'axis'}, nyq);
+    el('text', {x:NX0 + NW, y:NY0 + 38, 'font-size':12, 'text-anchor':'end', class:'t-mut'}, nyq, 'Z′ (Ω)');
+    el('text', {x:NX0, y:NY0 - NH - 12, 'font-size':12, 'text-anchor':'start', class:'t-mut'}, nyq, '−Z″ (Ω)');
+    // curve split at 5 MHz, clipped at the top
+    const inside = p => p.zr <= xmax && p.zi <= ymax;
+    const out = [], meas = [];
+    nyqPts = [];
+    for (const p of m.pts){
+      if (!inside(p)) continue;
+      const q = {...p, x:X(p.zr), y:Y(p.zi)};
+      if (p.f > 5e6) out.push(q); else { meas.push(q); nyqPts.push(q); }
+    }
+    if (out.length && meas.length) out.push(meas[0]);
+    const pd = arr => arr.map((q, i) => `${i ? 'L' : 'M'}${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join(' ');
+    if (out.length > 1) el('path', {d:pd(out), class:'curve-out'}, nyq);
+    if (meas.length > 1) el('path', {d:pd(meas), class:'curve'}, nyq);
+    // Rb intercept
+    const xr = X(Rs + m.Rb);
+    el('line', {x1:xr, y1:NY0, x2:xr, y2:NY0 + 24, class:'rb'}, nyq);
+    el('circle', {cx:xr, cy:NY0, r:5, class:'mark'}, nyq);
+    el('text', {x:xr, y:NY0 + 38, 'font-size':12, 'font-weight':700, 'text-anchor':'middle'}, nyq, `Rs + Rb = ${eng(Rs + m.Rb, 'Ω')}`);
+    if (m.fLim < 5e6){
+      let q = null;
+      for (const c of nyqPts){ if (!q || Math.abs(Math.log10(c.f / m.fLim)) < Math.abs(Math.log10(q.f / m.fLim))) q = c; }
+      if (q && Math.abs(Math.log10(q.f / m.fLim)) < 0.05){
+        el('circle', {cx:q.x, cy:q.y, r:6, style:'fill:none;stroke:var(--warn);stroke-width:2'}, nyq);
+        el('text', {x:q.x - 9, y:q.y + 4, 'font-size':11, 'text-anchor':'end', style:'fill:var(--warn)'}, nyq, '|Z|·f = 10⁹');
+      }
+    }
+    // decade markers on the measurable curve
+    let lastX = -99, lastY = -99;
+    for (let e = 6; e >= -1; e--){
+      const f = Math.pow(10, e);
+      let best = null;
+      for (const q of nyqPts){ if (!best || Math.abs(Math.log10(q.f) - e) < Math.abs(Math.log10(best.f) - e)) best = q; }
+      if (!best || Math.abs(Math.log10(best.f) - e) > 0.02) continue;
+      if (Math.hypot(best.x - lastX, best.y - lastY) < 34) continue;
+      el('circle', {cx:best.x, cy:best.y, r:4, class:'mark'}, nyq);
+      el('text', {x:best.x + 7, y:best.y - 7, 'font-size':11, class:'t-mut'}, nyq, hz(f));
+      lastX = best.x; lastY = best.y;
+    }
+    nyqHover = el('circle', {cx:-20, cy:-20, r:5, class:'hover'}, nyq);
+  }
+  let nyqHover = null;
+  function svgPoint(svg, evt){
+    const r = svg.getBoundingClientRect();
+    const vb = svg.viewBox.baseVal;
+    return {x:(evt.clientX - r.left) * vb.width / r.width, y:(evt.clientY - r.top) * vb.height / r.height, sx:r.width / vb.width};
+  }
+  nyq.addEventListener('pointermove', e => {
+    if (!nyqPts.length) return;
+    const p = svgPoint(nyq, e);
+    let best = null, bd = 1e9;
+    for (const q of nyqPts){ const d = Math.hypot(q.x - p.x, q.y - p.y); if (d < bd){ bd = d; best = q; } }
+    if (!best || bd > 40){ nyqTip.hidden = true; nyqHover.setAttribute('cx', -20); return; }
+    nyqHover.setAttribute('cx', best.x); nyqHover.setAttribute('cy', best.y);
+    nyqTip.hidden = false;
+    nyqTip.innerHTML = `f = ${hz(best.f)}<br>Z′ = ${eng(best.zr, 'Ω')}　−Z″ = ${eng(best.zi, 'Ω')}`;
+    nyqTip.style.left = (best.x * p.sx + 8) + 'px';
+    nyqTip.style.top = (best.y * p.sx + 8) + 'px';
+  });
+  nyq.addEventListener('pointerleave', () => { nyqTip.hidden = true; if (nyqHover) nyqHover.setAttribute('cx', -20); });
+
+  function msg(kind, html){ return `<div class="msg ${kind}">${html}</div>`; }
+  function updateSim(){
+    const sigma = Math.pow(10, num('#sLog'));
+    const p = {sigma, Lum:num('#sL'), dmm:num('#sD'), eps:num('#sEps'), Rs:Math.max(0, num('#sRs') || 0)};
+    $('#sVal').textContent = `${sci(sigma)} S/cm`;
+    if (!(p.Lum > 0 && p.dmm > 0 && p.eps > 0)){ $('#sMsgs').innerHTML = msg('warn', '厚度、直径和介电常数都要大于 0。'); return; }
+    const m = model(p);
+    $('#oA').textContent = `${(+m.A.toPrecision(3))} cm²`;
+    $('#oRb').textContent = eng(m.Rb, 'Ω');
+    $('#oCg').textContent = eng(m.Cg, 'F');
+    $('#oF').textContent = hz(m.fap);
+    const fi = m.fap > 5e5 ? 5e6 : 1e6;
+    const ff = Math.max(0.01, nice(m.fSpike / 3));
+    $('#oFi').textContent = hz(fi);
+    $('#oFf').textContent = hz(Math.min(ff, fi / 100));
+    const out = [];
+    if (m.fap > 5e6) out.push(msg('info', `半圆顶点约在 <strong>${hz(m.fap)}</strong>，超过 5 MHz：图上只有低频尖峰，R<sub>b</sub> 取尖峰延伸到实轴的截距。`));
+    else out.push(msg('ok', `半圆顶点约在 <strong>${hz(m.fap)}</strong>，在 5 MHz 以内，能看到完整或大部分半圆。`));
+    if (m.fLim < 5e6){
+      const plateau = 1 / (2 * Math.PI * m.Cg);
+      out.push(msg('warn', `按手册经验规则 |Z|·f &lt; 10⁹ Ω·Hz，约 <strong>${hz(m.fLim)}</strong> 以上的数据可能不够准（图上橙色圈）。照常测，读 R<sub>b</sub> 和拟合时以这个频率以下的数据为主；R<sub>b</sub> 截距在更低频率处，一般仍读得到。高频端 |Z|·f 趋近 1/(2πC<sub>g</sub>) ≈ ${sci(plateau)} Ω·Hz，只由几何电容决定：加大面积或减薄样品能放宽这个限制。`));
+    } else {
+      out.push(msg('ok', '5 MHz 以内都满足手册经验规则 |Z|·f &lt; 10⁹ Ω·Hz。'));
+    }
+    if (m.Rb > 1e6) out.push(msg('warn', `R<sub>b</sub> 很大（${eng(m.Rb, 'Ω')}）：用法拉第屏蔽、做 Low I DC 校准；R<sub>b</sub> 越大，半圆出现的频率越低，测得越慢，噪声也越大。`));
+    if (m.Rb < 20) out.push(msg('warn', `R<sub>b</sub> 很小（${eng(m.Rb, 'Ω')}），与导线电阻和电感同一量级：缩短导线，测一次短接夹子时的 R<sub>s</sub> 并扣除。`));
+    $('#sMsgs').innerHTML = out.join('');
+    drawNyq(m, p.Rs);
+    // keep the calculator geometry in step
+    $('#cL').value = p.Lum; $('#cD').value = p.dmm; updateCalc(); drawArr();
+  }
+  ['#sLog','#sL','#sD','#sEps','#sRs'].forEach(id => $(id).addEventListener('input', updateSim));
+
+  /* ---------------- sigma calculator ---------------- */
+  function sigmaOf(Rb, Lum, dmm){
+    const A = Math.PI * Math.pow(dmm / 20, 2);
+    return (Lum * 1e-4) / (Rb * A);
+  }
+  function updateCalc(){
+    const Rb = num('#cRb'), L = num('#cL'), d = num('#cD');
+    if (!(Rb > 0 && L > 0 && d > 0)){ $('#cOut').textContent = '—'; $('#cDetail').textContent = 'R_b、L、d 都要大于 0。'; return; }
+    const A = Math.PI * Math.pow(d / 20, 2);
+    const s = sigmaOf(Rb, L, d);
+    $('#cOut').textContent = `${sci(s, 3)} S/cm`;
+    $('#cDetail').innerHTML = `= ${(L * 1e-4).toPrecision(3)} cm ÷ (${(+Rb.toPrecision(4))} Ω × ${A.toPrecision(3)} cm²)<br>= ${(+(s * 1e3).toPrecision(3))} mS/cm，log<sub>10</sub>σ = ${Math.log10(s).toFixed(2)}`;
+  }
+  ['#cRb','#cL','#cD'].forEach(id => $(id).addEventListener('input', () => { updateCalc(); drawArr(); }));
+
+  /* ---------------- Arrhenius ---------------- */
+  const tbody = $('#arrTable tbody');
+  const EXAMPLE = [[30, 6369], [40, 2123], [50, 849], [60, 364], [70, 182], [80, 106]];
+  function addRow(T, Rb){
+    const tr = document.createElement('tr');
+    const i = tbody.children.length;
+    tr.innerHTML = `<td><input type="number" step="any" id="aT${i}" aria-label="温度 ${i+1}" value="${T ?? ''}"></td><td><input type="number" step="any" min="0" id="aR${i}" aria-label="R_b ${i+1}" value="${Rb ?? ''}"></td><td class="out">—</td>`;
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input').forEach(n => n.addEventListener('input', drawArr));
+  }
+  EXAMPLE.forEach(r => addRow(r[0], r[1]));
+  $('#addRow').addEventListener('click', () => { addRow(); drawArr(); });
+  $('#delRow').addEventListener('click', () => { if (tbody.lastElementChild) tbody.removeChild(tbody.lastElementChild); drawArr(); });
+
+  const arr = $('#arrPlot'), arrTip = $('#arrTip');
+  const AX0 = 70, AY0 = 320, AW = 500, AH = 280;
+  let arrPts = [];
+  function drawArr(){
+    while (arr.firstChild) arr.removeChild(arr.firstChild);
+    const L = num('#cL'), d = num('#cD');
+    const rows = [...tbody.children].map(tr => {
+      const [ti, ri] = tr.querySelectorAll('input');
+      const T = parseFloat(ti.value), Rb = parseFloat(ri.value);
+      const ok = isFinite(T) && T > -273.15 && Rb > 0 && L > 0 && d > 0;
+      const s = ok ? sigmaOf(Rb, L, d) : NaN;
+      tr.querySelector('.out').textContent = ok ? `${sci(s)}` : '—';
+      return ok ? {T, Rb, s, x:1000 / (T + 273.15), y:Math.log10(s)} : null;
+    }).filter(Boolean);
+    const outBox = $('#arrOut');
+    if (rows.length < 2){
+      outBox.innerHTML = msg('info', '至少填两行有效数据才能拟合。');
+      el('text', {x:300, y:190, 'font-size':13, 'text-anchor':'middle', class:'t-mut'}, arr, '填入至少两个温度的 R_b 后显示阿伦尼乌斯图');
+      arrPts = []; return;
+    }
+    // linear fit of ln σ vs 1/T
+    const xs = rows.map(r => 1 / (r.T + 273.15)), ys = rows.map(r => Math.log(r.s));
+    const n = xs.length, mx = xs.reduce((a,b) => a+b) / n, my = ys.reduce((a,b) => a+b) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < n; i++){ sxy += (xs[i]-mx)*(ys[i]-my); sxx += (xs[i]-mx)**2; syy += (ys[i]-my)**2; }
+    const slope = sxy / sxx, inter = my - slope * mx;
+    const r2 = sxx > 0 && syy > 0 ? (sxy * sxy) / (sxx * syy) : NaN;
+    const EaeV = -slope * KB, EakJ = -slope * RG / 1000;
+    outBox.innerHTML = msg('ok', `阿伦尼乌斯拟合：E<sub>a</sub> ≈ <strong>${EaeV.toFixed(3)} eV</strong>（${EakJ.toFixed(1)} kJ/mol），R² = ${isFinite(r2) ? r2.toFixed(4) : '—'}`) +
+      (rows.length >= 4 && r2 < 0.99 ? msg('info', 'R² 低于 0.99：数据可能是弯曲的（VTF 行为），活化能只作参考。') : '');
+    // axes ranges
+    let x0 = Math.min(...rows.map(r => r.x)), x1 = Math.max(...rows.map(r => r.x));
+    let y0 = Math.min(...rows.map(r => r.y)), y1 = Math.max(...rows.map(r => r.y));
+    const px = (x1 - x0) * 0.12 || 0.1, py = (y1 - y0) * 0.15 || 0.5;
+    x0 -= px; x1 += px; y0 = Math.floor((y0 - py) * 2) / 2; y1 = Math.ceil((y1 + py) * 2) / 2;
+    const X = v => AX0 + (v - x0) / (x1 - x0) * AW, Y = v => AY0 - (v - y0) / (y1 - y0) * AH;
+    const xstep = nice((x1 - x0) / 5);
+    for (let v = Math.ceil(x0 / xstep) * xstep; v <= x1 + 1e-9; v += xstep){
+      el('line', {x1:X(v), y1:AY0, x2:X(v), y2:AY0 - AH, class:'grid'}, arr);
+      el('text', {x:X(v), y:AY0 + 18, 'font-size':11.5, 'text-anchor':'middle', class:'t-mut'}, arr, v.toFixed(xstep < 0.1 ? 2 : 1));
+    }
+    const ystep = (y1 - y0) > 3 ? 1 : 0.5;
+    for (let v = y0; v <= y1 + 1e-9; v += ystep){
+      el('line', {x1:AX0, y1:Y(v), x2:AX0 + AW, y2:Y(v), class:'grid'}, arr);
+      el('text', {x:AX0 - 8, y:Y(v) + 4, 'font-size':11.5, 'text-anchor':'end', class:'t-mut'}, arr, v.toFixed(1));
+    }
+    el('path', {d:`M${AX0} ${AY0 - AH} V${AY0} H${AX0 + AW}`, class:'axis'}, arr);
+    el('text', {x:AX0 + AW, y:AY0 + 36, 'font-size':12, 'text-anchor':'end', class:'t-mut'}, arr, '1000 / T (K⁻¹)');
+    el('text', {x:AX0, y:AY0 - AH - 12, 'font-size':12, class:'t-mut'}, arr, 'log₁₀ σ (S/cm)');
+    // fit line (log10 σ = (inter + slope/T)/ln10)
+    const fy = xk => (inter + slope * (xk / 1000)) / Math.LN10;
+    el('line', {x1:X(x0), y1:Y(fy(x0)), x2:X(x1), y2:Y(fy(x1)), class:'fit'}, arr);
+    arrPts = rows.map(r => ({...r, px:X(r.x), py:Y(r.y)}));
+    for (const q of arrPts) el('circle', {cx:q.px, cy:q.py, r:5, class:'mark'}, arr);
+    el('text', {x:AX0 + AW - 6, y:AY0 - AH + 18, 'font-size':12, 'text-anchor':'end', class:'t-mut'}, arr, `直线拟合：Ea = ${EaeV.toFixed(2)} eV`);
+    arrHover = el('circle', {cx:-20, cy:-20, r:7, class:'hover'}, arr);
+  }
+  let arrHover = null;
+  arr.addEventListener('pointermove', e => {
+    if (!arrPts.length) return;
+    const p = svgPoint(arr, e);
+    let best = null, bd = 1e9;
+    for (const q of arrPts){ const d = Math.hypot(q.px - p.x, q.py - p.y); if (d < bd){ bd = d; best = q; } }
+    if (!best || bd > 30){ arrTip.hidden = true; arrHover.setAttribute('cx', -20); return; }
+    arrHover.setAttribute('cx', best.px); arrHover.setAttribute('cy', best.py);
+    arrTip.hidden = false;
+    arrTip.innerHTML = `${best.T} °C · R<sub>b</sub> = ${eng(best.Rb, 'Ω')}<br>σ = ${sci(best.s)} S/cm`;
+    arrTip.style.left = (best.px * p.sx + 8) + 'px';
+    arrTip.style.top = (best.py * p.sx + 8) + 'px';
+  });
+  arr.addEventListener('pointerleave', () => { arrTip.hidden = true; if (arrHover) arrHover.setAttribute('cx', -20); });
+
+  updateSim();
+  updateCalc();
+  drawArr();
+})();
+</script>
