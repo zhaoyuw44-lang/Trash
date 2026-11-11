@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>咖啡制备图解</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: a light table. Chapter index rail on the left, the current sheet laid on a cool surface on the right; the sheets keep their own warm paper. */
+:root {
+  --table: #e8ebed;
+  --rail: #f5f6f7;
+  --raised: #ffffff;
+  --ink: #1b2026;
+  --ink-2: #59626b;
+  --line: #d3d8dc;
+  --amber: #8f6100;
+  --amber-mark: #e0a100;
+  --amber-soft: #fbefd0;
+  --focus: #2a78d6;
+  --shadow: 0 1px 2px rgba(20, 28, 36, .08), 0 8px 28px rgba(20, 28, 36, .10);
+  --f-ui: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --f-num: "Space Grotesk", "Noto Sans SC", "PingFang SC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --table: #121518; --rail: #191d21; --raised: #20252a; --ink: #e7eaed; --ink-2: #a3acb4;
+    --line: #2c3238; --amber: #f2b632; --amber-mark: #f2b632; --amber-soft: #392d10; --focus: #6aa7f0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --table: #121518; --rail: #191d21; --raised: #20252a; --ink: #e7eaed; --ink-2: #a3acb4;
+  --line: #2c3238; --amber: #f2b632; --amber-mark: #f2b632; --amber-soft: #392d10; --focus: #6aa7f0;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--table);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: 15px;
+  line-height: 1.6;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--rail);
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- top bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--rail);
+  border-bottom: 1px solid var(--line);
+}
+.bar-inner {
+  display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap;
+  padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.brand-name { font-weight: 700; font-size: 17px; letter-spacing: .02em; white-space: nowrap; }
+.brand-sub { color: var(--ink-2); font-size: 13px; white-space: nowrap; }
+.nav { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.count { font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 14px; color: var(--ink-2); min-width: 4.2em; text-align: center; }
+.count b { color: var(--ink); font-weight: 700; }
+.btn {
+  border: 1px solid var(--line); background: var(--raised); border-radius: 8px;
+  padding: 6px 12px; font-size: 14px; cursor: pointer; white-space: nowrap;
+  transition: border-color .15s, background-color .15s;
+}
+.btn:hover:not(:disabled) { border-color: var(--amber-mark); }
+.btn:disabled { opacity: .4; cursor: default; }
+.toc-btn { display: none; }
+.progress { height: 3px; background: transparent; }
+.progress i { display: block; height: 100%; width: 0; background: var(--amber-mark); transition: width .25s ease; }
+
+/* ---------- layout */
+.layout {
+  display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px;
+  max-width: 1560px; margin: 0 auto;
+  padding-block: 24px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- chapter index */
+.toc { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); }
+.toc-group + .toc-group { margin-top: 18px; }
+.toc-label {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--ink-2);
+  margin: 0 0 6px 10px;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a {
+  display: grid; grid-template-columns: 2.2em minmax(0, 1fr); gap: 0 6px; align-items: baseline;
+  padding: 7px 10px; border-radius: 8px; color: inherit; text-decoration: none;
+  border-left: 3px solid transparent;
+}
+.toc a:hover { background: var(--raised); }
+.toc a[aria-current="page"] { background: var(--raised); border-left-color: var(--amber-mark); box-shadow: var(--shadow); }
+.toc .n { font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 13px; color: var(--ink-2); font-weight: 500; }
+.toc a[aria-current="page"] .n { color: var(--amber); font-weight: 700; }
+.toc .t { font-size: 14.5px; font-weight: 500; line-height: 1.4; }
+.toc .s { grid-column: 2; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+
+/* ---------- stage */
+.stage { min-width: 0; }
+.sheet-head { display: flex; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 14px; }
+.sheet-head > div { min-width: 0; flex: 1 1 320px; }
+.eyebrow { font-family: var(--f-num); font-size: 13px; letter-spacing: .1em; color: var(--amber); font-weight: 700; }
+.sheet-head h1 { margin: 2px 0 2px; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.3; text-wrap: balance; }
+.sheet-head p { margin: 0; color: var(--ink-2); }
+.zoom { align-self: center; }
+
+.sheet-wrap {
+  background: #fbf8f3; /* the sheets are printed on this paper colour in both themes */
+  border-radius: 10px; box-shadow: var(--shadow); overflow: hidden;
+  max-width: 1200px;
+  touch-action: pan-y pinch-zoom;
+}
+.sheet-wrap img { display: block; width: 100%; height: auto; max-width: 100%; }
+.sheet-wrap.native { overflow-x: auto; touch-action: auto; }
+.sheet-wrap.native img { width: 1200px; max-width: none; }
+.sheet-wrap img.enter { animation: fade .28s ease both; }
+@keyframes fade { from { opacity: .35; transform: translateX(var(--dx, 0)); } to { opacity: 1; transform: none; } }
+
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1200px; margin-top: 16px; }
+.pager button {
+  text-align: left; border: 1px solid var(--line); background: var(--raised); border-radius: 10px;
+  padding: 12px 16px; cursor: pointer; min-width: 0;
+}
+.pager button:hover:not(:disabled) { border-color: var(--amber-mark); }
+.pager button:disabled { visibility: hidden; }
+.pager .next { text-align: right; }
+.pager small { display: block; color: var(--ink-2); font-size: 12.5px; }
+.pager span { display: block; font-weight: 700; overflow-wrap: anywhere; }
+.hint { color: var(--ink-2); font-size: 13px; margin: 14px 0 0; max-width: 1200px; }
+
+/* ---------- narrow screens */
+@media (max-width: 980px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 16px 32px; }
+  .toc-btn { display: inline-block; }
+  .toc { display: none; position: static; background: var(--rail); border: 1px solid var(--line); border-radius: 12px; padding: 14px 8px; }
+  .toc.open { display: block; }
+  .brand-sub { display: none; }
+}
+@media (max-width: 560px) {
+  .btn .lbl { display: none; }
+  .bar-inner { gap: 8px 10px; }
+  .brand-name { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-wrap img.enter { animation: none; }
+  .progress i { transition: none; }
+}
+</style>
+
+<header class="bar">
+  <div class="bar-inner">
+    <button class="btn toc-btn" id="tocBtn" aria-expanded="false" aria-controls="toc">目录</button>
+    <div class="brand">
+      <span class="brand-name">咖啡制备图解</span>
+      <span class="brand-sub">12 张图看懂各种咖啡哪里不一样</span>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn" aria-label="上一张">‹<span class="lbl"> 上一张</span></button>
+      <span class="count" aria-live="polite"><b id="cur">00</b> / <span id="total">11</span></span>
+      <button class="btn" id="nextBtn" aria-label="下一张"><span class="lbl">下一张 </span>›</button>
+    </div>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+</header>
+
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="目录"></nav>
+
+  <main class="stage">
+    <div class="sheet-head">
+      <div>
+        <div class="eyebrow" id="eyebrow">00</div>
+        <h1 id="title">咖啡家族总览</h1>
+        <p id="sub">先看“怎么萃取”，再看“加了什么”</p>
+      </div>
+      <button class="btn zoom" id="zoomBtn" aria-pressed="false">原始大小</button>
+    </div>
+    <div class="sheet-wrap" id="wrap">
+      <img id="sheet" src="00_overview.svg" width="1200" height="1010" alt="咖啡家族总览">
+    </div>
+    <div class="pager">
+      <button class="prev" id="prevCard"><small>上一张</small><span id="prevName"></span></button>
+      <button class="next" id="nextCard"><small>下一张</small><span id="nextName"></span></button>
+    </div>
+    <p class="hint">翻页：点按钮、键盘 ← → 键，或在手机上左右滑动图片。看不清细节时点“原始大小”，再左右拖动查看。</p>
+  </main>
+</div>
+
+<script>
+(function () {
+  var PAGES = [
+    { slug: 'overview', file: '00_overview.svg', h: 1010, g: '入门', t: '咖啡家族总览', s: '先看“怎么萃取”（加压 / 渗滤 / 浸泡），再看“加了什么”' },
+    { slug: 'grind', file: '01_grind_vs_time.svg', h: 830, g: '入门', t: '研磨度 × 接触时间', s: '粉越细时间越短，越粗泡得越久；冷水要更久' },
+    { slug: 'espresso', file: '02_espresso.svg', h: 916, g: '意式浓缩家族', t: '意式浓缩 Espresso', s: '约 9 bar 高压 + 细粉 + 25–30 秒' },
+    { slug: 'milk', file: '03_milk_steaming.svg', h: 920, g: '意式浓缩家族', t: '打奶 Milk Steaming', s: '打进多少空气，决定奶泡多厚' },
+    { slug: 'milk-drinks', file: '04_espresso_milk_drinks.svg', h: 960, g: '意式浓缩家族', t: '浓缩 + 牛奶', s: '7 种奶咖的配方剖面' },
+    { slug: 'water-drinks', file: '05_espresso_water_drinks.svg', h: 870, g: '意式浓缩家族', t: '浓缩 + 水', s: '美式、长黑、长萃、冰美式：水加在哪、何时加' },
+    { slug: 'pour-over', file: '06_pour_over.svg', h: 872, g: '冲煮器具', t: '手冲 Pour-over', s: '重力渗滤 + 纸滤，干净透亮' },
+    { slug: 'french-press', file: '07_french_press.svg', h: 872, g: '冲煮器具', t: '法压壶 French Press', s: '浸泡 4 分钟 + 金属滤网，醇厚' },
+    { slug: 'moka-pot', file: '08_moka_pot.svg', h: 872, g: '冲煮器具', t: '摩卡壶 Moka Pot', s: '水蒸汽把热水顶过粉层' },
+    { slug: 'cold-brew', file: '09_cold_brew.svg', h: 887, g: '冲煮器具', t: '冷萃 Cold Brew', s: '冷水泡 12–24 小时，低酸顺口' },
+    { slug: 'turkish', file: '10_turkish_coffee.svg', h: 893, g: '冲煮器具', t: '土耳其咖啡 Turkish', s: '极细粉连粉一起煮，不过滤' },
+    { slug: 'compare', file: '11_comparison_table.svg', h: 1040, g: '总结', t: '总对比表', s: '6 种冲法的关键参数一表看完' }
+  ];
+  var N = PAGES.length;
+  var $ = function (id) { return document.getElementById(id); };
+  var img = $('sheet'), wrap = $('wrap'), toc = $('toc');
+  var cur = -1;
+
+  function pad(i) { return (i < 10 ? '0' : '') + i; }
+
+  // build the index, grouped
+  var html = '', lastGroup = null;
+  PAGES.forEach(function (p, i) {
+    if (p.g !== lastGroup) {
+      if (lastGroup !== null) html += '</ol></div>';
+      html += '<div class="toc-group"><p class="toc-label">' + p.g + '</p><ol>';
+      lastGroup = p.g;
+    }
+    html += '<li><a href="#' + p.slug + '" data-i="' + i + '"><span class="n">' + pad(i) +
+            '</span><span class="t">' + p.t + '</span><span class="s">' + p.s + '</span></a></li>';
+  });
+  html += '</ol></div>';
+  toc.innerHTML = html;
+  $('total').textContent = pad(N - 1);
+
+  function preload(i) {
+    if (i < 0 || i >= N) return;
+    var im = new Image();
+    im.src = PAGES[i].file;
+  }
+
+  function show(i, dir) {
+    i = Math.max(0, Math.min(N - 1, i));
+    if (i === cur) return;
+    var p = PAGES[i];
+    cur = i;
+    img.classList.remove('enter');
+    img.src = p.file;
+    img.height = p.h;
+    img.alt = p.t + '：' + p.s;
+    if (dir) {
+      img.style.setProperty('--dx', (dir > 0 ? '24px' : '-24px'));
+      void img.offsetWidth;
+      img.classList.add('enter');
+    }
+    $('eyebrow').textContent = pad(i) + ' · ' + p.g;
+    $('title').textContent = p.t;
+    $('sub').textContent = p.s;
+    $('cur').textContent = pad(i);
+    $('prog').style.width = ((i + 1) / N * 100) + '%';
+    $('prevBtn').disabled = i === 0;
+    $('nextBtn').disabled = i === N - 1;
+    $('prevCard').disabled = i === 0;
+    $('nextCard').disabled = i === N - 1;
+    $('prevName').textContent = i > 0 ? pad(i - 1) + '  ' + PAGES[i - 1].t : '';
+    $('nextName').textContent = i < N - 1 ? pad(i + 1) + '  ' + PAGES[i + 1].t : '';
+    document.title = p.t + ' · 咖啡制备图解';
+    Array.prototype.forEach.call(toc.querySelectorAll('a'), function (a) {
+      if (+a.getAttribute('data-i') === i) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    wrap.scrollLeft = 0;
+    preload(i + 1); preload(i - 1);
+  }
+
+  function indexFromHash() {
+    var h = (location.hash || '').replace('#', '');
+    for (var i = 0; i < N; i++) if (PAGES[i].slug === h) return i;
+    return 0;
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    if (i === cur) return;
+    var dir = i > cur ? 1 : -1;
+    var target = '#' + PAGES[i].slug;
+    if (location.hash !== target) {
+      pendingDir = dir;
+      location.hash = target;      // hashchange calls show()
+    } else {
+      show(i, dir);
+    }
+  }
+  var pendingDir = 0;
+
+  window.addEventListener('hashchange', function () {
+    var i = indexFromHash();
+    show(i, pendingDir || (i > cur ? 1 : -1));
+    pendingDir = 0;
+    if (window.matchMedia('(max-width: 980px)').matches) closeToc();
+    var head = document.querySelector('.sheet-head');
+    if (head && head.getBoundingClientRect().top < 0) head.scrollIntoView({ block: 'start' });
+  });
+
+  $('prevBtn').addEventListener('click', function () { go(cur - 1); });
+  $('nextBtn').addEventListener('click', function () { go(cur + 1); });
+  $('prevCard').addEventListener('click', function () { go(cur - 1); });
+  $('nextCard').addEventListener('click', function () { go(cur + 1); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { go(cur + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(cur - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { go(0); e.preventDefault(); }
+    else if (e.key === 'End') { go(N - 1); e.preventDefault(); }
+  });
+
+  // swipe (only when the sheet fits the width; in native size the drag scrolls the sheet)
+  var sx = null, sy = null;
+  wrap.addEventListener('touchstart', function (e) {
+    if (wrap.classList.contains('native') || e.touches.length !== 1) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  wrap.addEventListener('touchend', function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  // zoom toggle
+  $('zoomBtn').addEventListener('click', function () {
+    var on = wrap.classList.toggle('native');
+    this.setAttribute('aria-pressed', on ? 'true' : 'false');
+    this.textContent = on ? '适应宽度' : '原始大小';
+  });
+
+  // index toggle on narrow screens
+  function closeToc() { toc.classList.remove('open'); $('tocBtn').setAttribute('aria-expanded', 'false'); }
+  $('tocBtn').addEventListener('click', function () {
+    var open = toc.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  show(indexFromHash(), 0);
+})();
+</script>
+
+</html>
