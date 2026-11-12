@@ -452,7 +452,7 @@ svg .t-ok{fill:var(--ok)}
           <p style="margin:0">要准确测量 pA 级电流时做。手册列出的两类场景是小电极的物理电化学实验和高阻样品的 EIS：pA 档偏置不准时，EIS 的自动换档会选错量程，测得慢、数据也会错。按 10 mV 交流幅值估算，样品阻抗超过约 10⁷ Ω 才会用到这两档，室温下多数聚合物电解质用不到。<span class="src">手册 Ch 5</span></p>
           <div class="callout warn">必须先做完 Calibrate Instrument，而且用同一种电缆。它只替换 60 pA 和 600 pA 两档的偏置，不是完整校准。</div>
           <ol class="nums">
-            <li>在 <code>Experiment › Utilities</code> 中选 Low I DC 校准（手册的列表里叫 “DC Low I Calibration”，菜单名可能随软件版本略有不同），选仪器，点 OK。</li>
+            <li>在 <code>Experiment › Utilities</code> 中选 Low I DC 校准，对应的脚本是 <code>calib low ie ranges.exp</code>（手册的列表里叫 “DC Low I Calibration”）；运行过一次后，在 Experiment 菜单的最近使用列表里也能直接点开。选仪器，点 OK。</li>
             <li>软件弹出 Cell Connection Information 窗口，按它接线：
               <ul>
                 <li><strong style="color:var(--lead-we)">绿 (WE)</strong> 和 <strong style="color:var(--lead-ws)">蓝 (WS)</strong> 夹在一起，放在法拉第屏蔽盒<strong>里面</strong>，悬空，不要碰到盒壁。</li>
