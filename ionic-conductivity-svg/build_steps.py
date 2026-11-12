@@ -355,31 +355,31 @@ def s9():
 
 
 STEPS = [
-    (s1, '''<p>确认仪器已上电自检，并完成 Calibrate Instrument（菜单 <code>Experiment › Utilities</code>，见安装 SOP）。<span class="src">手册 Ch 5</span></p>
-          <ul><li>样品阻抗很高（膜厚、电导率低）时，先做 Low I DC 校准；手册指出高阻样品的 EIS 对它敏感。<span class="src">手册 Ch 5</span></li>
-          <li>高阻样品的谱图出现相位毛刺时，做电缆电容校准（20 kΩ 校准池）。<span class="src">手册 Ch 5</span></li></ul>'''),
-    (s2, '''<p>量样品厚度 L：用千分尺在几个位置测量，取平均。再确定接触面积 A（第 03 节）。<span class="src gen">通用方法</span></p>
+    (s1, '''<p>确认仪器已上电自检，并完成 Calibrate Instrument（步骤见<a href="#calib">校准仪器</a>一节）。<span class="src">手册 Ch 5</span></p>
+          <ul><li>样品阻抗很高（膜厚、电导率低）时，先做 <a href="#calib">Low I DC 校准</a>；手册指出高阻样品的 EIS 对它敏感。<span class="src">手册 Ch 5</span></li>
+          <li>高阻样品的谱图出现相位毛刺时，做<a href="#calib">电缆电容校准</a>（20 kΩ 校准池）。<span class="src">手册 Ch 5</span></li></ul>'''),
+    (s2, '''<p>量样品厚度 L：用千分尺在几个位置测量，取平均。再确定接触面积 A（<a href="#cell">L 与 A</a>一节）。<span class="src gen">通用方法</span></p>
           <ul><li>样品是软的聚合物膜时，千分尺不要拧太紧，用棘轮轻轻接触即可，否则会把膜压薄。</li>
           <li>用开孔垫片时，L 取垫片厚度，A 取孔的面积。</li></ul>'''),
     (s3, '''<p>装池：从下往上叠放下板、带样品的垫片、上板，再把两根尼龙螺栓交替、分几次拧紧。<span class="src gen">通用方法</span></p>
           <ul><li>不要拧得过紧：尼龙螺纹容易滑丝，样品也会被压薄、甚至被压穿。</li>
           <li>怕水的样品（例如含锂盐）在手套箱里装池，并保证测量时密封。</li></ul>'''),
-    (s4, '''<p>用万用表电阻挡量两个接线片，确认两块板没有短路，然后按第 02 节接线。<span class="src gen">通用方法</span></p>
+    (s4, '''<p>用万用表电阻挡量两个接线片，确认两块板没有短路，然后按<a href="#wire">夹层池接线</a>一节接线。<span class="src gen">通用方法</span></p>
           <ul><li>正常读数是 OL 或兆欧级、并缓慢上升：离子在直流下到不锈钢表面就被挡住，万用表测到的主要是这个充电过程。</li>
           <li>读数接近 0 Ω：两块板直接接触，拆开检查样品和垫片后重装。</li></ul>'''),
     (s5, '''<p>控温：把电解池放进恒温箱或加热台，温度到达设定值并稳定后再等一段时间（常用 30–60 min）再测。<span class="src gen">通用方法</span></p>
           <ul><li>需要记录温度时，可以用 Reference 620 后面板的 K 型热电偶插孔。仪器不附带热电偶，要自备黄色迷你插头的 K 型热电偶。<span class="src">手册 Ch 7</span></li>
           <li>手册给出的热电偶测温精度约 ±4 °C（校准后），所以算活化能用的温度最好以恒温箱或独立温度计为准。<span class="src">手册 Ch 7</span></li></ul>'''),
-    (s6, '''<p>在 Gamry Framework 中打开恒电位 EIS（Potentiostatic EIS），按第 05 节填参数。</p>
+    (s6, '''<p>在 Gamry Framework 中打开恒电位 EIS（Potentiostatic EIS），按<a href="#params">EIS 参数</a>一节填参数。</p>
           <ul><li>菜单路径按常见的 Framework 版本画出，不同版本的名称可能略有差异。</li>
           <li>先把 Area 填 1 cm²，读出的就是未归一化的 R<sub>b</sub>，计算 σ 时再用实际面积。</li></ul>'''),
     (s7, '''<p>运行。软件先测开路电位，这时 Cell On 黄灯不亮；开始施加信号后黄灯亮起。<span class="src">手册 Ch 7</span></p>
           <ul><li>黄灯亮时不要碰导线，否则数据质量会受影响；要改接线，等这次实验结束、黄灯熄灭后再改。<span class="src">手册 Ch 7</span></li>
           <li>对称不锈钢池的开路电位接近 0 V。Overload 红灯持续常亮时，检查夹子是否松脱。<span class="src">手册 Ch 7</span></li></ul>'''),
-    (s8, '''<p>在 Echem Analyst 2 中打开 .DTA 文件，看 Nyquist 图，读出 R<sub>b</sub>，或用等效电路拟合（第 06 节）。</p>
+    (s8, '''<p>在 Echem Analyst 2 中打开 .DTA 文件，看 Nyquist 图，读出 R<sub>b</sub>，或用等效电路拟合（<a href="#sim">预测谱图</a>一节）。</p>
           <ul><li>快速读法：取半圆右端（尖峰起点）与实轴的交点，减去 R<sub>s</sub>。</li>
           <li>更准的做法：用 R<sub>s</sub> + (R<sub>b</sub> ∥ CPE) + CPE 拟合，取拟合出的 R<sub>b</sub>。</li></ul>'''),
-    (s9, '''<p>用第 07 节计算 σ。同一样品最好装 2–3 个池重复测量，报告平均值和标准差。<span class="src gen">通用方法</span></p>
+    (s9, '''<p>用<a href="#calc">算电导率</a>一节计算 σ。同一样品最好装 2–3 个池重复测量，报告平均值和标准差。<span class="src gen">通用方法</span></p>
           <ul><li>图中的数值是示例，不是实测数据。</li></ul>'''),
 ]
 
@@ -1087,7 +1087,7 @@ MK_STEPS = [
     (m1, """<p>先按要用的电池定好膜的尺寸，再决定怎么做膜。<span class="src gen">通用方法</span></p>
           <ul><li>夹层池：填满 PTFE 垫片的孔，厚度等于垫片厚度。</li>
           <li>纽扣电池：圆片比不锈钢垫片大一圈（例如垫片 16 mm、膜 18–19 mm），但不能大到压住密封圈，否则封不严。</li>
-          <li>PP 环：填满环的孔，刮平到和环齐平（第 10 节）。</li>
+          <li>PP 环：填满环的孔，刮平到和环齐平（<a href="#pp">PP 膜</a>一节）。</li>
           <li>厚度：测电导率时厚一点（例如 100–300 µm），R<sub>b</sub> 更大、更好测。纽扣电池里膜太厚时，减少不锈钢垫片的厚度或数量，保证封口后弹片还有压缩量。</li></ul>"""),
     (m2, """<p>按材料的状态选制膜方法。<span class="src gen">通用方法</span></p>
           <ul><li>溶液浇铸最常用，但要把溶剂彻底除干净。</li>
@@ -1100,7 +1100,7 @@ MK_STEPS = [
           <li>残留溶剂和水分会让电导率虚高。干燥条件按课题组规程，一直干到质量不再变化；需要时用热重分析 (TGA) 确认。</li>
           <li>溶剂（例如乙腈）在通风橱里操作。</li></ul>"""),
     (m4, """<p>热压：把材料放在两张离型膜之间，两侧放已知厚度的垫片，加热到软化或熔化温度以上压平，在压力下冷却后再取出。<span class="src gen">通用方法</span></p>
-          <ul><li>垫片厚度决定膜厚，思路和第 10 节的 PP 环一样。</li>
+          <ul><li>垫片厚度决定膜厚，思路和<a href="#pp">PP 膜</a>一节的 PP 环一样。</li>
           <li>温度按材料定，不要超过聚合物和锂盐的分解温度；小心烫伤。</li></ul>"""),
     (m5, """<p>冲片：连同上下离型膜一起冲；很粘的膜先在预冷的金属块上冷却变硬，边缘才整齐。<span class="src gen">通用方法</span></p>
           <ul><li>用冲刀，不用剪刀：剪刀会让边缘变形、局部变薄。</li>
@@ -1289,6 +1289,97 @@ def build_uv():
     s = re.sub(r'<!--UVSTEPS-->.*?<!--/UVSTEPS-->', lambda m: block, s, flags=re.S)
     PAGE.write_text(s, encoding='utf-8')
     print('UV / plasticizer steps written:', len(items))
+
+
+
+# ================================================================ calibration
+def cal_setup(ohm, menu, disconnect=False, extra=''):
+    o = [R(8, 62, 74, 96, 'panel', 6), T(45, 80, 'Reference', 8, 'middle', 700, 't-panel'), T(45, 91, '620', 8, 'middle', 700, 't-panel'),
+         C(22, 146, 7, 'glow-b'), C(22, 146, 4, 'led-b'), R(64, 98, 10, 34, 'conn', 2),
+         P('M45 158 V182', 'gnd-line'), P('M33 182 H57 M37 187 H53 M41 192 H49', 'gnd-line'),
+         T(60, 190, '机壳接大地', 9.5, None, None, 't-mut'),
+         P('M74 115 H122', 'cable'),
+         R(122, 30, 268, 150, 'shield', 8), R(132, 44, 248, 126, 'shield-in', 5),
+         T(256, 22, 'Calibration Shield：盖好盖子', 10, 'middle', 600),
+         R(176, 84, 184, 56, 'pcb', 4), R(244, 104, 48, 16, 'res', 3), T(268, 115.5, ohm, 9.5, 'middle', 700),
+         C(192, 98, 5, 'jk-we'), C(208, 98, 5, 'jk-ws'), C(322, 98, 5, 'jk-re'), C(336, 98, 5, 'jk-ce'), C(350, 98, 5, 'jk-cs')]
+    if disconnect:
+        o += [wire('M126 108 C 150 108, 160 50, 200 50 H228', 're'), wire('M126 111 C 152 111, 164 56, 204 56 H234', 'ce'),
+              wire('M126 114 C 154 114, 168 62, 208 62 H240', 'cs'),
+              C(230, 50, 2.5, 'tipdot'), C(236, 56, 2.5, 'tipdot'), C(242, 62, 2.5, 'tipdot'),
+              T(250, 60, '白、红、橙：拆下，线头悬空', 9.5, None, 700, 't-warn')]
+    else:
+        o += [wire('M126 108 C 150 108, 160 50, 200 50 H314 Q322 50 322 58 V93', 're'),
+              wire('M126 111 C 152 111, 164 56, 204 56 H328 Q336 56 336 64 V93', 'ce'),
+              wire('M126 114 C 154 114, 168 62, 208 62 H342 Q350 62 350 70 V93', 'cs')]
+    o += [wire('M126 118 C 150 118, 170 70, 192 70 V93', 'we'), wire('M126 121 C 154 121, 180 78, 208 78 V93', 'ws'),
+          C(144, 160, 5, 'post'), wire('M126 126 C 132 140, 134 150, 141 156', 'gnd'),
+          T(153, 164, '黑线 → 接地柱', 9, None, 600),
+          T(268, 158, f'{ohm} 校准池', 10, 'middle', 700),
+          T(200, 210, menu, 9.5, 'middle', None, 'tm'), extra]
+    return ''.join(o)
+
+
+def cal_ci():
+    return svg('Calibrate Instrument 接线：机壳接大地；电缆五根彩色导线接 200 欧姆校准池对应插孔，校准池放进盖好的 Calibration Shield，黑色浮地线接屏蔽盒接地柱；菜单 Experiment、Utilities、Calibrate Instrument。',
+               cal_setup('200 Ω', 'Experiment › Utilities › Calibrate Instrument'))
+
+
+def cal_lowi():
+    return svg('DC Low I 校准接线：200 欧姆校准池放在屏蔽盒里，绿线和蓝线保持接着，白、红、橙三根线按提示拆下、线头悬空，黑线接接地柱。',
+               cal_setup('200 Ω', 'Experiment › Utilities › （Low I DC 校准）', disconnect=True))
+
+
+def cal_cable():
+    return svg('电缆电容校准接线：电缆接 20 千欧校准池，放进盖好的屏蔽盒，黑线接接地柱，机壳接大地；菜单 Experiment、Utilities、Calibrate Cable Capacitance。',
+               cal_setup('20 kΩ', 'Experiment › Utilities › Calibrate Cable Capacitance'))
+
+
+def cal_temp():
+    o = [R(14, 22, 180, 42, 'panel', 6), T(26, 37, '后面板', 9, None, None, 't-panel2'),
+         R(36, 42, 24, 14, 'tc-jack', 2), T(68, 53, 'T/C Type K', 10, None, 600, 't-panel'),
+         wire('M48 56 C 48 80, 120 70, 120 96', 'tc'),
+         '<line x1="120" y1="96" x2="120" y2="176" class="probe"/>',
+         P('M70 100 V172 Q70 180 78 180 H162 Q170 180 170 172 V100', 'beaker'),
+         R(72, 120, 96, 58, 'water', 2),
+         R(84, 124, 15, 13, 'ice', 2), R(134, 128, 16, 13, 'ice', 2), R(100, 146, 14, 12, 'ice', 2), R(140, 152, 13, 12, 'ice', 2),
+         P('M230 100 V172 Q230 180 238 180 H322 Q330 180 330 172 V100', 'beaker'),
+         R(232, 120, 96, 58, 'water', 2),
+         C(256, 168, 3, 'bubble'), C(270, 150, 4, 'bubble'), C(300, 160, 3, 'bubble'), C(310, 140, 3.5, 'bubble'), C(286, 132, 2.5, 'bubble'),
+         R(226, 182, 108, 8, 'panel', 2),
+         '<line x1="178" y1="92" x2="214" y2="92" class="ext"/>', P('M222 92 L213 87 L213 97 Z', 'arr'),
+         T(200, 84, '再放进', 9.5, 'middle', None, 't-mut'),
+         T(120, 204, '① 冰水浴 0 °C', 11, 'middle', 700), T(280, 204, '② 沸水 约 100 °C', 11, 'middle', 700),
+         T(392, 30, '自备 K 型热电偶', 10.5, 'end', 700), T(392, 46, '黄色迷你插头', 9.5, 'end', None, 't-mut'),
+         T(392, 68, '按软件提示两点校准', 10, 'end', 600)]
+    return svg('温度测量校准：自备 K 型热电偶插到后面板 T/C Type K 插孔，按软件提示先后放进冰水浴 0 度和沸水约 100 度，做两点校准。', ''.join(o))
+
+
+def cal_flow():
+    o = [T(10, 28, '先做 Calibrate Instrument，其余三种按需要做', 12, None, 700),
+         T(10, 48, 'DC Low I 必须在它之后做，并且用同一种电缆', 10, None, None, 't-mut'),
+         R(10, 80, 150, 72, 'sunk-r', 8),
+         T(85, 104, '接好大地和校准件', 11, 'middle', 700), T(85, 122, '校准池放进屏蔽盒', 9.5, 'middle', None, 't-mut'),
+         T(85, 138, '黑线接接地柱', 9.5, 'middle', None, 't-mut'),
+         '<line x1="164" y1="116" x2="178" y2="116" class="dim"/>', P('M186 116 L177 111 L177 121 Z', 'arr'),
+         R(190, 76, 150, 80, 'okbox', 8),
+         T(265, 102, 'Calibrate Instrument', 11.5, 'middle', 700), T(265, 120, '200 Ω 校准池', 9.5, 'middle', None, 't-mut'),
+         T(265, 142, '必做', 11.5, 'middle', 700, 't-ok'),
+         P('M340 116 H356 M356 40 V192 M356 40 H370 M356 116 H370 M356 192 H370', 'circ'),
+         P('M378 40 L369 35 L369 45 Z M378 116 L369 111 L369 121 Z M378 192 L369 187 L369 197 Z', 'arr'),
+         R(380, 12, 252, 56, 'menu-hi', 8), T(392, 34, 'DC Low I', 11.5, None, 700, 't-acc'),
+         T(392, 54, '样品阻抗很高、要测 pA 级电流时', 9.5, None, None, 't-mut'),
+         R(380, 88, 252, 56, 'menu-hi', 8), T(392, 110, 'Cable Capacitance', 11.5, None, 700, 't-acc'),
+         T(392, 130, '高阻样品的相位有毛刺时（20 kΩ）', 9.5, None, None, 't-mut'),
+         R(380, 164, 252, 56, 'menu-hi', 8), T(392, 186, 'Temperature Measurement', 11.5, None, 700, 't-acc'),
+         T(392, 206, '用后面板热电偶测温时（冰水、沸水）', 9.5, None, None, 't-mut'),
+         R(10, 172, 330, 48, 'sunk-r', 8),
+         T(22, 192, '工厂校准 (Factory Calibration)', 10.5, None, 700),
+         T(22, 210, '每 1–2 年送回 Gamry，保持 NIST 可追溯；用户不能自己做', 9.5, None, None, 't-mut')]
+    return svgw(640, 230, '校准顺序：接好大地、校准池放进屏蔽盒后，先做必做的 Calibrate Instrument；再按需要做 DC Low I（样品阻抗很高时，必须在它之后、用同一种电缆）、电缆电容校准（相位有毛刺时）、温度测量校准（用热电偶时）；工厂校准每 1 到 2 年送回 Gamry。', ''.join(o))
+
+
+FIGS.update({'cal-flow': cal_flow, 'cal-ci': cal_ci, 'cal-lowi': cal_lowi, 'cal-cable': cal_cable, 'cal-temp': cal_temp})
 
 
 if __name__ == '__main__':
