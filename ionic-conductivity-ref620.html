@@ -208,6 +208,9 @@ svg .vial{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1.5}
 svg .bubble{fill:#FFFFFF;fill-opacity:.7;stroke:var(--accent);stroke-width:1}
 svg .tacky{fill:none;stroke:#C9A25A;stroke-width:2}
 svg .curve-warn{fill:none;stroke:var(--warn);stroke-width:2;stroke-dasharray:5 4}
+svg .band-acc{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1}
+svg .band-warn{fill:var(--warn-soft);stroke:var(--warn);stroke-width:1}
+svg .arr-acc{fill:var(--accent)}
 svg .spark{fill:none;stroke:var(--danger);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 
 /* table */
@@ -348,13 +351,13 @@ svg .t-ok{fill:var(--ok)}
         <div><dt>A</dt><dd>样品与电极的接触面积，cm²</dd></div>
       </dl>
     </div>
-    <nav class="flow" aria-label="实验流程总览"><div class="flow-card"><div class="flow-no">1</div><div class="flow-t"><a href="#part-1">准备</a></div><ul><li><a href="#have">认识器材</a></li><li><a href="#calib">校准仪器</a></li><li><a href="#make">制备电解质膜</a></li></ul></div><div class="flow-card"><div class="flow-no">2</div><div class="flow-t"><a href="#part-2">装池与接线</a></div><ul><li><a href="#cell">夹层池：L 与 A</a></li><li><a href="#wire">夹层池接线</a></li><li><a href="#coin">纽扣电池</a></li><li><a href="#pp">PP 膜</a></li></ul></div><div class="flow-card"><div class="flow-no">3</div><div class="flow-t"><a href="#part-3">测量</a></div><ul><li><a href="#steps">测量步骤</a></li><li><a href="#params">EIS 参数</a></li></ul></div><div class="flow-card"><div class="flow-no">4</div><div class="flow-t"><a href="#part-4">分析</a></div><ul><li><a href="#sim">预测谱图、读 R<sub>b</sub></a></li><li><a href="#calc">算电导率</a></li><li><a href="#arr">变温与活化能</a></li></ul></div><div class="flow-card"><div class="flow-no">5</div><div class="flow-t"><a href="#part-5">收尾</a></div><ul><li><a href="#after">测后处理</a></li><li><a href="#trouble">问题排查</a></li></ul></div></nav>
+    <nav class="flow" aria-label="实验流程总览"><div class="flow-card"><div class="flow-no">1</div><div class="flow-t"><a href="#part-1">准备</a></div><ul><li><a href="#have">认识器材</a></li><li><a href="#calib">校准仪器</a></li><li><a href="#make">制备电解质膜</a></li></ul></div><div class="flow-card"><div class="flow-no">2</div><div class="flow-t"><a href="#part-2">装池与接线</a></div><ul><li><a href="#cell">夹层池：L 与 A</a></li><li><a href="#wire">夹层池接线</a></li><li><a href="#coin">纽扣电池</a></li><li><a href="#pp">PP 膜</a></li></ul></div><div class="flow-card"><div class="flow-no">3</div><div class="flow-t"><a href="#part-3">测量</a></div><ul><li><a href="#steps">测量步骤</a></li><li><a href="#params">EIS 参数</a></li><li><a href="#econd">电子电导</a></li></ul></div><div class="flow-card"><div class="flow-no">4</div><div class="flow-t"><a href="#part-4">分析</a></div><ul><li><a href="#sim">预测谱图、读 R<sub>b</sub></a></li><li><a href="#calc">算电导率</a></li><li><a href="#arr">变温与活化能</a></li></ul></div><div class="flow-card"><div class="flow-no">5</div><div class="flow-t"><a href="#part-5">收尾</a></div><ul><li><a href="#after">测后处理</a></li><li><a href="#trouble">问题排查</a></li></ul></div></nav>
     <p class="note">仪器部分（接线颜色、频率上限、|Z|·f 规则、屏蔽、校准）依据 Gamry《Reference 620 Operator's Manual》（988-00086，Rev 1.5.0）和《Reference 620 Calibration Quick-Start Guide》（988-00046，Rev 2.0）。其余内容是通用电化学和实验室做法，页面中标为“通用方法”。</p>
   </div>
 </header>
 
 <nav class="nav" aria-label="页面目录">
-  <div class="wrap"><span class="ng"><span class="ngl">准备</span><a href="#have">器材</a><a href="#calib">校准</a><a href="#make">制膜</a><a href="#uv">UV 与增塑剂</a></span><span class="ng"><span class="ngl">装池</span><a href="#cell">L 与 A</a><a href="#wire">接线</a><a href="#coin">纽扣电池</a><a href="#pp">PP 膜</a></span><span class="ng"><span class="ngl">测量</span><a href="#steps">步骤</a><a href="#params">EIS 参数</a></span><span class="ng"><span class="ngl">分析</span><a href="#sim">谱图</a><a href="#calc">算 σ</a><a href="#arr">变温</a></span><span class="ng"><span class="ngl">收尾</span><a href="#after">测后处理</a><a href="#trouble">问题排查</a></span></div>
+  <div class="wrap"><span class="ng"><span class="ngl">准备</span><a href="#have">器材</a><a href="#calib">校准</a><a href="#make">制膜</a><a href="#uv">UV 与增塑剂</a></span><span class="ng"><span class="ngl">装池</span><a href="#cell">L 与 A</a><a href="#wire">接线</a><a href="#coin">纽扣电池</a><a href="#pp">PP 膜</a></span><span class="ng"><span class="ngl">测量</span><a href="#steps">步骤</a><a href="#params">EIS 参数</a><a href="#econd">电子电导</a></span><span class="ng"><span class="ngl">分析</span><a href="#sim">谱图</a><a href="#calc">算 σ</a><a href="#arr">变温</a></span><span class="ng"><span class="ngl">收尾</span><a href="#after">测后处理</a><a href="#trouble">问题排查</a></span></div>
 </nav>
 
 <main>
@@ -1004,7 +1007,7 @@ svg .t-ok{fill:var(--ok)}
   <div class="wrap">
     <div class="part-no">Part 3 · Measure</div>
     <div class="part-title">测量</div>
-    <p>按步骤运行恒电位 EIS，参数怎么填。</p>
+    <p>按步骤运行恒电位 EIS、参数怎么填；用直流极化测电子电导。</p>
   </div>
 </div>
 <section id="steps">
@@ -1082,6 +1085,130 @@ svg .t-ok{fill:var(--ok)}
     </div>
   </div>
 </section>
+<section id="econd">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">10 · Electronic conductivity</div>
+      <h2>电子电导：直流极化法</h2>
+      <p>在 SS | 电解质 | SS 两端加一个恒定的小电压。离子在不锈钢表面被挡住、慢慢停下来，最后剩下的稳态电流就是电子电流（Wagner 直流极化法）。好的聚合物电解质几乎不导电子，σ<sub>e</sub> 应该比离子电导率低好几个数量级。仪器部分（屏蔽、低电流校准、导线不要动）依据手册，方法本身是通用电化学方法。</p>
+    </div>
+    <div class="formula" style="margin-bottom:16px">
+      <div class="eq"><i>σ</i><sub>e</sub> = <i>I</i><sub>ss</sub> · <i>L</i> / (Δ<i>V</i> · <i>A</i>)</div>
+      <dl>
+        <div><dt>I<sub>ss</sub></dt><dd>稳态电流（扣掉空白），A</dd></div>
+        <div><dt>ΔV</dt><dd>施加的电压，V</dd></div>
+        <div><dt>L、A</dt><dd>和测离子电导率时一样，cm、cm²</dd></div>
+      </dl>
+    </div>
+    <div class="block">
+      <!--ECSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>确认 Calibrate Instrument 已经做过，并在<strong>当天</strong>做一次 Low I DC 校准（步骤见<a href="#calib">校准仪器</a>一节）。<span class="src">手册 Ch 5</span></p>
+          <ul><li>稳态电流在 pA–nA 级，会用到 60 pA 和 600 pA 两档；这两档的偏置会随时间、温度和湿度漂移。</li>
+          <li>Low I DC 按软件的 Cell Connection Information 窗口接线：绿 + 蓝夹在一起放屏蔽盒里，白 + 橙 + 红夹在一起放盒外，黑线接屏蔽盒。</li>
+          <li>电缆电容校准不需要做，它只影响高频 EIS。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="测之前确认校准：开机、Calibrate Instrument 做过即可、当天做 Low I DC 校准、然后装池测量；Low I DC 按软件窗口接线，电缆电容校准不需要。"><text x="10" y="30" font-size="12" font-weight="700">测之前：确认校准</text><rect x="10" y="46" width="86" height="76" rx="8" class="sunk-r"/><text x="53" y="72" font-size="11.5" text-anchor="middle" font-weight="700">开机</text><text x="53" y="90" font-size="9.5" text-anchor="middle" class="t-mut">Power 蓝灯常亮</text><line x1="97" y1="84" x2="102" y2="84" class="dim"/><path d="M108 84 L101 80 L101 88 Z" class="arr"/><rect x="108" y="46" width="86" height="76" rx="8" class="sunk-r"/><text x="151" y="72" font-size="11.5" text-anchor="middle" font-weight="700">Calibrate</text><text x="151" y="90" font-size="9.5" text-anchor="middle">Instrument</text><text x="151" y="108" font-size="9.5" text-anchor="middle" class="t-mut">做过即可</text><line x1="195" y1="84" x2="200" y2="84" class="dim"/><path d="M206 84 L199 80 L199 88 Z" class="arr"/><rect x="206" y="46" width="86" height="76" rx="8" class="warnbox"/><text x="249" y="72" font-size="11.5" text-anchor="middle" font-weight="700">Low I DC</text><text x="249" y="90" font-size="9.5" text-anchor="middle" class="t-mut">当天做</text><text x="249" y="108" font-size="9.5" text-anchor="middle" class="t-mut">pA 级电流要用</text><line x1="293" y1="84" x2="298" y2="84" class="dim"/><path d="M304 84 L297 80 L297 88 Z" class="arr"/><rect x="304" y="46" width="86" height="76" rx="8" class="sunk-r"/><text x="347" y="72" font-size="11.5" text-anchor="middle" font-weight="700">装池</text><text x="347" y="90" font-size="9.5" text-anchor="middle" class="t-mut">开始测量</text><rect x="10" y="136" width="380" height="74" rx="8" class="sunk-r"/><text x="22" y="156" font-size="10.5" font-weight="700">Low I DC 按软件窗口接线：</text><text x="22" y="174" font-size="9.5" class="t-mut">绿 + 蓝夹在一起放盒内，白 + 橙 + 红夹在一起放盒外，黑接盒</text><text x="22" y="196" font-size="9.5" class="t-mut">电缆电容校准不需要：它只影响高频 EIS</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>先估算电流有多大，确认需要屏蔽和低电流档。<span class="src gen">通用方法</span></p>
+          <ul><li>刚加电压时主要是离子电流：I<sub>0</sub> ≈ ΔV / R<sub>b</sub>，常在 mA 级。</li>
+          <li>离子被挡住以后只剩电子电流：I<sub>ss</sub> = σ<sub>e</sub>·A·ΔV / L。σ<sub>e</sub> 在 10⁻¹⁰–10⁻¹² S/cm 时，只有几 nA 到几十 pA。</li>
+          <li>电流跨了 6–8 个数量级，I/E Range 要用 Auto。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="估算电流：刚加电压时离子电流约毫安级，几小时内衰减到皮安到纳安级的电子电流，跨好几个数量级，需要法拉第屏蔽和 Low I DC 校准，量程用 Auto。"><path d="M70 26.0 V192.0" class="axis"/><line x1="66" y1="190.0" x2="70" y2="190.0" class="axis"/><text x="62" y="194" font-size="9.5" text-anchor="end" class="t-mut">1 pA</text><line x1="66" y1="146.4" x2="70" y2="146.4" class="axis"/><text x="62" y="150.4" font-size="9.5" text-anchor="end" class="t-mut">1 nA</text><line x1="66" y1="102.7" x2="70" y2="102.7" class="axis"/><text x="62" y="106.7" font-size="9.5" text-anchor="end" class="t-mut">1 µA</text><line x1="66" y1="59.1" x2="70" y2="59.1" class="axis"/><text x="62" y="63.1" font-size="9.5" text-anchor="end" class="t-mut">1 mA</text><line x1="66" y1="30.0" x2="70" y2="30.0" class="axis"/><text x="62" y="34" font-size="9.5" text-anchor="end" class="t-mut">100 mA</text><rect x="78" y="44.5" width="96" height="23.3" rx="4" class="band-acc"/><text x="126" y="60.2" font-size="9.5" text-anchor="middle" font-weight="700">刚加电压：约 mA</text><rect x="78" y="142" width="96" height="33.5" rx="4" class="band-warn"/><text x="126" y="162.7" font-size="9.5" text-anchor="middle" font-weight="700">稳态：pA–nA</text><line x1="126" y1="70.8" x2="126" y2="133.0" class="dim"/><path d="M126 140.0 L121 131.0 L131 131.0 Z" class="arr"/><text x="132" y="104.9" font-size="9.5" class="t-mut">几小时内衰减</text><text x="196" y="40" font-size="11.5" font-weight="700">估算</text><text x="196" y="60" font-size="10.5">I<tspan dy="2.9" font-size="7.6">0</tspan><tspan dy="-2.9"> ≈ ΔV / R</tspan><tspan dy="2.9" font-size="7.6">b</tspan></text><text x="196" y="76" font-size="9.5" class="t-mut">0.5 V / 127 Ω ≈ 4 mA</text><text x="196" y="104" font-size="10.5">I<tspan dy="2.9" font-size="7.6">ss</tspan><tspan dy="-2.9"> = σ</tspan><tspan dy="2.9" font-size="7.6">e</tspan><tspan dy="-2.9"> · A · ΔV / L</tspan></text><text x="196" y="120" font-size="9.5" class="t-mut">σe = 10⁻¹⁰ S/cm：约 4 nA</text><text x="196" y="135" font-size="9.5" class="t-mut">σe = 10⁻¹² S/cm：约 40 pA</text><text x="196" y="162" font-size="10.5" font-weight="700" class="t-warn">→ 法拉第屏蔽 + Low I DC</text><text x="196" y="178" font-size="9.5" class="t-mut">I/E Range 用 Auto</text><text x="10" y="212" font-size="9.5" font-weight="600">示例：L = 100 µm，A = 0.785 cm²，ΔV = 0.5 V</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>做一个空白池：用一片绝缘的 PTFE 膜代替电解质，装成 SS | PTFE | SS，按同样的条件测一次，得到背景电流 I<sub>blank</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>夹具、厚度、面积、屏蔽、电压和时间都和样品相同。</li>
+          <li>背景电流来自夹具、电缆和仪器：手册指出绝缘材料不完美会形成分流电阻，导线移动也会产生电流。<span class="src">手册 Ch 9</span></li>
+          <li>I<sub>blank</sub> 应该远小于样品的 I<sub>ss</sub>；两者差不多时，样品的结果不可信。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="空白池：用绝缘的 PTFE 膜代替电解质，装成同样的夹具测一次，背景电流应该远小于样品的稳态电流，计算时扣掉。"><text x="100" y="30" font-size="12" text-anchor="middle" font-weight="700">空白池</text><text x="100" y="46" font-size="10" text-anchor="middle" class="t-mut tm">SS | PTFE | SS</text><text x="300" y="30" font-size="12" text-anchor="middle" font-weight="700">样品</text><text x="300" y="46" font-size="10" text-anchor="middle" class="t-mut">SS | 电解质 | SS</text><rect x="30" y="62" width="140" height="14" rx="2" class="steel"/><rect x="27" y="76" width="146" height="10" class="ptfe"/><rect x="30" y="86" width="140" height="14" rx="2" class="steel"/><rect x="230" y="62" width="140" height="14" rx="2" class="steel"/><rect x="227" y="76" width="146" height="10" class="sample"/><rect x="230" y="86" width="140" height="14" rx="2" class="steel"/><text x="100" y="126" font-size="13" text-anchor="middle" font-weight="700">I<tspan dy="3.6" font-size="9.4">blank</tspan></text><text x="300" y="126" font-size="13" text-anchor="middle" font-weight="700">I<tspan dy="3.6" font-size="9.4">ss</tspan></text><text x="200" y="124" font-size="22" text-anchor="middle" font-weight="700" class="t-acc">≪</text><rect x="10" y="146" width="380" height="64" rx="8" class="sunk-r"/><text x="22" y="166" font-size="10.5" font-weight="700">同样的夹具、厚度、面积、屏蔽、电压和时间</text><text x="22" y="184" font-size="9.5" class="t-mut">空白电流接近样品电流时，样品的结果不可信</text><text x="22" y="200" font-size="9.5" class="t-mut">计算时扣掉：I<tspan dy="2.7" font-size="6.8">ss</tspan><tspan dy="-2.7"> − I</tspan><tspan dy="2.7" font-size="6.8">blank</tspan></text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>装池接线和测 EIS 时一样，再把电池放进法拉第屏蔽盒，黑线接屏蔽盒。<span class="src">手册 Ch 6、9</span></p>
+          <ul><li>绿 + 蓝接一块板，白 + 红 + 橙接另一块板，两组导线分开走。</li>
+          <li>电池放在金属恒温箱里时，箱体可以当屏蔽：黑线接箱体，但电极和夹具都不能碰到箱体。</li>
+          <li>电池的任何一极接了大地时，不能再把仪器机壳接地。<span class="src">手册 Ch 1、6</span></li>
+          <li>导线摆好、固定，测量中不要再动：导线移动本身就会产生电流噪声。<span class="src">手册 Ch 9</span></li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="装池接线和屏蔽：SS 电解质 SS 电池放在法拉第屏蔽盒或接了黑线的金属恒温箱里；绿和蓝接一块板，白、红、橙接另一块板，黑线接屏蔽盒。"><rect x="8" y="62" width="74" height="96" rx="6" class="panel"/><text x="45" y="80" font-size="8" text-anchor="middle" font-weight="700" class="t-panel">Reference</text><text x="45" y="91" font-size="8" text-anchor="middle" font-weight="700" class="t-panel">620</text><circle cx="22" cy="146" r="7" class="glow-b"/><circle cx="22" cy="146" r="4" class="led-b"/><rect x="64" y="98" width="10" height="34" rx="2" class="conn"/><path d="M74 115 H122" class="cable"/><rect x="122" y="30" width="268" height="150" rx="8" class="shield"/><rect x="132" y="44" width="248" height="126" rx="5" class="shield-in"/><text x="256" y="22" font-size="10" text-anchor="middle" font-weight="600">法拉第屏蔽盒（或接了黑线的金属恒温箱）</text><rect x="212" y="100" width="22" height="10" rx="2" class="steel"/><rect x="232" y="96" width="106" height="14" rx="3" class="steel"/><rect x="228" y="110" width="114" height="6" class="ptfe"/><rect x="336" y="120" width="22" height="10" rx="2" class="steel"/><rect x="232" y="116" width="106" height="14" rx="3" class="steel"/><text x="285" y="88" font-size="9.5" text-anchor="middle" font-weight="600">SS | 电解质 | SS</text><path d="M126 110 C 160 110, 182 104, 214 104" class="w-out"/><path d="M126 110 C 160 110, 182 104, 214 104" class="w we"/><path d="M126 114 C 162 114, 184 108, 216 108" class="w-out"/><path d="M126 114 C 162 114, 184 108, 216 108" class="w ws"/><path d="M126 118 C 150 120, 156 146, 190 146 H338 Q344 146 344 140 V131" class="w-out"/><path d="M126 118 C 150 120, 156 146, 190 146 H338 Q344 146 344 140 V131" class="w re"/><path d="M126 121 C 152 124, 160 152, 194 152 H344 Q350 152 350 146 V131" class="w-out"/><path d="M126 121 C 152 124, 160 152, 194 152 H344 Q350 152 350 146 V131" class="w ce"/><path d="M126 124 C 154 128, 164 158, 198 158 H350 Q356 158 356 152 V131" class="w-out"/><path d="M126 124 C 154 128, 164 158, 198 158 H350 Q356 158 356 152 V131" class="w cs"/><path d="M126 128 C 132 150, 136 160, 150 163" class="w-out"/><path d="M126 128 C 132 150, 136 160, 150 163" class="w gnd"/><circle cx="154" cy="164" r="5" class="post"/><text x="162" y="168" font-size="9" font-weight="600">黑 → 屏蔽</text><path d="M45 158 V182" class="gnd-line"/><path d="M33 182 H57 M37 187 H53 M41 192 H49" class="gnd-line"/><text x="200" y="208" font-size="9.5" text-anchor="middle" class="t-mut">绿 + 蓝 → 一块板；白 + 红 + 橙 → 另一块板；黑 → 屏蔽盒</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>把温度稳定到测量温度，等 30–60 分钟以上再开始，测量全程保持恒温。<span class="src gen">通用方法</span></p>
+          <ul><li>温度变化会让离子电流和背景电流漂移，读不准稳态值。</li>
+          <li>关好箱门，避免气流和振动；记录实际温度。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="控温：温度到达设定值并稳定 30 到 60 分钟以上再开始极化，测量全程保持恒温，避免气流和振动。"><path d="M30 30 V180 H222" class="axis"/><text x="26" y="30" font-size="11" text-anchor="end" font-weight="600" class="t-mut">T</text><text x="222" y="196" font-size="10" text-anchor="end" class="t-mut">时间</text><line x1="30" y1="80" x2="222" y2="80" class="setline"/><text x="220" y="74" font-size="9.5" text-anchor="end" class="t-mut">设定温度</text><path d="M32 170 C 50 40, 64 50, 78 96 S 104 110, 118 86 S 140 76, 160 80 H220" class="curve"/><line x1="168" y1="180" x2="168" y2="60" class="mark-line"/><text x="168" y="54" font-size="10" text-anchor="middle" font-weight="700">开始极化</text><text x="126" y="130" font-size="9.5" text-anchor="middle" class="t-mut">等 30–60 min</text><text x="238" y="46" font-size="11.5" font-weight="700">温度稳定后再开始</text><text x="238" y="64" font-size="9.5" class="t-mut">常见等 30–60 min</text><text x="238" y="96" font-size="11.5" font-weight="700">测量全程保持恒温</text><text x="238" y="114" font-size="9.5" class="t-mut">温度波动 → 电流漂移</text><text x="238" y="130" font-size="9.5" class="t-mut">读不准稳态电流</text><text x="238" y="162" font-size="10.5" font-weight="600">关好箱门，</text><text x="238" y="178" font-size="10.5" font-weight="600">避免气流和振动</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>先测一次 EIS，得到 R<sub>b</sub> 和离子电导率 σ<sub>ion</sub>（参数见<a href="#params">EIS 参数</a>一节），同时确认没有短路。<span class="src gen">通用方法</span></p>
+          <ul><li>谱图只是实轴附近的一个点：两块板短路了，拆开重装。</li>
+          <li>记下 R<sub>b</sub>，第 11 步要和极化后的比较。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="极化前测 EIS：读出本体电阻 R_b，算离子电导率；谱图只是实轴附近一个点说明两块板短路，要拆开重装。"><path d="M24 30 V160 H222" class="axis"/><text x="28" y="28" font-size="9.5" class="t-mut">−Z″</text><text x="222" y="174" font-size="9.5" text-anchor="end" class="t-mut">Z′</text><path d="M34 160 A40 40 0 0 1 114 160 L146 50" class="curve"/><circle cx="114" cy="160" r="5.5" class="mark"/><line x1="34" y1="182" x2="114" y2="182" class="dim"/><path d="M34 182 L41 178 L41 186 Z M114 182 L107 178 L107 186 Z" class="arr"/><text x="74" y="200" font-size="12" text-anchor="middle" font-weight="700">R<tspan dy="3.4" font-size="8.6">b</tspan></text><circle cx="240" cy="50" r="8" class="ic-ok"/><path d="M236.4 50.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="254" y="54.5" font-size="11.5" font-weight="700">记下 R<tspan dy="3.2" font-size="8.3">b</tspan></text><text x="240" y="74" font-size="10" class="t-mut">→ σ<tspan dy="2.8" font-size="7.2">ion</tspan><tspan dy="-2.8"> = L / (R</tspan><tspan dy="2.8" font-size="7.2">b</tspan><tspan dy="-2.8">·A)</tspan></text><rect x="236" y="100" width="156" height="70" rx="8" class="sunk-r"/><path d="M252 152 H330" class="axis"/><circle cx="256" cy="151" r="4" class="mark"/><circle cx="258" cy="120" r="8" class="ic-bad"/><path d="M255.0 117.0 L261.0 123.0 M261.0 117.0 L255.0 123.0" class="ic-mark"/><text x="272" y="124.5" font-size="11" font-weight="700" class="t-bad">只有一个点</text><text x="250" y="166" font-size="9.5" class="t-mut">两块板短路：拆开重装</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>选 2–3 个明显低于分解电压的电压，例如 0.1、0.25、0.5 V。<span class="src gen">通用方法</span></p>
+          <ul><li>分解电压可以用另一个 SS–SS 电池慢扫一次 LSV（例如 0.1–1 mV/s），看电流开始明显上升的电压。LSV 会把样品扫坏，不要用要测电子电导的那个电池。</li>
+          <li>在 SS–SS 上只能得到稳定窗口的总宽度，不是相对 Li/Li<sup>+</sup> 的电位。</li>
+          <li>文献中常见 0.1–1 V；电压太低，电流太小，噪声占比就大。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="选电压：用另一个 SS 电解质 SS 电池慢扫 LSV 找到电流开始明显上升的分解电压，选 2 到 3 个明显低于它的电压，例如 0.1、0.25、0.5 伏。"><path d="M32 30 V170 H240" class="axis"/><text x="28" y="30" font-size="11" text-anchor="end" font-weight="600" class="t-mut">I</text><text x="240" y="200" font-size="10" text-anchor="end" class="t-mut">电压 (V)</text><text x="32" y="184" font-size="9.5" text-anchor="middle" class="t-mut">0</text><text x="132" y="184" font-size="9.5" text-anchor="middle" class="t-mut">1</text><text x="232" y="184" font-size="9.5" text-anchor="middle" class="t-mut">2</text><path d="M32 166 H150 C 176 166, 194 152, 206 112 S 224 44, 236 34" class="curve"/><line x1="162" y1="170" x2="162" y2="40" class="mark-line"/><text x="162" y="34" font-size="10" text-anchor="middle" font-weight="700">分解开始</text><path d="M42 166 l-4 -8 h8 Z" class="arr-acc"/><path d="M57 166 l-4 -8 h8 Z" class="arr-acc"/><path d="M82 166 l-4 -8 h8 Z" class="arr-acc"/><text x="57" y="150" font-size="9.5" text-anchor="middle" font-weight="700" class="t-acc">选这里</text><text x="62" y="198" font-size="9" text-anchor="middle" class="t-acc">0.1 · 0.25 · 0.5</text><text x="256" y="46" font-size="11.5" font-weight="700">选 2–3 个电压</text><text x="256" y="64" font-size="9.5" class="t-mut">明显低于分解电压</text><text x="256" y="80" font-size="9.5" class="t-mut">常见 0.1–1 V</text><text x="256" y="112" font-size="11.5" font-weight="700">分解电压怎么找</text><text x="256" y="130" font-size="9.5" class="t-mut">另一个电池慢扫 LSV</text><text x="256" y="146" font-size="9.5" class="t-mut">（会把样品扫坏）</text><text x="256" y="178" font-size="9.5" class="t-mut">SS–SS 只得到窗口</text><text x="256" y="193" font-size="9.5" class="t-mut">总宽度，不是 vs Li</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>在 <code>Experiment › Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
+          <ul><li>Pre-step：0 V，约 30 s。</li>
+          <li>Step 1：ΔV，例如 0.100 V；时间 7200–36000 s（2–10 h），要足够长，让电流到稳态。</li>
+          <li>Step 2：0 V，时间和 Step 1 差不多，让电池回到初始状态。</li>
+          <li>Sample Period 5–10 s；I/E Range 选 Auto；Area 填 1 cm²，读原始电流。</li>
+          <li>电压选 vs E<sub>ref</sub>：SS–SS 池不储能，这样 ΔV 就是加在两端的真实电压。<strong>只对 SS–SS 池这样做</strong>，带电的电池要用 vs E<sub>oc</sub>。</li>
+          <li>Output File 填能区分的名字，例如 <code>S3-1_60C_DCpol_0p1V.DTA</code>。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="计时电流法设置：预步 0 伏 30 秒；第一步 0.100 伏、2 到 10 小时；第二步 0 伏、时间和第一步相同；采样间隔 5 到 10 秒；量程 Auto；面积 1 平方厘米；vs Eref 只用于不储能的 SS 池。"><rect x="10" y="8" width="380" height="206" rx="8" class="card"/><path d="M10 16 Q10 8 18 8 H382 Q390 8 390 16 V28 H10 Z" class="titlebar"/><text x="22" y="22.5" font-size="10.5" font-weight="700">Chronoamperometry</text><text x="24" y="48" font-size="10" class="t-mut tm">Pre-step Voltage</text><text x="206" y="48" font-size="10.5" font-weight="700">0 V（vs Eref）</text><text x="24" y="65" font-size="10" class="t-mut tm">Pre-step Delay Time</text><text x="206" y="65" font-size="10.5" font-weight="700">30 s</text><rect x="16" y="70" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="82" font-size="10" class="t-mut tm">Step 1 Voltage</text><text x="206" y="82" font-size="10.5" font-weight="700" class="t-acc">0.100 V（vs Eref）</text><rect x="16" y="87" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="99" font-size="10" class="t-mut tm">Step 1 Time</text><text x="206" y="99" font-size="10.5" font-weight="700" class="t-acc">7200–36000 s</text><text x="24" y="116" font-size="10" class="t-mut tm">Step 2 Voltage</text><text x="206" y="116" font-size="10.5" font-weight="700">0 V（vs Eref）</text><text x="24" y="133" font-size="10" class="t-mut tm">Step 2 Time</text><text x="206" y="133" font-size="10.5" font-weight="700">和 Step 1 一样长</text><text x="24" y="150" font-size="10" class="t-mut tm">Sample Period</text><text x="206" y="150" font-size="10.5" font-weight="700">5–10 s</text><text x="24" y="167" font-size="10" class="t-mut tm">I/E Range</text><text x="206" y="167" font-size="10.5" font-weight="700">Auto</text><text x="24" y="184" font-size="10" class="t-mut tm">Area</text><text x="206" y="184" font-size="10.5" font-weight="700">1 cm²</text><text x="24" y="204" font-size="9" class="t-mut">字段名以你的软件为准；vs Eref 只用于不储能的 SS–SS 池</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>点 OK 运行。Cell On 黄灯会一直亮着，几个小时里都不要碰导线和屏蔽盒。<span class="src">手册 Ch 7、9</span></p>
+          <ul><li>测完在 Echem Analyst 2 里画 |I| 对时间，用对数纵轴。</li>
+          <li>稳态：最后 1 小时里电流变化小于约 1–2%，取最后一段的平均值作为 I<sub>ss</sub>。<span class="src gen">通用方法</span></li>
+          <li>电流还在下降：延长 Step 1 Time 重新测。</li>
+          <li>电流突然跳变：检查是否有人碰了导线、温度是否波动。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="运行并判断稳态：对数纵轴上电流从毫安级迅速下降，几小时后到纳安级平台；最后 1 小时变化小于 1 到 2% 时取平均作为稳态电流；第二步回到 0 伏，反向电流衰减。"><path d="M40 26 V176 H302" class="axis"/><line x1="36" y1="44.8" x2="302" y2="44.8" class="grid"/><text x="36" y="48.8" font-size="9" text-anchor="end" class="t-mut">1 mA</text><line x1="36" y1="101.0" x2="302" y2="101.0" class="grid"/><text x="36" y="105" font-size="9" text-anchor="end" class="t-mut">1 µA</text><line x1="36" y1="157.2" x2="302" y2="157.2" class="grid"/><text x="36" y="161.2" font-size="9" text-anchor="end" class="t-mut">1 nA</text><path d="M42 37 C 46 80, 52 96, 70 110 S 130 140, 170 147 H240" class="curve"/><line x1="240" y1="176" x2="240" y2="40" class="mark-line"/><text x="244" y="48" font-size="9.5" font-weight="600">Step 2：0 V</text><path d="M240 60 C 248 110, 262 140, 300 168" class="curve-todo"/><line x1="196" y1="136" x2="238" y2="136" class="dim"/><path d="M196 136 L203 132 L203 140 Z M238 136 L231 132 L231 140 Z" class="arr"/><text x="217" y="129" font-size="9.5" text-anchor="middle" font-weight="700">平均 = I<tspan dy="2.7" font-size="6.8">ss</tspan></text><text x="140" y="192" font-size="9.5" text-anchor="middle" class="t-mut">Step 1：几小时</text><text x="26" y="22" font-size="9.5" font-weight="600" class="t-mut">|I|</text><text x="312" y="46" font-size="11" font-weight="700">判断稳态</text><text x="312" y="64" font-size="9.5" class="t-mut">最后 1 h</text><text x="312" y="78" font-size="9.5" class="t-mut">变化 < 1–2%</text><text x="312" y="106" font-size="10" font-weight="600">还在降：</text><text x="312" y="122" font-size="9.5" class="t-mut">延长 Step 1</text><text x="312" y="150" font-size="10" font-weight="700" class="t-warn">全程别碰线</text><text x="40" y="210" font-size="9.5" font-weight="600">用对数纵轴画 |I|，更容易看出电流是否还在下降</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>测下一个电压之前，先在 0 V 下静置，时间至少和极化一样长，让离子分布恢复。<span class="src gen">通用方法</span></p>
+          <ul><li>从低电压到高电压依次做；高电压可能让样品分解，放在最后。</li>
+          <li>也可以每个电压用一个新电池，但电池之间的差别会混进结果里。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="多个电压：0.1、0.25、0.5 伏从低到高依次极化，每次之后回 0 伏静置，时间至少和极化一样长；或每个电压用一个新电池。"><text x="14" y="22" font-size="10.5" font-weight="700">每次极化后回 0 V 静置，时间至少和极化一样长</text><text x="14" y="38" font-size="9.5" class="t-mut">或者每个电压用一个新电池</text><path d="M30 56 V172 H392" class="axis"/><text x="26" y="60" font-size="10" text-anchor="end" font-weight="600" class="t-mut">V</text><text x="392" y="188" font-size="9.5" text-anchor="end" class="t-mut">时间</text><path d="M32 170 H40 V150 H100 V170 H140 V120 H200 V170 H240 V74 H300 V170 H340" class="curve"/><text x="70" y="144" font-size="10" text-anchor="middle" font-weight="700">0.1 V</text><text x="170" y="114" font-size="10" text-anchor="middle" font-weight="700">0.25 V</text><text x="270" y="68" font-size="10" text-anchor="middle" font-weight="700">0.5 V</text><text x="120" y="166" font-size="9" text-anchor="middle" class="t-mut">静置</text><text x="220" y="166" font-size="9" text-anchor="middle" class="t-mut">静置</text><text x="320" y="166" font-size="9" text-anchor="middle" class="t-mut">静置</text><text x="200" y="208" font-size="10" text-anchor="middle" font-weight="600">先低后高：高电压可能让样品分解，放在最后</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>全部电压测完后再测一次 EIS，R<sub>b</sub> 应该和第 6 步基本一样。<span class="src gen">通用方法</span></p>
+          <ul><li>R<sub>b</sub> 明显变化：样品在极化中分解、被压薄，或者出现了短路，这组数据不可信。</li>
+          <li>拆开后看看膜有没有变色、鼓泡或破孔。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="极化后测 EIS：和极化前的谱图基本重合说明数据可用；R_b 明显变化说明样品分解、被压薄或短路，这组数据不可信。"><rect x="10" y="10" width="184" height="200" rx="8" class="sunk-r"/><path d="M26 30 V140 H182" class="axis"/><path d="M34 140 A30 30 0 0 1 94 140 L118 54" class="curve"/><path d="M36 140 A30 30 0 0 1 96 140 L120 54" class="curve-todo"/><text x="160" y="72" font-size="10" text-anchor="middle" font-weight="700" class="t-acc">前</text><text x="160" y="90" font-size="10" text-anchor="middle" font-weight="700" class="t-mut">后</text><line x1="142" y1="68" x2="152" y2="68" class="curve"/><line x1="142" y1="86" x2="152" y2="86" class="curve-todo"/><circle cx="32" cy="166" r="8" class="ic-ok"/><path d="M28.4 166.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="46" y="170.5" font-size="11.5" font-weight="700">R<tspan dy="3.2" font-size="8.3">b</tspan><tspan dy="-3.2"> 基本不变</tspan></text><text x="102" y="192" font-size="9.5" text-anchor="middle" class="t-mut">数据可用</text><rect x="206" y="10" width="184" height="200" rx="8" class="sunk-r"/><path d="M222 30 V140 H378" class="axis"/><path d="M230 140 A30 30 0 0 1 290 140 L314 54" class="curve"/><path d="M230 140 A18 18 0 0 1 266 140 L290 54" class="curve-todo"/><text x="356" y="72" font-size="10" text-anchor="middle" font-weight="700" class="t-acc">前</text><text x="356" y="90" font-size="10" text-anchor="middle" font-weight="700" class="t-mut">后</text><line x1="338" y1="68" x2="348" y2="68" class="curve"/><line x1="338" y1="86" x2="348" y2="86" class="curve-todo"/><circle cx="228" cy="166" r="8" class="ic-bad"/><path d="M225.0 163.0 L231.0 169.0 M231.0 163.0 L225.0 169.0" class="ic-mark"/><text x="242" y="170.5" font-size="11.5" font-weight="700" class="t-bad">R<tspan dy="3.2" font-size="8.3">b</tspan><tspan dy="-3.2"> 明显变化</tspan></text><text x="298" y="192" font-size="9.5" text-anchor="middle" class="t-mut">分解、压薄或短路</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>扣掉空白电流，用 I<sub>ss</sub> 对 ΔV 作图，用过原点直线的斜率算电子电导。<span class="src gen">通用方法</span></p>
+          <ul><li>σ<sub>e</sub> = (L / A) × 斜率，斜率的单位是 A/V。</li>
+          <li>点应该落在一条过原点的直线上；高电压的点往上翘，说明发生了电化学反应，不要用这个点。</li>
+          <li>离子迁移数：t<sub>ion</sub> = σ<sub>ion</sub> / (σ<sub>ion</sub> + σ<sub>e</sub>)，σ<sub>ion</sub> 用第 6 步 EIS 的结果。</li>
+          <li>报告时写明 ΔV、极化时间、温度、L 和 A、空白电流，以及极化前后的 R<sub>b</sub>。下面的计算器可以直接算。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="计算：扣掉空白电流后，稳态电流对电压作图，取过原点直线的斜率，电子电导等于 L 除以 A 乘斜率，示例约 5.0 乘 10 的负 11 次方 S/cm；高电压下往上翘的点不用；离子迁移数接近 1。"><path d="M32 30 V170 H232" class="axis"/><text x="28" y="30" font-size="10" text-anchor="end" font-weight="600" class="t-mut">I<tspan dy="2.8" font-size="7.2">ss</tspan></text><text x="232" y="196" font-size="9.5" text-anchor="end" class="t-mut">ΔV (V)</text><text x="32" y="184" font-size="9" text-anchor="middle" class="t-mut">0</text><text x="122" y="184" font-size="9" text-anchor="middle" class="t-mut">0.5</text><text x="212" y="184" font-size="9" text-anchor="middle" class="t-mut">1.0</text><line x1="32" y1="170" x2="226.4" y2="63.3" class="fit"/><circle cx="50" cy="160" r="5" class="mark"/><circle cx="77" cy="145.5" r="5" class="mark"/><circle cx="122" cy="121.2" r="5" class="mark"/><circle cx="212" cy="40" r="6" class="ring-warn"/><text x="204" y="44" font-size="9.5" text-anchor="end" font-weight="700" class="t-warn">往上翘：不用</text><text x="246" y="40" font-size="11.5" font-weight="700">用斜率算</text><text x="246" y="62" font-size="11">σ<tspan dy="3.1" font-size="7.9">e</tspan><tspan dy="-3.1"> = (L / A) × 斜率</tspan></text><text x="246" y="80" font-size="9" class="t-mut tm">= (0.01 / 0.785) × 3.95 nA/V</text><text x="246" y="100" font-size="12.5" font-weight="700" class="t-acc">≈ 5.0 × 10⁻¹¹ S/cm</text><text x="246" y="132" font-size="10.5">t<tspan dy="2.9" font-size="7.6">ion</tspan><tspan dy="-2.9"> = σ</tspan><tspan dy="2.9" font-size="7.6">ion</tspan><tspan dy="-2.9"> / (σ</tspan><tspan dy="2.9" font-size="7.6">ion</tspan><tspan dy="-2.9"> + σ</tspan><tspan dy="2.9" font-size="7.6">e</tspan><tspan dy="-2.9">)</tspan></text><text x="246" y="150" font-size="9.5" class="t-mut">σion = 10⁻⁴ S/cm → ≈ 1</text><rect x="246" y="186" width="64" height="18" rx="9" class="tagbox"/><text x="278" y="199" font-size="10" text-anchor="middle" font-weight="700" class="t-warn">示例数值</text></svg></figure></div></li>
+      </ol>
+      <!--/ECSTEPS-->
+    </div>
+
+    <div class="block arr-grid" style="margin-top:16px">
+      <div>
+        <h3>电子电导计算</h3>
+        <p style="margin:8px 0"><span class="tag">示例数据</span> <span class="note">换成你的测量值</span></p>
+        <table class="rows" id="ecTable">
+          <thead><tr><th>ΔV (V)</th><th>I<sub>ss</sub> (nA)</th><th>单点 σ<sub>e</sub></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button type="button" class="btn" id="ecAdd">添加一行</button>
+          <button type="button" class="btn" id="ecDel">删除最后一行</button>
+        </div>
+        <div class="fields" style="margin-top:14px">
+          <div class="row2">
+            <div class="field"><label for="ecL">厚度 L (µm)</label><input id="ecL" type="number" min="0" step="any" value="100"></div>
+            <div class="field"><label for="ecD">直径 d (mm)</label><input id="ecD" type="number" min="0" step="any" value="10"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="ecB">空白电流 I<sub>blank</sub> (nA)</label><input id="ecB" type="number" min="0" step="any" value="0.05"></div>
+            <div class="field"><label for="ecSi">离子电导率 σ<sub>ion</sub> (S/cm)</label><input id="ecSi" type="number" min="0" step="any" value="0.0001"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="chartbox" id="ecBox">
+          <svg id="ecPlot" viewBox="0 0 400 260" role="img" aria-label="稳态电流对电压，过原点直线拟合"></svg>
+          <div class="tip" id="ecTip" hidden></div>
+        </div>
+        <dl class="outs" style="margin-top:12px">
+          <div><dt>斜率（过原点）</dt><dd id="ecSlope">—</dd></div>
+          <div><dt>电子电导 σ<sub>e</sub></dt><dd id="ecSig">—</dd></div>
+          <div><dt>离子迁移数 t<sub>ion</sub></dt><dd id="ecTion">—</dd></div>
+          <div><dt>σ<sub>ion</sub> / σ<sub>e</sub></dt><dd id="ecRatio">—</dd></div>
+        </dl>
+        <div class="msgs" id="ecMsgs" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="part" id="part-4">
   <div class="wrap">
     <div class="part-no">Part 4 · Analyze</div>
@@ -1092,7 +1219,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="sim">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">10 · Predict &amp; read</div>
+      <div class="eyebrow">11 · Predict &amp; read</div>
       <h2>预测谱图，并学会读 R<sub>b</sub></h2>
       <p>输入预计的电导率和样品尺寸，看 Nyquist 图大概长什么样，以及在 5 MHz 以内能看到哪一部分。曲线是示意模型，不是你的数据。</p>
     </div>
@@ -1150,7 +1277,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="calc">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">11 · Calculate</div>
+      <div class="eyebrow">12 · Calculate</div>
       <h2>用实测 R<sub>b</sub> 算电导率</h2>
       <p>厚度和直径沿用上面填的数值；也可以在这里改。</p>
     </div>
@@ -1174,7 +1301,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="arr">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">12 · Temperature series</div>
+      <div class="eyebrow">13 · Temperature series</div>
       <h2>变温测量与活化能</h2>
       <p>每个温度测一次 R<sub>b</sub>，填进表里，页面算出各温度的 σ，并按阿伦尼乌斯 (Arrhenius) 关系拟合活化能 E<sub>a</sub>。L 和 d 沿用<a href="#calc">算电导率</a>一节。</p>
     </div>
@@ -1211,7 +1338,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="after">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">13 · After the test</div>
+      <div class="eyebrow">14 · After the test</div>
       <h2>纽扣电池测完之后</h2>
       <p>从取下电池、记录数据，到拆壳、检查电解质膜、分类处理废物和清理工位，每一步配一张示意图。仪器部分依据手册，其余是通用的实验室做法；废物处理以所在单位的安全规定为准。</p>
     </div>
@@ -1262,7 +1389,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="trouble">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">14 · Troubleshooting</div>
+      <div class="eyebrow">15 · Troubleshooting</div>
       <h2>问题排查</h2>
     </div>
     <div class="block tablewrap">
@@ -1799,6 +1926,116 @@ svg .t-ok{fill:var(--ok)}
   ['#rcTot', '#rcSalt', '#rcPl', '#rcLin', '#rcPi'].forEach(id => $(id).addEventListener('input', recipe));
   ['#lsB', '#lsA', '#lsP'].forEach(id => $(id).addEventListener('input', loss));
   recipe(); loss();
+})();
+</script>
+
+<script>
+/* electronic conductivity from DC polarization: fit Iss vs dV through the origin */
+(function(){
+  const $ = s => document.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const SUP = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const sci = x => {
+    if (!isFinite(x) || x <= 0) return '—';
+    const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e);
+    if (e >= -2 && e <= 3) return (+x.toPrecision(3)).toString();
+    return `${m.toFixed(2)} × 10${String(e).split('').map(c => SUP[c] || c).join('')}`;
+  };
+  const msg = (k, h) => `<div class="msg ${k}">${h}</div>`;
+  function el(tag, attrs, parent, text){
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    parent.appendChild(n); return n;
+  }
+  const tbody = $('#ecTable tbody');
+  function addRow(v, i){
+    const k = tbody.children.length + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><input type="number" min="0" step="any" aria-label="电压 ${k}" value="${v ?? ''}"></td><td><input type="number" min="0" step="any" aria-label="稳态电流 ${k}" value="${i ?? ''}"></td><td class="out">—</td>`;
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input').forEach(x => x.addEventListener('input', update));
+  }
+  [[0.1, 0.45], [0.25, 1.03], [0.5, 2.0]].forEach(r => addRow(r[0], r[1]));
+  $('#ecAdd').addEventListener('click', () => { addRow(); update(); });
+  $('#ecDel').addEventListener('click', () => { if (tbody.lastElementChild) tbody.removeChild(tbody.lastElementChild); update(); });
+  ['#ecL', '#ecD', '#ecB', '#ecSi'].forEach(id => $(id).addEventListener('input', update));
+
+  const svg = $('#ecPlot'), tip = $('#ecTip');
+  const X0 = 56, Y0 = 220, W = 324, H = 190;
+  let pts = [], hover = null;
+  function update(){
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const L = parseFloat($('#ecL').value) * 1e-4, d = parseFloat($('#ecD').value), Ib = parseFloat($('#ecB').value) || 0;
+    const sIon = parseFloat($('#ecSi').value);
+    const A = Math.PI * Math.pow(d / 20, 2);
+    const geomOK = L > 0 && A > 0;
+    const rows = [...tbody.children].map(tr => {
+      const [a, b] = tr.querySelectorAll('input');
+      const v = parseFloat(a.value), i = parseFloat(b.value);
+      const ok = v > 0 && i >= 0;
+      const ic = ok ? Math.max(0, i - Ib) : NaN;
+      tr.querySelector('.out').textContent = ok && geomOK ? sci(ic * 1e-9 * L / (v * A)) : '—';
+      return ok ? {v, i, ic} : null;
+    }).filter(Boolean);
+    const ids = ['#ecSlope', '#ecSig', '#ecTion', '#ecRatio'];
+    if (!rows.length || !geomOK){
+      ids.forEach(id => $(id).textContent = '—');
+      $('#ecMsgs').innerHTML = msg('info', '至少填一组电压和稳态电流，L 和 d 都要大于 0。');
+      el('text', {x:200, y:130, 'font-size':13, 'text-anchor':'middle', class:'t-mut'}, svg, '填入电压和稳态电流后显示');
+      pts = []; return;
+    }
+    const sxy = rows.reduce((s, r) => s + r.v * r.ic, 0), sxx = rows.reduce((s, r) => s + r.v * r.v, 0);
+    const slope = sxy / sxx;                       // nA per V
+    const sigE = slope * 1e-9 * L / A;
+    $('#ecSlope').textContent = `${(+slope.toPrecision(3))} nA/V`;
+    $('#ecSig').textContent = `${sci(sigE)} S/cm`;
+    const tE = sigE / (sIon + sigE);
+    $('#ecTion').textContent = sIon > 0 && sigE > 0 ? (tE < 1e-4 ? `1 − ${sci(tE)}` : (1 - tE).toPrecision(4)) : '—';
+    $('#ecRatio').textContent = sIon > 0 && sigE > 0 ? sci(sIon / sigE) : '—';
+    const m = [];
+    rows.forEach(r => { r.dev = slope > 0 ? (r.ic - slope * r.v) / (slope * r.v) : 0; });
+    const off = rows.filter(r => rows.length >= 3 && Math.abs(r.dev) > 0.2);
+    if (off.length) m.push(msg('warn', `${off.map(r => r.v + ' V').join('、')} 的点偏离直线超过 20%：如果是高电压的点往上翘，说明发生了电化学反应，删掉这一行再算。`));
+    const minI = Math.min(...rows.map(r => r.i));
+    if (Ib > 0 && Ib / minI > 0.2) m.push(msg('warn', `空白电流占最小稳态电流的 ${Math.round(Ib / minI * 100)}%：背景太大，结果不可靠。检查夹具绝缘、屏蔽，或加大电压、换更薄的样品。`));
+    if (rows.length < 2) m.push(msg('info', '只有一个电压：无法检查线性，建议测 2–3 个电压。'));
+    if (sigE > 0 && sIon > 0 && !m.length) m.push(msg('ok', `σ<sub>e</sub> = (L / A) × 斜率 = (${(+L.toPrecision(3))} cm ÷ ${A.toPrecision(3)} cm²) × ${(+slope.toPrecision(3))} nA/V；离子电导率是它的 ${sci(sIon / sigE)} 倍。`));
+    $('#ecMsgs').innerHTML = m.join('');
+    // chart
+    const vmax = Math.max(...rows.map(r => r.v)) * 1.15;
+    const imax = Math.max(...rows.map(r => r.i), slope * vmax) * 1.15 || 1;
+    const X = v => X0 + v / vmax * W, Y = i => Y0 - i / imax * H;
+    const nice = raw => { const e = Math.pow(10, Math.floor(Math.log10(raw))), q = raw / e; return (q < 1.5 ? 1 : q < 3.5 ? 2 : q < 7.5 ? 5 : 10) * e; };
+    const sy = nice(imax / 4), sx = nice(vmax / 4);
+    for (let i = 0; i <= imax + 1e-12; i += sy){
+      el('line', {x1:X0, y1:Y(i), x2:X0 + W, y2:Y(i), class:'grid'}, svg);
+      el('text', {x:X0 - 8, y:Y(i) + 4, 'font-size':11, 'text-anchor':'end', class:'t-mut'}, svg, String(+i.toPrecision(3)));
+    }
+    for (let v = 0; v <= vmax + 1e-12; v += sx) el('text', {x:X(v), y:Y0 + 18, 'font-size':11, 'text-anchor':'middle', class:'t-mut'}, svg, String(+v.toPrecision(3)));
+    el('path', {d:`M${X0} ${Y0 - H - 6} V${Y0} H${X0 + W}`, class:'axis'}, svg);
+    el('text', {x:X0 + W, y:Y0 + 36, 'font-size':11.5, 'text-anchor':'end', class:'t-mut'}, svg, 'ΔV (V)');
+    el('text', {x:X0, y:Y0 - H - 12, 'font-size':11.5, class:'t-mut'}, svg, 'I_ss − I_blank (nA)');
+    el('line', {x1:X(0), y1:Y(0), x2:X(vmax), y2:Y(slope * vmax), class:'fit'}, svg);
+    pts = rows.map(r => ({...r, x:X(r.v), y:Y(r.ic)}));
+    pts.forEach(p => el('circle', {cx:p.x, cy:p.y, r:Math.abs(p.dev) > 0.2 && rows.length >= 3 ? 6 : 5, class:Math.abs(p.dev) > 0.2 && rows.length >= 3 ? 'ring-warn' : 'mark'}, svg));
+    hover = el('circle', {cx:-20, cy:-20, r:7, class:'hover'}, svg);
+  }
+  svg.addEventListener('pointermove', e => {
+    if (!pts.length) return;
+    const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal, sx = r.width / vb.width;
+    const px = (e.clientX - r.left) / sx, py = (e.clientY - r.top) / sx;
+    let best = null, bd = 1e9;
+    pts.forEach(p => { const dd = Math.hypot(p.x - px, p.y - py); if (dd < bd){ bd = dd; best = p; } });
+    if (!best || bd > 30){ tip.hidden = true; hover.setAttribute('cx', -20); return; }
+    hover.setAttribute('cx', best.x); hover.setAttribute('cy', best.y);
+    tip.hidden = false;
+    tip.innerHTML = `ΔV = ${best.v} V · I<sub>ss</sub> = ${best.i} nA<br>扣空白后 ${(+best.ic.toPrecision(3))} nA`;
+    tip.style.left = (best.x * sx + 8) + 'px';
+    tip.style.top = (best.y * sx + 8) + 'px';
+  });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; if (hover) hover.setAttribute('cx', -20); });
+  update();
 })();
 </script>
 

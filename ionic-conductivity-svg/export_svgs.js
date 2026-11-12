@@ -1,4 +1,4 @@
-// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps, the PP-film, film-making, UV/plasticizer and calibration figures of
+// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps, the PP-film, film-making, UV/plasticizer, calibration and electronic-conductivity figures of
 // ionic-conductivity-ref620.html as standalone SVG files with inlined colours.
 // Run from the repository root:  node ionic-conductivity-svg/export_svgs.js
 const { chromium } = require('playwright');
@@ -27,7 +27,8 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
       ...document.querySelectorAll('#coin .figsvg svg'), ...document.querySelectorAll('#after .stepfig svg'),
       ...document.querySelectorAll('#pp .figsvg svg'), ...document.querySelectorAll('#pp .stepfig svg'),
       ...document.querySelectorAll('#make .stepfig svg'),
-      ...document.querySelectorAll('#calib .figsvg svg'), ...document.querySelectorAll('#calib .stepfig svg')];
+      ...document.querySelectorAll('#calib .figsvg svg'), ...document.querySelectorAll('#calib .stepfig svg'),
+      ...document.querySelectorAll('#econd .stepfig svg')];
     return pick.map(svg => {
       const clone = svg.cloneNode(true);
       const src = [svg, ...svg.querySelectorAll('*')];
@@ -59,7 +60,8 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
     'make-05-punch', 'make-06-weigh', 'make-07-transfer', 'make-08-in-situ-cure',
     'uv-01-formulate', 'uv-02-when-to-add-plasticizer', 'uv-03-degas', 'uv-04-fill-cover-cure',
     'uv-05-check-cure', 'uv-06-monitor-plasticizer',
-    'cal-00-overview', 'cal-01-calibrate-instrument', 'cal-02-low-i-dc', 'cal-03-cable-capacitance', 'cal-04-temperature'];
+    'cal-00-overview', 'cal-01-calibrate-instrument', 'cal-02-low-i-dc', 'cal-03-cable-capacitance', 'cal-04-temperature',
+    'econd-01-calibration', 'econd-02-estimate-current', 'econd-03-blank-cell', 'econd-04-wiring-shield', 'econd-05-temperature', 'econd-06-eis-before', 'econd-07-choose-voltage', 'econd-08-ca-settings', 'econd-09-run-steady-state', 'econd-10-next-voltage', 'econd-11-eis-after', 'econd-12-calculate'];
   svgs.forEach((s, i) => {
     const file = path.join(OUT, names[i] + '.svg');
     fs.writeFileSync(file, '<?xml version="1.0" encoding="UTF-8"?>\n' + s + '\n');

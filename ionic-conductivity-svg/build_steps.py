@@ -1403,6 +1403,278 @@ def cal_flow():
 FIGS.update({'cal-flow': cal_flow, 'cal-ci': cal_ci, 'cal-lowi': cal_lowi, 'cal-cable': cal_cable, 'cal-temp': cal_temp})
 
 
+
+# ================================================================ electronic conductivity (DC polarization)
+def sandwich(x, y, w, mid, t=14, m=10):
+    return R(x, y, w, t, 'steel', 2) + R(x - 3, y + t, w + 6, m, mid) + R(x, y + t + m, w, t, 'steel', 2)
+
+
+def e1():
+    boxes = [('开机', 'Power 蓝灯常亮', '', 'sunk-r'), ('Calibrate', 'Instrument', '做过即可', 'sunk-r'),
+             ('Low I DC', '当天做', 'pA 级电流要用', 'warnbox'), ('装池', '开始测量', '', 'sunk-r')]
+    o = [T(10, 30, '测之前：确认校准', 12, None, 700)]
+    for i, (a, b, c, cls) in enumerate(boxes):
+        x0 = 10 + i * 98
+        cx = x0 + 43
+        o += [R(x0, 46, 86, 76, cls, 8), T(cx, 72, a, 11.5, 'middle', 700), T(cx, 90, b, 9.5, 'middle', None, 't-mut' if i != 1 else None)]
+        if c:
+            o.append(T(cx, 108, c, 9.5, 'middle', None, 't-mut'))
+        if i < 3:
+            o += [f'<line x1="{x0 + 87}" y1="84" x2="{x0 + 92}" y2="84" class="dim"/>', P(f'M{x0 + 98} 84 L{x0 + 91} 80 L{x0 + 91} 88 Z', 'arr')]
+    o += [R(10, 136, 380, 74, 'sunk-r', 8),
+          T(22, 156, 'Low I DC 按软件窗口接线：', 10.5, None, 700),
+          T(22, 174, '绿 + 蓝夹在一起放盒内，白 + 橙 + 红夹在一起放盒外，黑接盒', 9.5, None, None, 't-mut'),
+          T(22, 196, '电缆电容校准不需要：它只影响高频 EIS', 9.5, None, None, 't-mut')]
+    return svg('测之前确认校准：开机、Calibrate Instrument 做过即可、当天做 Low I DC 校准、然后装池测量；Low I DC 按软件窗口接线，电缆电容校准不需要。', ''.join(o))
+
+
+def e2():
+    Y = lambda e: 30 + (-1 - e) * (160 / 11)
+    o = [P(f'M70 {Y(-1) - 4:.1f} V{Y(-12) + 2:.1f}', 'axis')]
+    for e, lab in [(-12, '1 pA'), (-9, '1 nA'), (-6, '1 µA'), (-3, '1 mA'), (-1, '100 mA')]:
+        o += [f'<line x1="66" y1="{Y(e):.1f}" x2="70" y2="{Y(e):.1f}" class="axis"/>', T(62, round(Y(e) + 4, 1), lab, 9.5, 'end', None, 't-mut')]
+    o += [R(78, round(Y(-2), 1), 96, round(Y(-3.6) - Y(-2), 1), 'band-acc', 4),
+          T(126, round((Y(-2) + Y(-3.6)) / 2 + 4, 1), '刚加电压：约 mA', 9.5, 'middle', 700),
+          R(78, round(Y(-8.7), 1), 96, round(Y(-11) - Y(-8.7), 1), 'band-warn', 4),
+          T(126, round((Y(-8.7) + Y(-11)) / 2 + 4, 1), '稳态：pA–nA', 9.5, 'middle', 700),
+          f'<line x1="126" y1="{Y(-3.6) + 3:.1f}" x2="126" y2="{Y(-8.7) - 9:.1f}" class="dim"/>',
+          P(f'M126 {Y(-8.7) - 2:.1f} L121 {Y(-8.7) - 11:.1f} L131 {Y(-8.7) - 11:.1f} Z', 'arr'),
+          T(132, round((Y(-3.6) + Y(-8.7)) / 2, 1), '几小时内衰减', 9.5, None, None, 't-mut'),
+          T(196, 40, '估算', 11.5, None, 700),
+          T(196, 60, ms([('I', False), ('0', True), (' ≈ ΔV / R', False), ('b', True)], 10.5), 10.5),
+          T(196, 76, '0.5 V / 127 Ω ≈ 4 mA', 9.5, None, None, 't-mut'),
+          T(196, 104, ms([('I', False), ('ss', True), (' = σ', False), ('e', True), (' · A · ΔV / L', False)], 10.5), 10.5),
+          T(196, 120, 'σe = 10⁻¹⁰ S/cm：约 4 nA', 9.5, None, None, 't-mut'),
+          T(196, 135, 'σe = 10⁻¹² S/cm：约 40 pA', 9.5, None, None, 't-mut'),
+          T(196, 162, '→ 法拉第屏蔽 + Low I DC', 10.5, None, 700, 't-warn'),
+          T(196, 178, 'I/E Range 用 Auto', 9.5, None, None, 't-mut'),
+          T(10, 212, '示例：L = 100 µm，A = 0.785 cm²，ΔV = 0.5 V', 9.5, None, 600)]
+    return svg('估算电流：刚加电压时离子电流约毫安级，几小时内衰减到皮安到纳安级的电子电流，跨好几个数量级，需要法拉第屏蔽和 Low I DC 校准，量程用 Auto。', ''.join(o))
+
+
+def e3():
+    o = [T(100, 30, '空白池', 12, 'middle', 700), T(100, 46, 'SS | PTFE | SS', 10, 'middle', None, 't-mut tm'),
+         T(300, 30, '样品', 12, 'middle', 700), T(300, 46, 'SS | 电解质 | SS', 10, 'middle', None, 't-mut'),
+         sandwich(30, 62, 140, 'ptfe'), sandwich(230, 62, 140, 'sample'),
+         T(100, 126, ms([('I', False), ('blank', True)], 13), 13, 'middle', 700),
+         T(300, 126, ms([('I', False), ('ss', True)], 13), 13, 'middle', 700),
+         T(200, 124, '≪', 22, 'middle', 700, 't-acc'),
+         R(10, 146, 380, 64, 'sunk-r', 8),
+         T(22, 166, '同样的夹具、厚度、面积、屏蔽、电压和时间', 10.5, None, 700),
+         T(22, 184, '空白电流接近样品电流时，样品的结果不可信', 9.5, None, None, 't-mut'),
+         T(22, 200, ms([('计算时扣掉：I', False), ('ss', True), (' − I', False), ('blank', True)], 9.5), 9.5, None, None, 't-mut')]
+    return svg('空白池：用绝缘的 PTFE 膜代替电解质，装成同样的夹具测一次，背景电流应该远小于样品的稳态电流，计算时扣掉。', ''.join(o))
+
+
+def e4():
+    o = [R(8, 62, 74, 96, 'panel', 6), T(45, 80, 'Reference', 8, 'middle', 700, 't-panel'), T(45, 91, '620', 8, 'middle', 700, 't-panel'),
+         C(22, 146, 7, 'glow-b'), C(22, 146, 4, 'led-b'), R(64, 98, 10, 34, 'conn', 2),
+         P('M74 115 H122', 'cable'),
+         R(122, 30, 268, 150, 'shield', 8), R(132, 44, 248, 126, 'shield-in', 5),
+         T(256, 22, '法拉第屏蔽盒（或接了黑线的金属恒温箱）', 10, 'middle', 600),
+         cell_side(232, 96, 106, 14, 22, labels=False),
+         T(285, 88, 'SS | 电解质 | SS', 9.5, 'middle', 600),
+         wire('M126 110 C 160 110, 182 104, 214 104', 'we'), wire('M126 114 C 162 114, 184 108, 216 108', 'ws'),
+         wire('M126 118 C 150 120, 156 146, 190 146 H338 Q344 146 344 140 V131', 're'),
+         wire('M126 121 C 152 124, 160 152, 194 152 H344 Q350 152 350 146 V131', 'ce'),
+         wire('M126 124 C 154 128, 164 158, 198 158 H350 Q356 158 356 152 V131', 'cs'),
+         wire('M126 128 C 132 150, 136 160, 150 163', 'gnd'), C(154, 164, 5, 'post'),
+         T(162, 168, '黑 → 屏蔽', 9, None, 600),
+         P('M45 158 V182', 'gnd-line'), P('M33 182 H57 M37 187 H53 M41 192 H49', 'gnd-line'),
+         T(200, 208, '绿 + 蓝 → 一块板；白 + 红 + 橙 → 另一块板；黑 → 屏蔽盒', 9.5, 'middle', None, 't-mut')]
+    return svg('装池接线和屏蔽：SS 电解质 SS 电池放在法拉第屏蔽盒或接了黑线的金属恒温箱里；绿和蓝接一块板，白、红、橙接另一块板，黑线接屏蔽盒。', ''.join(o))
+
+
+def e5():
+    o = [P('M30 30 V180 H222', 'axis'), T(26, 30, 'T', 11, 'end', 600, 't-mut'), T(222, 196, '时间', 10, 'end', None, 't-mut'),
+         '<line x1="30" y1="80" x2="222" y2="80" class="setline"/>', T(220, 74, '设定温度', 9.5, 'end', None, 't-mut'),
+         P('M32 170 C 50 40, 64 50, 78 96 S 104 110, 118 86 S 140 76, 160 80 H220', 'curve'),
+         '<line x1="168" y1="180" x2="168" y2="60" class="mark-line"/>', T(168, 54, '开始极化', 10, 'middle', 700),
+         T(126, 130, '等 30–60 min', 9.5, 'middle', None, 't-mut'),
+         T(238, 46, '温度稳定后再开始', 11.5, None, 700), T(238, 64, '常见等 30–60 min', 9.5, None, None, 't-mut'),
+         T(238, 96, '测量全程保持恒温', 11.5, None, 700), T(238, 114, '温度波动 → 电流漂移', 9.5, None, None, 't-mut'),
+         T(238, 130, '读不准稳态电流', 9.5, None, None, 't-mut'),
+         T(238, 162, '关好箱门，', 10.5, None, 600), T(238, 178, '避免气流和振动', 10.5, None, 600)]
+    return svg('控温：温度到达设定值并稳定 30 到 60 分钟以上再开始极化，测量全程保持恒温，避免气流和振动。', ''.join(o))
+
+
+def e6():
+    import math
+    o = [P('M24 30 V160 H222', 'axis'), T(28, 28, '−Z″', 9.5, None, None, 't-mut'), T(222, 174, 'Z′', 9.5, 'end', None, 't-mut'),
+         P('M34 160 A40 40 0 0 1 114 160 L146 50', 'curve'), C(114, 160, 5.5, 'mark'),
+         dim_h(34, 114, 182), T(74, 200, sb('R', 'b', 12), 12, 'middle', 700),
+         ok(240, 50), T(254, 54.5, sb('记下 R', 'b', 11.5), 11.5, None, 700),
+         T(240, 74, ms([('→ σ', False), ('ion', True), (' = L / (R', False), ('b', True), ('·A)', False)], 10), 10, None, None, 't-mut'),
+         R(236, 100, 156, 70, 'sunk-r', 8), P('M252 152 H330', 'axis'), C(256, 151, 4, 'mark'),
+         bad(258, 120), T(272, 124.5, '只有一个点', 11, None, 700, 't-bad'), T(250, 166, '两块板短路：拆开重装', 9.5, None, None, 't-mut')]
+    return svg('极化前测 EIS：读出本体电阻 R_b，算离子电导率；谱图只是实轴附近一个点说明两块板短路，要拆开重装。', ''.join(o))
+
+
+def e7():
+    X = lambda v: 32 + v / 2.0 * 200
+    o = [P('M32 30 V170 H240', 'axis'), T(28, 30, 'I', 11, 'end', 600, 't-mut'), T(240, 200, '电压 (V)', 10, 'end', None, 't-mut'),
+         T(X(0), 184, '0', 9.5, 'middle', None, 't-mut'), T(X(1), 184, '1', 9.5, 'middle', None, 't-mut'), T(X(2), 184, '2', 9.5, 'middle', None, 't-mut'),
+         P('M32 166 H150 C 176 166, 194 152, 206 112 S 224 44, 236 34', 'curve'),
+         f'<line x1="{X(1.3):.0f}" y1="170" x2="{X(1.3):.0f}" y2="40" class="mark-line"/>', T(X(1.3), 34, '分解开始', 10, 'middle', 700)]
+    for v in (0.1, 0.25, 0.5):
+        o += [P(f'M{X(v):.0f} 166 l-4 -8 h8 Z', 'arr-acc')]
+    o += [T(X(0.25), 150, '选这里', 9.5, 'middle', 700, 't-acc'), T(X(0.3), 198, '0.1 · 0.25 · 0.5', 9, 'middle', None, 't-acc'),
+          T(256, 46, '选 2–3 个电压', 11.5, None, 700), T(256, 64, '明显低于分解电压', 9.5, None, None, 't-mut'),
+          T(256, 80, '常见 0.1–1 V', 9.5, None, None, 't-mut'),
+          T(256, 112, '分解电压怎么找', 11.5, None, 700), T(256, 130, '另一个电池慢扫 LSV', 9.5, None, None, 't-mut'),
+          T(256, 146, '（会把样品扫坏）', 9.5, None, None, 't-mut'),
+          T(256, 178, 'SS–SS 只得到窗口', 9.5, None, None, 't-mut'), T(256, 193, '总宽度，不是 vs Li', 9.5, None, None, 't-mut')]
+    return svg('选电压：用另一个 SS 电解质 SS 电池慢扫 LSV 找到电流开始明显上升的分解电压，选 2 到 3 个明显低于它的电压，例如 0.1、0.25、0.5 伏。', ''.join(o))
+
+
+def e8():
+    rows = [('Pre-step Voltage', '0 V（vs Eref）', False), ('Pre-step Delay Time', '30 s', False),
+            ('Step 1 Voltage', '0.100 V（vs Eref）', True), ('Step 1 Time', '7200–36000 s', True),
+            ('Step 2 Voltage', '0 V（vs Eref）', False), ('Step 2 Time', '和 Step 1 一样长', False),
+            ('Sample Period', '5–10 s', False), ('I/E Range', 'Auto', False), ('Area', '1 cm²', False)]
+    o = [R(10, 8, 380, 206, 'card', 8), P('M10 16 Q10 8 18 8 H382 Q390 8 390 16 V28 H10 Z', 'titlebar'),
+         T(22, 22.5, 'Chronoamperometry', 10.5, None, 700)]
+    for i, (k, v, hi) in enumerate(rows):
+        y = 48 + i * 17
+        if hi:
+            o.append(R(16, y - 12, 368, 16, 'menu-hi', 3))
+        o += [T(24, y, k, 10, None, None, 't-mut tm'), T(206, y, v, 10.5, None, 700, 't-acc' if hi else None)]
+    o += [T(24, 204, '字段名以你的软件为准；vs Eref 只用于不储能的 SS–SS 池', 9, None, None, 't-mut')]
+    return svg('计时电流法设置：预步 0 伏 30 秒；第一步 0.100 伏、2 到 10 小时；第二步 0 伏、时间和第一步相同；采样间隔 5 到 10 秒；量程 Auto；面积 1 平方厘米；vs Eref 只用于不储能的 SS 池。', ''.join(o))
+
+
+def e9():
+    Y = lambda e: 26 + (-2 - e) * (150 / 8)
+    o = [P('M40 26 V176 H302', 'axis')]
+    for e, lab in [(-3, '1 mA'), (-6, '1 µA'), (-9, '1 nA')]:
+        o += [f'<line x1="36" y1="{Y(e):.1f}" x2="302" y2="{Y(e):.1f}" class="grid"/>', T(36, round(Y(e) + 4, 1), lab, 9, 'end', None, 't-mut')]
+    o += [P('M42 37 C 46 80, 52 96, 70 110 S 130 140, 170 147 H240', 'curve'),
+          '<line x1="240" y1="176" x2="240" y2="40" class="mark-line"/>', T(244, 48, 'Step 2：0 V', 9.5, None, 600),
+          P('M240 60 C 248 110, 262 140, 300 168', 'curve-todo'),
+          dim_h(196, 238, 136), T(217, 129, ms([('平均 = I', False), ('ss', True)], 9.5), 9.5, 'middle', 700),
+          T(140, 192, 'Step 1：几小时', 9.5, 'middle', None, 't-mut'), T(26, 22, '|I|', 9.5, None, 600, 't-mut'),
+          T(312, 46, '判断稳态', 11, None, 700), T(312, 64, '最后 1 h', 9.5, None, None, 't-mut'),
+          T(312, 78, '变化 < 1–2%', 9.5, None, None, 't-mut'),
+          T(312, 106, '还在降：', 10, None, 600), T(312, 122, '延长 Step 1', 9.5, None, None, 't-mut'),
+          T(312, 150, '全程别碰线', 10, None, 700, 't-warn'),
+          T(40, 210, '用对数纵轴画 |I|，更容易看出电流是否还在下降', 9.5, None, 600)]
+    return svg('运行并判断稳态：对数纵轴上电流从毫安级迅速下降，几小时后到纳安级平台；最后 1 小时变化小于 1 到 2% 时取平均作为稳态电流；第二步回到 0 伏，反向电流衰减。', ''.join(o))
+
+
+def e10():
+    o = [T(14, 22, '每次极化后回 0 V 静置，时间至少和极化一样长', 10.5, None, 700),
+         T(14, 38, '或者每个电压用一个新电池', 9.5, None, None, 't-mut'),
+         P('M30 56 V172 H392', 'axis'), T(26, 60, 'V', 10, 'end', 600, 't-mut'), T(392, 188, '时间', 9.5, 'end', None, 't-mut'),
+         P('M32 170 H40 V150 H100 V170 H140 V120 H200 V170 H240 V74 H300 V170 H340', 'curve'),
+         T(70, 144, '0.1 V', 10, 'middle', 700), T(170, 114, '0.25 V', 10, 'middle', 700), T(270, 68, '0.5 V', 10, 'middle', 700),
+         T(120, 166, '静置', 9, 'middle', None, 't-mut'), T(220, 166, '静置', 9, 'middle', None, 't-mut'), T(320, 166, '静置', 9, 'middle', None, 't-mut'),
+         T(200, 208, '先低后高：高电压可能让样品分解，放在最后', 10, 'middle', 600)]
+    return svg('多个电压：0.1、0.25、0.5 伏从低到高依次极化，每次之后回 0 伏静置，时间至少和极化一样长；或每个电压用一个新电池。', ''.join(o))
+
+
+def e11():
+    o = []
+    for i, (good, title, sub) in enumerate([(True, '基本重合', '数据可用'), (False, 'R_b 明显变化', '分解、压薄或短路')]):
+        x0 = 10 + i * 196
+        o += [R(x0, 10, 184, 200, 'sunk-r', 8), P(f'M{x0 + 16} 30 V140 H{x0 + 172}', 'axis'),
+              P(f'M{x0 + 24} 140 A30 30 0 0 1 {x0 + 84} 140 L{x0 + 108} 54', 'curve')]
+        if good:
+            o.append(P(f'M{x0 + 26} 140 A30 30 0 0 1 {x0 + 86} 140 L{x0 + 110} 54', 'curve-todo'))
+        else:
+            o.append(P(f'M{x0 + 24} 140 A18 18 0 0 1 {x0 + 60} 140 L{x0 + 84} 54', 'curve-todo'))
+        o += [T(x0 + 150, 72, '前', 10, 'middle', 700, 't-acc'), T(x0 + 150, 90, '后', 10, 'middle', 700, 't-mut'),
+              f'<line x1="{x0 + 132}" y1="68" x2="{x0 + 142}" y2="68" class="curve"/>',
+              f'<line x1="{x0 + 132}" y1="86" x2="{x0 + 142}" y2="86" class="curve-todo"/>',
+              (ok if good else bad)(x0 + 22, 166),
+              T(x0 + 36, 170.5, sb('R', 'b', 11.5, ' 基本不变') if good else sb('R', 'b', 11.5, ' 明显变化'), 11.5, None, 700, None if good else 't-bad'),
+              T(x0 + 92, 192, sub, 9.5, 'middle', None, 't-mut')]
+    return svg('极化后测 EIS：和极化前的谱图基本重合说明数据可用；R_b 明显变化说明样品分解、被压薄或短路，这组数据不可信。', ''.join(o))
+
+
+def e12():
+    X = lambda v: 32 + v * 180
+    Yi = lambda i: 170 - i * 25
+    o = [P('M32 30 V170 H232', 'axis'), T(28, 30, ms([('I', False), ('ss', True)], 10), 10, 'end', 600, 't-mut'),
+         T(232, 196, 'ΔV (V)', 9.5, 'end', None, 't-mut'),
+         T(X(0), 184, '0', 9, 'middle', None, 't-mut'), T(X(0.5), 184, '0.5', 9, 'middle', None, 't-mut'), T(X(1), 184, '1.0', 9, 'middle', None, 't-mut'),
+         f'<line x1="{X(0)}" y1="{Yi(0)}" x2="{X(1.08):.1f}" y2="{Yi(3.95 * 1.08):.1f}" class="fit"/>']
+    for v, i in [(0.1, 0.40), (0.25, 0.98), (0.5, 1.95)]:
+        o.append(C(round(X(v), 1), round(Yi(i), 1), 5, 'mark'))
+    o += [C(X(1.0), Yi(5.2), 6, 'ring-warn'), T(X(1.0) - 8, Yi(5.2) + 4, '往上翘：不用', 9.5, 'end', 700, 't-warn'),
+          T(246, 40, '用斜率算', 11.5, None, 700),
+          T(246, 62, ms([('σ', False), ('e', True), (' = (L / A) × 斜率', False)], 11), 11),
+          T(246, 80, '= (0.01 / 0.785) × 3.95 nA/V', 9, None, None, 't-mut tm'),
+          T(246, 100, '≈ 5.0 × 10⁻¹¹ S/cm', 12.5, None, 700, 't-acc'),
+          T(246, 132, ms([('t', False), ('ion', True), (' = σ', False), ('ion', True), (' / (σ', False), ('ion', True), (' + σ', False), ('e', True), (')', False)], 10.5), 10.5),
+          T(246, 150, 'σion = 10⁻⁴ S/cm → ≈ 1', 9.5, None, None, 't-mut'),
+          R(246, 186, 64, 18, 'tagbox', 9), T(278, 199, '示例数值', 10, 'middle', 700, 't-warn')]
+    return svg('计算：扣掉空白电流后，稳态电流对电压作图，取过原点直线的斜率，电子电导等于 L 除以 A 乘斜率，示例约 5.0 乘 10 的负 11 次方 S/cm；高电压下往上翘的点不用；离子迁移数接近 1。', ''.join(o))
+
+
+EC_STEPS = [
+    (e1, """<p>确认 Calibrate Instrument 已经做过，并在<strong>当天</strong>做一次 Low I DC 校准（步骤见<a href="#calib">校准仪器</a>一节）。<span class="src">手册 Ch 5</span></p>
+          <ul><li>稳态电流在 pA–nA 级，会用到 60 pA 和 600 pA 两档；这两档的偏置会随时间、温度和湿度漂移。</li>
+          <li>Low I DC 按软件的 Cell Connection Information 窗口接线：绿 + 蓝夹在一起放屏蔽盒里，白 + 橙 + 红夹在一起放盒外，黑线接屏蔽盒。</li>
+          <li>电缆电容校准不需要做，它只影响高频 EIS。</li></ul>"""),
+    (e2, """<p>先估算电流有多大，确认需要屏蔽和低电流档。<span class="src gen">通用方法</span></p>
+          <ul><li>刚加电压时主要是离子电流：I<sub>0</sub> ≈ ΔV / R<sub>b</sub>，常在 mA 级。</li>
+          <li>离子被挡住以后只剩电子电流：I<sub>ss</sub> = σ<sub>e</sub>·A·ΔV / L。σ<sub>e</sub> 在 10⁻¹⁰–10⁻¹² S/cm 时，只有几 nA 到几十 pA。</li>
+          <li>电流跨了 6–8 个数量级，I/E Range 要用 Auto。</li></ul>"""),
+    (e3, """<p>做一个空白池：用一片绝缘的 PTFE 膜代替电解质，装成 SS | PTFE | SS，按同样的条件测一次，得到背景电流 I<sub>blank</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>夹具、厚度、面积、屏蔽、电压和时间都和样品相同。</li>
+          <li>背景电流来自夹具、电缆和仪器：手册指出绝缘材料不完美会形成分流电阻，导线移动也会产生电流。<span class="src">手册 Ch 9</span></li>
+          <li>I<sub>blank</sub> 应该远小于样品的 I<sub>ss</sub>；两者差不多时，样品的结果不可信。</li></ul>"""),
+    (e4, """<p>装池接线和测 EIS 时一样，再把电池放进法拉第屏蔽盒，黑线接屏蔽盒。<span class="src">手册 Ch 6、9</span></p>
+          <ul><li>绿 + 蓝接一块板，白 + 红 + 橙接另一块板，两组导线分开走。</li>
+          <li>电池放在金属恒温箱里时，箱体可以当屏蔽：黑线接箱体，但电极和夹具都不能碰到箱体。</li>
+          <li>电池的任何一极接了大地时，不能再把仪器机壳接地。<span class="src">手册 Ch 1、6</span></li>
+          <li>导线摆好、固定，测量中不要再动：导线移动本身就会产生电流噪声。<span class="src">手册 Ch 9</span></li></ul>"""),
+    (e5, """<p>把温度稳定到测量温度，等 30–60 分钟以上再开始，测量全程保持恒温。<span class="src gen">通用方法</span></p>
+          <ul><li>温度变化会让离子电流和背景电流漂移，读不准稳态值。</li>
+          <li>关好箱门，避免气流和振动；记录实际温度。</li></ul>"""),
+    (e6, """<p>先测一次 EIS，得到 R<sub>b</sub> 和离子电导率 σ<sub>ion</sub>（参数见<a href="#params">EIS 参数</a>一节），同时确认没有短路。<span class="src gen">通用方法</span></p>
+          <ul><li>谱图只是实轴附近的一个点：两块板短路了，拆开重装。</li>
+          <li>记下 R<sub>b</sub>，第 11 步要和极化后的比较。</li></ul>"""),
+    (e7, """<p>选 2–3 个明显低于分解电压的电压，例如 0.1、0.25、0.5 V。<span class="src gen">通用方法</span></p>
+          <ul><li>分解电压可以用另一个 SS–SS 电池慢扫一次 LSV（例如 0.1–1 mV/s），看电流开始明显上升的电压。LSV 会把样品扫坏，不要用要测电子电导的那个电池。</li>
+          <li>在 SS–SS 上只能得到稳定窗口的总宽度，不是相对 Li/Li<sup>+</sup> 的电位。</li>
+          <li>文献中常见 0.1–1 V；电压太低，电流太小，噪声占比就大。</li></ul>"""),
+    (e8, """<p>在 <code>Experiment › Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
+          <ul><li>Pre-step：0 V，约 30 s。</li>
+          <li>Step 1：ΔV，例如 0.100 V；时间 7200–36000 s（2–10 h），要足够长，让电流到稳态。</li>
+          <li>Step 2：0 V，时间和 Step 1 差不多，让电池回到初始状态。</li>
+          <li>Sample Period 5–10 s；I/E Range 选 Auto；Area 填 1 cm²，读原始电流。</li>
+          <li>电压选 vs E<sub>ref</sub>：SS–SS 池不储能，这样 ΔV 就是加在两端的真实电压。<strong>只对 SS–SS 池这样做</strong>，带电的电池要用 vs E<sub>oc</sub>。</li>
+          <li>Output File 填能区分的名字，例如 <code>S3-1_60C_DCpol_0p1V.DTA</code>。</li></ul>"""),
+    (e9, """<p>点 OK 运行。Cell On 黄灯会一直亮着，几个小时里都不要碰导线和屏蔽盒。<span class="src">手册 Ch 7、9</span></p>
+          <ul><li>测完在 Echem Analyst 2 里画 |I| 对时间，用对数纵轴。</li>
+          <li>稳态：最后 1 小时里电流变化小于约 1–2%，取最后一段的平均值作为 I<sub>ss</sub>。<span class="src gen">通用方法</span></li>
+          <li>电流还在下降：延长 Step 1 Time 重新测。</li>
+          <li>电流突然跳变：检查是否有人碰了导线、温度是否波动。</li></ul>"""),
+    (e10, """<p>测下一个电压之前，先在 0 V 下静置，时间至少和极化一样长，让离子分布恢复。<span class="src gen">通用方法</span></p>
+          <ul><li>从低电压到高电压依次做；高电压可能让样品分解，放在最后。</li>
+          <li>也可以每个电压用一个新电池，但电池之间的差别会混进结果里。</li></ul>"""),
+    (e11, """<p>全部电压测完后再测一次 EIS，R<sub>b</sub> 应该和第 6 步基本一样。<span class="src gen">通用方法</span></p>
+          <ul><li>R<sub>b</sub> 明显变化：样品在极化中分解、被压薄，或者出现了短路，这组数据不可信。</li>
+          <li>拆开后看看膜有没有变色、鼓泡或破孔。</li></ul>"""),
+    (e12, """<p>扣掉空白电流，用 I<sub>ss</sub> 对 ΔV 作图，用过原点直线的斜率算电子电导。<span class="src gen">通用方法</span></p>
+          <ul><li>σ<sub>e</sub> = (L / A) × 斜率，斜率的单位是 A/V。</li>
+          <li>点应该落在一条过原点的直线上；高电压的点往上翘，说明发生了电化学反应，不要用这个点。</li>
+          <li>离子迁移数：t<sub>ion</sub> = σ<sub>ion</sub> / (σ<sub>ion</sub> + σ<sub>e</sub>)，σ<sub>ion</sub> 用第 6 步 EIS 的结果。</li>
+          <li>报告时写明 ΔV、极化时间、温度、L 和 A、空白电流，以及极化前后的 R<sub>b</sub>。下面的计算器可以直接算。</li></ul>"""),
+]
+
+
+def build_ec():
+    s = PAGE.read_text(encoding='utf-8')
+    items = [f"""        <li><div class="step"><div class="step-text">{text}</div>
+          <figure class="stepfig">{fn()}</figure></div></li>""" for fn, text in EC_STEPS]
+    block = '<!--ECSTEPS-->\n      <ol class="steps">\n' + '\n'.join(items) + '\n      </ol>\n      <!--/ECSTEPS-->'
+    s = re.sub(r'<!--ECSTEPS-->.*?<!--/ECSTEPS-->', lambda m: block, s, flags=re.S)
+    PAGE.write_text(s, encoding='utf-8')
+    print('electronic conductivity steps written:', len(items))
+
+
 if __name__ == '__main__':
     build()
     fill_figs()
@@ -1410,3 +1682,4 @@ if __name__ == '__main__':
     build_pp()
     build_mk()
     build_uv()
+    build_ec()
