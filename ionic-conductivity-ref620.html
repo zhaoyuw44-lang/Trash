@@ -173,7 +173,7 @@ svg .okbox{fill:var(--ok-soft);stroke:var(--ok);stroke-width:1} svg .warnbox{fil
 svg .bin{fill:var(--sunk);stroke:var(--steel-edge);stroke-width:1.5} svg .binlid{fill:var(--steel);stroke:var(--steel-edge);stroke-width:1}
 svg .tape{fill:#E3B341;stroke:#A77A12;stroke-width:.8}
 svg .crystal{fill:#F7F5EE;stroke:var(--steel-edge);stroke-width:1} svg .drip{fill:var(--sample);stroke:var(--steel-edge);stroke-width:1}
-svg .li{fill:#C9CED4;stroke:var(--steel-edge);stroke-width:1.2} svg .cloth{fill:#FBFBF8;stroke:var(--steel-edge);stroke-width:1}
+svg .li{fill:#CDBFEA;stroke:#7A68B5;stroke-width:1.2} svg .cloth{fill:#FBFBF8;stroke:var(--steel-edge);stroke-width:1}
 svg .bottle{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.2}
 svg .gbox{fill:var(--sunk);stroke:var(--steel-edge);stroke-width:1.5} svg .gwin{fill:var(--accent-soft);stroke:var(--steel-edge);stroke-width:1}
 svg .gport{fill:var(--panel);stroke:var(--steel-edge);stroke-width:1.5} svg .grip{fill:#D9822B;stroke:var(--wire-outline);stroke-width:1}
@@ -364,13 +364,13 @@ svg .t-ok{fill:var(--ok)}
         <div><dt>A</dt><dd>样品与电极的接触面积，cm²</dd></div>
       </dl>
     </div>
-    <nav class="flow" aria-label="实验流程总览"><div class="flow-card"><div class="flow-no">1</div><div class="flow-t"><a href="#part-1">准备</a></div><ul><li><a href="#have">认识器材</a></li><li><a href="#calib">校准仪器</a></li><li><a href="#make">制备电解质膜</a></li></ul></div><div class="flow-card"><div class="flow-no">2</div><div class="flow-t"><a href="#part-2">装池与接线</a></div><ul><li><a href="#cell">夹层池：L 与 A</a></li><li><a href="#wire">夹层池接线</a></li><li><a href="#coin">纽扣电池</a></li><li><a href="#pp">PP 膜</a></li></ul></div><div class="flow-card"><div class="flow-no">3</div><div class="flow-t"><a href="#part-3">测量</a></div><ul><li><a href="#steps">测量步骤</a></li><li><a href="#params">EIS 参数</a></li><li><a href="#econd">电子电导</a></li></ul></div><div class="flow-card"><div class="flow-no">4</div><div class="flow-t"><a href="#part-4">分析</a></div><ul><li><a href="#sim">预测谱图、读 R<sub>b</sub></a></li><li><a href="#calc">算电导率</a></li><li><a href="#arr">变温与活化能</a></li></ul></div><div class="flow-card"><div class="flow-no">5</div><div class="flow-t"><a href="#part-5">收尾</a></div><ul><li><a href="#after">测后处理</a></li><li><a href="#trouble">问题排查</a></li></ul></div></nav>
+    <nav class="flow" aria-label="实验流程总览"><div class="flow-card"><div class="flow-no">1</div><div class="flow-t"><a href="#part-1">准备</a></div><ul><li><a href="#have">认识器材</a></li><li><a href="#calib">校准仪器</a></li><li><a href="#make">制备电解质膜</a></li></ul></div><div class="flow-card"><div class="flow-no">2</div><div class="flow-t"><a href="#part-2">装池与接线</a></div><ul><li><a href="#cell">夹层池：L 与 A</a></li><li><a href="#wire">夹层池接线</a></li><li><a href="#coin">纽扣电池</a></li><li><a href="#pp">PP 膜</a></li></ul></div><div class="flow-card"><div class="flow-no">3</div><div class="flow-t"><a href="#part-3">测量</a></div><ul><li><a href="#software">软件程序速查</a></li><li><a href="#steps">测量步骤</a></li><li><a href="#params">EIS 参数</a></li><li><a href="#econd">电子电导</a></li><li><a href="#tli">锂离子迁移数</a></li><li><a href="#esw">稳定窗口</a></li><li><a href="#lisym">锂对称循环与 CCD</a></li></ul></div><div class="flow-card"><div class="flow-no">4</div><div class="flow-t"><a href="#part-4">分析</a></div><ul><li><a href="#sim">预测谱图、读 R<sub>b</sub></a></li><li><a href="#calc">算电导率</a></li><li><a href="#arr">变温与活化能</a></li></ul></div><div class="flow-card"><div class="flow-no">5</div><div class="flow-t"><a href="#part-5">收尾</a></div><ul><li><a href="#after">测后处理</a></li><li><a href="#trouble">问题排查</a></li></ul></div></nav>
     <p class="note">仪器部分（接线颜色、频率上限、|Z|·f 规则、屏蔽、校准）依据 Gamry《Reference 620 Operator's Manual》（988-00086，Rev 1.5.0）和《Reference 620 Calibration Quick-Start Guide》（988-00046，Rev 2.0）。其余内容是通用电化学和实验室做法，页面中标为“通用方法”。</p>
   </div>
 </header>
 
 <nav class="nav" aria-label="页面目录">
-  <div class="wrap"><span class="ng"><span class="ngl">准备</span><a href="#have">器材</a><a href="#calib">校准</a><a href="#make">制膜</a><a href="#uv">UV 与增塑剂</a></span><span class="ng"><span class="ngl">装池</span><a href="#cell">L 与 A</a><a href="#wire">接线</a><a href="#coin">纽扣电池</a><a href="#pp">PP 膜</a></span><span class="ng"><span class="ngl">测量</span><a href="#steps">步骤</a><a href="#params">EIS 参数</a><a href="#econd">电子电导</a></span><span class="ng"><span class="ngl">分析</span><a href="#sim">谱图</a><a href="#calc">算 σ</a><a href="#arr">变温</a></span><span class="ng"><span class="ngl">收尾</span><a href="#after">测后处理</a><a href="#trouble">问题排查</a></span></div>
+  <div class="wrap"><span class="ng"><span class="ngl">准备</span><a href="#have">器材</a><a href="#calib">校准</a><a href="#make">制膜</a><a href="#uv">UV 与增塑剂</a></span><span class="ng"><span class="ngl">装池</span><a href="#cell">L 与 A</a><a href="#wire">接线</a><a href="#coin">纽扣电池</a><a href="#pp">PP 膜</a></span><span class="ng"><span class="ngl">测量</span><a href="#software">程序速查</a><a href="#steps">步骤</a><a href="#params">EIS 参数</a><a href="#econd">电子电导</a><a href="#tli">迁移数</a><a href="#esw">稳定窗口</a><a href="#lisym">锂对称</a></span><span class="ng"><span class="ngl">分析</span><a href="#sim">谱图</a><a href="#calc">算 σ</a><a href="#arr">变温</a></span><span class="ng"><span class="ngl">收尾</span><a href="#after">测后处理</a><a href="#trouble">问题排查</a></span></div>
 </nav>
 
 <main>
@@ -831,6 +831,21 @@ svg .t-ok{fill:var(--ok)}
       </figure>
     </div>
 
+    <div class="block" style="margin-top:16px">
+      <h3>五种常用电池怎么叠</h3>
+      <figure class="fig" style="margin-top:10px">
+        <div class="figsvg" data-svgname="coin-06-cell-stacks"><!--FIG:coin-stacks--><svg viewBox="0 0 640 256" role="img" aria-label="五种纽扣电池的叠层：SS 电解质 SS 测离子电导率和电子电导；SS PTFE SS 是电子电导的空白池；Li 电解质 Li 测迁移数、对称循环和临界电流密度；SS 电解质 Li 测稳定窗口；SS 浸液隔膜 SS 测液体电解液的有效电导率；组装顺序都是从下往上。"><text x="16" y="22" font-size="12" font-weight="700">五种电池：组装顺序相同，只换上下电极（上 = 负极盖侧）</text><rect x="30" y="40" width="80" height="12" rx="3" class="steel"/><path d="M40 62 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="36" y="74" width="68" height="6" rx="1" class="steel"/><rect x="28" y="80" width="84" height="7" rx="1" class="sample"/><rect x="36" y="87" width="68" height="6" rx="1" class="steel"/><rect x="26" y="99" width="88" height="22" rx="4" class="steel"/><rect x="30" y="99" width="80" height="16" rx="3" class="cavity"/><text x="70" y="160" font-size="10.5" text-anchor="middle" font-weight="700">SS | 电解质 | SS</text><text x="70" y="177" font-size="9.5" text-anchor="middle" class="t-mut">离子电导率</text><text x="70" y="192" font-size="9.5" text-anchor="middle" class="t-mut">电子电导</text><rect x="155" y="40" width="80" height="12" rx="3" class="steel"/><path d="M165 62 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="161" y="74" width="68" height="6" rx="1" class="steel"/><rect x="153" y="80" width="84" height="7" rx="1" class="ptfe"/><rect x="161" y="87" width="68" height="6" rx="1" class="steel"/><rect x="151" y="99" width="88" height="22" rx="4" class="steel"/><rect x="155" y="99" width="80" height="16" rx="3" class="cavity"/><text x="195" y="160" font-size="10.5" text-anchor="middle" font-weight="700">SS | PTFE | SS</text><text x="195" y="177" font-size="9.5" text-anchor="middle" class="t-mut">电子电导的</text><text x="195" y="192" font-size="9.5" text-anchor="middle" class="t-mut">空白池</text><rect x="280" y="40" width="80" height="12" rx="3" class="steel"/><path d="M290 62 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="286" y="74" width="68" height="6" rx="1" class="steel"/><rect x="290" y="80" width="60" height="6" rx="1" class="li"/><rect x="278" y="86" width="84" height="7" rx="1" class="sample"/><rect x="290" y="93" width="60" height="6" rx="1" class="li"/><rect x="286" y="99" width="68" height="6" rx="1" class="steel"/><rect x="276" y="111" width="88" height="22" rx="4" class="steel"/><rect x="280" y="111" width="80" height="16" rx="3" class="cavity"/><text x="320" y="160" font-size="10.5" text-anchor="middle" font-weight="700">Li | 电解质 | Li</text><text x="320" y="177" font-size="9.5" text-anchor="middle" class="t-mut">迁移数、对称</text><text x="320" y="192" font-size="9.5" text-anchor="middle" class="t-mut">循环、CCD</text><rect x="405" y="40" width="80" height="12" rx="3" class="steel"/><path d="M415 62 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="411" y="74" width="68" height="6" rx="1" class="steel"/><rect x="415" y="80" width="60" height="6" rx="1" class="li"/><rect x="403" y="86" width="84" height="7" rx="1" class="sample"/><rect x="411" y="93" width="68" height="6" rx="1" class="steel"/><rect x="401" y="105" width="88" height="22" rx="4" class="steel"/><rect x="405" y="105" width="80" height="16" rx="3" class="cavity"/><text x="445" y="160" font-size="10.5" text-anchor="middle" font-weight="700">SS | 电解质 | Li</text><text x="445" y="177" font-size="9.5" text-anchor="middle" class="t-mut">电化学</text><text x="445" y="192" font-size="9.5" text-anchor="middle" class="t-mut">稳定窗口</text><rect x="530" y="40" width="80" height="12" rx="3" class="steel"/><path d="M540 62 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="536" y="74" width="68" height="6" rx="1" class="steel"/><rect x="528" y="80" width="84" height="7" rx="1" class="sep-wet"/><rect x="528" y="80" width="84" height="7" rx="1" class="sep-edge"/><rect x="536" y="87" width="68" height="6" rx="1" class="steel"/><rect x="526" y="99" width="88" height="22" rx="4" class="steel"/><rect x="530" y="99" width="80" height="16" rx="3" class="cavity"/><text x="570" y="160" font-size="10.5" text-anchor="middle" font-weight="700">SS | 隔膜+液 | SS</text><text x="570" y="177" font-size="9.5" text-anchor="middle" class="t-mut">液体电解液</text><text x="570" y="192" font-size="9.5" text-anchor="middle" class="t-mut">有效电导率</text><rect x="16" y="212" width="18" height="10" rx="2" class="steel"/><text x="40" y="221" font-size="9.5" class="t-mut">不锈钢垫片、壳、盖</text><rect x="140" y="212" width="18" height="10" rx="2" class="li"/><text x="164" y="221" font-size="9.5" class="t-mut">锂片</text><rect x="264" y="212" width="18" height="10" rx="2" class="sample"/><text x="288" y="221" font-size="9.5" class="t-mut">聚合物电解质</text><rect x="388" y="212" width="18" height="10" rx="2" class="ptfe"/><text x="412" y="221" font-size="9.5" class="t-mut">PTFE 片</text><rect x="512" y="212" width="18" height="10" rx="2" class="sep-wet"/><text x="536" y="221" font-size="9.5" class="t-mut">浸液隔膜</text><rect x="512" y="212" width="18" height="10" rx="2" class="sep-edge"/><text x="16" y="244" font-size="10" font-weight="600">从下往上：正极壳 → 下电极 → 电解质 → 上电极 → 弹片 → 负极盖 → 封口</text></svg><!--/FIG:coin-stacks--></div>
+        <figcaption>同一套 CR2032 零件，换上下电极和中间层就是五种电池（示意）。含锂的电池必须在手套箱里装。<span class="src gen">通用方法</span></figcaption>
+      </figure>
+      <ul class="b" style="margin-top:10px">
+        <li><strong>SS | 电解质 | SS</strong>：离子电导率（EIS）和电子电导（直流极化）。</li>
+        <li><strong>SS | PTFE | SS</strong>：电子电导的空白池，厚度和面积尽量和样品一样。</li>
+        <li><strong>Li | 电解质 | Li</strong>：锂离子迁移数、锂对称循环、临界电流密度 (CCD)。电解质膜要比锂片大一圈。</li>
+        <li><strong>SS | 电解质 | Li</strong>：电化学稳定窗口。SS 是工作电极，锂同时作对电极和参比。</li>
+        <li><strong>SS | 隔膜 + 液 | SS</strong>：液体电解液的有效电导率，见 <a href="#pp">PP 膜</a>。</li>
+      </ul>
+    </div>
+
     <div class="block split" style="margin-top:16px">
       <figure class="fig">
         <div class="figsvg"><!--FIG:coin-exploded--><svg viewBox="0 0 540 276" role="img" aria-label="CR2032 纽扣电池分层图，从下往上：正极壳、不锈钢垫片（下电极）、电解质膜或浸液隔膜（厚度 L）、不锈钢垫片（上电极）、弹片、密封圈、负极盖；面积 A 按垫片直径 d 计算。"><rect x="102" y="26" width="196" height="22" rx="5" class="steel"/><rect x="96" y="60" width="16" height="12" rx="2" class="gasket"/><rect x="288" y="60" width="16" height="12" rx="2" class="gasket"/><path d="M112 61 H288 M112 71 H288" class="gasket-line"/><path d="M120 91 l10 -7 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14 l10 -14 l10 14" class="spring"/><rect x="112" y="110" width="176" height="8" rx="1.5" class="steel"/><rect x="95.5" y="129" width="209" height="6" class="sample"/><rect x="112" y="146" width="176" height="8" rx="1.5" class="steel"/><rect x="90" y="166" width="220" height="40" rx="6" class="steel"/><rect x="97" y="166" width="206" height="32" rx="3" class="cavity"/><line x1="302" y1="37" x2="322" y2="37" class="lead"/><text x="328" y="41.5" font-size="12" font-weight="600">负极盖 (−)</text><line x1="308" y1="66" x2="322" y2="66" class="lead"/><text x="328" y="70.5" font-size="12" font-weight="600">密封圈：绝缘，隔开正负极</text><line x1="284" y1="91" x2="322" y2="91" class="lead"/><text x="328" y="95.5" font-size="12" font-weight="600">弹片：提供压力</text><line x1="292" y1="114" x2="322" y2="114" class="lead"/><text x="328" y="118.5" font-size="12" font-weight="600">不锈钢垫片：上电极</text><line x1="308.5" y1="132" x2="322" y2="132" class="lead"/><text x="328" y="136.5" font-size="12" font-weight="600">电解质膜或浸液隔膜（厚度 L）</text><line x1="292" y1="150" x2="322" y2="150" class="lead"/><text x="328" y="154.5" font-size="12" font-weight="600">不锈钢垫片：下电极</text><line x1="314" y1="186" x2="322" y2="186" class="lead"/><text x="328" y="190.5" font-size="12" font-weight="600">正极壳 (+)</text><line x1="40" y1="206" x2="40" y2="40" class="dim"/><path d="M40 32 L35 42 L45 42 Z" class="arr"/><text x="40" y="226" font-size="11" text-anchor="middle" font-weight="600">从下往上组装</text><line x1="112" y1="156" x2="112" y2="232" class="ext"/><line x1="288" y1="156" x2="288" y2="232" class="ext"/><line x1="112" y1="226" x2="288" y2="226" class="dim"/><path d="M112 226 L119 222 L119 230 Z M288 226 L281 222 L281 230 Z" class="arr"/><text x="200" y="248" font-size="12.5" text-anchor="middle" font-weight="700">d（垫片直径）→ A = π d² / 4</text><text x="200" y="266" font-size="10.5" text-anchor="middle" class="t-mut">膜比垫片大时，A 按垫片算</text></svg><!--/FIG:coin-exploded--></div>
@@ -1032,13 +1047,46 @@ svg .t-ok{fill:var(--ok)}
   <div class="wrap">
     <div class="part-no">Part 3 · Measure</div>
     <div class="part-title">测量</div>
-    <p>按步骤运行恒电位 EIS、参数怎么填；用直流极化测电子电导。</p>
+    <p>先查每种测量在软件里选哪个程序；再按步骤测离子电导率（EIS）、电子电导（直流极化），以及用锂电极测迁移数、稳定窗口和锂对称循环。</p>
   </div>
 </div>
+<section id="software">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">08 · Software</div>
+      <h2>软件程序速查：每种测量选哪个程序</h2>
+      <p>所有测试都从 Gamry Framework 的 Experiment 菜单启动，只用到 A、E、G 三组；锂对称电池的长时间循环可以用 J 组。字段名按常见的 Framework 版本写出，以你的软件为准；能用哪些程序取决于装了哪些软件模块。</p>
+    </div>
+    <div class="block">
+      <figure class="fig">
+        <div class="figsvg" data-svgname="sw-map"><!--FIG:sw-map--><svg viewBox="0 0 640 320" role="img" aria-label="Gamry Framework 的 Experiment 菜单里只用 A、E、G 三组，循环可用 J：A Utilities 做校准；E Physical Electrochemistry 里用计时电流、线性扫描、循环伏安和计时电位；G Electrochemical Impedance 里用恒电位 EIS；J Electrochemical Energy 做锂对称循环。"><text x="16" y="22" font-size="12" font-weight="700">Experiment 菜单：只用 A、E、G（循环可用 J）</text><rect x="16" y="32" width="220" height="250" rx="6" class="card"/><rect x="20" y="39" width="212" height="18" rx="3" class="menu-hi"/><text x="28" y="52" font-size="10" font-weight="700" class="t-acc">A Utilities</text><text x="28" y="72" font-size="10" class="t-mut">B Critical Pitting Temperature</text><text x="28" y="92" font-size="10" class="t-mut">C DC Corrosion</text><text x="28" y="112" font-size="10" class="t-mut">D Multiplexed DC Corrosion</text><rect x="20" y="119" width="212" height="18" rx="3" class="menu-hi"/><text x="28" y="132" font-size="10" font-weight="700" class="t-acc">E Physical Electrochemistry</text><text x="28" y="152" font-size="10" class="t-mut">F Pulse Voltammetry</text><rect x="20" y="159" width="212" height="18" rx="3" class="menu-hi"/><text x="28" y="172" font-size="10" font-weight="700" class="t-acc">G Electrochemical Impedance</text><text x="28" y="192" font-size="10" class="t-mut">H Electrochemical Noise</text><text x="28" y="212" font-size="10" class="t-mut">I Electrochemical Frequency Modulation</text><rect x="20" y="219" width="212" height="18" rx="3" class="menu-hi"/><text x="28" y="232" font-size="10" font-weight="700" class="t-acc">J Electrochemical Energy</text><text x="28" y="252" font-size="10" class="t-mut">K Solar Cells</text><text x="28" y="272" font-size="10" class="t-mut">L BiPotentiostat Scripts</text><path d="M232 48 H256 V66 H292" class="circ"/><path d="M232 128 H264 V156 H292" class="circ"/><path d="M232 168 H272 V238 H292" class="circ"/><path d="M232 228 H256 V290 H292" class="circ"/><path d="M298 66 l-8 -4 v8 Z M298 156 l-8 -4 v8 Z M298 238 l-8 -4 v8 Z M298 290 l-8 -4 v8 Z" class="arr"/><rect x="298" y="34" width="326" height="64" rx="6" class="sunk-r"/><text x="310" y="52" font-size="11" font-weight="700">A Utilities：校准</text><text x="310" y="70" font-size="9.5" class="t-mut">Calibrate Instrument（calib.exp）</text><text x="310" y="86" font-size="9.5" class="t-mut">Low I DC（calib low ie ranges.exp）· 电缆电容 · 测温</text><rect x="298" y="108" width="326" height="96" rx="6" class="sunk-r"/><text x="310" y="126" font-size="11" font-weight="700">E Physical Electrochemistry</text><text x="310" y="144" font-size="9.5" class="t-mut">Chronoamperometry：电子电导、迁移数极化</text><text x="310" y="160" font-size="9.5" class="t-mut">Linear Sweep Voltammetry：稳定窗口</text><text x="310" y="176" font-size="9.5" class="t-mut">Cyclic Voltammetry：锂沉积和溶出</text><text x="310" y="192" font-size="9.5" class="t-mut">Chronopotentiometry：单步恒流</text><rect x="298" y="216" width="326" height="44" rx="6" class="sunk-r"/><text x="310" y="234" font-size="11" font-weight="700">G Electrochemical Impedance</text><text x="310" y="251" font-size="9.5" class="t-mut">Potentiostatic EIS：电导率、迁移数前后的 EIS</text><rect x="298" y="268" width="326" height="44" rx="6" class="sunk-r"/><text x="310" y="286" font-size="11" font-weight="700">J Electrochemical Energy</text><text x="310" y="303" font-size="9.5" class="t-mut">循环充放电：锂对称循环（名称以菜单为准）</text><text x="16" y="306" font-size="9.5" class="t-mut">F1 ABORT 终止 · F2 Skip 跳到下一步 · F3 Pause 暂停</text></svg><!--/FIG:sw-map--></div>
+      </figure>
+      <div class="tablewrap" style="margin-top:14px">
+        <table class="p keepcase wrap1">
+          <thead><tr><th>测量</th><th>电池</th><th>Experiment 菜单</th><th>关键设置</th><th>步骤</th></tr></thead>
+          <tbody>
+            <tr><td>校准</td><td>200 Ω / 20 kΩ 校准池</td><td>A Utilities › Calibrate Instrument（calib.exp）、Low I DC（calib low ie ranges.exp）、Calibrate Cable Capacitance、Calibrate Temperature Measurement</td><td>Low I DC 按软件窗口接线</td><td><a href="#calib">校准仪器</a></td></tr>
+            <tr><td>离子电导率</td><td>SS | 电解质 | SS</td><td>G Electrochemical Impedance › Potentiostatic EIS</td><td>1 MHz → 0.1–1 Hz，10 mV rms，0 V vs E<sub>oc</sub></td><td><a href="#steps">测量步骤</a>、<a href="#params">EIS 参数</a></td></tr>
+            <tr><td>电子电导</td><td>SS | 电解质 | SS，另加 SS | PTFE | SS 空白</td><td>E Physical Electrochemistry › Chronoamperometry</td><td>Step 1 = ΔV vs E<sub>ref</sub>（仅 SS–SS 池），2–10 h</td><td><a href="#econd">电子电导</a></td></tr>
+            <tr><td>锂离子迁移数</td><td>Li | 电解质 | Li</td><td>G › Potentiostatic EIS + E › Chronoamperometry</td><td>Step 1 = 10 mV vs E<sub>oc</sub>；极化后马上测 EIS</td><td><a href="#tli">迁移数</a></td></tr>
+            <tr><td>电化学稳定窗口</td><td>SS | 电解质 | Li</td><td>E › Linear Sweep Voltammetry；还原侧 E › Cyclic Voltammetry</td><td>0.1–1 mV/s，终止电位 vs E<sub>ref</sub> = vs Li</td><td><a href="#esw">稳定窗口</a></td></tr>
+            <tr><td>锂对称循环、CCD</td><td>Li | 电解质 | Li</td><td>J Electrochemical Energy 下的循环充放电；或 E › Chronopotentiometry 用 Sequence Wizard 串起来</td><td>±I = j × A，电压保护上下限</td><td><a href="#lisym">锂对称循环</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="b" style="margin-top:12px">
+        <li>运行中的工具栏：<strong>F1 ABORT</strong> 立即终止；<strong>F2 Skip</strong> 结束当前这一步、进入下一步；<strong>F3 Pause</strong> 暂停（极化实验里不用）。</li>
+        <li>几个测试要连续跑（例如 EIS → 极化 → EIS）时，用 Experiment › Sequence Wizard 串起来。</li>
+        <li>带电的电池（SS | Li、全电池）DC 电压一律选 vs E<sub>oc</sub>；只有不储能的 SS–SS 池（和开路电压接近 0 的 Li | Li 池）可以用 vs E<sub>ref</sub>。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section id="steps">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">08 · Procedure</div>
+      <div class="eyebrow">09 · Procedure</div>
       <h2>测量步骤</h2>
       <p>以一个温度、一个样品为例，每一步配一张示意图。变温测量就在每个温度重复第 5–8 步。</p>
     </div>
@@ -1065,7 +1113,7 @@ svg .t-ok{fill:var(--ok)}
           <ul><li>需要记录温度时，可以用 Reference 620 后面板的 K 型热电偶插孔。仪器不附带热电偶，要自备黄色迷你插头的 K 型热电偶。<span class="src">手册 Ch 7</span></li>
           <li>手册给出的热电偶测温精度约 ±4 °C（校准后），所以算活化能用的温度最好以恒温箱或独立温度计为准。<span class="src">手册 Ch 7</span></li></ul></div>
           <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="控温：电解池放进恒温箱，自备的 K 型热电偶接到 Reference 620 后面板的 T/C Type K 插孔；温度曲线到达设定值并稳定一段时间后再开始测量。"><text x="14" y="16" font-size="11" font-weight="700">恒温箱或加热台</text><rect x="12" y="24" width="190" height="150" rx="8" class="oven"/><rect x="22" y="36" width="128" height="128" rx="4" class="chamber"/><rect x="158" y="48" width="38" height="20" rx="3" class="panel"/><text x="177" y="62" font-size="10" text-anchor="middle" font-weight="600" class="t-panel tm">60 °C</text><circle cx="177" cy="96" r="9" class="knob-s"/><circle cx="177" cy="124" r="9" class="knob-s"/><rect x="38" y="98" width="14" height="10" rx="2" class="steel"/><rect x="50" y="94" width="84" height="10" rx="3" class="steel"/><rect x="46" y="104" width="92" height="6" class="ptfe"/><rect x="132" y="114" width="14" height="10" rx="2" class="steel"/><rect x="50" y="110" width="84" height="10" rx="3" class="steel"/><path d="M38 101 Q28 101 28 120 V146 Q28 154 38 154 H86" class="lead-thin"/><path d="M146 115 Q154 115 154 128 V146 Q154 154 144 154 H86" class="lead-thin"/><path d="M86 154 V198" class="cable"/><text x="94" y="200" font-size="10" class="t-mut">电缆接前面板</text><path d="M112 93 V34 Q112 10 136 10 H262 Q276 10 276 24 V40" class="w-out"/><path d="M112 93 V34 Q112 10 136 10 H262 Q276 10 276 24 V40" class="w tc"/><rect x="232" y="30" width="160" height="42" rx="6" class="panel"/><rect x="265" y="40" width="22" height="14" rx="2" class="tc-jack"/><text x="296" y="52" font-size="10" font-weight="600" class="t-panel">T/C Type K</text><text x="388" y="24" font-size="10" text-anchor="end" class="t-mut">仪器后面板</text><text x="120" y="52" font-size="10" class="t-mut">热电偶</text><path d="M250 92 V190 H390" class="axis"/><text x="244" y="100" font-size="11" text-anchor="end" font-weight="600" class="t-mut">T</text><text x="390" y="205" font-size="10" text-anchor="end" class="t-mut">时间</text><line x1="250" y1="116" x2="390" y2="116" class="setline"/><text x="254" y="110" font-size="9.5" class="t-mut">设定温度</text><path d="M250 182 C 282 182, 292 117, 330 116 H388" class="curve"/><line x1="362" y1="190" x2="362" y2="104" class="mark-line"/><text x="362" y="100" font-size="10" text-anchor="middle" font-weight="700">开始测量</text><text x="334" y="136" font-size="9.5" text-anchor="middle" class="t-mut">稳定后再等</text></svg></figure></div></li>
-        <li><div class="step"><div class="step-text"><p>在 Gamry Framework 中打开恒电位 EIS（Potentiostatic EIS），按<a href="#params">EIS 参数</a>一节填参数。</p>
+        <li><div class="step"><div class="step-text"><p>在 Gamry Framework 中选 <code>Experiment › G Electrochemical Impedance › Potentiostatic EIS</code>，按<a href="#params">EIS 参数</a>一节填参数。</p>
           <ul><li>菜单路径按常见的 Framework 版本画出，不同版本的名称可能略有差异。</li>
           <li>先把 Area 填 1 cm²，读出的就是未归一化的 R<sub>b</sub>，计算 σ 时再用实际面积。</li></ul></div>
           <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="软件界面示意：Gamry Framework 菜单 Experiment、Electrochemical Impedance、Potentiostatic EIS；参数框填起始频率 1 MHz、结束频率 0.1 Hz、每十倍频程 10 点、交流 10 mV rms、直流 0 V vs Eoc、面积 1 cm²。"><rect x="10" y="10" width="380" height="200" rx="8" class="card"/><path d="M10 18 Q10 10 18 10 H382 Q390 10 390 18 V32 H10 Z" class="titlebar"/><text x="22" y="25.5" font-size="10.5" font-weight="700">Gamry Framework</text><text x="22" y="47" font-size="10.5">File</text><rect x="50" y="36" width="72" height="16" rx="3" class="menu-hi"/><text x="86" y="47.5" font-size="10.5" text-anchor="middle" font-weight="700" class="t-acc">Experiment</text><text x="132" y="47" font-size="10.5" class="t-mut">…</text><rect x="50" y="54" width="164" height="66" rx="4" class="menu"/><text x="60" y="70" font-size="10">Physical Electrochemistry</text><text x="206" y="70" font-size="10" text-anchor="end">›</text><rect x="52" y="77" width="160" height="18" rx="2" class="menu-hi"/><text x="60" y="90" font-size="10" font-weight="700" class="t-acc">Electrochemical Impedance</text><text x="206" y="90" font-size="10" text-anchor="end" font-weight="700" class="t-acc">›</text><text x="60" y="110" font-size="10">Utilities</text><text x="206" y="110" font-size="10" text-anchor="end">›</text><rect x="214" y="77" width="130" height="44" rx="4" class="menu"/><rect x="216" y="80" width="126" height="18" rx="2" class="menu-hi"/><text x="224" y="93" font-size="10" font-weight="700" class="t-acc">Potentiostatic EIS</text><text x="224" y="114" font-size="10" class="t-mut">Galvanostatic EIS</text><rect x="22" y="132" width="356" height="68" rx="6" class="sunk-r"/><text x="32" y="152" font-size="10" class="t-mut tm">Initial Freq.</text><text x="124" y="152" font-size="10.5" font-weight="700">1 MHz</text><text x="32" y="170" font-size="10" class="t-mut tm">Final Freq.</text><text x="124" y="170" font-size="10.5" font-weight="700">0.1 Hz</text><text x="32" y="188" font-size="10" class="t-mut tm">Points/decade</text><text x="124" y="188" font-size="10.5" font-weight="700">10</text><text x="206" y="152" font-size="10" class="t-mut tm">AC Voltage</text><text x="298" y="152" font-size="10.5" font-weight="700">10 mV rms</text><text x="206" y="170" font-size="10" class="t-mut tm">DC Voltage</text><text x="298" y="170" font-size="10.5" font-weight="700">0 V vs E<tspan dy="2.9" font-size="7.6">oc</tspan></text><text x="206" y="188" font-size="10" class="t-mut tm">Area</text><text x="298" y="188" font-size="10.5" font-weight="700">1 cm²</text></svg></figure></div></li>
@@ -1088,7 +1136,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="params">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">09 · EIS settings</div>
+      <div class="eyebrow">10 · EIS settings</div>
       <h2>EIS 参数</h2>
       <p>下面是起步值。<a href="#sim">预测谱图</a>一节的预测工具会按你的样品估算 R<sub>b</sub>，给出更合适的频率范围。</p>
     </div>
@@ -1113,7 +1161,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="econd">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">10 · Electronic conductivity</div>
+      <div class="eyebrow">11 · Electronic conductivity</div>
       <h2>电子电导：直流极化法</h2>
       <p>在 SS | 电解质 | SS 两端加一个恒定的小电压。离子在不锈钢表面被挡住、慢慢停下来，最后剩下的稳态电流就是电子电流（Wagner 直流极化法）。好的聚合物电解质几乎不导电子，σ<sub>e</sub> 应该比离子电导率低好几个数量级。仪器部分（屏蔽、低电流校准、导线不要动）依据手册，方法本身是通用电化学方法。</p>
     </div>
@@ -1162,7 +1210,7 @@ svg .t-ok{fill:var(--ok)}
           <li>在 SS–SS 上只能得到稳定窗口的总宽度，不是相对 Li/Li<sup>+</sup> 的电位。</li>
           <li>文献中常见 0.1–1 V；电压太低，电流太小，噪声占比就大。</li></ul></div>
           <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="选电压：用另一个 SS 电解质 SS 电池慢扫 LSV 找到电流开始明显上升的分解电压，选 2 到 3 个明显低于它的电压，例如 0.1、0.25、0.5 伏。"><path d="M32 30 V170 H240" class="axis"/><text x="28" y="30" font-size="11" text-anchor="end" font-weight="600" class="t-mut">I</text><text x="240" y="200" font-size="10" text-anchor="end" class="t-mut">电压 (V)</text><text x="32" y="184" font-size="9.5" text-anchor="middle" class="t-mut">0</text><text x="132" y="184" font-size="9.5" text-anchor="middle" class="t-mut">1</text><text x="232" y="184" font-size="9.5" text-anchor="middle" class="t-mut">2</text><path d="M32 166 H150 C 176 166, 194 152, 206 112 S 224 44, 236 34" class="curve"/><line x1="162" y1="170" x2="162" y2="40" class="mark-line"/><text x="162" y="34" font-size="10" text-anchor="middle" font-weight="700">分解开始</text><path d="M42 166 l-4 -8 h8 Z" class="arr-acc"/><path d="M57 166 l-4 -8 h8 Z" class="arr-acc"/><path d="M82 166 l-4 -8 h8 Z" class="arr-acc"/><text x="57" y="150" font-size="9.5" text-anchor="middle" font-weight="700" class="t-acc">选这里</text><text x="62" y="198" font-size="9" text-anchor="middle" class="t-acc">0.1 · 0.25 · 0.5</text><text x="256" y="46" font-size="11.5" font-weight="700">选 2–3 个电压</text><text x="256" y="64" font-size="9.5" class="t-mut">明显低于分解电压</text><text x="256" y="80" font-size="9.5" class="t-mut">常见 0.1–1 V</text><text x="256" y="112" font-size="11.5" font-weight="700">分解电压怎么找</text><text x="256" y="130" font-size="9.5" class="t-mut">另一个电池慢扫 LSV</text><text x="256" y="146" font-size="9.5" class="t-mut">（会把样品扫坏）</text><text x="256" y="178" font-size="9.5" class="t-mut">SS–SS 只得到窗口</text><text x="256" y="193" font-size="9.5" class="t-mut">总宽度，不是 vs Li</text></svg></figure></div></li>
-        <li><div class="step"><div class="step-text"><p>在 <code>Experiment › Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
+        <li><div class="step"><div class="step-text"><p>在 <code>Experiment › E Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
           <ul><li>Pre-step：0 V，约 30 s。</li>
           <li>Step 1：ΔV，例如 0.100 V；时间 7200–36000 s（2–10 h），要足够长，让电流到稳态。</li>
           <li>Step 2：0 V，时间和 Step 1 差不多，让电池回到初始状态。</li>
@@ -1234,6 +1282,163 @@ svg .t-ok{fill:var(--ok)}
   </div>
 </section>
 
+<section id="tli">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">12 · Li transference number</div>
+      <h2>锂离子迁移数（Li | 电解质 | Li）</h2>
+      <p>在锂对称电池上依次做 EIS → 10 mV 恒电位极化到稳态 → EIS（Bruce–Vincent 法），用初始和稳态电流、极化前后的界面电阻算 t<sub>+</sub>。不锈钢会把锂离子挡住，SS | SS 电池测不了 t<sub>+</sub>。方法本身是通用电化学方法。</p>
+    </div>
+    <div class="formula" style="margin-bottom:16px">
+      <div class="eq"><i>t</i><sub>+</sub> = <i>I</i><sub>ss</sub>(Δ<i>V</i> − <i>I</i><sub>0</sub><i>R</i><sub>0</sub>) / [<i>I</i><sub>0</sub>(Δ<i>V</i> − <i>I</i><sub>ss</sub><i>R</i><sub>ss</sub>)]</div>
+      <dl>
+        <div><dt>ΔV</dt><dd>极化电压，常用 10 mV</dd></div>
+        <div><dt>I<sub>0</sub>、I<sub>ss</sub></dt><dd>初始、稳态电流</dd></div>
+        <div><dt>R<sub>0</sub>、R<sub>ss</sub></dt><dd>极化前、后的界面电阻</dd></div>
+      </dl>
+    </div>
+    <div class="block">
+      <!--TLSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>在手套箱里装 Li / 电解质 / Li，放到测试温度（PEO 类常在 60–80 °C），等界面稳定再开始。<span class="src gen">通用方法</span></p>
+          <ul><li>膜比锂片大一圈，防止边缘短路；锂片表面有氧化层时轻轻刮亮。</li>
+          <li>隔一段时间测一次 EIS，界面半圆不再明显变化后再开始。界面还在变的时候测，t<sub>+</sub> 会不准。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-01"><svg viewBox="0 0 400 220" role="img" aria-label="装锂对称电池并静置：Li 电解质 Li，膜比锂片大一圈；在测试温度下隔一段时间测一次 EIS，界面半圆不再变化后再开始测迁移数。"><text x="16" y="22" font-size="12" font-weight="700">在手套箱里装，测试温度下静置</text><rect x="40" y="36" width="80" height="12" rx="3" class="steel"/><path d="M50 58 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="46" y="70" width="68" height="6" rx="1" class="steel"/><rect x="50" y="76" width="60" height="6" rx="1" class="li"/><rect x="38" y="82" width="84" height="7" rx="1" class="sample"/><rect x="50" y="89" width="60" height="6" rx="1" class="li"/><rect x="46" y="95" width="68" height="6" rx="1" class="steel"/><rect x="36" y="107" width="88" height="22" rx="4" class="steel"/><rect x="40" y="107" width="80" height="16" rx="3" class="cavity"/><text x="128" y="82" font-size="9.5" font-weight="600">锂片</text><text x="128" y="96" font-size="9.5" font-weight="600">膜比锂片大一圈</text><text x="128" y="110" font-size="9.5" font-weight="600">锂片</text><text x="16" y="172" font-size="11" font-weight="700">Li / 电解质 / Li</text><text x="16" y="190" font-size="9.5" class="t-mut">膜比锂片大一圈，防止边缘短路</text><text x="16" y="206" font-size="9.5" class="t-mut">记下锂片直径（算电流密度用）</text><text x="246" y="30" font-size="10" font-weight="600">隔一段时间测一次 EIS</text><path d="M246 40 V150 H388" class="axis"/><path d="M256 150 A55 55 0 0 1 366 150" class="curve-todo"/><path d="M256 150 A46 46 0 0 1 348 150" class="curve-todo"/><path d="M256 150 A40 40 0 0 1 336 150" class="curve"/><path d="M256 150 A39 39 0 0 1 334 150" class="curve"/><text x="246" y="172" font-size="9.5" class="t-mut">虚线：早期；实线：最后两次重合</text><text x="246" y="192" font-size="10.5" font-weight="700">→ 界面稳定，开始测</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>极化前测 EIS：<code>Experiment › G Electrochemical Impedance › Potentiostatic EIS</code>，1 MHz → 0.1 Hz，AC 5–10 mV rms（不大于 ΔV），DC 0 V vs E<sub>oc</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>在 Echem Analyst 2 里用 R<sub>s</sub> + (R<sub>b</sub> ∥ CPE) + (R<sub>i</sub> ∥ CPE) 拟合，得到本体电阻 R<sub>b,0</sub> 和界面电阻 R<sub>0</sub>。</li>
+          <li>R<sub>0</sub> 是界面电阻，不含本体电阻。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-02"><svg viewBox="0 0 400 220" role="img" aria-label="极化前 EIS：小半圆是本体电阻 R_b,0，接着的大半圆是界面电阻 R_0；用 R_s 串联 R_b 与 CPE 并联、再串联 R_i 与 CPE 并联的等效电路拟合；程序是 G Potentiostatic EIS，1 兆赫到 0.1 赫，交流 5 到 10 毫伏，直流 0 伏 vs Eoc。"><path d="M24 30 V150 H226" class="axis"/><text x="28" y="28" font-size="9.5" class="t-mut">−Z″</text><text x="226" y="164" font-size="9.5" text-anchor="end" class="t-mut">Z′</text><path d="M34 150 A15 15 0 0 1 64 150 A50 50 0 0 1 164 150 L190 124" class="curve"/><line x1="34" y1="172" x2="64" y2="172" class="dim"/><path d="M34 172 L41 168 L41 176 Z M64 172 L57 168 L57 176 Z" class="arr"/><line x1="64" y1="172" x2="164" y2="172" class="dim"/><path d="M64 172 L71 168 L71 176 Z M164 172 L157 168 L157 176 Z" class="arr"/><text x="49" y="190" font-size="10.5" text-anchor="middle" font-weight="700">R<tspan dy="2.9" font-size="7.6">b,0</tspan></text><text x="114" y="190" font-size="10.5" text-anchor="middle" font-weight="700">R<tspan dy="2.9" font-size="7.6">0</tspan><tspan dy="-2.9">（界面）</tspan></text><path d="M236 60 H246 M266 60 H276 V46 H286 M306 46 H316 V60 M276 60 V74 H290 M302 74 H316 V60 H326 V46 H336 M356 46 H366 V60 M326 60 V74 H340 M352 74 H366 V60 H384" class="circ"/><rect x="246" y="54" width="20" height="12" rx="1" class="res"/><rect x="286" y="40" width="20" height="12" rx="1" class="res"/><rect x="336" y="40" width="20" height="12" rx="1" class="res"/><path d="M294 68 L290 74 L294 80 M302 68 L298 74 L302 80" class="circ"/><path d="M344 68 L340 74 L344 80 M352 68 L348 74 L352 80" class="circ"/><text x="256" y="48" font-size="9.5" text-anchor="middle" font-weight="600">R<tspan dy="2.7" font-size="6.8">s</tspan></text><text x="296" y="34" font-size="9.5" text-anchor="middle" font-weight="600">R<tspan dy="2.7" font-size="6.8">b</tspan></text><text x="346" y="34" font-size="9.5" text-anchor="middle" font-weight="600">R<tspan dy="2.7" font-size="6.8">i</tspan></text><text x="296" y="94" font-size="8.5" text-anchor="middle" class="t-mut">CPE</text><text x="346" y="94" font-size="8.5" text-anchor="middle" class="t-mut">CPE</text><text x="310" y="122" font-size="10" text-anchor="middle" class="tm">G › Potentiostatic EIS</text><text x="310" y="142" font-size="9.5" text-anchor="middle" class="t-mut">1 MHz → 0.1 Hz，AC 5–10 mV</text><text x="310" y="158" font-size="9.5" text-anchor="middle" class="t-mut">DC 0 V vs Eoc</text><text x="310" y="184" font-size="10.5" text-anchor="middle" font-weight="700">拟合得到 R<tspan dy="2.9" font-size="7.6">b,0</tspan><tspan dy="-2.9"> 和 R</tspan><tspan dy="2.9" font-size="7.6">0</tspan></text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>恒电位极化：<code>Experiment › E Physical Electrochemistry › Chronoamperometry</code>，Step 1 = 0.010 V vs E<sub>oc</sub>，1–5 h。字段名以你的软件为准。</p>
+          <ul><li>Li 对称电池的开路电压接近 0，vs E<sub>oc</sub> 和 vs E<sub>ref</sub> 差别很小，但统一用 vs E<sub>oc</sub>。</li>
+          <li>Max Current 不小于 ΔV / (R<sub>b,0</sub> + R<sub>0</sub>)，IRComp 选 None。</li>
+          <li>EIS 和极化可以用 Experiment › Sequence Wizard 串成一个序列。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-03"><svg viewBox="0 0 400 220" role="img" aria-label="迁移数的计时电流设置：预步 0 伏 vs Eoc 10 秒；第一步 0.010 伏 vs Eoc，1 到 5 小时；第二步 0 伏很短；采样 1 到 5 秒；最大电流不小于 ΔV 除以本体加界面电阻；不开 iR 补偿。"><rect x="10" y="8" width="380" height="206" rx="8" class="card"/><path d="M10 16 Q10 8 18 8 H382 Q390 8 390 16 V28 H10 Z" class="titlebar"/><text x="22" y="22.5" font-size="10.5" font-weight="700">Chronoamperometry（迁移数）</text><text x="24" y="48" font-size="10" class="t-mut tm">Pre-step Voltage</text><text x="196" y="48" font-size="10.5" font-weight="700">0 V（vs Eoc）</text><text x="24" y="65" font-size="10" class="t-mut tm">Pre-step Delay Time</text><text x="196" y="65" font-size="10.5" font-weight="700">10 s</text><rect x="16" y="70" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="82" font-size="10" class="t-mut tm">Step 1 Voltage</text><text x="196" y="82" font-size="10.5" font-weight="700" class="t-acc">0.010 V（vs Eoc）</text><rect x="16" y="87" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="99" font-size="10" class="t-mut tm">Step 1 Time</text><text x="196" y="99" font-size="10.5" font-weight="700" class="t-acc">3600–18000 s</text><text x="24" y="116" font-size="10" class="t-mut tm">Step 2 Voltage</text><text x="196" y="116" font-size="10.5" font-weight="700">0 V（vs Eoc）</text><text x="24" y="133" font-size="10" class="t-mut tm">Step 2 Time</text><text x="196" y="133" font-size="10.5" font-weight="700">0–10 s</text><text x="24" y="150" font-size="10" class="t-mut tm">Sample Period</text><text x="196" y="150" font-size="10.5" font-weight="700">1–5 s</text><text x="24" y="167" font-size="10" class="t-mut tm">Max Current</text><text x="196" y="167" font-size="10.5" font-weight="700">≥ ΔV / (Rb + R0)</text><text x="24" y="184" font-size="10" class="t-mut tm">IRComp</text><text x="196" y="184" font-size="10.5" font-weight="700">None</text><text x="24" y="204" font-size="9" class="t-mut">E › Chronoamperometry；字段名以你的软件为准</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>电流从初始值 I<sub>0</sub> 衰减到稳态 I<sub>ss</sub>。30–60 min 内变化小于约 1% 时，取最后一段的平均作为 I<sub>ss</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>I<sub>0</sub> 可以取曲线开头的电流，但它受双电层充电和采样时刻影响；用 I<sub>0</sub> = ΔV / (R<sub>b,0</sub> + R<sub>0</sub>) 计算更稳妥，两者应接近。</li>
+          <li>Cell On 黄灯亮着，几个小时里都不要碰导线。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-04"><svg viewBox="0 0 400 220" role="img" aria-label="恒电位极化：加 10 毫伏后电流从初始值 I0 衰减到稳态 Iss，30 到 60 分钟内变化小于约 1% 时取最后一段平均；I0 可取曲线开头的电流，或用 ΔV 除以本体加界面电阻计算。"><path d="M30 30 V170 H250" class="axis"/><text x="26" y="30" font-size="10" text-anchor="end" font-weight="600" class="t-mut">I</text><text x="250" y="186" font-size="9.5" text-anchor="end" class="t-mut">时间</text><path d="M34 44 C 60 104, 110 128, 180 134 H246" class="curve"/><circle cx="34" cy="44" r="5" class="mark"/><text x="44" y="46" font-size="11" font-weight="700">I<tspan dy="3.1" font-size="7.9">0</tspan></text><line x1="196" y1="120" x2="244" y2="120" class="dim"/><path d="M196 120 L203 116 L203 124 Z M244 120 L237 116 L237 124 Z" class="arr"/><text x="220" y="112" font-size="9.5" text-anchor="middle" font-weight="700">平均 = I<tspan dy="2.7" font-size="6.8">ss</tspan></text><text x="80" y="200" font-size="10" font-weight="600">ΔV = 10 mV 一直加着</text><text x="262" y="40" font-size="11" font-weight="700">稳态判据</text><text x="262" y="58" font-size="9.5" class="t-mut">30–60 min 内</text><text x="262" y="73" font-size="9.5" class="t-mut">电流变化 < 约 1%</text><text x="262" y="104" font-size="11" font-weight="700">I<tspan dy="3.1" font-size="7.9">0</tspan><tspan dy="-3.1"> 的两种取法</tspan></text><text x="262" y="122" font-size="9.5" class="t-mut">曲线开头的电流</text><text x="262" y="138" font-size="9.5" class="t-mut">或 ΔV / (R<tspan dy="2.7" font-size="6.8">b,0</tspan><tspan dy="-2.7"> + R</tspan><tspan dy="2.7" font-size="6.8">0</tspan><tspan dy="-2.7">)</tspan></text><text x="262" y="154" font-size="9.5" class="t-mut">两者应接近</text><text x="262" y="186" font-size="10.5" font-weight="700" class="t-warn">全程别碰导线</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>极化结束后马上测 EIS：Init. Delay 关掉或设得很短，用同一个等效电路拟合，得到 R<sub>ss</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>也可以保持 10 mV 偏压测（DC = 0.010 V vs E<sub>ref</sub>，对锂对称电池是安全的）。选一种，并在报告里写明。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-05"><svg viewBox="0 0 400 220" role="img" aria-label="极化后立即测 EIS：Init. Delay 关掉；用同一个等效电路拟合，界面电阻从极化前的 R0 变成极化后的 Rss。"><path d="M24 30 V150 H226" class="axis"/><text x="28" y="28" font-size="9.5" class="t-mut">−Z″</text><text x="226" y="164" font-size="9.5" text-anchor="end" class="t-mut">Z′</text><path d="M34 150 A15 15 0 0 1 64 150 A50 50 0 0 1 164 150" class="curve-todo"/><path d="M34 150 A15 15 0 0 1 64 150 A60 60 0 0 1 184 150" class="curve"/><text x="160" y="168" font-size="10" text-anchor="middle" font-weight="600" class="t-mut">R<tspan dy="2.8" font-size="7.2">0</tspan></text><text x="188" y="168" font-size="10" text-anchor="middle" font-weight="700">R<tspan dy="2.8" font-size="7.2">ss</tspan></text><line x1="244" y1="40" x2="262" y2="40" class="curve-todo"/><text x="268" y="44" font-size="10">极化前</text><line x1="244" y1="60" x2="262" y2="60" class="curve"/><text x="268" y="64" font-size="10" font-weight="700">极化后</text><text x="244" y="96" font-size="11" font-weight="700">极化后马上测</text><text x="244" y="114" font-size="9.5" class="t-mut">Init. Delay 关掉</text><text x="244" y="130" font-size="9.5" class="t-mut">浓度梯度会慢慢松弛</text><text x="244" y="160" font-size="10.5" font-weight="700">界面电阻：R<tspan dy="2.9" font-size="7.6">0</tspan><tspan dy="-2.9"> → R</tspan><tspan dy="2.9" font-size="7.6">ss</tspan></text><text x="244" y="178" font-size="9.5" class="t-mut">同一个等效电路拟合</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>按公式计算 t<sub>+</sub>，检查结果是否合理，装 2–3 个电池取平均。下面的计算器可以直接算。<span class="src gen">通用方法</span></p>
+          <ul><li>t<sub>+</sub> 大于 1 或小于 0，或 I<sub>ss</sub> 大于 I<sub>0</sub>：界面在测量中变化太大、有短路，或极化时间不够。</li>
+          <li>浓度高的聚合物电解质测到的是表观迁移数，报告时写明方法、温度和 ΔV。</li></ul></div>
+          <figure class="stepfig" data-svgname="tli-06"><svg viewBox="0 0 400 220" role="img" aria-label="计算迁移数：t+ 等于 Iss 乘 ΔV 减 I0 R0，除以 I0 乘 ΔV 减 Iss Rss；示例约 0.29；检查 0 小于 t+ 小于 1、Iss 小于 I0、测量与计算的 I0 接近，重复 2 到 3 个电池。"><text x="200" y="36" font-size="14" text-anchor="middle" font-weight="700">t<tspan dy="3.9" font-size="10.1">+</tspan><tspan dy="-3.9"> = I</tspan><tspan dy="3.9" font-size="10.1">ss</tspan><tspan dy="-3.9">(ΔV − I</tspan><tspan dy="3.9" font-size="10.1">0</tspan><tspan dy="-3.9">R</tspan><tspan dy="3.9" font-size="10.1">0</tspan><tspan dy="-3.9">) / [I</tspan><tspan dy="3.9" font-size="10.1">0</tspan><tspan dy="-3.9">(ΔV − I</tspan><tspan dy="3.9" font-size="10.1">ss</tspan><tspan dy="-3.9">R</tspan><tspan dy="3.9" font-size="10.1">ss</tspan><tspan dy="-3.9">)]</tspan></text><text x="200" y="62" font-size="10" text-anchor="middle" class="tm">= 8 × (0.010 − 0.004) / [20 × (0.010 − 0.00176)]</text><text x="200" y="88" font-size="16" text-anchor="middle" font-weight="700" class="t-acc">≈ 0.29</text><text x="200" y="106" font-size="9" text-anchor="middle" class="t-mut">ΔV = 10 mV，I0 = 20 µA，Iss = 8 µA，R0 = 200 Ω，Rss = 220 Ω</text><rect x="14" y="120" width="372" height="76" rx="8" class="sunk-r"/><text x="26" y="140" font-size="11" font-weight="700">结果要合理</text><circle cx="32" cy="160" r="8" class="ic-ok"/><path d="M28.4 160.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="46" y="164.5" font-size="10.5">0 < t+ < 1</text><circle cx="162" cy="160" r="8" class="ic-ok"/><path d="M158.4 160.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="176" y="164.5" font-size="10.5">Iss < I0</text><circle cx="32" cy="182" r="8" class="ic-ok"/><path d="M28.4 182.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="46" y="186.5" font-size="10.5">测量的 I0 ≈ 计算的 I0</text><circle cx="232" cy="182" r="8" class="ic-ok"/><path d="M228.4 182.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="246" y="186.5" font-size="10.5">重复 2–3 个电池</text><rect x="14" y="200" width="64" height="18" rx="9" class="tagbox"/><text x="46" y="213" font-size="10" text-anchor="middle" font-weight="700" class="t-warn">示例数值</text></svg></figure></div></li>
+      </ol>
+      <!--/TLSTEPS-->
+    </div>
+    <div class="block two" style="margin-top:16px">
+      <div class="fields">
+        <h3>t<sub>+</sub> 计算</h3>
+        <div class="row2">
+          <div class="field"><label for="tlV">ΔV (mV)</label><input id="tlV" type="number" min="0" step="any" value="10"></div>
+          <div class="field"><label for="tlI0">I<sub>0</sub>，测量值 (µA)</label><input id="tlI0" type="number" min="0" step="any" value="20"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="tlIss">I<sub>ss</sub> (µA)</label><input id="tlIss" type="number" min="0" step="any" value="8"></div>
+          <div class="field"><label for="tlRb">R<sub>b,0</sub>，极化前本体 (Ω)</label><input id="tlRb" type="number" min="0" step="any" value="300"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="tlR0">R<sub>0</sub>，极化前界面 (Ω)</label><input id="tlR0" type="number" min="0" step="any" value="200"></div>
+          <div class="field"><label for="tlRss">R<sub>ss</sub>，极化后界面 (Ω)</label><input id="tlRss" type="number" min="0" step="any" value="220"></div>
+        </div>
+        <p class="note" style="margin:0">示例数值是虚构的。I<sub>0</sub> 计算值 = ΔV / (R<sub>b,0</sub> + R<sub>0</sub>)。</p>
+      </div>
+      <div class="sigma" aria-live="polite">
+        <div class="note">锂离子迁移数</div>
+        <div class="big" id="tlOut">—</div>
+        <div class="note" id="tlDetail">—</div>
+        <div class="msgs" id="tlMsgs"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="esw">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">13 · Stability window</div>
+      <h2>电化学稳定窗口（SS | 电解质 | Li）</h2>
+      <p>以锂作对电极兼参比，从开路电位慢扫到高电位，电流明显上升的电位就是氧化极限（vs Li/Li<sup>+</sup>）；还原侧用循环伏安看锂的沉积和溶出。每次扫描用一个新电池。方法本身是通用电化学方法。</p>
+    </div>
+    <div class="block">
+      <!--ESWSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>装 SS / 电解质 / Li，锂放在负极盖一侧。接线：绿 + 蓝接不锈钢，白 + 红 + 橙接锂，软件里的 vs E<sub>ref</sub> 就是 vs Li/Li<sup>+</sup>。<span class="src">手册 Ch 6</span></p>
+          <ul><li>装好后记下开路电压，在测试温度下静置。</li>
+          <li>每次扫描用一个新电池：扫过的电解质已经分解。</li></ul></div>
+          <figure class="stepfig" data-svgname="esw-01"><svg viewBox="0 0 400 220" role="img" aria-label="稳定窗口的电池：SS 电解质 Li，锂在负极盖一侧作对电极兼参比，不锈钢是工作电极；绿和蓝接不锈钢，白、红、橙接锂，软件里 vs Eref 就是 vs Li；每次扫描用一个新电池。"><text x="16" y="22" font-size="12" font-weight="700">SS / 电解质 / Li：锂在负极盖一侧</text><rect x="50" y="36" width="80" height="12" rx="3" class="steel"/><path d="M60 58 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0 q3.0 -4 6 0 q3.0 4 6 0" class="spring"/><rect x="56" y="70" width="68" height="6" rx="1" class="steel"/><rect x="60" y="76" width="60" height="6" rx="1" class="li"/><rect x="48" y="82" width="84" height="7" rx="1" class="sample"/><rect x="56" y="89" width="68" height="6" rx="1" class="steel"/><rect x="46" y="101" width="88" height="22" rx="4" class="steel"/><rect x="50" y="101" width="80" height="16" rx="3" class="cavity"/><text x="142" y="82" font-size="9.5" font-weight="600">锂：对电极 + 参比</text><text x="142" y="96" font-size="9.5" font-weight="600">电解质膜</text><text x="142" y="110" font-size="9.5" font-weight="600">不锈钢：工作电极</text><circle cx="258" cy="52" r="5" class="jk-we"/><circle cx="270" cy="52" r="5" class="jk-ws"/><text x="282" y="56" font-size="10">绿 + 蓝 → 不锈钢</text><circle cx="258" cy="76" r="5" class="jk-re"/><circle cx="270" cy="76" r="5" class="jk-ce"/><circle cx="282" cy="76" r="5" class="jk-cs"/><text x="294" y="80" font-size="10">白 + 红 + 橙 → 锂</text><text x="252" y="112" font-size="11" font-weight="700" class="t-acc">vs Eref = vs Li/Li⁺</text><text x="252" y="132" font-size="9.5" class="t-mut">软件显示的电位就是</text><text x="252" y="148" font-size="9.5" class="t-mut">不锈钢相对锂的电位</text><text x="16" y="176" font-size="10.5" font-weight="600">装好后记下开路电压</text><text x="16" y="194" font-size="9.5" class="t-mut">每次扫描用一个新电池：扫过的电解质已经分解</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>氧化侧：<code>Experiment › E Physical Electrochemistry › Linear Sweep Voltammetry</code>，从开路电位慢扫到高电位。字段名以你的软件为准。<span class="src gen">通用方法</span></p>
+          <ul><li>扫速 0.1–1 mV/s；终止电位按体系定，例如 6.0 V vs Li。</li>
+          <li>这是带电的半电池：起始电位用 vs E<sub>oc</sub>；终止电位用 vs E<sub>ref</sub>，此时它就是相对锂的电位。</li></ul></div>
+          <figure class="stepfig" data-svgname="esw-02"><svg viewBox="0 0 400 220" role="img" aria-label="线性扫描伏安设置：起始 0 伏 vs Eoc，终止 6.0 伏 vs Eref 也就是 vs 锂，扫速 0.1 到 1 毫伏每秒，步长 1 到 2 毫伏，量程 Auto，不开 iR 补偿，初始延时等开路电位稳定。"><rect x="10" y="8" width="380" height="206" rx="8" class="card"/><path d="M10 16 Q10 8 18 8 H382 Q390 8 390 16 V28 H10 Z" class="titlebar"/><text x="22" y="22.5" font-size="10.5" font-weight="700">Linear Sweep Voltammetry</text><text x="24" y="48" font-size="10" class="t-mut tm">Initial E</text><text x="196" y="48" font-size="10.5" font-weight="700">0 V（vs Eoc）</text><rect x="16" y="53" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="65" font-size="10" class="t-mut tm">Final E</text><text x="196" y="65" font-size="10.5" font-weight="700" class="t-acc">6.0 V（vs Eref = vs Li）</text><rect x="16" y="70" width="368" height="16" rx="3" class="menu-hi"/><text x="24" y="82" font-size="10" class="t-mut tm">Scan Rate</text><text x="196" y="82" font-size="10.5" font-weight="700" class="t-acc">0.1–1 mV/s</text><text x="24" y="99" font-size="10" class="t-mut tm">Step Size</text><text x="196" y="99" font-size="10.5" font-weight="700">1–2 mV</text><text x="24" y="116" font-size="10" class="t-mut tm">I/E Range Mode</text><text x="196" y="116" font-size="10.5" font-weight="700">Auto</text><text x="24" y="133" font-size="10" class="t-mut tm">IRComp</text><text x="196" y="133" font-size="10.5" font-weight="700">None</text><text x="24" y="150" font-size="10" class="t-mut tm">Init. Delay</text><text x="196" y="150" font-size="10.5" font-weight="700">On：等开路电位稳定</text><text x="24" y="204" font-size="9" class="t-mut">E › Linear Sweep Voltammetry；终止电位按体系定；字段名以软件为准</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>先定判据再读数：例如电流密度超过 10 µA/cm² 时的电位，或基线和上升段切线的交点。<span class="src gen">通用方法</span></p>
+          <ul><li>电流密度 = 电流 ÷ 不锈钢与电解质的接触面积。</li>
+          <li>报告时写明扫速、温度、工作电极和判据；扫速越慢，得到的极限越保守。</li>
+          <li>更灵敏的做法：在候选电位做恒电位保持（E › Chronoamperometry），看长时间的电流。</li></ul></div>
+          <figure class="stepfig" data-svgname="esw-03"><svg viewBox="0 0 400 220" role="img" aria-label="读氧化极限：电流密度对电位作图，先定判据，例如电流密度超过 10 微安每平方厘米时的电位，示例约 5.3 伏 vs 锂；报告时写明扫速、温度、工作电极和判据。"><path d="M40 30 V170 H262" class="axis"/><text x="36" y="28" font-size="10" text-anchor="end" font-weight="600" class="t-mut">j</text><text x="262" y="200" font-size="9.5" text-anchor="end" class="t-mut">E (V vs Li)</text><text x="40" y="184" font-size="9.5" text-anchor="middle" class="t-mut">3</text><text x="110" y="184" font-size="9.5" text-anchor="middle" class="t-mut">4</text><text x="180" y="184" font-size="9.5" text-anchor="middle" class="t-mut">5</text><text x="250" y="184" font-size="9.5" text-anchor="middle" class="t-mut">6</text><line x1="40" y1="140" x2="262" y2="140" class="setline"/><text x="44" y="134" font-size="9.5" class="t-mut">判据：10 µA/cm²</text><path d="M40 160 H150 C 178 160, 192 152, 206 132 S 236 60, 252 36" class="curve"/><circle cx="201" cy="140" r="5" class="ring-warn"/><line x1="201" y1="140" x2="201" y2="170" class="mark-line"/><text x="205" y="160" font-size="10" font-weight="700" class="t-warn">≈ 5.3 V</text><text x="276" y="40" font-size="11" font-weight="700">先定判据</text><text x="276" y="58" font-size="9.5" class="t-mut">电流密度阈值</text><text x="276" y="73" font-size="9.5" class="t-mut">或切线交点</text><text x="276" y="104" font-size="11" font-weight="700">报告时写明</text><text x="276" y="122" font-size="9.5" class="t-mut">扫速、温度</text><text x="276" y="137" font-size="9.5" class="t-mut">工作电极、判据</text><text x="276" y="168" font-size="9.5" class="t-mut">扫速越慢，</text><text x="276" y="183" font-size="9.5" class="t-mut">得到的极限越保守</text><rect x="40" y="196" width="64" height="18" rx="9" class="tagbox"/><text x="72" y="209" font-size="10" text-anchor="middle" font-weight="700" class="t-warn">示例</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>还原侧：用另一个新的 SS / 电解质 / Li 电池做循环伏安（<code>E › Cyclic Voltammetry</code>），在约 −0.5 V 到 3 V vs Li 之间扫几圈。<span class="src gen">通用方法</span></p>
+          <ul><li>接近 0 V 的还原峰是锂在不锈钢上沉积，回扫时的氧化峰是锂溶出，这不是电解质分解。</li>
+          <li>沉积和溶出的电荷之比可以反映锂沉积的可逆性。</li></ul></div>
+          <figure class="stepfig" data-svgname="esw-04"><svg viewBox="0 0 400 220" role="img" aria-label="还原侧：用新的 SS 电解质 Li 电池做循环伏安，−0.5 到 3 伏 vs 锂；接近 0 伏的还原峰是锂在不锈钢上沉积，回扫的氧化峰是锂溶出，不是电解质分解。"><path d="M60 30 V172 H276" class="axis"/><line x1="60" y1="100" x2="276" y2="100" class="setline"/><text x="56" y="28" font-size="10" text-anchor="end" font-weight="600" class="t-mut">I</text><text x="276" y="196" font-size="9.5" text-anchor="end" class="t-mut">E (V vs Li)</text><text x="60" y="186" font-size="9.5" text-anchor="middle" class="t-mut">−0.5</text><text x="90" y="186" font-size="9.5" text-anchor="middle" class="t-mut">0</text><text x="150" y="186" font-size="9.5" text-anchor="middle" class="t-mut">1</text><text x="210" y="186" font-size="9.5" text-anchor="middle" class="t-mut">2</text><text x="270" y="186" font-size="9.5" text-anchor="middle" class="t-mut">3</text><path d="M270 100 H96 C 86 104, 74 150, 66 166 C 72 142, 84 106, 92 98 C 98 62, 104 40, 112 42 C 120 48, 126 92, 142 100 H270" class="curve"/><text x="74" y="160" font-size="9.5" font-weight="700">锂沉积</text><text x="116" y="40" font-size="9.5" font-weight="700">锂溶出</text><text x="290" y="36" font-size="10" class="tm">E › Cyclic</text><text x="290" y="50" font-size="10" class="tm">Voltammetry</text><text x="290" y="70" font-size="9.5" class="t-mut">新的 SS|Li 电池</text><text x="290" y="86" font-size="9.5" class="t-mut">−0.5 ↔ 3 V vs Li</text><text x="290" y="114" font-size="10.5" font-weight="700">接近 0 V 的峰是锂</text><text x="290" y="132" font-size="9.5" class="t-mut">在不锈钢上沉积和溶出，</text><text x="290" y="148" font-size="9.5" class="t-mut">不是电解质分解</text></svg></figure></div></li>
+      </ol>
+      <!--/ESWSTEPS-->
+    </div>
+  </div>
+</section>
+
+<section id="lisym">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">14 · Li symmetric cycling</div>
+      <h2>锂对称电池循环与临界电流密度</h2>
+      <p>在 Li | 电解质 | Li 上正负交替通恒定电流，看电压平台是否稳定；逐级加大电流密度，电压突然掉到接近 0 的那一级就是临界电流密度 (CCD)。方法本身是通用电化学方法。</p>
+    </div>
+    <div class="block">
+      <!--LSSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>装 Li / 电解质 / Li，静置到 EIS 稳定。把电流密度换算成电流：I = j × A，A 按锂片面积算。<span class="src gen">通用方法</span></p>
+          <ul><li>程序：<code>Experiment › J Electrochemical Energy</code> 下的循环充放电程序（名称以菜单为准）；没有这个模块时，用 <code>E › Chronopotentiometry</code> 在 Sequence Wizard 里串成 +I、−I 交替的序列。</li>
+          <li>常用起步值：0.05–0.1 mA/cm²，每半周 0.5–1 h，电压保护例如 ±1 V，按体系调。</li>
+          <li>只有一个通道：几天以上的长循环最好放到电池测试仪上做。</li></ul></div>
+          <figure class="stepfig" data-svgname="lisym-01"><svg viewBox="0 0 400 220" role="img" aria-label="锂对称循环设置：电流 I 等于电流密度 j 乘锂片面积，示例 0.1 毫安每平方厘米、直径 12 毫米锂片得 0.113 毫安；正负交替；常用每半周 0.5 到 1 小时、电压保护例如正负 1 伏；程序用 J 循环充放电，或计时电位法串起来。"><text x="16" y="24" font-size="12" font-weight="700">先把电流密度换算成电流</text><text x="16" y="52" font-size="15" font-weight="700">I = j × A</text><text x="16" y="76" font-size="10" class="t-mut">j = 0.1 mA/cm²，锂片直径 12 mm</text><text x="16" y="92" font-size="10" class="t-mut">A = π × 0.6² = 1.13 cm²</text><text x="16" y="116" font-size="13" font-weight="700" class="t-acc">→ I = 0.113 mA</text><path d="M16 182 H40 V146 H100 V182 H124 V218" class="curve"/><line x1="16" y1="182" x2="200" y2="182" class="setline"/><path d="M124 218 H184 V182 H200" class="curve"/><text x="70" y="140" font-size="9.5" text-anchor="middle" font-weight="600">+I</text><text x="154" y="212" font-size="9.5" text-anchor="middle" font-weight="600">−I</text><text x="230" y="40" font-size="11" font-weight="700">常用起步值</text><text x="230" y="60" font-size="9.5" class="t-mut">• j 0.05–0.1 mA/cm²</text><text x="230" y="76" font-size="9.5" class="t-mut">• 每半周 0.5–1 h</text><text x="230" y="92" font-size="9.5" class="t-mut">• 电压保护 例如 ±1 V</text><text x="230" y="108" font-size="9.5" class="t-mut">• 采样 5–60 s</text><text x="230" y="138" font-size="11" font-weight="700">程序</text><text x="230" y="156" font-size="9.5" class="t-mut">J › 循环充放电</text><text x="230" y="172" font-size="9.5" class="t-mut">或 E › Chronopotentiometry</text><text x="230" y="188" font-size="9.5" class="t-mut">用 Sequence Wizard 串起来</text><rect x="16" y="196" width="64" height="18" rx="9" class="tagbox"/><text x="48" y="209" font-size="10" text-anchor="middle" font-weight="700" class="t-warn">示例数值</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>正常的曲线：电压正负交替，每半周的平台一样高。平台高度是两侧的过电位加上 iR 压降。<span class="src gen">通用方法</span></p>
+          <ul><li>报告电流密度、每半周时间、温度，以及平台电压随循环的变化。</li></ul></div>
+          <figure class="stepfig" data-svgname="lisym-02"><svg viewBox="0 0 400 220" role="img" aria-label="正常的锂对称循环曲线：电压正负交替，每半周的平台一样高，说明界面稳定；平台高度是两侧过电位加 iR 压降。"><path d="M30 30 V180 H380" class="axis"/><line x1="30" y1="105" x2="380" y2="105" class="setline"/><text x="26" y="30" font-size="10" text-anchor="end" font-weight="600" class="t-mut">V</text><text x="380" y="196" font-size="9.5" text-anchor="end" class="t-mut">时间</text><path d="M34 105 V65 H58.0 V145 H82 V105 V65 H106.0 V145 H130 V105 V65 H154.0 V145 H178 V105 V65 H202.0 V145 H226 V105 V65 H250.0 V145 H274 V105 V65 H298.0 V145 H322 V105 V65 H346.0 V145 H370 V105" class="curve"/><line x1="372" y1="65" x2="372" y2="105" class="dim"/><path d="M372 65 l-4 8 h8 Z" class="arr"/><text x="366" y="58" font-size="9.5" text-anchor="end" font-weight="600">过电位 + iR</text><text x="30" y="212" font-size="11" font-weight="700">每半周的电压平台一样高 → 界面稳定</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>两种异常：平台逐渐变大，说明界面在恶化；电压突然变小、变得杂乱，说明锂枝晶造成了短路，记录短路时间后停止。<span class="src gen">通用方法</span></p>
+          <ul><li>循环前后各测一次 EIS，比较界面电阻。</li>
+          <li>测完在手套箱里拆开，看锂表面有没有枝晶、变色，拍照存档。</li></ul></div>
+          <figure class="stepfig" data-svgname="lisym-03"><svg viewBox="0 0 400 220" role="img" aria-label="异常的锂对称循环：左边电压平台逐渐变大，说明界面恶化；右边电压突然变小并变得杂乱，说明锂枝晶造成短路。"><rect x="10" y="10" width="184" height="200" rx="8" class="sunk-r"/><path d="M22 30 V170 H184" class="axis"/><line x1="22" y1="100" x2="184" y2="100" class="setline"/><path d="M24 100 V84 H40.0 V116 H56 V100 V76 H72.0 V124 H88 V100 V66 H104.0 V134 H120 V100 V54 H136.0 V146 H152 V100 V40 H168.0 V160 H184 V100" class="curve"/><circle cx="24" cy="186" r="8" class="ic-bad"/><path d="M21.0 183.0 L27.0 189.0 M27.0 183.0 L21.0 189.0" class="ic-mark"/><text x="38" y="190.5" font-size="10.5" font-weight="700" class="t-bad">逐渐变大：界面恶化</text><rect x="206" y="10" width="184" height="200" rx="8" class="sunk-r"/><path d="M218 30 V170 H380" class="axis"/><line x1="218" y1="100" x2="380" y2="100" class="setline"/><path d="M220 100 V66 H236.0 V134 H252 V100 V66 H268.0 V134 H284 V100 V66 H300.0 V134 H316 V100 L322 96 L326 104 L330 97 L334 103 L338 98 L342 102 L346 99 L350 101 L376 100" class="curve"/><line x1="316" y1="30" x2="316" y2="170" class="mark-line"/><text x="320" y="42" font-size="10" font-weight="700" class="t-bad">短路</text><circle cx="220" cy="186" r="8" class="ic-bad"/><path d="M217.0 183.0 L223.0 189.0 M223.0 183.0 L217.0 189.0" class="ic-mark"/><text x="234" y="190.5" font-size="10.5" font-weight="700" class="t-bad">突然变小、变乱：短路</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>临界电流密度 (CCD)：换一个新电池，从 0.05 mA/cm² 开始，每个循环加 0.05 mA/cm²（每半周例如 30 min）。电压突然掉到接近 0 的那一级就是 CCD。<span class="src gen">通用方法</span></p>
+          <ul><li>报告短路前一级和短路的那一级，以及温度和每半周时间。</li>
+          <li>温度越高，CCD 通常越大，所以不同温度的结果不能直接比较。</li></ul></div>
+          <figure class="stepfig" data-svgname="lisym-04"><svg viewBox="0 0 400 220" role="img" aria-label="临界电流密度：电流密度每个循环加 0.05 毫安每平方厘米，电压平台随之升高，到某一级电压突然掉到接近 0，这一级就是临界电流密度；报告短路前一级和短路的那一级。"><text x="16" y="22" font-size="12" font-weight="700">临界电流密度：每个循环加大电流密度</text><path d="M40 36 V96 H384" class="axis"/><text x="36" y="40" font-size="10" text-anchor="end" font-weight="600" class="t-mut">j</text><path d="M42 90 H100 V80 H158 V70 H216 V60 H274 V50 H332 V40 H380" class="curve"/><text x="70" y="86" font-size="9" text-anchor="middle" class="t-mut">0.05</text><text x="128" y="76" font-size="9" text-anchor="middle" class="t-mut">0.10</text><text x="186" y="66" font-size="9" text-anchor="middle" class="t-mut">0.15</text><text x="244" y="56" font-size="9" text-anchor="middle" class="t-mut">0.20</text><text x="302" y="46" font-size="9" text-anchor="middle" class="t-warn">0.25</text><path d="M40 110 V200 H384" class="axis"/><line x1="40" y1="155" x2="384" y2="155" class="setline"/><text x="36" y="114" font-size="10" text-anchor="end" font-weight="600" class="t-mut">V</text><path d="M42 155 V145 H71.0 V165 H100 V155 V139 H129.0 V171 H158 V155 V133 H187.0 V177 H216 V155 V125 H245.0 V185 H274 V155 V122 L280 160 H290 L294 152 L298 158 L304 154 L380 155" class="curve"/><line x1="276" y1="36" x2="276" y2="200" class="mark-line"/><text x="282" y="128" font-size="9.5" font-weight="700" class="t-warn">电压突然掉到接近 0</text><text x="282" y="144" font-size="9.5" font-weight="700" class="t-warn">→ 这一级 = CCD</text><text x="40" y="214" font-size="9.5" class="t-mut">单位 mA/cm²（示例）；报告短路前一级和短路的那一级</text></svg></figure></div></li>
+      </ol>
+      <!--/LSSTEPS-->
+    </div>
+    <div class="block two" style="margin-top:16px">
+      <div class="fields">
+        <h3>电流密度换算成电流</h3>
+        <div class="row2">
+          <div class="field"><label for="lsJ">起始电流密度 j (mA/cm²)</label><input id="lsJ" type="number" min="0" step="any" value="0.05"></div>
+          <div class="field"><label for="lsD">锂片直径 (mm)</label><input id="lsD" type="number" min="0" step="any" value="12"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="lsStep">CCD 每级增加 (mA/cm²)</label><input id="lsStep" type="number" min="0" step="any" value="0.05"></div>
+          <div class="field"><label for="lsN">级数</label><input id="lsN" type="number" min="1" max="20" step="1" value="8"></div>
+        </div>
+        <p class="note" style="margin:0">恒流循环用第一行的电流；做 CCD 时按表逐级设置。</p>
+      </div>
+      <div>
+        <div class="note" id="lsArea">—</div>
+        <div class="tablewrap" style="margin-top:8px">
+          <table class="p keepcase"><thead><tr><th>级</th><th>j (mA/cm²)</th><th>I (mA)</th></tr></thead><tbody id="lsBody"></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="part" id="part-4">
   <div class="wrap">
     <div class="part-no">Part 4 · Analyze</div>
@@ -1244,7 +1449,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="sim">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">11 · Predict &amp; read</div>
+      <div class="eyebrow">15 · Predict &amp; read</div>
       <h2>预测谱图，并学会读 R<sub>b</sub></h2>
       <p>输入预计的电导率和样品尺寸，看 Nyquist 图大概长什么样，以及在 5 MHz 以内能看到哪一部分。曲线是示意模型，不是你的数据。</p>
     </div>
@@ -1302,7 +1507,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="calc">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">12 · Calculate</div>
+      <div class="eyebrow">16 · Calculate</div>
       <h2>用实测 R<sub>b</sub> 算电导率</h2>
       <p>厚度和直径沿用上面填的数值；也可以在这里改。</p>
     </div>
@@ -1326,7 +1531,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="arr">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">13 · Temperature series</div>
+      <div class="eyebrow">17 · Temperature series</div>
       <h2>变温测量与活化能</h2>
       <p>每个温度测一次 R<sub>b</sub>，填进表里，页面算出各温度的 σ，并按阿伦尼乌斯 (Arrhenius) 关系拟合活化能 E<sub>a</sub>。L 和 d 沿用<a href="#calc">算电导率</a>一节。</p>
     </div>
@@ -1363,7 +1568,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="after">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">14 · After the test</div>
+      <div class="eyebrow">18 · After the test</div>
       <h2>纽扣电池测完之后</h2>
       <p>从取下电池、记录数据，到拆壳、检查电解质膜、分类处理废物和清理工位，每一步配一张示意图。仪器部分依据手册，其余是通用的实验室做法；废物处理以所在单位的安全规定为准。</p>
     </div>
@@ -1414,7 +1619,7 @@ svg .t-ok{fill:var(--ok)}
 <section id="trouble">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">15 · Troubleshooting</div>
+      <div class="eyebrow">19 · Troubleshooting</div>
       <h2>问题排查</h2>
     </div>
     <div class="block tablewrap">
@@ -2061,6 +2266,48 @@ svg .t-ok{fill:var(--ok)}
   });
   svg.addEventListener('pointerleave', () => { tip.hidden = true; if (hover) hover.setAttribute('cx', -20); });
   update();
+})();
+</script>
+
+<script>
+/* Li transference number (Bruce-Vincent) and current-density table */
+(function(){
+  const $ = s => document.querySelector(s);
+  const v = id => parseFloat($(id).value);
+  const f = x => (+x.toPrecision(3)).toString();
+  const msg = (k, h) => `<div class="msg ${k}">${h}</div>`;
+  function tplus(dV, I0, Iss, R0, Rss){ return Iss * (dV - I0 * R0) / (I0 * (dV - Iss * Rss)); }
+  function updT(){
+    const dV = v('#tlV') * 1e-3, I0 = v('#tlI0') * 1e-6, Iss = v('#tlIss') * 1e-6, Rb = v('#tlRb'), R0 = v('#tlR0'), Rss = v('#tlRss');
+    const out = $('#tlOut'), det = $('#tlDetail'), m = [];
+    if (!(dV > 0 && I0 > 0 && Iss > 0 && R0 >= 0 && Rss >= 0)){ out.textContent = '—'; det.textContent = 'ΔV、I0、Iss 要大于 0，电阻不能为负。'; $('#tlMsgs').innerHTML = ''; return; }
+    const t = tplus(dV, I0, Iss, R0, Rss);
+    out.textContent = `t+ ≈ ${isFinite(t) ? t.toFixed(3) : '—'}`;
+    let d = `= ${f(Iss * 1e6)} µA × (${f(dV * 1e3)} − ${f(I0 * R0 * 1e3)}) mV ÷ [${f(I0 * 1e6)} µA × (${f(dV * 1e3)} − ${f(Iss * Rss * 1e3)}) mV]`;
+    if (Rb > 0){
+      const I0c = dV / (Rb + R0), tc = tplus(dV, I0c, Iss, R0, Rss);
+      d += `<br>用计算的 I<sub>0</sub> = ΔV / (R<sub>b,0</sub> + R<sub>0</sub>) = ${f(I0c * 1e6)} µA：t<sub>+</sub> ≈ ${isFinite(tc) ? tc.toFixed(3) : '—'}`;
+      if (Math.abs(I0 - I0c) / I0c > 0.2) m.push(msg('warn', `测量的 I<sub>0</sub> 和计算值相差 ${Math.round(Math.abs(I0 - I0c) / I0c * 100)}%：检查采样时刻（开头的电流受双电层充电影响）和 EIS 拟合。`));
+    }
+    det.innerHTML = d;
+    if (dV - I0 * R0 <= 0 || dV - Iss * Rss <= 0) m.push(msg('warn', 'ΔV 不大于 I·R：电压几乎全落在界面上，公式不适用。检查 R<sub>0</sub>、R<sub>ss</sub> 和电流的单位。'));
+    if (Iss >= I0) m.push(msg('warn', 'I<sub>ss</sub> 不小于 I<sub>0</sub>：电流没有衰减，可能短路，或极化刚开始就读了数。'));
+    if (isFinite(t) && (t < 0 || t > 1)) m.push(msg('warn', 't<sub>+</sub> 超出 0–1：界面在测量中变化太大、有短路，或极化时间不够。'));
+    if (!m.length) m.push(msg('ok', '结果在合理范围内。装 2–3 个电池取平均，报告时写明方法、温度和 ΔV。'));
+    $('#tlMsgs').innerHTML = m.join('');
+  }
+  function updL(){
+    const j = v('#lsJ'), d = v('#lsD'), st = v('#lsStep') || 0, n = Math.max(1, Math.min(20, Math.round(v('#lsN') || 1)));
+    if (!(j > 0 && d > 0)){ $('#lsArea').textContent = 'j 和直径都要大于 0。'; $('#lsBody').innerHTML = ''; return; }
+    const A = Math.PI * Math.pow(d / 20, 2);
+    $('#lsArea').innerHTML = `锂片面积 A = π × (${f(d / 20)} cm)² = <strong>${f(A)} cm²</strong>；I = j × A`;
+    let rows = '';
+    for (let i = 0; i < n; i++){ const jj = j + i * st; rows += `<tr><td>${i + 1}</td><td>${f(jj)}</td><td>${f(jj * A)}</td></tr>`; }
+    $('#lsBody').innerHTML = rows;
+  }
+  ['#tlV', '#tlI0', '#tlIss', '#tlRb', '#tlR0', '#tlRss'].forEach(id => $(id).addEventListener('input', updT));
+  ['#lsJ', '#lsD', '#lsStep', '#lsN'].forEach(id => $(id).addEventListener('input', updL));
+  updT(); updL();
 })();
 </script>
 

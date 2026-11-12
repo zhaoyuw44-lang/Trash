@@ -370,7 +370,7 @@ STEPS = [
     (s5, '''<p>控温：把电解池放进恒温箱或加热台，温度到达设定值并稳定后再等一段时间（常用 30–60 min）再测。<span class="src gen">通用方法</span></p>
           <ul><li>需要记录温度时，可以用 Reference 620 后面板的 K 型热电偶插孔。仪器不附带热电偶，要自备黄色迷你插头的 K 型热电偶。<span class="src">手册 Ch 7</span></li>
           <li>手册给出的热电偶测温精度约 ±4 °C（校准后），所以算活化能用的温度最好以恒温箱或独立温度计为准。<span class="src">手册 Ch 7</span></li></ul>'''),
-    (s6, '''<p>在 Gamry Framework 中打开恒电位 EIS（Potentiostatic EIS），按<a href="#params">EIS 参数</a>一节填参数。</p>
+    (s6, '''<p>在 Gamry Framework 中选 <code>Experiment › G Electrochemical Impedance › Potentiostatic EIS</code>，按<a href="#params">EIS 参数</a>一节填参数。</p>
           <ul><li>菜单路径按常见的 Framework 版本画出，不同版本的名称可能略有差异。</li>
           <li>先把 Area 填 1 cm²，读出的就是未归一化的 R<sub>b</sub>，计算 σ 时再用实际面积。</li></ul>'''),
     (s7, '''<p>运行。软件先测开路电位，这时 Cell On 黄灯不亮；开始施加信号后黄灯亮起。<span class="src">手册 Ch 7</span></p>
@@ -1639,7 +1639,7 @@ EC_STEPS = [
           <ul><li>分解电压可以用另一个 SS–SS 电池慢扫一次 LSV（例如 0.1–1 mV/s），看电流开始明显上升的电压。LSV 会把样品扫坏，不要用要测电子电导的那个电池。</li>
           <li>在 SS–SS 上只能得到稳定窗口的总宽度，不是相对 Li/Li<sup>+</sup> 的电位。</li>
           <li>文献中常见 0.1–1 V；电压太低，电流太小，噪声占比就大。</li></ul>"""),
-    (e8, """<p>在 <code>Experiment › Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
+    (e8, """<p>在 <code>Experiment › E Physical Electrochemistry › Chronoamperometry</code> 中设置参数（字段名以你的软件为准）。</p>
           <ul><li>Pre-step：0 V，约 30 s。</li>
           <li>Step 1：ΔV，例如 0.100 V；时间 7200–36000 s（2–10 h），要足够长，让电流到稳态。</li>
           <li>Step 2：0 V，时间和 Step 1 差不多，让电池回到初始状态。</li>
@@ -1791,6 +1791,360 @@ def coin_clip():
 FIGS['coin-clip'] = coin_clip
 
 
+
+# ================================================================ software map, cell stacks, Li-electrode procedures
+def sw_map():
+    items = [('A', 'Utilities', True), ('B', 'Critical Pitting Temperature', False), ('C', 'DC Corrosion', False),
+             ('D', 'Multiplexed DC Corrosion', False), ('E', 'Physical Electrochemistry', True), ('F', 'Pulse Voltammetry', False),
+             ('G', 'Electrochemical Impedance', True), ('H', 'Electrochemical Noise', False),
+             ('I', 'Electrochemical Frequency Modulation', False), ('J', 'Electrochemical Energy', True),
+             ('K', 'Solar Cells', False), ('L', 'BiPotentiostat Scripts', False)]
+    o = [T(16, 22, 'Experiment 菜单：只用 A、E、G（循环可用 J）', 12, None, 700), R(16, 32, 220, 250, 'card', 6)]
+    for i, (k, n, hi) in enumerate(items):
+        y = 52 + i * 20
+        if hi:
+            o.append(R(20, y - 13, 212, 18, 'menu-hi', 3))
+        o.append(T(28, y, f'{k} {n}', 10, None, 700 if hi else None, 't-acc' if hi else 't-mut'))
+    o += [P('M232 48 H256 V66 H292', 'circ'), P('M232 128 H264 V156 H292', 'circ'),
+          P('M232 168 H272 V238 H292', 'circ'), P('M232 228 H256 V290 H292', 'circ'),
+          P('M298 66 l-8 -4 v8 Z M298 156 l-8 -4 v8 Z M298 238 l-8 -4 v8 Z M298 290 l-8 -4 v8 Z', 'arr'),
+          R(298, 34, 326, 64, 'sunk-r', 6), T(310, 52, 'A Utilities：校准', 11, None, 700),
+          T(310, 70, 'Calibrate Instrument（calib.exp）', 9.5, None, None, 't-mut'),
+          T(310, 86, 'Low I DC（calib low ie ranges.exp）· 电缆电容 · 测温', 9.5, None, None, 't-mut'),
+          R(298, 108, 326, 96, 'sunk-r', 6), T(310, 126, 'E Physical Electrochemistry', 11, None, 700),
+          T(310, 144, 'Chronoamperometry：电子电导、迁移数极化', 9.5, None, None, 't-mut'),
+          T(310, 160, 'Linear Sweep Voltammetry：稳定窗口', 9.5, None, None, 't-mut'),
+          T(310, 176, 'Cyclic Voltammetry：锂沉积和溶出', 9.5, None, None, 't-mut'),
+          T(310, 192, 'Chronopotentiometry：单步恒流', 9.5, None, None, 't-mut'),
+          R(298, 216, 326, 44, 'sunk-r', 6), T(310, 234, 'G Electrochemical Impedance', 11, None, 700),
+          T(310, 251, 'Potentiostatic EIS：电导率、迁移数前后的 EIS', 9.5, None, None, 't-mut'),
+          R(298, 268, 326, 44, 'sunk-r', 6), T(310, 286, 'J Electrochemical Energy', 11, None, 700),
+          T(310, 303, '循环充放电：锂对称循环（名称以菜单为准）', 9.5, None, None, 't-mut'),
+          T(16, 306, 'F1 ABORT 终止 · F2 Skip 跳到下一步 · F3 Pause 暂停', 9.5, None, None, 't-mut')]
+    return svgw(640, 320, 'Gamry Framework 的 Experiment 菜单里只用 A、E、G 三组，循环可用 J：A Utilities 做校准；E Physical Electrochemistry 里用计时电流、线性扫描、循环伏安和计时电位；G Electrochemical Impedance 里用恒电位 EIS；J Electrochemical Energy 做锂对称循环。', ''.join(o))
+
+
+def mini_stack(cx, top_li, mid, bot_li, cap_top=40):
+    y = cap_top
+    o = [R(cx - 40, y, 80, 12, 'steel', 3), P(wavy(cx - 30, cx + 30, y + 22, 4, 6), 'spring'),
+         R(cx - 34, y + 34, 68, 6, 'steel', 1)]
+    yy = y + 40
+    if top_li:
+        o.append(R(cx - 30, yy, 60, 6, 'li', 1)); yy += 6
+    o.append(R(cx - 42, yy, 84, 7, mid, 1))
+    if mid == 'sep-wet':
+        o.append(R(cx - 42, yy, 84, 7, 'sep-edge', 1))
+    yy += 7
+    if bot_li:
+        o.append(R(cx - 30, yy, 60, 6, 'li', 1)); yy += 6
+    o += [R(cx - 34, yy, 68, 6, 'steel', 1), R(cx - 44, yy + 12, 88, 22, 'steel', 4), R(cx - 40, yy + 12, 80, 16, 'cavity', 3)]
+    return ''.join(o)
+
+
+def coin_stacks():
+    cols = [(70, False, 'sample', False, 'SS | 电解质 | SS', '离子电导率', '电子电导'),
+            (195, False, 'ptfe', False, 'SS | PTFE | SS', '电子电导的', '空白池'),
+            (320, True, 'sample', True, 'Li | 电解质 | Li', '迁移数、对称', '循环、CCD'),
+            (445, True, 'sample', False, 'SS | 电解质 | Li', '电化学', '稳定窗口'),
+            (570, False, 'sep-wet', False, 'SS | 隔膜+液 | SS', '液体电解液', '有效电导率')]
+    o = [T(16, 22, '五种电池：组装顺序相同，只换上下电极（上 = 负极盖侧）', 12, None, 700)]
+    for cx, tl, mid, bl, name, u1, u2 in cols:
+        o += [mini_stack(cx, tl, mid, bl), T(cx, 160, name, 10.5, 'middle', 700),
+              T(cx, 177, u1, 9.5, 'middle', None, 't-mut'), T(cx, 192, u2, 9.5, 'middle', None, 't-mut')]
+    legend = [('steel', '不锈钢垫片、壳、盖'), ('li', '锂片'), ('sample', '聚合物电解质'), ('ptfe', 'PTFE 片'), ('sep-wet', '浸液隔膜')]
+    for i, (cls, t) in enumerate(legend):
+        x = 16 + i * 124
+        o += [R(x, 212, 18, 10, cls, 2), T(x + 24, 221, t, 9.5, None, None, 't-mut')]
+        if cls == 'sep-wet':
+            o.append(R(x, 212, 18, 10, 'sep-edge', 2))
+    o.append(T(16, 244, '从下往上：正极壳 → 下电极 → 电解质 → 上电极 → 弹片 → 负极盖 → 封口', 10, None, 600))
+    return svgw(640, 256, '五种纽扣电池的叠层：SS 电解质 SS 测离子电导率和电子电导；SS PTFE SS 是电子电导的空白池；Li 电解质 Li 测迁移数、对称循环和临界电流密度；SS 电解质 Li 测稳定窗口；SS 浸液隔膜 SS 测液体电解液的有效电导率；组装顺序都是从下往上。', ''.join(o))
+
+
+def winmock(title, rows, note):
+    o = [R(10, 8, 380, 206, 'card', 8), P('M10 16 Q10 8 18 8 H382 Q390 8 390 16 V28 H10 Z', 'titlebar'),
+         T(22, 22.5, title, 10.5, None, 700)]
+    for i, (k, v, hi) in enumerate(rows):
+        y = 48 + i * 17
+        if hi:
+            o.append(R(16, y - 12, 368, 16, 'menu-hi', 3))
+        o += [T(24, y, k, 10, None, None, 't-mut tm'), T(196, y, v, 10.5, None, 700, 't-acc' if hi else None)]
+    o.append(T(24, 204, note, 9, None, None, 't-mut'))
+    return ''.join(o)
+
+
+def t1():
+    o = [T(16, 22, '在手套箱里装，测试温度下静置', 12, None, 700),
+         mini_stack(80, True, 'sample', True, cap_top=36),
+         T(128, 82, '锂片', 9.5, None, 600), T(128, 96, '膜比锂片大一圈', 9.5, None, 600), T(128, 110, '锂片', 9.5, None, 600),
+         T(16, 172, 'Li / 电解质 / Li', 11, None, 700),
+         T(16, 190, '膜比锂片大一圈，防止边缘短路', 9.5, None, None, 't-mut'),
+         T(16, 206, '记下锂片直径（算电流密度用）', 9.5, None, None, 't-mut'),
+         T(246, 30, '隔一段时间测一次 EIS', 10, None, 600),
+         P('M246 40 V150 H388', 'axis'),
+         P('M256 150 A55 55 0 0 1 366 150', 'curve-todo'), P('M256 150 A46 46 0 0 1 348 150', 'curve-todo'),
+         P('M256 150 A40 40 0 0 1 336 150', 'curve'), P('M256 150 A39 39 0 0 1 334 150', 'curve'),
+         T(246, 172, '虚线：早期；实线：最后两次重合', 9.5, None, None, 't-mut'),
+         T(246, 192, '→ 界面稳定，开始测', 10.5, None, 700)]
+    return svg('装锂对称电池并静置：Li 电解质 Li，膜比锂片大一圈；在测试温度下隔一段时间测一次 EIS，界面半圆不再变化后再开始测迁移数。', ''.join(o))
+
+
+def t2():
+    o = [P('M24 30 V150 H226', 'axis'), T(28, 28, '−Z″', 9.5, None, None, 't-mut'), T(226, 164, 'Z′', 9.5, 'end', None, 't-mut'),
+         P('M34 150 A15 15 0 0 1 64 150 A50 50 0 0 1 164 150 L190 124', 'curve'),
+         dim_h(34, 64, 172), dim_h(64, 164, 172),
+         T(49, 190, sb('R', 'b,0', 10.5), 10.5, 'middle', 700), T(114, 190, sb('R', '0', 10.5, '（界面）'), 10.5, 'middle', 700),
+         P('M236 60 H246 M266 60 H276 V46 H286 M306 46 H316 V60 M276 60 V74 H290 M302 74 H316 V60 H326 V46 H336 M356 46 H366 V60 M326 60 V74 H340 M352 74 H366 V60 H384', 'circ'),
+         R(246, 54, 20, 12, 'res', 1), R(286, 40, 20, 12, 'res', 1), R(336, 40, 20, 12, 'res', 1),
+         P('M294 68 L290 74 L294 80 M302 68 L298 74 L302 80', 'circ'), P('M344 68 L340 74 L344 80 M352 68 L348 74 L352 80', 'circ'),
+         T(256, 48, sb('R', 's', 9.5), 9.5, 'middle', 600), T(296, 34, sb('R', 'b', 9.5), 9.5, 'middle', 600),
+         T(346, 34, sb('R', 'i', 9.5), 9.5, 'middle', 600),
+         T(296, 94, 'CPE', 8.5, 'middle', None, 't-mut'), T(346, 94, 'CPE', 8.5, 'middle', None, 't-mut'),
+         T(310, 122, 'G › Potentiostatic EIS', 10, 'middle', None, 'tm'),
+         T(310, 142, '1 MHz → 0.1 Hz，AC 5–10 mV', 9.5, 'middle', None, 't-mut'),
+         T(310, 158, 'DC 0 V vs Eoc', 9.5, 'middle', None, 't-mut'),
+         T(310, 184, ms([('拟合得到 R', False), ('b,0', True), (' 和 R', False), ('0', True)], 10.5), 10.5, 'middle', 700)]
+    return svg('极化前 EIS：小半圆是本体电阻 R_b,0，接着的大半圆是界面电阻 R_0；用 R_s 串联 R_b 与 CPE 并联、再串联 R_i 与 CPE 并联的等效电路拟合；程序是 G Potentiostatic EIS，1 兆赫到 0.1 赫，交流 5 到 10 毫伏，直流 0 伏 vs Eoc。', ''.join(o))
+
+
+def t3():
+    rows = [('Pre-step Voltage', '0 V（vs Eoc）', False), ('Pre-step Delay Time', '10 s', False),
+            ('Step 1 Voltage', '0.010 V（vs Eoc）', True), ('Step 1 Time', '3600–18000 s', True),
+            ('Step 2 Voltage', '0 V（vs Eoc）', False), ('Step 2 Time', '0–10 s', False),
+            ('Sample Period', '1–5 s', False), ('Max Current', '≥ ΔV / (Rb + R0)', False), ('IRComp', 'None', False)]
+    return svg('迁移数的计时电流设置：预步 0 伏 vs Eoc 10 秒；第一步 0.010 伏 vs Eoc，1 到 5 小时；第二步 0 伏很短；采样 1 到 5 秒；最大电流不小于 ΔV 除以本体加界面电阻；不开 iR 补偿。',
+               winmock('Chronoamperometry（迁移数）', rows, 'E › Chronoamperometry；字段名以你的软件为准'))
+
+
+def t4():
+    o = [P('M30 30 V170 H250', 'axis'), T(26, 30, 'I', 10, 'end', 600, 't-mut'), T(250, 186, '时间', 9.5, 'end', None, 't-mut'),
+         P('M34 44 C 60 104, 110 128, 180 134 H246', 'curve'), C(34, 44, 5, 'mark'),
+         T(44, 46, sb('I', '0', 11), 11, None, 700),
+         dim_h(196, 244, 120), T(220, 112, ms([('平均 = I', False), ('ss', True)], 9.5), 9.5, 'middle', 700),
+         T(80, 200, 'ΔV = 10 mV 一直加着', 10, None, 600),
+         T(262, 40, '稳态判据', 11, None, 700), T(262, 58, '30–60 min 内', 9.5, None, None, 't-mut'),
+         T(262, 73, '电流变化 < 约 1%', 9.5, None, None, 't-mut'),
+         T(262, 104, ms([('I', False), ('0', True), (' 的两种取法', False)], 11), 11, None, 700),
+         T(262, 122, '曲线开头的电流', 9.5, None, None, 't-mut'),
+         T(262, 138, ms([('或 ΔV / (R', False), ('b,0', True), (' + R', False), ('0', True), (')', False)], 9.5), 9.5, None, None, 't-mut'),
+         T(262, 154, '两者应接近', 9.5, None, None, 't-mut'),
+         T(262, 186, '全程别碰导线', 10.5, None, 700, 't-warn')]
+    return svg('恒电位极化：加 10 毫伏后电流从初始值 I0 衰减到稳态 Iss，30 到 60 分钟内变化小于约 1% 时取最后一段平均；I0 可取曲线开头的电流，或用 ΔV 除以本体加界面电阻计算。', ''.join(o))
+
+
+def t5():
+    o = [P('M24 30 V150 H226', 'axis'), T(28, 28, '−Z″', 9.5, None, None, 't-mut'), T(226, 164, 'Z′', 9.5, 'end', None, 't-mut'),
+         P('M34 150 A15 15 0 0 1 64 150 A50 50 0 0 1 164 150', 'curve-todo'),
+         P('M34 150 A15 15 0 0 1 64 150 A60 60 0 0 1 184 150', 'curve'),
+         T(160, 168, sb('R', '0', 10), 10, 'middle', 600, 't-mut'), T(188, 168, sb('R', 'ss', 10), 10, 'middle', 700),
+         '<line x1="244" y1="40" x2="262" y2="40" class="curve-todo"/>', T(268, 44, '极化前', 10),
+         '<line x1="244" y1="60" x2="262" y2="60" class="curve"/>', T(268, 64, '极化后', 10, None, 700),
+         T(244, 96, '极化后马上测', 11, None, 700), T(244, 114, 'Init. Delay 关掉', 9.5, None, None, 't-mut'),
+         T(244, 130, '浓度梯度会慢慢松弛', 9.5, None, None, 't-mut'),
+         T(244, 160, ms([('界面电阻：R', False), ('0', True), (' → R', False), ('ss', True)], 10.5), 10.5, None, 700),
+         T(244, 178, '同一个等效电路拟合', 9.5, None, None, 't-mut')]
+    return svg('极化后立即测 EIS：Init. Delay 关掉；用同一个等效电路拟合，界面电阻从极化前的 R0 变成极化后的 Rss。', ''.join(o))
+
+
+def t6():
+    o = [T(200, 36, ms([('t', False), ('+', True), (' = I', False), ('ss', True), ('(ΔV − I', False), ('0', True), ('R', False), ('0', True), (') / [I', False), ('0', True), ('(ΔV − I', False), ('ss', True), ('R', False), ('ss', True), (')]', False)], 14), 14, 'middle', 700),
+         T(200, 62, '= 8 × (0.010 − 0.004) / [20 × (0.010 − 0.00176)]', 10, 'middle', None, 'tm'),
+         T(200, 88, '≈ 0.29', 16, 'middle', 700, 't-acc'),
+         T(200, 106, 'ΔV = 10 mV，I0 = 20 µA，Iss = 8 µA，R0 = 200 Ω，Rss = 220 Ω', 9, 'middle', None, 't-mut'),
+         R(14, 120, 372, 76, 'sunk-r', 8), T(26, 140, '结果要合理', 11, None, 700),
+         ok(32, 160), T(46, 164.5, '0 < t+ < 1', 10.5), ok(162, 160), T(176, 164.5, 'Iss < I0', 10.5),
+         ok(32, 182), T(46, 186.5, '测量的 I0 ≈ 计算的 I0', 10.5), ok(232, 182), T(246, 186.5, '重复 2–3 个电池', 10.5),
+         R(14, 200, 64, 18, 'tagbox', 9), T(46, 213, '示例数值', 10, 'middle', 700, 't-warn')]
+    return svg('计算迁移数：t+ 等于 Iss 乘 ΔV 减 I0 R0，除以 I0 乘 ΔV 减 Iss Rss；示例约 0.29；检查 0 小于 t+ 小于 1、Iss 小于 I0、测量与计算的 I0 接近，重复 2 到 3 个电池。', ''.join(o))
+
+
+def w1():
+    o = [T(16, 22, 'SS / 电解质 / Li：锂在负极盖一侧', 12, None, 700),
+         mini_stack(90, True, 'sample', False, cap_top=36),
+         T(142, 82, '锂：对电极 + 参比', 9.5, None, 600), T(142, 96, '电解质膜', 9.5, None, 600), T(142, 110, '不锈钢：工作电极', 9.5, None, 600),
+         C(258, 52, 5, 'jk-we'), C(270, 52, 5, 'jk-ws'), T(282, 56, '绿 + 蓝 → 不锈钢', 10),
+         C(258, 76, 5, 'jk-re'), C(270, 76, 5, 'jk-ce'), C(282, 76, 5, 'jk-cs'), T(294, 80, '白 + 红 + 橙 → 锂', 10),
+         T(252, 112, 'vs Eref = vs Li/Li⁺', 11, None, 700, 't-acc'),
+         T(252, 132, '软件显示的电位就是', 9.5, None, None, 't-mut'), T(252, 148, '不锈钢相对锂的电位', 9.5, None, None, 't-mut'),
+         T(16, 176, '装好后记下开路电压', 10.5, None, 600), T(16, 194, '每次扫描用一个新电池：扫过的电解质已经分解', 9.5, None, None, 't-mut')]
+    return svg('稳定窗口的电池：SS 电解质 Li，锂在负极盖一侧作对电极兼参比，不锈钢是工作电极；绿和蓝接不锈钢，白、红、橙接锂，软件里 vs Eref 就是 vs Li；每次扫描用一个新电池。', ''.join(o))
+
+
+def w2():
+    rows = [('Initial E', '0 V（vs Eoc）', False), ('Final E', '6.0 V（vs Eref = vs Li）', True),
+            ('Scan Rate', '0.1–1 mV/s', True), ('Step Size', '1–2 mV', False), ('I/E Range Mode', 'Auto', False),
+            ('IRComp', 'None', False), ('Init. Delay', 'On：等开路电位稳定', False)]
+    return svg('线性扫描伏安设置：起始 0 伏 vs Eoc，终止 6.0 伏 vs Eref 也就是 vs 锂，扫速 0.1 到 1 毫伏每秒，步长 1 到 2 毫伏，量程 Auto，不开 iR 补偿，初始延时等开路电位稳定。',
+               winmock('Linear Sweep Voltammetry', rows, 'E › Linear Sweep Voltammetry；终止电位按体系定；字段名以软件为准'))
+
+
+def w3():
+    X = lambda e: 40 + (e - 3) * 70
+    o = [P('M40 30 V170 H262', 'axis'), T(36, 28, 'j', 10, 'end', 600, 't-mut'), T(262, 200, 'E (V vs Li)', 9.5, 'end', None, 't-mut')]
+    for e in (3, 4, 5, 6):
+        o.append(T(X(e), 184, str(e), 9.5, 'middle', None, 't-mut'))
+    o += ['<line x1="40" y1="140" x2="262" y2="140" class="setline"/>', T(44, 134, '判据：10 µA/cm²', 9.5, None, None, 't-mut'),
+          P('M40 160 H150 C 178 160, 192 152, 206 132 S 236 60, 252 36', 'curve'),
+          C(201, 140, 5, 'ring-warn'), '<line x1="201" y1="140" x2="201" y2="170" class="mark-line"/>',
+          T(205, 160, '≈ 5.3 V', 10, None, 700, 't-warn'),
+          T(276, 40, '先定判据', 11, None, 700), T(276, 58, '电流密度阈值', 9.5, None, None, 't-mut'),
+          T(276, 73, '或切线交点', 9.5, None, None, 't-mut'),
+          T(276, 104, '报告时写明', 11, None, 700), T(276, 122, '扫速、温度', 9.5, None, None, 't-mut'),
+          T(276, 137, '工作电极、判据', 9.5, None, None, 't-mut'),
+          T(276, 168, '扫速越慢，', 9.5, None, None, 't-mut'), T(276, 183, '得到的极限越保守', 9.5, None, None, 't-mut'),
+          R(40, 196, 64, 18, 'tagbox', 9), T(72, 209, '示例', 10, 'middle', 700, 't-warn')]
+    return svg('读氧化极限：电流密度对电位作图，先定判据，例如电流密度超过 10 微安每平方厘米时的电位，示例约 5.3 伏 vs 锂；报告时写明扫速、温度、工作电极和判据。', ''.join(o))
+
+
+def w4():
+    X = lambda e: 60 + (e + 0.5) * 60
+    o = [P('M60 30 V172 H276', 'axis'), '<line x1="60" y1="100" x2="276" y2="100" class="setline"/>',
+         T(56, 28, 'I', 10, 'end', 600, 't-mut'), T(276, 196, 'E (V vs Li)', 9.5, 'end', None, 't-mut')]
+    for e, lab in [(-0.5, '−0.5'), (0, '0'), (1, '1'), (2, '2'), (3, '3')]:
+        o.append(T(round(X(e), 1), 186, lab, 9.5, 'middle', None, 't-mut'))
+    o += [P('M270 100 H96 C 86 104, 74 150, 66 166 C 72 142, 84 106, 92 98 C 98 62, 104 40, 112 42 C 120 48, 126 92, 142 100 H270', 'curve'),
+          T(74, 160, '锂沉积', 9.5, None, 700), T(116, 40, '锂溶出', 9.5, None, 700),
+          T(290, 36, 'E › Cyclic', 10, None, None, 'tm'), T(290, 50, 'Voltammetry', 10, None, None, 'tm'),
+          T(290, 70, '新的 SS|Li 电池', 9.5, None, None, 't-mut'), T(290, 86, '−0.5 ↔ 3 V vs Li', 9.5, None, None, 't-mut'),
+          T(290, 114, '接近 0 V 的峰是锂', 10.5, None, 700), T(290, 132, '在不锈钢上沉积和溶出，', 9.5, None, None, 't-mut'),
+          T(290, 148, '不是电解质分解', 9.5, None, None, 't-mut')]
+    return svg('还原侧：用新的 SS 电解质 Li 电池做循环伏安，−0.5 到 3 伏 vs 锂；接近 0 伏的还原峰是锂在不锈钢上沉积，回扫的氧化峰是锂溶出，不是电解质分解。', ''.join(o))
+
+
+def l1():
+    o = [T(16, 24, '先把电流密度换算成电流', 12, None, 700),
+         T(16, 52, 'I = j × A', 15, None, 700),
+         T(16, 76, 'j = 0.1 mA/cm²，锂片直径 12 mm', 10, None, None, 't-mut'),
+         T(16, 92, 'A = π × 0.6² = 1.13 cm²', 10, None, None, 't-mut'),
+         T(16, 116, '→ I = 0.113 mA', 13, None, 700, 't-acc'),
+         P('M16 182 H40 V146 H100 V182 H124 V218', 'curve'), '<line x1="16" y1="182" x2="200" y2="182" class="setline"/>',
+         P('M124 218 H184 V182 H200', 'curve'),
+         T(70, 140, '+I', 9.5, 'middle', 600), T(154, 212, '−I', 9.5, 'middle', 600),
+         T(230, 40, '常用起步值', 11, None, 700),
+         T(230, 60, '• j 0.05–0.1 mA/cm²', 9.5, None, None, 't-mut'), T(230, 76, '• 每半周 0.5–1 h', 9.5, None, None, 't-mut'),
+         T(230, 92, '• 电压保护 例如 ±1 V', 9.5, None, None, 't-mut'), T(230, 108, '• 采样 5–60 s', 9.5, None, None, 't-mut'),
+         T(230, 138, '程序', 11, None, 700), T(230, 156, 'J › 循环充放电', 9.5, None, None, 't-mut'),
+         T(230, 172, '或 E › Chronopotentiometry', 9.5, None, None, 't-mut'), T(230, 188, '用 Sequence Wizard 串起来', 9.5, None, None, 't-mut'),
+         R(16, 196, 64, 18, 'tagbox', 9), T(48, 209, '示例数值', 10, 'middle', 700, 't-warn')]
+    o = [x for x in o if x]
+    return svg('锂对称循环设置：电流 I 等于电流密度 j 乘锂片面积，示例 0.1 毫安每平方厘米、直径 12 毫米锂片得 0.113 毫安；正负交替；常用每半周 0.5 到 1 小时、电压保护例如正负 1 伏；程序用 J 循环充放电，或计时电位法串起来。', ''.join(o))
+
+
+def sq(x0, y0, n, w, amps):
+    d = f'M{x0} {y0}'
+    x = x0
+    for i in range(n):
+        a = amps[i] if i < len(amps) else amps[-1]
+        d += f' V{y0 - a} H{x + w / 2} V{y0 + a} H{x + w} V{y0}'
+        x += w
+    return d
+
+
+def l2():
+    o = [P('M30 30 V180 H380', 'axis'), '<line x1="30" y1="105" x2="380" y2="105" class="setline"/>',
+         T(26, 30, 'V', 10, 'end', 600, 't-mut'), T(380, 196, '时间', 9.5, 'end', None, 't-mut'),
+         P(sq(34, 105, 7, 48, [40]), 'curve'),
+         '<line x1="372" y1="65" x2="372" y2="105" class="dim"/>', P('M372 65 l-4 8 h8 Z', 'arr'),
+         T(366, 58, '过电位 + iR', 9.5, 'end', 600),
+         T(30, 212, '每半周的电压平台一样高 → 界面稳定', 11, None, 700)]
+    return svg('正常的锂对称循环曲线：电压正负交替，每半周的平台一样高，说明界面稳定；平台高度是两侧过电位加 iR 压降。', ''.join(o))
+
+
+def l3():
+    o = [R(10, 10, 184, 200, 'sunk-r', 8), P('M22 30 V170 H184', 'axis'), '<line x1="22" y1="100" x2="184" y2="100" class="setline"/>',
+         P(sq(24, 100, 5, 32, [16, 24, 34, 46, 60]), 'curve'),
+         bad(24, 186), T(38, 190.5, '逐渐变大：界面恶化', 10.5, None, 700, 't-bad'),
+         R(206, 10, 184, 200, 'sunk-r', 8), P('M218 30 V170 H380', 'axis'), '<line x1="218" y1="100" x2="380" y2="100" class="setline"/>',
+         P(sq(220, 100, 3, 32, [34]) + ' L322 96 L326 104 L330 97 L334 103 L338 98 L342 102 L346 99 L350 101 L376 100', 'curve'),
+         '<line x1="316" y1="30" x2="316" y2="170" class="mark-line"/>', T(320, 42, '短路', 10, None, 700, 't-bad'),
+         bad(220, 186), T(234, 190.5, '突然变小、变乱：短路', 10.5, None, 700, 't-bad')]
+    return svg('异常的锂对称循环：左边电压平台逐渐变大，说明界面恶化；右边电压突然变小并变得杂乱，说明锂枝晶造成短路。', ''.join(o))
+
+
+def l4():
+    o = [T(16, 22, '临界电流密度：每个循环加大电流密度', 12, None, 700),
+         P('M40 36 V96 H384', 'axis'), T(36, 40, 'j', 10, 'end', 600, 't-mut'),
+         P('M42 90 H100 V80 H158 V70 H216 V60 H274 V50 H332 V40 H380', 'curve'),
+         T(70, 86, '0.05', 9, 'middle', None, 't-mut'), T(128, 76, '0.10', 9, 'middle', None, 't-mut'),
+         T(186, 66, '0.15', 9, 'middle', None, 't-mut'), T(244, 56, '0.20', 9, 'middle', None, 't-mut'),
+         T(302, 46, '0.25', 9, 'middle', None, 't-warn'),
+         P('M40 110 V200 H384', 'axis'), '<line x1="40" y1="155" x2="384" y2="155" class="setline"/>', T(36, 114, 'V', 10, 'end', 600, 't-mut'),
+         P(sq(42, 155, 4, 58, [10, 16, 22, 30]) + ' V122 L280 160 H290 L294 152 L298 158 L304 154 L380 155', 'curve'),
+         '<line x1="276" y1="36" x2="276" y2="200" class="mark-line"/>',
+         T(282, 128, '电压突然掉到接近 0', 9.5, None, 700, 't-warn'),
+         T(282, 144, '→ 这一级 = CCD', 9.5, None, 700, 't-warn'),
+         T(40, 214, '单位 mA/cm²（示例）；报告短路前一级和短路的那一级', 9.5, None, None, 't-mut')]
+    return svg('临界电流密度：电流密度每个循环加 0.05 毫安每平方厘米，电压平台随之升高，到某一级电压突然掉到接近 0，这一级就是临界电流密度；报告短路前一级和短路的那一级。', ''.join(o))
+
+
+TL_STEPS = [
+    (t1, """<p>在手套箱里装 Li / 电解质 / Li，放到测试温度（PEO 类常在 60–80 °C），等界面稳定再开始。<span class="src gen">通用方法</span></p>
+          <ul><li>膜比锂片大一圈，防止边缘短路；锂片表面有氧化层时轻轻刮亮。</li>
+          <li>隔一段时间测一次 EIS，界面半圆不再明显变化后再开始。界面还在变的时候测，t<sub>+</sub> 会不准。</li></ul>"""),
+    (t2, """<p>极化前测 EIS：<code>Experiment › G Electrochemical Impedance › Potentiostatic EIS</code>，1 MHz → 0.1 Hz，AC 5–10 mV rms（不大于 ΔV），DC 0 V vs E<sub>oc</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>在 Echem Analyst 2 里用 R<sub>s</sub> + (R<sub>b</sub> ∥ CPE) + (R<sub>i</sub> ∥ CPE) 拟合，得到本体电阻 R<sub>b,0</sub> 和界面电阻 R<sub>0</sub>。</li>
+          <li>R<sub>0</sub> 是界面电阻，不含本体电阻。</li></ul>"""),
+    (t3, """<p>恒电位极化：<code>Experiment › E Physical Electrochemistry › Chronoamperometry</code>，Step 1 = 0.010 V vs E<sub>oc</sub>，1–5 h。字段名以你的软件为准。</p>
+          <ul><li>Li 对称电池的开路电压接近 0，vs E<sub>oc</sub> 和 vs E<sub>ref</sub> 差别很小，但统一用 vs E<sub>oc</sub>。</li>
+          <li>Max Current 不小于 ΔV / (R<sub>b,0</sub> + R<sub>0</sub>)，IRComp 选 None。</li>
+          <li>EIS 和极化可以用 Experiment › Sequence Wizard 串成一个序列。</li></ul>"""),
+    (t4, """<p>电流从初始值 I<sub>0</sub> 衰减到稳态 I<sub>ss</sub>。30–60 min 内变化小于约 1% 时，取最后一段的平均作为 I<sub>ss</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>I<sub>0</sub> 可以取曲线开头的电流，但它受双电层充电和采样时刻影响；用 I<sub>0</sub> = ΔV / (R<sub>b,0</sub> + R<sub>0</sub>) 计算更稳妥，两者应接近。</li>
+          <li>Cell On 黄灯亮着，几个小时里都不要碰导线。</li></ul>"""),
+    (t5, """<p>极化结束后马上测 EIS：Init. Delay 关掉或设得很短，用同一个等效电路拟合，得到 R<sub>ss</sub>。<span class="src gen">通用方法</span></p>
+          <ul><li>也可以保持 10 mV 偏压测（DC = 0.010 V vs E<sub>ref</sub>，对锂对称电池是安全的）。选一种，并在报告里写明。</li></ul>"""),
+    (t6, """<p>按公式计算 t<sub>+</sub>，检查结果是否合理，装 2–3 个电池取平均。下面的计算器可以直接算。<span class="src gen">通用方法</span></p>
+          <ul><li>t<sub>+</sub> 大于 1 或小于 0，或 I<sub>ss</sub> 大于 I<sub>0</sub>：界面在测量中变化太大、有短路，或极化时间不够。</li>
+          <li>浓度高的聚合物电解质测到的是表观迁移数，报告时写明方法、温度和 ΔV。</li></ul>"""),
+]
+
+ESW_STEPS = [
+    (w1, """<p>装 SS / 电解质 / Li，锂放在负极盖一侧。接线：绿 + 蓝接不锈钢，白 + 红 + 橙接锂，软件里的 vs E<sub>ref</sub> 就是 vs Li/Li<sup>+</sup>。<span class="src">手册 Ch 6</span></p>
+          <ul><li>装好后记下开路电压，在测试温度下静置。</li>
+          <li>每次扫描用一个新电池：扫过的电解质已经分解。</li></ul>"""),
+    (w2, """<p>氧化侧：<code>Experiment › E Physical Electrochemistry › Linear Sweep Voltammetry</code>，从开路电位慢扫到高电位。字段名以你的软件为准。<span class="src gen">通用方法</span></p>
+          <ul><li>扫速 0.1–1 mV/s；终止电位按体系定，例如 6.0 V vs Li。</li>
+          <li>这是带电的半电池：起始电位用 vs E<sub>oc</sub>；终止电位用 vs E<sub>ref</sub>，此时它就是相对锂的电位。</li></ul>"""),
+    (w3, """<p>先定判据再读数：例如电流密度超过 10 µA/cm² 时的电位，或基线和上升段切线的交点。<span class="src gen">通用方法</span></p>
+          <ul><li>电流密度 = 电流 ÷ 不锈钢与电解质的接触面积。</li>
+          <li>报告时写明扫速、温度、工作电极和判据；扫速越慢，得到的极限越保守。</li>
+          <li>更灵敏的做法：在候选电位做恒电位保持（E › Chronoamperometry），看长时间的电流。</li></ul>"""),
+    (w4, """<p>还原侧：用另一个新的 SS / 电解质 / Li 电池做循环伏安（<code>E › Cyclic Voltammetry</code>），在约 −0.5 V 到 3 V vs Li 之间扫几圈。<span class="src gen">通用方法</span></p>
+          <ul><li>接近 0 V 的还原峰是锂在不锈钢上沉积，回扫时的氧化峰是锂溶出，这不是电解质分解。</li>
+          <li>沉积和溶出的电荷之比可以反映锂沉积的可逆性。</li></ul>"""),
+]
+
+LS_STEPS = [
+    (l1, """<p>装 Li / 电解质 / Li，静置到 EIS 稳定。把电流密度换算成电流：I = j × A，A 按锂片面积算。<span class="src gen">通用方法</span></p>
+          <ul><li>程序：<code>Experiment › J Electrochemical Energy</code> 下的循环充放电程序（名称以菜单为准）；没有这个模块时，用 <code>E › Chronopotentiometry</code> 在 Sequence Wizard 里串成 +I、−I 交替的序列。</li>
+          <li>常用起步值：0.05–0.1 mA/cm²，每半周 0.5–1 h，电压保护例如 ±1 V，按体系调。</li>
+          <li>只有一个通道：几天以上的长循环最好放到电池测试仪上做。</li></ul>"""),
+    (l2, """<p>正常的曲线：电压正负交替，每半周的平台一样高。平台高度是两侧的过电位加上 iR 压降。<span class="src gen">通用方法</span></p>
+          <ul><li>报告电流密度、每半周时间、温度，以及平台电压随循环的变化。</li></ul>"""),
+    (l3, """<p>两种异常：平台逐渐变大，说明界面在恶化；电压突然变小、变得杂乱，说明锂枝晶造成了短路，记录短路时间后停止。<span class="src gen">通用方法</span></p>
+          <ul><li>循环前后各测一次 EIS，比较界面电阻。</li>
+          <li>测完在手套箱里拆开，看锂表面有没有枝晶、变色，拍照存档。</li></ul>"""),
+    (l4, """<p>临界电流密度 (CCD)：换一个新电池，从 0.05 mA/cm² 开始，每个循环加 0.05 mA/cm²（每半周例如 30 min）。电压突然掉到接近 0 的那一级就是 CCD。<span class="src gen">通用方法</span></p>
+          <ul><li>报告短路前一级和短路的那一级，以及温度和每半周时间。</li>
+          <li>温度越高，CCD 通常越大，所以不同温度的结果不能直接比较。</li></ul>"""),
+]
+
+
+def build_li():
+    s = PAGE.read_text(encoding='utf-8')
+    for marker, steps, prefix in [('TLSTEPS', TL_STEPS, 'tli'), ('ESWSTEPS', ESW_STEPS, 'esw'), ('LSSTEPS', LS_STEPS, 'lisym')]:
+        items = [f"""        <li><div class="step"><div class="step-text">{text}</div>
+          <figure class="stepfig" data-svgname="{prefix}-{i + 1:02d}">{fn()}</figure></div></li>""" for i, (fn, text) in enumerate(steps)]
+        block = f'<!--{marker}-->\n      <ol class="steps">\n' + '\n'.join(items) + f'\n      </ol>\n      <!--/{marker}-->'
+        s = re.sub(rf'<!--{marker}-->.*?<!--/{marker}-->', lambda m: block, s, flags=re.S)
+    PAGE.write_text(s, encoding='utf-8')
+    print('Li procedures written:', len(TL_STEPS), len(ESW_STEPS), len(LS_STEPS))
+
+
+FIGS['sw-map'] = sw_map
+FIGS['coin-stacks'] = coin_stacks
+
+
 if __name__ == '__main__':
     build()
     fill_figs()
@@ -1799,3 +2153,4 @@ if __name__ == '__main__':
     build_mk()
     build_uv()
     build_ec()
+    build_li()
