@@ -38,13 +38,13 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--sign-green)}
 .wrap{max-width:1360px;margin:0 auto;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
 h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.25;text-wrap:balance}
 p{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--warn);outline-offset:2px;border-radius:4px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 5px var(--warn);border-radius:4px}
 .en{font-family:var(--f-display);font-weight:600;color:var(--muted);font-size:.9em}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .small{font-size:.86rem}
@@ -66,6 +66,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media (max-width:980px){.stage{grid-template-columns:minmax(0,1fr)}}
 .game{position:relative;border-radius:12px;overflow:hidden;background:#3B4045;border:1px solid var(--rule);height:min(72vh,680px);min-height:360px;touch-action:none;user-select:none;-webkit-user-select:none;outline:none}
 @media (max-width:980px){.game{height:min(58vh,560px);min-height:300px}}
+.game:focus-visible{outline:3px solid var(--warn);outline-offset:-3px;box-shadow:none}
 #cv{display:block;width:100%;height:100%}
 #mini{position:absolute;top:10px;right:10px;width:170px;height:100px;border-radius:8px;border:2px solid rgba(255,255,255,.85);background:rgba(20,25,22,.55)}
 @media (max-width:600px){#mini{width:118px;height:70px;top:8px;right:8px}}
@@ -104,7 +105,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes tk{50%{opacity:.25}}
 
 /* toast stack */
-.toasts{position:absolute;left:10px;bottom:64px;display:flex;flex-direction:column-reverse;gap:6px;max-width:min(380px,calc(100% - 20px));pointer-events:none}
+.toasts{position:absolute;z-index:3;left:10px;bottom:calc(var(--dashH,56px) + 8px);display:flex;flex-direction:column-reverse;gap:6px;max-width:min(380px,calc(100% - 20px));pointer-events:none}
 .toast{background:rgba(255,255,255,.97);color:#141D19;border-radius:10px;padding:7px 11px 6px;border-left:6px solid #E8A800;box-shadow:0 4px 14px rgba(0,0,0,.3);font-size:.86rem;line-height:1.45;animation:tin .25s ease-out}
 .toast b{display:block;font-size:.92rem}
 .toast.critical{border-left-color:#C8102E}
@@ -112,7 +113,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .toast.info{border-left-color:#1E7A46}
 @keyframes tin{from{transform:translateY(8px);opacity:0}}
 @media (prefers-reduced-motion: reduce){.toast{animation:none}.tell span.blink.on{animation-duration:2s}}
-.phone{position:absolute;right:10px;bottom:70px;width:220px;background:#111;color:#fff;border-radius:16px;padding:10px 12px;border:2px solid #444;box-shadow:0 6px 20px rgba(0,0,0,.4);font-size:.85rem;pointer-events:auto}
+.phone{position:absolute;z-index:3;right:10px;bottom:calc(var(--dashH,56px) + 10px);width:220px;background:#111;color:#fff;border-radius:16px;padding:10px 12px;border:2px solid #444;box-shadow:0 6px 20px rgba(0,0,0,.4);font-size:.85rem;pointer-events:auto}
 .phone b{display:block;margin-bottom:2px}
 .phone .row{display:flex;gap:6px;margin-top:8px}
 .phone button{flex:1;border:none;border-radius:8px;padding:6px 4px;font-weight:700;font-size:.8rem}
@@ -164,8 +165,13 @@ kbd{font-family:var(--f-mono);font-size:.8rem;border:1px solid var(--rule);borde
 .tbtns button{flex:1 1 auto;min-width:52px;border:1px solid var(--rule);background:var(--surface);border-radius:9px;padding:8px 6px;font-weight:700;font-size:.8rem;touch-action:none}
 .tbtns button.on{background:var(--ink);color:var(--surface)}
 .wheelpad{position:relative;height:110px;border-radius:14px;background:var(--surface);border:1px solid var(--rule);touch-action:none;overflow:hidden}
-.wheelpad svg{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;pointer-events:none;transition:transform .05s}
-.wheelpad .hint{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:.72rem;color:var(--muted);pointer-events:none}
+.wheelpad svg{position:absolute;left:50%;top:calc(50% - 8px);width:76px;height:76px;margin:-38px 0 0 -38px;pointer-events:none;transition:transform .05s}
+.wheelpad .hint{position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:.72rem;color:var(--muted);pointer-events:none}
+.touch,.touch *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media (max-width:600px){.brand span{display:none}.modes{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.modes button{flex:0 0 auto;padding:4px 9px 3px;font-size:.8rem}.tbtns{gap:4px}.tbtns button{padding:6px 3px;min-width:44px;font-size:.74rem}.wheelpad,.pedal,.pedal.gas{height:92px}.wheelpad svg{width:62px;height:62px;margin:-31px 0 0 -31px}.banner{text-wrap:balance}}
+body.land .stage>section{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:10px;align-items:start}
+body.land .touch{padding-top:0}
+body.land .tbtns button{min-width:40px;padding:5px 2px}
 .pedals{display:flex;gap:8px}
 .pedal{width:78px;height:110px;border-radius:12px;border:2px solid var(--rule);background:var(--surface);font-weight:900;font-family:var(--f-display);touch-action:none;display:grid;place-items:center;font-size:.95rem}
 .pedal.gas{background:#1E7A46;color:#fff;border-color:#1E7A46;height:110px;width:64px}
@@ -181,6 +187,8 @@ kbd{font-family:var(--f-mono);font-size:.8rem;border:1px solid var(--rule);borde
 .filters button{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:.84rem}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 .sheet{width:100%;border-collapse:collapse;font-size:.86rem}
+.sheet td:first-child{width:1%;white-space:nowrap}.sev{white-space:nowrap}
+.filters{position:sticky;top:-1px;z-index:1;background:var(--surface);padding-block:6px}
 .sheet td,.sheet th{border-bottom:1px solid var(--rule);padding:6px 6px;text-align:left;vertical-align:top}
 .result{font-family:var(--f-display);font-weight:900;font-size:1.6rem}
 .result.pass{color:var(--ok)}.result.fail{color:var(--bad)}
@@ -194,8 +202,8 @@ footer{color:var(--muted);font-size:.82rem;padding-block:6px 30px}
       <button type="button" data-mode="free" aria-pressed="true">自由驾驶</button>
       <button type="button" data-mode="test" aria-pressed="false">路考模式</button>
       <button type="button" data-mode="scen" aria-pressed="false">情景练习</button>
-      <button type="button" data-open="coll" aria-pressed="false">错误图鉴</button>
-      <button type="button" data-open="help" aria-pressed="false">操作说明</button>
+      <button type="button" data-open="coll">错误图鉴</button>
+      <button type="button" data-open="help">操作说明</button>
     </nav>
   </div>
 </header>
@@ -710,7 +718,7 @@ const CATALOG = [
 "severity": "major",
 "why": "无故开得过慢 (impeding traffic) 会迫使后车急刹或冒险超车。加州路考把无理由低于限速10 mph列为关键错误。",
 "fix": "路况良好时保持接近限速的车速，跟上车流。确实需要慢行时，靠右侧车道行驶。",
-"how": "在限速 35 的路上无故开得比 18 mph 还慢超过 9 秒。"
+"how": "在限速 30 以上的路上、前方没车也没路口时，比限速低 12 mph 以上（35 限速时低于 23 mph）超过 7 秒。"
 },
 {
 "id": "wrong_lane_turn",
@@ -944,7 +952,7 @@ const CATALOG = [
 "severity": "minor",
 "why": "转向灯一直开着 (signal left on) 会误导他人：在路口等候的车以为你要转弯而驶出，就会与直行的你相撞。",
 "fix": "转弯或变道完成后，看仪表、听声音，确认转向灯已熄灭，没灭就手动关掉。",
-"how": "打着转向灯却一直不转弯、不变道超过 14 秒。"
+"how": "打着转向灯一直不转弯、不变道，开了 10 秒以上；或者变道完成 4 秒后还没关灯。"
 },
 {
 "id": "signal_too_early",
@@ -1249,7 +1257,7 @@ for (const e of EDGES) {
       list.push({ type, out: o, k2 });
     }
     if (!list.length) for (const o of outs) list.push({ type: moveType(e.T, o.T), out: o, k2: o.forceLane != null ? o.forceLane : 0 });
-    e.moves[k] = list.map(m => Object.assign(m, { poly: bezPoly(e.lanes[k].pts[1], TD[e.T].u, m.out.lanes[m.k2].pts[0], TD[m.out.T].u, m.type, { kind: 'move', node: n, appr: e.appr, from: e, k1: k, type: m.type, out: m.out, k2: m.k2 }) }));
+    e.moves[k] = list.map(m => Object.assign(m, { poly: bezPoly(e.lanes[k].pts[1], TD[e.T].u, m.out.lanes[m.k2].pts[0], TD[m.out.T].u, m.type, { kind: 'move', node: n, appr: e.appr, from: e, k1: k, type: m.type, out: m.out, k2: m.k2, merge: m.type === 'straight' && m.k2 !== Math.min(k, m.out.n - 1) }) }));
   }
 }
 function findEdge(s, d, al) { return EDGES.find(e => e.s === s && e.d === d && (al - e.a0) * d >= -16 && (e.a1 - al) * d >= -16); }
@@ -1362,7 +1370,8 @@ function updatePlayer(dt) {
   const thr = INPUT.thr, brk = INPUT.brk;
   if (PL.gear === 'D') { drive = thr * 11.5 * (1 - Math.min(1, Math.max(0, PL.v) / 120)); if (thr < 0.02 && brk < 0.05 && PL.v < 4.6) drive += 2.4; }
   else if (PL.gear === 'R') { drive = -thr * 7; if (thr < 0.02 && brk < 0.05 && PL.v > -2.6) drive -= 1.6; if (PL.v < -15) drive = Math.max(drive, 0); }
-  const dec = brk * mu * GRAV + 0.3 + 0.012 * vAbs + 0.00045 * vAbs * vAbs + (PL.pb ? 9 : 0) + (PL.gear === 'P' ? 40 : 0) + (PL.offroad ? 6 : 0);
+  PL.brkDec = brk * mu * GRAV;
+  const dec = brk * mu * GRAV + 0.3 + 0.012 * vAbs + 0.00045 * vAbs * vAbs + (PL.pb ? 4 : 0) + (PL.gear === 'P' ? 40 : 0) + (PL.offroad ? 6 : 0);
   const v0 = PL.v;
   if (Math.abs(PL.v) < 0.05 && Math.abs(drive) <= dec) PL.v = 0;
   else { PL.v += drive * dt; const sg = Math.sign(PL.v); PL.v -= sg * dec * dt; if (Math.sign(PL.v) !== sg) PL.v = 0; }
@@ -1389,7 +1398,7 @@ function newAI(edge, k, s, type = 'car') {
   extendPlan(ai); return ai;
 }
 function chooseMove(ai, e, k) {
-  const opts = e.moves[k];
+  const all = e.moves[k]; const nm = all.filter(o => !o.poly.merge); const opts = nm.length ? nm : all;
   if (ai.route) { const want = ai.route[e.to.id]; const m = opts.find(o => o.out.T === want); if (m) return m; }
   if (ai.type === 'amb') { const st = opts.find(o => o.type === 'straight'); if (st) return st; }
   const w = opts.map(o => o.type === 'straight' ? 2.2 : 1); let r = Math.random() * w.reduce((a, b) => a + b, 0);
@@ -1430,11 +1439,20 @@ function vehInfo() { // unify AI + player for interactions
   list.push(p); return list;
 }
 let VEH = [];
-function oncomingClear(node, T, selfId) {
+function oncomingClear(node, T, selfId, me) {
   const RT = REV[T], u = TD[RT].u;
   for (const o of VEH) {
     if (o.id === selfId) continue;
     if (o.appr && o.appr.node === node && o.appr.T === RT && o.v > 1 && o.distBox < 230 && o.distBox / Math.max(o.v, 1) < 4.8) return false;
+    if (o.appr && o.appr.node === node && o.appr.T === RT && o.distBox < 30) {
+      // opposite vehicle at its line: committed, or arrived earlier at a stop and not turning left itself
+      const oLeft = o.ai ? (o.ai.plan[1] && o.ai.plan[1].type === 'left') : PL.sigL;
+      if (o.ai && o.ai.go && !oLeft) return false;
+      if (!oLeft && o.appr.control === 'stop' && me && me.arrived) {
+        const oArr = o.ai ? o.ai.arrived : (typeof playerQueued === 'function' && playerQueued(node) ? RS.av.arrT : 0);
+        if (oArr && oArr < me.arrived) return false;
+      }
+    }
     if (o.inBox === node || inBox(node, o.cx, o.cy)) { const dot = Math.cos(o.h) * u[0] + Math.sin(o.h) * u[1]; if (dot > 0.6 && o.v > 1) return false; }
   }
   return true;
@@ -1464,36 +1482,47 @@ function mustHold(ai, a, mv, dist) {
     const L = lightFor(n, a.group);
     if (L === 'R') { if (ai.yGo === n.id && dist < 1) return false; return true; }
     if (L === 'Y') { if (ai.yGo === n.id) return false; const need = ai.v * ai.v / (2 * 9); if (dist > need + 3) return true; ai.yGo = n.id; }
-    if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id)) return true;
+    if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id, ai)) return true;
     if (boxBusy(n, ai.id, a.T)) return true;
+    if (dist < 25 && pedOnMove(n, a.T, mv)) return true;
     return false;
   }
   if (a.control === 'stop') {
     if (!ai.arrived) { if (dist < 3.5 && ai.v < 0.6) { ai.arrived = GS.t; n.queue.push({ id: ai.id, t: GS.t, T: a.T }); } return true; }
     if (ai.go) return false;
     if (GS.t - ai.arrived < 1.3) return true;
-    { const p = VEH.find(o => o.player); if (p && p.v > 2 && ((p.appr && p.appr.node === n && p.distBox < 22) || inBox(n, p.cx, p.cy, 4))) return true; }
+    { const p = VEH.find(o => o.player); if (p && p.v > 0.3 && ((p.appr && p.appr.node === n && p.distBox < 22) || inBox(n, p.cx, p.cy, 4))) return true; }
     if (ALLSTOP_NODES.has(n.id)) {
       const mine = n.queue.find(e => e.id === ai.id) || { t: ai.arrived, T: a.T };
       const waiting = n.queue.filter(e => e.id !== ai.id && (e.id === 'P' ? (typeof playerQueued === 'function' && playerQueued(n)) : GS.ais.some(x => x.id === e.id && x.plan[0].kind === 'edge' && x.plan[0].edge.to === n)));
       const strict = GS.t - ai.arrived > 4;
       if (waiting.some(e => e.t < mine.t - 1 || (!strict && Math.abs(e.t - mine.t) <= 1 && e.T === LEFT[mine.T]) || (strict && e.t < mine.t))) return true;
+      if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id, ai)) return true;
       if (boxBusy(n, ai.id)) return true;
+      // another car already committed to a conflicting move
+      if (GS.ais.some(x => x !== ai && x.go && x.plan[0].kind === 'edge' && x.plan[0].edge.to === n && x.plan[1] && movesConflict(a.T, mv.type, x.plan[0].edge.T, x.plan[1].type))) return true;
     } else {
       if (!crossClear(n, a.T, ai.id)) return true;
-      if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id)) return true;
+      if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id, ai)) return true;
       if (boxBusy(n, ai.id)) return true;
     }
-    ai.go = true; return false;
+    if (pedOnMove(n, a.T, mv)) return true;
+    ai.go = true; ai.goT = GS.t; return false;
   }
-  if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id)) return true;
+  if (mv.type === 'left' && !oncomingClear(n, a.T, ai.id, ai)) return true;
   if (boxBusy(n, ai.id, a.T)) return true;
   return false;
+}
+/* a pedestrian is crossing on the near- or far-side crosswalk of this move */
+function pedOnMove(n, T, mv) {
+  const cws = [n.cw && n.cw[REV[T]], n.cw && mv && mv.out && n.cw[mv.out.T]].filter(Boolean);
+  if (!cws.length) return false;
+  return GS.peds.some(p => p.state === 'cross' && cws.includes(p.cw));
 }
 function busRedOn(street) { const b = GS.bus; return b && b.lights === 'red' && b.plan[0].kind === 'edge' && b.plan[0].edge.s === street ? b : null; }
 function aiConstraints(ai) {
   // returns [gap, leaderV] pairs
-  const out = []; const cur = ai.plan[0];
+  const out = []; const cur = ai.plan[0]; ai.ambYield = false;
   if (cur.kind === 'edge') {
     const e = cur.edge, a = e.appr, mv = ai.plan[1];
     if (a) { const dist = (cur.len + e.trimEnd - a.setback) - ai.s; if (dist > -1 && mustHold(ai, a, mv, dist)) out.push([dist - 0.5, 0, 1.5]); }
@@ -1506,10 +1535,10 @@ function aiConstraints(ai) {
     const bus = busRedOn(e.s);
     if (bus && bus !== ai && bus.plan[0].edge.d !== e.d) { const bf = bus.plan[0].edge.a0 + bus.plan[0].edge.d * bus.s; const fa = e.a0 + e.d * ai.s; const d = (bf - e.d * 20 - fa) * e.d; if (d > -4 && d < 320) out.push([d, 0, 1]); }
     const amb = GS.amb;
-    if (amb && amb !== ai && ai.type !== 'bus' && amb.plan[0].kind === 'edge' && amb.plan[0].edge.s === e.s) {
-      const ae = amb.plan[0].edge; const aal = ae.a0 + ae.d * amb.s, fal = e.a0 + e.d * ai.s;
-      if (ae.d === e.d && (fal - aal) * e.d > 0 && (fal - aal) * e.d < 380) { out.push([0, 0, 0]); ai.latT = 3; }
-      if (ae.d !== e.d && (aal - fal) * e.d > 0 && (aal - fal) * e.d < 420) out.push([0, 0, 0]);
+    if (amb && amb !== ai && ai.type !== 'bus' && amb.plan[0].kind === 'edge' && amb.plan[0].edge.s === e.s && !amb.done) {
+      const ae = amb.plan[0].edge; const aal = ae.a0 + ae.d * amb.s, fal = e.a0 + e.d * ai.s; const ar = aal - ae.d * amb.len;
+      if (ae.d === e.d && (fal - ar) * e.d > -10 && (fal - aal) * e.d < 380) { out.push([0, 0, 0]); ai.latT = 3; ai.ambYield = true; }
+      if (ae.d !== e.d && (aal - fal) * e.d > -amb.len && (aal - fal) * e.d < 420 && (amb.stuckT || 0) < 4) { out.push([0, 0, 0]); ai.latT = 3; ai.ambYield = true; }
     }
   }
   return out;
@@ -1524,10 +1553,10 @@ function aiObstacle(ai) {
     const p = aiAt(ai, d); const px = p[0] + nx * ai.lat, py = p[1] + ny * ai.lat;
     for (const o of near) {
       const dd = segDist(px, py, [o.fx, o.fy], [o.rx, o.ry]);
-      if (dd < (o.wid + ai.wid) / 2 - 0.6) { if (d < best) { best = d; bestV = o.v * Math.max(0, Math.cos(angDiff(o.h, p[2]))); bestWho = o.id; } }
+      if (dd < (o.wid + ai.wid) / 2 + 0.3) { if (d < best) { best = d; bestV = o.v * Math.max(0, Math.cos(angDiff(o.h, p[2]))); bestWho = o.id; } }
     }
     if (d <= 80) for (const q of peds) {
-      if (Math.hypot(q.x - px, q.y - py) < (q.state === 'cross' ? 9 : 4.5)) { if (d < best) { best = d; bestV = 0; } }
+      if (Math.hypot(q.x - px, q.y - py) < (q.state === 'cross' ? 9 : ai.wid / 2 + 2)) { if (d < best) { best = d; bestV = 0; } }
     }
     if (GS.truck.box && d < 120 && circleObb(px, py, ai.wid / 2, GS.truck.box)) { if (d < best) { best = d; bestV = 0; } }
     if (best < Infinity && d > best + 8) break;
@@ -1541,23 +1570,42 @@ function idm(v, v0, gap, vl, s0 = 7) {
   return A * (1 - Math.pow(v / Math.max(v0, 0.1), 4) - Math.pow(Math.max(sStar, 0) / gap, 2));
 }
 function updateAI(ai, dt) {
+  ai.prevS = ai.s; ai.prevSeg = ai.plan[0];
   if (ai.stun > 0) { ai.stun -= dt; ai.v = 0; return; }
   const cur = ai.plan[0];
   let v0;
-  if (cur.kind === 'edge') { v0 = limitOnEdge(cur.edge, ai.s) * MPH * ai.v0f; const nxt = ai.plan[1]; const toEnd = cur.len - ai.s; if (nxt && nxt.type !== 'straight') v0 = Math.min(v0, (14 + toEnd * 0.28) * MPH); if (ai.type === 'amb' && toEnd < 90) v0 = Math.min(v0, 22 * MPH); }
-  else v0 = (cur.type === 'straight' ? cur.out.s.limit : cur.type === 'left' ? 17 : 13) * MPH * (ai.type === 'amb' ? 1.2 : 1);
-  if (ai.type === 'amb') v0 = Math.max(v0, cur.kind === 'edge' ? 48 * MPH : 22 * MPH);
+  if (cur.kind === 'edge') { v0 = limitOnEdge(cur.edge, ai.s) * MPH * ai.v0f; const nxt = ai.plan[1]; const toEnd = cur.len - ai.s; if (nxt && nxt.type !== 'straight') v0 = Math.min(v0, (14 + toEnd * 0.28) * MPH); if (ai.type === 'amb') v0 = (toEnd < 90 ? 22 : ai.latT < -1 ? 30 : 48) * MPH; }
+  else { v0 = (cur.type === 'straight' ? cur.out.s.limit : cur.type === 'left' ? 17 : 13) * MPH * (ai.type === 'amb' ? 1.2 : 1); if (ai.type === 'amb') v0 = Math.max(v0, 22 * MPH); }
   if (ai.type === 'bus') v0 *= 0.85;
   let a = idm(ai.v, v0, 1e9, 0);
-  const [og, ov, ow] = aiObstacle(ai); if (og < Infinity) { const ao = idm(ai.v, v0, og, ov); a = Math.min(a, ao); if (ow === 'P' && ao < -13 && ai.v > 8 && ai.type !== 'amb') { GS.evasiveT = GS.t; GS.evasiveWho = ai; } }
+  const af = a;
+  let [og, ov, ow] = aiObstacle(ai);
+  if (cur.kind === 'move' && ai.v < 0.3 && og < Infinity && ow != null && ow !== 'P') {
+    const other = GS.ais.find(x => x.id === ow); const oc = other && other.plan[0];
+    ai.boxStuckT = (ai.boxStuckT || 0) + dt;
+    if (oc && oc.kind === 'move' && oc.node === cur.node && other.v < 0.3 && ai.boxStuckT > 3 && (cur.type !== 'left' ? (oc.type === 'left' || ai.id < other.id) : (oc.type === 'left' && ai.id < other.id))) og = Infinity;
+  } else ai.boxStuckT = 0;
+  if (og < Infinity) { const ao = idm(ai.v, v0, og, ov); a = Math.min(a, ao); if (ow === 'P' && ao < -13 && ao - af < -8 && og < Math.max(40, ai.v * 1.5) && ai.v > 8 && ai.type !== 'amb') { GS.evasiveT = GS.t; GS.evasiveWho = ai; } }
   for (const [g, vl, s0] of aiConstraints(ai)) a = Math.min(a, idm(ai.v, v0, Math.max(0.01, g), vl, s0));
   a = Math.max(-28, Math.min(5.5, a));
   ai.brakeOn = a < -2 || ai.v < 0.3;
   ai.v = Math.max(0, ai.v + a * dt);
   ai.s += ai.v * dt;
-  if (ai.type === 'amb') { let pass = false; for (const o of VEH) { if (!o.yielded || o.id === ai.id) continue; const rx = o.cx - ai.cx, ry = o.cy - ai.cy; const al = rx * Math.cos(ai.h) + ry * Math.sin(ai.h); if (al > -30 && al < 170 && Math.abs(-rx * Math.sin(ai.h) + ry * Math.cos(ai.h)) < 14) pass = true; } ai.latT = pass ? -6.5 : 0; }
+  if (ai.type === 'amb') {
+    // swing left just enough to clear vehicles that pulled over (and keep clear while alongside them)
+    let need = 0; const ch = Math.cos(ai.h), sh = Math.sin(ai.h);
+    for (const o of VEH) {
+      if (o.id === ai.id || Math.cos(angDiff(o.h, ai.h)) < 0.5) continue;
+      const rx = o.cx - ai.cx, ry = o.cy - ai.cy; const al = rx * ch + ry * sh, lt = -rx * sh + ry * ch + ai.lat;
+      if (Math.abs(lt) > 14 || al < -(ai.len + o.len) / 2 - 4 || al > 170) continue;
+      const alongside = Math.abs(al) < (ai.len + o.len) / 2 + 4;
+      if (o.yielded || (alongside && lt > 0.5)) need = Math.min(need, lt - (o.wid + ai.wid) / 2 - 1.2);
+    }
+    ai.latT = Math.max(-7.5, need);
+    ai.stuckT = ai.v < 0.3 ? (ai.stuckT || 0) + dt : 0;
+  }
+  if (ai.type !== 'amb' && !ai.ambYield) ai.latT = 0;
   ai.lat += Math.max(-4 * dt, Math.min(4 * dt, ai.latT - ai.lat));
-  if (ai.latT && ai.type !== 'amb' && !(GS.amb)) ai.latT = 0;
   // advance plan
   while (ai.s > ai.plan[0].len) {
     ai.s -= ai.plan[0].len; const done = ai.plan.shift(); ai.prev = done;
@@ -1575,10 +1623,12 @@ function updateAI(ai, dt) {
 function updateBusStop(b, dt) {
   const cur = b.plan[0];
   if (cur.kind !== 'edge' || cur.edge.s.id !== SCHOOL.street || cur.edge.d !== 1 || b.stopDone === cur.edge.id) { if (b.lights !== 'off' && b.lights) b.lights = 'off'; return; }
-  const d = edgeAlongToS(cur.edge, SCHOOL.busStopX) - b.s;
+  const sStop = edgeAlongToS(cur.edge, SCHOOL.busStopX);
+  if (sStop < 0 || sStop > cur.len + cur.edge.trimEnd) { if (b.lights && b.lights !== 'off') b.lights = 'off'; return; }
+  const d = sStop - b.s;
   if (b.lights === 'red') { b.redT -= dt; if (b.redT <= 0) { b.lights = 'off'; b.stopDone = cur.edge.id; } return; }
   if (d < 190 && d > 1.5) b.lights = 'amber';
-  if (d <= 1.5 && b.v < 0.4) { b.lights = 'red'; b.redT = 13; spawnBusKids(b); }
+  if (d <= 1.5 && d > -3 && b.v < 0.4) { b.lights = 'red'; b.redT = 13; spawnBusKids(b); }
 }
 function aiSpawnOK(e, k, s, minD = 260) {
   const p = polyAt(e.lanes[k], s); const c = plCenter();
@@ -1611,7 +1661,8 @@ function cwEnds(cw) {
 }
 function spawnPed(cw, kid = false, end = null) {
   const ends = cwEnds(cw); const i = end == null ? (Math.random() < 0.5 ? 0 : 1) : end; const p0 = ends[i], p1 = ends[1 - i];
-  const off = rand(-2.5, 2.5); const perp = cw.walk === 'x' ? [0, 1] : [1, 0];
+  const perp = cw.walk === 'x' ? [0, 1] : [1, 0]; const away = cw.arm === 'N' || cw.arm === 'W' ? -1 : cw.arm ? 1 : 0;
+  const off = away ? away * rand(0, 2.5) : rand(-2.5, 2.5);
   const p = { id: GS.nextId++, x: p0[0] + perp[0] * off, y: p0[1] + perp[1] * off, tx: p1[0] + perp[0] * off, ty: p1[1] + perp[1] * off, cw, state: 'wait', wait: rand(0.6, 3.5), kid, speed: kid ? 3.8 : rand(4.2, 5), col: pick(PED_COLORS), phase: Math.random() * 6 };
   GS.peds.push(p); return p;
 }
@@ -1620,9 +1671,15 @@ function spawnBusKids(b) {
   for (let i = 0; i < 3; i++) GS.peds.push({ id: GS.nextId++, x: x - 10 - i * 4, y: s.c + s.ePos - 1, tx: x - 10 - i * 4, ty: s.c + s.ePos + 30, state: 'cross', kid: true, speed: 3.6, col: pick(PED_COLORS), phase: i, cw: null, after: [0, 1], wait: 0 });
   for (let i = 0; i < 2; i++) GS.peds.push({ id: GS.nextId++, x: x + 8 + i * 3, y: s.c + s.ePos - 2, tx: x + 8 + i * 3, ty: s.c - s.eNeg - 6, state: 'wait', wait: 1.2 + i * 0.8, kid: true, speed: 3.8, col: pick(PED_COLORS), phase: i, cw: null, busKid: true });
 }
-function vehicleNear(cw, distFt, vMin) {
-  const r = cw.r;
-  for (const o of VEH) { if (o.v * 1 < vMin) continue; if (inRect(r, o.fx, o.fy, distFt)) return true; }
+function vehicleNear(cw, distFt) {
+  const r = cw.r, mx = (r[0] + r[2]) / 2, my = (r[1] + r[3]) / 2;
+  for (const o of VEH) {
+    const dx = Math.max(r[0] - o.fx, 0, o.fx - r[2]), dy = Math.max(r[1] - o.fy, 0, o.fy - r[3]); const dist = Math.hypot(dx, dy);
+    const toward = (mx - o.fx) * Math.cos(o.h) + (my - o.fy) * Math.sin(o.h) > 0;
+    if (o.v > 0.3 && dist < 4) return true;
+    if (o.ai && o.ai.go && o.distBox != null && o.distBox < 30 && toward) return true;
+    if (toward && o.v > 0.3 && dist < Math.max(distFt, o.v * 1.5 + o.v * o.v / 20)) return true;
+  }
   return false;
 }
 function updatePeds(dt) {
@@ -1643,9 +1700,13 @@ function updatePeds(dt) {
       p.wait -= dt;
       let ok;
       if (p.cw && p.cw.kind === 'signal') ok = walkOK(p.cw.node, p.cw.group);
-      else ok = p.wait <= 0 && !(p.cw && vehicleNear(p.cw, 26, 15 * MPH));
+      else ok = p.wait <= 0 && !(p.cw && vehicleNear(p.cw, 26));
       if (p.busKid) ok = p.wait <= 0 && GS.bus && GS.bus.lights === 'red';
-      if (ok) p.state = 'cross';
+      if (ok) {
+        p.state = 'cross';
+        // could the player still stop before this crosswalk when the pedestrian stepped out?
+        if (p.cw) { const f = plFront(), v = Math.abs(PL.v), r = p.cw.r; const dx = Math.max(r[0] - f[0], 0, f[0] - r[2]), dy = Math.max(r[1] - f[1], 0, f[1] - r[3]); const toward = ((r[0] + r[2]) / 2 - f[0]) * Math.cos(PL.th) + ((r[1] + r[3]) / 2 - f[1]) * Math.sin(PL.th) > 0; p.plCould = !(toward && v > 1 && Math.hypot(dx, dy) < v * 0.8 + v * v / (2 * 0.38 * GRAV)); }
+      }
     } else if (p.state === 'cross') {
       const dx = p.tx - p.x, dy = p.ty - p.y, d = Math.hypot(dx, dy);
       if (d < 0.6) {
@@ -1655,8 +1716,12 @@ function updatePeds(dt) {
         if (p.after) p.wu = [0, 1];
       } else {
         const sp = p.speed * dt; const nx = p.x + dx / d * sp * 8, ny = p.y + dy / d * sp * 8;
-        const blocked = circleObb(nx, ny, 1.4, plOBB()) || GS.ais.some(a => a.box && Math.abs(a.cx - nx) < 30 && Math.abs(a.cy - ny) < 30 && circleObb(nx, ny, 1.4, a.box));
-        if (!blocked) { p.x += dx / d * sp; p.y += dy / d * sp; } p.h = Math.atan2(dy, dx);
+        // a pedestrian blocked by a stopped car for more than 1.5 s walks around it (no mutual waiting)
+        const hits = mv => (circleObb(nx, ny, 1.4, plOBB()) && (!mv || Math.abs(PL.v) > 0.3)) || GS.ais.some(a => a.box && (!mv || a.v > 0.3) && Math.abs(a.cx - nx) < 30 && Math.abs(a.cy - ny) < 30 && circleObb(nx, ny, 1.4, a.box));
+        if (!hits(false)) { p.x += dx / d * sp; p.y += dy / d * sp; p.blockT = 0; }
+        else if ((p.blockT || 0) >= 1.5 && !hits(true)) { p.x += dx / d * sp; p.y += dy / d * sp; } // tired of waiting: walk around the stopped car
+        else p.blockT = (p.blockT || 0) + dt;
+        p.h = Math.atan2(dy, dx);
       }
       if (p.cw && p.cw.kind === 'school') GS.guardOut = true;
     } else if (p.state === 'walk') {
@@ -1696,8 +1761,8 @@ function updateWork(dt) {
   if (f.state !== 'STOP') tk.ph = 0; else if (!busy || tk.ph > 0) tk.ph = (tk.ph || 0) + dt;
   const k = f.state === 'STOP' && tk.ph > 0 ? Math.max(0, Math.sin(Math.min(1, tk.ph / 6.5) * Math.PI)) : 0;
   if (f.state === 'STOP' && f.t < 0.2 && tk.ph > 0 && tk.ph < 6.5) f.t = 0.2; // finish the manoeuvre before waving traffic on
-  tk.off = k; const y = 519 - k * 13, x = 1712 - k * 10;
-  tk.cx = x; tk.cy = y; tk.h = -k * 0.35; tk.box = obb(x, y, tk.h, 30, 8.2);
+  tk.off = k; const y = 519 - k * 11, x = 1712 - k * 10;
+  tk.cx = x; tk.cy = y; tk.h = -k * 0.25; tk.box = obb(x, y, tk.h, 30, 8.2);
 }
 
 /* ---------- ambulance ---------- */
@@ -1705,8 +1770,8 @@ function spawnAmbulance() {
   const loc = PINFO.loc; if (!loc || !loc.street || typeof loc.k !== 'number') return false;
   const f = plFront(); const al = alongOf(loc.street, f[0], f[1]);
   const e = findEdge(loc.street, loc.d, al); if (!e) return false;
-  const s = edgeAlongToS(e, al) - 360;
-  if (s < 0) return false;
+  const sp = edgeAlongToS(e, al); let s = sp - 360;
+  if (s < 0) { if (sp < 200) return false; s = 0; }
   const k = e.n > 1 ? 0 : 0;
   const amb = newAI(e, k, s, 'amb'); amb.v = Math.max(Math.abs(PL.v) + 8 * MPH, 30 * MPH); amb.siren = true; amb.start = GS.t; aiGeom(amb);
   GS.amb = amb; GS.ais.push(amb); return true;
@@ -1719,7 +1784,7 @@ function stepWorld(dt) {
   for (const n of NODES) if (n.sig) n.sig.t += dt;
   updateTrain(dt); updateWork(dt);
   VEH = vehInfo();
-  for (const o of VEH) if (o.ai && o.ai.type !== 'amb') o.yielded = o.v < 1.5 && (o.ai.lat > 1.5);
+  for (const o of VEH) if (o.ai && o.ai.type !== 'amb') o.yielded = o.ai.lat > 1.5;
   { const p = VEH.find(o => o.player); if (p) p.yielded = PINFO.yieldedEV; }
   for (const ai of GS.ais) updateAI(ai, dt);
   for (const ai of GS.ais) aiGeom(ai);
@@ -1739,7 +1804,7 @@ const RS = { cd: {}, av: null, bx: null, prevLane: null, prevSide: null, wrongT:
   harshT: 0, accT: 0, revFastT: 0, revLooked: true, revFlag: false, belt: false, pbFlag: false, sigStart: { L: -1, R: -1 }, sigUsed: { L: false, R: false }, sigOdo: { L: 0, R: 0 }, odo: 0,
   parkedT: 0, wasParked: true, busRel: null, ev: null, rail: { in: false, stopT: 0, close: false }, hornT: 0, stopFlag: {}, inZoneT: 0, centerT: 0 };
 const CONES = [];
-{ const add = (x, y) => CONES.push({ x, y, x0: x, y0: y, hit: false }); for (let x = 1580; x <= 1640; x += 12) add(x, 523 - (x - 1580) / 60 * 10.5); for (let x = 1652; x <= 1900; x += 20) add(x, 512.5); for (let x = 1912; x <= 1948; x += 12) add(x, 512.5 + (x - 1900) / 48 * 10.5); }
+{ const add = (x, y) => CONES.push({ x, y, x0: x, y0: y, hit: false }); for (let x = 1580; x <= 1640; x += 12) add(x, 523 - (x - 1580) / 60 * 10.5); for (let x = 1652; x <= 1812; x += 20) add(x, 512.5); for (let x = 1824; x <= 1860; x += 12) add(x, 512.5 + (x - 1812) / 48 * 10.5); }
 const PARKED_OBB = PARK.parked.map(x0 => ({ x0, box: obb(x0 + 7.75, 1516.4, 0, 15.5, 6.2) }));
 
 function fault(id, note) { RS.lf = RS.lf || {}; RS.lf[id] = GS.t; if (typeof onFault === 'function') onFault(id, note); }
@@ -1779,23 +1844,32 @@ function computePINFO() {
 function playerCollisions(prev) {
   const B = plOBB(); let hit = null; const mph = Math.abs(PL.v) / MPH;
   const still = mph < 0.5;
-  for (const ai of GS.ais) if (satOverlap(B, ai.box)) { ai.stun = 2.5; if (still && ai.v > 0.3) { ai.v = 0; continue; } hit = { id: 'collision_car', who: ai }; break; }
+  RS.contact = RS.contact || {}; const touching = new Set();
+  for (const ai of GS.ais) if (satOverlap(B, ai.box)) {
+    touching.add('a' + ai.id); ai.stun = 2.5;
+    if (still && (ai.v > 0.3 || ai.hitStill)) { ai.hitStill = true; ai.v = 0; if (ai.prevS != null && ai.plan[0] === ai.prevSeg) { ai.s = Math.max(0, ai.prevS - 0.6); aiGeom(ai); } continue; }
+    hit = { id: 'collision_car', who: ai, ck: 'a' + ai.id }; break;
+  }
+  for (const ai of GS.ais) if (ai.hitStill && !touching.has('a' + ai.id)) ai.hitStill = false;
   if (!hit && !still) for (const p of GS.peds) if (circleObb(p.x, p.y, 1.2, B)) { hit = { id: 'collision_ped', ped: p }; p.state = 'gone'; break; }
-  if (!hit) for (const pc of PARKED_OBB) if (satOverlap(B, pc.box)) { hit = { id: 'collision_car' }; break; }
-  if (!hit && !still && GS.truck.box && satOverlap(B, GS.truck.box)) hit = { id: 'collision_car' };
-  if (!hit) for (const tb of trainOBBs()) if (satOverlap(B, tb)) { hit = { id: 'collision_car', train: true }; break; }
-  if (!hit && circleObb(PARK.hydrant.x, PARK.hydrant.y, 0.9, B)) hit = { id: 'curb_hit' };
+  if (!hit) for (const pc of PARKED_OBB) if (satOverlap(B, pc.box)) { hit = { id: 'collision_car', ck: 'p' + pc.x0 }; break; }
+  if (!hit && !still && GS.truck.box && satOverlap(B, GS.truck.box)) hit = { id: 'collision_car', ck: 'truck' };
+  if (!hit) for (const tb of trainOBBs()) if (satOverlap(B, tb)) { hit = { id: 'collision_car', train: true, ck: 'train' }; break; }
+  if (!hit && circleObb(PARK.hydrant.x, PARK.hydrant.y, 0.9, B)) hit = { id: 'curb_hit', ck: 'hyd' };
+  // one fault per contact episode: a contact key is re-armed only after ~1 s apart
+  for (const k in RS.contact) if (GS.t - RS.contact[k] > 1 && !(hit && hit.ck === k)) delete RS.contact[k];
   for (const c of CONES) if (!c.hit && circleObb(c.x, c.y, 1, B)) { c.hit = true; c.x += Math.cos(PL.th) * 6; c.y += Math.sin(PL.th) * 6 + 2; if (cool('cone_hit', 3)) fault('cone_hit', '施工区'); PL.v *= 0.8; }
   if (hit) {
     Object.assign(PL, prev); PL.v = 0;
-    const key = hit.id + (hit.who ? hit.who.id : '');
-    if (cool(key, 4)) fault(hit.id, hit.train ? '与火车相撞' : hit.who && hit.who.type === 'bus' ? '撞到校车' : hit.who && hit.who.type === 'amb' ? '撞到救护车' : placeName());
+    const fresh = !hit.ck || RS.contact[hit.ck] == null; if (hit.ck) RS.contact[hit.ck] = GS.t;
+    if (fresh) fault(hit.id, hit.train ? '与火车相撞' : hit.who && hit.who.type === 'bus' ? '撞到校车' : hit.who && hit.who.type === 'amb' ? '撞到救护车' : placeName());
     if (typeof sfx === 'function') sfx('crash');
   }
   // curb
   let off = 0; for (const q of B) if (!onRoad(q[0], q[1])) off++;
   PL.offroad = off >= 2;
-  if (off) { if (mph > 5) { if (cool('curb_hit', 5)) fault('curb_hit', placeName()); } else if (mph > 0.3 && cool('curb_touch', 6)) fault('curb_touch', placeName()); }
+  if (off) { RS.curbLast = GS.t; if (!RS.curbOn) { if (mph > 5) { RS.curbOn = true; fault('curb_hit', placeName()); } else if (mph > 0.3) { RS.curbOn = true; if (cool('curb_touch', 6)) fault('curb_touch', placeName()); } } }
+  else if (RS.curbOn && GS.t - (RS.curbLast ?? 0) > 1) RS.curbOn = false;
 }
 
 function rules(dt) {
@@ -1815,7 +1889,7 @@ function rules(dt) {
     for (const o of VEH) { if (o.player) continue; const rx = o.cx - c[0], ry = o.cy - c[1]; const al = rx * hx + ry * hy; if (al > 0 && al < 500 && Math.abs(-rx * hy + ry * hx) < 60 && Math.cos(angDiff(o.h, PL.th)) < -0.7) glare = true; }
     if (GS.rain && RS.hbT > 1.6) glare = true;
     if (glare || GS.rain) { RS.hbT += dt; if (RS.hbT > (glare && !GS.rain ? 1.5 : 3) && cool('high_beam', 25)) fault('high_beam', GS.rain && !glare ? '雨天开远光' : ''); } else RS.hbT = 0;
-  }
+  } else if (PL.lights !== 2) RS.hbT = 0;
   if (PL.haz && mph > 20) { RS.hazT += dt; if (RS.hazT > 4 && cool('hazard_driving', 45)) fault('hazard_driving'); } else RS.hazT = 0;
   /* --- reversing --- */
   if (PL.gear === 'R') {
@@ -1823,10 +1897,10 @@ function rules(dt) {
     if (PL.v < -1 * MPH && t - PL.look > 2.5 && !RS.revFlag) { RS.revFlag = true; fault('reverse_no_look'); }
   } else { RS.revFlag = false; RS.revFastT = 0; }
   /* --- acceleration --- */
-  if (PL.acc < -13) { RS.harshT += dt; if (RS.harshT > 0.35 && !hazardAhead() && cool('harsh_brake', 15)) fault('harsh_brake'); } else RS.harshT = 0;
+  if (PL.acc < -13 && PL.brkDec > 13 && (RS.harshT > 0 || mph > 8)) { RS.harshT += dt; if (RS.harshT > 0.35 && !hazardAhead() && cool('harsh_brake', 15)) fault('harsh_brake'); } else RS.harshT = 0;
   if (PL.gear === 'D' && PL.acc > 9.6) { RS.accT += dt; if (RS.accT > 0.5 && cool('harsh_accel', 30)) fault('harsh_accel'); } else RS.accT = 0;
   /* --- horn --- */
-  if (PL.horn && !RS.hornHeld) { RS.hornHeld = true; if (!hazardAhead(110) && cool('horn_misuse', 20)) fault('horn_misuse'); } if (!PL.horn) RS.hornHeld = false;
+  if (PL.horn && !RS.hornHeld) { RS.hornHeld = true; if (!hazardAhead(110, true) && cool('horn_misuse', 20)) fault('horn_misuse'); } if (!PL.horn) RS.hornHeld = false;
   /* --- speed --- */
   if (loc && loc.street && mph > 1) {
     const lim = PINFO.limit;
@@ -1855,7 +1929,7 @@ function rules(dt) {
       let inMyCw = false;
       if (p.cw) { const cw = p.cw; inMyCw = B.some(q => inRect(cw.r, q[0], q[1], 1)) || inRect(cw.r, f[0] + hx * 4, f[1] + hy * 4, 0); }
       else inMyCw = d < 16;
-      if (inMyCw && cool('fail_yield_ped' + p.id, 30)) fault('fail_yield_ped', p.cw && p.cw.kind === 'school' ? '学校人行横道' : placeName());
+      if (inMyCw && p.plCould !== false && cool('fail_yield_ped' + p.id, 30)) fault('fail_yield_ped', p.cw && p.cw.kind === 'school' ? '学校人行横道' : placeName());
     }
   }
   /* --- railroad --- */
@@ -1874,22 +1948,23 @@ function rules(dt) {
   /* --- turn signal left on --- */
   RS.sigRun = RS.sigRun || { L: 0, R: 0 };
   for (const sd of ['L', 'R']) { const on = sd === 'L' ? PL.sigL : PL.sigR; if (!on || RS.sigUsed[sd]) RS.sigRun[sd] = 0; else if (mph > 5 && !PINFO.node && !(PINFO.appr && PINFO.distLine < 150)) RS.sigRun[sd] += dt; if (RS.sigRun[sd] > 10 && cool('signal_left_on' + sd, 30)) { RS.sigUsed[sd] = true; fault('signal_left_on', sd === 'L' ? '左转向灯' : '右转向灯'); } }
+  if (RS.laneDone && !RS.laneDone.checked && !(RS.laneDone.dir === 'L' ? PL.sigL : PL.sigR)) RS.laneDone.checked = true;
   if (RS.laneDone && t - RS.laneDone.t > 4 && !RS.laneDone.checked) { RS.laneDone.checked = true; if ((RS.laneDone.dir === 'L' ? PL.sigL : PL.sigR) && !(PINFO.appr && PINFO.distLine < 150) && cool('signal_left_on' + RS.laneDone.dir, 20)) fault('signal_left_on', '变道完成后没有关灯'); }
   extraRules(dt, mph);
   /* --- stopped in lane for no reason --- */
   if (mph < 0.3 && loc && loc.street && typeof loc.k === 'number' && !PINFO.strictNode) {
     RS.stopT += dt;
-    const reason = (PINFO.appr && PINFO.distLine < 140) || (PINFO.lead && PINFO.lead.gap < 50) || PINFO.yieldedEV || GS.amb || hazardAhead(70) || (PL.haz && loc.k === loc.nl - 1) || PL.gear === 'P' && loc.k === loc.nl - 1 || (busRedOn(loc.street)) || (loc.street.id === 'H1' && GS.flag.state === 'STOP') || (loc.street.id === 'V0' && Math.abs(loc.along - RAIL.y) < 120 && (GS.train.lights || GS.train.gate > 0.15));
+    const reason = (PINFO.appr && PINFO.distLine < 140) || (PINFO.lead && PINFO.lead.gap < 50) || PINFO.yieldedEV || GS.amb || hazardAhead(70) || (PL.haz && loc.k === loc.nl - 1) || PL.gear === 'P' && loc.k === loc.nl - 1 || PL.gear === 'R' || (PL.sigR && loc.k === loc.nl - 1 && loc.street.parkPos) || (typeof SESSION !== 'undefined' && SESSION.scen === 'park') || (busRedOn(loc.street)) || (loc.street.id === 'H1' && GS.flag.state === 'STOP') || (loc.street.id === 'V0' && Math.abs(loc.along - RAIL.y) < 120 && (GS.train.lights || GS.train.gate > 0.15));
     if (reason) { RS.stopT = 0; RS.reasonEnd = t; } else if (t - (RS.reasonEnd ?? -99) < 3) RS.stopT = 0;
     if (!reason && RS.stopT > 7 && cool('stop_in_lane', 40)) fault('stop_in_lane', placeName());
   } else RS.stopT = 0;
 }
-function hazardAhead(range = 90) {
+function hazardAhead(range = 90, usersOnly = false) {
   const f = plFront(), hx = Math.cos(PL.th), hy = Math.sin(PL.th);
   if (PINFO.lead && (PINFO.lead.gap < range || PINFO.lead.gap < Math.abs(PL.v) * 2.5)) return true;
   for (const p of GS.peds) { const rx = p.x - f[0], ry = p.y - f[1]; const al = rx * hx + ry * hy; if (al > -5 && al < range && Math.abs(-rx * hy + ry * hx) < 30) return true; }
   const a = PINFO.appr;
-  if (a && PINFO.distLine < 170) { if (a.control === 'stop') return true; if (a.control === 'signal' && lightFor(a.node, a.group) !== 'G') return true; if (a.control === 'signal') return true; }
+  if (a && PINFO.distLine < 170 && !usersOnly) { if (a.control === 'stop') return true; if (a.control === 'signal' && lightFor(a.node, a.group) !== 'G') return true; if (a.control === 'signal') return true; }
   if (GS.amb || (GS.bus && GS.bus.lights !== 'off' && Math.hypot(GS.bus.cx - f[0], GS.bus.cy - f[1]) < 250)) return true;
   if (GS.train.lights && Math.hypot(f[0] - RAIL.x, f[1] - RAIL.y) < 250) return true;
   if (GS.flag.state === 'STOP' && Math.hypot(f[0] - WORK.flagX, f[1] - 515) < 200) return true;
@@ -2011,7 +2086,9 @@ function approachRules(dt, mph) {
     if (L === 'G' && av.lastLight !== 'G') av.gSince = t; if (L === 'G' && av.gSince == null) av.gSince = t - 2;
     av.lastLight = L;
     if ((av.prevD ?? 1) > 0 && d <= 0) { av.lineLight = L; if (L === 'Y' && av.yOn && av.yOn.canStop && av.firstStop == null) fault('yellow_run', a.node.name); }
-    if (L === 'G' && t - av.gSince >= 2 && mph < 0.3 && d < 40 && live && !PL.sigL && !(PINFO.lead && PINFO.lead.gap < 50) && !pedNear(70) && !GS.amb && !(GS.bus && GS.bus.lights === 'red')) { av.sogT = (av.sogT || 0) + dt; if (av.sogT > 3 && !av.sogFlag) { av.sogFlag = true; fault('stop_on_green', a.node.name); } } else av.sogT = 0;
+    const depth = a.s.axis === 'h' ? a.node.box.x1 - a.node.box.x0 : a.node.box.y1 - a.node.box.y0;
+    const exitBlocked = PINFO.lead && PINFO.lead.v < 3 && PINFO.lead.gap < d + a.setback + depth + CW + PL.len + 4;
+    if (L === 'G' && t - av.gSince >= 2 && mph < 0.3 && d < 40 && live && !PL.sigL && !(PINFO.lead && PINFO.lead.gap < 50) && !exitBlocked && !pedNear(70) && !GS.amb && !(GS.bus && GS.bus.lights === 'red')) { av.sogT = (av.sogT || 0) + dt; if (av.sogT > 3 && !av.sogFlag) { av.sogFlag = true; fault('stop_on_green', a.node.name); } } else av.sogT = 0;
   }
   av.prevD = d;
   if (d > -1) { av.sig = { L: sigRecent('L', 1.8), R: sigRecent('R', 1.8) }; const l = PINFO.loc; av.lane = l && typeof l.k === 'number' ? l.k : av.lane; av.nl = l && l.nl; }
@@ -2049,11 +2126,12 @@ function evalApproach(av) {
   const stopped = av.firstStop != null;
   RS.pendingStop = null;
   if (a.control === 'stop') {
-    const queued = stopped && av.leadAtFirst && !av.nearStop;
+    const farBack = stopped && !av.nearStop && !av.leadAtFirst && av.firstStop > 15;
+    const queued = stopped && !av.nearStop && (av.leadAtFirst || farBack);
     const mv = queued ? (av.minVNear ?? av.minV) : av.minV;
-    if ((!stopped || queued) && mv > 0.5) fault(mv > 4 ? 'ran_stop' : 'rolling_stop', a.node.name + (mv < Infinity ? ` · 最低 ${mv.toFixed(1)} mph` : '') + (queued ? ' · 排队停过但到线前没再停' : ''));
+    if ((!stopped || queued) && mv > 0.5) fault(mv > 4 ? 'ran_stop' : 'rolling_stop', a.node.name + (mv < Infinity ? ` · 最低 ${mv.toFixed(1)} mph` : '') + (queued ? (farBack ? ` · 停在线前 ${Math.round(av.firstStop)} ft，到线时没再停` : ' · 排队停过但到线前没再停') : ''));
     else {
-      if (stopped && !av.nearStop && !av.leadAtFirst && av.firstStop > 6 && (av.minVNear ?? 0) > 1.5) fault('stop_too_far_back', `${a.node.name} · 停在线前 ${Math.round(av.firstStop)} ft`);
+      if (stopped && !av.nearStop && !av.leadAtFirst && av.firstStop > 6 && av.firstStop <= 15 && (av.minVNear ?? 0) > 1.5) fault('stop_too_far_back', `${a.node.name} · 停在线前 ${Math.round(av.firstStop)} ft`);
       // decide right-of-way once the movement is known (box exit); snapshot candidates now for every possible move
       const snap = {}; for (const pm of ['straight', 'left', 'right', 'u']) snap[pm] = stopPriority(a.node, a, pm, av.arrT ?? t);
       RS.pendingStop = { a, snap, t };
@@ -2062,7 +2140,7 @@ function evalApproach(av) {
   }
   if (a.control === 'signal') {
     const Lnow = lightFor(a.node, a.group);
-    const L = av.stopAfterLine ? Lnow : (av.lineLight || Lnow);
+    const L = (av.stopAfterLine && (av.lineLight === 'R' || !av.lineLight)) ? Lnow : (av.lineLight || Lnow);
     RS.redEntry = L === 'R' ? { a, fullStop: !!av.nearStop, t } : null;
     if (stopped && !av.nearStop && !av.leadAtFirst && av.firstStop > 6 && (av.firstLight === 'R' || av.firstLight === 'Y')) fault('stop_too_far_back', `${a.node.name} · 停在线前 ${Math.round(av.firstStop)} ft`);
   }
@@ -2082,7 +2160,9 @@ function boxRules(dt, mph) {
     const e = bx.entry; const f = plFront();
     const redHere = RS.redEntry && e && RS.redEntry.a === e.a && RS.redEntry.t >= bx.t0 - 0.5;
     // permissive left: oncoming traffic that is going straight or right and has not passed us yet
-    if (e && !bx.leftChecked && turned < -0.25 && mph > 2 && e.a.control !== 'stop' && !redHere) {
+    // judged when the turn is started (later conflicts show up as evasive braking by the oncoming car)
+    if (turned < -0.25 && mph > 2 && bx.leftT0 == null) bx.leftT0 = t;
+    if (e && !bx.leftChecked && turned < -0.25 && mph > 2 && t - bx.leftT0 < 1.2 && e.a.control !== 'stop' && !redHere) {
       const RT = REV[e.a.T];
       for (const o of VEH) {
         if (o.player) continue; const mv = aiMoveAt(o, n); if (!mv || mv.T !== RT || mv.m === 'left' || mv.m === 'u' || o.v < 3) continue;
@@ -2098,7 +2178,9 @@ function boxRules(dt, mph) {
     }
     const inStrict = inBox(n, f[0], f[1]);
     bx.waitT = mph < 0.4 ? (bx.waitT || 0) + dt : 0;
-    if (mph < 0.4 && PL.sigL && PL.steer < -0.09 && bx.waitT > 1 && !bx.wheelFlag && e && e.a.control !== 'stop') { bx.wheelFlag = true; fault('wheels_turned_waiting', n.name); }
+    const wheelHold = mph < 0.4 && PL.sigL && PL.steer < -0.09 && (typeof INPUT === 'undefined' || INPUT.thr < 0.05) && Math.abs(angDiff(PL.th, bx.h0)) < 0.35;
+    bx.wheelT = wheelHold ? (bx.wheelT || 0) + dt : 0;
+    if (bx.wheelT > 1 && !bx.wheelFlag && e && e.a.control !== 'stop') { bx.wheelFlag = true; fault('wheels_turned_waiting', n.name); }
     if (mph < 0.4 && inStrict) {
       bx.stopT += dt;
       const red = e && e.a.control === 'signal' && lightFor(n, e.a.group) === 'R'; bx.redStopT = red ? bx.redStopT + dt : 0;
@@ -2162,8 +2244,9 @@ function railRules(dt, mph) {
   const B = plOBB(); const zone = [-14, RAIL.y - 10, 14, RAIL.y + 10];
   const over = B.some(q => inRect(zone, q[0], q[1]));
   const rr = RS.rail;
-  if (over && !rr.in && (GS.train.lights || GS.train.gate > 0.15) && mph > 0.5 && cool('rail_crossing', 12)) fault('rail_crossing', 'West Ave 铁路道口');
-  rr.in = over;
+  { const f0 = plFront(), v = Math.abs(PL.v); if (GS.train.lights && !rr.lightsWas) { const dStop = Math.abs(f0[1] - RAIL.y) - RAIL.rail - 15; const toward = Math.sin(PL.th) * (RAIL.y - f0[1]) > 0; rr.canStop = !toward || Math.abs(f0[0]) > 30 || dStop > v * 1.0 + v * v / (2 * 0.38 * GRAV); } rr.lightsWas = GS.train.lights; }
+  if (over && !rr.in && (GS.train.gate > 0.15 || (GS.train.lights && rr.canStop !== false)) && mph > 0.5 && cool('rail_crossing', 12)) fault('rail_crossing', 'West Ave 铁路道口');
+  rr.in = over; if (!GS.train.lights) rr.canStop = null;
   if (over && mph < 0.3) { rr.stopT += dt; if (rr.stopT > 1.5 && cool('stop_on_tracks', 15)) fault('stop_on_tracks'); } else rr.stopT = 0;
   const f = plFront();
   if (!over && mph < 0.3 && GS.train.lights && Math.abs(f[0]) < 14) { const dRail = Math.abs(f[1] - RAIL.y) - RAIL.rail; if (dRail < 14 && dRail > 0 && cool('rail_too_close', 30)) fault('rail_too_close', `距最近铁轨 ${dRail.toFixed(1)} ft`); }
@@ -2197,7 +2280,9 @@ function evRules(dt, mph) {
   if (!ev.done) {
     if (ev.start == null && dist < 420) ev.start = t;
     if (PINFO.yieldedEV) ev.everYield = true;
-    if (ev.start != null && !ev.flagged && !PINFO.yieldedEV && t - ev.start > 9 && rel < 0) { ev.flagged = true; fault('emergency'); }
+    ev.stuckT = amb.v < 1 ? (ev.stuckT || 0) + dt : 0;
+    if (ev.start != null && !ev.flagged && !PINFO.yieldedEV && t - ev.start > 9 && rel < 0 && rel > -500 && ev.stuckT < 2 && !ev.everYieldLong) { ev.flagged = true; fault('emergency'); }
+    if (PINFO.yieldedEV) ev.yT = (ev.yT || 0) + dt; if (ev.yT > 20) ev.everYieldLong = true;
     if (rel > 30 || (dist > 500 && ev.start != null)) { ev.done = true; ev.doneT = t; amb.done = true; if (ev.start != null && rel > 30 && !ev.everYield && !ev.flagged) { ev.flagged = true; fault('emergency', '救护车经过时你没有靠右停车'); } }
   } else {
     if (!ev.followFlag && rel > 0 && rel < 500 && mph > 15 && Math.cos(angDiff(amb.h, PL.th)) > 0.8 && t - ev.doneT < 25 && t - ev.doneT > 3) { ev.followFlag = true; fault('follow_emergency'); }
@@ -2223,17 +2308,19 @@ function evalParking() {
 
 /* ---------- additional mistakes (from the research catalog) ---------- */
 function inClosedLane(x, y) {
-  if (x < 1580 || x > 1948) return false;
+  if (x < 1580 || x > 1860) return false;
   if (x < 1640) return y > 523 - (x - 1580) / 60 * 10.5 && y < 526;
-  if (x <= 1900) return y > 512.5 && y < 526;
-  return y > 512.5 + (x - 1900) / 48 * 10.5 && y < 526;
+  if (x <= 1812) return y > 512.5 && y < 526;
+  return y > 512.5 + (x - 1812) / 48 * 10.5 && y < 526;
 }
 function extraRules(dt, mph) {
   const t = GS.t, c = plCenter(), f = plFront(), loc = PINFO.loc;
   // closed lane in the work zone
   if (inClosedLane(c[0], c[1]) && mph > 0.5) { RS.closedT = (RS.closedT || 0) + dt; if (RS.closedT > 0.5 && cool('closed_lane', 15)) fault('closed_lane', 'Main St 右车道已封闭'); } else RS.closedT = 0;
-  // crossing guard holding STOP
-  { const r = [SCHOOL.cwX - 15, 984, SCHOOL.cwX + 15, 1016]; const inside = inRect(r, f[0], f[1]); if (inside && !RS.cgIn && GS.guardOut && mph > 1 && cool('crossing_guard', 15)) fault('crossing_guard', '学校人行横道'); RS.cgIn = inside; }
+  // crossing guard holding STOP (not charged if the guard stepped out when the car could no longer stop)
+  if (GS.guardOut && !RS.guardWas) { const v = Math.abs(PL.v), dx = SCHOOL.cwX - f[0]; const toward = Math.cos(PL.th) * dx > 0 && Math.abs(c[1] - 1000) < 20; RS.cgCould = !toward || Math.abs(dx) - 6 > v * 0.8 + v * v / (2 * 0.38 * GRAV); }
+  if (!GS.guardOut) RS.cgCould = null; RS.guardWas = GS.guardOut;
+  { const r = [SCHOOL.cwX - 6, 984, SCHOOL.cwX + 6, 1016]; const inside = inRect(r, f[0], f[1]); if (inside && !RS.cgIn && GS.guardOut && mph > 1 && RS.cgCould !== false && cool('crossing_guard', 15)) fault('crossing_guard', '学校人行横道'); RS.cgIn = inside; }
   // coasting in neutral
   if (PL.gear === 'N' && mph > 5) { RS.nT = (RS.nT || 0) + dt; if (RS.nT > 2 && cool('coast_neutral', 30)) fault('coast_neutral'); } else RS.nT = 0;
   // stopping too close behind another vehicle
@@ -2264,24 +2351,29 @@ function extraRules(dt, mph) {
   const b = GS.bus;
   if (b && b.lights === 'amber' && b.plan[0].kind === 'edge') {
     const d = Math.hypot(b.cx - c[0], b.cy - c[1]); const s = b.plan[0].edge.s;
-    if (d < 200 && loc && loc.street === s && (mph > 20 || PL.acc > 3.3) && cool('school_bus_amber', 20)) fault('school_bus_amber', `${Math.round(mph)} mph`);
+    const ahead = ((b.cx - c[0]) * Math.cos(PL.th) + (b.cy - c[1]) * Math.sin(PL.th)) > -b.len / 2;
+    if (d < 200 && ahead && loc && loc.street === s && (mph > 20 || PL.acc > 5) && cool('school_bus_amber', 20)) fault('school_bus_amber', `${Math.round(mph)} mph`);
   }
   // excessive parking maneuvers
   const inParkArea = c[0] > 860 && c[0] < 1360 && c[1] > 1494 && c[1] < 1524;
-  if (!inParkArea || mph > 12) { RS.parkSw = 0; RS.parkFlag = false; }
-  if (RS.prevGear && RS.prevGear !== PL.gear && inParkArea && ((RS.prevGear === 'R' && PL.gear === 'D') || (RS.prevGear === 'D' && PL.gear === 'R'))) { RS.parkSw = (RS.parkSw || 0) + 1; if (RS.parkSw > 4 && !RS.parkFlag) { RS.parkFlag = true; fault('park_excess_maneuvers', `换挡调整 ${RS.parkSw} 次`); } }
+  if (!inParkArea || mph > 12) { RS.parkSw = 0; RS.parkFlag = false; RS.lastDir = null; }
+  if ((PL.gear === 'R' || PL.gear === 'D') && inParkArea && RS.lastDir && RS.lastDir !== PL.gear) { RS.parkSw = (RS.parkSw || 0) + 1; if (RS.parkSw > 4 && !RS.parkFlag) { RS.parkFlag = true; fault('park_excess_maneuvers', `换挡调整 ${RS.parkSw} 次`); } }
+  if (PL.gear === 'R' || PL.gear === 'D') RS.lastDir = PL.gear;
   RS.prevGear = PL.gear;
 }
 /* parking in a prohibited place (checked when shifting into P) */
 function parkZoneCheck() {
   if (Math.abs(PL.v) > 1.5) return;
   const c = plCenter(), loc = PINFO.loc; const B = plOBB();
-  if (PINFO.appr && PINFO.distLine < 60 && PINFO.distLine > -20) return; // waiting at a light / sign, not parking
+  // waiting in a travel lane at a light / stop sign is not parking
+  if (loc && typeof loc.k === 'number' && PINFO.appr && PINFO.appr.control !== 'none' && PINFO.distLine < 60 && PINFO.distLine > -2) return;
   if (PINFO.node || CROSSWALKS.some(cw => B.some(q => inRect(cw.r, q[0], q[1])))) { fault('illegal_park_zone', '停在路口或人行横道里'); return; }
+  if (loc && loc.street && loc.k === 'bike') { fault('illegal_park_zone', '停在自行车道上'); return; }
+  if (loc && loc.fillet) { fault('illegal_park_zone', '停在路口转角'); return; }
   if (loc && loc.street && typeof loc.k === 'number') { fault('illegal_park_zone', '停在行车道上（并排停车）'); return; }
   if (loc && loc.street && loc.k === 'park') {
     const s = loc.street; const al = B.map(q => alongOf(s, q[0], q[1])); const a0 = Math.min(...al), a1 = Math.max(...al);
-    for (const n of NODES) { if ((s.axis === 'h' ? n.H : n.V) !== s) continue; const lo = alongOf(s, n.box.x0, n.box.y0) - (hasCW(n, 'W') || hasCW(n, 'N') ? CW : 0), hi = alongOf(s, n.box.x1, n.box.y1) + CW; if (a1 > lo - 20 && a0 < hi + 20) { fault('illegal_park_zone', `离路口不到 20 ft（${n.name}）`); return; } }
+    for (const n of NODES) { if ((s.axis === 'h' ? n.H : n.V) !== s) continue; const lo = alongOf(s, n.box.x0, n.box.y0) - (hasCW(n, s.axis === 'h' ? 'W' : 'N') ? CW : 0), hi = alongOf(s, n.box.x1, n.box.y1) + (hasCW(n, s.axis === 'h' ? 'E' : 'S') ? CW : 0); if (a1 > lo - 20 && a0 < hi + 20) { fault('illegal_park_zone', `离路口不到 20 ft（${n.name}）`); return; } }
   }
 }
 /* =====================================================================
@@ -2655,29 +2747,38 @@ function cardHTML(c, note) {
 }
 function showFaultCard(rec, paused) {
   const wasPaused = GS.paused; GS.paused = true;
-  openOverlay(`<div class="card" role="dialog" aria-modal="true">${cardHTML(rec.c, rec.note)}<div class="btn-row"><button class="btn" id="ocont">继续驾驶</button><button class="btn ghost" id="ocoll">打开错误图鉴</button></div><p class="small muted">${paused ? '严重错误会自动暂停讲解，可以在右侧「设置」里关闭。' : ''}</p></div>`);
+  openOverlay(`<div class="card" role="dialog" aria-modal="true">${cardHTML(rec.c, rec.note)}<div class="btn-row"><button class="btn" id="ocont">继续驾驶</button><button class="btn ghost" id="ocoll">打开错误图鉴</button></div><p class="small muted">${paused ? '严重错误会自动暂停讲解，可以在「设置」里关闭。' : ''}</p></div>`);
   $('#ocont').onclick = () => { closeOverlay(); GS.paused = paused ? false : wasPaused; focusGame(); };
+  $('#overlay')._esc = () => $('#ocont').click();
   $('#ocoll').onclick = () => openCollection();
 }
-function openOverlay(html) { const o = $('#overlay'); o.innerHTML = html; o.hidden = false; const b = o.querySelector('button'); if (b) setTimeout(() => b.focus(), 30); }
-function closeOverlay() { const o = $('#overlay'); o.hidden = true; o.innerHTML = ''; }
+function openOverlay(html, onEsc) {
+  const o = $('#overlay'); o.innerHTML = html; o.hidden = false; o._esc = onEsc || null;
+  const card = o.querySelector('.card'); if (card) { card.setAttribute('role', 'dialog'); card.setAttribute('aria-modal', 'true'); const h = card.querySelector('h2'); if (h) { h.id = 'ovTitle'; card.setAttribute('aria-labelledby', 'ovTitle'); } }
+  const b = o.querySelector('button');
+  setTimeout(() => { if (b) b.focus({ preventScroll: true }); if (card) card.scrollTop = 0; }, 30);
+}
+function closeOverlay() { const o = $('#overlay'); o.hidden = true; o.innerHTML = ''; o._esc = null; }
+const isTouchUI = () => $('#touch').classList.contains('show');
 function focusGame() { try { $('#game').focus({ preventScroll: true }); } catch (e) { } }
 
 /* ---------- collection ---------- */
+const COLL_UI = { filt: 'all', top: 0 };
+function resumeAfterOverlay() { closeOverlay(); if (SESSION.ended) { reopenSheet(); return; } GS.paused = false; focusGame(); }
 function openCollection() {
-  GS.paused = true; let filt = 'all';
+  GS.paused = true; let filt = COLL_UI.filt;
   const draw = () => {
     const items = CATALOG.filter(c => filt === 'all' || (filt === 'got' ? COLL[c.id] : filt === 'not' ? !COLL[c.id] : c.severity === filt));
     const got = CATALOG.filter(c => COLL[c.id]).length;
     $('#collBody').innerHTML = `<p class="small muted">已经体验过 <b>${got}</b> / ${CATALOG.length} 种错误。每种错误都可以故意在游戏里「犯」一次来学习。点卡片看原因。</p><div class="coll">${items.map(c => `<button type="button" class="${COLL[c.id] ? 'got' : ''}" data-id="${c.id}"><span class="btn-row" style="justify-content:space-between">${sevTag(c.severity)}<span class="c">${COLL[c.id] ? '已触发 ×' + COLL[c.id] : '未触发'}</span></span><b>${c.cn}</b><span class="c">${c.en}</span></button>`).join('')}</div>`;
-    $$('#collBody .coll button').forEach(b => b.onclick = () => { const c = CAT[b.dataset.id]; openOverlay(`<div class="card">${cardHTML(c, c.how ? '怎么触发：' + c.how : '')}<div class="btn-row"><button class="btn" id="oback">返回图鉴</button><button class="btn ghost" id="oclose">继续驾驶</button></div></div>`); $('#oback').onclick = openCollection; $('#oclose').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); }; });
+    $$('#collBody .coll button').forEach(b => b.onclick = () => { const cd = $('#overlay .card'); COLL_UI.top = cd ? cd.scrollTop : 0; const c = CAT[b.dataset.id]; const back = () => { openCollection(); setTimeout(() => { const cd2 = $('#overlay .card'); if (cd2) cd2.scrollTop = COLL_UI.top; }, 40); }; openOverlay(`<div class="card">${cardHTML(c, c.how ? '怎么触发：' + c.how : '')}<div class="btn-row"><button class="btn" id="oback">返回图鉴</button><button class="btn ghost" id="oclose">${SESSION.ended ? '返回成绩单' : '继续驾驶'}</button></div></div>`, back); $('#oback').onclick = back; $('#oclose').onclick = resumeAfterOverlay; });
   };
-  openOverlay(`<div class="card" style="max-width:900px"><div class="btn-row" style="justify-content:space-between"><h2>错误图鉴 <span class="en">MISTAKE COLLECTION</span></h2><button class="btn" id="cclose">继续驾驶</button></div>
-    <div class="filters" id="cfilt">${[['all', '全部'], ['critical', '严重'], ['major', '一般'], ['minor', '轻微'], ['got', '已触发'], ['not', '未触发']].map(([k, t], i) => `<button type="button" data-f="${k}" aria-pressed="${i === 0}">${t}</button>`).join('')}</div><div id="collBody"></div>
-    <div class="btn-row"><button class="btn ghost" id="creset" type="button">清空记录</button></div></div>`);
-  $('#cclose').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); };
+  openOverlay(`<div class="card" style="max-width:900px"><div class="btn-row" style="justify-content:space-between"><h2>错误图鉴 <span class="en">MISTAKE COLLECTION</span></h2><button class="btn" id="cclose">${SESSION.ended ? '返回成绩单' : '继续驾驶'}</button></div>
+    <div class="filters" id="cfilt">${[['all', '全部'], ['critical', '严重'], ['major', '一般'], ['minor', '轻微'], ['got', '已触发'], ['not', '未触发']].map(([k, t]) => `<button type="button" data-f="${k}" aria-pressed="${k === filt}">${t}</button>`).join('')}</div><div id="collBody"></div>
+    <div class="btn-row"><button class="btn ghost" id="creset" type="button">清空记录</button></div></div>`, resumeAfterOverlay);
+  $('#cclose').onclick = resumeAfterOverlay;
   $('#creset').onclick = () => { COLL = {}; store.set('rtt-coll', COLL); draw(); };
-  $$('#cfilt button').forEach(b => b.onclick = () => { $$('#cfilt button').forEach(x => x.setAttribute('aria-pressed', x === b)); filt = b.dataset.f; draw(); });
+  $$('#cfilt button').forEach(b => b.onclick = () => { $$('#cfilt button').forEach(x => x.setAttribute('aria-pressed', x === b)); filt = COLL_UI.filt = b.dataset.f; draw(); });
   draw();
 }
 
@@ -2691,12 +2792,13 @@ function openHelp(first) {
     <div><kbd>←</kbd><kbd>→</kbd>/<kbd>A</kbd><kbd>D</kbd> 转向</div><div><kbd>Q</kbd> / <kbd>E</kbd> 左 / 右转向灯</div>
     <div><kbd>Z</kbd> / <kbd>C</kbd> 转头看左 / 右后方盲区</div><div><kbd>X</kbd> 倒车时回头看</div>
     <div><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> 挡位 P R N D（踩住刹车再换）</div><div><kbd>Space</kbd> 手刹 · <kbd>B</kbd> 安全带</div>
-    <div><kbd>L</kbd> 大灯（关 / 近光 / 远光）</div><div><kbd>J</kbd> 双闪 · <kbd>H</kbd> 喇叭</div>
+    <div><kbd>L</kbd> 开大灯 / 远近光切换 · <kbd>Shift</kbd>+<kbd>L</kbd> 关灯</div><div><kbd>J</kbd> 双闪 · <kbd>H</kbd> 喇叭</div>
     <div><kbd>+</kbd> <kbd>−</kbd> 缩放 · <kbd>Esc</kbd> 暂停</div><div>手机：勾选「触屏按键」</div>
   </div>
-  <p class="small muted">起步流程：<b>B</b> 系安全带 → 踩住 <b>↓</b> 按 <b>4</b> 挂 D → <b>空格</b> 松手刹 → <b>Q</b> 打左灯 → <b>Z</b> 回头看左后方 → 松刹车起步。</p>
+  <div class="fix"><h4>起步流程</h4><p class="small">${isTouchUI() ? '点「安全带」→ 按住「刹车」再点 <b>D</b> → 点「手刹」松开 → 点「◀ 左灯」「左看」→ 松开刹车、踩「油门」。' : '<b>B</b> 系安全带 → 踩住 <b>↓</b> 按 <b>4</b> 挂 D → <b>空格</b> 松手刹 → <b>Q</b> 打左灯 → <b>Z</b> 回头看左后方 → 松刹车起步。'}</p></div>
   <div class="btn-row"><button class="btn" id="hstart">${first ? '开始自由驾驶' : '继续'}</button><button class="btn ghost" id="htest">路考模式</button><button class="btn ghost" id="hscen">情景练习</button></div></div>`);
-  $('#hstart').onclick = () => { closeOverlay(); GS.paused = false; ensureAudio(); focusGame(); };
+  $('#hstart').onclick = () => { closeOverlay(); GS.paused = false; ensureAudio(); focusGame(); if (isTouchUI() && (innerWidth <= 980 || innerHeight <= 500)) $('#game').scrollIntoView({ block: 'start', behavior: 'smooth' }); };
+  $('#overlay')._esc = () => $('#hstart').click();
   $('#htest').onclick = () => { setMode('test'); }; $('#hscen').onclick = () => { setMode('scen'); };
 }
 
@@ -2705,8 +2807,8 @@ function resetPlayerParked() {
   placePlayer(846, 1516.4, 0, 0, "P"); Object.assign(PL, { belt: false, pb: true, lights: GS.night ? 0 : 0, sigL: false, sigR: false, haz: false, horn: false, look: -99 }); PL.head = { L: -99, R: -99 }; PL.sigOn = { L: -99, R: -99 };
 }
 function resetSession() {
-  SESSION = { faults: [], start: GS.t }; $('#toasts').innerHTML = ''; $('#log').innerHTML = '<li class="empty" style="cursor:default;border:none">还没有错误。开动起来吧。</li>'; updateScore();
-  Object.assign(RS, { cd: {}, av: null, bx: null, prevLane: null, prevSide: null, belt: false, redEntry: null, entry: null, busRel: null, ev: null, parkedT: 5, odo: 0, sigOdo: { L: 0, R: 0 }, lastManOdo: 0, laneDone: null, lcTimes: [], wFlips: [], parkSw: 0, shRel: {}, prevGear: null, pendingStop: null, sigRun: { L: 0, R: 0 }, spMajT: 0, spT: 0, slowT: 0, stopT: 0, follT: 0, strT: 0, bikeT: 0, nlT: 0, hazT: 0, hbT: 0, harshT: 0, accT: 0, centerT: 0, wrongT: 0, rail: { in: false, stopT: 0, close: false }, prevFX: undefined, prevFlag: undefined, flagCanStop: undefined, hornHeld: false, revFlag: false, revFastT: 0, closedT: 0, nT: 0, tfcT: 0, wasMoving: false, reasonEnd: -99, lf: {} });
+  SESSION = { faults: [], start: GS.t }; $('#toasts').innerHTML = ''; if (GS.phone && GS.phone.open) closePhone(); $('#log').innerHTML = '<li class="empty" style="cursor:default;border:none">还没有错误。开动起来吧。</li>'; updateScore();
+  Object.assign(RS, { cd: {}, av: null, bx: null, prevLane: null, prevSide: null, belt: false, redEntry: null, entry: null, busRel: null, ev: null, parkedT: 5, odo: 0, sigOdo: { L: 0, R: 0 }, lastManOdo: 0, laneDone: null, lcTimes: [], wFlips: [], parkSw: 0, shRel: {}, prevGear: null, pendingStop: null, sigRun: { L: 0, R: 0 }, spMajT: 0, spT: 0, slowT: 0, stopT: 0, follT: 0, strT: 0, bikeT: 0, nlT: 0, hazT: 0, hbT: 0, harshT: 0, accT: 0, centerT: 0, wrongT: 0, rail: { in: false, stopT: 0, close: false }, prevFX: undefined, prevFlag: undefined, flagCanStop: undefined, hornHeld: false, contact: {}, curbOn: false, lastDir: null, cgCould: null, guardWas: false, revFlag: false, revFastT: 0, closedT: 0, nT: 0, tfcT: 0, wasMoving: false, reasonEnd: -99, lf: {} });
   INPUT.thr = 0; INPUT.brk = 0;
   GS.evasiveT = null;
   for (const n of NODES) n.queue = [];
@@ -2714,12 +2816,13 @@ function resetSession() {
 }
 function clearWorld() { GS.ais = []; GS.peds = []; GS.bus = null; GS.amb = null; spawnBus(); CAM = null; }
 let ROUTE = null;
+const FREE_TXT = () => isTouchUI() ? '想去哪就去哪，可以故意犯错来看讲解。起步：点「安全带」→ 按住刹车点 D → 点「手刹」松开 → 打左灯、左看 → 起步。' : '想去哪就去哪，可以故意犯错来看讲解。起步：B 系安全带 → 踩刹车按 4 挂 D → 空格松手刹 → Q 打左灯 → Z 回头看 → 起步。';
 function setMode(m) {
+  if (m === 'scen') { openScenarios(); return; }
   $$('.modes button[data-mode]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m));
   closeOverlay(); GS.mode = m; ROUTE = null; ROUTE_DRAW = null; $('#banner').hidden = true;
-  if (m === 'free') { resetSession(); resetPlayerParked(); clearWorld(); computePINFO(); spawnTraffic(true); setTask('自由驾驶', 'FREE DRIVE', '想去哪就去哪。可以故意犯错来看讲解。起步：B 系安全带 → 踩刹车按 4 挂 D → 空格松手刹 → Q 打左灯 → Z 回头看 → 起步。'); GS.paused = false; GS.evT = rand(90, 150); focusGame(); }
+  if (m === 'free') { resetSession(); resetPlayerParked(); clearWorld(); computePINFO(); spawnTraffic(true); setTask('自由驾驶', 'FREE DRIVE', FREE_TXT()); GS.paused = false; GS.evT = rand(90, 150); focusGame(); }
   if (m === 'test') { resetSession(); resetPlayerParked(); clearWorld(); computePINFO(); spawnTraffic(true); startRoute(); GS.paused = false; focusGame(); }
-  if (m === 'scen') openScenarios();
 }
 function setTask(t, en, txt) { $('#taskTitle').textContent = t; $('#taskEn').textContent = en; $('#taskText').textContent = txt; }
 
@@ -2727,9 +2830,9 @@ function setTask(t, en, txt) { $('#taskTitle').textContent = t; $('#taskEn').tex
 const ROUTE_STEPS = [
   { node: '1400,1500', out: 'N', cn: '在下一个路口（Oak Ave）左转', en: 'At the next intersection, turn left onto Oak Avenue.' },
   { node: '1400,1000', out: 'N', cn: '在 School Rd 路口直行', en: 'Continue straight through the light.' },
-  { lane: { s: 'V2', d: -1, k: 1 }, cn: '安全时换到右侧车道', en: 'When it is safe, change to the right lane.' },
+  { lane: { s: 'V2', d: -1, k: 1 }, before: '1400,500', cn: '安全时换到右侧车道', en: 'When it is safe, change to the right lane.' },
   { node: '1400,500', out: 'E', cn: '在 Main St 右转', en: 'Turn right at Main Street.' },
-  { node: '2100,500', out: 'S', cn: '在 Pine St 右转（注意前方施工区）', en: 'Turn right on Pine Street. Watch for the work zone.' },
+  { node: '2100,500', out: 'S', cn: '在 Pine St 右转（注意施工区，出了锥桶区再并回右车道）', en: 'Turn right on Pine Street. Watch for the work zone.' },
   { node: '2100,1000', out: 'W', cn: '在四向停车路口右转', en: 'At the four-way stop, turn right.' },
   { node: '1400,1000', out: 'W', cn: '在 Oak Ave 信号灯直行', en: 'Continue straight at Oak Avenue.' },
   { node: '700,1000', out: 'W', cn: '在 Elm St 停车后直行，前方是学校区', en: 'Stop at Elm Street, then continue straight. School zone ahead.' },
@@ -2747,7 +2850,7 @@ const ROUTE_STEPS = [
 ];
 function startRoute() {
   ROUTE = { steps: ROUTE_STEPS.map(s => Object.assign({}, s)), i: -1, started: false, triggers: {} };
-  setTask('路考模式', 'ROAD TEST', '考官坐在副驾。先系好安全带、调好后视镜，然后从路边安全起步。跟着上方的指令走，最后侧方停车。');
+  setTask('路考模式', 'ROAD TEST', '考官坐在副驾。先系好安全带，然后从路边安全起步。跟着上方的指令走，最后侧方停车。');
   showInstr({ cn: '准备好后，从路边安全起步', en: 'When you are ready, pull away from the curb.' });
 }
 function showInstr(st) { const b = $('#banner'); b.hidden = false; b.innerHTML = `${st.cn}<span class="en">${st.en}</span>`; if (OPT.speech) speak(st.en); }
@@ -2773,7 +2876,9 @@ function advanceRoute() {
 }
 function onNodePass(node, move, outT) {
   if (!ROUTE || ROUTE.i < 0) return;
-  const st = ROUTE.steps[ROUTE.i]; if (!st || !st.node) { routeDrawUpdate(); return; }
+  let st = ROUTE.steps[ROUTE.i];
+  if (st && st.lane && st.before === node.id) { ROUTE.i++; st = ROUTE.steps[ROUTE.i]; } // lane step not done before its intersection: drop it
+  if (!st || !st.node) { routeDrawUpdate(); return; }
   if (st.node === node.id && st.out === outT) { advanceRoute(); routeTriggers(node.id, outT); return; }
   // off route: reroute to the next step's node
   toast('<b>没有按考官指令行驶</b><span>Off route · 实际路考中会被记为不遵守指令，考官会重新给你指路。</span>', 'major');
@@ -2807,18 +2912,22 @@ function routeTick() {
   if (ROUTE.ambAt && GS.t > ROUTE.ambAt && !GS.amb) { if (spawnAmbulance()) ROUTE.ambAt = null; else ROUTE.ambAt = GS.t + 2; }
   if (GS.t % 2 < 1 / 60) routeDrawUpdate();
 }
+function reopenSheet() { GS.paused = true; if (SESSION.sheet) { openOverlay(SESSION.sheet, () => {}); bindSheet(); } }
+function bindSheet() { $('#fagain').onclick = () => { if (GS.mode === 'scen' && SESSION.scen) runScenario(SESSION.scen); else setMode(GS.mode); }; $('#ffree').onclick = () => setMode('free'); $('#fcoll').onclick = openCollection; }
 function finishDrive(reason) {
+  if (SESSION.ended) { reopenSheet(); return; }
+  SESSION.ended = true;
   if (PL.gear !== 'P' || !PL.pb) fault('park_not_secured', PL.gear !== 'P' ? '没有挂 P 挡' : '没有拉手刹');
-  GS.paused = true; const { n, score, pass } = tally();
+  GS.paused = true; closePhone(); const { n, score, pass } = tally();
   const rows = SESSION.faults.map(r => `<tr><td>${sevTag(r.c.severity)}</td><td><b>${r.c.cn}</b><br><span class="muted small">${r.c.en}${r.note ? ' · ' + r.note : ''}</span></td></tr>`).join('');
   const testMode = GS.mode === 'test';
-  openOverlay(`<div class="card" style="max-width:720px"><h2>${testMode ? '路考成绩单' : '本次驾驶记录'} <span class="en">SCORE SHEET</span></h2>
+  const html = (`<div class="card" style="max-width:720px"><h2>${testMode ? '路考成绩单' : '本次驾驶记录'} <span class="en">SCORE SHEET</span></h2>
     <div class="result ${pass ? 'pass' : 'fail'}">${testMode ? (pass ? '通过 PASS' : '未通过 FAIL') : `得分 ${score}`}</div>
     <p class="small">分数 ${score} / 100 · 严重 ${n.critical} · 一般 ${n.major} · 轻微 ${n.minor}${SESSION.offRoute ? ` · 偏离路线 ${SESSION.offRoute} 次` : ''}${reason ? ' · ' + reason : ''}</p>
     <p class="small muted">评分规则（示意）：任何一项「严重」错误直接不及格；一般错误扣 5 分，轻微错误扣 2 分，低于 70 分不及格。各州真实标准不同。</p>
-    ${rows ? `<div style="max-height:46vh;overflow:auto"><table class="sheet">${rows}</table></div>` : '<p>零失误，完美驾驶！</p>'}
+    ${rows ? `<table class="sheet">${rows}</table>` : '<p>零失误，完美驾驶！</p>'}
     <div class="btn-row"><button class="btn" id="fagain">再来一次</button><button class="btn ghost" id="ffree">自由驾驶</button><button class="btn ghost" id="fcoll">错误图鉴</button></div></div>`);
-  $('#fagain').onclick = () => setMode(GS.mode === 'scen' ? 'scen' : GS.mode); $('#ffree').onclick = () => setMode('free'); $('#fcoll').onclick = openCollection;
+  SESSION.sheet = html; reopenSheet();
 }
 
 /* ---------- scenarios ---------- */
@@ -2830,7 +2939,7 @@ const SCEN = [
   { id: 'yellow', t: '黄灯两难', en: 'Yellow Light Dilemma', d: '以 35 mph 接近信号灯，绿灯即将变黄。判断：能安全停下就停，太近就安全通过。', run() { const e = E_('H1', 'E', 700); startAt(e, 1, e.len - 330, 35); setSignal(NODE['1400,500'], 'EW', 'G', 4.2); spawnOn(e, 0, e.len - 420, 33); return { cn: '保持车速，注意信号灯变化', en: 'Maintain your speed and watch the signal.' }; } },
   { id: 'rtor', t: '红灯右转', en: 'Right on Red', d: '红灯时可以右转吗？先在停止线后完全停住，让行人和横向车辆，确认没有「NO TURN ON RED」标志。', run() { const e = E_('V2', 'N', 1400, 1000); startAt(e, 1, e.len - 160, 15); setSignal(NODE['1400,500'], 'EW', 'G', 13); const cw = NODE['1400,500'].cw.E; spawnPed(cw, false, 1).wait = 2; spawnOn(E_('H1', 'E', 700), 1, E_('H1', 'E', 700).len - 260, 30); return { cn: '在 Main St 右转', en: 'Turn right at Main Street.' }; } },
   { id: 'ntor', t: '禁止红灯右转', en: 'No Turn on Red', d: '这个路口南向进口挂着 NO TURN ON RED。红灯时即使停稳也不能右转。', run() { const e = E_('V2', 'S', 1400, 0); startAt(e, 1, e.len - 180, 18); setSignal(NODE['1400,500'], 'EW', 'G', 13); return { cn: '在 Main St 右转', en: 'Turn right at Main Street.' }; } },
-  { id: 'left', t: '无保护左转', en: 'Permissive Left Turn', d: '绿灯但没有左转箭头，对向一直有车。在路口里等待时轮子摆正，找到足够空当再转。', run() { const e = E_('H2', 'E', 700); startAt(e, 0, e.len - 200, 20); setSignal(NODE['1400,1000'], 'EW', 'G', 13.5); const w = E_('H2', 'W', 2100); for (const s of [w.len - 120, w.len - 260, w.len - 420, w.len - 560]) spawnOn(w, 0, s, 25); return { cn: '在 Oak Ave 左转', en: 'Turn left at Oak Avenue.' }; } },
+  { id: 'left', t: '无保护左转', en: 'Permissive Left Turn', d: '绿灯但没有左转箭头，对向一直有车。在路口里等待时轮子摆正，找到足够空当再转。', run() { const e = E_('H2', 'E', 700); startAt(e, 0, e.len - 200, 20); setSignal(NODE['1400,1000'], 'EW', 'G', 13.5); const w = E_('H2', 'W', 2100); for (const s of [w.len - 120, w.len - 260, w.len - 420, w.len - 560]) { const a = spawnOn(w, 0, s, 25); a.route = { '1400,1000': 'W' }; a.plan = [a.plan[0]]; extendPlan(a); } return { cn: '在 Oak Ave 左转', en: 'Turn left at Oak Avenue.' }; } },
   { id: 'bus', t: '校车停靠', en: 'School Bus Stop', d: '对向的校车正在靠站，红灯闪烁、STOP 臂伸出时，没有中央隔离带的道路上双向都必须停车。', run() { const e = E_('H2', 'W', 700); startAt(e, 0, 40, 15); if (GS.bus) GS.ais = GS.ais.filter(a => a !== GS.bus); const be = E_('H2', 'E', 0); const b = newAI(be, 0, edgeAlongToS(be, SCHOOL.busStopX) - 28, 'bus'); b.route = { '700,1000': 'E', '1400,1000': 'E', '2100,1000': 'N', '2100,500': 'W', '1400,500': 'W', '700,500': 'W', '0,500': 'S', '0,1000': 'E' }; b.plan = [be.lanes[0]]; extendPlan(b); b.lights = 'amber'; b.v = 6 * MPH; aiGeom(b); GS.bus = b; GS.ais.push(b); return { cn: '沿 School Rd 向西行驶', en: 'Continue west on School Road.' }; } },
   { id: 'amb', t: '救护车来了', en: 'Emergency Vehicle', d: '后方救护车鸣笛闪灯。尽快安全地靠右停车，等它过去；不要在路口里停。', run() { const e = E_('H1', 'E', 0); startAt(e, 1, 120, 30); GS.ambAt = GS.t + 2.5; return { cn: '沿 Main St 向东行驶', en: 'Continue east on Main Street.' }; } },
   { id: 'rail', t: '铁路道口', en: 'Railroad Crossing', d: '道口红灯闪烁、栏杆放下时必须停在距离最近铁轨 15–50 英尺处，绝不能停在铁轨上。', run() { const e = E_('V0', 'N', 0, 1000); startAt(e, 0, 20, 25); GS.train.state = 'east'; GS.train.E = -1200; GS.train.v = 40 * MPH; return { cn: '沿 West Ave 向北，通过铁路道口', en: 'Continue north over the railroad crossing.' }; } },
@@ -2845,14 +2954,15 @@ function openScenarios() {
   openOverlay(`<div class="card" style="max-width:860px"><div class="btn-row" style="justify-content:space-between"><h2>情景练习 <span class="en">SCENARIOS</span></h2><button class="btn ghost" id="sback">返回驾驶</button></div>
   <p class="small muted">每个情景把你放到一个容易犯错的地点。先试着正确完成，再故意做错看看会发生什么。</p>
   <div class="grid">${SCEN.map(s => `<button type="button" class="choice" data-id="${s.id}"><b>${s.t}</b><small>${s.en}</small><span class="small">${s.d}</span></button>`).join('')}</div></div>`);
-  $('#sback').onclick = () => { closeOverlay(); GS.paused = false; if (GS.mode === 'scen' && !SESSION.scen) setMode('free'); focusGame(); };
+  $('#sback').onclick = () => { if (SESSION.ended) { closeOverlay(); reopenSheet(); return; } closeOverlay(); if (GS.mode === 'scen' && !SESSION.scen) { setMode('free'); return; } GS.paused = false; focusGame(); };
+  $('#overlay')._esc = () => $('#sback').click();
   $$('.card .choice').forEach(b => b.onclick = () => runScenario(b.dataset.id));
 }
 function runScenario(id) {
   const s = SCEN.find(x => x.id === id); closeOverlay(); GS.mode = 'scen';
   $$('.modes button[data-mode]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === 'scen'));
   setOpt('night', !!s.night); setOpt('rain', !!s.rain);
-  resetSession(); SESSION.scen = id; GS.ais = []; GS.peds = []; GS.amb = null; GS.bus = null; ROUTE = null; ROUTE_DRAW = null; CAM = null; GS.ambAt = null;
+  resetSession(); closePhone(); SESSION.scen = id; GS.ais = []; GS.peds = []; GS.amb = null; GS.bus = null; ROUTE = null; ROUTE_DRAW = null; CAM = null; GS.ambAt = null;
   if (GS.train.state !== 'idle') { GS.train.state = 'idle'; GS.train.t = 120; GS.train.cars = []; GS.train.lights = false; }
   const ins = s.run(); RS.parkedT = 0; computePINFO(); VEH = vehInfo(); spawnTraffic(true); if (!GS.bus && id !== 'bus') spawnBus();
   setTask(s.t, s.en.toUpperCase(), s.d); showInstr(ins); GS.paused = false; focusGame();
@@ -2871,7 +2981,17 @@ $('#optPause').onchange = e => OPT.pause = e.target.checked;
 $('#optSound').onchange = e => { OPT.sound = e.target.checked; if (!OPT.sound) stopSounds(); };
 $('#optSpeech').onchange = e => OPT.speech = e.target.checked;
 $('#optEvents').onchange = e => GS.events = e.target.checked;
-$('#optTouch').onchange = e => { $('#touch').classList.toggle('show', e.target.checked); setTimeout(resize, 50); store.set('rtt-touch', e.target.checked); };
+$('#optTouch').onchange = e => { $('#touch').classList.toggle('show', e.target.checked); setTimeout(fitLayout, 50); store.set('rtt-touch', e.target.checked); };
+$$('.toggles input').forEach(i => i.addEventListener('click', e => { if (e.detail > 0) setTimeout(focusGame, 0); }));
+/* phone layout: fit canvas + touch controls in the viewport; keep toasts above the dash */
+function fitLayout() {
+  const g = $('#game'), t = $('#touch'); const shown = t.classList.contains('show');
+  const land = shown && innerHeight <= 500 && innerWidth > innerHeight; document.body.classList.toggle('land', land);
+  if (land) { g.style.height = Math.max(200, innerHeight - 16) + 'px'; g.style.minHeight = '0'; }
+  else if (shown && innerWidth <= 980) { g.style.height = Math.max(220, Math.min(560, innerHeight - t.offsetHeight - 16)) + 'px'; g.style.minHeight = '0'; }
+  else { g.style.height = ''; g.style.minHeight = ''; }
+  resize(); const d = $('#dash'); if (d) g.style.setProperty('--dashH', d.offsetHeight + 'px');
+}
 $$('.modes button').forEach(b => b.onclick = () => { if (b.dataset.mode) setMode(b.dataset.mode); else if (b.dataset.open === 'coll') openCollection(); else openHelp(false); });
 $('#btnEnd').onclick = () => finishDrive('');
 $('#btnReset').onclick = () => { if (GS.mode === 'scen' && SESSION.scen) runScenario(SESSION.scen); else setMode(GS.mode === 'scen' ? 'free' : GS.mode); };
@@ -2887,7 +3007,7 @@ function shiftTo(g) {
   if (g === 'P') {
     const r = evalParking();
     if (r && r.inSpot && GS.mode !== 'free') toast('<b>停车到位</b><span>记得拉手刹（空格），然后点「结束并评分」。</span>', 'info');
-    if (ROUTE && ROUTE.steps[ROUTE.i] && ROUTE.steps[ROUTE.i].park) { setTimeout(() => { if (PL.pb) finishDrive(r && r.inSpot ? '侧方停车完成' : '没有停进指定车位'); else toast('<b>拉上手刹（空格）后结束考试</b>', 'info'); }, 400); ROUTE.awaitPB = true; }
+    if (ROUTE && ROUTE.steps[ROUTE.i] && ROUTE.steps[ROUTE.i].park) { setTimeout(() => { if (PL.pb && !SESSION.ended) finishDrive(r && r.inSpot ? '侧方停车完成' : '没有停进指定车位'); else toast('<b>拉上手刹（空格）后结束考试</b>', 'info'); }, 400); ROUTE.awaitPB = true; }
   }
 }
 function act(k, down) {
@@ -2901,40 +3021,46 @@ function act(k, down) {
     case 'gP': if (down) shiftTo('P'); break; case 'gR': if (down) shiftTo('R'); break; case 'gN': if (down) shiftTo('N'); break; case 'gD': if (down) shiftTo('D'); break;
     case 'belt': if (down) { PL.belt = !PL.belt; sfx('click'); } break;
     case 'pb': if (down) { PL.pb = !PL.pb; sfx('click'); if (PL.pb && ROUTE && ROUTE.awaitPB && PL.gear === 'P') { const r = evalParking(); finishDrive(r && r.inSpot ? '侧方停车完成' : '没有停进指定车位'); } } break;
-    case 'lights': if (down) PL.lights = (PL.lights + 1) % 3; break;
+    case 'lights': if (down) PL.lights = PL.lights === 0 ? 1 : PL.lights === 1 ? 2 : 1; break;
+    case 'lightsOff': if (down) PL.lights = 0; break;
     case 'haz': if (down) PL.haz = !PL.haz; break;
     case 'horn': PL.horn = down; break;
   }
 }
 const KEYMAP = { q: 'sigL', e: 'sigR', z: 'headL', c: 'headR', x: 'look', '1': 'gP', '2': 'gR', '3': 'gN', '4': 'gD', b: 'belt', ' ': 'pb', l: 'lights', j: 'haz', h: 'horn' };
-function inField(e) { const t = e.target; return t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT'); }
+function inField(e) { const t = e.target; if (!t || !t.tagName) return false; if (t.tagName === 'TEXTAREA' || t.tagName === 'SELECT') return true; if (t.tagName === 'INPUT') return t.type !== 'checkbox' || [' ', 'Enter', 'Tab'].includes(e.key); return false; }
 window.addEventListener('keydown', e => {
   if (inField(e)) return; const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-  if (!$('#overlay').hidden) { if (k === 'Escape') { closeOverlay(); GS.paused = false; } return; }
+  if (!$('#overlay').hidden) { if (k === 'Escape') { const o = $('#overlay'); if (o._esc) o._esc(); else { closeOverlay(); GS.paused = false; focusGame(); } } return; }
+  // Space / Enter on a real control outside the game keep their normal meaning
+  if ((e.key === ' ' || e.key === 'Enter') && e.target.closest && e.target.closest('button,a,label,input') && !e.target.closest('#game,#tbtns')) return;
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
-  if (k === 'Escape') { GS.paused = !GS.paused; if (GS.paused) openOverlay('<div class="card"><h2>已暂停</h2><div class="btn-row"><button class="btn" id="presume">继续</button><button class="btn ghost" id="phelp">操作说明</button></div></div>'), $('#presume').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); }, $('#phelp').onclick = () => openHelp(false); return; }
+  if (k === 'Escape') { GS.paused = !GS.paused; if (GS.paused) { openOverlay('<div class="card"><h2>已暂停</h2><div class="btn-row"><button class="btn" id="presume">继续</button><button class="btn ghost" id="phelp">操作说明</button></div></div>'); $('#presume').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); }; $('#overlay')._esc = () => $('#presume').click(); $('#phelp').onclick = () => openHelp(false); } return; }
   if (k === '+' || k === '=') ZOOM = Math.min(2.6, ZOOM * 1.15); if (k === '-' || k === '_') ZOOM = Math.max(0.55, ZOOM / 1.15);
   KEYS.add(k); if (e.shiftKey) KEYS.add('Shift');
-  if (KEYMAP[k] && !e.repeat) { ensureAudio(); act(KEYMAP[k], true); }
+  if (KEYMAP[k] && !e.repeat) { ensureAudio(); act(k === 'l' && e.shiftKey ? 'lightsOff' : KEYMAP[k], true); }
 });
 window.addEventListener('keyup', e => { const k = e.key.length === 1 ? e.key.toLowerCase() : e.key; KEYS.delete(k); if (!e.shiftKey) KEYS.delete('Shift'); if (KEYMAP[k] === 'horn') act('horn', false); });
 window.addEventListener('blur', () => { KEYS.clear(); PL.horn = false; });
-const TOUCH = { thr: 0, brk: 0, steer: null };
+const TOUCH = { thr: 0, brk: 0, steer: null, held: {} };
 function readInput(dt) {
   const up = KEYS.has('ArrowUp') || KEYS.has('w'), dn = KEYS.has('ArrowDown') || KEYS.has('s');
   const lf = KEYS.has('ArrowLeft') || KEYS.has('a'), rt = KEYS.has('ArrowRight') || KEYS.has('d');
   const hard = KEYS.has('Shift');
-  const tThr = up ? (hard ? 1 : 0.6) : TOUCH.thr, tBrk = dn ? (hard ? 1 : 0.5) : TOUCH.brk;
+  const tThr = up ? (hard ? 1 : 0.6) : TOUCH.thr, tBrk = dn ? (hard ? 1 : 0.4) : TOUCH.brk;
   INPUT.thr += Math.max(-dt * 3, Math.min(dt * 1.6, tThr - INPUT.thr)); if (tThr === 0) INPUT.thr = Math.max(0, INPUT.thr - dt * 4);
   INPUT.brk += Math.max(-dt * 4, Math.min(dt * 3, tBrk - INPUT.brk));
   INPUT.steer = (lf ? -1 : 0) + (rt ? 1 : 0); INPUT.steerAnalog = (INPUT.steer === 0 && TOUCH.steer != null) ? TOUCH.steer : null;
+  if (KEYS.has('x') || TOUCH.held.look) PL.look = GS.t;
+  if (KEYS.has('z') || TOUCH.held.headL) PL.head.L = GS.t;
+  if (KEYS.has('c') || TOUCH.held.headR) PL.head.R = GS.t;
 }
 /* touch */
 (function touchSetup() {
   $$('#tbtns button').forEach(b => {
     const k = b.dataset.k;
-    b.addEventListener('pointerdown', e => { e.preventDefault(); ensureAudio(); act(k, true); b.classList.add('on'); });
-    const up = e => { if (k === 'horn') act('horn', false); b.classList.remove('on'); };
+    b.addEventListener('pointerdown', e => { e.preventDefault(); ensureAudio(); act(k, true); b.classList.add('on'); TOUCH.held[k] = true; });
+    const up = e => { if (k === 'horn') act('horn', false); b.classList.remove('on'); TOUCH.held[k] = false; };
     b.addEventListener('pointerup', up); b.addEventListener('pointercancel', up); b.addEventListener('pointerleave', up);
   });
   const pedal = (el, key) => {
@@ -2957,8 +3083,8 @@ function readInput(dt) {
 /* ---------- phone distraction ---------- */
 const PHONE_MSGS = [['妈妈', '到了吗？到了回我一下'], ['室友', '晚上吃火锅吗？🍲'], ['Uber Eats', 'Your order is on the way!'], ['群聊', '[12 条新消息]'], ['Instagram', '有人给你的照片点了赞']];
 function phoneTick(dt) {
-  if (!GS.events || GS.mode === 'scen') return;
-  const ph = GS.phone; if (ph.open) { ph.t -= dt; if (ph.t <= 0) closePhone(); return; }
+  const ph = GS.phone; if (ph.open) { ph.t -= dt; if (ph.t <= 0 || GS.mode === 'scen') closePhone(); return; }
+  if (!GS.events || GS.mode !== 'free') return;
   if (Math.abs(PL.v) > 8 * MPH) ph.next -= dt;
   if (ph.next <= 0) { const m = pick(PHONE_MSGS); ph.open = true; ph.t = 9; const el = $('#phone'); el.hidden = false; el.innerHTML = `<b>${m[0]}</b>${m[1]}<div class="row"><button class="open" id="phOpen">查看</button><button class="later" id="phLater">稍后</button></div>`; sfx('ding');
     $('#phOpen').onclick = () => { if (PL.gear !== 'P') fault('phone', '点开了手机消息'); else toast('<b>已挂 P 挡停好车</b><span>停好车再看手机，这是正确的。</span>', 'info'); closePhone(); focusGame(); };
@@ -2981,7 +3107,7 @@ function hud() {
   $$('#gears span').forEach(s => s.classList.toggle('on', s.dataset.g === PL.gear));
   $('#tL').classList.toggle('on', PL.sigL || PL.haz); $('#tR').classList.toggle('on', PL.sigR || PL.haz);
   $('#tBelt').classList.toggle('on', !PL.belt); $('#tPB').classList.toggle('on', PL.pb);
-  const tl = $('#tLights'); tl.textContent = PL.lights === 2 ? 'HIGH' : 'LOW'; tl.classList.toggle('on', PL.lights > 0); tl.classList.toggle('blue', PL.lights === 2);
+  const tl = $('#tLights'); tl.textContent = PL.lights === 2 ? 'HIGH' : PL.lights === 1 ? 'LOW' : 'OFF'; tl.classList.toggle('on', PL.lights > 0); tl.classList.toggle('blue', PL.lights === 2);
   $('#tHaz').classList.toggle('on', PL.haz);
   // ahead
   const a = PINFO.appr, ah = $('#ahead');
@@ -2997,8 +3123,11 @@ function hud() {
   else if (GS.bus && GS.bus.lights === 'amber' && Math.hypot(GS.bus.cx - c[0], GS.bus.cy - c[1]) < 300) al = ['校车黄灯闪烁 · 准备停车', 'warn'];
   else if (GS.train.lights && Math.hypot(c[0] - RAIL.x, c[1] - RAIL.y) < 400) al = ['铁路道口闪灯 · 停在停止线后', ''];
   else if (GS.flag.state === 'STOP' && PINFO.loc && PINFO.loc.street && PINFO.loc.street.id === 'H1' && PINFO.loc.d === 1 && c[0] < WORK.flagX && c[0] > 1300) al = ['旗手举起 STOP · 停车等待', ''];
-  else if (!PL.belt && GS.t > 1) al = ['未系安全带 · 按 B', 'warn'];
-  else if ((GS.night || GS.rain) && PL.lights === 0) al = [GS.night ? '天黑了 · 按 L 开大灯' : '下雨了 · 开大灯 (L)', 'warn'];
+  else if (INPUT.thr > 0.3 && Math.abs(PL.v) < 0.5 && PL.gear === 'P') al = ['还在 P 挡 · ' + (isTouchUI() ? '按住刹车再点 D' : '按住 ↓ 再按 4 挂 D'), 'warn'];
+  else if (INPUT.thr > 0.3 && Math.abs(PL.v) < 3 && PL.pb && PL.gear !== 'P') al = ['手刹没松 · ' + (isTouchUI() ? '点「手刹」' : '按空格'), 'warn'];
+  else if (INPUT.thr > 0.3 && Math.abs(PL.v) < 0.5 && PL.gear === 'N') al = ['在 N 挡 · 挂 D 才能前进', 'warn'];
+  else if (!PL.belt && GS.t > 1) al = ['未系安全带 · ' + (isTouchUI() ? '点「安全带」' : '按 B'), 'warn'];
+  else if ((GS.night || GS.rain) && PL.lights === 0) al = [(GS.night ? '天黑了' : '下雨了') + ' · ' + (isTouchUI() ? '点「大灯」' : '按 L 开大灯'), 'warn'];
   const ae = $('#alert'); if (al) { ae.hidden = false; ae.textContent = al[0]; ae.className = 'alert ' + al[1]; } else ae.hidden = true;
 }
 
@@ -3044,14 +3173,14 @@ function frame(now) {
   render(); hud(); soundTick(dt);
   requestAnimationFrame(frame);
 }
-window.addEventListener('resize', resize);
-document.addEventListener('visibilitychange', () => { if (document.hidden && !GS.paused && $('#overlay').hidden) { GS.paused = true; openOverlay('<div class="card"><h2>已暂停</h2><div class="btn-row"><button class="btn" id="presume">继续</button></div></div>'); $('#presume').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); }; } });
+window.addEventListener('resize', fitLayout);
+document.addEventListener('visibilitychange', () => { if (document.hidden && !GS.paused && $('#overlay').hidden) { GS.paused = true; openOverlay('<div class="card"><h2>已暂停</h2><div class="btn-row"><button class="btn" id="presume">继续</button></div></div>'); $('#presume').onclick = () => { closeOverlay(); GS.paused = false; focusGame(); }; $('#overlay')._esc = () => $('#presume').click(); } });
 $('#game').addEventListener('pointerdown', () => { ensureAudio(); });
 
 /* ---------- boot ---------- */
 ROTATE = store.get('rtt-rot', false); $('#optRotate').checked = ROTATE;
-resize(); resetPlayerParked(); spawnBus(); computePINFO(); VEH = vehInfo(); spawnTraffic(true); for (let i = 0; i < 90; i++) { stepWorld(1 / 60); } GS.t = 0; updateScore();
-setTask('自由驾驶', 'FREE DRIVE', '想去哪就去哪。可以故意犯错来看讲解。');
+fitLayout(); resetPlayerParked(); spawnBus(); computePINFO(); VEH = vehInfo(); spawnTraffic(true); for (let i = 0; i < 90; i++) { stepWorld(1 / 60); } GS.t = 0; updateScore();
+setTask('自由驾驶', 'FREE DRIVE', FREE_TXT());
 openHelp(true);
 requestAnimationFrame(frame);
 
