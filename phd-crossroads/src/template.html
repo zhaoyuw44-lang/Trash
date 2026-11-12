@@ -1,0 +1,1256 @@
+<title>博士毕业去留地图</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap">
+<style>
+/* Layout: a dossier — passport-ink masthead with an MRZ strip of the two document chains; sticky chapter rail on the left (top strip on phones); one reading column where figures run full width. US = cobalt visa-stamp ink, China = seal-paste red. Status stamps are the one bold device. */
+:root{
+  --paper:#F3F5F4; --paper-2:#E8ECEB; --card:#FFFFFF; --ink:#16202A; --ink-2:#4E5A66; --line:#CDD5D6;
+  --us:#2B4C9B; --us-tint:#E4EBF8; --us-wash:#EEF2FA;
+  --cn:#B03A2E; --cn-tint:#F8E4E0; --cn-wash:#FBF0EE;
+  --ch-cn:#B03A2E; --ch-row:#6B5FB5;
+  --mute:#9AA4AE; --ok:#23704A; --ok-tint:#E2F1E8; --warn:#93600F; --warn-tint:#F7ECD8; --off:#5E6873; --off-tint:#E6E9EC;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11161C; --paper-2:#1A2129; --card:#171E26; --ink:#E4E9EE; --ink-2:#A2ADB8; --line:#2F3A46;
+    --us:#8EADF2; --us-tint:#1C2A47; --us-wash:#16203A;
+    --cn:#F08C7A; --cn-tint:#3B211E; --cn-wash:#2A1A19;
+    --mute:#5D6873; --ok:#72CC97; --ok-tint:#183326; --warn:#E3B160; --warn-tint:#352812; --off:#A3ADB8; --off-tint:#232B34;
+    --ch-cn:#D9644F; --ch-row:#8A80D0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11161C; --paper-2:#1A2129; --card:#171E26; --ink:#E4E9EE; --ink-2:#A2ADB8; --line:#2F3A46;
+  --us:#8EADF2; --us-tint:#1C2A47; --us-wash:#16203A;
+  --cn:#F08C7A; --cn-tint:#3B211E; --cn-wash:#2A1A19;
+  --mute:#5D6873; --ok:#72CC97; --ok-tint:#183326; --warn:#E3B160; --warn-tint:#352812; --off:#A3ADB8; --off-tint:#232B34;
+  --ch-cn:#D9644F; --ch-row:#8A80D0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--paper)}
+a{color:var(--us);text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--us);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.3;margin:0}
+h4{margin:0;font-size:15px;line-height:1.5}
+p{margin:0}
+code,.mono{font-family:var(--mono);font-size:.92em}
+
+.shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:44px;padding-block:28px 72px}
+
+/* masthead */
+.mast{grid-column:1/-1;display:grid;gap:14px;padding-bottom:26px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.mast-top{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--ink-2);font-family:var(--mono)}
+.mast-top b{color:var(--ink)}
+.mast h1{font-size:clamp(34px,5.2vw,58px);font-weight:900;letter-spacing:.02em}
+.mast h1 span{color:var(--cn)}
+.lede{max-width:68ch;color:var(--ink-2);font-size:16px}
+.mrz{font-family:var(--mono);font-size:13px;letter-spacing:.06em;background:var(--ink);color:var(--paper);border-radius:6px;
+  padding:10px 14px;white-space:nowrap;overflow-x:auto;display:flex;gap:14px}
+.mrz .u{color:var(--us-tint)} .mrz .c{color:var(--cn-tint)}
+.mrz i{font-style:normal;opacity:.55}
+
+/* chapter rail */
+nav.chapters{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 24px);align-self:start;padding-top:22px}
+nav.chapters ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+nav.chapters a{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);
+  padding:7px 10px;border-radius:8px;font-size:14px;line-height:1.35}
+nav.chapters a small{grid-column:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;opacity:.8}
+nav.chapters a .dot{width:8px;height:8px;border-radius:50%;background:var(--mute);transform:translateY(-1px)}
+nav.chapters a[data-side="u"] .dot{background:var(--us)} nav.chapters a[data-side="c"] .dot{background:var(--cn)}
+nav.chapters a:hover{background:var(--paper-2);color:var(--ink)}
+nav.chapters a[aria-current="page"]{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--line)}
+.rail-note{margin-top:18px;font-size:12px;color:var(--ink-2);line-height:1.6;padding:0 10px}
+
+main{min-width:0;padding-top:22px}
+.view{display:grid;gap:34px}
+.view > *{min-width:0}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.vh{display:grid;gap:8px}
+.vh h2{font-size:clamp(26px,3.4vw,36px);font-weight:900}
+.vh p{max-width:70ch;color:var(--ink-2);font-size:15.5px}
+.blk{display:grid;gap:14px}
+.blk > h3{font-size:21px;font-weight:700}
+.blk > p,.prose{max-width:70ch}
+.sub{color:var(--ink-2);font-size:14px}
+
+/* figures */
+.fig{margin:0;display:grid;gap:10px}
+.fig-head{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.fig-no{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-2)}
+.fig-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px}
+.fig-svg{display:block;width:100%;height:auto;min-width:760px}
+.fig-scroll.narrow .fig-svg{min-width:640px}
+.fig figcaption{font-size:13.5px;color:var(--ink-2);max-width:78ch}
+.fig figcaption b{color:var(--ink)}
+.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer;line-height:1.4}
+.btn:hover{border-color:var(--ink-2)}
+.fig-svg .hit{cursor:pointer}
+.fig-svg .hit:hover rect,.fig-svg .hit:focus rect{stroke-width:2.4}
+.fig-svg .hit:focus{outline:none}
+.fig-svg .stage.is-on rect,.fig-svg .stage.is-on path{stroke:var(--ink);stroke-width:2.6}
+/*@svg-rules*/
+
+/* stamps */
+.stamp{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  padding:3px 9px;border:1.5px solid currentColor;border-radius:4px;transform:rotate(-2.5deg);white-space:nowrap;line-height:1.4;background:var(--card)}
+.stamp.live{color:var(--ok)} .stamp.prop{color:var(--warn)} .stamp.held{color:var(--off);border-style:double;border-width:3px}
+.stamp.data{color:var(--us)} .stamp.cnst{color:var(--cn)}
+
+/* policy watch */
+.watch{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--line)}
+.watch li{display:grid;grid-template-columns:118px minmax(0,1fr);gap:6px 18px;padding:16px 4px;border-bottom:1px solid var(--line)}
+.watch li > div{min-width:0;display:grid;gap:4px}
+.watch .stamp{justify-self:start;align-self:start;margin-top:2px}
+.watch p{color:var(--ink-2);font-size:14px}
+.watch p b{color:var(--ink)}
+.watch .you{color:var(--ink)}
+.watch .you::before{content:"对你：";font-weight:700}
+
+/* cards & grids */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.card h4 .en{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--ink-2);margin-left:6px}
+.card p,.card li{font-size:14px;color:var(--ink-2)}
+.card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.myth{border-left:none}
+.myth .q{font-weight:700;color:var(--ink);font-size:14.5px}
+.myth .q::before{content:"误区 ";font-family:var(--mono);font-size:11px;color:var(--cn);letter-spacing:.08em;margin-right:4px}
+
+/* visa cards */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.vcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px 18px;display:grid;gap:10px;align-content:start;min-width:0}
+.vcard header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.vcard h4{font-size:16px}
+.vcard h4 small{display:block;font-family:var(--mono);font-weight:500;font-size:11.5px;color:var(--ink-2);letter-spacing:.03em}
+.vcard dl{margin:0;display:grid;grid-template-columns:62px minmax(0,1fr);gap:6px 12px;font-size:13.5px}
+.vcard dt{color:var(--ink-2);font-size:12.5px;padding-top:1px}
+.vcard dd{margin:0;color:var(--ink)}
+.vcard.na{background:var(--paper-2)}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+thead th{font-size:12px;letter-spacing:.04em;color:var(--ink-2);background:var(--paper-2);font-weight:700}
+tbody th{font-weight:700;white-space:nowrap}
+td.num,.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cn-col{color:var(--cn);font-weight:700} .us-col{color:var(--us);font-weight:700}
+
+/* forms / tools */
+.tool{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:16px}
+.tool-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+.tool-head h3{font-size:19px}
+.tag-ex{font-family:var(--mono);font-size:11.5px;color:var(--warn);border:1px dashed currentColor;border-radius:4px;padding:1px 7px}
+.fields{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end}
+.field{display:grid;gap:4px;font-size:13px;color:var(--ink-2)}
+.field input[type=date],.field select,.field input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 10px;min-width:0}
+.check{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)}
+.check input{width:16px;height:16px;accent-color:var(--us)}
+fieldset{border:none;margin:0;padding:0;display:grid;gap:6px}
+legend{font-size:13px;color:var(--ink-2);padding:0;margin-bottom:6px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.seg span{display:inline-block;font-size:13.5px;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--paper);cursor:pointer}
+.seg input:checked + span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg input:focus-visible + span{outline:2px solid var(--us);outline-offset:2px}
+.finder-q{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 22px}
+.route{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;border-top:1px solid var(--line);padding-top:16px}
+.route h4{font-size:14px;margin-bottom:8px}
+.route ol{margin:0;padding-left:22px;display:grid;gap:8px;font-size:14px}
+.route ol li::marker{font-family:var(--mono);font-weight:600;color:var(--ink-2)}
+.route ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2)}
+.route .side{display:grid;gap:14px;align-content:start}
+.badge{display:inline-block;font-size:11px;font-family:var(--mono);padding:0 6px;border-radius:4px;margin-right:6px;vertical-align:1px;border:1px solid currentColor}
+.badge.u{color:var(--us)} .badge.c{color:var(--cn)} .badge.b{color:var(--ink-2)}
+
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.out div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:2px;background:var(--paper)}
+.out dt{font-size:12px;color:var(--ink-2)}
+.out dd{margin:0;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+.out dd small{display:block;font-family:var(--sans);font-size:12px;color:var(--ink-2)}
+.warnline{font-size:13.5px;color:var(--warn);background:var(--warn-tint);border-radius:8px;padding:8px 12px}
+.verdict{border-radius:var(--r);padding:14px 16px;display:grid;gap:4px}
+.verdict.ok{background:var(--ok-tint)} .verdict.mid{background:var(--warn-tint)} .verdict.no{background:var(--off-tint)}
+.verdict strong{font-size:16px}
+.verdict.ok strong{color:var(--ok)} .verdict.mid strong{color:var(--warn)} .verdict.no strong{color:var(--ink)}
+
+/* stage panel */
+.stage-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;display:grid;gap:6px;min-height:96px}
+.stage-panel h4{font-size:16px}
+.stage-panel h4 .num{font-weight:500;color:var(--ink-2);margin-left:8px;font-size:12.5px}
+.stage-panel p{font-size:14px;color:var(--ink-2);max-width:78ch}
+
+/* details */
+details{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:0 16px}
+details + details{margin-top:-6px}
+summary{cursor:pointer;padding:12px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--ink-2)}
+details[open] summary::after{content:"−"}
+details ol,details ul{margin:0 0 14px;padding-left:22px;display:grid;gap:4px;font-size:14px;color:var(--ink-2)}
+details p{font-size:14px;color:var(--ink-2);margin-bottom:14px}
+
+/* checklist */
+.progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-2)}
+.bar{flex:1;height:6px;background:var(--paper-2);border-radius:99px;overflow:hidden;max-width:320px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .3s}
+.phase{display:grid;gap:6px}
+.phase h4{font-size:14px;font-family:var(--mono);letter-spacing:.04em;color:var(--ink-2);font-weight:600}
+.todo{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.todo label{display:grid;grid-template-columns:18px auto minmax(0,1fr);gap:10px;align-items:start;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid var(--line);font-size:14px;cursor:pointer}
+.todo input{margin-top:5px;width:16px;height:16px;accent-color:var(--ok)}
+.todo input:checked ~ span:last-child{color:var(--ink-2);text-decoration:line-through;text-decoration-color:var(--mute)}
+.todo .badge{margin-top:3px}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin:0}
+.gloss div{padding:10px 0;border-bottom:1px solid var(--line);display:grid;gap:2px;min-width:0}
+.gloss dt{font-weight:700;font-size:14px}
+.gloss dt .num{font-weight:500;color:var(--ink-2);font-size:12px;margin-left:6px}
+.gloss dd{margin:0;font-size:13.5px;color:var(--ink-2)}
+.src{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2);columns:1}
+.src a{word-break:break-word}
+
+.next{display:flex;justify-content:flex-end}
+.next a{font-weight:700;text-decoration:none;border-bottom:1.5px solid currentColor}
+footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2);max-width:78ch;display:grid;gap:6px}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:50;background:var(--paper);background:color-mix(in srgb, var(--paper) 96%, transparent);display:grid;grid-template-rows:auto minmax(0,1fr);
+  padding:calc(env(safe-area-inset-top, 0px) + 10px) max(12px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 10px) max(12px, env(safe-area-inset-left, 0px))}
+.lb-bar{display:flex;gap:8px;align-items:center;justify-content:space-between;padding-bottom:10px}
+.lb-bar .t{font-size:13.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.lb-bar .ctl{display:flex;gap:6px;flex-shrink:0}
+.lb-body{overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.lb-body svg{display:block;height:auto}
+
+@media (max-width:1000px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  nav.chapters{position:sticky;top:env(safe-area-inset-top, 0px);z-index:6;background:var(--paper);padding:8px 0;
+    margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+    border-bottom:1px solid var(--line)}
+  nav.chapters ol{display:flex;overflow-x:auto;gap:4px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));scrollbar-width:none}
+  nav.chapters a{white-space:nowrap;padding:6px 12px}
+  nav.chapters a small{display:none}
+  .rail-note{display:none}
+  footer.disc{grid-column:1}
+}
+@media (max-width:760px){
+  .grid2,.grid3,.vcards,.gloss{grid-template-columns:minmax(0,1fr)}
+  .route{grid-template-columns:minmax(0,1fr)}
+  .watch li{grid-template-columns:minmax(0,1fr)}
+  .vcard dl{grid-template-columns:54px minmax(0,1fr)}
+  body{font-size:14.5px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important;scroll-behavior:auto!important} }
+</style>
+
+<div class="shell">
+<header class="mast">
+  <div class="mast-top"><span>资料核对至 <b>2026-11-12</b></span><span>美国移民政策 · 中国人才政策 · 中美教育体系</span><span>不构成法律意见</span></div>
+  <h1>博士毕业去留<span>地图</span></h1>
+  <p class="lede">毕业后的每条路，都是一串需要按时交接的文件。这份地图把美国的身份接力（OPT、H-1B、绿卡）、回国的求职链（认证、签约、落户），以及两国的教育体系画在一起，并标出 2026 年仍在变动的政策。</p>
+  <div class="mrz" aria-label="两条主线的关键文件"><span class="u">F-1 ▸ I-765 OPT ▸ I-983 STEM OPT ▸ I-129 H-1B ▸ I-140 ▸ I-485</span><i>┃</i><span class="c">学历学位认证 ▸ 签约 ▸ 落户 ▸ 社保·公积金</span></div>
+</header>
+
+<nav class="chapters" aria-label="章节">
+  <ol>
+    <li><a href="#overview" data-nav="overview"><span class="dot"></span>总览<small>Overview</small></a></li>
+    <li><a href="#us-visa" data-nav="us-visa" data-side="u"><span class="dot"></span>美国签证<small>OPT · H-1B · O-1</small></a></li>
+    <li><a href="#green-card" data-nav="green-card" data-side="u"><span class="dot"></span>绿卡<small>EB-1 · NIW · PERM</small></a></li>
+    <li><a href="#china" data-nav="china" data-side="c"><span class="dot"></span>回国发展<small>认证 · 求职 · 落户</small></a></li>
+    <li><a href="#edu-cn" data-nav="edu-cn" data-side="c"><span class="dot"></span>中国教育体系<small>K-12 → 博士</small></a></li>
+    <li><a href="#edu-us" data-nav="edu-us" data-side="u"><span class="dot"></span>美国教育体系<small>K-12 → PhD</small></a></li>
+    <li><a href="#plan" data-nav="plan"><span class="dot"></span>时间规划<small>年历 · 清单</small></a></li>
+    <li><a href="#glossary" data-nav="glossary"><span class="dot"></span>术语与来源<small>Glossary</small></a></li>
+  </ol>
+  <p class="rail-note">蓝色 = 美国路线，红色 = 中国路线。每张图都可以点“放大查看”。</p>
+</nav>
+
+<main>
+<!-- ============================================================ OVERVIEW -->
+<section class="view" data-view="overview" aria-labelledby="h-overview">
+  <div class="vh">
+    <span class="kicker">Overview · 先看全局</span>
+    <h2 id="h-overview">三条路，两条接力链</h2>
+    <p>留在美国，靠的是一段接一段的合法身份：F-1 → OPT → STEM OPT → H-1B 或 O-1 → 绿卡，任何一棒掉了都要重新规划。回国则是另一条链：学历认证 → 求职签约 → 落户 → 待遇落实。两条链在毕业后的头 1–3 年可以并行，所以越早想清楚主路线和后备路线越好。</p>
+  </div>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 1 · 决策地图</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:01-decision-map--></div>
+    <figcaption>点击方框可跳到对应章节。<b>虚线</b>是最常见的“两边都不放弃”的路径：在海外做博后，满足海外工作年限后申报海外优青等人才项目回国任教。</figcaption>
+  </figure>
+
+  <section class="tool" aria-labelledby="h-finder">
+    <div class="tool-head"><h3 id="h-finder">路线助手</h3><span class="sub">选几个条件，给出一条建议路线、后备方案和要提前避开的坑</span></div>
+    <form class="finder-q" id="finder" onsubmit="return false">
+      <fieldset><legend>长期更想在哪里</legend><div class="seg">
+        <label><input type="radio" name="where" value="us"><span>美国</span></label>
+        <label><input type="radio" name="where" value="cn"><span>中国</span></label>
+        <label><input type="radio" name="where" value="open" checked><span>还没想好</span></label></div></fieldset>
+      <fieldset><legend>职业方向</legend><div class="seg">
+        <label><input type="radio" name="track" value="acad"><span>学术</span></label>
+        <label><input type="radio" name="track" value="ind"><span>工业界</span></label>
+        <label><input type="radio" name="track" value="either" checked><span>都可以</span></label></div></fieldset>
+      <fieldset><legend>学位在 STEM 清单上吗（看 I-20 的 CIP code）</legend><div class="seg">
+        <label><input type="radio" name="stem" value="yes" checked><span>是</span></label>
+        <label><input type="radio" name="stem" value="no"><span>否</span></label></div></fieldset>
+      <fieldset><legend>成果强度（论文、引用、审稿、奖项）</legend><div class="seg">
+        <label><input type="radio" name="power" value="1"><span>一般</span></label>
+        <label><input type="radio" name="power" value="2" checked><span>较强</span></label>
+        <label><input type="radio" name="power" value="3"><span>很突出</span></label></div></fieldset>
+      <fieldset><legend>家庭情况</legend><div class="seg">
+        <label><input type="radio" name="family" value="single" checked><span>单身</span></label>
+        <label><input type="radio" name="family" value="partner"><span>有配偶</span></label>
+        <label><input type="radio" name="family" value="kids"><span>有孩子</span></label></div></fieldset>
+    </form>
+    <div class="route" id="route" aria-live="polite"></div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-watch">
+    <h3 id="h-watch">政策快照：2026 年 11 月仍在变动的事</h3>
+    <p class="sub">印章表示状态：<span class="stamp live">生效</span> 已经执行；<span class="stamp prop">提案</span> 尚未定稿；<span class="stamp held">法院暂停</span> 被法院阻止，可能随上诉恢复；<span class="stamp data">数据</span> 最新公布的数字。</p>
+    <ol class="watch">
+      <li><span class="stamp held">法院暂停</span><div><h4>H-1B 10 万美元入境付款（总统公告）</h4>
+        <p>2025-09 公告要求部分新 H-1B 在境外受益人入境时付 10 万美元。2026-06 马萨诸塞联邦法院撤销执行政策，2026-09-30 加州联邦法院再次阻止；公告虽延长至 2027-09-21，但目前不征收，政府仍在上诉。</p>
+        <p class="you">境内 F-1/OPT 转 H-1B 本来就不在征收范围。需要盯的是下面那条申请费提案。</p></div></li>
+      <li><span class="stamp prop">提案</span><div><h4>H-1B cap 申请费 $103,265</h4>
+        <p>2026-08-25 DHS 发布提案，对所有 cap-subject H-1B 申请收费，<b>包括境内转身份</b>。评论期已结束，尚无最终规则。</p>
+        <p class="you">如果定稿，雇主担保成本剧增，cap-exempt 雇主（大学、研究机构）和 O-1A 的价值会明显上升。</p></div></li>
+      <li><span class="stamp live">生效</span><div><h4>H-1B 按工资级别加权抽签</h4>
+        <p>2025-12-29 最终规则，从 FY2027（2026 年 3 月）开始：Level IV 4 次机会、III 3 次、II 2 次、I 1 次（见图 3）。</p>
+        <p class="you">谈 offer 时问清职位在 LCA 上定的工资级别，它直接决定中签权重。</p></div></li>
+      <li><span class="stamp prop">提案</span><div><h4>OPT 推荐费：学校付 $70,000 / $30,000</h4>
+        <p>2026-10-08 DHS 提案：学校首次推荐 OPT 付 7 万美元，之后每次（含 STEM OPT）3 万美元。评论期 2026-11-09 截止，未生效。</p>
+        <p class="you">若定稿，学校可能收紧推荐或转嫁成本。2027 年毕业的同学要持续关注学校国际学生办公室的通知。</p></div></li>
+      <li><span class="stamp held">法院暂停</span><div><h4>F-1 固定入境期限（取消 D/S）</h4>
+        <p>2026-07-17 最终规则原定 09-15 生效，2026-09-14 联邦法院全国性暂缓。目前 D/S 和 60 天宽限期照旧。</p>
+        <p class="you">如果禁令被推翻，OPT/STEM OPT 期间可能还要另交 I-539 延期，入职会更容易出现空档。</p></div></li>
+      <li><span class="stamp live">生效</span><div><h4>CPT 收紧</h4>
+        <p>SEVP 2026-08 通知：CPT 必须是所有学生都要完成的必修课程环节。</p>
+        <p class="you">靠 Day 1 CPT 在抽签失败后“过桥”的做法基本走不通了，后备方案要换成 cap-exempt 或 O-1A。</p></div></li>
+      <li><span class="stamp live">生效 · 诉讼中</span><div><h4>USCIS PA-2026-05：EB-1A / NIW 可直接拒</h4>
+        <p>2026-08-05 起，证据不足的 EB-1A 和 NIW 可以不发补件通知（RFE）直接拒绝。</p>
+        <p class="you">第一次递交就要把证据做完整，不能指望补件时再补。</p></div></li>
+      <li><span class="stamp data">数据</span><div><h4>I-140 批准率（律所整理 USCIS 季度数据）</h4>
+        <p>FY2026 Q3：EB-1A 约 <b>32%</b>（历史低位），NIW 约 <b>55%</b>（连续三个季度回升，2025 Q4 曾低至约 36%），O-1 约 <b>90%</b>。</p></div></li>
+      <li><span class="stamp prop">提案</span><div><h4>DOL 上调现行工资（prevailing wage）</h4>
+        <p>2026-03 提案：Level I 由约第 17 分位升至约第 34 分位，影响 H-1B 和 PERM。截至检索未见最终规则。</p></div></li>
+      <li><span class="stamp live">生效</span><div><h4>面签规则</h4>
+        <p>2025-09 起须在国籍国或居住国面签，面谈豁免大幅收窄；F/M/J（2025-06）与 H-1B/H-4（2025-12）申请人需公开社交媒体账户供审查。</p>
+        <p class="you">H-1B 首次贴签通常要回中国办理；STEM 背景可能遇到 221(g) 行政审查，留出数周到数月的缓冲。</p></div></li>
+      <li><span class="stamp data">数据</span><div><h4>2026 年 11 月排期（中国大陆出生）</h4>
+        <p>EB-1 <span class="num">2023-08-01</span> · EB-2 <span class="num">2021-10-01</span> · EB-3 <span class="num">2022-01-22</span>。本月 USCIS 允许按 Dates for Filing 递交 I-485。</p></div></li>
+      <li><span class="stamp cnst">生效 · 中国</span><div><h4>2027 年度国考</h4>
+        <p>年龄 18–38 周岁，2027 届应届硕博放宽到 43 周岁以下；报名 2026-10 已结束，笔试 2026-11-29。下一轮约 2027 年 10 月报名。</p></div></li>
+      <li><span class="stamp cnst">生效 · 中国</span><div><h4>K 字签证</h4>
+        <p>2025-10-01 起面向外籍青年 STEM 人才，不需要国内单位邀请。中国公民本人不适用，但与外籍配偶、或你将来想招的外籍学生和博后有关。</p></div></li>
+    </ol>
+  </section>
+
+  <section class="blk" aria-labelledby="h-myth">
+    <h3 id="h-myth">几个常见误区</h3>
+    <div class="grid2">
+      <div class="card myth"><p class="q">“H-1B 要交 10 万美元，留美没戏了。”</p><p>那笔钱只针对境外受益人的新申请，而且目前被法院阻止。境内 F-1/OPT 转 H-1B 不在范围内。真正会影响境内转身份的是 $103,265 申请费提案，它还没有定稿。</p></div>
+      <div class="card myth"><p class="q">“博士学位加几篇论文，NIW 稳过。”</p><p>2025-01 起 USCIS 先审 EB-2 门槛，再看 Dhanasar 三要素；2026-08 起可以不发补件直接拒。独立引用、别人在用你的成果、推荐人与你无利益关系，这些比论文数量更重要。</p></div>
+      <div class="card myth"><p class="q">“绿卡排期按国籍算。”</p><p>按<b>出生地</b>算（chargeability）。在香港、澳门、台湾出生的人不排“中国大陆出生”那一列；配偶在其他国家出生，可以交叉计算，用配偶的排期。</p></div>
+      <div class="card myth"><p class="q">“OPT 是一种签证。”</p><p>OPT 是 F-1 身份下的工作许可（EAD 卡），不是新签证。OPT 期间出境再入境，需要有效的 F-1 签证、EAD 卡、雇主信，以及 6 个月内 DSO 签过字的 I-20。</p></div>
+      <div class="card myth"><p class="q">“回国了，美国的社保和 401(k) 就没了。”</p><p>401(k) 账户仍然属于你，可以留着或转 IRA。领美国社保退休金需要约 40 个 credits（大约工作 10 年）；中美社保协定只免除外派人员的双重缴费，不能合并两国年限。</p></div>
+      <div class="card myth"><p class="q">“签证过期就得马上离开美国。”</p><p>签证（visa）只管入境，身份（status）看 I-94 和你的 I-20 / EAD / 批准通知。签证过期但身份有效，可以合法留在美国，只是出境后要重新贴签。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#us-visa">下一章：美国签证 →</a></p>
+</section>
+
+<!-- ============================================================ US VISA -->
+<section class="view" data-view="us-visa" aria-labelledby="h-usv" hidden>
+  <div class="vh">
+    <span class="kicker">U.S. Visas · 身份接力</span>
+    <h2 id="h-usv">美国：毕业后的身份接力</h2>
+    <p>F-1 博士毕业后，大多数人的第一棒是 OPT。STEM 学位还能再接 24 个月 STEM OPT，这三年里可以参加多次 H-1B 抽签。学术岗位和成果突出的人还有不用抽签的路：cap-exempt H-1B 和 O-1A。</p>
+  </div>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 2 · F-1 → OPT → H-1B 时间轴</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:02-f1-opt-h1b-timeline--></div>
+    <figcaption>以 2027 年 5 月毕业为例。<b>STEM 学位</b>让授权期从 12 个月变成 36 个月，H-1B 抽签机会也从 1–2 次变成 3–4 次；非 STEM 学位只有 OPT 那一年。</figcaption>
+  </figure>
+
+  <section class="tool" aria-labelledby="h-calc">
+    <div class="tool-head"><h3 id="h-calc">OPT / H-1B 日期计算器</h3><span class="tag-ex">示例日期 · 改成你的</span></div>
+    <div class="fields">
+      <label class="field" for="c-end">I-20 上的学业结束日（Program End Date）<input type="date" id="c-end" value="2027-05-14"></label>
+      <label class="field" for="c-start">计划的 OPT 开始日<input type="date" id="c-start" value="2027-06-01"></label>
+      <label class="check" for="c-stem"><input type="checkbox" id="c-stem" checked>STEM 学位</label>
+      <label class="check" for="c-exempt"><input type="checkbox" id="c-exempt">雇主是 cap-exempt（免抽签）</label>
+    </div>
+    <div id="c-warn" class="warnline" hidden></div>
+    <div class="fig-scroll narrow"><svg class="fig-svg" id="c-svg" viewBox="0 0 1000 220" role="img" aria-label="根据输入日期生成的 OPT 与 H-1B 时间轴"></svg></div>
+    <dl class="out" id="c-out"></dl>
+    <p class="sub">规则：OPT 可在学业结束前 90 天到结束后 60 天内递交（且须在 DSO 推荐后 30 天内）；OPT 开始日须在结束后 60 天内；STEM OPT 须在 OPT 到期前 90 天内递交，按时递交可自动延长工作许可 180 天。抽签按“每年 3 月注册、10/1 生效”估算，实际日期以 USCIS 公告为准。</p>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 3 · H-1B 加权抽签</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:03-h1b-weighted-lottery--></div>
+    <figcaption>美国博士<b>参加两轮</b>：先和所有人一起抽 65,000 常规名额，没中再进 20,000 高学历名额。新规下，雇主给的工资级别越高，你在池子里的“票”越多。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-cards">
+    <h3 id="h-cards">身份卡片：要求、时长与 2026 年风险</h3>
+    <div class="chips" role="group" aria-label="筛选身份类型">
+      <button class="chip" data-filter="all" aria-pressed="true">全部</button>
+      <button class="chip" data-filter="work" aria-pressed="false">工作身份</button>
+      <button class="chip" data-filter="acad" aria-pressed="false">学术常用</button>
+      <button class="chip" data-filter="family" aria-pressed="false">家属与探亲</button>
+      <button class="chip" data-filter="na" aria-pressed="false">中国公民不适用</button>
+    </div>
+    <div class="vcards" id="vcards">
+      <article class="vcard" data-tags="work acad"><header><h4>宽限期<small>F-1 Grace Period</small></h4><span class="stamp live">60 天</span></header>
+        <dl><dt>是什么</dt><dd>学业结束后不申请 OPT，有 60 天用于离境、转学或转换身份。期间不能工作。</dd>
+        <dt>要点</dt><dd>OPT 可以在这 60 天内递交；一旦申请 OPT，后续以 OPT 规则为准。</dd>
+        <dt>2026</dt><dd>固定入境期限规则曾拟缩短离境期，已被法院暂缓，目前仍是 60 天。</dd></dl></article>
+
+      <article class="vcard" data-tags="work acad"><header><h4>OPT<small>Post-completion OPT · I-765</small></h4><span class="stamp live">12 个月</span></header>
+        <dl><dt>资格</dt><dd>完成学位的 F-1 学生。每升一个学位级别可再获 12 个月，硕士用过 OPT，博士还能再用一次。</dd>
+        <dt>工作</dt><dd>须与专业直接相关；可多份工作、自雇或每周 20 小时以上的无薪研究。</dd>
+        <dt>限制</dt><dd>累计失业不超过 90 天；拿到工作后 10 天内在 SEVP Portal 报告雇主。</dd>
+        <dt>递交</dt><dd>DSO 在 SEVIS 推荐后 30 天内递交，窗口为学业结束前 90 天到后 60 天。可选加急。</dd>
+        <dt>2026</dt><dd>学校付费提案（$70,000）未生效；若定稿，学校推荐可能收紧。</dd></dl></article>
+
+      <article class="vcard" data-tags="work acad"><header><h4>STEM OPT 延期<small>STEM OPT Extension · I-983</small></h4><span class="stamp live">+24 个月</span></header>
+        <dl><dt>资格</dt><dd>学位专业在 DHS 的 STEM 指定清单上（看 I-20 的 CIP code）；也可以用过去 10 年内的美国 STEM 学位。</dd>
+        <dt>雇主</dt><dd>必须参加 E-Verify，与你共同签 I-983 培训计划；须为 W-2 雇员、每周至少 20 小时，薪酬与同类美国员工相当。不能自雇。</dd>
+        <dt>限制</dt><dd>累计失业不超过 150 天（含 OPT 期间的 90 天）；每 6 个月向 SEVP 确认信息，第 12、24 个月提交自评。</dd>
+        <dt>递交</dt><dd>OPT 到期前 90 天内；按时递交可自动延长工作许可 180 天。</dd></dl></article>
+
+      <article class="vcard" data-tags="work"><header><h4>H-1B（需抽签）<small>Cap-subject · I-129</small></h4><span class="stamp live">3 + 3 年</span></header>
+        <dl><dt>要求</dt><dd>“专业职位”（specialty occupation），需对口的本科及以上学位；雇主提交 LCA 并支付不低于现行工资。</dd>
+        <dt>名额</dt><dd>每年 65,000 常规 + 20,000 美国硕士及以上。3 月注册，4/1–6/30 递交，10/1 生效。</dd>
+        <dt>延期</dt><dd>最长 6 年；I-140 已获批（或 PERM 已递交满 365 天）可延期超过 6 年（AC21）。</dd>
+        <dt>2026</dt><dd>加权抽签生效；10 万美元付款被法院阻止且不适用境内转身份；$103,265 申请费仍是提案。</dd></dl></article>
+
+      <article class="vcard" data-tags="work acad"><header><h4>H-1B 免抽签<small>Cap-exempt H-1B</small></h4><span class="stamp live">全年可申</span></header>
+        <dl><dt>雇主</dt><dd>高等院校、其附属非营利机构、非营利研究机构、政府研究机构。2025 年新规放宽了“研究机构”的认定（研究是其根本活动之一即可）。</dd>
+        <dt>好处</dt><dd>不受 3 月抽签限制，博后和研究岗最常用。</dd>
+        <dt>注意</dt><dd>之后跳到营利公司仍需抽签（除非之前已被计入过名额）。境外入境的新 H-1B 曾被要求付 10 万美元，目前被法院阻止。</dd></dl></article>
+
+      <article class="vcard" data-tags="work acad"><header><h4>O-1A<small>Extraordinary Ability · I-129</small></h4><span class="stamp live">无名额</span></header>
+        <dl><dt>标准</dt><dd>8 项标准满足至少 3 项（奖项、协会、媒体报道、审稿评审、原创贡献、学术文章、关键岗位、高薪），再做综合评估。</dd>
+        <dt>期限</dt><dd>最长 3 年，可按年续延；不抽签，全年可申。需美国雇主或代理人（agent）作为申请方。</dd>
+        <dt>适合</dt><dd>审稿多、引用高、有奖项的博士，作为抽签失败的后备。FY2026 批准率约 90%。</dd></dl></article>
+
+      <article class="vcard" data-tags="acad"><header><h4>J-1 研究学者<small>Research Scholar · DS-2019</small></h4><span class="stamp prop">留意 212(e)</span></header>
+        <dl><dt>要点</dt><dd>由大学签发 DS-2019，最长 5 年，常用于博后和访问学者。</dd>
+        <dt>风险</dt><dd>若受政府资助、或专业在 Exchange Visitor Skills List 上（中国覆盖面很广），可能受 212(e) 约束：回国服务满 2 年前不能转 H/L 或办绿卡，除非获得豁免。</dd>
+        <dt>其他</dt><dd>结束后有 12 个月 / 24 个月的再次申请限制。J-2 配偶可以申请工作许可，这一点比 F-2、H-4 宽松。</dd></dl></article>
+
+      <article class="vcard" data-tags="work"><header><h4>L-1 跨国调动<small>Intracompany Transferee</small></h4><span class="stamp live">先回国再外派</span></header>
+        <dl><dt>要求</dt><dd>过去 3 年中在美国公司的海外关联公司连续工作满 1 年，调往美国担任经理/高管（L-1A）或专门知识人员（L-1B）。</dd>
+        <dt>适合</dt><dd>回国加入有美国分支的企业，以后外派回美；L-1A 可以走 EB-1C 绿卡，无需 PERM。</dd></dl></article>
+
+      <article class="vcard" data-tags="family"><header><h4>配偶：F-2 / H-4 / J-2<small>Dependents</small></h4><span class="stamp prop">工作受限</span></header>
+        <dl><dt>F-2</dt><dd>不能工作，可以兼读非学位课程。</dd>
+        <dt>H-4</dt><dd>主申请人 I-140 获批（或已按 AC21 延期）后，可申请 H-4 EAD 工作。</dd>
+        <dt>J-2</dt><dd>可申请 EAD 工作许可。</dd>
+        <dt>规划</dt><dd>配偶需要工作的话，尽早推进 I-140 很关键；配偶自己读书或找工作拿独立身份也是常见方案。</dd></dl></article>
+
+      <article class="vcard" data-tags="family"><header><h4>父母探亲 B-2<small>Visitor · EVUS</small></h4><span class="stamp live">10 年多次</span></header>
+        <dl><dt>签证</dt><dd>中国公民 B1/B2 通常为 10 年多次；每次入境前需完成 EVUS 登记（每 2 年或换护照时更新）。</dd>
+        <dt>面签</dt><dd>2025-09 起面谈豁免大幅收窄，续签也可能需要面谈；面签需在国籍国或居住国。</dd>
+        <dt>提醒</dt><dd>每次停留通常不超过 6 个月；给父母买好旅行医疗保险。</dd></dl></article>
+
+      <article class="vcard na" data-tags="na"><header><h4>中国公民不适用<small>TN · E-3 · H-1B1 · E-1/E-2</small></h4><span class="stamp held">不适用</span></header>
+        <dl><dt>原因</dt><dd>TN 限加拿大/墨西哥，E-3 限澳大利亚，H-1B1 限智利/新加坡，E-1/E-2 需与美国有条约（中国没有）。网上的“免抽签替代方案”多数不适用于中国国籍。</dd>
+        <dt>例外</dt><dd>如果你或配偶持有第二国籍（中国不承认双重国籍，取得外籍即丧失中国国籍），适用情况会不同。</dd></dl></article>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-travel">
+    <h3 id="h-travel">面签与出行（中国公民）</h3>
+    <div class="grid2">
+      <div class="card"><h4>签证 ≠ 身份</h4><p>签证只用于入境，过期不影响在美的合法身份；身份看 I-94。转换身份（如 F-1 转 H-1B）在境内完成，第一次出境回来前才需要贴新签证。</p></div>
+      <div class="card"><h4>OPT 期间出境</h4><p>OPT 申请待审、或批了但还没工作时出境风险最高。已工作的话带齐 F-1 签证、EAD 卡、雇主信和 6 个月内签字的 I-20。</p></div>
+      <div class="card"><h4>H-1B 首次贴签</h4><p>须在国籍国或居住国面签，中国公民通常回国办理。STEM 背景可能被 221(g) 行政审查数周到数月，最好和雇主约定远程工作的预案。</p></div>
+      <div class="card"><h4>背景审查</h4><p>2020 年第 10043 号公告限制与“军民融合”有关机构的中国研究生和研究人员的 F/J 签证。本科或硕士来自相关院校的，出行前咨询移民律师。</p></div>
+      <div class="card"><h4>I-485 待审时出境</h4><p>需要先拿 Advance Parole（回美证），否则视为放弃申请。持有效 H-1B/L-1 身份者可凭 H/L 签证出入境，不受此限。</p></div>
+      <div class="card"><h4>移民倾向</h4><p>递交过绿卡申请（甚至只是 I-140）后，日后申请 F/J/B 等非移民签证可能更难。回国后还常去美国开会的人，递交 NIW 前要考虑这一点。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#green-card">下一章：绿卡 →</a></p>
+</section>
+
+<!-- ============================================================ GREEN CARD -->
+<section class="view" data-view="green-card" aria-labelledby="h-gc" hidden>
+  <div class="vh">
+    <span class="kicker">Green Card · 职业移民</span>
+    <h2 id="h-gc">绿卡：三种起点，一条队伍</h2>
+    <p>无论走雇主 PERM、EB-1B 还是自主申请的 EB-1A / NIW，最后都要按出生地排队。对中国大陆出生的人，I-140 获批后通常还要再等 3–5 年以上，所以“越早锁定优先日”是最实用的原则。</p>
+  </div>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 4 · 职业移民路径</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:04-green-card-pathways--></div>
+    <figcaption>三条路的差别在 I-140 之前：PERM 要先经过劳工部，EB-1B 需要雇主提供永久职位，EB-1A 和 NIW 可以自己递交。I-140 之后，大家一起看排期表。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-gctbl">
+    <h3 id="h-gctbl">四种类别对比</h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>EB-1A 杰出人才</th><th>EB-1B 杰出研究员</th><th>EB-2 NIW 国家利益豁免</th><th>EB-2/3 PERM</th></tr></thead>
+      <tbody>
+        <tr><th>需要雇主</th><td>否</td><td>是（永久职位）</td><td>否</td><td>是</td></tr>
+        <tr><th>需要 PERM</th><td>否</td><td>否</td><td>否</td><td>是</td></tr>
+        <tr><th>核心标准</th><td>10 项满足 3 项 + 综合评估</td><td>6 项满足 2 项 + 3 年科研/教学经验 + 国际认可</td><td>高学历（博士即满足）+ Dhanasar 三要素</td><td>劳工市场测试，找不到合格美国工人</td></tr>
+        <tr><th>I-140 加急</th><td class="num">15 个工作日</td><td class="num">15 个工作日</td><td class="num">45 个工作日</td><td class="num">15 个工作日</td></tr>
+        <tr><th>中国大陆排期<br><span class="sub">2026-11 FAD</span></th><td class="num">2023-08-01</td><td class="num">2023-08-01</td><td class="num">2021-10-01</td><td class="num">EB-2 2021-10-01<br>EB-3 2022-01-22</td></tr>
+        <tr><th>近期批准率</th><td>FY26 Q3 约 32%</td><td>未单独公布</td><td>FY26 Q3 约 55%</td><td>未单独公布</td></tr>
+        <tr><th>适合</th><td>有奖项、媒体报道、高引用、关键角色</td><td>拿到 tenure-track 或永久研究岗</td><td>有清晰研究议程和独立认可</td><td>雇主愿意出钱、出时间</td></tr>
+      </tbody></table></div>
+    <p class="sub">批准率来自律所对 USCIS 季度数据的整理，不按国家或学位细分。EB-1A 与 EB-1B 共用 EB-1 排期，NIW 与 PERM 的 EB-2 共用 EB-2 排期。</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-crit">
+    <h3 id="h-crit">评判标准原文要点</h3>
+    <details><summary>EB-1A：10 项满足至少 3 项（8 CFR 204.5(h)）</summary><ol>
+      <li>国家或国际认可的奖项</li><li>要求杰出成就才能加入的协会会员</li><li>专业或主流媒体关于你和你工作的报道</li>
+      <li>评审他人工作（期刊审稿、基金或比赛评审）</li><li>有重大意义的原创科研贡献</li><li>在专业期刊或主流媒体发表学术文章</li>
+      <li>作品在艺术展览中展示</li><li>在有声望的机构担任领导或关键角色</li><li>相对同行的高薪酬</li><li>表演艺术领域的商业成功</li></ol>
+      <p>满足 3 项只是门槛，第二步“综合评估”看你是否处于领域顶尖的一小部分人。另一条路是一次性的重大国际奖项（如诺贝尔奖）。</p></details>
+    <details><summary>EB-1B：6 项满足至少 2 项（8 CFR 204.5(i)）</summary><ol>
+      <li>杰出成就的重要奖项</li><li>要求杰出成就的协会会员</li><li>他人发表的关于你工作的材料</li>
+      <li>评审他人工作</li><li>原创科研贡献</li><li>撰写学术书籍或在国际期刊发表文章</li></ol>
+      <p>另需：至少 3 年教学或科研经验（读博期间的研究在一定条件下可计入）、国际认可，以及永久职位 offer（tenure / tenure-track 教职，或无固定期限的研究岗位）。</p></details>
+    <details><summary>EB-2 NIW：Dhanasar 三要素（2016 年判例）</summary><ol>
+      <li>你要做的事业有实质价值，且具有国家重要性</li><li>你有能力推进它：教育、经验、成果记录、具体计划、他人对你工作的兴趣</li>
+      <li>综合衡量，豁免工作 offer 和劳工证对美国有利</li></ol>
+      <p>前提是先满足 EB-2 资格（博士学位即满足）。2025-01 政策更新后，“国家重要性”需要具体说明，泛泛地说“研究很重要”不够。</p></details>
+    <details><summary>O-1A：8 项满足至少 3 项（8 CFR 214.2(o)）</summary><ol>
+      <li>国家或国际认可的奖项</li><li>要求杰出成就的协会会员</li><li>关于你的媒体报道</li><li>评审他人工作</li>
+      <li>重大原创贡献</li><li>学术文章</li><li>在有声望机构担任关键岗位</li><li>高薪酬</li></ol>
+      <p>O-1A 的证据和 EB-1A 高度重合，可以先拿 O-1A，再用同一套材料准备 EB-1A。</p></details>
+  </section>
+
+  <section class="blk" aria-labelledby="h-vb">
+    <h3 id="h-vb">2026 年 11 月排期表</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>类别</th><th>中国大陆出生 · 可获批（FAD）</th><th>中国大陆出生 · 可递交（DFF）</th><th>其他国家 · FAD</th><th>其他国家 · DFF</th></tr></thead>
+      <tbody>
+        <tr><th>EB-1</th><td class="num cn-col">2023-08-01</td><td class="num">2024-07-01</td><td class="num">Current</td><td class="num">Current</td></tr>
+        <tr><th>EB-2</th><td class="num cn-col">2021-10-01</td><td class="num">2023-01-01</td><td class="num">2025-04-01</td><td class="num">2026-03-15</td></tr>
+        <tr><th>EB-3</th><td class="num cn-col">2022-01-22</td><td class="num">2024-04-01</td><td class="num">2024-06-15</td><td class="num">2024-08-01</td></tr>
+      </tbody></table></div>
+    <figure class="fig">
+      <div class="fig-head"><span class="fig-no">图 5 · 排期距今多久</span><button class="btn" data-zoom>放大查看</button></div>
+      <div class="fig-scroll"><!--@fig:05-visa-bulletin-china-backlog--></div>
+      <figcaption>条形长度 = 2026 年 11 月的 Final Action Date 距今多少年；黑色竖线 = Dates for Filing。悬停可看具体日期。截止日每月只前进几周到几个月，<b>实际等待通常比条形显示的更长</b>。</figcaption>
+    </figure>
+  </section>
+
+  <section class="tool" aria-labelledby="h-pd">
+    <div class="tool-head"><h3 id="h-pd">我的优先日排到了吗？</h3><span class="tag-ex">示例日期 · 改成你的</span></div>
+    <div class="fields">
+      <label class="field" for="p-cat">类别<select id="p-cat"><option value="eb1">EB-1（EB-1A / EB-1B）</option><option value="eb2" selected>EB-2（NIW / PERM）</option><option value="eb3">EB-3</option></select></label>
+      <label class="field" for="p-born">出生地<select id="p-born"><option value="china" selected>中国大陆</option><option value="row">其他国家或地区（含港澳台）</option></select></label>
+      <label class="field" for="p-date">优先日（Priority Date）<input type="date" id="p-date" value="2023-03-15"></label>
+    </div>
+    <div id="p-out" aria-live="polite"></div>
+    <p class="sub">优先日 = PERM 递交日；不需要 PERM 的类别（EB-1、NIW）为 I-140 递交日。数据为 2026 年 11 月排期，下个月请对照最新 Visa Bulletin 和 USCIS 公布的当月可用表格。</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-gcnotes">
+    <h3 id="h-gcnotes">拿绿卡前要知道的</h3>
+    <div class="grid2">
+      <div class="card"><h4>优先日可以保留</h4><p>I-140 获批后，即使换雇主，优先日也保留；以后用新的 EB-2/EB-1 申请可以沿用旧优先日。EB-3 排期更早时，也可以“降级”另递 EB-3。</p></div>
+      <div class="card"><h4>AC21 换工作</h4><p>I-485 待审满 180 天且 I-140 已获批，可以换到相同或类似的工作而不必重新开始。</p></div>
+      <div class="card"><h4>自主和雇主可以并行</h4><p>NIW / EB-1A 是你自己的申请，与雇主的 PERM 互不冲突。常见做法是两条一起走，哪个先到用哪个。</p></div>
+      <div class="card"><h4>绿卡与中国户口</h4><p>取得外国永久居留属于“定居国外”，部分地区会要求注销户口，影响国内的社保、房产手续。护照仍是中国护照，具体以当地公安机关为准。</p></div>
+      <div class="card"><h4>孩子的国籍</h4><p>按《国籍法》第 5 条：父母一方是中国公民并<b>已定居外国</b>（如持绿卡），孩子在美出生即不具有中国国籍，回国需办签证；父母都没有定居外国，孩子通常可办中国旅行证回国。</p></div>
+      <div class="card"><h4>入籍等于放弃中国国籍</h4><p>绿卡满 5 年（与美国公民结婚满 3 年）可申请入籍。中国不承认双重国籍，入籍即自动丧失中国国籍，回国要用签证。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#china">下一章：回国发展 →</a></p>
+</section>
+
+<!-- ============================================================ CHINA -->
+<section class="view" data-view="china" aria-labelledby="h-cn" hidden>
+  <div class="vh">
+    <span class="kicker">Return to China · 回国发展</span>
+    <h2 id="h-cn">回国：从认证到落户</h2>
+    <p>回国的链条更短，但每一环都有截止日期：秋招在毕业前一年、国考在 10 月、海外优青看海外工作年限、应届身份有两年择业期。高校岗位的谈判空间很大，关键是把承诺写进合同。</p>
+  </div>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 6 · 回国五步</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:06-return-to-china-flow--></div>
+    <figcaption>每一步下方的色块是常见的时间点。学历学位认证是后面所有环节（考公、落户、职称）的前提，拿到学位就办。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-sector">
+    <h3 id="h-sector">四类去向</h3>
+    <div class="grid2">
+      <div class="card"><h4>高校教职<span class="en">University Faculty</span></h4>
+        <ul><li><b>岗位</b>：预聘-长聘制（预聘期常见 3+3 或 6 年，考核不过即“非升即走”）、传统事业编制、师资博士后、专职科研岗。</li>
+        <li><b>门槛</b>：双一流高校多希望有 1–2 段博后或海外工作经历、有一作或通讯代表作；不少学校看“第一学历”。</li>
+        <li><b>节奏</b>：全年滚动招聘；海外青年学者论坛多在秋冬；人才项目按年度申报。</li>
+        <li><b>注意</b>：也有学校明确不实行“非升即走”，谈判时可以作为比较条件。</li></ul></div>
+      <div class="card"><h4>科研院所 / 国家实验室<span class="en">Research Institutes</span></h4>
+        <ul><li><b>类型</b>：中科院等研究所、国家实验室与省实验室、新型研发机构。</li>
+        <li><b>特点</b>：后两类多为合同制，薪酬相对高，考核偏重任务和工程交付；研究所有特别研究助理、助理研究员到研究员的序列。</li>
+        <li><b>注意</b>：问清是否有编制、能否独立招生、能否申请国家自然科学基金。</li></ul></div>
+      <div class="card"><h4>企业研发<span class="en">Industry R&amp;D</span></h4>
+        <ul><li><b>方向</b>：互联网与 AI、新能源、半导体、生物医药、化工新材料等研发岗；部分大企业设有博士专项计划。</li>
+        <li><b>节奏</b>：秋招 8–11 月（提前批 7–8 月），春招 3–5 月，社招全年。</li>
+        <li><b>身份</b>：国家规定两年择业期，期间未就业可按应届毕业生报考；留学人员通常以学历认证时间等作为判断依据，以招聘公告为准。</li></ul></div>
+      <div class="card"><h4>国企 · 央企 · 公务员<span class="en">Public Sector</span></h4>
+        <ul><li><b>国考 2027 年度</b>：年龄 18–38 周岁，应届硕博 43 周岁以下；10 月报名，11 月底至 12 月初笔试。</li>
+        <li><b>条件</b>：需完成学历认证；中央机关多数岗位要求 2 年以上基层经历，市级以下多招应届生；部分岗位要求中共党员。</li>
+        <li><b>选调生</b>：部分省份面向世界名校留学生开放，以当年公告为准。</li></ul></div>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-talent">
+    <h3 id="h-talent">人才项目与基金</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>项目</th><th>对象与核心条件</th><th>时间</th><th>提醒</th></tr></thead>
+      <tbody>
+        <tr><th>海外优青<br><span class="sub">优秀青年科学基金项目（海外）</span></th><td>年龄约 40 周岁以下（2026 年为 1986-01-01 后出生）；博士学位后在海外高校、科研机构或企业研发机构有连续 36 个月以上全职科研或教学经历；尚未全职回国或在规定日期后回国</td><td>每年春季申报（2026 年海外工作经历计算截至 4/15）</td><td>读博时间不计入 36 个月；入选后须全职回国工作不少于 3 年；同层次国家人才计划只能承担一项</td></tr>
+        <tr><th>国家自然科学基金<br><span class="sub">青年科学基金项目 A/B/C 类</span></th><td>回国入职后申请。C 类（原青年基金）男 35 岁以下、女 40 岁以下；B 类（原优青）男 38、女 40 以下；A 类（原杰青）一般 45 岁以下</td><td>每年 3 月集中申报</td><td>年龄与限项以当年《项目指南》为准</td></tr>
+        <tr><th>省市青年人才计划</th><td>各地名称不同，常与高校或企业的引进待遇配套</td><td>各地不同</td><td>问清配套资金由谁出、未入选时待遇如何调整</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 7 · 学术职业阶梯对照</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:07-academic-ladders-us-vs-cn--></div>
+    <figcaption>中美职称只能<b>大致</b>对应。拿国内 offer 时，同样叫“助理教授”，可能是预聘制下的中级职称，也可能直接给副高；看合同里的职称和考核条款，不要只看头衔。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-city">
+    <h3 id="h-city">博士落户：几个城市的概况</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>城市</th><th>博士 / 留学人员落户</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><th>上海</th><td>留学回国人员：世界排名前 50 院校毕业，全职来沪工作即可申办；51–100 名社保满 6 个月；其他院校需满足社保年限和缴费基数</td><td>排名参照 QS、THE、U.S. News、软科；现行细则为沪人才规〔2025〕3 号，2026-08-01 起调整了配偶子女随迁条件</td></tr>
+        <tr><th>北京</th><td>一般需用人单位申报引进人才或留学人员落户，名额和条件较严</td><td>未落户可先办《北京市工作居住证》，享受部分子女入学、购房等待遇</td></tr>
+        <tr><th>深圳</th><td>45 周岁以下博士可直接落户，不要求社保</td><td>另有留学人员创业资助</td></tr>
+        <tr><th>杭州</th><td>博士可“先落户、后就业”</td><td>人才补贴按学历分档</td></tr>
+        <tr><th>天津</th><td>50 周岁以下博士可直接落户</td><td>无社保要求</td></tr>
+        <tr><th>其他新一线</th><td>南京、苏州、成都、武汉、西安等对博士普遍放开</td><td>多有安家补贴和购房支持，细则每年调整</td></tr>
+      </tbody></table></div>
+    <p class="sub">落户政策来自各地文件和媒体汇总，年度调整频繁。办理前以当地人社局或人才服务中心的现行文件为准。</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-ask">
+    <h3 id="h-ask">签约前要问清的 10 件事</h3>
+    <div class="grid2">
+      <div class="card"><ul>
+        <li><b>岗位性质</b>：事业编制、预聘制，还是合同制 / 人事代理？</li>
+        <li><b>考核标准</b>：论文、项目、经费、教学的具体数字写进合同了吗？</li>
+        <li><b>考核不过</b>：转岗、续聘还是解聘？</li>
+        <li><b>职称</b>：入职给什么职称，多久可以申请晋升？</li>
+        <li><b>薪酬结构</b>：基本工资、绩效、人才津贴各多少？税前还是税后？</li></ul></div>
+      <div class="card"><ul>
+        <li><b>安家费</b>：一次性还是分期？服务期多长？提前离职怎么退？</li>
+        <li><b>启动经费</b>：金额、到账节奏，能否用来招博后、买设备？</li>
+        <li><b>资源</b>：实验空间、研究生名额、博导资格何时给？</li>
+        <li><b>家庭</b>：周转房、配偶工作、子女入学有没有书面承诺？</li>
+        <li><b>人才项目</b>：没入选时，待遇是否打折？</li></ul></div>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-money">
+    <h3 id="h-money">离开美国前：钱、税和家人</h3>
+    <div class="grid3">
+      <div class="card"><h4>美国税务</h4><p>F-1 学生前 5 个日历年通常是非居民；读博超过 5 年后多数人已成为税务居民，OPT 期间也要交 FICA。离境当年常是 dual-status 报税，州税另算。中美税收协定对学生和研究人员有专门条款，找税务专业人士确认。</p></div>
+      <div class="card"><h4>401(k) 与社保</h4><p>401(k) 可以留在账户或转 IRA；59½ 岁前取出通常要交所得税和 10% 罚金。美国社保退休金需要约 40 个 credits；中美协定不合并缴费年限。</p></div>
+      <div class="card"><h4>中国个税</h4><p>一年内在中国住满 183 天的中国税务居民，按全球所得纳税，包括境外账户的利息、股息和出售收益。</p></div>
+      <div class="card"><h4>子女</h4><p>先确认国籍（见绿卡章节）。中国籍子女入学按户籍或居住证划片；外籍子女不能参加普通高考，通常读国际学校或走外籍学生通道。</p></div>
+      <div class="card"><h4>配偶</h4><p>配偶落户随迁在多数城市可办。配偶若是外籍，可用 Q1 团聚签证；符合条件的外籍青年 STEM 人才还可以申请 K 字签证。</p></div>
+      <div class="card"><h4>保留的美国资源</h4><p>保留一张美国信用卡和银行账户，方便以后开会、合作和管理 401(k)；把美国手机号转成低价套餐用于接收验证码。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#edu-cn">下一章：中国教育体系 →</a></p>
+</section>
+
+<!-- ============================================================ EDU CN -->
+<section class="view" data-view="edu-cn" aria-labelledby="h-ecn" hidden>
+  <div class="vh">
+    <span class="kicker">China's Education System · 中国教育体系</span>
+    <h2 id="h-ecn">中国教育体系</h2>
+    <p>两次统一考试（中考、高考）把路径分成普通教育和职业教育两条线。回国求职时，用人单位还会顺着这张图往回看：你的本科（“第一学历”）在哪里、学校有什么标签。</p>
+  </div>
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 8 · 中国教育体系（按年龄）</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:08-china-education-system--></div>
+    <figcaption>红色 = 九年义务教育；菱形 = 升学考试。<b>点击任意阶段</b>，下方会显示该阶段的说明。</figcaption>
+  </figure>
+  <div class="stage-panel" id="panel-cn" aria-live="polite"></div>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 9 · 高校标签</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:09-china-university-tiers--></div>
+    <figcaption>985、211 已并入“双一流”建设，但仍是招聘和人才政策中的常用筛选词。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-ecn-facts">
+    <h3 id="h-ecn-facts">近两年的变化</h3>
+    <div class="grid2">
+      <div class="card"><h4>《学位法》2025-01-01 施行</h4><p>学位分为学术学位和专业学位；博士也有专业学位（如工程博士）。学位授予、撤销的程序写进了法律。</p></div>
+      <div class="card"><h4>学前一年免费</h4><p>2025 年秋季学期起，公办幼儿园学前一年（大班）免保育教育费，民办园参照减免；伙食费等仍需自付。</p></div>
+      <div class="card"><h4>育儿补贴</h4><p>2025-01-01 起，3 周岁以下婴幼儿每孩每年 3,600 元，免个税，可线上申领。</p></div>
+      <div class="card"><h4>新高考</h4><p>多数省份实行“3+1+2”：语数外 + 物理或历史二选一 + 再选两科。高考按省录取，户籍和学籍决定在哪个省考。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#edu-us">下一章：美国教育体系 →</a></p>
+</section>
+
+<!-- ============================================================ EDU US -->
+<section class="view" data-view="edu-us" aria-labelledby="h-eus" hidden>
+  <div class="vh">
+    <span class="kicker">U.S. Education System · 美国教育体系</span>
+    <h2 id="h-eus">美国教育体系</h2>
+    <p>美国没有全国统一的升学考试，K–12 由各州和学区管理，大学录取看综合材料。对留美的博士家庭来说，最直接的影响是两件事：住在哪个学区，以及孩子将来能不能交州内学费。</p>
+  </div>
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 10 · 美国教育体系（按年龄）</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:10-us-education-system--></div>
+    <figcaption>与图 8 使用同一年龄刻度，可以直接对比。<b>点击任意阶段</b>查看说明。</figcaption>
+  </figure>
+  <div class="stage-panel" id="panel-us" aria-live="polite"></div>
+
+  <section class="blk" aria-labelledby="h-cmp">
+    <h3 id="h-cmp">中美对照</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>维度</th><th class="cn-col">中国</th><th class="us-col">美国</th></tr></thead>
+      <tbody>
+        <tr><th>义务教育</th><td>9 年（约 6–15 岁），全国统一</td><td>各州规定，约 6–16/18 岁；K–12 公立免费</td></tr>
+        <tr><th>入学依据</th><td>户籍 / 房产 / 居住证划片</td><td>住址决定学区</td></tr>
+        <tr><th>升学选拔</th><td>中考、高考，统一考试为主</td><td>申请制综合评估，SAT/ACT 多为可选</td></tr>
+        <tr><th>本科</th><td>4 年，入学即定专业</td><td>4 年，通常第 2 年末确定 major</td></tr>
+        <tr><th>硕士</th><td>2–3 年；学硕 / 专硕；考研或推免</td><td>1–2 年，多为自费的职业型学位</td></tr>
+        <tr><th>博士入学</th><td>申请-考核、硕博连读、直博</td><td>本科直博常见，多数全额资助</td></tr>
+        <tr><th>博士年限</th><td>3–4 年，延期常见</td><td>STEM 中位约 5–6 年</td></tr>
+        <tr><th>学位授予</th><td>依《学位法》，学术 / 专业学位</td><td>大学自主授予，靠认证机构（accreditation）背书</td></tr>
+        <tr><th>教职</th><td>讲师 → 副教授 → 教授；预聘-长聘与编制并存</td><td>Assistant → Associate → Full；tenure</td></tr>
+        <tr><th>学校标签</th><td>985 / 211 / 双一流，“第一学历”</td><td>排名，以及 Carnegie R1/R2 研究型分类</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-kids">
+    <h3 id="h-kids">如果孩子在美国上学</h3>
+    <div class="grid3">
+      <div class="card"><h4>K–12 免费</h4><p>任何孩子都能上公立学校，不论父母签证身份。学区好坏直接反映在房价和房租上。</p></div>
+      <div class="card"><h4>州内学费</h4><p>公立大学州内学费远低于州外。资格看在该州居住的时间和移民身份，H-1B、绿卡家庭是否符合由各州决定。</p></div>
+      <div class="card"><h4>529 教育储蓄</h4><p>投资收益用于教育时免税，多数州还有州税抵扣。离开美国前要想好账户怎么处理。</p></div>
+    </div>
+  </section>
+  <p class="next"><a href="#plan">下一章：时间规划 →</a></p>
+</section>
+
+<!-- ============================================================ PLAN -->
+<section class="view" data-view="plan" aria-labelledby="h-plan" hidden>
+  <div class="vh">
+    <span class="kicker">Planning · 时间规划</span>
+    <h2 id="h-plan">时间规划</h2>
+    <p>两国的关键窗口一年只开一次：H-1B 在 3 月注册，秋招在 8–11 月，国考在 10 月报名。把它们放进同一张年历，就能看出哪些事必须提前一年开始。</p>
+  </div>
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 11 · 一年中的关键窗口</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:11-year-wheel--></div>
+    <figcaption>外两圈是美国，内两圈是中国。黑色指针指向今天。</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 12 · 四条路线的甘特图</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:12-plan-gantt--></div>
+    <figcaption>横轴以毕业月为 0。两条美国路线和两条中国路线在毕业前后 1 年最拥挤，也最需要并行。</figcaption>
+  </figure>
+
+  <section class="tool" aria-labelledby="h-todo">
+    <div class="tool-head"><h3 id="h-todo">行动清单</h3>
+      <div class="chips" role="group" aria-label="筛选清单">
+        <button class="chip" data-tf="all" aria-pressed="true">全部</button>
+        <button class="chip" data-tf="u" aria-pressed="false">美国</button>
+        <button class="chip" data-tf="c" aria-pressed="false">中国</button>
+      </div></div>
+    <div class="progress"><span id="todo-count">0 / 0</span><span class="bar"><i id="todo-bar"></i></span><span>勾选会保存在这台设备的浏览器里</span></div>
+    <div id="todo" class="blk"></div>
+  </section>
+  <p class="next"><a href="#glossary">下一章：术语与来源 →</a></p>
+</section>
+
+<!-- ============================================================ GLOSSARY -->
+<section class="view" data-view="glossary" aria-labelledby="h-gl" hidden>
+  <div class="vh">
+    <span class="kicker">Glossary &amp; Sources · 术语与来源</span>
+    <h2 id="h-gl">术语与来源</h2>
+    <p>表格编号和缩写是这个领域的“方言”。搜索中文或英文都可以。</p>
+  </div>
+  <label class="field" for="g-q">搜索术语<input type="search" id="g-q" placeholder="例如 OPT、优先日、编制"></label>
+  <dl class="gloss" id="gloss"></dl>
+  <p class="sub" id="g-none" hidden>没有匹配的术语。</p>
+
+  <section class="blk" aria-labelledby="h-src">
+    <h3 id="h-src">主要来源（2026-11-12 检索）</h3>
+    <ol class="src">
+      <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students" target="_blank" rel="noopener">OPT for F-1 Students</a> · <a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-extension-for-stem-students-stem-opt" target="_blank" rel="noopener">STEM OPT Extension</a> · <a href="https://studyinthestates.dhs.gov/stem-opt-hub" target="_blank" rel="noopener">Study in the States STEM OPT Hub</a></li>
+      <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-first-preference-eb-1" target="_blank" rel="noopener">EB-1</a> · <a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-second-preference-eb-2" target="_blank" rel="noopener">EB-2 / NIW</a> · <a href="https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement" target="_blank" rel="noopener">O-1</a> · <a href="https://www.uscis.gov/policy-manual" target="_blank" rel="noopener">Policy Manual</a></li>
+      <li>美国国务院：<a href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" target="_blank" rel="noopener">Visa Bulletin</a>；2026 年 11 月数值核对自 <a href="https://ogletree.com/insights-resources/blog-posts/november-2026-visa-bulletin-final-action-dates-advance-filing-dates-hold/" target="_blank" rel="noopener">Ogletree 汇总</a></li>
+      <li>H-1B 加权抽签最终规则：<a href="https://www.jdsupra.com/legalnews/dhs-finalizes-new-weighted-selection-9018390/" target="_blank" rel="noopener">JD Supra</a> · <a href="https://www.gtlaw.com/ja/insights/2026/2/uscis-finalizes-wage-weighted-h-1b-cap-selection-rule-effective-feb-27-2026" target="_blank" rel="noopener">Greenberg Traurig</a></li>
+      <li>10 万美元付款诉讼：<a href="https://www.forbes.com/sites/stuartanderson/2026/10/01/judge-strikes-down-latest-version-of-100000-h-1b-immigration-fee/" target="_blank" rel="noopener">Forbes（2026-10-01）</a> · <a href="https://www.samperlaw.com/insights/immigration-updates/h1b-100000-fee-second-court-blocks-extension" target="_blank" rel="noopener">Samper Law 追踪</a></li>
+      <li>Federal Register：<a href="https://www.federalregister.gov/documents/2026/08/25/2026-17324/fee-for-certain-h-1b-petitions" target="_blank" rel="noopener">Fee for Certain H-1B Petitions</a> · <a href="https://www.federalregister.gov/documents/2026/10/08/2026-20660/optional-practical-training-fees" target="_blank" rel="noopener">Optional Practical Training Fees</a> · <a href="https://www.federalregister.gov/documents/2026/07/17/2026-14439/establishing-a-fixed-time-period-of-admission-and-an-extension-of-stay-procedure-for-nonimmigrant" target="_blank" rel="noopener">Fixed Time Period of Admission</a></li>
+      <li>固定入境期限禁令与 CPT：<a href="https://www.globalimmigrationblog.com/2026/09/federal-court-blocks-dhs-f-1-j-1-fixed-period-admission-rule-curricular-practical-training-restrictions-remain/" target="_blank" rel="noopener">Global Immigration Blog（2026-09）</a></li>
+      <li>PA-2026-05 与批准率：<a href="https://www.f1jobs.io/resources/blog/uscis-policy-alert-pa-2026-05-eb1a-niw-denials-without-rfe" target="_blank" rel="noopener">F1Jobs 解读</a> · <a href="https://manifestlaw.com/news/uscis-q3-fy2026-approval-data-09-09-2026" target="_blank" rel="noopener">Manifest Law Q3 FY2026</a></li>
+      <li>DOL 现行工资提案：<a href="https://www.dol.gov/newsroom/releases/eta/eta20260326-0" target="_blank" rel="noopener">DOL 新闻稿（2026-03-26）</a></li>
+      <li>国考 2027 年度公告：<a href="https://www.news.cn/edu/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html" target="_blank" rel="noopener">新华网</a>；K 字签证：<a href="https://www.chinanews.com.cn/gn/2025/08-14/10464960.shtml" target="_blank" rel="noopener">中新网四部门解读</a></li>
+      <li>学历学位认证：<a href="https://www.cscse.edu.cn/" target="_blank" rel="noopener">中国留学服务中心</a>；海外优青与青年科学基金：<a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委员会</a></li>
+      <li>学前一年免费与育儿补贴：<a href="https://www.news.cn/20250929/f2215fdf3dd4419b95a3dccaa54d2e00/c.html" target="_blank" rel="noopener">新华网</a>；上海留学人员落户：<a href="https://m.thepaper.cn/newsDetail_forward_33705260" target="_blank" rel="noopener">澎湃新闻</a></li>
+    </ol>
+  </section>
+</section>
+</main>
+
+<footer class="disc">
+  <p><b>说明</b>：本页用于学习和规划，不构成法律、税务或移民意见。2025–2026 年美国移民政策变化非常快，多项规则处于诉讼或提案阶段；中国各地人才与落户政策每年调整。每一步行动前，请核对 USCIS、美国国务院、学校国际学生办公室（DSO）、中国留学服务中心和当地人社部门的最新文件，必要时咨询移民律师。</p>
+  <p>部分数字（批准率、落户条件）来自律所和媒体对官方数据的整理，已在正文中注明。</p>
+</footer>
+</div>
+
+<div class="lightbox" id="lb" hidden role="dialog" aria-modal="true" aria-label="放大查看图表">
+  <div class="lb-bar"><span class="t" id="lb-title"></span><span class="ctl">
+    <button class="btn" id="lb-out" aria-label="缩小">－</button><button class="btn" id="lb-in" aria-label="放大">＋</button><button class="btn" id="lb-close">关闭</button></span></div>
+  <div class="lb-body" id="lb-body"></div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------------- router */
+const views = $$(".view");
+const names = views.map(v => v.dataset.view);
+function show(name, scroll) {
+  if (!names.includes(name)) name = "overview";
+  views.forEach(v => { v.hidden = v.dataset.view !== name; });
+  $$("nav.chapters a").forEach(a => { if (a.dataset.nav === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  const cur = $(`nav.chapters a[data-nav="${name}"]`);
+  if (cur && cur.scrollIntoView && window.matchMedia("(max-width:1000px)").matches) cur.scrollIntoView({block: "nearest", inline: "center"});
+  if (scroll) window.scrollTo({top: 0});
+}
+window.addEventListener("hashchange", () => show(location.hash.slice(1), true));
+show(location.hash.slice(1), false);
+
+/* ---------------- dates */
+const D = s => { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); };
+const fmt = d => d.toISOString().slice(0, 10);
+const addDays = (d, n) => new Date(d.getTime() + n * 864e5);
+const addMonths = (d, n) => {
+  const y = d.getUTCFullYear(), m = d.getUTCMonth() + n, day = d.getUTCDate();
+  const last = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+  return new Date(Date.UTC(y, m, Math.min(day, last)));
+};
+const today = (() => { const n = new Date(); return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())); })();
+
+/* ---------------- route finder */
+const finder = $("#finder");
+function route() {
+  const v = Object.fromEntries(new FormData(finder));
+  const P = +v.power, stem = v.stem === "yes";
+  const steps = [], hedge = [], risk = [];
+  const B = s => `<span class="badge ${s}">${s === "u" ? "美" : s === "c" ? "中" : "两边"}</span>`;
+  const wantUS = v.where !== "cn", wantCN = v.where !== "us";
+  const acad = v.track !== "ind", ind = v.track !== "acad";
+  let title = "";
+  if (v.where === "us") title = acad && !ind ? "留美 · 学术路线" : ind && !acad ? "留美 · 工业界路线" : "留美 · 学术与工业界都投";
+  else if (v.where === "cn") title = acad && !ind ? "回国 · 高校 / 院所路线" : ind && !acad ? "回国 · 企业路线" : "回国 · 高校与企业都投";
+  else title = "两边都保留，先用 OPT 争取时间";
+
+  if (wantUS) steps.push(`${B("u")}毕业前 90 天内请 DSO 推荐并递交 OPT（I-765）。OPT 在开始前可以放弃，先申请不吃亏。`);
+  if (wantUS) {
+    if (stem) steps.push(`${B("u")}OPT 到期前 90 天内申请 STEM OPT（雇主需 E-Verify + I-983），授权期合计 36 个月，可参加 3–4 次 H-1B 抽签。`);
+    else steps.push(`${B("u")}非 STEM 学位只有 12 个月 OPT，通常只有 1 次抽签机会：入职前就请雇主参加当年 3 月注册，或直接选 cap-exempt 雇主。`);
+    if (acad) steps.push(`${B("u")}博后 / 研究岗优先找大学或非营利研究机构，用 cap-exempt H-1B 免抽签；接 J-1 前确认是否受 212(e) 两年回国限制。`);
+    if (ind) steps.push(`${B("u")}工业界 offer 问清三件事：H-1B 定在哪个工资级别（决定抽签权重）、是否支持 STEM OPT、多久启动绿卡。`);
+    if (P >= 3) steps.push(`${B("u")}成果很突出：O-1A 免抽签；同一套证据准备 EB-1A，${acad ? "拿到教职后再加 EB-1B" : "雇主也可以同时走 EB-1B 或 PERM"}。`);
+    else if (P === 2) steps.push(`${B("u")}尽早递交 NIW（自主申请，锁定优先日），同时让雇主走 PERM 或 EB-1B，两条并行。`);
+    else steps.push(`${B("u")}以雇主 PERM（EB-2）为主；同时积累审稿、引用和独立推荐人，两三年后再评估 NIW。`);
+  }
+  if (wantCN) {
+    if (acad) {
+      steps.push(`${B("c")}毕业前 12 个月起关注目标高校招聘和海外青年学者论坛；拿到学位就办学历学位认证。`);
+      if (P >= 2) steps.push(`${B("c")}若想冲海外优青：在海外做满 36 个月全职博后（读博不算），40 岁左右以下，春季申报。也可以直接谈预聘制岗位。`);
+      else steps.push(`${B("c")}先做一段博后（海外或国内师资博后）攒代表作，再谈预聘制岗位，起点会更高。`);
+      steps.push(`${B("c")}签约前把预聘期限、考核指标、启动经费、住房和子女入学写进合同。`);
+    }
+    if (ind) {
+      steps.push(`${B("c")}企业研发：秋招在毕业前一年 8–11 月（提前批 7 月起），错过可走春招 3–5 月或社招；两年择业期内可按应届生。`);
+      steps.push(`${B("c")}想进体制内：国考 10 月报名，年龄 38 岁以下（应届硕博 43 岁以下），需先完成学历认证。`);
+    }
+  }
+  if (v.where === "open") {
+    hedge.push("两边同时投：美国职位和国内秋招 / 高校岗位的时间线有重叠，拿到 offer 再比较。");
+    hedge.push("海外博后 2–3 年对两边都加分：美国这边积累 NIW / EB-1 证据，中国这边满足海外优青的海外年限。");
+  }
+  if (v.where === "us") {
+    hedge.push("后备一：cap-exempt 雇主（大学、附属医院、非营利研究机构）免抽签。");
+    if (P >= 2) hedge.push("后备二：O-1A 不抽签、无名额，证据和 EB-1A 共用。");
+    hedge.push("后备三：先回国加入有美国分支的企业，满 1 年后以 L-1 外派。");
+  }
+  if (v.where === "cn") {
+    hedge.push("回国前在美国用 OPT 工作 1–3 年，社招时经验更值钱，薪资谈判空间更大。");
+    hedge.push("多城市比较落户与人才补贴：深圳、杭州、天津等对博士门槛很低；上海看毕业院校的世界排名。");
+  }
+  if (wantUS) risk.push("2026 年未定的三件事：$103,265 H-1B 申请费提案、OPT 推荐费提案、10 万美元付款的上诉结果。");
+  if (wantUS && P >= 2) risk.push("PA-2026-05 后 EB-1A / NIW 可直接拒，第一次递交就把证据做完整。");
+  if (wantCN && v.where !== "us") risk.push("递交过绿卡申请，日后申请美国 B 签证去开会可能更难（移民倾向）。");
+  if (wantCN) risk.push("学历学位认证、档案存放、应届身份的时间点都会影响考公和落户，回国前就规划好。");
+  if (v.family === "partner") {
+    if (wantUS) risk.push("配偶：F-2 不能工作；H-4 要等你的 I-140 获批才能申请 EAD；J-2 可以申请工作许可。");
+    if (wantCN) risk.push("配偶：多数城市可随迁落户；外籍配偶可用 Q1 签证，符合条件的外籍青年 STEM 人才可申请 K 字签证。");
+  }
+  if (v.family === "kids") {
+    risk.push("孩子在美出生：你们都没有绿卡时，孩子通常可办中国旅行证；一方已有绿卡，孩子不具有中国国籍，回国需签证。");
+    if (wantCN) risk.push("回国后外籍子女不能参加普通高考；中国籍子女入学看户籍或居住证，先选城市再选学校。");
+    if (wantUS) risk.push("留美：公立 K–12 免费，学区决定学校；公立大学州内学费资格各州规定不同。");
+  }
+  $("#route").innerHTML = `
+    <div><h4>${esc(title)}</h4><ol>${steps.map(s => `<li>${s}</li>`).join("")}</ol></div>
+    <div class="side">
+      ${hedge.length ? `<div><h4>后备方案</h4><ul>${hedge.map(s => `<li>${s}</li>`).join("")}</ul></div>` : ""}
+      <div><h4>提前避开</h4><ul>${risk.map(s => `<li>${s}</li>`).join("")}</ul></div>
+    </div>`;
+}
+finder.addEventListener("change", route);
+route();
+
+/* ---------------- OPT / H-1B calculator */
+const cEnd = $("#c-end"), cStart = $("#c-start"), cStem = $("#c-stem"), cEx = $("#c-exempt");
+function calc() {
+  const end = D(cEnd.value), start = D(cStart.value);
+  const warn = $("#c-warn"), out = $("#c-out"), svg = $("#c-svg");
+  if (!end || !start) { warn.hidden = false; warn.textContent = "请填写两个日期。"; return; }
+  const msgs = [];
+  const latest = addDays(end, 60);
+  if (start <= end) msgs.push("OPT 开始日须在学业结束日之后。");
+  if (start > latest) msgs.push(`OPT 开始日须在学业结束后 60 天内（最晚 ${fmt(latest)}）。`);
+  warn.hidden = !msgs.length; warn.textContent = msgs.join(" ");
+  const optEnd = addDays(addMonths(start, 12), -1);
+  const stem = cStem.checked;
+  const stemEnd = addDays(addMonths(addDays(optEnd, 1), 24), -1);
+  const authEnd = stem ? stemEnd : optEnd;
+  // lotteries
+  const lots = [];
+  if (!cEx.checked) {
+    const y0 = end.getUTCFullYear(), y1 = authEnd.getUTCFullYear();
+    for (let y = y0; y <= y1; y++) {
+      const reg = new Date(Date.UTC(y, 2, 10)), fileBy = new Date(Date.UTC(y, 3, 1)), go = new Date(Date.UTC(y, 9, 1));
+      if (y === y0 && end > new Date(Date.UTC(y, 5, 30))) continue;   // degree not finished before the filing window closes
+      if (y > y0 && authEnd < fileBy) break;                          // no valid status left to file the petition
+      lots.push({y, reg, go, fy: y + 1, gap: authEnd < go, pre: end >= reg});
+    }
+  }
+  const rows = [
+    ["OPT 递交窗口", `${fmt(addDays(end, -90))} → ${fmt(addDays(end, 60))}`, "DSO 推荐后 30 天内递交"],
+    ["不申请 OPT 时的离境截止", fmt(addDays(end, 60)), "60 天宽限期，期间不能工作"],
+    ["OPT 有效期", `${fmt(start)} → ${fmt(optEnd)}`, "累计失业不超过 90 天"],
+  ];
+  if (stem) {
+    rows.push(["STEM OPT 递交窗口", `${fmt(addDays(optEnd, -90))} → ${fmt(optEnd)}`, "按时递交可自动延长 180 天"]);
+    rows.push(["STEM OPT 有效期", `${fmt(addDays(optEnd, 1))} → ${fmt(stemEnd)}`, "累计失业不超过 150 天"]);
+  }
+  rows.push(["授权结束后的宽限期", `至 ${fmt(addDays(authEnd, 60))}`, "离境、转身份或转学"]);
+  if (cEx.checked) rows.push(["H-1B", "免抽签", "cap-exempt 雇主全年可递交，在授权期内转 H-1B 即可"]);
+  else rows.push(["H-1B 抽签机会", `${lots.length} 次`, lots.map(l => `${l.y}-03（FY${l.fy}）${l.pre ? "·毕业前注册" : ""}${l.gap ? "·靠 cap-gap 衔接" : ""}`).join("；") || "授权期内没有完整的抽签季"]);
+  out.innerHTML = rows.map(([a, b, c]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}<small>${esc(c)}</small></dd></div>`).join("");
+
+  // svg timeline
+  const t0 = addDays(end, -120), t1 = addDays(authEnd, 220);
+  const W = 1000, x0 = 110, x1 = 980;
+  const X = d => x0 + (d - t0) / (t1 - t0) * (x1 - x0);
+  const r = (a, b, y, cls, label, tcls = "t-s t-b") => {
+    const xa = Math.max(X(a), x0), xb = Math.min(X(b), x1), w = Math.max(xb - xa, 2);
+    let s = `<rect x="${xa.toFixed(1)}" y="${y - 12}" width="${w.toFixed(1)}" height="24" rx="5" class="${cls}"/>`;
+    if (label && w > label.length * 8 + 10) s += `<text x="${((xa + xb) / 2).toFixed(1)}" y="${y + 4}" text-anchor="middle" class="${tcls}">${esc(label)}</text>`;
+    return s;
+  };
+  let s = "";
+  [["学业", 34], ["OPT 递交", 70], ["工作许可", 106], ["H-1B", 148]].forEach(([l, y]) => { s += `<text x="10" y="${y + 4}" class="t-s t-b">${l}</text>`; });
+  for (let y = t0.getUTCFullYear(); y <= t1.getUTCFullYear(); y++) {
+    const d = new Date(Date.UTC(y, 0, 1));
+    if (d < t0 || d > t1) continue;
+    const x = X(d).toFixed(1);
+    s += `<path d="M${x},18 V180" class="l-grid"/><text x="${x}" y="198" text-anchor="middle" class="t-xs t-m">${y}</text>`;
+  }
+  s += r(t0, end, 34, "k-mute", "F-1 在读");
+  s += r(addDays(end, -90), addDays(end, 60), 70, "k-us k-dash", "I-765 窗口");
+  s += r(start, optEnd, 106, "k-solid-us", "OPT", "t-s t-b t-inv");
+  if (stem) s += r(addDays(optEnd, 1), stemEnd, 106, "k-us", "STEM OPT");
+  s += r(addDays(authEnd, 1), addDays(authEnd, 60), 106, "k-mute k-dash", "");
+  lots.forEach(l => {
+    const xr = X(l.reg), xg = X(l.go);
+    s += `<path d="M${xr.toFixed(1)},148 H${Math.min(xg, x1).toFixed(1)}" class="l l-us"/>`;
+    s += `<path d="M${xr.toFixed(1)},139 l9,9 l-9,9 l-9,-9 Z" class="m-us"/>`;
+    if (xg <= x1) s += `<circle cx="${xg.toFixed(1)}" cy="148" r="5" class="m-bg-us"/>`;
+    s += `<text x="${xr.toFixed(1)}" y="170" text-anchor="middle" class="t-xs t-m">FY${l.fy}</text>`;
+  });
+  if (cEx.checked) s += `<text x="${X(start).toFixed(1)}" y="152" class="t-s t-b t-us">cap-exempt：全年可递交，免抽签</text>`;
+  const xe = X(end).toFixed(1);
+  s += `<path d="M${xe},12 V184" class="l l-strong l-dash"/><text x="${(+xe + 6)}" y="14" class="t-xs t-b">学业结束</text>`;
+  if (today >= t0 && today <= t1) { const xt = X(today).toFixed(1); s += `<path d="M${xt},18 V184" class="l l-cn"/><text x="${(+xt + 5)}" y="26" class="t-xs t-cn">今天</text>`; }
+  s += `<text x="${x1}" y="214" text-anchor="end" class="t-xs">◆ 3 月注册  ○ 10/1 生效  虚线框 = 60 天宽限期</text>`;
+  svg.innerHTML = s;
+}
+[cEnd, cStart, cStem, cEx].forEach(el => el.addEventListener("input", calc));
+[cStem, cEx].forEach(el => el.addEventListener("change", calc));
+calc();
+
+/* ---------------- visa card filter */
+$$("[data-filter]").forEach(b => b.addEventListener("click", () => {
+  $$("[data-filter]").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  const f = b.dataset.filter;
+  $$("#vcards .vcard").forEach(c => { c.hidden = f !== "all" && !c.dataset.tags.split(" ").includes(f); });
+}));
+
+/* ---------------- priority date checker */
+const VB = {china: {eb1: ["2023-08-01", "2024-07-01"], eb2: ["2021-10-01", "2023-01-01"], eb3: ["2022-01-22", "2024-04-01"]},
+            row: {eb1: ["C", "C"], eb2: ["2025-04-01", "2026-03-15"], eb3: ["2024-06-15", "2024-08-01"]}};
+const monthsBetween = (a, b) => (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + (b.getUTCMonth() - a.getUTCMonth()) + (b.getUTCDate() - a.getUTCDate()) / 30;
+function pd() {
+  const cat = $("#p-cat").value, born = $("#p-born").value, d = D($("#p-date").value), o = $("#p-out");
+  if (!d) { o.innerHTML = ""; return; }
+  const [fad, dff] = VB[born][cat];
+  const cur = fad === "C" || d < D(fad), canFile = dff === "C" || d < D(dff);
+  const lab = cat.toUpperCase().replace("EB", "EB-");
+  let html;
+  if (cur) html = `<div class="verdict ok"><strong>已排到：可以获批</strong><span>${lab} 本月 Final Action Date 为 ${fad === "C" ? "Current" : fad}，你的优先日 ${fmt(d)} 更早。I-485 若已递交，可以进入审批。</span></div>`;
+  else if (canFile) html = `<div class="verdict mid"><strong>可以先递 I-485，暂时不能获批</strong><span>你的优先日早于 Dates for Filing（${dff}），本月 USCIS 允许按这张表递交，可同时申请 EAD 和回美证。Final Action Date 还需前进约 ${Math.ceil(monthsBetween(D(fad), d))} 个月。</span></div>`;
+  else html = `<div class="verdict no"><strong>尚未排到</strong><span>Final Action Date（${fad}）还需前进约 ${Math.ceil(monthsBetween(D(fad), d))} 个月才到你的优先日；按照中国大陆排期近年的速度，实际等待常常更久。</span></div>`;
+  o.innerHTML = html;
+}
+["#p-cat", "#p-born", "#p-date"].forEach(s => { $(s).addEventListener("input", pd); $(s).addEventListener("change", pd); });
+pd();
+
+/* ---------------- education stage panels */
+const STAGES = {
+  "cn-kg": ["幼儿园", "3–6 岁", "非义务教育，分公办、普惠性民办和民办。2025 年秋季学期起免除公办幼儿园学前一年（大班）保育教育费，伙食费等另计；另有 3 岁以下每孩每年 3,600 元育儿补贴。"],
+  "cn-pri": ["小学", "6–12 岁 · 6 年", "义务教育。公办学校按户籍和住址划片入学，学位常与房产挂钩；随迁子女一般凭居住证、社保等材料入学，各城市“积分入学”规则不同。"],
+  "cn-mid": ["初中", "12–15 岁 · 3 年", "义务教育的最后三年。初三参加中考，决定进入普通高中还是中等职业学校，各地普职比例和竞争程度差别很大。"],
+  "cn-zhongkao": ["中考", "约 15 岁", "由省市组织的高中阶段招生考试，户籍和学籍会影响报考资格。"],
+  "cn-high": ["普通高中", "15–18 岁 · 3 年", "非义务教育。多数省份实行新高考“3+1+2”：语数外 + 物理或历史二选一 + 再选两科；少数省份为“3+3”。"],
+  "cn-gaokao": ["高考", "约 18 岁", "全国统一招生考试，按省分配名额和录取，户籍和学籍决定在哪个省报考。外籍学生不参加普通高考，走外国留学生招生通道。"],
+  "cn-voc": ["职业教育", "15 岁起", "中职 → 高职（专科）→ 职业本科或专升本。多省推行“职教高考”。"],
+  "cn-ug": ["本科", "18–22 岁 · 4 年（医学、建筑多为 5 年）", "入学时一般已确定专业，可申请转专业，毕业授予学士学位。招聘中常问的“第一学历”就是这一段。"],
+  "cn-kaoyan": ["考研 / 推免", "约 22 岁", "推免（保研）在大四上学期 9–10 月完成；统考初试在 12 月下旬，复试在次年 3–4 月。"],
+  "cn-ms": ["硕士", "22–25 岁 · 2–3 年", "分学术学位（学硕）和专业学位（专硕），近年专硕扩招明显。"],
+  "cn-phdadmit": ["博士招生", "约 22–25 岁", "普遍实行“申请-考核制”，另有硕博连读和本科直博。导师的招生名额是最主要的约束。"],
+  "cn-phd": ["博士", "25–29 岁 · 3–4 年，常延期", "分学术学位博士和专业学位博士（如工程博士）。《学位法》2025-01-01 施行。用海外博士学位在国内求职、考公、落户，先要做学历学位认证。"],
+  "us-prek": ["Pre-K 学前班", "3–5 岁", "多数自费；部分州和城市提供免费的 Universal Pre-K。托育费用在美国家庭支出中占比很高。"],
+  "us-k12": ["K–12", "5–18 岁", "Kindergarten 加 12 个年级，公立学校免费，按住址划学区，学区质量直接影响房价。任何孩子都能上公立学校，不论父母签证身份。分段常见 K–5 / 6–8 / 9–12，各学区不同。"],
+  "us-sat": ["SAT / ACT", "约 17–18 岁", "本科申请用的标准化考试。疫情后许多学校改为可选提交，部分名校已恢复要求。录取看 GPA、课程难度、文书、推荐信和课外活动的综合评估（holistic review）。"],
+  "us-college": ["本科 College", "18–22 岁 · 4 年", "前两年以通识教育为主，通常第二年末确定 major。公立大学州内学费明显低于州外，资格看在该州居住的时长和身份。"],
+  "us-cc": ["社区学院", "18–20 岁 · 2 年", "授予副学士（Associate），学费低，可以转学（transfer）到四年制大学读完后两年，加州等州有转学保障协议。"],
+  "us-gre": ["GRE", "约 22 岁", "研究生入学考试。许多 STEM 博士项目已改为不要求或可选。"],
+  "us-ms": ["硕士", "22–24 岁 · 1–2 年", "多为自费的职业型学位，也有研究型硕士。不少 STEM 博士本科毕业直接读 PhD，中途可以获得“过路硕士”。"],
+  "us-phd": ["PhD", "约 22–28 岁 · STEM 中位约 5–6 年", "通常全额资助（RA/TA 津贴 + 学费减免）。关键节点：资格考试（qualifying exam）→ 开题（proposal）→ 答辩（defense）。"],
+  "us-postdoc": ["博士后", "28 岁起", "合同制研究岗位，常见 1–3 年一签，可以做多段。它是通往 tenure-track 的常见过渡，也是积累 O-1 / NIW / EB-1B 证据的阶段。"],
+  "us-md": ["医学 MD / 法学 JD", "本科后", "MD 为本科后 4 年医学院，再加住院医（residency）3–7 年；JD 为本科后 3 年。专业学位与 PhD 平行，不是更高一级。"]
+};
+function showStage(key, panel) {
+  const s = STAGES[key]; if (!s || !panel) return;
+  panel.innerHTML = `<h4>${esc(s[0])}<span class="num">${esc(s[1])}</span></h4><p>${esc(s[2])}</p>`;
+  const svg = panel.previousElementSibling && panel.previousElementSibling.querySelector("svg");
+  if (svg) $$(".stage", svg).forEach(g => g.classList.toggle("is-on", g.dataset.stage === key));
+}
+$$("svg .stage").forEach(g => {
+  const panel = g.closest(".fig").nextElementSibling;
+  const go = () => showStage(g.dataset.stage, panel);
+  g.addEventListener("click", go);
+  g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+});
+showStage("cn-phd", $("#panel-cn"));
+showStage("us-phd", $("#panel-us"));
+
+/* ---------------- wheel needle = today */
+(() => {
+  const g = $(".wheel-now"); if (!g) return;
+  const n = new Date(), y = n.getFullYear(), start = new Date(y, 0, 1), end = new Date(y + 1, 0, 1);
+  const deg = (n - start) / (end - start) * 360;
+  g.setAttribute("transform", `rotate(${deg.toFixed(2)} 300 300)`);
+})();
+
+/* ---------------- checklist */
+const TODO = [
+  ["毕业前 12–18 个月", [
+    ["b", "用“路线助手”定下一条主路线和一条后备路线"],
+    ["u", "确认学位的 CIP code 在 STEM 清单上（看 I-20）"],
+    ["u", "建一份成果清单：论文、引用、审稿记录、奖项、媒体报道，为 O-1 / NIW / EB-1 备用"],
+    ["u", "主动接期刊审稿邀请，保存邀请与完成邮件（“评审他人工作”的证据）"],
+    ["c", "关注目标高校、院所的人才招聘和海外青年学者论坛"],
+    ["c", "想去企业：秋招在毕业前一年 8–11 月，提前批 7 月起"]]],
+  ["毕业前 6–12 个月", [
+    ["u", "学术：秋季投博后和教职，优先 cap-exempt 单位"],
+    ["u", "工业界：问清 H-1B 工资级别、是否支持 STEM OPT（E-Verify）和绿卡时间表"],
+    ["c", "国考：10 月报名，确认年龄和岗位要求"],
+    ["b", "和导师敲定答辩与学位授予日期，它决定 Program End Date"]]],
+  ["毕业前 0–6 个月", [
+    ["u", "结束前 90 天内：DSO 推荐 OPT，30 天内递交 I-765"],
+    ["u", "3 月前拿到 offer 的，请雇主参加当年 H-1B 注册"],
+    ["c", "准备认证材料：学位证明、成绩单、护照出入境记录页"],
+    ["b", "OPT 待审期间尽量不出境"]]],
+  ["毕业后 0–3 个月", [
+    ["u", "开始工作后 10 天内在 SEVP Portal 报告雇主"],
+    ["u", "记录失业天数（OPT 累计 ≤90 天）"],
+    ["c", "递交学历学位认证，安排档案存放"]]],
+  ["毕业后 3–36 个月", [
+    ["u", "OPT 到期前 90 天内申请 STEM OPT（I-983）"],
+    ["u", "每年 3 月 H-1B 注册，同时准备 cap-exempt 或 O-1A 后备"],
+    ["u", "证据够了尽早递 NIW / EB-1，锁定优先日"],
+    ["c", "海外博后满 36 个月，评估海外优青"],
+    ["c", "两年择业期内回国，保留应届身份"],
+    ["b", "离境前处理 401(k)、dual-status 报税、信用卡和银行账户"]]]
+];
+const KEY = "phd-map-todo-v1";
+let done = store.get(KEY, {});
+let tf = "all";
+function drawTodo() {
+  let n = 0, k = 0;
+  $("#todo").innerHTML = TODO.map(([ph, items], i) => {
+    const vis = items.map((it, j) => [it, `${i}-${j}`]).filter(([it]) => tf === "all" || it[0] === tf || it[0] === "b");
+    if (!vis.length) return "";
+    return `<div class="phase"><h4>${esc(ph)}</h4><ul class="todo">${vis.map(([[side, txt], id]) => {
+      n++; if (done[id]) k++;
+      return `<li><label for="t-${id}"><input type="checkbox" id="t-${id}" data-id="${id}" ${done[id] ? "checked" : ""}><span class="badge ${side}">${side === "u" ? "美" : side === "c" ? "中" : "两边"}</span><span>${esc(txt)}</span></label></li>`;
+    }).join("")}</ul></div>`;
+  }).join("");
+  $("#todo-count").textContent = `${k} / ${n}`;
+  $("#todo-bar").style.width = n ? (k / n * 100) + "%" : "0";
+}
+$("#todo").addEventListener("change", e => {
+  const id = e.target.dataset.id; if (!id) return;
+  if (e.target.checked) done[id] = 1; else delete done[id];
+  store.set(KEY, done); drawTodo();
+});
+$$("[data-tf]").forEach(b => b.addEventListener("click", () => {
+  tf = b.dataset.tf;
+  $$("[data-tf]").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  drawTodo();
+}));
+drawTodo();
+
+/* ---------------- glossary */
+const G = [
+  ["OPT", "Optional Practical Training", "F-1 学生毕业后与专业相关的工作许可，每个学位级别 12 个月。"],
+  ["STEM OPT", "STEM OPT Extension", "STEM 学位的 24 个月延期，雇主须参加 E-Verify 并签 I-983。"],
+  ["EAD", "Employment Authorization Document", "工作许可卡。OPT、STEM OPT、H-4 EAD、I-485 待审期间都靠它证明可以工作。"],
+  ["SEVIS / SEVP", "学生与交流访问者信息系统 / 项目", "记录 F/J 身份的系统；OPT 期间雇主信息要在 SEVP Portal 报告。"],
+  ["DSO", "Designated School Official", "学校国际学生办公室的指定官员，负责推荐 OPT、签 I-20。"],
+  ["I-20", "Certificate of Eligibility (F-1)", "F-1 身份文件，上面有专业 CIP code 和 Program End Date。"],
+  ["Program End Date", "学业结束日", "I-20 上的结束日期，OPT 递交窗口和 60 天宽限期都以它计算。"],
+  ["I-765", "工作许可申请表", "OPT、STEM OPT、I-485 期间的 EAD 都用这张表申请。"],
+  ["I-983", "STEM OPT 培训计划", "学生和雇主共同填写的培训计划，第 12、24 个月需自评。"],
+  ["E-Verify", "雇佣资格电子核验", "美国政府的雇佣资格核验系统，STEM OPT 雇主必须参加。"],
+  ["Cap-gap", "身份衔接期", "H-1B 已递交、等待 10/1 生效时，F-1 身份和工作许可自动延长（2025 年起最长至次年 4/1）。"],
+  ["H-1B Cap", "H-1B 名额", "每年 65,000 常规名额 + 20,000 美国硕士及以上名额。"],
+  ["Cap-exempt", "免名额雇主", "高校、其附属非营利机构、非营利或政府研究机构，不参加抽签。"],
+  ["Weighted selection", "按工资加权抽签", "FY2027 起按 OEWS 工资级别分配抽签机会：Level IV 4 次 … Level I 1 次。"],
+  ["LCA", "Labor Condition Application", "雇主向劳工部提交的工资与工作条件声明，H-1B 必需。"],
+  ["Prevailing wage", "现行工资", "按职业和地区确定的工资标准，分 Level I–IV。"],
+  ["Specialty occupation", "专业职位", "需要对口专业本科及以上学历的职位，H-1B 的核心要求。"],
+  ["I-129", "非移民工作申请", "雇主为 H-1B、O-1、L-1 等递交的申请表。"],
+  ["O-1A", "杰出能力工作签证", "科学、教育、商业、体育领域的杰出人才签证，无名额、不抽签。"],
+  ["J-1 / 212(e)", "交流访问者 / 两年回国服务", "受 212(e) 约束者须回国服务满两年或获豁免，才能申请 H、L 或绿卡。"],
+  ["DS-2019", "J-1 身份文件", "J-1 交流访问者的资格证明，由项目单位签发。"],
+  ["DS-160", "非移民签证在线申请表", "面签前在线填写的申请表。"],
+  ["221(g)", "行政审查 Administrative Processing", "面签后需要进一步审查，STEM 背景的中国申请人较常见。"],
+  ["EVUS", "签证更新电子系统", "持 10 年 B1/B2 签证的中国护照持有人赴美前必须完成的在线登记。"],
+  ["I-94", "入境记录", "记录入境日期和身份的电子档案，身份是否有效看它。"],
+  ["PERM", "劳工证 Labor Certification", "雇主向劳工部证明找不到合格美国工人，是 EB-2/EB-3 雇主担保的第一步。"],
+  ["PWD", "Prevailing Wage Determination", "劳工部出具的现行工资认定，PERM 的起点。"],
+  ["I-140", "职业移民申请", "雇主或本人递交，确认类别并锁定优先日。"],
+  ["I-485", "调整身份申请 AOS", "排期到了在美国境内递交的绿卡申请，可同时申请 EAD 和回美证。"],
+  ["Advance Parole", "回美证", "I-485 待审期间出境再入境用的旅行许可。"],
+  ["Priority Date", "优先日 PD", "排队日期：PERM 递交日，或（无 PERM 时）I-140 递交日。"],
+  ["Final Action Date", "FAD 可获批截止日", "排期表中能够批准绿卡的截止日。"],
+  ["Dates for Filing", "DFF 可递交截止日", "可以先递交 I-485 的截止日；USCIS 每月公布用哪张表。"],
+  ["Chargeability", "出生地计算", "排期按出生地而不是国籍；配偶出生地不同可交叉计算。"],
+  ["Retrogression", "排期倒退", "需求超过名额时截止日往回退。"],
+  ["EB-1A", "杰出人才", "自主申请，10 项标准满足 3 项 + 综合评估。"],
+  ["EB-1B", "杰出教授 / 研究员", "需雇主和永久职位 offer，6 项标准满足 2 项。"],
+  ["EB-2 NIW", "国家利益豁免", "免雇主、免 PERM 的 EB-2，按 Dhanasar 三要素审查。"],
+  ["Dhanasar", "NIW 判例（2016）", "确立 NIW 的三要素标准。"],
+  ["RFE / NOID", "补件通知 / 拒绝意向通知", "2026-08 起 EB-1A 与 NIW 可以不发 RFE 直接拒（PA-2026-05）。"],
+  ["Premium Processing", "加急处理", "I-140：EB-1A/EB-1B/PERM 15 个工作日，NIW 45 个工作日。"],
+  ["AC21", "21 世纪美国竞争力法", "允许 H-1B 超过 6 年延期，以及 I-485 待审满 180 天后换同类工作。"],
+  ["H-4 EAD", "H-4 配偶工作许可", "H-1B 主申请人 I-140 获批后，配偶可申请。"],
+  ["Dual-status", "双重身份纳税年", "同一年里既是非居民又是居民（如离境当年）的报税方式。"],
+  ["FICA", "社保和医保税", "非居民的 F-1/OPT 收入可免；读博超过 5 个日历年后通常不再免。"],
+  ["学历学位认证", "CSCSE Credential Evaluation", "中国留学服务中心对国外学位的官方认证，考公、落户、评职称都要用。"],
+  ["择业期", "应届身份", "国家规定的两年择业期内未就业的毕业生，可按应届生报考，具体以招录公告为准。"],
+  ["档案", "人事档案", "影响职称评定、政审和社保视同缴费年限，存放在单位或人才服务中心。"],
+  ["编制", "事业 / 行政编制", "机关事业单位的人员编制，意味着更稳定的岗位和保障。"],
+  ["预聘-长聘", "中国版 tenure-track", "预聘期考核通过后转长聘，未通过即“非升即走”。"],
+  ["师资博士后", "Faculty-track Postdoc", "高校聘用的博士后岗位，出站后可能直接留校任教。"],
+  ["双一流 / 985 / 211", "重点高校标签", "国家重点建设高校的标签，招聘中还常看“第一学历”。"],
+  ["海外优青", "优秀青年科学基金项目（海外）", "面向博士后在海外全职工作满 36 个月、约 40 岁以下的青年人才。"],
+  ["落户", "取得常住户口", "影响子女入学、购房、社保和部分考试资格。"],
+  ["北京市工作居住证", "Beijing Work Residence Permit", "未落户人员享受部分市民待遇的证件。"],
+  ["K 字签证", "K Visa", "中国 2025-10-01 起为外籍青年 STEM 人才设立的签证，无需国内单位邀请。"],
+  ["旅行证", "PRC Travel Document", "中国驻外使领馆为具有中国国籍的海外出生儿童等签发的旅行证件。"],
+  ["国考", "中央机关公务员考试", "每年 10 月报名、11 月底至 12 月初笔试。"],
+  ["学位法", "Degree Law of the PRC", "2025-01-01 施行，学位分为学术学位和专业学位。"]
+];
+const gl = $("#gloss");
+gl.innerHTML = G.map(([a, b, c]) => `<div data-q="${esc((a + b + c).toLowerCase())}"><dt>${esc(a)}<span class="num">${esc(b)}</span></dt><dd>${esc(c)}</dd></div>`).join("");
+$("#g-q").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase(); let n = 0;
+  $$("#gloss > div").forEach(d => { const hit = !q || d.dataset.q.includes(q); d.hidden = !hit; if (hit) n++; });
+  $("#g-none").hidden = n > 0;
+});
+
+/* ---------------- lightbox */
+const lb = $("#lb"), lbBody = $("#lb-body");
+let zoom = 1.4, lbW = 1080, lastBtn = null;
+function setZoom() { const s = lbBody.querySelector("svg"); if (s) { s.style.width = (lbW * zoom) + "px"; s.style.minWidth = "0"; } }
+$$("[data-zoom]").forEach(b => b.addEventListener("click", () => {
+  const fig = b.closest(".fig"), svg = fig.querySelector("svg");
+  lastBtn = b;
+  lbW = svg.viewBox.baseVal.width || 1080;
+  lbBody.innerHTML = ""; lbBody.appendChild(svg.cloneNode(true));
+  $("#lb-title").textContent = fig.querySelector(".fig-no").textContent;
+  zoom = Math.max(1, Math.min(1.6, (window.innerWidth - 40) / lbW * 1.25));
+  setZoom(); lb.hidden = false; $("#lb-close").focus();
+}));
+$("#lb-in").addEventListener("click", () => { zoom = Math.min(zoom * 1.25, 4); setZoom(); });
+$("#lb-out").addEventListener("click", () => { zoom = Math.max(zoom / 1.25, 0.5); setZoom(); });
+const closeLb = () => { lb.hidden = true; lbBody.innerHTML = ""; if (lastBtn) lastBtn.focus(); };
+$("#lb-close").addEventListener("click", closeLb);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+})();
+</script>
