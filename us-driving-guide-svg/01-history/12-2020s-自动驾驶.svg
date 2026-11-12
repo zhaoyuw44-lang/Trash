@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" width="720" height="340"><rect x="0" y="146" width="360" height="24" fill="rgb(201, 210, 205)"/><line x1="0" y1="146" x2="360" y2="146" stroke-width="1.5" fill="rgb(0, 0, 0)" stroke="rgb(86, 99, 93)"/>
+      <path d="M50 120 L50 70 Q50 50 72 48 L270 48 Q300 50 306 78 L314 100 Q318 110 318 120 Z" stroke-width="2" fill="rgb(255, 255, 255)" stroke="rgb(21, 32, 27)"/>
+      <path d="M232 54 L268 54 Q290 56 296 80 L232 80 Z" fill="rgb(188, 213, 229)"/><rect x="72" y="56" width="70" height="26" rx="4" fill="rgb(188, 213, 229)"/><rect x="150" y="56" width="74" height="26" rx="4" fill="rgb(188, 213, 229)"/>
+      <rect x="150" y="30" width="44" height="18" rx="6" fill="rgb(21, 32, 27)"/><rect x="160" y="22" width="24" height="10" rx="4" fill="rgb(138, 148, 155)"/>
+      <circle cx="100" cy="124" r="20" fill="rgb(26, 29, 32)"/><circle cx="100" cy="124" r="11" fill="rgb(195, 201, 206)"/><circle cx="100" cy="124" r="4" fill="rgb(26, 29, 32)"/><circle cx="270" cy="124" r="20" fill="rgb(26, 29, 32)"/><circle cx="270" cy="124" r="11" fill="rgb(195, 201, 206)"/><circle cx="270" cy="124" r="4" fill="rgb(26, 29, 32)"/>
+      <g stroke-width="1.6" opacity=".9"><ellipse cx="172" cy="28" rx="60" ry="12" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="172" cy="28" rx="110" ry="20" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="172" cy="28" rx="160" ry="26" fill="none" stroke="rgb(47, 111, 179)"/></g>
+      <text x="184" y="104" text-anchor="middle" font-size="10" fill="rgb(86, 99, 93)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="600">LIDAR · RADAR · CAMERAS</text></svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 320 170" xmlns="http://www.w3.org/2000/svg" width="640" height="340">
+            <rect width="320" height="170" fill="rgb(207, 220, 203)"/>
+            <path d="M120 170 L150 20 L170 20 L200 170 Z" fill="rgb(59, 64, 69)"/>
+            <path d="M160 170 L160 20" stroke-width="2" stroke-dasharray="10 8" fill="rgb(0, 0, 0)" stroke="rgb(242, 194, 48)"/>
+            <rect x="174" y="146" width="16" height="22" rx="4" fill="rgb(47, 111, 179)"/>
+            <path d="M182 146 L162 34" stroke-width="2" stroke-dasharray="5 4" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/>
+            <circle cx="162" cy="32" r="6" stroke-width="2.5" fill="none" stroke="rgb(232, 168, 0)"/>
+            <text x="210" y="40" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">12–15 秒的路程</text>
+            <text x="210" y="56" font-size="11" fill="rgb(86, 99, 93)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="600">市区约 1 个街区</text>
+            <text x="210" y="70" font-size="11" fill="rgb(86, 99, 93)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="600">高速约 1/4 英里</text>
+            <text x="16" y="100" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">I 识别 Identify</text>
+            <text x="16" y="118" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">P 预测 Predict</text>
+            <text x="16" y="136" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">D 决定 Decide</text>
+            <text x="16" y="154" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">E 执行 Execute</text>
+          </svg>

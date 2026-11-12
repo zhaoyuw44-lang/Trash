@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" width="720" height="500"><rect width="360" height="250" fill="rgb(226, 231, 228)"/><ellipse cx="190" cy="150" rx="120" ry="50" stroke-width="1.5" opacity="0.9" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="190" cy="150" rx="146" ry="60" stroke-width="1.5" opacity="0.78" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="190" cy="150" rx="172" ry="70" stroke-width="1.5" opacity="0.66" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="190" cy="150" rx="198" ry="80" stroke-width="1.5" opacity="0.54" fill="none" stroke="rgb(47, 111, 179)"/><ellipse cx="190" cy="150" rx="224" ry="90" stroke-width="1.5" opacity="0.42000000000000004" fill="none" stroke="rgb(47, 111, 179)"/>
+      <rect x="0" y="206" width="360" height="44" fill="rgb(59, 64, 69)"/><line x1="0" y1="228" x2="360" y2="228" stroke-width="3" stroke-dasharray="18 14" fill="rgb(0, 0, 0)" stroke="rgb(242, 194, 48)"/>
+      <path d="M60 200 L60 150 Q62 120 96 116 L130 112 Q150 80 196 78 L262 78 Q290 80 304 112 L320 118 Q336 124 336 146 L336 200 Z" fill="rgb(47, 111, 179)"/>
+      <path d="M140 112 Q156 88 196 86 L222 86 L222 112 Z" fill="rgb(188, 213, 229)"/><path d="M230 86 L260 86 Q282 88 292 112 L230 112 Z" fill="rgb(188, 213, 229)"/>
+      <circle cx="110" cy="206" r="20" fill="rgb(26, 29, 32)"/><circle cx="290" cy="206" r="20" fill="rgb(26, 29, 32)"/><circle cx="110" cy="206" r="9" fill="rgb(195, 201, 206)"/><circle cx="290" cy="206" r="9" fill="rgb(195, 201, 206)"/>
+      
+      
+      
+      
+      
+      
+      <text x="140" y="70" font-size="11" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">不需要方向盘和司机（尚不存在）</text>
+      <g transform="translate(14 14)">
+        <rect width="118" height="34" rx="6" stroke-width="1" fill="rgb(255, 255, 255)" stroke="rgb(201, 210, 205)"/>
+        <text x="10" y="22" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">系统驾驶</text>
+        
+      </g></svg>

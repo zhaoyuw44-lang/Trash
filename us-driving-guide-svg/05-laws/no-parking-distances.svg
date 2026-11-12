@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" width="1440" height="400">
+          <rect x="0" y="0" width="720" height="70" fill="rgb(226, 231, 228)"/>
+          <rect x="0" y="70" width="720" height="8" fill="rgb(179, 186, 181)"/>
+          <rect x="0" y="78" width="720" height="122" fill="rgb(59, 64, 69)"/>
+          <g><rect x="20" y="84" width="48" height="7" fill="rgb(245, 245, 240)"/><rect x="20" y="98" width="48" height="7" fill="rgb(245, 245, 240)"/><rect x="20" y="112" width="48" height="7" fill="rgb(245, 245, 240)"/><rect x="20" y="126" width="48" height="7" fill="rgb(245, 245, 240)"/></g>
+          <text x="44" y="180" text-anchor="middle" font-size="11" fill="rgb(255, 255, 255)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="400">人行横道</text>
+          <g transform="translate(155 100)"><rect x="-26" y="-11" width="52" height="22" rx="5" fill="rgb(138, 148, 155)"/><rect x="8" y="-8" width="10" height="16" rx="2" fill="rgb(188, 213, 229)"/></g>
+          <path d="M68 150 H129" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/><path d="M68 144 v12 M129 144 v12" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/>
+          <text x="98" y="143" text-anchor="middle" font-size="13" fill="rgb(255, 255, 255)" font-family="Overpass, Arial, sans-serif" font-weight="800">20 ft</text>
+          <g transform="translate(300 100)"><rect x="-26" y="-11" width="52" height="22" rx="5" fill="rgb(138, 148, 155)"/><rect x="8" y="-8" width="10" height="16" rx="2" fill="rgb(188, 213, 229)"/></g>
+          <g transform="translate(372 62)"><rect x="-6" y="-4" width="12" height="16" rx="3" fill="rgb(200, 16, 46)"/><rect x="-9" y="2" width="18" height="4" rx="2" fill="rgb(200, 16, 46)"/></g>
+          <text x="372" y="40" text-anchor="middle" font-size="11" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">消防栓</text>
+          <path d="M326 120 H372 M372 120 H418" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/><path d="M326 114 v12 M372 114 v12 M418 114 v12" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/>
+          <text x="349" y="140" text-anchor="middle" font-size="12" fill="rgb(255, 255, 255)" font-family="Overpass, Arial, sans-serif" font-weight="800">15 ft</text><text x="395" y="140" text-anchor="middle" font-size="12" fill="rgb(255, 255, 255)" font-family="Overpass, Arial, sans-serif" font-weight="800">15 ft</text>
+          <g transform="translate(444 100)"><rect x="-26" y="-11" width="52" height="22" rx="5" fill="rgb(138, 148, 155)"/><rect x="8" y="-8" width="10" height="16" rx="2" fill="rgb(188, 213, 229)"/></g>
+          <g transform="translate(562 46)"><rect x="-1.5" y="0" width="3" height="24" fill="rgb(86, 99, 93)"/><path d="M-6 -14 H6 L14 -6 V6 L6 14 H-6 L-14 6 V-6 Z" fill="rgb(200, 16, 46)"/></g>
+          <text x="562" y="22" text-anchor="end" dx="-18" font-size="11" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">停车标志</text>
+          <path d="M470 120 H562" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/><path d="M470 114 v12 M562 114 v12" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(232, 168, 0)"/>
+          <text x="516" y="114" text-anchor="middle" font-size="13" fill="rgb(255, 255, 255)" font-family="Overpass, Arial, sans-serif" font-weight="800">30 ft</text>
+          <path d="M300 89 V78" stroke-width="2" fill="rgb(0, 0, 0)" stroke="rgb(30, 122, 70)"/><text x="300" y="180" text-anchor="middle" font-size="11" fill="rgb(255, 255, 255)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="400">车轮距路缘 ≤ 18 英寸 (18 in)</text>
+          <path d="M300 170 V112" stroke-width="1" stroke-dasharray="3 3" fill="rgb(0, 0, 0)" stroke="rgb(30, 122, 70)"/>
+        </svg>

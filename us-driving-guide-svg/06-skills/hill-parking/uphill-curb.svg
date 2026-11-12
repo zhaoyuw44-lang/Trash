@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="200" height="150" fill="rgb(226, 231, 228)"/>
+      <g transform="translate(100 66) rotate(-12)"><rect x="-100" y="14" width="200" height="60" fill="rgb(207, 220, 203)"/>
+      <path d="M-70 14 L-70 -4 Q-68 -12 -58 -14 L-30 -16 L-20 -30 L22 -30 L38 -16 L64 -12 Q72 -10 72 0 L72 14 Z" fill="rgb(47, 111, 179)"/>
+      <rect x="-100" y="14" width="200" height="6" fill="rgb(179, 186, 181)"/>
+      <circle cx="-44" cy="14" r="9" fill="rgb(26, 29, 32)"/><circle cx="46" cy="14" r="9" fill="rgb(26, 29, 32)"/></g>
+      <text x="160" y="20" text-anchor="middle" font-size="10" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">上坡 ↗</text>
+      <g transform="translate(100 120)"><rect x="-80" y="-18" width="160" height="30" fill="rgb(59, 64, 69)"/><rect x="-80" y="10" width="160" height="5" fill="rgb(179, 186, 181)"/>
+      <g><rect x="-30" y="-10" width="56" height="20" rx="5" fill="rgb(47, 111, 179)"/><rect x="4" y="-8" width="10" height="16" rx="2" fill="rgb(188, 213, 229)"/>
+      <rect x="10" y="-13" width="10" height="4" rx="1" transform="rotate(-30 15 -11)" fill="rgb(26, 29, 32)"/><rect x="10" y="9" width="10" height="4" rx="1" transform="rotate(-30 15 11)" fill="rgb(26, 29, 32)"/></g>
+      <text x="-76" y="-22" font-size="9" fill="rgb(86, 99, 93)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="600">俯视</text></g></svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" width="720" height="340"><rect x="0" y="146" width="360" height="24" fill="rgb(201, 210, 205)"/><line x1="0" y1="146" x2="360" y2="146" stroke-width="1.5" fill="rgb(0, 0, 0)" stroke="rgb(86, 99, 93)"/>
+      <path d="M34 120 Q32 100 50 96 L104 90 Q136 58 190 56 Q246 58 276 88 L314 94 Q332 98 332 114 L332 120 Z" fill="rgb(47, 111, 179)"/>
+      <path d="M112 90 Q140 64 188 62 L188 90 Z" fill="rgb(188, 213, 229)"/><path d="M196 62 Q240 64 262 88 L196 90 Z" fill="rgb(188, 213, 229)"/>
+      <rect x="88" y="106" width="190" height="10" rx="2" opacity=".85" fill="rgb(30, 122, 70)"/>
+      <g opacity=".7"><rect x="96" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="122" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="148" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="174" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="200" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="226" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/><rect x="252" y="108" width="20" height="6" fill="rgb(255, 255, 255)"/></g>
+      <circle cx="84" cy="124" r="20" fill="rgb(26, 29, 32)"/><circle cx="84" cy="124" r="11" fill="rgb(195, 201, 206)"/><circle cx="84" cy="124" r="4" fill="rgb(26, 29, 32)"/><circle cx="286" cy="124" r="20" fill="rgb(26, 29, 32)"/><circle cx="286" cy="124" r="11" fill="rgb(195, 201, 206)"/><circle cx="286" cy="124" r="4" fill="rgb(26, 29, 32)"/>
+      <path d="M32 100 L2 84 L2 130 Z" fill="rgba(47, 111, 179, 0.2)"/>
+      <path d="M336 96 a 14 14 0 0 1 0 20 M344 90 a 22 22 0 0 1 0 32 M352 84 a 30 30 0 0 1 0 44" stroke-width="2" fill="none" stroke="rgb(47, 111, 179)"/>
+      <text x="183" y="140" text-anchor="middle" font-size="10" fill="rgb(86, 99, 93)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="600">BATTERY PACK</text></svg>

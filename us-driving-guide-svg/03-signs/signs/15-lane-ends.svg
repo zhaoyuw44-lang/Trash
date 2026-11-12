@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="240" height="240"><polygon points="60,3 117,60 60,117 3,60" fill="rgb(255, 204, 0)"/><polygon points="60,9 111,60 60,111 9,60" stroke-width="3" fill="none" stroke="rgb(17, 17, 17)"/><path d="M44 96 V30" stroke-width="7" fill="rgb(0, 0, 0)" stroke="rgb(17, 17, 17)"/><path d="M80 96 V70 L56 44 V30" stroke-width="7" fill="none" stroke="rgb(17, 17, 17)"/><path d="M62 96 V80" stroke-width="4" stroke-dasharray="6 5" fill="rgb(0, 0, 0)" stroke="rgb(17, 17, 17)"/></svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" width="720" height="340"><rect x="0" y="146" width="360" height="24" fill="rgb(201, 210, 205)"/><line x1="0" y1="146" x2="360" y2="146" stroke-width="1.5" fill="rgb(0, 0, 0)" stroke="rgb(86, 99, 93)"/>
+      <path d="M44 120 Q42 98 66 92 L104 88 Q124 52 172 50 Q218 50 240 84 L296 90 Q322 94 322 112 L322 120 Z" fill="rgb(94, 140, 58)"/>
+      <path d="M112 88 Q128 60 170 58 L170 88 Z" fill="rgb(188, 213, 229)"/><path d="M178 58 Q214 60 230 88 L178 88 Z" fill="rgb(188, 213, 229)"/>
+      <path d="M50 122 Q 50 92 100 92 Q 140 92 140 122 Z" stroke="rgba(0, 0, 0, 0.18)" fill="rgb(94, 140, 58)"/>
+      <path d="M232 122 Q 232 94 276 94 Q 314 96 316 122 Z" stroke="rgba(0, 0, 0, 0.18)" fill="rgb(94, 140, 58)"/>
+      <circle cx="98" cy="124" r="21" fill="rgb(26, 29, 32)"/><circle cx="98" cy="124" r="11.55" fill="rgb(195, 201, 206)"/><circle cx="98" cy="124" r="4.2" fill="rgb(26, 29, 32)"/><circle cx="274" cy="124" r="21" fill="rgb(26, 29, 32)"/><circle cx="274" cy="124" r="11.55" fill="rgb(195, 201, 206)"/><circle cx="274" cy="124" r="4.2" fill="rgb(26, 29, 32)"/>
+      <rect x="306" y="102" width="20" height="5" rx="2" fill="rgb(195, 201, 206)"/>
+      <g transform="translate(190 30)"><rect x="-38" y="-16" width="76" height="22" rx="4" stroke-width="1.5" fill="rgb(255, 255, 255)" stroke="rgb(21, 32, 27)"/><text x="0" y="0" text-anchor="middle" font-size="13" fill="rgb(21, 32, 27)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="700">P R N D L</text></g></svg>

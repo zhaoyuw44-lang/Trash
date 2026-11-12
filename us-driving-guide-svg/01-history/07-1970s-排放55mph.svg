@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg" width="720" height="340"><rect x="0" y="146" width="360" height="24" fill="rgb(201, 210, 205)"/><line x1="0" y1="146" x2="360" y2="146" stroke-width="1.5" fill="rgb(0, 0, 0)" stroke="rgb(86, 99, 93)"/>
+      <path d="M50 120 L50 96 Q50 90 58 88 L100 84 L130 58 L210 58 L236 84 L262 86 Q274 88 274 100 L274 120 Z" fill="rgb(232, 168, 0)"/>
+      <path d="M106 84 L132 62 L166 62 L166 84 Z" fill="rgb(188, 213, 229)"/><path d="M172 62 L206 62 L228 84 L172 84 Z" fill="rgb(188, 213, 229)"/>
+      <rect x="44" y="110" width="236" height="7" fill="rgb(195, 201, 206)"/>
+      <circle cx="96" cy="124" r="18" fill="rgb(26, 29, 32)"/><circle cx="96" cy="124" r="9.9" fill="rgb(195, 201, 206)"/><circle cx="96" cy="124" r="3.6" fill="rgb(26, 29, 32)"/><circle cx="234" cy="124" r="18" fill="rgb(26, 29, 32)"/><circle cx="234" cy="124" r="9.9" fill="rgb(195, 201, 206)"/><circle cx="234" cy="124" r="3.6" fill="rgb(26, 29, 32)"/>
+      <rect x="292" y="22" width="56" height="70" rx="5" stroke-width="2.5" fill="rgb(255, 255, 255)" stroke="rgb(17, 17, 17)"/>
+      <text x="320" y="38" text-anchor="middle" font-size="9" fill="rgb(17, 17, 17)" font-family="Overpass, Arial, sans-serif" font-weight="800">SPEED</text><text x="320" y="49" text-anchor="middle" font-size="9" fill="rgb(17, 17, 17)" font-family="Overpass, Arial, sans-serif" font-weight="800">LIMIT</text>
+      <text x="320" y="80" text-anchor="middle" font-size="26" fill="rgb(17, 17, 17)" font-family="Overpass, Arial, sans-serif" font-weight="800">55</text>
+      <rect x="318" y="92" width="4" height="54" fill="rgb(86, 99, 93)"/></svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg" width="720" height="520"><rect width="360" height="260" fill="rgb(226, 231, 228)"/>
+    <rect x="0" y="16" width="360" height="8" rx="4" fill="rgb(86, 99, 93)"/>
+    <rect x="96" y="24" width="4" height="12" fill="rgb(86, 99, 93)"/><rect x="246" y="24" width="4" height="12" fill="rgb(86, 99, 93)"/>
+    <rect x="76" y="36" width="44" height="128" rx="9" fill="rgb(30, 35, 33)"/>
+    <circle cx="98" cy="60" r="16" fill="rgb(58, 63, 60)"/><circle cx="98" cy="100" r="16" fill="rgb(58, 63, 60)"/><circle cx="98" cy="140" r="16" fill="rgb(29, 180, 106)"/>
+    <rect x="226" y="36" width="44" height="168" rx="9" fill="rgb(30, 35, 33)"/>
+    <circle cx="248" cy="60" r="16" fill="rgb(58, 63, 60)"/><circle cx="248" cy="100" r="16" fill="rgb(58, 63, 60)"/><circle cx="248" cy="140" r="16" fill="rgb(58, 63, 60)"/><circle cx="248" cy="180" r="16" fill="rgb(58, 63, 60)"/>
+    <path transform="translate(248 60)" d="M-13 0 L-1 -11 L-1 -4.5 L12 -4.5 L12 4.5 L-1 4.5 L-1 11 Z" fill="rgb(58, 63, 60)"/><path transform="translate(248 100)" d="M-13 0 L-1 -11 L-1 -4.5 L12 -4.5 L12 4.5 L-1 4.5 L-1 11 Z" fill="rgb(98, 86, 48)"/><path transform="translate(248 140)" d="M-13 0 L-1 -11 L-1 -4.5 L12 -4.5 L12 4.5 L-1 4.5 L-1 11 Z" fill="rgb(204, 149, 16)"/><path transform="translate(248 180)" d="M-13 0 L-1 -11 L-1 -4.5 L12 -4.5 L12 4.5 L-1 4.5 L-1 11 Z" fill="rgb(58, 63, 60)"/>
+    <text x="98" y="186" text-anchor="middle" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">直行灯</text>
+    <text x="248" y="226" text-anchor="middle" font-size="12" fill="rgb(21, 32, 27)" font-family="&quot;Noto Sans SC&quot;, Overpass, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif" font-weight="700">左转灯</text>
+    <text x="300" y="104" font-size="9" fill="rgb(86, 99, 93)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="600">steady</text><text x="300" y="144" font-size="9" fill="rgb(86, 99, 93)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="600">flashing</text>
+    <text x="180" y="250" text-anchor="middle" font-size="12" fill="rgb(21, 32, 27)" font-family="Overpass, &quot;Noto Sans SC&quot;, system-ui, sans-serif" font-weight="700">FLASHING YELLOW ARROW</text></svg>
