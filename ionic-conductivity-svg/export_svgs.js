@@ -50,7 +50,7 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
       return clone.outerHTML;
     });
   }, PROPS);
-  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring',
+  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring', 'coin-04-cable-accessories',
     'after-01-unplug', 'after-02-record', 'after-03-inspect', 'after-04-route-by-type',
     'after-05-decrimp', 'after-06-check-membrane', 'after-07-sort-waste', 'after-08-clean-up',
     'pp-01-identify', 'pp-02-dense-film-ring',
