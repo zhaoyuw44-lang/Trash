@@ -1,4 +1,4 @@
-// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps and the PP-film figures of
+// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps, the PP-film and film-making figures of
 // ionic-conductivity-ref620.html as standalone SVG files with inlined colours.
 // Run from the repository root:  node ionic-conductivity-svg/export_svgs.js
 const { chromium } = require('playwright');
@@ -25,7 +25,8 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
     const bg = getComputedStyle(document.body).getPropertyValue('--surface').trim() || '#FFFFFF';
     const pick = [...document.querySelectorAll('#steps .stepfig svg'), document.querySelector('#wire svg'), document.querySelector('#cell svg'),
       ...document.querySelectorAll('#coin .figsvg svg'), ...document.querySelectorAll('#after .stepfig svg'),
-      ...document.querySelectorAll('#pp .figsvg svg'), ...document.querySelectorAll('#pp .stepfig svg')];
+      ...document.querySelectorAll('#pp .figsvg svg'), ...document.querySelectorAll('#pp .stepfig svg'),
+      ...document.querySelectorAll('#make .stepfig svg')];
     return pick.map(svg => {
       const clone = svg.cloneNode(true);
       const src = [svg, ...svg.querySelectorAll('*')];
@@ -52,7 +53,9 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
     'after-05-decrimp', 'after-06-check-membrane', 'after-07-sort-waste', 'after-08-clean-up',
     'pp-01-identify', 'pp-02-dense-film-ring',
     'pp-step-01-punch-dry', 'pp-step-02-thickness', 'pp-step-03-assemble', 'pp-step-04-wetting',
-    'pp-step-05-multilayer', 'pp-step-06-calculate'];
+    'pp-step-05-multilayer', 'pp-step-06-calculate',
+    'make-01-target-size', 'make-02-choose-method', 'make-03-solution-cast', 'make-04-hot-press',
+    'make-05-punch', 'make-06-weigh', 'make-07-transfer', 'make-08-in-situ-cure'];
   svgs.forEach((s, i) => {
     const file = path.join(OUT, names[i] + '.svg');
     fs.writeFileSync(file, '<?xml version="1.0" encoding="UTF-8"?>\n' + s + '\n');

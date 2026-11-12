@@ -186,6 +186,20 @@ svg .droplet{fill:#BFD8F2;fill-opacity:.8;stroke:var(--accent);stroke-width:1}
 svg .pipette{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1.3}
 svg .ring-warn{fill:var(--surface);stroke:var(--warn);stroke-width:2}
 svg .slope{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 3}
+svg .dish{fill:var(--ptfe);stroke:var(--steel-edge);stroke-width:1.2}
+svg .sol{fill:var(--sample);fill-opacity:.65;stroke:none}
+svg .glassc{fill:var(--accent-soft);fill-opacity:.7;stroke:var(--accent);stroke-width:1}
+svg .evap{fill:none;stroke:var(--muted);stroke-width:1.5}
+svg .platen{fill:var(--steel);stroke:var(--steel-edge);stroke-width:1.5}
+svg .heat{fill:none;stroke:var(--danger);stroke-width:1.6}
+svg .liner{fill:#EEF2F6;stroke:var(--steel-edge);stroke-width:.8}
+svg .cutmark{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 2}
+svg .coldblock{fill:#D6E6F4;stroke:#7FA6C9;stroke-width:1.2}
+svg .pan{fill:none;stroke:var(--steel-edge);stroke-width:5;stroke-linecap:round}
+svg .liner-out{fill:none;stroke:var(--steel-edge);stroke-width:6;stroke-linecap:round}
+svg .liner-line{fill:none;stroke:#EEF2F6;stroke-width:3.5;stroke-linecap:round}
+svg .tweezer{stroke:var(--steel-edge);stroke-width:3.5;stroke-linecap:round}
+svg .ray{stroke:#8B5CF6;stroke-width:1.5;stroke-dasharray:4 4}
 svg .spark{fill:none;stroke:var(--danger);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 
 /* table */
@@ -299,6 +313,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
     <a href="#arr">变温测量</a>
     <a href="#coin">纽扣电池</a>
     <a href="#pp">PP 膜</a>
+    <a href="#make">制膜</a>
     <a href="#after">测后处理</a>
     <a href="#trouble">问题排查</a>
   </div>
@@ -857,10 +872,96 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   </div>
 </section>
 
+<section id="make">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">11 · Making films that fit</div>
+      <h2>做出尺寸合适的聚合物电解质膜</h2>
+      <p>测电导率时，膜的尺寸、厚度和平整度直接决定 L 和 A 准不准。下面按定尺寸、选方法、制膜、冲片、称重、转移和原位固化的顺序，每一步配一张图。都是通用实验方法，具体温度、溶剂和干燥条件以课题组的配方和规程为准。</p>
+    </div>
+    <div class="block">
+      <!--MKSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>先按要用的电池定好膜的尺寸，再决定怎么做膜。<span class="src gen">通用方法</span></p>
+          <ul><li>夹层池：填满 PTFE 垫片的孔，厚度等于垫片厚度。</li>
+          <li>纽扣电池：圆片比不锈钢垫片大一圈（例如垫片 16 mm、膜 18–19 mm），但不能大到压住密封圈，否则封不严。</li>
+          <li>PP 环：填满环的孔，刮平到和环齐平（第 10 节）。</li>
+          <li>厚度：测电导率时厚一点（例如 100–300 µm），R<sub>b</sub> 更大、更好测。纽扣电池里膜太厚时，减少不锈钢垫片的厚度或数量，保证封口后弹片还有压缩量。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="先定目标尺寸：夹层池填满 PTFE 垫片的孔，厚度等于垫片厚度；纽扣电池用 18 到 19 毫米的圆片，比 16 毫米垫片大一圈；PP 环填满孔并刮平。"><text x="70" y="26" font-size="12" text-anchor="middle" font-weight="700">夹层池</text><text x="200" y="26" font-size="12" text-anchor="middle" font-weight="700">纽扣电池</text><text x="330" y="26" font-size="12" text-anchor="middle" font-weight="700">PP 环</text><circle cx="70" cy="90" r="44" class="ptfe"/><circle cx="70" cy="90" r="22" class="sample"/><circle cx="200" cy="90" r="50" class="steel"/><circle cx="200" cy="90" r="46" class="sample"/><circle cx="200" cy="90" r="38" class="hidden-edge"/><circle cx="330" cy="90" r="44" class="film-clear"/><circle cx="330" cy="90" r="26" class="sample"/><text x="70" y="156" font-size="11" text-anchor="middle" font-weight="700">填满垫片的孔</text><text x="70" y="172" font-size="9.5" text-anchor="middle" class="t-mut">厚度 = 垫片厚度</text><text x="200" y="156" font-size="11" text-anchor="middle" font-weight="700">膜 Ø18–19 mm</text><text x="200" y="172" font-size="9.5" text-anchor="middle" class="t-mut">虚线：垫片 Ø16 mm</text><text x="330" y="156" font-size="11" text-anchor="middle" font-weight="700">填满环的孔</text><text x="330" y="172" font-size="9.5" text-anchor="middle" class="t-mut">刮平到和环齐平</text><rect x="14" y="186" width="372" height="28" rx="8" class="sunk-r"/><text x="200" y="204.5" font-size="11" text-anchor="middle" font-weight="700">先按电池定尺寸，再决定怎么做膜</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>按材料的状态选制膜方法。<span class="src gen">通用方法</span></p>
+          <ul><li>溶液浇铸最常用，但要把溶剂彻底除干净。</li>
+          <li>热压不用溶剂，厚度由垫片决定，适合能熔融或软化的体系，例如 PEO 类。</li>
+          <li>液态前驱体（例如可 UV 或热固化的凝胶）直接在孔里固化，尺寸和接触都最好。</li>
+          <li>很软很粘、难以冲片的材料，直接填孔或熔融填充最省事。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="按材料状态选制膜方法：能溶于溶剂用溶液浇铸；加热能熔融或软化用无溶剂热压；液态前驱体在孔里原位固化；很软很粘的材料直接填孔或熔融填充。"><rect x="10" y="8" width="170" height="44" rx="6" class="sunk-r"/><text x="95" y="34.5" font-size="11.5" text-anchor="middle" font-weight="700">能溶于溶剂</text><line x1="184" y1="30" x2="198" y2="30" class="dim"/><path d="M206 30 L197 25 L197 35 Z" class="arr"/><rect x="212" y="8" width="180" height="44" rx="6" class="menu-hi"/><text x="222" y="27" font-size="11.5" font-weight="700" class="t-acc">溶液浇铸</text><text x="222" y="43" font-size="9.5" class="t-mut">最常用；要彻底干燥</text><rect x="10" y="60" width="170" height="44" rx="6" class="sunk-r"/><text x="95" y="86.5" font-size="11.5" text-anchor="middle" font-weight="700">加热能熔融或软化</text><line x1="184" y1="82" x2="198" y2="82" class="dim"/><path d="M206 82 L197 77 L197 87 Z" class="arr"/><rect x="212" y="60" width="180" height="44" rx="6" class="menu-hi"/><text x="222" y="79" font-size="11.5" font-weight="700" class="t-acc">热压（无溶剂）</text><text x="222" y="95" font-size="9.5" class="t-mut">厚度由垫片决定</text><rect x="10" y="112" width="170" height="44" rx="6" class="sunk-r"/><text x="95" y="138.5" font-size="11.5" text-anchor="middle" font-weight="700">液态前驱体，可固化</text><line x1="184" y1="134" x2="198" y2="134" class="dim"/><path d="M206 134 L197 129 L197 139 Z" class="arr"/><rect x="212" y="112" width="180" height="44" rx="6" class="menu-hi"/><text x="222" y="131" font-size="11.5" font-weight="700" class="t-acc">在孔里原位固化</text><text x="222" y="147" font-size="9.5" class="t-mut">尺寸和接触最好</text><rect x="10" y="164" width="170" height="44" rx="6" class="sunk-r"/><text x="95" y="190.5" font-size="11.5" text-anchor="middle" font-weight="700">很软、很粘</text><line x1="184" y1="186" x2="198" y2="186" class="dim"/><path d="M206 186 L197 181 L197 191 Z" class="arr"/><rect x="212" y="164" width="180" height="44" rx="6" class="menu-hi"/><text x="222" y="183" font-size="11.5" font-weight="700" class="t-acc">直接填孔或熔融填充</text><text x="222" y="199" font-size="9.5" class="t-mut">不用冲片</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>溶液浇铸：按目标厚度算好溶液用量，倒进放水平的 PTFE 培养皿，盖子留缝让溶剂慢慢挥发，然后真空干燥到恒重。<span class="src gen">通用方法</span></p>
+          <ul><li>厚度 ≈ 溶质质量 ÷ (密度 × 培养皿面积)，可以用下面的计算器估算。</li>
+          <li>挥发太快会起泡、边缘厚中间薄；冲片时取中间均匀的部分。</li>
+          <li>残留溶剂和水分会让电导率虚高。干燥条件按课题组规程，一直干到质量不再变化；需要时用热重分析 (TGA) 确认。</li>
+          <li>溶剂（例如乙腈）在通风橱里操作。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="溶液浇铸：按目标厚度算好溶液用量，倒进放水平的 PTFE 培养皿，盖子留缝让溶剂慢慢挥发；厚度 t 等于溶质质量除以密度乘面积；真空干燥到恒重，残留溶剂和水分会让电导率虚高。"><text x="18" y="40" font-size="11" font-weight="700">按目标厚度算好溶液用量</text><text x="18" y="58" font-size="9.5" class="t-mut">（见下面的计算器）</text><path d="M18 100 H28 L34 128 H186 L192 100 H202 L196 140 H24 Z" class="dish"/><path d="M30.6 112 H189.4 L186 128 H34 Z" class="sol"/><rect x="12" y="90" width="170" height="5" rx="1" class="glassc"/><path d="M190 94 q-5 -5 0 -10 q5 -5 0 -10 q-5 -5 0 -10" class="evap"/><path d="M190 62 l-3.5 7 h7 Z" class="arr"/><path d="M200 94 q-5 -5 0 -10 q5 -5 0 -10" class="evap"/><path d="M200 72 l-3.5 7 h7 Z" class="arr"/><text x="110" y="160" font-size="11" text-anchor="middle" font-weight="700">PTFE 培养皿，放水平</text><text x="110" y="178" font-size="10" text-anchor="middle" class="t-mut">盖子留缝，让溶剂慢慢挥发</text><text x="110" y="195" font-size="10" text-anchor="middle" class="t-mut">挥发太快会起泡、厚薄不均</text><rect x="226" y="16" width="166" height="190" rx="8" class="sunk-r"/><text x="309" y="46" font-size="15" text-anchor="middle" font-weight="700">t = m / (ρ · A)</text><text x="238" y="72" font-size="9.5" class="t-mut">m：溶质（聚合物 + 盐）质量</text><text x="238" y="90" font-size="9.5" class="t-mut">ρ：膜的密度</text><text x="238" y="108" font-size="9.5" class="t-mut">A：培养皿的底面积</text><line x1="238" y1="122" x2="380" y2="122" class="grid"/><text x="309" y="146" font-size="11.5" text-anchor="middle" font-weight="700" class="t-warn">真空干燥到恒重</text><text x="309" y="168" font-size="10" text-anchor="middle" class="t-mut">残留溶剂和水分</text><text x="309" y="184" font-size="10" text-anchor="middle" class="t-mut">会让电导率虚高</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>热压：把材料放在两张离型膜之间，两侧放已知厚度的垫片，加热到软化或熔化温度以上压平，在压力下冷却后再取出。<span class="src gen">通用方法</span></p>
+          <ul><li>垫片厚度决定膜厚，思路和第 10 节的 PP 环一样。</li>
+          <li>温度按材料定，不要超过聚合物和锂盐的分解温度；小心烫伤。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="无溶剂热压：电解质放在两张离型膜之间，两侧放已知厚度的垫片，用加热压板压平，垫片厚度就是膜厚；在压力下冷却后取出；温度按材料定，不超过分解温度，小心烫伤。"><line x1="80" y1="6" x2="80" y2="26" class="dim"/><path d="M80 32 L75 23 L85 23 Z" class="arr"/><line x1="200" y1="6" x2="200" y2="26" class="dim"/><path d="M200 32 L195 23 L205 23 Z" class="arr"/><rect x="30" y="34" width="220" height="24" rx="3" class="platen"/><path d="M44 46 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0" class="heat"/><text x="256" y="50" font-size="10" font-weight="600">加热压板</text><rect x="50" y="92" width="180" height="4" class="liner"/><rect x="96" y="96" width="88" height="16" class="sample"/><rect x="54" y="96" width="30" height="16" rx="1" class="steel"/><rect x="196" y="96" width="30" height="16" rx="1" class="steel"/><rect x="50" y="112" width="180" height="4" class="liner"/><rect x="30" y="118" width="220" height="24" rx="3" class="platen"/><path d="M44 130 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0 q4.0 -4 8 0 q4.0 4 8 0" class="heat"/><text x="69" y="88" font-size="9.5" text-anchor="middle" font-weight="600">垫片</text><text x="211" y="88" font-size="9.5" text-anchor="middle" font-weight="600">垫片</text><text x="140" y="108" font-size="9.5" text-anchor="middle" font-weight="700">电解质</text><text x="46" y="104" font-size="9" text-anchor="end" class="t-mut">离型膜</text><rect x="266" y="70" width="124" height="64" rx="6" class="warnbox"/><text x="328" y="92" font-size="10.5" text-anchor="middle" font-weight="700">温度按材料定</text><text x="328" y="110" font-size="9.5" text-anchor="middle" class="t-mut">不超过分解温度</text><text x="328" y="125" font-size="9.5" text-anchor="middle" class="t-mut">小心烫伤</text><text x="140" y="168" font-size="11.5" text-anchor="middle" font-weight="700">两侧垫片的厚度 = 膜厚</text><text x="140" y="186" font-size="10" text-anchor="middle" class="t-mut">上下垫离型膜，防止粘住</text><text x="140" y="202" font-size="10" text-anchor="middle" class="t-mut">在压力下冷却后再取出</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>冲片：连同上下离型膜一起冲；很粘的膜先在预冷的金属块上冷却变硬，边缘才整齐。<span class="src gen">通用方法</span></p>
+          <ul><li>用冲刀，不用剪刀：剪刀会让边缘变形、局部变薄。</li>
+          <li>冲的时候不要拉扯膜；刀口粘了电解质，用溶剂擦净再冲下一片。</li>
+          <li>冲完复测直径，软的膜会回缩。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="冲片：膜连同上下离型膜放在预冷的金属块上，用冲刀冲出圆片；先冷却变硬边缘才整齐；用冲刀不用剪刀，不要拉扯膜，冲完复测直径。"><rect x="156" y="6" width="24" height="18" rx="3" class="steel"/><rect x="144" y="24" width="48" height="44" rx="4" class="steel"/><path d="M144 68 H192 L190 76 H146 Z" class="steel"/><line x1="146" y1="76" x2="146" y2="100" class="ext"/><line x1="190" y1="76" x2="190" y2="100" class="ext"/><rect x="40" y="92" width="256" height="3" class="liner"/><rect x="40" y="95" width="256" height="10" class="sample"/><rect x="40" y="105" width="256" height="3" class="liner"/><rect x="146" y="92" width="44" height="16" class="cutmark"/><rect x="30" y="108" width="276" height="34" rx="4" class="coldblock"/><text x="168" y="130" font-size="10.5" text-anchor="middle" font-weight="600" class="t-onlight">预冷的金属块</text><text x="206" y="36" font-size="11" font-weight="700">连同上下离型膜一起冲</text><text x="206" y="54" font-size="10" class="t-mut">先冷却变硬，边缘才整齐</text><text x="168" y="170" font-size="11" text-anchor="middle" font-weight="700">用冲刀，不用剪刀：边缘不变形</text><text x="168" y="188" font-size="10" text-anchor="middle" class="t-mut">不要拉扯膜，会被拉薄</text><text x="168" y="204" font-size="10" text-anchor="middle" class="t-mut">冲完复测直径：软的膜会回缩</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>每片称重，用质量估算平均厚度，再和千分尺的读数对照。<span class="src gen">通用方法</span></p>
+          <ul><li>t = m / (ρ · A)：不用碰膜就能知道平均厚度，适合一压就变形的软膜。</li>
+          <li>密度 ρ 按配方估算，或者用一块已知尺寸、已知厚度的膜标定。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="称重估厚度：圆片称得 36.0 毫克，直径 19 毫米、密度 1.25 克每立方厘米时，平均厚度约 102 微米；不用碰膜就能知道平均厚度，和千分尺读数对照。"><text x="20" y="30" font-size="12" font-weight="700">每片称重</text><text x="20" y="48" font-size="10" class="t-mut">用质量估算平均厚度</text><ellipse cx="115" cy="112" rx="34" ry="6" class="sample"/><path d="M52 120 H178" class="pan"/><rect x="110" y="122" width="10" height="18" class="steel"/><rect x="20" y="140" width="190" height="46" rx="8" class="panel"/><rect x="60" y="150" width="110" height="24" rx="3" class="lcd"/><text x="115" y="167" font-size="13" text-anchor="middle" font-weight="700" class="lcd-ink tm">36.0 mg</text><text x="115" y="206" font-size="10.5" text-anchor="middle" font-weight="600">和千分尺读数对照</text><rect x="222" y="16" width="170" height="190" rx="8" class="sunk-r"/><text x="307" y="46" font-size="15" text-anchor="middle" font-weight="700">t = m / (ρ · A)</text><text x="307" y="72" font-size="9.5" text-anchor="middle" class="tm">= 0.036 g ÷ (1.25 g/cm³</text><text x="307" y="88" font-size="9.5" text-anchor="middle" class="tm">× 2.84 cm²)</text><text x="307" y="116" font-size="16" text-anchor="middle" font-weight="700" class="t-acc">≈ 102 µm</text><text x="307" y="142" font-size="9.5" text-anchor="middle" class="t-mut">不用碰膜就知道平均厚度</text><text x="307" y="158" font-size="9.5" text-anchor="middle" class="t-mut">适合一压就变形的软膜</text><text x="307" y="190" font-size="9" text-anchor="middle" font-weight="600" class="t-warn">示例：Ø19 mm，ρ = 1.25 g/cm³</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>转移：带着离型膜一起拿，放到不锈钢垫片上，放平居中后再以低角度慢慢揭掉离型膜。<span class="src gen">通用方法</span></p>
+          <ul><li>膜粘在离型膜上揭不下来时，先冷却；或者换一种离型膜，例如 PTFE 片或硅油处理过的 PET 膜。</li>
+          <li>用 PTFE 头的镊子，避免金属镊子划伤或粘住膜。</li>
+          <li>制好的膜存放在手套箱里，装电池也在手套箱里进行，避免吸水。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="转移：带着离型膜把膜放到不锈钢垫片上，放平居中后，用 PTFE 头镊子以低角度慢慢揭掉离型膜；粘住时先冷却或换离型膜；在手套箱里操作。"><text x="20" y="28" font-size="12" font-weight="700">带着离型膜一起转移</text><text x="20" y="46" font-size="10" class="t-mut">放平、居中后再揭膜</text><rect x="30" y="150" width="190" height="12" rx="2" class="steel"/><rect x="46" y="140" width="158" height="10" rx="2" class="sample"/><path d="M46 139 H140 Q160 139 214 100" class="liner-out"/><path d="M46 139 H140 Q160 139 214 100" class="liner-line"/><line x1="212" y1="100" x2="300" y2="52" class="tweezer"/><line x1="219" y1="105" x2="306" y2="58" class="tweezer"/><circle cx="214" cy="102" r="5" class="ptfe"/><path d="M150 120 Q168 100 192 94" class="turn"/><path d="M198 92 L189 90 L192 98 Z" class="arr"/><text x="262" y="120" font-size="11.5" font-weight="700">低角度、慢慢揭</text><text x="262" y="140" font-size="10" class="t-mut">粘住揭不下来：</text><text x="262" y="156" font-size="10" class="t-mut">先冷却，或换离型膜</text><text x="262" y="180" font-size="10" class="t-mut">用 PTFE 头的镊子</text><text x="125" y="184" font-size="10" text-anchor="middle" class="t-mut">不锈钢垫片</text><text x="125" y="204" font-size="10.5" text-anchor="middle" font-weight="600">在手套箱里操作</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>原位固化（适合液态前驱体）：把前驱体滴进放在不锈钢垫片上的 PP 或 PTFE 环形垫片孔里，刮平后用 UV 或加热固化，再盖上垫片、封口。<span class="src gen">通用方法</span></p>
+          <ul><li>UV 透不过不锈钢，要在敞开状态下先固化，再盖上面的垫片；热固化可以封口后进行。</li>
+          <li>固化要完全：残留的未反应单体会影响电导率和稳定性。</li>
+          <li>这样得到的膜和孔的尺寸完全一致，和电极的接触也最好。</li>
+          <li>使用 UV 灯时戴防护眼镜。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="原位固化：先把液态前驱体滴进放在不锈钢垫片上的环形垫片孔里，刮平到和环齐平；再用紫外光或加热固化，然后盖上垫片、封口。"><rect x="20" y="150" width="170" height="10" rx="2" class="steel"/><rect x="20" y="136" width="55" height="14" class="film-clear"/><rect x="135" y="136" width="55" height="14" class="film-clear"/><rect x="75" y="138" width="60" height="12" class="sol"/><rect x="97" y="36" width="16" height="52" rx="3" class="pipette"/><path d="M98 88 L112 88 L106 116 L104 116 Z" class="pipette"/><path d="M105 120 q4 6 0 9 q-4 -3 0 -9 Z" class="droplet"/><text x="102" y="186" font-size="11" text-anchor="middle" font-weight="700">① 前驱体填满孔</text><text x="102" y="203" font-size="10" text-anchor="middle" class="t-mut">刮平，和环齐平</text><rect x="215" y="150" width="170" height="10" rx="2" class="steel"/><rect x="215" y="136" width="55" height="14" class="film-clear"/><rect x="330" y="136" width="55" height="14" class="film-clear"/><rect x="270" y="136" width="60" height="14" class="sample"/><rect x="250" y="30" width="100" height="26" rx="4" class="panel"/><text x="300" y="47.5" font-size="10.5" text-anchor="middle" font-weight="700" class="t-panel">UV / 加热</text><line x1="272" y1="60" x2="272" y2="130" class="ray"/><line x1="286" y1="60" x2="286" y2="130" class="ray"/><line x1="300" y1="60" x2="300" y2="130" class="ray"/><line x1="314" y1="60" x2="314" y2="130" class="ray"/><line x1="328" y1="60" x2="328" y2="130" class="ray"/><text x="300" y="186" font-size="11" text-anchor="middle" font-weight="700">② 固化</text><text x="300" y="203" font-size="10" text-anchor="middle" class="t-mut">再盖上垫片、封口</text><line x1="200" y1="20" x2="200" y2="210" class="grid"/></svg></figure></div></li>
+      </ol>
+      <!--/MKSTEPS-->
+    </div>
+
+    <div class="block two" style="margin-top:16px">
+      <div class="fields">
+        <h3>浇铸用量</h3>
+        <div class="row2">
+          <div class="field"><label for="mkT">目标厚度 (µm)</label><input id="mkT" type="number" min="0" step="any" value="150"></div>
+          <div class="field"><label for="mkD">培养皿内径 (mm)</label><input id="mkD" type="number" min="0" step="any" value="60"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="mkRho">膜的密度 ρ (g/cm³)</label><input id="mkRho" type="number" min="0" step="any" value="1.25"></div>
+          <div class="field"><label for="mkC">溶液浓度 (g 溶质 / mL)</label><input id="mkC" type="number" min="0" step="any" value="0.05"></div>
+        </div>
+        <div class="big" id="mkOut" aria-live="polite">—</div>
+        <div class="note" id="mkDetail">—</div>
+        <p class="note" style="margin:0">实际的膜边缘厚、中间薄，冲片时取中间部分；第一次做按实际厚度微调用量。密度按配方估算。</p>
+      </div>
+      <div class="fields">
+        <h3>称重估厚度</h3>
+        <div class="row2">
+          <div class="field"><label for="wM">圆片质量 (mg)</label><input id="wM" type="number" min="0" step="any" value="36"></div>
+          <div class="field"><label for="wD">圆片直径 (mm)</label><input id="wD" type="number" min="0" step="any" value="19"></div>
+        </div>
+        <div class="field"><label for="wRho">膜的密度 ρ (g/cm³)</label><input id="wRho" type="number" min="0" step="any" value="1.25"></div>
+        <div class="big" id="wOut" aria-live="polite">—</div>
+        <div class="note" id="wDetail">—</div>
+        <p class="note" style="margin:0">示例数值是虚构的。称重得到的是平均厚度，和千分尺读数相差很大时，检查膜是否厚薄不均或密度估错。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="after">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">11 · After the test</div>
+      <div class="eyebrow">12 · After the test</div>
       <h2>纽扣电池测完之后</h2>
       <p>从取下电池、记录数据，到拆壳、检查电解质膜、分类处理废物和清理工位，每一步配一张示意图。仪器部分依据手册，其余是通用的实验室做法；废物处理以所在单位的安全规定为准。</p>
     </div>
@@ -912,7 +1013,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
 <section id="trouble">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">12 · Troubleshooting</div>
+      <div class="eyebrow">13 · Troubleshooting</div>
       <h2>问题排查</h2>
     </div>
     <div class="block tablewrap">
@@ -928,6 +1029,8 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
           <tr><td>Overload 灯持续常亮</td><td>导线断开或夹子松脱</td><td>检查五个夹子；Cell On 熄灭后再动线<span class="src">手册 Ch 7</span></td></tr>
           <tr><td>电导率比预期低很多</td><td>L 量大了或 A 取大了；接触不良</td><td>重新核对 L、A 的取法（第 03 节）；检查样品与不锈钢的接触</td></tr>
           <tr><td>纽扣电池谱图只是实轴附近一个点</td><td>弹片压穿了膜，或垫片错位，两片垫片直接接触</td><td>拆开检查；软的膜外加 PTFE 环形垫片限定厚度<span class="src gen">通用方法</span></td></tr>
+          <tr><td>电导率偏高、批次间差别大</td><td>膜里有残留溶剂或吸了水</td><td>真空干燥到恒重；制膜、存放、装池都在手套箱里<span class="src gen">通用方法</span></td></tr>
+          <tr><td>同一批膜电阻差别大</td><td>膜厚薄不均：浇铸时挥发太快，或冲片时拉扯</td><td>取浇铸膜中间部分；每片称重估厚度；用垫片或热压控制厚度<span class="src gen">通用方法</span></td></tr>
           <tr><td>PP 隔膜电池的截距一直在变</td><td>电解液还没浸透隔膜</td><td>延长静置时间，截距稳定后再取值；浸不透时换容易浸润的隔膜<span class="src gen">通用方法</span></td></tr>
           <tr><td>纽扣电池重复性差</td><td>接触电阻、封口压力不一致；鳄鱼夹位置不同</td><td>用纽扣电池夹具；用空白池测接触电阻并扣除；同一封口机、同一压力<span class="src gen">通用方法</span></td></tr>
         </tbody>
@@ -1377,5 +1480,34 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   });
   svg.addEventListener('pointerleave', () => { tip.hidden = true; if (hover) hover.setAttribute('cx', -20); });
   update();
+})();
+</script>
+
+<script>
+/* film thickness helpers: casting amount and thickness from weight */
+(function(){
+  const $ = s => document.querySelector(s);
+  const v = id => parseFloat($(id).value);
+  const p3 = x => (+x.toPrecision(3)).toString();
+  function cast(){
+    const t = v('#mkT'), d = v('#mkD'), rho = v('#mkRho'), c = v('#mkC');
+    if (!(t > 0 && d > 0 && rho > 0)){ $('#mkOut').textContent = '—'; $('#mkDetail').textContent = '厚度、内径和密度都要大于 0。'; return; }
+    const A = Math.PI * Math.pow(d / 20, 2);
+    const m = t * 1e-4 * A * rho;
+    $('#mkOut').textContent = c > 0 ? `${p3(m)} g 溶质 · ${p3(m / c)} mL 溶液` : `${p3(m)} g 溶质`;
+    $('#mkDetail').innerHTML = `面积 A = ${p3(A)} cm²；m = ${p3(t * 1e-4)} cm × ${p3(A)} cm² × ${p3(rho)} g/cm³ = ${p3(m)} g` +
+      (c > 0 ? `；溶液体积 = ${p3(m)} g ÷ ${p3(c)} g/mL = ${p3(m / c)} mL` : '');
+  }
+  function weigh(){
+    const m = v('#wM'), d = v('#wD'), rho = v('#wRho');
+    if (!(m > 0 && d > 0 && rho > 0)){ $('#wOut').textContent = '—'; $('#wDetail').textContent = '质量、直径和密度都要大于 0。'; return; }
+    const A = Math.PI * Math.pow(d / 20, 2);
+    const t = (m * 1e-3) / (rho * A);
+    $('#wOut').textContent = `≈ ${p3(t * 1e4)} µm`;
+    $('#wDetail').innerHTML = `t = ${p3(m * 1e-3)} g ÷ (${p3(rho)} g/cm³ × ${p3(A)} cm²) = ${p3(t)} cm`;
+  }
+  ['#mkT', '#mkD', '#mkRho', '#mkC'].forEach(id => $(id).addEventListener('input', cast));
+  ['#wM', '#wD', '#wRho'].forEach(id => $(id).addEventListener('input', weigh));
+  cast(); weigh();
 })();
 </script>
