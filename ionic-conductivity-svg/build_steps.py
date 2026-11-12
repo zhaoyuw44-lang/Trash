@@ -1326,8 +1326,29 @@ def cal_ci():
 
 
 def cal_lowi():
-    return svg('DC Low I 校准接线：200 欧姆校准池放在屏蔽盒里，绿线和蓝线保持接着，白、红、橙三根线按提示拆下、线头悬空，黑线接接地柱。',
-               cal_setup('200 Ω', 'Experiment › Utilities › （Low I DC 校准）', disconnect=True))
+    """Wiring from the software's Cell Connection Information dialog (IEOFST step)."""
+    o = [R(8, 62, 74, 96, 'panel', 6), T(45, 80, 'Reference', 8, 'middle', 700, 't-panel'), T(45, 91, '620', 8, 'middle', 700, 't-panel'),
+         C(22, 146, 7, 'glow-b'), C(22, 146, 4, 'led-b'), R(64, 98, 10, 34, 'conn', 2),
+         P('M45 158 V182', 'gnd-line'), P('M33 182 H57 M37 187 H53 M41 192 H49', 'gnd-line'),
+         T(60, 190, '机壳接大地', 9.5, None, None, 't-mut'),
+         P('M74 117 H106', 'cable'),
+         R(150, 40, 240, 140, 'shield', 8), R(160, 52, 220, 118, 'shield-in', 5),
+         T(270, 32, '法拉第屏蔽盒：盖好盖子', 10, 'middle', 600),
+         # RE + CS + CE clipped together outside the cage
+         wire('M108 110 C 116 100, 116 74, 118 58', 're'), wire('M110 113 C 122 100, 124 74, 124 58', 'cs'),
+         wire('M112 116 C 128 100, 132 74, 130 58', 'ce'),
+         P('M114 58 H134 L131 34 H117 Z', 'clip'),
+         T(10, 22, '白 + 橙 + 红', 11, None, 700), T(10, 38, '夹在一起，放盒外', 9.5, None, None, 't-mut'),
+         # WE + WS clipped together inside the cage
+         wire('M112 119 C 132 119, 140 108, 160 108 H224', 'we'), wire('M112 122 C 134 123, 144 120, 160 120 H224', 'ws'),
+         P('M224 102 L250 110 L250 118 L224 126 Z', 'clip'),
+         T(262, 100, '绿 + 蓝夹在一起', 10.5, None, 700), T(262, 116, '放在盒里，悬空', 9.5, None, None, 't-mut'),
+         T(262, 131, '不要碰到盒壁', 9.5, None, None, 't-mut'),
+         # floating ground to the cage
+         wire('M110 125 C 126 148, 150 162, 170 162', 'gnd'), C(175, 163, 5, 'post'),
+         T(185, 167, '黑线 → 屏蔽盒接地柱', 9, None, 600),
+         T(200, 210, '按软件的 Cell Connection Information 窗口接好，再点 OK', 9.5, 'middle', None, 't-mut')]
+    return svg('DC Low I 校准接线（按软件提示窗口）：绿色 WE 和蓝色 WS 夹在一起，放在法拉第屏蔽盒里，不碰盒壁；黑色浮地线接屏蔽盒；白色 RE、橙色 CS、红色 CE 三根夹在一起，放在屏蔽盒外面；接好后点 OK。', ''.join(o))
 
 
 def cal_cable():
