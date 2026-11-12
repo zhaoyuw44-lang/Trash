@@ -1,4 +1,4 @@
-// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps, the PP-film and film-making figures of
+// Export the step illustrations, the wiring / cross-section diagrams, the coin-cell figures, the after-test steps, the PP-film, film-making and UV/plasticizer figures of
 // ionic-conductivity-ref620.html as standalone SVG files with inlined colours.
 // Run from the repository root:  node ionic-conductivity-svg/export_svgs.js
 const { chromium } = require('playwright');
@@ -55,7 +55,9 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
     'pp-step-01-punch-dry', 'pp-step-02-thickness', 'pp-step-03-assemble', 'pp-step-04-wetting',
     'pp-step-05-multilayer', 'pp-step-06-calculate',
     'make-01-target-size', 'make-02-choose-method', 'make-03-solution-cast', 'make-04-hot-press',
-    'make-05-punch', 'make-06-weigh', 'make-07-transfer', 'make-08-in-situ-cure'];
+    'make-05-punch', 'make-06-weigh', 'make-07-transfer', 'make-08-in-situ-cure',
+    'uv-01-formulate', 'uv-02-when-to-add-plasticizer', 'uv-03-degas', 'uv-04-fill-cover-cure',
+    'uv-05-check-cure', 'uv-06-monitor-plasticizer'];
   svgs.forEach((s, i) => {
     const file = path.join(OUT, names[i] + '.svg');
     fs.writeFileSync(file, '<?xml version="1.0" encoding="UTF-8"?>\n' + s + '\n');

@@ -200,6 +200,14 @@ svg .liner-out{fill:none;stroke:var(--steel-edge);stroke-width:6;stroke-linecap:
 svg .liner-line{fill:none;stroke:#EEF2F6;stroke-width:3.5;stroke-linecap:round}
 svg .tweezer{stroke:var(--steel-edge);stroke-width:3.5;stroke-linecap:round}
 svg .ray{stroke:#8B5CF6;stroke-width:1.5;stroke-dasharray:4 4}
+.subsec{margin-top:44px}
+.h2sub{font-size:clamp(22px,3.4vw,30px)}
+svg .bottle2{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1.2}
+svg .plast{fill:#BFD8F2;stroke:none} svg .amber{fill:#B8742A;fill-opacity:.85;stroke:#7A4A14;stroke-width:1}
+svg .vial{fill:var(--surface);stroke:var(--steel-edge);stroke-width:1.5}
+svg .bubble{fill:#FFFFFF;fill-opacity:.7;stroke:var(--accent);stroke-width:1}
+svg .tacky{fill:none;stroke:#C9A25A;stroke-width:2}
+svg .curve-warn{fill:none;stroke:var(--warn);stroke-width:2;stroke-dasharray:5 4}
 svg .spark{fill:none;stroke:var(--danger);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 
 /* table */
@@ -237,6 +245,7 @@ ol.steps ul{margin:4px 0 0;padding-left:18px;font-size:14.5px}
 .outs dt{font-size:12px;color:var(--muted)}
 .outs dd{margin:2px 0 0;font-family:var(--f-display);font-weight:600;font-size:19px;font-variant-numeric:tabular-nums}
 .msgs{display:grid;gap:8px;margin-top:12px}
+.msgs:empty{display:none}
 .msg{font-size:14px;padding:8px 12px;border-radius:8px;border-left:3px solid var(--rule);background:var(--sunk)}
 .msg.ok{border-left-color:var(--ok);background:var(--ok-soft)}
 .msg.warn{border-left-color:var(--warn);background:var(--warn-soft)}
@@ -314,6 +323,7 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
     <a href="#coin">纽扣电池</a>
     <a href="#pp">PP 膜</a>
     <a href="#make">制膜</a>
+    <a href="#uv">UV 与增塑剂</a>
     <a href="#after">测后处理</a>
     <a href="#trouble">问题排查</a>
   </div>
@@ -922,7 +932,8 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
           <ul><li>UV 透不过不锈钢，要在敞开状态下先固化，再盖上面的垫片；热固化可以封口后进行。</li>
           <li>固化要完全：残留的未反应单体会影响电导率和稳定性。</li>
           <li>这样得到的膜和孔的尺寸完全一致，和电极的接触也最好。</li>
-          <li>使用 UV 灯时戴防护眼镜。</li></ul></div>
+          <li>使用 UV 灯时戴防护眼镜。</li>
+          <li>含 UV 交联基团或要加增塑剂时，详细做法见下面的小节。</li></ul></div>
           <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="原位固化：先把液态前驱体滴进放在不锈钢垫片上的环形垫片孔里，刮平到和环齐平；再用紫外光或加热固化，然后盖上垫片、封口。"><rect x="20" y="150" width="170" height="10" rx="2" class="steel"/><rect x="20" y="136" width="55" height="14" class="film-clear"/><rect x="135" y="136" width="55" height="14" class="film-clear"/><rect x="75" y="138" width="60" height="12" class="sol"/><rect x="97" y="36" width="16" height="52" rx="3" class="pipette"/><path d="M98 88 L112 88 L106 116 L104 116 Z" class="pipette"/><path d="M105 120 q4 6 0 9 q-4 -3 0 -9 Z" class="droplet"/><text x="102" y="186" font-size="11" text-anchor="middle" font-weight="700">① 前驱体填满孔</text><text x="102" y="203" font-size="10" text-anchor="middle" class="t-mut">刮平，和环齐平</text><rect x="215" y="150" width="170" height="10" rx="2" class="steel"/><rect x="215" y="136" width="55" height="14" class="film-clear"/><rect x="330" y="136" width="55" height="14" class="film-clear"/><rect x="270" y="136" width="60" height="14" class="sample"/><rect x="250" y="30" width="100" height="26" rx="4" class="panel"/><text x="300" y="47.5" font-size="10.5" text-anchor="middle" font-weight="700" class="t-panel">UV / 加热</text><line x1="272" y1="60" x2="272" y2="130" class="ray"/><line x1="286" y1="60" x2="286" y2="130" class="ray"/><line x1="300" y1="60" x2="300" y2="130" class="ray"/><line x1="314" y1="60" x2="314" y2="130" class="ray"/><line x1="328" y1="60" x2="328" y2="130" class="ray"/><text x="300" y="186" font-size="11" text-anchor="middle" font-weight="700">② 固化</text><text x="300" y="203" font-size="10" text-anchor="middle" class="t-mut">再盖上垫片、封口</text><line x1="200" y1="20" x2="200" y2="210" class="grid"/></svg></figure></div></li>
       </ol>
       <!--/MKSTEPS-->
@@ -953,6 +964,84 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
         <div class="big" id="wOut" aria-live="polite">—</div>
         <div class="note" id="wDetail">—</div>
         <p class="note" style="margin:0">示例数值是虚构的。称重得到的是平均厚度，和千分尺读数相差很大时，检查膜是否厚薄不均或密度估错。</p>
+      </div>
+    </div>
+
+    <div id="uv" class="subsec">
+      <div class="sec-head">
+        <div class="eyebrow">11b · UV crosslinking &amp; plasticizers</div>
+        <h2 class="h2sub">含 UV 交联基团、要加增塑剂时</h2>
+        <p>聚合物带丙烯酸酯等可 UV 交联的基团、又要加增塑剂时，有两件事要提前安排：增塑剂什么时候加（加了之后就不能再长时间真空干燥），以及 UV 固化要怎么避开氧阻聚、固化深度不够和固化收缩。以下都是通用方法，具体配方、引发剂和剂量以课题组的规程为准。</p>
+      </div>
+      <div class="block">
+        <!--UVSTEPS-->
+      <ol class="steps">
+        <li><div class="step"><div class="step-text"><p>配前驱体：可交联的单体或低聚物、锂盐、增塑剂、光引发剂，在手套箱里避光混合，搅拌到完全溶解。<span class="src gen">通用方法</span></p>
+          <ul><li>锂盐和增塑剂先干燥。很多增塑剂容易吸水，可以用活化的分子筛除水。</li>
+          <li>光引发剂的吸收波长要和 UV 灯匹配（例如 365 nm 灯）。用量常见约 0.5–2 wt%（相对可交联组分），以配方文献为准。</li>
+          <li>需要加热帮助溶解时要温和，避免提前交联。配好后避光保存，尽快用完。</li>
+          <li>每个组分称量后记下质量，可以用下面的配方计算器核对 wt%。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="配前驱体：可交联单体或低聚物、干燥过的锂盐和增塑剂、光引发剂，在手套箱里装进避光的棕色瓶搅拌到完全溶解；加热要温和，避免提前交联；光引发剂的吸收波长要和 UV 灯匹配。"><rect x="39" y="22" width="32" height="34" rx="4" class="bottle2"/><rect x="46" y="12" width="18" height="10" rx="2" class="steel"/><rect x="42" y="36" width="26" height="17" rx="2" class="sol"/><text x="55" y="72" font-size="10.5" text-anchor="middle" font-weight="700">可交联</text><text x="55" y="87" font-size="9.5" text-anchor="middle" class="t-mut">单体或低聚物</text><rect x="129" y="22" width="32" height="34" rx="4" class="bottle2"/><rect x="136" y="12" width="18" height="10" rx="2" class="steel"/><rect x="132" y="36" width="26" height="17" rx="2" class="li"/><text x="145" y="72" font-size="10.5" text-anchor="middle" font-weight="700">锂盐</text><text x="145" y="87" font-size="9.5" text-anchor="middle" class="t-mut">先干燥</text><rect x="219" y="22" width="32" height="34" rx="4" class="bottle2"/><rect x="226" y="12" width="18" height="10" rx="2" class="steel"/><rect x="222" y="36" width="26" height="17" rx="2" class="plast"/><text x="235" y="72" font-size="10.5" text-anchor="middle" font-weight="700">增塑剂</text><text x="235" y="87" font-size="9.5" text-anchor="middle" class="t-mut">先干燥</text><rect x="309" y="22" width="32" height="34" rx="4" class="bottle2"/><rect x="316" y="12" width="18" height="10" rx="2" class="steel"/><rect x="312" y="36" width="26" height="17" rx="2" class="amber"/><text x="325" y="72" font-size="10.5" text-anchor="middle" font-weight="700">光引发剂</text><text x="325" y="87" font-size="9.5" text-anchor="middle" class="t-mut">避光</text><line x1="55" y1="94" x2="184" y2="112" class="dim"/><line x1="145" y1="94" x2="195" y2="112" class="dim"/><line x1="235" y1="94" x2="205" y2="112" class="dim"/><line x1="325" y1="94" x2="216" y2="112" class="dim"/><rect x="180" y="106" width="40" height="12" rx="3" class="steel"/><rect x="176" y="118" width="48" height="56" rx="6" class="amber"/><rect x="190" y="160" width="20" height="5" rx="2" class="ptfe"/><rect x="140" y="176" width="120" height="24" rx="5" class="panel"/><text x="200" y="192" font-size="10" text-anchor="middle" font-weight="600" class="t-panel">搅拌</text><text x="18" y="136" font-size="10.5" font-weight="700">手套箱里配</text><text x="18" y="152" font-size="9.5" class="t-mut">避光：棕色瓶或包锡纸</text><text x="18" y="168" font-size="9.5" class="t-mut">搅拌到完全溶解</text><text x="272" y="136" font-size="10.5" font-weight="700">加热要温和</text><text x="272" y="152" font-size="9.5" class="t-mut">避免提前交联</text><text x="272" y="168" font-size="9.5" class="t-mut">每个组分都记下质量</text><text x="200" y="214" font-size="10" text-anchor="middle" font-weight="600">光引发剂的吸收波长要和 UV 灯匹配</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>先想清楚增塑剂什么时候加：加了增塑剂之后，就不能再长时间真空干燥。<span class="src gen">通用方法</span></p>
+          <ul><li><strong>溶剂浇铸路线</strong>：先把聚合物和锂盐浇铸、真空干燥到恒重，再在手套箱里加增塑剂（滴加或浸泡），称重确定实际含量。</li>
+          <li><strong>无溶剂 UV 路线</strong>：所有组分本来就是液态混合物，直接填孔或成膜固化，不需要干燥，增塑剂含量就是配方值。这条路线最适合含增塑剂的体系。</li>
+          <li>DMC、DEC 这类低沸点溶剂挥发很快，不适合当增塑剂来测电导率。EC、PC、丁二腈 (SN)、甘醇二甲醚类和离子液体挥发慢，但长时间真空加热也会损失。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="增塑剂什么时候加：溶剂浇铸路线先浇铸并真空干燥到恒重，再在手套箱里加增塑剂并称重；无溶剂 UV 路线把全部液态组分混合后直接固化，不用干燥，增塑剂不会损失；加了增塑剂后不要再长时间真空干燥。"><text x="12" y="22" font-size="11.5" font-weight="700">溶剂浇铸路线</text><rect x="10" y="30" width="112" height="44" rx="6" class="sunk-r"/><text x="66" y="49" font-size="10.5" text-anchor="middle" font-weight="700">聚合物 + 盐</text><text x="66" y="65" font-size="9.5" text-anchor="middle" class="t-mut">+ 溶剂</text><line x1="126" y1="52" x2="138" y2="52" class="dim"/><path d="M145 52 L137 47.5 L137 56.5 Z" class="arr"/><rect x="148" y="30" width="112" height="44" rx="6" class="sunk-r"/><text x="204" y="49" font-size="10.5" text-anchor="middle" font-weight="700">浇铸</text><text x="204" y="65" font-size="9.5" text-anchor="middle" class="t-mut">真空干燥到恒重</text><line x1="264" y1="52" x2="276" y2="52" class="dim"/><path d="M283 52 L275 47.5 L275 56.5 Z" class="arr"/><rect x="286" y="30" width="112" height="44" rx="6" class="menu-hi"/><text x="342" y="49" font-size="10.5" text-anchor="middle" font-weight="700">再加增塑剂</text><text x="342" y="65" font-size="9.5" text-anchor="middle" class="t-mut">在手套箱里，称重</text><text x="12" y="104" font-size="11.5" font-weight="700">无溶剂 UV 路线</text><rect x="10" y="112" width="112" height="44" rx="6" class="sunk-r"/><text x="66" y="131" font-size="10.5" text-anchor="middle" font-weight="700">全部液态组分</text><text x="66" y="147" font-size="9.5" text-anchor="middle" class="t-mut">混合均匀</text><line x1="126" y1="134" x2="138" y2="134" class="dim"/><path d="M145 134 L137 129.5 L137 138.5 Z" class="arr"/><rect x="148" y="112" width="112" height="44" rx="6" class="menu-hi"/><text x="204" y="131" font-size="10.5" text-anchor="middle" font-weight="700">直接 UV 固化</text><text x="204" y="147" font-size="9.5" text-anchor="middle" class="t-mut">填孔或夹层成膜</text><line x1="264" y1="134" x2="276" y2="134" class="dim"/><path d="M283 134 L275 129.5 L275 138.5 Z" class="arr"/><rect x="286" y="112" width="112" height="44" rx="6" class="okbox"/><text x="342" y="131" font-size="10.5" text-anchor="middle" font-weight="700">不用干燥</text><text x="342" y="147" font-size="9.5" text-anchor="middle" class="t-mut">增塑剂不会损失</text><rect x="10" y="172" width="388" height="40" rx="6" class="warnbox"/><text x="204" y="189" font-size="11" text-anchor="middle" font-weight="700">加了增塑剂之后，不要再长时间真空干燥</text><text x="204" y="205" font-size="9.5" text-anchor="middle" class="t-mut">DMC、DEC 等挥发太快，不适合做增塑剂</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>除气泡：静置或离心；必须抽真空时，时间要短、温和。<span class="src gen">通用方法</span></p>
+          <ul><li>气泡固化后会变成孔洞，A 和 L 都会不准。</li>
+          <li>抽真空会把挥发性增塑剂一起抽走，所以抽前抽后都要称重。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="除气泡：前驱体里的气泡固化后会变成孔洞；静置或离心除泡，抽真空要短而温和，因为挥发性增塑剂会被一起抽走，抽前抽后称重。"><rect x="40" y="56" width="60" height="96" rx="8" class="vial"/><rect x="44" y="86" width="52" height="62" rx="4" class="sol"/><circle cx="58" cy="104" r="4" class="bubble"/><circle cx="78" cy="118" r="5" class="bubble"/><circle cx="66" cy="132" r="3" class="bubble"/><circle cx="86" cy="98" r="3" class="bubble"/><circle cx="54" cy="124" r="2.5" class="bubble"/><rect x="160" y="56" width="60" height="96" rx="8" class="vial"/><rect x="164" y="86" width="52" height="62" rx="4" class="sol"/><line x1="108" y1="110" x2="144" y2="110" class="dim"/><path d="M152 110 L143 105 L143 115 Z" class="arr"/><text x="130" y="98" font-size="10" text-anchor="middle" font-weight="600">除泡</text><text x="70" y="172" font-size="11" text-anchor="middle" font-weight="700" class="t-bad">有气泡</text><text x="190" y="172" font-size="11" text-anchor="middle" font-weight="700" class="t-acc">无气泡</text><text x="70" y="190" font-size="9.5" text-anchor="middle" class="t-mut">固化后变成孔洞</text><text x="190" y="190" font-size="9.5" text-anchor="middle" class="t-mut">再填孔、固化</text><text x="252" y="52" font-size="11" font-weight="700">静置，或离心</text><text x="252" y="82" font-size="11" font-weight="700">抽真空要短、温和</text><text x="252" y="100" font-size="9.5" class="t-mut">挥发性增塑剂会被</text><text x="252" y="115" font-size="9.5" class="t-mut">一起抽走</text><text x="252" y="145" font-size="11" font-weight="700">抽前抽后称重</text><text x="252" y="163" font-size="9.5" class="t-mut">质量下降 = 有损失</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>填孔、加盖片、固化：前驱体稍微多填一点，盖上透 UV 的盖片压在环上，让多余的挤出来，再透过盖片照射固化。<span class="src gen">通用方法</span></p>
+          <ul><li>丙烯酸酯类的自由基聚合会被氧气抑制，表面会发粘。在手套箱的惰性气氛里固化，盖片也能隔绝氧气。</li>
+          <li>盖片用石英片，或者在灯的波长下透光的膜（例如 365 nm 下可用 PET 膜，用前确认透光）。PTFE 片透光差，不适合。</li>
+          <li>固化后揭掉盖片，修掉环外多余的部分，再盖上面的垫片、封口。</li>
+          <li>要做独立的膜时：把前驱体夹在两片盖片之间、两侧放垫片，固化后再冲片。</li>
+          <li>记下灯的波长、功率、距离和照射时间，每批用同样的剂量。UV 灯会发热，照得太久增塑剂也会挥发。</li>
+          <li>戴防 UV 护目镜和手套：丙烯酸酯单体容易引起皮肤过敏。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="填孔、加盖片、固化：前驱体稍微多填进环形垫片的孔，盖上透紫外的石英片或 PET 膜压在环上，多余的挤出；在手套箱里透过盖片用 365 纳米紫外固化，然后揭掉盖片、盖上垫片。"><text x="14" y="24" font-size="11" font-weight="700">在手套箱里固化</text><rect x="110" y="22" width="100" height="26" rx="4" class="panel"/><text x="160" y="39.5" font-size="10" text-anchor="middle" font-weight="700" class="t-panel">UV 365 nm</text><line x1="122" y1="52" x2="122" y2="132" class="ray"/><line x1="138" y1="52" x2="138" y2="132" class="ray"/><line x1="154" y1="52" x2="154" y2="132" class="ray"/><line x1="170" y1="52" x2="170" y2="132" class="ray"/><line x1="186" y1="52" x2="186" y2="132" class="ray"/><line x1="198" y1="52" x2="198" y2="132" class="ray"/><line x1="60" y1="106" x2="60" y2="124" class="dim"/><path d="M60 131 L55 122 L65 122 Z" class="arr"/><line x1="260" y1="106" x2="260" y2="124" class="dim"/><path d="M260 131 L255 122 L265 122 Z" class="arr"/><text x="60" y="100" font-size="9.5" text-anchor="middle" font-weight="600">压平</text><text x="260" y="100" font-size="9.5" text-anchor="middle" font-weight="600">压平</text><rect x="40" y="160" width="240" height="12" rx="2" class="steel"/><rect x="40" y="144" width="70" height="16" class="film-clear"/><rect x="210" y="144" width="70" height="16" class="film-clear"/><rect x="110" y="144" width="100" height="16" class="sol"/><ellipse cx="34" cy="146" rx="7" ry="4" class="sol"/><ellipse cx="286" cy="146" rx="7" ry="4" class="sol"/><rect x="30" y="136" width="260" height="8" rx="1" class="glassc"/><text x="298" y="132" font-size="10.5" font-weight="700">透 UV 的盖片</text><text x="298" y="148" font-size="9.5" class="t-mut">石英片或 PET 膜</text><text x="298" y="164" font-size="9.5" class="t-mut">隔绝氧气、压平</text><text x="160" y="194" font-size="10.5" text-anchor="middle" font-weight="700">稍微多填，盖片压在环上，多余的挤出</text><text x="160" y="211" font-size="9.5" text-anchor="middle" class="t-mut">透过盖片固化，然后揭盖片、盖垫片</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>检查固化：揭开盖片后，表面应该不粘、整片固化，和环齐平。<span class="src gen">通用方法</span></p>
+          <ul><li>表面发粘：氧阻聚或剂量不够。在惰性气氛中固化、加盖片，或延长照射。</li>
+          <li>底部发粘：层太厚或配方吸光太强（锂盐、填料都会吸光）。减薄，或分层固化。</li>
+          <li>边缘有缝：固化收缩。补填一层再固化，或改用收缩小的低聚物。</li>
+          <li>需要定量时，用红外光谱 (FTIR) 看丙烯酸酯 C=C 峰（约 1635 cm⁻¹ 和 810 cm⁻¹）是否消失；或测凝胶含量，也就是溶剂浸泡后不溶部分的质量比例（增塑剂和锂盐也会被溶出，要扣除）。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="检查固化：整片固化、表面不粘可以测；表面发粘是氧阻聚或剂量不够，加盖片或延长照射；边缘有缝是固化收缩，补填一层再固化；底部发粘说明层太厚或吸光太强；可用红外看 1635 波数的碳碳双键峰是否消失。"><rect x="14" y="64" width="30" height="14" class="film-clear"/><rect x="104" y="64" width="30" height="14" class="film-clear"/><rect x="14" y="78" width="120" height="8" rx="1.5" class="steel"/><rect x="44" y="64" width="60" height="14" class="sample"/><circle cx="28" cy="112" r="8" class="ic-ok"/><path d="M24.4 112.2 l2.4 2.6 l4.6 -5.0" class="ic-mark"/><text x="42" y="116.5" font-size="11" font-weight="700">整片固化</text><text x="74" y="136" font-size="9.5" text-anchor="middle" class="t-mut">表面不粘</text><text x="74" y="152" font-size="9.5" text-anchor="middle" font-weight="600">可以测</text><rect x="142" y="64" width="30" height="14" class="film-clear"/><rect x="232" y="64" width="30" height="14" class="film-clear"/><rect x="142" y="78" width="120" height="8" rx="1.5" class="steel"/><rect x="172" y="67" width="60" height="11" class="sample"/><path d="M172 67 q3.0 -2.5 6 0 q3.0 2.5 6 0 q3.0 -2.5 6 0 q3.0 2.5 6 0 q3.0 -2.5 6 0 q3.0 2.5 6 0 q3.0 -2.5 6 0 q3.0 2.5 6 0 q3.0 -2.5 6 0 q3.0 2.5 6 0" class="tacky"/><circle cx="186" cy="60" r="2.5" class="droplet"/><circle cx="212" cy="58" r="2" class="droplet"/><circle cx="156" cy="112" r="8" class="ic-bad"/><path d="M153.0 109.0 L159.0 115.0 M159.0 109.0 L153.0 115.0" class="ic-mark"/><text x="170" y="116.5" font-size="11" font-weight="700" class="t-bad">表面发粘</text><text x="202" y="136" font-size="9.5" text-anchor="middle" class="t-mut">氧阻聚或剂量不够</text><text x="202" y="152" font-size="9.5" text-anchor="middle" font-weight="600">加盖片、延长照射</text><rect x="270" y="64" width="30" height="14" class="film-clear"/><rect x="360" y="64" width="30" height="14" class="film-clear"/><rect x="270" y="78" width="120" height="8" rx="1.5" class="steel"/><rect x="306" y="68" width="48" height="10" class="sample"/><circle cx="284" cy="112" r="8" class="ic-bad"/><path d="M281.0 109.0 L287.0 115.0 M287.0 109.0 L281.0 115.0" class="ic-mark"/><text x="298" y="116.5" font-size="11" font-weight="700" class="t-bad">边缘有缝</text><text x="330" y="136" font-size="9.5" text-anchor="middle" class="t-mut">固化收缩</text><text x="330" y="152" font-size="9.5" text-anchor="middle" font-weight="600">补填一层再固化</text><text x="200" y="32" font-size="12" text-anchor="middle" font-weight="700">揭开盖片检查</text><rect x="14" y="170" width="372" height="42" rx="8" class="sunk-r"/><text x="26" y="187" font-size="10.5" font-weight="700">底部发粘：层太厚，或配方吸光太强</text><text x="26" y="203" font-size="9.5" class="t-mut">定量：FTIR 看 C=C 峰（约 1635 cm⁻¹）是否消失</text></svg></figure></div></li>
+        <li><div class="step"><div class="step-text"><p>测量时监控增塑剂：恒温下隔一段时间测一次，σ 应该稳定；测前测后都称重。<span class="src gen">通用方法</span></p>
+          <ul><li>σ 一直下降：增塑剂在挥发或被挤出。检查密封，或换挥发更慢的增塑剂。</li>
+          <li>拆开后表面湿、油亮：增塑剂渗出了，可能流到环和垫片之间，使 A 和 L 不准。</li>
+          <li>报告电导率时写明增塑剂的种类和 wt%，以及测前测后的质量变化。</li></ul></div>
+          <figure class="stepfig"><svg viewBox="0 0 400 220" role="img" aria-label="测量时监控增塑剂：恒温下隔一段时间测一次电导率，稳定才可信，一直下降说明增塑剂在挥发或渗出；测前测后称重，拆开看表面是否湿、油亮；报告时写明增塑剂种类、含量和质量变化。"><path d="M30 30 V150 H230" class="axis"/><text x="26" y="30" font-size="11" text-anchor="end" font-weight="600" class="t-mut">σ</text><text x="230" y="166" font-size="10" text-anchor="end" class="t-mut">时间</text><path d="M36 72 C 80 66, 120 64, 220 64" class="curve"/><path d="M36 72 C 80 80, 140 104, 220 120" class="curve-warn"/><text x="220" y="56" font-size="10.5" text-anchor="end" font-weight="700" class="t-acc">稳定</text><text x="220" y="140" font-size="10.5" text-anchor="end" font-weight="700" class="t-warn">一直下降</text><text x="30" y="180" font-size="10.5" font-weight="700">恒温下隔一段时间测一次 σ</text><text x="30" y="197" font-size="9.5" class="t-mut">一直下降：增塑剂在挥发或渗出</text><text x="30" y="212" font-size="9.5" class="t-mut">检查密封，或换挥发慢的增塑剂</text><rect x="250" y="20" width="140" height="192" rx="8" class="sunk-r"/><text x="262" y="44" font-size="11" font-weight="700">测前测后称重</text><text x="262" y="62" font-size="9.5" class="t-mut">质量下降 → 有损失</text><text x="262" y="94" font-size="11" font-weight="700">拆开看表面</text><text x="262" y="112" font-size="9.5" class="t-mut">湿、油亮 → 渗出了</text><text x="262" y="144" font-size="11" font-weight="700">报告时写明</text><text x="262" y="162" font-size="9.5" class="t-mut">增塑剂种类和 wt%</text><text x="262" y="178" font-size="9.5" class="t-mut">测前测后的质量变化</text></svg></figure></div></li>
+      </ol>
+      <!--/UVSTEPS-->
+      </div>
+
+      <div class="block two" style="margin-top:16px">
+        <div class="fields">
+          <h3>配方计算</h3>
+          <div class="row2">
+            <div class="field"><label for="rcTot">前驱体总质量 (mg)</label><input id="rcTot" type="number" min="0" step="any" value="500"></div>
+            <div class="field"><label for="rcSalt">锂盐 (wt%)</label><input id="rcSalt" type="number" min="0" step="any" value="20"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="rcPl">增塑剂 (wt%)</label><input id="rcPl" type="number" min="0" step="any" value="30"></div>
+            <div class="field"><label for="rcLin">线性聚合物 (wt%，没有填 0)</label><input id="rcLin" type="number" min="0" step="any" value="0"></div>
+          </div>
+          <div class="field"><label for="rcPi">光引发剂（相对可交联组分的 wt%）</label><input id="rcPi" type="number" min="0" step="any" value="1"></div>
+          <dl class="outs" id="rcOut"></dl>
+          <div class="msgs" id="rcMsgs" aria-live="polite"></div>
+          <p class="note" style="margin:0">锂盐、增塑剂和线性聚合物按总质量的 wt% 计；光引发剂按可交联组分计。PEO / PEG 类配方还可以再换算成 EO:Li 比。</p>
+        </div>
+        <div class="fields">
+          <h3>增塑剂损失核对</h3>
+          <div class="row2">
+            <div class="field"><label for="lsB">测前质量 (mg)</label><input id="lsB" type="number" min="0" step="any" value="36.0"></div>
+            <div class="field"><label for="lsA">测后质量 (mg)</label><input id="lsA" type="number" min="0" step="any" value="35.1"></div>
+          </div>
+          <div class="field"><label for="lsP">初始增塑剂含量 (wt%)</label><input id="lsP" type="number" min="0" step="any" value="30"></div>
+          <div class="big" id="lsOut" aria-live="polite">—</div>
+          <div class="note" id="lsDetail">—</div>
+          <div class="msgs" id="lsMsgs"></div>
+          <p class="note" style="margin:0">假设减少的质量全部来自增塑剂。测前测后要用同样的方式称，例如都连同垫片一起称，因为软膜拆开时会粘掉一部分。示例数值是虚构的。</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1029,6 +1118,8 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
           <tr><td>Overload 灯持续常亮</td><td>导线断开或夹子松脱</td><td>检查五个夹子；Cell On 熄灭后再动线<span class="src">手册 Ch 7</span></td></tr>
           <tr><td>电导率比预期低很多</td><td>L 量大了或 A 取大了；接触不良</td><td>重新核对 L、A 的取法（第 03 节）；检查样品与不锈钢的接触</td></tr>
           <tr><td>纽扣电池谱图只是实轴附近一个点</td><td>弹片压穿了膜，或垫片错位，两片垫片直接接触</td><td>拆开检查；软的膜外加 PTFE 环形垫片限定厚度<span class="src gen">通用方法</span></td></tr>
+          <tr><td>UV 固化的膜表面发粘</td><td>氧阻聚或照射剂量不够</td><td>在手套箱里固化、加透 UV 的盖片，或延长照射；确认引发剂和灯的波长匹配<span class="src gen">通用方法</span></td></tr>
+          <tr><td>含增塑剂的膜 σ 随时间一直下降</td><td>增塑剂挥发或被挤出</td><td>密封好电池；测前测后称重；换挥发慢的增塑剂<span class="src gen">通用方法</span></td></tr>
           <tr><td>电导率偏高、批次间差别大</td><td>膜里有残留溶剂或吸了水</td><td>真空干燥到恒重；制膜、存放、装池都在手套箱里<span class="src gen">通用方法</span></td></tr>
           <tr><td>同一批膜电阻差别大</td><td>膜厚薄不均：浇铸时挥发太快，或冲片时拉扯</td><td>取浇铸膜中间部分；每片称重估厚度；用垫片或热压控制厚度<span class="src gen">通用方法</span></td></tr>
           <tr><td>PP 隔膜电池的截距一直在变</td><td>电解液还没浸透隔膜</td><td>延长静置时间，截距稳定后再取值；浸不透时换容易浸润的隔膜<span class="src gen">通用方法</span></td></tr>
@@ -1509,5 +1600,44 @@ footer{padding-block:28px 44px;color:var(--muted);font-size:13px}
   ['#mkT', '#mkD', '#mkRho', '#mkC'].forEach(id => $(id).addEventListener('input', cast));
   ['#wM', '#wD', '#wRho'].forEach(id => $(id).addEventListener('input', weigh));
   cast(); weigh();
+})();
+</script>
+
+<script>
+/* UV precursor recipe and plasticizer-loss check */
+(function(){
+  const $ = s => document.querySelector(s);
+  const v = id => parseFloat($(id).value);
+  const f = x => (+x.toPrecision(3)).toString();
+  const msg = (k, h) => `<div class="msg ${k}">${h}</div>`;
+  function recipe(){
+    const tot = v('#rcTot'), s = v('#rcSalt') || 0, z = v('#rcPl') || 0, p = v('#rcLin') || 0, i = v('#rcPi') || 0;
+    const out = $('#rcOut'), m = $('#rcMsgs');
+    if (!(tot > 0) || s < 0 || z < 0 || p < 0 || i < 0){ out.innerHTML = ''; m.innerHTML = msg('warn', '总质量要大于 0，各百分比不能为负。'); return; }
+    const restFrac = 1 - (s + z + p) / 100;
+    if (restFrac <= 0){ out.innerHTML = ''; m.innerHTML = msg('warn', '锂盐、增塑剂和线性聚合物加起来已经达到 100 wt%，没有留给可交联组分的量。'); return; }
+    const rest = tot * restFrac, M = rest / (1 + i / 100), I = rest - M;
+    const rows = [['可交联组分', M], ['光引发剂', I], ['锂盐', tot * s / 100], ['增塑剂', tot * z / 100]];
+    if (p > 0) rows.push(['线性聚合物', tot * p / 100]);
+    out.innerHTML = rows.map(([k, x]) => `<div><dt>${k}</dt><dd>${f(x)} mg</dd></div>`).join('');
+    const w = [];
+    if (restFrac < 0.3) w.push(msg('info', `可交联组分只占 ${f(restFrac * 100)} wt%：交联网络可能太稀，固化后容易发粘或强度不够。`));
+    if (i > 5) w.push(msg('info', '光引发剂用量偏高：残留的引发剂和分解产物可能影响电导率和稳定性。'));
+    m.innerHTML = w.join('');
+  }
+  function loss(){
+    const b = v('#lsB'), a = v('#lsA'), p = v('#lsP');
+    const out = $('#lsOut'), det = $('#lsDetail'), m = $('#lsMsgs');
+    if (!(b > 0 && a > 0 && p > 0)){ out.textContent = '—'; det.textContent = '测前、测后质量和增塑剂含量都要大于 0。'; m.innerHTML = ''; return; }
+    const lost = b - a, plast0 = b * p / 100;
+    if (lost < 0){ out.textContent = '质量增加了'; det.textContent = ''; m.innerHTML = msg('warn', '测后比测前重：可能吸了水，或者称量方式不一致（例如粘了别的东西）。'); return; }
+    const frac = lost / plast0, now = (plast0 - lost) / a * 100;
+    out.textContent = `增塑剂损失 ${f(frac * 100)}%`;
+    det.innerHTML = `质量减少 ${f(lost)} mg；原有增塑剂 ${f(plast0)} mg；现在含量约 ${f(Math.max(0, now))} wt%`;
+    m.innerHTML = frac > 0.05 ? msg('warn', '损失超过 5%：测到的电导率可能偏离配方值。检查密封或干燥步骤，或换挥发慢的增塑剂。') : msg('ok', '损失很小，电导率可以按配方组成报告（同时写明质量变化）。');
+  }
+  ['#rcTot', '#rcSalt', '#rcPl', '#rcLin', '#rcPi'].forEach(id => $(id).addEventListener('input', recipe));
+  ['#lsB', '#lsA', '#lsP'].forEach(id => $(id).addEventListener('input', loss));
+  recipe(); loss();
 })();
 </script>
