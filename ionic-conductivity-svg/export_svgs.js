@@ -13,7 +13,7 @@ const NAMES = [
   'step-04-short-check', 'step-05-temperature', 'step-06-eis-setup',
   'step-07-running', 'step-08-read-Rb', 'step-09-calculate-sigma',
 ];
-const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap',
+const PROPS = ['fill', 'fill-opacity', 'stroke', 'stroke-opacity', 'stroke-width', 'stroke-dasharray', 'stroke-linecap',
   'stroke-linejoin', 'opacity', 'font-family', 'font-size', 'font-weight'];
 
 (async () => {
@@ -50,7 +50,7 @@ const PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-lin
       return clone.outerHTML;
     });
   }, PROPS);
-  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring', 'coin-04-cable-accessories',
+  const names = [...NAMES, 'wiring-two-electrode', 'cell-cross-section', 'coin-01-spectra-by-cell-type', 'coin-02-exploded-cr2032', 'coin-03-wiring', 'coin-04-cable-accessories', 'coin-05-clip-design',
     'after-01-unplug', 'after-02-record', 'after-03-inspect', 'after-04-route-by-type',
     'after-05-decrimp', 'after-06-check-membrane', 'after-07-sort-waste', 'after-08-clean-up',
     'pp-01-identify', 'pp-02-dense-film-ring',

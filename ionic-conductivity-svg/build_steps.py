@@ -1727,6 +1727,70 @@ def coin_parts():
 FIGS['coin-parts'] = coin_parts
 
 
+
+# ================================================================ coin cell clip (4-wire spring clamp)
+def coin_clip():
+    o = [R(10, 10, 320, 222, 'sunk-r', 10), T(24, 34, '侧视图', 12.5, None, 700),
+         # handles, hinge, spring
+         P('M66 100 L24 80', 'handle'), P('M66 168 L24 188', 'handle'),
+         T(20, 68, '捏这里张开', 9.5, None, 600, 't-mut'),
+         C(60, 134, 7, 'steel'),
+         P('M75 116 l8 4 l-16 8 l16 8 l-16 8 l16 8 l-8 4', 'spring'),
+         T(92, 138, '弹簧', 9.5, None, 600),
+         # jaws
+         R(60, 92, 210, 20, 'jaw', 4), R(60, 156, 210, 20, 'jaw', 4),
+         T(165, 84, '绝缘夹臂（PEEK / PTFE）', 10, 'middle', 700),
+         # coin cell, cap up
+         coin(150, 118, 120),
+         # contact pads (current left, sense right) on both jaws
+         R(192, 112, 14, 6, 'pad', 1), R(214, 112, 14, 6, 'pad', 1),
+         R(192, 150, 14, 6, 'pad', 1), R(214, 150, 14, 6, 'pad', 1),
+         # traces inside the jaws to the terminals
+         P('M199 112 V97 H276', 'trace-dark'), P('M221 112 V107 H276', 'trace-dark'),
+         P('M199 156 V171 H276', 'trace-dark'), P('M221 156 V161 H276', 'trace-dark'),
+         C(282, 97, 4.5, 'jk-ce'), C(282, 107, 4.5, 'jk-re'), C(282, 161, 4.5, 'jk-ws'), C(282, 171, 4.5, 'jk-we'),
+         T(291, 100.5, 'CE', 8.5, None, 700), T(291, 110.5, 'RE', 8.5, None, 700),
+         T(291, 164.5, 'WS', 8.5, None, 700), T(291, 174.5, 'WE', 8.5, None, 700),
+         T(144, 132, '−', 11, 'end', 700), T(144, 148, '+', 11, 'end', 700),
+         '<line x1="210" y1="176" x2="210" y2="186" class="lead"/>',
+         T(210, 198, '镀金触点：每面两块（电流 + 感应）', 9.5, 'middle', 600),
+         T(170, 216, 'CR2032 负极盖朝上；触点压在两个平面的中心', 9.5, 'middle', None, 't-mut')]
+    # face view of one jaw
+    cx, cy = 440, 112
+    o += [R(340, 10, 290, 222, 'sunk-r', 10), T(354, 34, '夹臂内侧（触点面）', 12.5, None, 700),
+          R(380, 50, 120, 124, 'jaw', 8),
+          C(cx, cy, 50, 'edge-ring'), C(cx, cy, 42, 'jaw-in'),
+          C(cx, cy, 50, 'hidden-edge'),
+          P(f'M{cx - 3} {cy - 30} A30 30 0 0 0 {cx - 3} {cy + 30} Z', 'pad'),
+          P(f'M{cx + 3} {cy - 30} A30 30 0 0 1 {cx + 3} {cy + 30} Z', 'pad'),
+          T(cx - 16, cy + 5, '①', 13, 'middle', 700, 't-onlight'), T(cx + 16, cy + 5, '②', 13, 'middle', 700, 't-onlight'),
+          T(512, 78, '① 电流触点', 10.5, None, 700),
+          T(512, 94, '上：红 CE　下：绿 WE', 9, None, None, 't-mut'),
+          T(512, 130, '② 感应触点', 10.5, None, 700),
+          T(512, 146, '上：白 RE + 橙 CS', 9, None, None, 't-mut'), T(512, 160, '下：蓝 WS', 9, None, None, 't-mut'),
+          T(512, 184, '两块之间绝缘', 9.5, None, 600),
+          T(440, 196, '虚线：电池外径 20 mm', 9.5, 'middle', None, 't-mut'),
+          T(440, 212, '橙色环：翻边，触点不能碰到', 9.5, 'middle', 600, 't-warn')]
+    # wiring and buying checklist
+    o += [R(10, 242, 620, 168, 'sunk-r', 10), T(24, 266, '接线', 12, None, 700)]
+    rows = [('jk-ce', '上夹臂 · 电流触点 → 红 CE'), ('jk-re', '上夹臂 · 感应触点 → 白 RE（橙 CS 也接这里）'),
+            ('jk-we', '下夹臂 · 电流触点 → 绿 WE'), ('jk-ws', '下夹臂 · 感应触点 → 蓝 WS')]
+    for i, (cls, t) in enumerate(rows):
+        y = 290 + i * 22
+        o += [C(32, y - 4, 5, cls), T(44, y, t, 10.5)]
+    o += [C(32, 374, 5, 'jk-gnd'), T(44, 378, '黑（浮地）→ 法拉第屏蔽盒；不用屏蔽时悬空', 10.5),
+          T(44, 398, '负极盖朝上放；夹好后用万用表确认上下两组不通', 9.5, None, None, 't-mut'),
+          T(370, 266, '选购 / 自制要点', 12, None, 700)]
+    tips = ['弹簧压紧：压力稳定、每次一样', '夹臂用 PEEK 或 PTFE：漏电小、耐温', '触点镀金，面积小于负极盖平面',
+            '每面两块触点互相绝缘（四线）', '端子：2 mm 插孔；4 mm 要配转接头', '买来先用 PTFE 空白池测背景电流']
+    for i, t in enumerate(tips):
+        o.append(T(370, 290 + i * 19, '• ' + t, 10, None, None, 't-mut'))
+    return svgw(640, 420, '四线纽扣电池夹具结构：侧视图中弹簧夹的两片绝缘夹臂（PEEK 或 PTFE）夹住负极盖朝上的 CR2032，每片夹臂内侧有两块镀金触点，一块接电流线、一块接感应线，触点压在平面中心；触点面俯视图中两块半圆触点互相绝缘，不能碰到电池边缘的翻边；接线：上夹臂电流触点接红 CE、感应触点接白 RE 和橙 CS，下夹臂电流触点接绿 WE、感应触点接蓝 WS，黑线接屏蔽盒。', ''.join(o))
+
+
+FIGS['coin-clip'] = coin_clip
+
+
 if __name__ == '__main__':
     build()
     fill_figs()
