@@ -6,8 +6,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const PAGE = 'file://' + path.join(ROOT, 'ionic-conductivity-ref620.html');
-const OUT = __dirname;
+// EXPORT_LANG=en exports the English page's figures into ionic-conductivity-svg/en/ with the same names.
+const EN = process.env.EXPORT_LANG === 'en';
+const PAGE = 'file://' + path.join(ROOT, EN ? 'ionic-conductivity-ref620-en.html' : 'ionic-conductivity-ref620.html');
+const OUT = EN ? path.join(__dirname, 'en') : __dirname;
 const NAMES = [
   'step-01-instrument-ready', 'step-02-measure-L-and-A', 'step-03-assemble-cell',
   'step-04-short-check', 'step-05-temperature', 'step-06-eis-setup',

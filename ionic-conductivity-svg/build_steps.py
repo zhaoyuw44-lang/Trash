@@ -2,13 +2,15 @@
 
 Rewrites the <ol class="steps"> block between the STEPS markers. Each step gets
 its own inline SVG drawn with the page's CSS classes, so light/dark themes work.
-Run: python3 ionic-conductivity-svg/build_steps.py
+Run: python3 ionic-conductivity-svg/build_steps.py        (Chinese page)
+     python3 ionic-conductivity-svg/build_steps.py --en   (English page; then node ionic-conductivity-svg/en/fit_en.js)
 Then: node ionic-conductivity-svg/export_svgs.js  (writes standalone .svg files)
 """
-import pathlib, re
+import pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGE = ROOT / 'ionic-conductivity-ref620.html'
+EN = '--en' in sys.argv  # build the English page: same figures, then translated by en/translate_en.py
+PAGE = ROOT / ('ionic-conductivity-ref620-en.html' if EN else 'ionic-conductivity-ref620.html')
 W, H = 400, 220
 
 
@@ -2497,3 +2499,7 @@ if __name__ == '__main__':
     build_ec()
     build_li()
     build_coin_steps()
+    if EN:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'en'))
+        import translate_en
+        translate_en.translate(PAGE)
