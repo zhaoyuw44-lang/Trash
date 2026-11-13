@@ -1,0 +1,1336 @@
+<title>居家对半剪</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+QingKe+HuangYou&display=swap">
+<style>
+/* 布局：理发工作台。卷尺题头 → 诊断台（左：头发与工具；右：结论、侧面轮廓、分区数值）→ 剃/推/剪 原理对比 → 按顺序的工序卡 → 意外情况 */
+:root{
+  --paper:#F1F5F5;
+  --panel:#FFFFFF;
+  --ink:#162127;
+  --muted:#55666E;
+  --line:#D2DCDF;
+  --soft:#E4ECEE;
+  --accent:#0A6A92;
+  --accent-soft:#D3E8F1;
+  --cut:#CF4329;
+  --cut-soft:#F7DCD5;
+  --warn:#9C600C;
+  --warn-soft:#F6E7CC;
+  --hair:#2A2320;
+  --hair-off:#C6BBB3;
+  --skin:#F0DAC5;
+  --skin-line:#A87C5D;
+  --steel:#CAD4D9;
+  --f-display:"ZCOOL QingKe HuangYou","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1417;--panel:#142025;--ink:#E2EAED;--muted:#93A4AC;--line:#28393F;--soft:#1B2A30;
+    --accent:#55B4DE;--accent-soft:#16384A;--cut:#FF7D60;--cut-soft:#47231B;--warn:#E5AC4F;--warn-soft:#3D2E14;
+    --hair:#DDD0C6;--hair-off:#5A524D;--skin:#6C5646;--skin-line:#B4917A;--steel:#4B5A62;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1417;--panel:#142025;--ink:#E2EAED;--muted:#93A4AC;--line:#28393F;--soft:#1B2A30;
+  --accent:#55B4DE;--accent-soft:#16384A;--cut:#FF7D60;--cut-soft:#47231B;--warn:#E5AC4F;--warn-soft:#3D2E14;
+  --hair:#DDD0C6;--hair-off:#5A524D;--skin:#6C5646;--skin-line:#B4917A;--steel:#4B5A62;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(44px,8vw,80px);letter-spacing:.04em;line-height:1.05}
+h2{font-family:var(--f-display);font-weight:400;font-size:clamp(26px,3.8vw,38px);letter-spacing:.04em}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.25em}
+li+li{margin-top:4px}
+b,strong{font-weight:700}
+.eyebrow{font:600 12px/1.2 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.mono,.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 题头 */
+.hero{padding-block:24px 4px}
+.tape{display:block;width:100%;height:58px;margin-bottom:26px}
+.tp-band{fill:var(--accent-soft);stroke:var(--line)}
+.tp-t{stroke:var(--ink);stroke-width:1}
+.tp-n{fill:var(--ink);font:600 11px var(--f-mono)}
+.tp-cut{stroke:var(--cut);stroke-width:2;stroke-dasharray:4 3}
+.tp-half{fill:var(--cut);font:700 13px var(--f-body)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:36px;align-items:end}
+.lead{font-size:16px;color:var(--muted);max-width:38em;margin-top:14px}
+.lead strong{color:var(--ink)}
+.facts{margin:0;border-top:2px solid var(--ink)}
+.facts div{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.facts dt{font-family:var(--f-display);font-size:24px;line-height:1}
+.facts dd{margin:0;color:var(--muted);font-size:14px}
+@media (max-width:820px){.hero-grid{grid-template-columns:1fr;gap:22px}}
+
+section{margin-top:60px}
+.sec-head{display:grid;gap:6px;margin-bottom:20px}
+.sec-lead{color:var(--muted);max-width:44em;margin:-6px 0 20px}
+
+/* 诊断台 */
+.bench-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:24px;align-items:start}
+@media (max-width:940px){.bench-grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}
+.inputs fieldset{border:0;padding:0;margin:0;min-width:0}
+.inputs{display:grid;gap:24px}
+legend{font-weight:700;padding:0;margin-bottom:10px}
+.hint{color:var(--muted);font-size:13px;margin:-4px 0 10px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+.presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.presets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.preset{display:grid;gap:0;text-align:left;padding:9px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);cursor:pointer}
+.preset b{font-size:14px}
+.preset span{font:12px var(--f-mono);color:var(--muted)}
+.preset:hover{border-color:var(--accent)}
+.preset.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.zone-row{display:grid;grid-template-columns:8.2em minmax(0,1fr) auto;gap:12px;align-items:center;padding:5px 0}
+.zone-row label{display:flex;align-items:center;gap:8px;font-weight:500;font-size:14px}
+.zn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink);font:600 11px var(--f-mono);flex:none}
+.numwrap{display:flex;align-items:center;gap:4px;color:var(--muted);font-size:13px}
+input[type=number]{width:4.2em;padding:5px 6px;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);font:600 14px var(--f-mono);text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0}
+@media (max-width:440px){.zone-row{grid-template-columns:minmax(0,1fr) auto}.zone-row input[type=range]{grid-column:1 / -1;grid-row:2}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;padding:6px 13px;border:1px solid var(--line);border-radius:999px;background:var(--paper);cursor:pointer;font-size:14px;user-select:none}
+.chip input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.chip input:disabled+span{opacity:.4;cursor:not-allowed}
+.toolgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.tool{position:relative;display:block}
+.tool input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.tcard{display:grid;justify-items:center;gap:1px;padding:10px 6px 9px;border:1px solid var(--line);border-radius:6px;background:var(--paper);cursor:pointer;text-align:center;color:var(--muted);user-select:none;height:100%}
+.tcard svg{width:44px;height:44px;margin-bottom:2px;opacity:.4;transition:opacity .15s}
+.tname{font-weight:700;font-size:14px;color:var(--ink);opacity:.6}
+.tnote{font-size:11.5px;line-height:1.35}
+.tool input:checked+.tcard{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.tool input:checked+.tcard svg,.tool input:checked+.tcard .tname{opacity:1}
+.tool input:focus-visible+.tcard{outline:2px solid var(--accent);outline-offset:2px}
+
+.results{display:grid;gap:14px;min-width:0}
+.verdict{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px 22px}
+.verdict .eyebrow{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.v-title{font-family:var(--f-display);font-weight:400;font-size:clamp(26px,3.4vw,34px);letter-spacing:.03em;margin:8px 0 8px}
+.v-sub{color:color-mix(in srgb,var(--paper) 82%,transparent);max-width:40em}
+.v-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 0;padding-top:14px;border-top:1px solid color-mix(in srgb,var(--paper) 22%,transparent)}
+.v-facts dt{font-size:12px;color:color-mix(in srgb,var(--paper) 65%,transparent)}
+.v-facts dd{margin:2px 0 0;font-weight:700;font-size:14px;line-height:1.4}
+@media (max-width:480px){.v-facts{grid-template-columns:1fr 1fr}.v-facts div:first-child{grid-column:1 / -1}}
+.dots{display:inline-flex;gap:4px;vertical-align:middle}
+.dots i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--paper);display:block}
+.dots i.on{background:var(--paper)}
+.v-keep{margin-top:12px;font-size:13.5px;padding:8px 12px;border-radius:6px;background:color-mix(in srgb,var(--paper) 12%,transparent)}
+
+.profile{margin:0;padding:12px}
+.profile svg{display:block;width:100%;aspect-ratio:1/1;max-height:440px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);padding:6px 6px 2px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:22px;height:0;border-top:4px solid}
+.sw.keep{border-color:var(--hair)}
+.sw.off{border-color:var(--hair-off)}
+.sw.cut{border-top:2px dashed var(--cut)}
+.pf-skin{fill:var(--skin);stroke:var(--skin-line)}
+.pf-mass{fill:var(--hair)}
+.pf-keep{fill:none;stroke:var(--hair);stroke-linecap:round;stroke-linejoin:round}
+.pf-off{fill:none;stroke:var(--hair-off);stroke-linecap:round;stroke-linejoin:round}
+.pf-cut{fill:none;stroke:var(--cut);stroke-linecap:round}
+.pf-line{fill:none;stroke:var(--skin-line)}
+.pf-mark circle{fill:var(--panel);stroke:var(--ink)}
+.pf-mark text{fill:var(--ink);font-family:var(--f-mono);font-weight:600}
+.pf-scale line{stroke:var(--muted)}
+.pf-scale text{fill:var(--muted);font-family:var(--f-mono)}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.zt{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-weight:500}
+.zt i{font-style:normal;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink);font:600 10px var(--f-mono)}
+.mth{font-weight:700;white-space:nowrap}
+.mth.clip{color:var(--accent)}
+.gnote{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.tablewrap{overflow-x:auto;min-width:0}
+.ztitle{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ztitle span{font-size:12px;color:var(--muted)}
+
+.cover{margin:0}
+.cover figcaption{font-size:13px;color:var(--muted);margin-bottom:8px}
+.cover figcaption b{color:var(--ink);font-size:14px;display:block}
+.cover svg{display:block;width:100%}
+.cv-band{fill:var(--accent-soft)}
+.cv-grid{stroke:var(--line);stroke-width:1}
+.cv-tick{fill:var(--muted);font:11px var(--f-mono)}
+.cv-lbl{fill:var(--ink);font:500 13px var(--f-body)}
+.cv-val{fill:var(--ink);font:500 12.5px var(--f-body)}
+.cv-off{stroke:var(--hair-off);stroke-width:6;stroke-linecap:round}
+.cv-keep{stroke:var(--hair);stroke-width:6;stroke-linecap:round}
+.cv-first{stroke:var(--cut);stroke-width:2}
+.cv-dot{fill:var(--ink);stroke:var(--panel);stroke-width:2}
+.cv-dot.is-clip{fill:var(--accent)}
+.cv-head{fill:var(--muted);font:12px var(--f-body)}
+.cv-head tspan.k{fill:var(--accent);font-weight:700}
+
+.alerts{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.alerts li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;padding:10px 14px;border-radius:6px;font-size:14px;margin:0;background:var(--accent-soft)}
+.alerts li.warn{background:var(--warn-soft)}
+.alerts li.cut{background:var(--cut-soft)}
+.alerts svg{width:20px;height:20px;margin-top:2px}
+.al-i{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round}
+.warn .al-i{stroke:var(--warn)}
+.cut .al-i{stroke:var(--cut)}
+
+/* 原理对比 */
+.cmp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:780px){.cmp-grid{grid-template-columns:1fr}}
+.cmp-card{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 14px 16px;display:grid;gap:10px;align-content:start}
+.cmp-card.rec{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.cmp-card svg{width:100%;height:auto;display:block;background:var(--paper);border-radius:6px}
+.cmp-card h3{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cmp-card h3 .big{font-family:var(--f-display);font-weight:400;font-size:26px;line-height:1}
+.cmp-card figcaption{font-size:14px;color:var(--muted)}
+.pill{display:inline-block;font:600 11px/1 var(--f-body);padding:5px 8px;border-radius:999px;background:var(--accent);color:var(--panel);letter-spacing:.04em}
+.pill.warnp{background:var(--warn)}
+.cmp-table{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.cmp-table table{min-width:640px}
+.cmp-table th:first-child,.cmp-table td:first-child{color:var(--muted);font-size:13px;white-space:nowrap}
+.cmp-table .reccol{background:var(--accent-soft)}
+
+/* 流程 */
+.flow-head{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:-4px 0 18px}
+.tag{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+.tag.main{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:700}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.pbar{flex:1;min-width:160px;height:8px;background:var(--soft);border-radius:999px;overflow:hidden}
+.pbar span{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.step{margin:0;display:grid;grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;transition:opacity .2s}
+.step+.step{margin-top:0}
+.step-art{background:var(--paper);border-radius:6px;padding:6px;align-self:start}
+.step-art svg{display:block;width:100%;height:auto}
+.step-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.step-no{font:600 22px/1 var(--f-mono);color:var(--accent);flex:none}
+.step-head h3{flex:1;min-width:0}
+.done-toggle{position:relative;flex:none;align-self:center}
+.done-toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.done-toggle span{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:4px 10px 4px 8px;border:1px solid var(--line);border-radius:999px;cursor:pointer;user-select:none;white-space:nowrap}
+.done-toggle span::before{content:"";width:12px;height:12px;border:1.5px solid var(--muted);border-radius:3px}
+.done-toggle input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.done-toggle input:checked+span::before{border-color:var(--panel);background:var(--panel);box-shadow:inset 0 0 0 2px var(--accent)}
+.done-toggle input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.step.is-done{opacity:.55}
+.step-text{display:grid;gap:10px;max-width:46em}
+.step-text ul,.step-text ol{display:grid;gap:4px}
+.step-text li+li{margin-top:0}
+.sub-h{font-weight:700;font-size:13px;color:var(--muted)}
+.step-tip{margin-top:12px;font-size:14px;padding:9px 12px;border-radius:6px;background:var(--warn-soft);max-width:46em}
+.step-tip b{margin-right:6px;color:var(--warn)}
+.mini{font-size:13.5px;max-width:30em}
+.mini td,.mini th{padding:5px 8px}
+.note{font-size:13px;color:var(--muted)}
+.val{font-family:var(--f-mono);font-weight:600;background:var(--accent-soft);padding:0 5px;border-radius:4px;white-space:nowrap}
+.valc{font-family:var(--f-mono);font-weight:600;background:var(--cut-soft);padding:0 5px;border-radius:4px;white-space:nowrap}
+@media (max-width:720px){.step{grid-template-columns:1fr;gap:14px}.step-art{max-width:380px}}
+
+/* 意外情况 */
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
+.case svg{width:56px;height:56px;display:block;background:var(--paper);border-radius:6px}
+.case h3{font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}
+.case p{font-size:14px;color:var(--muted)}
+.case p+p{margin-top:6px}
+.case p b{color:var(--ink)}
+.case.rel{border-color:var(--accent)}
+.foot{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+/* 插图通用 */
+svg .ln{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+svg .thin{stroke-width:1.1}
+svg .skin{fill:var(--skin);stroke:var(--skin-line);stroke-width:1.3}
+svg .skinl{fill:none;stroke:var(--skin-line);stroke-width:1}
+svg .scalp{fill:var(--skin);stroke:var(--skin-line);stroke-width:1.2}
+svg .hairf{fill:var(--hair)}
+svg .hairOffF{fill:var(--hair-off)}
+svg .hairCap{fill:none;stroke:var(--hair);stroke-width:7;stroke-linecap:round}
+svg .hs{fill:none;stroke:var(--hair);stroke-width:1.8;stroke-linecap:round}
+svg .hsA{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round}
+svg .ho{fill:none;stroke:var(--hair-off);stroke-width:1.8;stroke-linecap:round}
+svg .hm{fill:none;stroke:var(--hair);stroke-width:1.8;stroke-linecap:round;opacity:.45}
+svg .hoG{fill:none;stroke:var(--hair-off);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:3 3}
+svg .cutl{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-dasharray:5 3.5}
+svg .cutd{fill:none;stroke:var(--cut);stroke-width:1.6;stroke-dasharray:1.5 3.5;stroke-linecap:round}
+svg .steel{fill:var(--steel);stroke:var(--ink);stroke-width:1.1;stroke-linejoin:round}
+svg .ring{fill:var(--panel);stroke:var(--accent);stroke-width:2.6}
+svg .pivot{fill:var(--ink)}
+svg .body{fill:var(--accent);stroke:var(--ink);stroke-width:1.2}
+svg .switch{fill:var(--panel)}
+svg .guard{fill:var(--accent-soft);stroke:var(--ink);stroke-width:1.1}
+svg .guardO{fill:var(--accent-soft);fill-opacity:.55;stroke:var(--ink);stroke-width:1.2}
+svg .guardt{stroke:var(--ink);stroke-width:.9;opacity:.6}
+svg .combb{fill:var(--soft);stroke:var(--ink);stroke-width:1.2}
+svg .bottle{fill:var(--accent-soft);stroke:var(--ink);stroke-width:1.2}
+svg .drop{fill:var(--accent)}
+svg .clipf{fill:var(--accent);stroke:var(--ink);stroke-width:1.1}
+svg .tie{fill:none;stroke:var(--accent);stroke-width:3}
+svg .tieb{fill:var(--accent);stroke:var(--ink);stroke-width:.8}
+svg .frame{fill:var(--soft);stroke:var(--ink);stroke-width:1.4}
+svg .glass{fill:var(--accent-soft)}
+svg .glare{fill:none;stroke:var(--panel);stroke-width:2;stroke-linecap:round;opacity:.85}
+svg .handle{fill:var(--soft);stroke:var(--ink);stroke-width:1.2}
+svg .cape{fill:var(--accent-soft);stroke:var(--ink);stroke-width:1.2}
+svg .lamp{fill:var(--steel);stroke:var(--ink);stroke-width:1.2}
+svg .ray{fill:none;stroke:var(--warn);stroke-width:1.5;stroke-dasharray:3 4;stroke-linecap:round}
+svg .sheet{fill:var(--soft);stroke:var(--line);stroke-width:1}
+svg .bits{fill:none;stroke:var(--hair);stroke-width:1.3;stroke-linecap:round}
+svg .phone{fill:var(--ink)}
+svg .rec{fill:var(--cut)}
+svg .eye{fill:var(--ink)}
+svg .secfill{fill:var(--hair-off)}
+svg .rulerb{fill:var(--warn-soft);stroke:var(--warn);stroke-width:1}
+svg .barOff{fill:var(--hair-off)}
+svg .barMid{fill:var(--hair);opacity:.5}
+svg .barKeep{fill:var(--hair)}
+svg .gU .gshape{fill:var(--accent);stroke:var(--ink);stroke-width:1.1}
+svg .gI .gshape{fill:var(--soft);stroke:var(--muted);stroke-width:1}
+svg .gU .gtooth{stroke:var(--panel);stroke-width:1;opacity:.7}
+svg .gI .gtooth{stroke:var(--muted);stroke-width:.8;opacity:.6}
+svg .strike{stroke:var(--cut);stroke-width:3;stroke-linecap:round}
+svg .barH{fill:var(--hair)}
+svg .stripe{fill:var(--skin)}
+svg .lbl{fill:var(--muted);font:500 11px var(--f-body)}
+svg .lblk{fill:var(--ink);font:700 11px var(--f-body)}
+svg .lblc{fill:var(--cut);font:700 11px var(--f-body)}
+svg .lbla{fill:var(--accent);font:700 11px var(--f-body)}
+svg .num{font-family:var(--f-mono)}
+svg .halo{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+svg .big{font-size:12px}
+svg .dim{fill:none;stroke:var(--muted);stroke-width:1}
+svg .mk{fill:var(--muted)}
+svg .mkc{fill:var(--cut)}
+svg .mka{fill:var(--accent)}
+svg .mkp{fill:var(--panel)}
+svg .arrow{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round}
+svg .arrowP{fill:none;stroke:var(--panel);stroke-width:2.2;stroke-linecap:round}
+svg .arrowC{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-linecap:round}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <svg id="tape" class="tape" aria-hidden="true"></svg>
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">一套理发器 · 只剪掉一半长度</p>
+      <h1>居家对半剪</h1>
+      <p class="lead">先填好每个区域现在多长、手边有哪些工具。页面会算出每处该留多少、该推还是该剪，再按你的情况排出完整流程和每一步的示意图。全程只守一条规矩：<strong>宁长勿短，分两轮剪</strong>。</p>
+    </div>
+    <dl class="facts">
+      <div><dt>剃</dt><dd>剃刀，或不装卡尺的推子。留 0–1 mm，长度几乎归零。</dd></div>
+      <div><dt>推</dt><dd>推子装卡尺。留下的长度等于卡尺高度，常见最长 12–25 mm。</dd></div>
+      <div><dt>剪</dt><dd>剪刀配手指。手指停在哪里就留多长，长度不限。</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section id="bench">
+  <div class="sec-head"><p class="eyebrow">一 · 诊断</p><h2>你的头发和工具</h2></div>
+  <div class="bench-grid">
+    <form id="inputs" class="panel inputs" autocomplete="off">
+      <fieldset><legend>先套一个接近的起点</legend><div class="presets" id="presets"></div></fieldset>
+      <fieldset><legend>现在每个区域多长</legend><p class="hint">捏住一缕头发拉直，从头皮量到发梢。编号和右边侧面图上的编号对应。</p><div id="zones"></div></fieldset>
+      <div class="two">
+        <fieldset><legend>发质</legend><div class="chips" id="tex"></div></fieldset>
+        <fieldset><legend>发量</legend><div class="chips" id="den"></div></fieldset>
+      </div>
+      <fieldset><legend>谁来剪</legend><div class="chips" id="who"></div></fieldset>
+      <fieldset><legend>工具箱里有什么</legend><p class="hint">点一下切换有 / 没有。缺的东西，流程里会给替代办法。</p><div class="toolgrid" id="tools"></div></fieldset>
+      <fieldset id="guardSet"><legend>有哪些卡尺（限位梳）</legend><p class="hint" id="guardHint">卡尺侧面印着数字，单位是 mm。</p><div class="chips" id="guards"></div></fieldset>
+    </form>
+
+    <div class="results">
+      <div class="verdict" id="verdict" aria-live="polite"></div>
+      <figure class="panel profile">
+        <svg id="profile" role="img" aria-label="侧面轮廓：深色是保留的头发，浅色是要剪掉的部分，红色虚线是最终剪切线"></svg>
+        <figcaption class="legend">
+          <span><i class="sw keep"></i>保留的一半</span>
+          <span><i class="sw off"></i>剪掉的一半</span>
+          <span><i class="sw cut"></i>最终剪切线</span>
+          <span>按真实比例绘制，左下角有 10 cm 比例尺</span>
+        </figcaption>
+      </figure>
+      <div class="panel" id="ztable"></div>
+      <figure class="panel cover">
+        <figcaption><b>推子够得着哪些区域</b>每一行是一个区域：深色是保留的长度，浅色是剪掉的部分，红色竖线是第一刀的位置，圆点是最终长度。圆点落在蓝色区里，才能用推子。</figcaption>
+        <svg id="cover" role="img" aria-label="各区域目标长度与推子卡尺可达范围的对比"></svg>
+      </figure>
+      <ul class="alerts" id="alerts"></ul>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="sec-head"><p class="eyebrow">二 · 剃、推、剪</p><h2>长度是由什么决定的</h2></div>
+  <p class="sec-lead">三种方式决定留多长的东西不一样：剃刀贴着头皮，推子靠卡尺的高度，剪刀靠手指的位置。所以“剪掉一半”能不能用推子，只看一件事：一半的长度有没有超过你最长的卡尺。</p>
+  <div class="cmp-grid" id="cmpGrid"></div>
+  <div class="cmp-table tablewrap"><table id="cmpTable"></table></div>
+</section>
+
+<section id="flow">
+  <div class="sec-head"><p class="eyebrow">三 · 流程</p><h2 id="flowTitle">你的剪发流程</h2></div>
+  <div class="flow-head" id="flowTags"></div>
+  <div class="progress"><div class="pbar"><span id="pbar"></span></div><span class="mono" id="pcount">0 / 0</span><button type="button" class="linkbtn" id="resetDone">清空勾选</button></div>
+  <ol class="steps" id="steps"></ol>
+</section>
+
+<section id="cases-sec">
+  <div class="sec-head"><p class="eyebrow">四 · 意外情况</p><h2>出了状况怎么办</h2></div>
+  <p class="sec-lead">标着“和你有关”的几条，是按你上面填的情况挑出来的，建议开剪前先读一遍。</p>
+  <div class="cases" id="cases"></div>
+</section>
+
+<p class="foot">数值按“剪掉一半长度”计算；头发平均每月长 1–1.5 cm。卡尺数字以你手上那套的实际印字为准。</p>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const cm=v=>{const r=Math.round(v*10)/10;return Number.isInteger(r)?String(r):r.toFixed(1);};
+let UID=0;const uid=p=>p+(++UID);
+const esc=s=>String(s);
+
+/* ---------- 数据 ---------- */
+const ZONES=[
+  {k:'front',name:'刘海 / 前额',short:'刘海',n:1},
+  {k:'top',name:'头顶',short:'头顶',n:2},
+  {k:'side',name:'两侧（耳上）',short:'两侧',n:3},
+  {k:'back',name:'后脑 / 后颈',short:'后脑',n:4}
+];
+const PRESETS={
+  buzz:{label:'寸头长长了',sub:'2–3 cm',len:{front:3,top:3,side:2,back:2}},
+  grown:{label:'几个月没剪',sub:'7–12 cm',len:{front:12,top:11,side:7,back:8}},
+  bob:{label:'齐下巴',sub:'20–28 cm',len:{front:20,top:28,side:24,back:26}},
+  long:{label:'过肩长发',sub:'35–45 cm',len:{front:35,top:45,side:42,back:45}}
+};
+const TOOLS=[
+  {k:'clipper',name:'电推剪',note:'理发器主机'},
+  {k:'scissors',name:'平剪',note:'理发剪刀'},
+  {k:'thinning',name:'打薄剪',note:'一边带齿'},
+  {k:'comb',name:'梳子',note:'细齿最好'},
+  {k:'clips',name:'分区夹',note:'长尾夹也行'},
+  {k:'spray',name:'喷壶',note:'湿毛巾也行'},
+  {k:'ties',name:'发圈',note:'橡皮筋也行'},
+  {k:'mirror2',name:'第二面镜子',note:'或手机录像'},
+  {k:'cape',name:'围布',note:'旧床单也行'}
+];
+const GUARDS=[3,6,9,12,16,19,22,25];
+const DEFAULT={len:{...PRESETS.grown.len},texture:'straight',density:'medium',who:'self',
+  tools:{clipper:true,scissors:true,thinning:true,comb:true,clips:false,spray:false,ties:false,mirror2:false,cape:true},
+  guards:[3,6,9,12]};
+const SKEY='halfcut-state-v1',DKEY='halfcut-done-v1';
+function load(){
+  let s=null;try{s=JSON.parse(localStorage.getItem(SKEY)||'null');}catch(e){s=null;}
+  const d=JSON.parse(JSON.stringify(DEFAULT));
+  if(s&&typeof s==='object'){
+    if(s.len)for(const z of ZONES){const v=+s.len[z.k];if(v>=1&&v<=60)d.len[z.k]=v;}
+    if(['straight','wavy','curly'].includes(s.texture))d.texture=s.texture;
+    if(['thin','medium','thick'].includes(s.density))d.density=s.density;
+    if(['self','helper'].includes(s.who))d.who=s.who;
+    if(s.tools)for(const t of TOOLS){if(typeof s.tools[t.k]==='boolean')d.tools[t.k]=s.tools[t.k];}
+    if(Array.isArray(s.guards))d.guards=s.guards.filter(g=>GUARDS.includes(g));
+  }
+  return d;
+}
+let state=load();
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(state));}catch(e){}}
+function loadDone(){try{return JSON.parse(localStorage.getItem(DKEY)||'{}')||{};}catch(e){return {};}}
+function saveDone(d){try{localStorage.setItem(DKEY,JSON.stringify(d));}catch(e){}}
+
+/* ---------- 计算 ---------- */
+function compute(){
+  const t=state.tools,hasClipper=!!t.clipper,sc=!!t.scissors;
+  const firstKeep=state.texture==='straight'?0.6:0.65;
+  const guards=hasClipper?[...state.guards].sort((a,b)=>a-b):[];
+  const maxG=guards.length?guards[guards.length-1]:0;
+  const long=state.len.back>=18;
+  const zones=ZONES.map(z=>{
+    const L=state.len[z.k],fin=L*0.5,first=L*firstKeep,tmm=fin*10;
+    let pick=null;
+    if(guards.length){
+      const above=guards.filter(g=>g>=tmm),below=guards.filter(g=>g<tmm);
+      if(above.length&&above[0]-tmm<=Math.max(3,tmm*0.25))pick=above[0];
+      else if(below.length&&below[below.length-1]>=tmm*0.85)pick=below[below.length-1];
+    }
+    return Object.assign({},z,{L,fin,first,tmm,pick,gOK:pick!==null});
+  });
+  let mode;
+  if(long)mode='ponytail';
+  else if(hasClipper&&zones.every(z=>z.gOK))mode='clipper';
+  else if(sc)mode=(hasClipper&&zones.some(z=>z.gOK))?'mixed':'scissors';
+  else if(hasClipper)mode='finger';
+  else mode='none';
+  zones.forEach(z=>{
+    let m;
+    if(mode==='clipper')m='clip';
+    else if(mode==='mixed')m=z.gOK?'clip':'cut';
+    else if(mode==='ponytail')m=z.k==='front'?(z.L>=18?'tail':'cut'):(z.L>=15?'tail':'cut');
+    else if(mode==='finger')m='finger';
+    else m='cut';
+    if(m==='cut'&&z.k==='front')m='bangs';
+    z.method=m;
+  });
+  const usesScissors=zones.some(z=>z.method==='cut'||z.method==='bangs')||(mode==='ponytail'&&sc);
+  const wetCut=state.texture==='straight'&&(mode==='scissors'||mode==='none'||mode==='mixed');
+  return {mode,zones,maxG,guards,hasClipper,sc,firstKeep,long,usesScissors,wetCut,
+    tailCut:state.len.back*(1-firstKeep),tailCut2:state.len.back*(firstKeep-0.5),noTool:!sc&&!hasClipper};
+}
+const MODE={
+  clipper:{title:'用推子推（装卡尺）',ans:'推。装卡尺推，不是剃',diff:2,time:'15–25 分钟',flow:'推子流程'},
+  scissors:{title:'用剪刀剪（指间剪法）',ans:'剪。推子留不了这么长',diff:4,time:'40–70 分钟',flow:'剪刀流程'},
+  mixed:{title:'短的区域推，长的区域剪',ans:'两样都用',diff:3,time:'35–60 分钟',flow:'推＋剪流程'},
+  ponytail:{title:'低马尾法：量好，一次剪',ans:'剪。长发用马尾法最稳',diff:2,time:'15–30 分钟',flow:'马尾流程'},
+  finger:{title:'应急：推子指间法',ans:'只有推子，但要当剪刀用',diff:5,time:'50–80 分钟',flow:'推子指间流程'},
+  none:{title:'先备一把理发平剪',ans:'剪',diff:4,time:'40–70 分钟',flow:'剪刀流程'}
+};
+function methodLabel(z){
+  if(z.method==='clip')return `推 · ${z.pick} mm 卡尺`;
+  if(z.method==='bangs')return '剪 · 竖着剪';
+  if(z.method==='tail')return '马尾一次剪';
+  if(z.method==='finger')return '推子指间法';
+  return '剪 · 指间剪';
+}
+const METHOD_SHORT={clip:'推',cut:'剪',bangs:'剪',tail:'马尾',finger:'推子指间'};
+function guardNote(z){
+  if(z.method!=='clip')return '';
+  const d=z.pick-z.tmm;
+  if(Math.abs(d)<0.5)return '正好';
+  return d>0?`比目标长 ${cm(d)} mm`:`比目标短 ${cm(-d)} mm`;
+}
+const zt=z=>`<span class="zt"><i>${z.n}</i>${z.short}</span>`;
+const V=v=>`<span class="val">${v}</span>`;
+const VC=v=>`<span class="valc">${v}</span>`;
+
+/* ---------- SVG 基础件 ---------- */
+function T(x,y,s,cls,anchor){return `<text class="${cls||'lbl'}" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}"${anchor?` text-anchor="${anchor}"`:''}>${s}</text>`;}
+function wrap(inner,label,vb){return `<svg viewBox="${vb||'0 0 240 150'}" role="img" aria-label="${label}">${inner}</svg>`;}
+function mk(id,cls){return `<marker id="${id}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="${cls||'mk'}" d="M0 0 L10 5 L0 10 Z"/></marker>`;}
+function G(x,y,rot,s,inner){return `<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)}) rotate(${rot||0}) scale(${s||1})">${inner}</g>`;}
+function scissors(x,y,rot,s,open,thin){
+  open=open==null?16:open;
+  const blade='<path class="steel" d="M-1 -2.6 L50 -1 Q54 0 50 1 L-1 2.6 Z"/>';
+  let teeth='';
+  if(thin)for(let i=0;i<10;i++){const xx=8+i*4;teeth+=`<line class="ln thin" x1="${xx}" y1="-1.6" x2="${xx}" y2="-5"/>`;}
+  return G(x,y,rot,s,
+    `<g transform="rotate(${open/2})">${blade}${teeth}<path class="ln" d="M-1 0 L-12 -3"/><ellipse class="ring" cx="-20" cy="-5" rx="8.5" ry="5.5"/></g>`+
+    `<g transform="rotate(${-open/2})">${blade}<path class="ln" d="M-1 0 L-12 3"/><ellipse class="ring" cx="-20" cy="5" rx="8.5" ry="5.5"/></g>`+
+    `<circle class="pivot" r="2.3"/>`);
+}
+function clipper(x,y,rot,s,guard){
+  let t='';
+  for(let i=0;i<9;i++){const yy=(-13+i*3.25).toFixed(2);t+=`<line class="ln thin" x1="2.5" y1="${yy}" x2="6" y2="${yy}"/>`;}
+  let gd='';
+  if(guard>0){const gx=6+guard;gd=`<path class="guard" d="M1 -17.5 L${gx} -15 L${gx} 15 L1 17.5 Z"/>`;for(let i=0;i<8;i++){const yy=(-12.6+i*3.6).toFixed(1);gd+=`<line class="guardt" x1="6" y1="${yy}" x2="${gx}" y2="${yy}"/>`;}}
+  return G(x,y,rot,s,`<rect class="body" x="-62" y="-12" width="54" height="24" rx="11"/><path class="body" d="M-12 -12 L-3 -16 L-3 16 L-12 12 Z"/><rect class="steel" x="-4" y="-16.5" width="7" height="33" rx="1.5"/>${t}<rect class="switch" x="-46" y="-4.5" width="12" height="9" rx="4"/>${gd}`);
+}
+function comb(x,y,rot,len,s){
+  len=len||64;let t='';
+  for(let xx=3;xx<len-2;xx+=3.2)t+=`<line class="ln thin" x1="${xx.toFixed(1)}" y1="7" x2="${xx.toFixed(1)}" y2="${xx<len*0.45?14:16}"/>`;
+  return G(x,y,rot,s,`<rect class="combb" x="0" y="0" width="${len}" height="7" rx="2"/>${t}`);
+}
+function fingers(x,y,rot,s,len){
+  len=len||60;const h=len/2;
+  return G(x,y,rot,s,`<rect class="skin" x="${-h-4}" y="1" width="${len}" height="10" rx="5"/><rect class="skin" x="${-h}" y="-11" width="${len}" height="10" rx="5"/><path class="skinl" d="M${h-7} -9 q4 3 0 6 M${h-11} 3 q4 3 0 6"/>`);
+}
+function hand(x,y,rot,s){
+  return G(x,y,rot,s,`<rect class="skin" x="-16" y="-6" width="32" height="34" rx="10"/><rect class="skin" x="-16" y="-30" width="7.5" height="28" rx="3.75"/><rect class="skin" x="-8" y="-35" width="7.5" height="33" rx="3.75"/><rect class="skin" x="0" y="-33" width="7.5" height="31" rx="3.75"/><rect class="skin" x="8" y="-27" width="7.5" height="25" rx="3.75"/><rect class="skin" x="12" y="4" width="8" height="20" rx="4" transform="rotate(-35 16 14)"/>`);
+}
+function headProfile(x,y,s,o){
+  o=o||{};
+  const hair=o.hair===false?'':`<path class="hairCap" d="M-23.7 -19.9 A31 31 0 0 1 28.1 13.1"/>`;
+  return G(x,y,0,s,`<path class="skin" d="M-20 -22 C-27 -15 -31 -8 -30 -1 L-37 12 L-31 15 Q-33 18 -31 21 Q-30 25 -27 30 Q-20 34 -8 30 L-6 48 L14 48 L14 30 Q30 18 30 0 A30 30 0 0 0 -20 -22 Z"/>${hair}<ellipse class="skin" cx="4" cy="5" rx="4.5" ry="7.5"/><path class="skinl" d="M5 1 q-3 4 0 8"/><path class="ln thin" d="M-27 -1 q3 -1.6 6 0"/>`);
+}
+function headFront(x,y,s,o){
+  o=o||{};
+  const hair=o.hair===false?'':`<path class="hairf" d="M-29 6 C-32 -26 -16 -38 0 -38 C16 -38 32 -26 29 6 L25 6 C25 -14 14 -22 0 -22 C-14 -22 -25 -14 -25 6 Z"/>`;
+  return G(x,y,0,s,`<rect class="skin" x="-10" y="24" width="20" height="18"/><ellipse class="skin" cx="-26" cy="4" rx="4" ry="7"/><ellipse class="skin" cx="26" cy="4" rx="4" ry="7"/><ellipse class="skin" cx="0" cy="0" rx="25" ry="32"/>${hair}<circle class="eye" cx="-9" cy="3" r="1.8"/><circle class="eye" cx="9" cy="3" r="1.8"/><path class="ln thin" d="M-13 -4 q4 -2 8 0 M5 -4 q4 -2 8 0 M-5 18 q5 3 10 0"/>`);
+}
+function headBack(x,y,s,o){
+  o=o||{};
+  const hair=o.hair===false?'':(o.hairPath||`<path class="hairf" d="M-27 12 C-30 -24 -16 -36 0 -36 C16 -36 30 -24 27 12 Q14 22 0 20 Q-14 22 -27 12 Z"/>`);
+  return G(x,y,0,s,`<path class="skin" d="M-46 64 Q-40 42 -12 36 L-10 22 L10 22 L12 36 Q40 42 46 64 Z"/><ellipse class="skin" cx="-26" cy="4" rx="4" ry="7"/><ellipse class="skin" cx="26" cy="4" rx="4" ry="7"/><ellipse class="skin" cx="0" cy="0" rx="25" ry="32"/>${hair}`);
+}
+function sprayIcon(x,y,s){return G(x,y,0,s,`<rect class="bottle" x="-14" y="-4" width="28" height="40" rx="6"/><rect class="bottle" x="-6" y="-14" width="12" height="10"/><path class="steel" d="M-10 -14 L14 -14 L24 -21 L24 -27 L-6 -27 Z"/><path class="ln" d="M4 -14 Q2 -5 9 -3"/>`);}
+function oil(x,y,s){return G(x,y,0,s,`<path class="bottle" d="M-9 -4 L-9 22 Q-9 26 -5 26 L5 26 Q9 26 9 22 L9 -4 Z"/><path class="bottle" d="M-4 -4 L-2 -16 L2 -16 L4 -4 Z"/><path class="drop" d="M0 -30 q-5 7 0 10 q5 -3 0 -10 Z"/>`);}
+function clipIcon(x,y,s,rot){return G(x,y,rot,s,`<path class="clipf" d="M-22 -3 L18 -6 Q24 -6 24 0 Q24 6 18 6 L-22 3 Z"/><path class="ln thin" d="M-22 0 L20 0"/><circle class="pivot" cx="-8" cy="0" r="2"/>`);}
+function tiesIcon(x,y,s){return G(x,y,0,s,`<ellipse class="tie" cx="-4" cy="0" rx="12" ry="9"/><ellipse class="tie" cx="5" cy="3" rx="12" ry="9"/>`);}
+function mirrorIcon(x,y,s){return G(x,y,0,s,`<rect class="handle" x="-4" y="12" width="8" height="24" rx="3"/><ellipse class="frame" cx="0" cy="-6" rx="15" ry="19"/><ellipse class="glass" cx="0" cy="-6" rx="11" ry="15"/><path class="glare" d="M-6 -14 L2 -20"/>`);}
+function capeIcon(x,y,s){return G(x,y,0,s,`<path class="cape" d="M-8 -20 Q0 -16 8 -20 L24 22 Q0 30 -24 22 Z"/><path class="ln thin" d="M-12 -2 L-16 20 M0 0 L0 24 M12 -2 L16 20"/><ellipse class="ln thin" cx="0" cy="-20" rx="8" ry="3"/>`);}
+function brush(x,y,rot,s){return G(x,y,rot,s,`<rect class="handle" x="-30" y="-3" width="30" height="6" rx="3"/><path class="hs" d="M0 -5 L10 -8 M0 -2 L11 -3 M0 1 L11 2 M0 4 L10 7"/>`);}
+function dryer(x,y,s){return G(x,y,0,s,`<rect class="body" x="-22" y="8" width="14" height="36" rx="6"/><rect class="body" x="-34" y="-14" width="56" height="28" rx="14"/><rect class="steel" x="20" y="-10" width="12" height="20" rx="3"/><circle class="switch" cx="-18" cy="0" r="6"/>`);}
+function phoneIcon(x,y,s){return G(x,y,0,s,`<rect class="phone" x="-11" y="-20" width="22" height="38" rx="4"/><circle class="rec" cx="0" cy="-12" r="3"/><path class="ln thin" d="M0 18 L0 40 M0 40 L-10 52 M0 40 L10 52"/>`);}
+
+const TOOL_ICON={
+  clipper:()=>clipper(33,13,-60,0.6,0),
+  scissors:()=>scissors(14,34,-50,0.55,16),
+  thinning:()=>scissors(14,34,-50,0.55,16,true),
+  comb:()=>comb(8,16,0,32,1),
+  clips:()=>clipIcon(24,24,0.85,-30),
+  spray:()=>sprayIcon(21,29,0.62),
+  ties:()=>tiesIcon(24,24,1),
+  mirror2:()=>mirrorIcon(24,20,0.9),
+  cape:()=>capeIcon(24,24,0.85)
+};
+
+/* ---------- 工序插图 ---------- */
+function artSpace(phone){
+  let s=`<rect class="frame" x="16" y="12" width="80" height="104" rx="6"/><rect class="glass" x="22" y="18" width="68" height="92" rx="3"/>${headFront(56,62,0.85)}<path class="glare" d="M30 32 L42 22 M30 42 L50 24"/>`;
+  s+=`<line class="ln" x1="150" y1="0" x2="150" y2="12"/><path class="lamp" d="M136 12 L164 12 L172 26 L128 26 Z"/><path class="ray" d="M134 32 L114 58 M150 32 L150 62 M166 32 L186 58"/>`;
+  s+=`<path class="sheet" d="M104 126 L232 126 L224 146 L96 146 Z"/><path class="bits" d="M128 136 l6 -3 M150 139 l5 2 M172 134 l-4 4 M196 138 l6 -2 M116 141 l4 -3"/>`;
+  s+=T(56,132,'镜子与眼睛齐平','lbl','middle')+T(150,76,'正面光','lbl','middle')+T(140,120,'铺报纸','lbl','middle');
+  if(phone)s+=phoneIcon(212,84,0.95)+T(212,58,'录后脑','lbl','middle');
+  return wrap(s,'场地布置：镜子在正前方，灯从正面照，地上铺报纸');
+}
+function artTools(t){
+  const it=[];
+  if(t.clipper)it.push(['电推剪',x=>clipper(x,46,-90,0.8,0)]);
+  if(t.scissors)it.push(['平剪',x=>scissors(x,90,-90,0.8,12)]);
+  if(t.thinning)it.push(['打薄剪',x=>scissors(x,90,-90,0.8,12,true)]);
+  if(t.comb)it.push(['梳子',x=>comb(x+7,44,90,58,1)]);
+  if(t.clipper)it.push(['刀头油',x=>oil(x,80,1.1)]);
+  if(t.clips)it.push(['分区夹',x=>clipIcon(x,74,0.9,-70)]);
+  if(t.spray)it.push(['喷壶',x=>sprayIcon(x-4,80,0.8)]);
+  if(t.ties)it.push(['发圈',x=>tiesIcon(x,76,1)]);
+  if(t.mirror2)it.push(['手镜',x=>mirrorIcon(x,70,1.1)]);
+  if(t.cape)it.push(['围布',x=>capeIcon(x,76,1)]);
+  const list=it.slice(0,6),n=list.length||1,slot=228/n;
+  let s=`<rect class="sheet" x="4" y="112" width="232" height="8" rx="2"/>`;
+  list.forEach((e,i)=>{const cx=6+slot*(i+0.5);s+=e[1](cx)+T(cx,138,e[0],'lbl','middle');});
+  if(!list.length)s+=T(120,80,'还没有勾选任何工具','lbl','middle');
+  return wrap(s,'你手上的工具');
+}
+function artWet(kind){
+  let s=`<path class="scalp" d="M128 32 Q162 22 198 32 L198 22 Q162 12 128 22 Z"/>`,lab='';
+  const straight=x0=>{let p='';for(let i=0;i<6;i++){const x=x0+i*5;p+=`<path class="hs" d="M${x} 30 Q${x+4} 72 ${x-1} 116"/>`;}return p;};
+  if(kind==='spray'){
+    s+=straight(148)+sprayIcon(58,84,1.2);
+    [[98,46,3],[106,54,2.4],[112,40,2.2],[120,49,1.8],[102,36,1.8],[126,42,1.4]].forEach(a=>{s+=`<circle class="drop" cx="${a[0]}" cy="${a[1]}" r="${a[2]}" opacity=".55"/>`;});
+    s+=T(162,136,'七八成干 · 不滴水','lbl','middle')+T(62,140,'干了就补喷','lbl','middle');
+    lab='直发用剪刀：头发保持七八成干，干了用喷壶补湿';
+  }else if(kind==='curly'){
+    s=`<path class="scalp" d="M34 32 Q66 22 98 32 L98 22 Q66 12 34 22 Z"/><path class="scalp" d="M142 32 Q174 22 206 32 L206 22 Q174 12 142 22 Z"/>`;
+    for(let i=0;i<4;i++){const x=56+i*6;s+=`<path class="hs" d="M${x} 30 L${x} 120"/>`;}
+    for(let i=0;i<4;i++){const x=162+i*6;let d=`M${x} 30`;for(let k=0;k<4;k++)d+=` q${k%2?7:-7} 7 0 14`;s+=`<path class="hs" d="${d}"/>`;}
+    s+=`<line class="dim" x1="40" y1="30" x2="40" y2="120"/><line class="dim" x1="148" y1="30" x2="148" y2="86"/>`;
+    s+=T(66,138,'拉直时','lbl','middle')+T(174,104,'松开回缩','lbl','middle')+T(174,138,'所以干剪、少剪','lblc','middle');
+    lab='卷发拉直时比松开时长得多，所以要干剪、少剪';
+  }else{
+    s+=straight(148)+dryer(60,64,1.1);
+    s+=`<path class="arrow" d="M100 56 q6 -4 12 0 t12 0 M100 66 q6 -4 12 0 t12 0 M100 76 q6 -4 12 0 t12 0"/>`;
+    s+=T(162,136,'完全吹干','lbl','middle')+T(58,134,'干发才服帖卡尺','lbl','middle');
+    lab='用推子或马尾法：头发完全吹干';
+  }
+  return wrap(s,lab);
+}
+function artMeasure(L,first,fin,clipMode){
+  const top=22,bot=124,H=bot-top,yA=v=>bot-v/L*H,y1=yA(first),yf=yA(fin);
+  const step=L<=8?1:L<=20?2:L<=40?5:10,n=Math.floor(L/step+1e-9);
+  let s=`<rect class="rulerb" x="70" y="${top-6}" width="16" height="${H+12}" rx="2"/>`;
+  for(let i=0;i<=n;i++){const v=i*step,y=yA(v);s+=`<line class="ln thin" x1="76" y1="${y.toFixed(1)}" x2="86" y2="${y.toFixed(1)}"/>`;if(n<=8||i%2===0)s+=T(64,y+4,v,'lbl num','end');}
+  s+=T(78,top-10,'cm','lbl num','middle');
+  s+=`<path class="scalp" d="M100 ${bot} Q128 ${bot-5} 156 ${bot} L156 ${bot+12} L100 ${bot+12} Z"/>`;
+  for(let i=0;i<5;i++){const x=118+i*4;
+    if(clipMode)s+=`<line class="hs" x1="${x}" y1="${bot-2}" x2="${x}" y2="${yf}"/><line class="ho" x1="${x}" y1="${yf}" x2="${x}" y2="${top}"/>`;
+    else s+=`<line class="hs" x1="${x}" y1="${bot-2}" x2="${x}" y2="${yf}"/><line class="hm" x1="${x}" y1="${yf}" x2="${x}" y2="${y1}"/><line class="ho" x1="${x}" y1="${y1}" x2="${x}" y2="${top}"/>`;}
+  s+=`<circle class="skin" cx="122" cy="${top-4}" r="6"/><circle class="skin" cx="133" cy="${top-2}" r="6"/>`;
+  if(!clipMode)s+=`<line class="cutl" x1="108" y1="${y1}" x2="146" y2="${y1}"/>`+T(150,y1-3,`第一刀 ${cm(first)} cm`,'lblc num');
+  s+=`<line class="cutd" x1="108" y1="${yf}" x2="146" y2="${yf}"/>`+T(150,yf+13,`最终 ${cm(fin)} cm`,'lblk num');
+  s+=T(150,top+12,'剪掉的是发梢','lbl');
+  return wrap(s,`量长度：现在 ${cm(L)} cm，第一刀留 ${cm(first)} cm，最终留 ${cm(fin)} cm`);
+}
+function artSection(){
+  const cx=92,cy=80;
+  let s=`<ellipse class="skin" cx="${cx-47}" cy="${cy+4}" rx="5" ry="9"/><ellipse class="skin" cx="${cx+47}" cy="${cy+4}" rx="5" ry="9"/><path class="skin" d="M${cx-8} 24 L${cx} 13 L${cx+8} 24 Z"/>`;
+  s+=`<ellipse class="secfill" cx="${cx}" cy="${cy}" rx="46" ry="58"/>`;
+  s+=`<path class="cutl" d="M${cx-24} 36 Q${cx} 46 ${cx+24} 36 M${cx-24} 36 L${cx-26} 92 M${cx+24} 36 L${cx+26} 92 M${cx-45} 92 Q${cx} 100 ${cx+45} 92 M${cx-38} 116 Q${cx} 124 ${cx+38} 116"/>`;
+  s+=clipIcon(cx,66,0.55,90)+clipIcon(cx-36,70,0.5,80)+clipIcon(cx+36,70,0.5,100)+clipIcon(cx,106,0.5,0);
+  const L=[[cx+8,30,'刘海',34],[cx+10,58,'头顶',58],[cx+40,82,'两侧',82],[cx+22,104,'后脑上层',106],[cx+16,130,'后脑下层',132]];
+  L.forEach(a=>{s+=`<line class="dim" x1="${a[0]}" y1="${a[1]}" x2="156" y2="${a[3]-4}"/>`+T(160,a[3],a[2],'lblk');});
+  return wrap(s,'俯视图：刘海、头顶、两侧、后脑上下层五个分区');
+}
+function artFingerCut(L,keep,tool,lab){
+  const bot=128,top=14,H=bot-top-6,y=Math.round(bot-6-keep/L*H),id=uid('m');
+  let s=`<defs>${mk(id)}</defs><path class="scalp" d="M30 ${bot} Q120 ${bot-12} 210 ${bot} L210 150 L30 150 Z"/>`;
+  for(let i=0;i<7;i++){const x=106+i*4.5;s+=`<line class="hs" x1="${x}" y1="${bot-9}" x2="${x}" y2="${y}"/><line class="ho" x1="${x}" y1="${y}" x2="${(x+(i-3)*0.8).toFixed(1)}" y2="${top}"/>`;}
+  s+=fingers(116,y+12,0,1,58)+`<line class="cutl" x1="86" y1="${y}" x2="150" y2="${y}"/>`;
+  s+=tool==='clipper'?clipper(152,y-9,180,0.66,0):scissors(184,y-4,180,0.95,10);
+  s+=`<line class="dim" x1="70" y1="${bot-9}" x2="70" y2="${y}" marker-start="url(#${id})" marker-end="url(#${id})"/>`;
+  s+=T(64,(y+bot-9)/2+4,`留 ${cm(keep)} cm`,'lblk num','end')+T(140,top+10,'剪掉','lbl');
+  if(tool==='clipper')s+=T(200,y+30,'不装卡尺','lblc','middle');
+  return wrap(s,lab||`手指夹住发片，手指停在离头皮 ${cm(keep)} cm 处，剪掉手指外侧`);
+}
+function artTravel(){
+  const cx=120,cy=152,r=70,P=(a,rr)=>[cx+rr*Math.cos(a*Math.PI/180),cy+rr*Math.sin(a*Math.PI/180)],id=uid('m');
+  const f=v=>v.toFixed(1);
+  let s=`<defs>${mk(id,'mka')}</defs>`;
+  const a=P(-172,r),b=P(-8,r);
+  s+=`<path class="scalp" d="M${f(a[0])} ${f(a[1])} A${r} ${r} 0 0 1 ${f(b[0])} ${f(b[1])} Z"/>`;
+  for(let ang=-146;ang<=-34;ang+=8){
+    const done=ang<=-90,guide=ang===-98||ang===-90;
+    const p0=P(ang,r+1),p1=P(ang,r+22),p2=P(ang,r+40);
+    s+=`<line class="${guide?'hsA':'hs'}" x1="${f(p0[0])}" y1="${f(p0[1])}" x2="${f(p1[0])}" y2="${f(p1[1])}"/>`;
+    if(!done)s+=`<line class="ho" x1="${f(p1[0])}" y1="${f(p1[1])}" x2="${f(p2[0])}" y2="${f(p2[1])}"/>`;
+  }
+  const c1=P(-150,r+22),c2=P(-30,r+22);
+  s+=`<path class="cutl" d="M${f(c1[0])} ${f(c1[1])} A${r+22} ${r+22} 0 0 1 ${f(c2[0])} ${f(c2[1])}"/>`;
+  const q1=P(-82,r+50),q2=P(-48,r+50);
+  s+=`<path class="arrow" d="M${f(q1[0])} ${f(q1[1])} A${r+50} ${r+50} 0 0 1 ${f(q2[0])} ${f(q2[1])}" marker-end="url(#${id})"/>`;
+  s+=T(cx-6,52,'引导线','lbla','middle')+T(206,52,'推进','lbla')+T(30,74,'已剪好','lbl');
+  return wrap(s,'以第一片为引导线，每次带上一半已剪好的头发，往后、往两边推进');
+}
+function artBangs(){
+  let s=`<rect class="skin" x="106" y="118" width="28" height="32"/><ellipse class="skin" cx="120" cy="88" rx="36" ry="44"/>`;
+  s+=`<path class="hairf" d="M80 100 C76 40 98 30 120 30 C142 30 164 40 160 100 L154 100 C154 66 144 52 120 52 C96 52 86 66 86 100 Z"/>`;
+  for(let i=0;i<11;i++){const x=94+i*5.2;s+=`<path class="hs" d="M${(x+4).toFixed(1)} 46 Q${x.toFixed(1)} 60 ${(x+0.6).toFixed(1)} 70"/><path class="ho" d="M${(x+0.6).toFixed(1)} 70 L${(x+1).toFixed(1)} ${82+(i%3)}"/>`;}
+  s+=`<path class="ln thin" d="M100 90 q7 -3 13 0 M127 90 q7 -3 13 0"/><circle class="eye" cx="107" cy="98" r="2.2"/><circle class="eye" cx="133" cy="98" r="2.2"/><path class="ln thin" d="M112 118 q8 4 16 0"/>`;
+  s+=`<line class="cutl" x1="88" y1="70" x2="154" y2="70"/>`+scissors(146,124,-94,0.85,10);
+  s+=T(8,36,'干剪','lblk')+T(8,52,'剪刀竖起来','lbl')+T(8,68,'不要拉紧','lbl')+T(164,73,'第一刀','lblc');
+  return wrap(s,'刘海：干剪，剪刀竖起来往上一点点剪，不要拉紧');
+}
+function artSides(L,keep){
+  const id=uid('m'),x0=122,len=88,xc=Math.round(x0+keep/L*len);
+  let s=`<defs>${mk(id)}</defs>`+headFront(80,80,1.4);
+  for(let i=0;i<5;i++){const y=58+i*3;s+=`<line class="hs" x1="${x0}" y1="${y}" x2="${xc}" y2="${y}"/><line class="ho" x1="${xc}" y1="${y}" x2="${x0+len}" y2="${y+(i-2)*1.5}"/>`;}
+  s+=fingers(xc-12,64,90,1,46)+`<line class="cutl" x1="${xc}" y1="40" x2="${xc}" y2="92"/>`+scissors(xc+2,118,-90,1.05,10);
+  s+=`<line class="dim" x1="${x0}" y1="34" x2="${xc}" y2="34" marker-start="url(#${id})" marker-end="url(#${id})"/>`+T((x0+xc)/2,28,`留 ${cm(keep)} cm`,'lblk num','middle');
+  s+=T(6,16,'另一只手按住耳朵','lbl');
+  return wrap(s,`两侧：头发垂直头皮拉出，手指竖着夹住，留 ${cm(keep)} cm`);
+}
+function artBack(self,mirror2){
+  let s=headBack(92,60,1.25,{hairPath:`<path class="hairf" d="M-25 0 C-26 -24 -14 -34 0 -34 C14 -34 26 -24 25 0 Q0 -8 -25 0 Z"/>`});
+  for(let i=0;i<14;i++){const x=67+i*3.8;s+=`<path class="hs" d="M${x.toFixed(1)} 62 L${(x+0.4).toFixed(1)} 94"/><path class="ho" d="M${(x+0.4).toFixed(1)} 94 L${(x+0.8).toFixed(1)} 108"/>`;}
+  s+=clipIcon(92,34,0.6,0)+`<line class="cutl" x1="58" y1="94" x2="126" y2="94"/>`+scissors(166,92,180,0.85,10);
+  s+=T(128,26,'上层夹起','lblk')+T(4,20,'先剪下层','lblk')+T(4,34,'手指量长度','lbl');
+  if(self){s+=mirror2?mirrorIcon(214,58,1.1)+T(214,112,'手镜看','lbl','middle'):phoneIcon(214,56,0.95)+T(214,124,'录像看','lbl','middle');}
+  return wrap(s,'后脑：上层夹起，先剪下层，靠手指量长度');
+}
+function artCross(){
+  let s=headFront(120,44,1);
+  s+=`<path class="hairf" d="M95 32 Q84 70 98 130 L104 130 Q94 76 101 34 Z"/><path class="hairf" d="M145 32 Q156 70 142 126 L136 126 Q146 76 139 34 Z"/>`;
+  s+=`<line class="cutl" x1="86" y1="126" x2="156" y2="126"/><line class="arrowC" x1="90" y1="126" x2="90" y2="131"/>`;
+  s+=T(4,74,'左右各取一缕','lblk')+T(4,90,'同时拉到脸前','lbl')+T(4,140,'只修长的那边','lblc')+T(160,122,'发梢齐吗','lbl');
+  return wrap(s,'交叉检查：左右对称各取一缕拉到脸前对比长度');
+}
+function artSoften(){
+  let s='';
+  for(let i=0;i<9;i++){const x=34+i*6;s+=`<line class="hs" x1="${x}" y1="26" x2="${x}" y2="104"/>`;}
+  s+=`<line class="ln" x1="30" y1="105" x2="86" y2="105"/>`;
+  const st=[0,7,3,9,1,6,2,8,4];
+  for(let i=0;i<9;i++){const x=140+i*6;s+=`<line class="hs" x1="${x}" y1="26" x2="${x}" y2="${104-st[i]}"/>`;}
+  s+=scissors(196,128,-120,0.72,8);
+  s+=`<path class="arrow" d="M98 66 L124 66"/><path class="arrow" d="M117 60 L124 66 L117 72"/>`;
+  s+=T(58,16,'一刀平：边缘生硬','lbl','middle')+T(166,16,'点剪：发尾柔和','lbl','middle')+T(58,124,'剪刀横着','lbl','middle')+T(126,142,'剪刀竖着，往里剪 3–5 mm','lblk','middle');
+  return wrap(s,'点剪：剪刀竖起来往发梢里剪小口，去掉一刀平的硬线');
+}
+function artOutline(hasClipper){
+  let s=`<path class="skin" d="M70 150 L72 70 Q120 58 168 70 L170 150 Z"/><path class="hairf" d="M66 0 L174 0 L174 72 Q160 62 146 78 Q120 88 94 78 Q80 62 66 72 Z"/>`;
+  s+=`<path class="cutd" d="M72 76 Q82 68 94 82 Q120 92 146 82 Q158 68 168 76"/>`;
+  s+=`<path class="hs" d="M102 98 l1 5 M112 102 l-1 5 M126 100 l1 5 M138 96 l0 5 M118 108 l1 4"/>`;
+  s+=hasClipper?clipper(152,120,-130,0.62,0):scissors(158,126,-130,0.7,8);
+  s+=`<line class="dim" x1="60" y1="73" x2="74" y2="76"/><line class="dim" x1="60" y1="101" x2="98" y2="101"/>`;
+  s+=T(4,76,'自然发际线','lbl')+T(4,104,'线外碎毛','lblk')+T(178,98,hasClipper?'刀齿朝上':'刀尖贴皮肤','lbl')+T(178,112,'轻轻带过','lbl');
+  return wrap(s,'修边：只去掉发际线以外的碎毛，不要把发际线往上推');
+}
+function artSecond(name,L,first,fin){
+  const x0=64,W=126,w=v=>v/L*W;
+  const rows=[['原长',L,'barOff'],['第一刀后',first,'barMid'],['最终',fin,'barKeep']];
+  let s=T(120,12,`以${name}为例`,'lbl','middle');
+  rows.forEach((r,i)=>{const y=26+i*40;s+=`<rect class="${r[2]}" x="${x0}" y="${y}" width="${w(r[1]).toFixed(1)}" height="16" rx="3"/>`+T(x0-6,y+12,r[0],'lbl','end')+T(x0+w(r[1])+6,y+12,cm(r[1])+' cm','lblk num');});
+  const id=uid('m');
+  s+=`<defs>${mk(id,'mkc')}</defs><path class="arrowC" d="M${(x0+w(first)).toFixed(1)} 86 Q${(x0+w(first)+10).toFixed(1)} 96 ${(x0+w(fin)+3).toFixed(1)} 104" marker-end="url(#${id})"/>`;
+  s+=T(x0+w(first)+16,100,`再剪 ${cm(first-fin)} cm`,'lblc num');
+  return wrap(s,`两轮剪：${cm(L)} cm 先剪到 ${cm(first)} cm，再修到 ${cm(fin)} cm`);
+}
+function artClean(hasClipper){
+  let s=`<rect class="sheet" x="10" y="122" width="220" height="10" rx="2"/>`;
+  if(hasClipper){s+=clipper(108,68,0,0.95,0)+brush(150,46,150,1)+oil(186,86,1.1)+`<path class="drop" d="M114 40 q-4 6 0 9 q4 -3 0 -9 Z"/>`;
+    s+=T(60,104,'刷掉碎发','lbl','middle')+T(186,140,'滴 1–2 滴油','lbl','middle');}
+  else{s+=scissors(70,80,-20,1.1,12)+oil(186,86,1.1)+T(80,116,'擦干，单独收好','lbl','middle')+T(186,140,'轴上一滴油','lbl','middle');}
+  return wrap(s,'收尾：清理碎发，给刀头上油');
+}
+function artGuards(guards,used){
+  const list=[...guards].sort((a,b)=>b-a),n=list.length;
+  if(!n)return wrap(T(120,80,'没有选卡尺','lbl','middle'),'没有卡尺');
+  const slot=Math.min(30,212/n),x0=(240-slot*n)/2,base=116,k=3.1,id=uid('m');
+  let s=`<defs>${mk(id,'mka')}</defs>`;
+  list.forEach((g,i)=>{const x=x0+slot*i+slot/2-10,h=Math.max(10,g*k),u=used.includes(g);
+    s+=`<g class="${u?'gU':'gI'}"><path class="gshape" d="M${x.toFixed(1)} ${base} L${x.toFixed(1)} ${(base-h+4).toFixed(1)} Q${(x+10).toFixed(1)} ${(base-h-4).toFixed(1)} ${(x+20).toFixed(1)} ${(base-h+4).toFixed(1)} L${(x+20).toFixed(1)} ${base} Z"/>`;
+    for(let j=1;j<4;j++)s+=`<line class="gtooth" x1="${(x+j*5).toFixed(1)}" y1="${base}" x2="${(x+j*5).toFixed(1)}" y2="${(base-h+6).toFixed(1)}"/>`;
+    s+=`</g>`+T(x+10,base+15,g,u?'lblk num':'lbl num','middle');});
+  s+=T(x0+slot*n+2,base+15,'mm','lbl');
+  s+=`<line class="arrow" x1="${(x0+4).toFixed(1)}" y1="18" x2="${(x0+slot*n-4).toFixed(1)}" y2="18" marker-end="url(#${id})"/>`+T(x0+4,12,'先装长的，再换短的','lbla');
+  return wrap(s,'卡尺从长到短使用，本次用到的卡尺已高亮');
+}
+function artDirection(){
+  const id=uid('m');
+  let s=`<defs>${mk(id,'mkp')}</defs>`+headBack(110,62,1.4);
+  [[94,98,94,64],[110,102,110,62],[126,98,126,64]].forEach(a=>{s+=`<line class="arrowP" x1="${a[0]}" y1="${a[1]}" x2="${a[2]}" y2="${a[3]}" marker-end="url(#${id})"/>`;});
+  s+=`<path class="arrowP" d="M82 84 Q78 66 84 46" marker-end="url(#${id})"/><path class="arrowP" d="M138 84 Q142 66 136 46" marker-end="url(#${id})"/>`;
+  s+=clipper(204,62,-90,0.7,8);
+  s+=T(6,36,'两侧、后脑','lbl')+T(6,52,'从下往上','lblk')+T(6,120,'头顶：从前往后','lbl')+T(6,134,'发旋处换方向','lbl')+T(204,128,'卡尺平贴','lbl','middle')+T(204,142,'慢、重叠半道','lbl','middle');
+  return wrap(s,'推的方向：两侧和后脑从下往上，逆着头发生长方向');
+}
+function artBlend(mixed){
+  const id=uid('m');
+  let s=`<defs>${mk(id,'mka')}</defs>`+headProfile(96,84,1.7,{hair:false});
+  s+=`<path class="hairCap" style="stroke-width:16" d="M${(96-23.7*1.75).toFixed(1)} ${(84-19.9*1.75).toFixed(1)} A54 54 0 0 1 ${(96+46.8).toFixed(1)} ${(84-27).toFixed(1)}"/>`;
+  s+=`<path class="hairCap" style="stroke-width:7" d="M${(96+46.8).toFixed(1)} ${(84-27).toFixed(1)} A54 54 0 0 1 ${(96+44).toFixed(1)} ${(84+32).toFixed(1)}"/>`;
+  s+=`<path class="arrow" d="M170 82 Q186 66 168 46" marker-end="url(#${id})"/>`;
+  if(mixed){s+=comb(150,34,62,36,0.8)+scissors(206,30,160,0.6,10);s+=T(236,112,'交界：剪刀梳','lblk','end')+T(236,126,'把台阶修顺','lbl','end');}
+  else{s+=clipper(196,100,-120,0.5,6);s+=T(236,128,'交界：中间号卡尺','lblk','end')+T(236,142,'手腕向外挑出','lbl','end');}
+  s+=T(36,20,'长','lbl','middle')+T(152,108,'短','lbl','middle');
+  return wrap(s,mixed?'推子区和剪刀区的交界，用剪刀梳修顺':'两个卡尺交界处用中间号卡尺，手腕向外挑出');
+}
+function artFeel(){
+  const id=uid('m');
+  let s=`<defs>${mk(id,'mka')}</defs>`+headBack(96,62,1.35)+hand(104,92,-8,0.9);
+  s+=`<line class="arrow" x1="160" y1="118" x2="160" y2="58" marker-end="url(#${id})"/>`;
+  s+=T(170,70,'逆着摸','lblk')+T(170,86,'扎手处','lbl')+T(170,100,'就是漏推','lbl');
+  return wrap(s,'手掌逆着头发方向摸，扎手的地方就是漏推的');
+}
+function artTailTie(){
+  let s=headBack(120,38,0.95,{hairPath:`<path class="hairf" d="M-26 6 C-29 -26 -15 -35 0 -35 C15 -35 29 -26 26 6 Q20 26 4 34 L-4 34 Q-20 26 -26 6 Z"/>`});
+  s+=`<path class="hairf" d="M114 70 Q108 108 115 146 L125 146 Q132 108 126 70 Z"/>`;
+  [70,92,114,136].forEach(y=>{s+=`<rect class="tieb" x="110" y="${y-2}" width="20" height="5" rx="2"/>`;});
+  s+=`<line class="dim" x1="134" y1="70" x2="152" y2="70"/><line class="dim" x1="134" y1="103" x2="152" y2="103"/>`;
+  s+=T(156,74,'紧贴后颈，正中','lblk')+T(156,107,'每隔约 5 cm','lbl')+T(156,121,'再扎一根','lbl');
+  return wrap(s,'扎低马尾，贴紧后颈正中，每隔约 5 cm 再加一根皮筋');
+}
+function artTailMeasure(cut,back){
+  const top=14,tip=136,yc=Math.round(tip-Math.min(cut/back,0.9)*(tip-top)),id=uid('m');
+  const xl=y=>113+2*(y-top)/(tip-top),xr=y=>127-2*(y-top)/(tip-top);
+  let s=`<defs>${mk(id)}</defs>`;
+  s+=`<path class="hairf" d="M113 ${top} L${xl(yc).toFixed(1)} ${yc} L${xr(yc).toFixed(1)} ${yc} L127 ${top} Z"/>`;
+  s+=`<path class="hairOffF" d="M${xl(yc).toFixed(1)} ${yc} L115 ${tip} L125 ${tip} L${xr(yc).toFixed(1)} ${yc} Z"/>`;
+  s+=`<rect class="tieb" x="109" y="${top-2}" width="22" height="5" rx="2"/><rect class="tieb" x="110" y="${yc-3}" width="20" height="5" rx="2"/>`;
+  s+=`<line class="cutl" x1="94" y1="${yc+6}" x2="146" y2="${yc+6}"/>`+scissors(64,yc+6,0,1.05,10);
+  s+=`<line class="dim" x1="150" y1="${yc}" x2="150" y2="${tip}" marker-start="url(#${id})" marker-end="url(#${id})"/>`;
+  s+=T(158,(yc+tip)/2,`${cm(cut)} cm`,'lblk num')+T(158,(yc+tip)/2+15,'从发梢往上量','lbl');
+  s+=T(136,yc-6,'扎皮筋','lbl')+T(6,yc-8,'皮筋下方剪','lblc');
+  return wrap(s,`从马尾发梢往上量 ${cm(cut)} cm 扎皮筋，在皮筋下方剪`);
+}
+function artTailCut(sc){
+  let s='';
+  for(let i=0;i<13;i++){const x=90+i*5;if(x<110)s+=`<line class="hs" x1="${x}" y1="10" x2="${x}" y2="68"/><line class="ho" x1="${x}" y1="73" x2="${x}" y2="150"/>`;else s+=`<line class="hs" x1="${x}" y1="10" x2="${x}" y2="71"/><line class="ho" x1="${x}" y1="71" x2="${x}" y2="150"/>`;}
+  s+=`<rect class="tieb" x="84" y="50" width="72" height="6" rx="2"/><line class="cutl" x1="82" y1="71" x2="160" y2="71"/>`;
+  s+=sc?scissors(42,70,0,0.92,12):clipper(78,70,0,0.62,0);
+  const id=uid('m');
+  s+=`<defs>${mk(id,'mka')}</defs><line class="arrow" x1="92" y1="90" x2="152" y2="90" marker-end="url(#${id})"/>`;
+  s+=T(166,94,'每次 1 cm 宽','lblk')+T(166,108,'慢慢剪过去','lbl')+T(6,118,sc?'剪刀与马尾垂直':'推子不装卡尺','lbl');
+  return wrap(s,'粗马尾分几小口剪断');
+}
+function artTailCheck(){
+  let s=`<path class="skin" d="M36 150 Q46 96 100 86 L140 86 Q194 96 204 150 Z"/>`+headFront(120,38,0.95);
+  s+=`<path class="ln thin" d="M76 106 Q98 100 116 106 M124 106 Q142 100 164 106"/>`;
+  s+=`<path class="hairf" d="M93 32 Q84 74 92 128 L104 126 Q98 80 99 38 Z"/><path class="hairf" d="M147 32 Q156 74 148 122 L136 122 Q142 80 141 38 Z"/>`;
+  s+=`<line class="cutl" x1="80" y1="122" x2="162" y2="122"/>`;
+  s+=T(4,104,'锁骨做参照','lbl')+T(4,138,'只修长的一侧','lblc')+T(170,118,'对齐了吗','lbl');
+  return wrap(s,'放下头发，分左右拉到胸前，以锁骨为参照对比');
+}
+function artLayers(){
+  let s=headFront(120,94,1.05)+`<path class="hairf" d="M114 58 Q108 32 116 8 L124 8 Q132 32 126 58 Z"/><path class="hairOffF" d="M116 8 L124 8 L124.6 18 L115.4 18 Z"/><rect class="tieb" x="110" y="54" width="20" height="5" rx="2"/>`;
+  s+=`<line class="cutl" x1="100" y1="18" x2="140" y2="18"/>`+scissors(180,18,180,0.85,10);
+  s+=T(6,22,'只剪 2–3 cm','lblc')+T(6,38,'额前高马尾','lbl');
+  return wrap(s,'可选：额前扎高马尾，只剪 2–3 cm，得到层次');
+}
+function artBuy(){
+  return wrap(scissors(80,80,-30,1.2,14)+comb(140,50,20,60,1)+T(120,140,'理发平剪 + 细齿梳','lblk','middle'),'先准备理发平剪和细齿梳');
+}
+
+/* ---------- 原理对比插图 ---------- */
+const sY=x=>{const t=(x-10)/200;return 150-16*t*(1-t);};
+function cmpBase(){return `<path class="scalp" d="M10 150 Q110 142 210 150 L210 190 L10 190 Z"/>`;}
+function artCmpShave(){
+  let s=cmpBase();
+  for(let i=0;i<15;i++){const x=24+i*12,y=sY(x);s+=`<line class="hoG" x1="${x}" y1="${(y-4).toFixed(1)}" x2="${x+1}" y2="36"/><line class="hs" x1="${x}" y1="${y.toFixed(1)}" x2="${x}" y2="${(y-2).toFixed(1)}"/>`;}
+  s+=G(118,128,-12,1,`<rect class="steel" x="-34" y="-3" width="56" height="12" rx="2"/><rect class="handle" x="22" y="-2" width="44" height="9" rx="4"/>`);
+  s+=T(12,20,'刀片贴着头皮','lblk')+T(110,176,'留 0–1 mm','lblk num','middle');
+  return wrap(s,'剃：刀片贴头皮，长度几乎归零','0 0 220 190');
+}
+function artCmpClip(maxG){
+  const g=maxG||12,h=Math.min(96,Math.max(14,g*3.4)),gx0=92,gx1=136,id=uid('m');
+  let s=`<defs>${mk(id)}</defs>`+cmpBase();
+  for(let x=18;x<=204;x+=8){const y=sY(x),tp=y-h;
+    if(x<gx0)s+=`<line class="hs" x1="${x}" y1="${y.toFixed(1)}" x2="${x}" y2="34"/>`;
+    else{s+=`<line class="hs" x1="${x}" y1="${y.toFixed(1)}" x2="${x}" y2="${tp.toFixed(1)}"/>`;if(x>gx1)s+=`<line class="hoG" x1="${x}" y1="${(tp-3).toFixed(1)}" x2="${x}" y2="34"/>`;else s+=`<line class="ho" x1="${x}" y1="${tp.toFixed(1)}" x2="${x}" y2="34"/>`;}}
+  const top=sY(114)-h;
+  s+=`<rect class="guardO" x="${gx0}" y="${top.toFixed(1)}" width="${gx1-gx0}" height="${h.toFixed(1)}" rx="2"/>`;
+  for(let x=gx0+5;x<gx1;x+=5)s+=`<line class="guardt" x1="${x}" y1="${top.toFixed(1)}" x2="${x}" y2="${(top+h).toFixed(1)}"/>`;
+  s+=`<rect class="steel" x="${gx0-2}" y="${(top-6).toFixed(1)}" width="${gx1-gx0+4}" height="6" rx="1.5"/>`;
+  s+=G(130,top-6,-50,1,`<rect class="body" x="0" y="-12" width="66" height="24" rx="11"/>`);
+  s+=`<line class="dim" x1="${gx0-8}" y1="${(top+h).toFixed(1)}" x2="${gx0-8}" y2="${top.toFixed(1)}" marker-start="url(#${id})" marker-end="url(#${id})"/>`;
+  s+=T(gx0-12,top+h/2+4,`${g} mm`,'lblk num halo','end');
+  s+=`<line class="arrow" x1="150" y1="172" x2="80" y2="172" marker-end="url(#${id})"/>`+T(156,176,'推的方向','lbl');
+  s+=T(12,20,'卡尺高度 = 留下的长度','lblk');
+  return wrap(s,`推：卡尺立在头皮上，刀片在卡尺顶端，高出的部分被推掉。最长卡尺 ${g} mm`,'0 0 220 190');
+}
+function artCmpCut(){
+  const H=72,id=uid('m');
+  let s=`<defs>${mk(id)}</defs>`+cmpBase();
+  for(let i=0;i<10;i++){const x=82+i*6,y=sY(x);s+=`<line class="hs" x1="${x}" y1="${y.toFixed(1)}" x2="${x}" y2="${H}"/><line class="ho" x1="${x}" y1="${H}" x2="${x}" y2="30"/>`;}
+  s+=fingers(110,H+12,0,1,74)+`<line class="cutl" x1="70" y1="${H}" x2="150" y2="${H}"/>`+scissors(186,H-4,180,0.85,10);
+  s+=`<line class="dim" x1="54" y1="${sY(54).toFixed(1)}" x2="54" y2="${H}" marker-start="url(#${id})" marker-end="url(#${id})"/>`;
+  s+=T(48,112,'任意','lblk','end')+T(12,20,'手指高度 = 留下的长度','lblk');
+  return wrap(s,'剪：手指夹住头发，手指外侧被剪掉，手指停在哪里就留多长','0 0 220 190');
+}
+
+/* ---------- 意外情况图标 ---------- */
+const ICON={
+  guard:()=>`<line class="ln thin" x1="6" y1="48" x2="50" y2="48"/><path class="guard" d="M12 48 L12 30 Q22 24 32 30 L32 48 Z"/><line class="guardt" x1="17" y1="48" x2="17" y2="29"/><line class="guardt" x1="22" y1="48" x2="22" y2="27"/><line class="guardt" x1="27" y1="48" x2="27" y2="29"/><line class="hs" x1="42" y1="48" x2="42" y2="27"/><line class="cutl" x1="42" y1="27" x2="42" y2="6"/>`,
+  noScissors:()=>scissors(17,38,-45,0.5,14)+`<line class="strike" x1="8" y1="48" x2="48" y2="8"/>`,
+  tooShort:()=>`<rect class="frame" x="8" y="12" width="40" height="36" rx="4"/><line class="ln" x1="8" y1="22" x2="48" y2="22"/><line class="ln" x1="17" y1="7" x2="17" y2="16"/><line class="ln" x1="39" y1="7" x2="39" y2="16"/>`+T(28,40,'+1cm','lblk num big','middle'),
+  uneven:()=>`<rect class="barH" x="12" y="14" width="10" height="34" rx="2"/><rect class="barH" x="34" y="20" width="10" height="28" rx="2"/><line class="cutl" x1="6" y1="20" x2="50" y2="20"/>`,
+  back:()=>`<rect class="phone" x="19" y="6" width="18" height="30" rx="3"/><circle class="rec" cx="28" cy="12" r="2.5"/><path class="ln thin" d="M28 36 L28 44 M28 44 L20 52 M28 44 L36 52"/>`,
+  curly:()=>`<path class="hs" d="M14 8 L14 50"/><path class="hs" d="M36 8 q8 4 0 8 q-8 4 0 8 q8 4 0 8 q-8 4 0 8"/><path class="dim" d="M24 30 L28 30"/>`,
+  cowlick:()=>{let d='';for(let a=0;a<=4*Math.PI;a+=0.25){const r=2+2.6*a;d+=(d?' L':'M')+(28+r*Math.cos(a)).toFixed(1)+' '+(28+r*Math.sin(a)).toFixed(1);}return `<path class="hs" d="${d}"/>`;},
+  pull:()=>clipper(36,22,-135,0.42,0)+`<path class="hs" d="M40 18 l5 -3 l-3 -4 l5 -3"/>`+T(46,48,'!','lblc big','middle'),
+  step:()=>`<path class="barH" d="M8 48 L8 32 L22 32 L22 18 L48 18 L48 48 Z"/><path class="arrow" d="M10 30 Q18 20 46 16"/>`,
+  battery:()=>`<rect class="frame" x="7" y="18" width="36" height="20" rx="3"/><rect class="ln" x="43" y="24" width="4" height="8"/><rect class="rec" x="10" y="21" width="7" height="14" rx="1"/>`,
+  thick:()=>{let p='';for(let i=0;i<9;i++)p+=`<path class="hs" d="M28 50 Q${20+i*2} 30 ${8+i*5} 8"/>`;return p;},
+  forgot:()=>headBack(28,26,0.6)+`<rect class="stripe" x="25" y="8" width="6" height="26" rx="3"/>`,
+  shave:()=>headBack(28,26,0.6,{hair:false})+clipper(46,16,-130,0.3,0),
+  tail:()=>`<circle class="hairf" cx="28" cy="16" r="10"/><path class="hairf" d="M24 24 Q16 38 8 50 L14 52 Q24 40 31 25 Z"/><line class="cutl" x1="4" y1="44" x2="22" y2="52"/>`,
+  dry:()=>`<path class="hs" d="M14 8 L14 50 M20 8 L20 50 M26 8 L26 50"/><path class="drop" d="M40 14 q-5 8 0 11 q5 -3 0 -11 Z"/><path class="drop" d="M44 32 q-4 6 0 9 q4 -3 0 -9 Z"/>`
+};
+
+/* ---------- 侧面轮廓（真实比例，单位 mm） ---------- */
+const RX=88,RY=100;
+const HEAD_D='M-77.7 -46.9 C-88 -30 -94 -10 -92 8 Q-95 14 -93 18 L-110 52 Q-108 58 -98 58 Q-101 66 -97 72 Q-102 78 -96 84 Q-98 98 -86 108 Q-66 116 -46 110 L-42 170 L40 170 L44 100 Q52 92 51.7 80.9 A88 100 0 1 0 -77.7 -46.9 Z';
+const TORSO_D='M-44 150 Q-52 192 -88 214 Q-102 236 -102 300 L-102 1400 L104 1400 L104 300 Q104 232 92 214 Q52 192 42 150 Z';
+const MASS_D=(()=>{const pts=[];for(let t=-153;t<=55;t+=3){const r=t*Math.PI/180;pts.push([RX*1.045*Math.cos(r),RY*1.045*Math.sin(r)]);}
+  const inner=[[50,84],[38,64],[30,44],[28,20],[22,-4],[6,-14],[-16,-14],[-36,-6],[-44,10],[-52,12],[-58,-14],[-68,-36],[-76,-48]];
+  return 'M'+pts.concat(inner).map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L')+' Z';})();
+const ellPt=(t,k)=>{const r=t*Math.PI/180;k=k||1;return {x:RX*k*Math.cos(r),y:RY*k*Math.sin(r)};};
+const ellN=t=>{const r=t*Math.PI/180,nx=Math.cos(r)/RX,ny=Math.sin(r)/RY,l=Math.hypot(nx,ny);return {x:nx/l,y:ny/l};};
+const norm=v=>{const l=Math.hypot(v.x,v.y)||1;return {x:v.x/l,y:v.y/l};};
+function backX(y){if(y<150)return 44;if(y<214)return 42+50*(y-150)/64;if(y<300)return 92+12*(y-214)/86;return 104;}
+function simStrand(root,d0,Lmm,side){
+  const pts=[{x:root.x,y:root.y}];let p={x:root.x,y:root.y},d=norm(d0),s=0;const G=0.011,ds=3;
+  while(s<Lmm-1e-6){
+    const st=Math.min(ds,Lmm-s);
+    d=norm({x:d.x,y:d.y+G*st});
+    let q={x:p.x+d.x*st,y:p.y+d.y*st};
+    if(!side){
+      const e=Math.hypot(q.x/RX,q.y/RY),k=1.05;
+      if(e<k&&q.y<70){q={x:q.x*k/e,y:q.y*k/e};d=norm({x:q.x-p.x,y:q.y-p.y});}
+      if(q.y>70&&q.x>-20){const bx=backX(q.y)+4;if(q.x<bx){q.x=bx;d=norm({x:q.x-p.x,y:q.y-p.y});}}
+    }
+    p=q;pts.push(p);s+=st;
+  }
+  return pts;
+}
+function wobble(pts,amp,per){
+  if(!amp)return pts;let s=0;const out=[pts[0]];
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],dx=b.x-a.x,dy=b.y-a.y,l=Math.hypot(dx,dy)||1;s+=l;const nx=-dy/l,ny=dx/l,o=amp*Math.sin(2*Math.PI*s/per)*Math.min(1,s/12);out.push({x:b.x+nx*o,y:b.y+ny*o});}
+  return out;
+}
+function splitPts(pts,frac){
+  let tot=0;const seg=[];for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i].x-pts[i-1].x,pts[i].y-pts[i-1].y);seg.push(d);tot+=d;}
+  const target=tot*frac;let acc=0;
+  for(let i=1;i<pts.length;i++){const d=seg[i-1];if(acc+d>=target){const f=(target-acc)/(d||1),m={x:pts[i-1].x+(pts[i].x-pts[i-1].x)*f,y:pts[i-1].y+(pts[i].y-pts[i-1].y)*f};return {keep:pts.slice(0,i).concat([m]),off:[m].concat(pts.slice(i)),cut:m};}acc+=d;}
+  return {keep:pts,off:[],cut:pts[pts.length-1]};
+}
+const pd=pts=>'M'+pts.map(p=>p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' L');
+function renderProfile(c){
+  const el=$('#profile');const r=el.getBoundingClientRect();const pxW=r.width||400,pxH=r.height||400;
+  const Lz=k=>state.len[k]*10,vary=i=>1-0.025*((i*7)%3);
+  const tex=state.texture,amp=tex==='curly'?4:tex==='wavy'?2.6:0,per=tex==='curly'?14:30;
+  const raw=[];
+  const Lf=Lz('front');
+  for(let i=0;i<7;i++){const t=-153+i*4,n=ellN(t);raw.push({z:'front',root:ellPt(t,1.02),d0:Lf>180?{x:n.x+1.6,y:n.y-0.3}:{x:n.x-0.15,y:n.y+0.1},L:Lf*vary(i)});}
+  const Lt=Lz('top');
+  for(let i=0;i<15;i++){const t=-126+i*4.8,n=ellN(t);raw.push({z:'top',root:ellPt(t,1.02),d0:{x:n.x+0.9,y:n.y},L:Lt*vary(i)});}
+  const Lb=Lz('back');
+  for(let i=0;i<17;i++){const t=-54+i*6.4,n=ellN(t);raw.push({z:'back',root:ellPt(t,1.02),d0:{x:n.x+0.15,y:n.y+0.6},L:Lb*vary(i)});}
+  const Ls=Lz('side');
+  for(let i=0;i<10;i++){const x=-50+i*8.4,y=-30+0.004*(x+12)*(x+12);raw.push({z:'side',root:{x,y},d0:{x:0.3,y:1},L:Ls*vary(i),side:true});}
+  const strands=raw.map(st=>{const pts=wobble(simStrand(st.root,st.d0,st.L,st.side),amp,per);return Object.assign(st,splitPts(pts,0.5));});
+  let minX=-114,maxX=58,minY=-108,maxY=178;
+  strands.forEach(st=>{st.keep.concat(st.off).forEach(p=>{if(p.x<minX)minX=p.x;if(p.x>maxX)maxX=p.x;if(p.y<minY)minY=p.y;if(p.y>maxY)maxY=p.y;});});
+  const w=maxX-minX,h=maxY-minY,side0=Math.max(w,h)*1.12,cx=(minX+maxX)/2,cy=(minY+maxY)/2;
+  const asp=pxW/pxH;let vbW=side0,vbH=side0;if(asp>1)vbW=side0*asp;else vbH=side0/asp;
+  const vx=cx-vbW/2,vy=cy-vbH/2,k=vbW/pxW;
+  const sw=(1.9*k).toFixed(2);
+  let s=`<path class="pf-skin" stroke-width="${(1.2*k).toFixed(2)}" d="${TORSO_D}"/><path class="pf-skin" stroke-width="${(1.2*k).toFixed(2)}" d="${HEAD_D}"/>`;
+  s+=`<path class="pf-mass" d="${MASS_D}"/>`;
+  s+=`<g transform="rotate(-12 8 18)"><ellipse class="pf-skin" stroke-width="${(1.2*k).toFixed(2)}" cx="8" cy="18" rx="13" ry="21"/><path class="pf-line" stroke-width="${(1*k).toFixed(2)}" d="M10 6 q-7 10 0 22"/></g>`;
+  s+=`<path class="pf-line" stroke-width="${(1.4*k).toFixed(2)}" d="M-90 14 q4 -2.4 8 0"/>`;
+  const order=['front','top','back','side'];
+  s+=`<g class="pf-off" stroke-width="${sw}">`+strands.filter(x=>x.z!=='side').map(x=>`<path d="${pd(x.off)}"/>`).join('')+`</g>`;
+  s+=`<g class="pf-keep" stroke-width="${sw}">`+strands.filter(x=>x.z!=='side').map(x=>`<path d="${pd(x.keep)}"/>`).join('')+`</g>`;
+  s+=`<g class="pf-off" stroke-width="${sw}">`+strands.filter(x=>x.z==='side').map(x=>`<path d="${pd(x.off)}"/>`).join('')+`</g>`;
+  s+=`<g class="pf-keep" stroke-width="${sw}">`+strands.filter(x=>x.z==='side').map(x=>`<path d="${pd(x.keep)}"/>`).join('')+`</g>`;
+  s+=`<g class="pf-cut" stroke-width="${(2.2*k).toFixed(2)}" stroke-dasharray="${(6*k).toFixed(1)} ${(4*k).toFixed(1)}">`;
+  order.forEach(z=>{const cuts=strands.filter(x=>x.z===z).map(x=>x.cut);if(cuts.length>1)s+=`<path d="${pd(cuts)}"/>`;});
+  s+=`</g>`;
+  const rr=9*k;
+  order.forEach(z=>{const zz=ZONES.find(q=>q.k===z),cuts=strands.filter(x=>x.z===z).map(x=>x.cut),m=cuts[Math.floor(cuts.length/2)];
+    let dir=z==='side'?{x:-1,y:0.15}:norm({x:m.x,y:m.y});
+    const px=m.x+dir.x*rr*2.1,py=m.y+dir.y*rr*2.1;
+    s+=`<g class="pf-mark"><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${rr.toFixed(1)}" stroke-width="${(1.5*k).toFixed(2)}"/><text x="${px.toFixed(1)}" y="${(py+rr*0.42).toFixed(1)}" text-anchor="middle" font-size="${(12*k).toFixed(1)}">${zz.n}</text></g>`;});
+  const sbx=vx+14*k,sby=vy+vbH-16*k;
+  s+=`<g class="pf-scale"><line x1="${sbx.toFixed(1)}" y1="${sby.toFixed(1)}" x2="${(sbx+100).toFixed(1)}" y2="${sby.toFixed(1)}" stroke-width="${(2*k).toFixed(2)}"/><line x1="${sbx.toFixed(1)}" y1="${(sby-4*k).toFixed(1)}" x2="${sbx.toFixed(1)}" y2="${(sby+4*k).toFixed(1)}" stroke-width="${(2*k).toFixed(2)}"/><line x1="${(sbx+100).toFixed(1)}" y1="${(sby-4*k).toFixed(1)}" x2="${(sbx+100).toFixed(1)}" y2="${(sby+4*k).toFixed(1)}" stroke-width="${(2*k).toFixed(2)}"/><text x="${(sbx+50).toFixed(1)}" y="${(sby-7*k).toFixed(1)}" text-anchor="middle" font-size="${(11*k).toFixed(1)}">10 cm</text></g>`;
+  el.setAttribute('viewBox',`${vx.toFixed(1)} ${vy.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}`);
+  el.innerHTML=s;
+}
+
+/* ---------- 覆盖范围图 ---------- */
+function renderCover(c){
+  const el=$('#cover');const W=Math.max(300,Math.round(el.parentElement.clientWidth-40)||520);
+  const rowH=34,top=44,n=c.zones.length,H=top+rowH*n+28;
+  const left=50,rightCol=W<420?112:136,right=W-rightCol,pw=right-left;
+  const maxL=Math.max(...c.zones.map(z=>z.L));
+  let R=Math.max(maxL,c.maxG/10*1.2,2);
+  const step=R<=4?0.5:R<=8?1:R<=16?2:R<=40?5:10;
+  R=Math.ceil(R/step-1e-9)*step;
+  const X=v=>left+v/R*pw;
+  let s='';
+  if(c.maxG>0){const bx=X(c.maxG/10);s+=`<rect class="cv-band" x="${left}" y="${top-12}" width="${Math.max(2,bx-left).toFixed(1)}" height="${rowH*n+12}"/>`;
+    s+=`<text class="cv-head" x="${left}" y="16"><tspan class="k">■</tspan> 蓝色区：推子能留到的长度（≤ ${c.maxG} mm）</text>`;}
+  else s+=`<text class="cv-head" x="${left}" y="16">没有可用的推子卡尺，全部靠剪刀</text>`;
+  const nt=Math.round(R/step),every=pw/nt<28?2:1;
+  for(let i=0;i<=nt;i++){const v=i*step,x=X(v);s+=`<line class="cv-grid" x1="${x.toFixed(1)}" y1="${top-12}" x2="${x.toFixed(1)}" y2="${top+rowH*n}"/>`;if(i%every===0||i===nt)s+=`<text class="cv-tick" x="${x.toFixed(1)}" y="${top+rowH*n+16}" text-anchor="middle">${cm(v)}${i===nt?' cm':''}</text>`;}
+  c.zones.forEach((z,i)=>{const y=top+rowH*i+rowH/2;
+    s+=`<g><title>${z.name}：现在 ${cm(z.L)} cm，第一刀后 ${cm(z.first)} cm，最终 ${cm(z.fin)} cm（${methodLabel(z)}）</title>`;
+    s+=`<text class="cv-lbl" x="${left-10}" y="${y+4}" text-anchor="end">${z.short}</text>`;
+    s+=`<line class="cv-off" x1="${X(0).toFixed(1)}" y1="${y}" x2="${X(z.L).toFixed(1)}" y2="${y}"/><line class="cv-keep" x1="${X(0).toFixed(1)}" y1="${y}" x2="${X(z.fin).toFixed(1)}" y2="${y}"/>`;
+    if(c.mode!=='clipper')s+=`<line class="cv-first" x1="${X(z.first).toFixed(1)}" y1="${y-8}" x2="${X(z.first).toFixed(1)}" y2="${y+8}"/>`;
+    s+=`<circle class="cv-dot${z.method==='clip'?' is-clip':''}" cx="${X(z.fin).toFixed(1)}" cy="${y}" r="5.5"/>`;
+    s+=`<text class="cv-val" x="${right+14}" y="${y+4}">留 ${cm(z.fin)} cm · ${METHOD_SHORT[z.method]}</text></g>`;});
+  el.setAttribute('viewBox',`0 0 ${W} ${H}`);el.setAttribute('height',H);el.innerHTML=s;
+}
+
+/* ---------- 结论、表格、提醒 ---------- */
+function renderVerdict(c){
+  const m=MODE[c.mode],fins=c.zones.map(z=>z.fin),mn=Math.min(...fins),mx=Math.max(...fins);
+  const range=mn===mx?`${cm(mn)} cm`:`${cm(mn)}–${cm(mx)} cm`;
+  const clipZ=c.zones.filter(z=>z.method==='clip').map(z=>z.short).join('、'),cutZ=c.zones.filter(z=>z.method!=='clip').map(z=>z.short).join('、');
+  let sub='';
+  switch(c.mode){
+    case 'clipper':sub=`各区目标 ${range}，都在卡尺范围内（最长 ${c.maxG} mm）。卡尺保证每处一样长，自己操作比剪刀稳。`;break;
+    case 'scissors':sub=c.hasClipper?`各区目标 ${range}，可推子最多只能留到卡尺的高度${c.maxG?`（你最长的是 ${c.maxG} mm）`:'（你没选卡尺）'}。用推子会剪掉远不止一半，所以用剪刀。`:`各区目标 ${range}，用剪刀按区域分别剪。`;break;
+    case 'mixed':sub=`${clipZ}的目标在卡尺范围内，用推子更均匀；${cutZ}太长，只能用剪刀。`;break;
+    case 'ponytail':sub=`后脑头发有 ${cm(state.len.back)} cm，扎低马尾后从发梢往上量 ${cm(c.tailCut)} cm 一次剪掉，比一缕一缕剪更齐。${!c.sc&&c.hasClipper?'没有剪刀时，可以用不装卡尺的推子推断马尾。':''}${c.noTool?'你还没有剪的工具，先买一把理发平剪。':''}`;break;
+    case 'finger':sub=`目标 ${range} 超过卡尺${c.maxG?`（最长 ${c.maxG} mm）`:''}，又没有剪刀，只能取下卡尺，让推子沿着手指外侧推。`;break;
+    case 'none':sub='推子和剪刀都没勾选。剪掉一半需要一把理发平剪（几十元），下面的流程按平剪来写。';break;
+  }
+  const keep=c.mode==='clipper'?'拿不准时，第一遍用大一号的卡尺。':`第一刀只剪到 ${Math.round(c.firstKeep*100)}%，看过再修到 50%。宁长勿短。`;
+  let dots='';for(let i=1;i<=5;i++)dots+=`<i class="${i<=m.diff?'on':''}"></i>`;
+  const extra=state.who==='self'&&['scissors','mixed','finger','none'].includes(c.mode)?'，自己剪后脑另加 15 分钟':'';
+  $('#verdict').innerHTML=`<p class="eyebrow">结论</p><h3 class="v-title">${m.title}</h3><p class="v-sub">${sub}</p><p class="v-keep">${keep}</p>
+  <dl class="v-facts"><div><dt>剃还是剪</dt><dd>${m.ans}</dd></div><div><dt>难度</dt><dd><span class="dots" aria-label="难度 ${m.diff} / 5">${dots}</span></dd></div><div><dt>预计用时</dt><dd>${m.time}${extra}</dd></div></dl>`;
+}
+function renderZTable(c){
+  const clip=c.mode==='clipper';
+  const rows=c.zones.map(z=>`<tr><td>${zt(z)}</td><td class="n">${cm(z.L)}</td>${clip?'':`<td class="n">${cm(z.first)}</td>`}<td class="n"><b>${cm(z.fin)}</b></td><td><span class="mth ${z.method==='clip'?'clip':''}">${methodLabel(z)}</span>${z.method==='clip'?`<span class="gnote">${guardNote(z)}</span>`:''}</td></tr>`).join('');
+  $('#ztable').innerHTML=`<div class="ztitle"><b>每个区域的数值</b><span>单位 cm</span></div><div class="tablewrap"><table><thead><tr><th>区域</th><th class="n">现在</th>${clip?'':'<th class="n">第一刀后</th>'}<th class="n">最终</th><th>用什么</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+const AL_ICON={info:'<path class="al-i" d="M10 9 L10 15 M10 5.5 L10 6"/><circle class="al-i" cx="10" cy="10" r="8.2"/>',warn:'<path class="al-i" d="M10 2.5 L18.5 17 L1.5 17 Z M10 8 L10 12 M10 14.5 L10 15"/>',cut:'<path class="al-i" d="M4 4 L16 16 M16 4 L4 16"/>'};
+function renderAlerts(c){
+  const a=[],t=state.tools;
+  if(c.noTool)a.push(['cut','推子和剪刀都没有：先准备一把理发平剪（几十元），流程按平剪来写。']);
+  if(c.mode==='finger')a.push(['warn','没有剪刀，只能用推子指间法应急，剪口会毛糙。建议先买一把理发平剪。']);
+  if(c.hasClipper&&c.mode!=='finger'&&c.mode!=='ponytail'){const bad=c.zones.filter(z=>!z.gOK);if(bad.length&&bad.length<4)a.push(['info',`${bad.map(z=>z.short).join('、')}的目标超过你最长的卡尺（${c.maxG||0} mm），这些区域不能用推子。`]);}
+  if(state.texture!=='straight')a.push(['info','卷发：全程干剪，第一刀只剪到 65%，卷发回弹后会比拉直时短。']);
+  if(state.who==='self'&&!t.mirror2&&c.mode!=='clipper')a.push(['warn','自己剪又没有第二面镜子：用手机前置摄像头录像看后脑。']);
+  if(c.usesScissors&&!t.comb)a.push(['warn','没有梳子很难分出整齐的发片，建议买一把细齿梳。']);
+  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')a.push(['info','没有分区夹：长尾夹、黑发卡、鲨鱼夹都可以。']);
+  if(c.mode==='ponytail'&&!t.ties)a.push(['warn','马尾法要 5–6 根皮筋：普通橡皮筋就行。']);
+  if(c.wetCut&&!t.spray)a.push(['info','没有喷壶：剪的时候用湿毛巾按一下，保持头发微湿。']);
+  if(state.density==='thick'&&!t.thinning&&c.usesScissors)a.push(['info','发量多又没有打薄剪：点剪剪深一点，也能减掉一些重量。']);
+  if(c.zones.some(z=>z.method==='clip'&&z.L>5))a.push(['warn','推子区域的头发超过 5 cm，直接推容易卡发：先用剪刀剪到 4 cm 左右。']);
+  $('#alerts').innerHTML=a.map(x=>`<li class="${x[0]}"><svg viewBox="0 0 20 20" aria-hidden="true">${AL_ICON[x[0]]}</svg><span>${x[1]}</span></li>`).join('');
+}
+
+/* ---------- 原理对比 ---------- */
+function renderCompare(c){
+  const rec=c.mode==='clipper'?1:2;
+  const cards=[
+    {big:'剃',sub:'剃刀 / 不装卡尺',art:artCmpShave(),cap:'刀片贴着头皮走，所有头发都被切到 0–1 mm。和“只剪掉一半”是两回事。'},
+    {big:'推',sub:'推子＋卡尺',art:artCmpClip(c.maxG),cap:`卡尺把刀片垫高，高出卡尺的部分被推掉。留多长完全由卡尺决定，${c.maxG?`你最长的卡尺是 ${c.maxG} mm，所以原长 ≤ ${cm(c.maxG/5)} cm 的区域才能用它剪掉一半。`:'你现在没有可用的卡尺。'}`},
+    {big:'剪',sub:'剪刀＋手指',art:artCmpCut(),cap:'手指夹住发片，剪掉手指外侧。手指放在哪里就留多长，所以任何长度都能剪掉一半，代价是要靠手感和检查。'}
+  ];
+  $('#cmpGrid').innerHTML=cards.map((x,i)=>`<figure class="cmp-card${i===rec?' rec':''}">${x.art}<h3><span class="big">${x.big}</span><span>${x.sub}</span>${i===rec?'<span class="pill">适合你</span>':''}</h3><figcaption>${x.cap}</figcaption></figure>`).join('');
+  const rows=[
+    ['能留的长度','0–1 mm','3–25 mm，看卡尺','任意'],
+    ['能不能剪掉一半','不能',c.maxG?`原长 ≤ ${cm(c.maxG/5)} cm 时可以`:'没有卡尺，不能','能'],
+    ['自己操作难度','低，但不可逆','低','中，后脑偏难'],
+    ['长短是否均匀','很均匀','很均匀，卡尺保证','靠手感，要交叉检查'],
+    ['用时','10 分钟左右','15–25 分钟','40–70 分钟'],
+    ['最常见的事故','长度归零','忘装卡尺，推出一道痕','剪多、左右不齐'],
+    ['剪完的样子','光头 / 极短','整齐，偏短的发型','保留原来的轮廓，只是变短']
+  ];
+  const col=i=>i===rec+1?' class="reccol"':'';
+  $('#cmpTable').innerHTML=`<thead><tr><th></th><th${col(1)}>剃</th><th${col(2)}>推</th><th${col(3)}>剪</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r[0]}</td><td${col(1)}>${r[1]}</td><td${col(2)}>${r[2]}</td><td${col(3)}>${r[3]}</td></tr>`).join('')+`</tbody>`;
+}
+
+/* ---------- 流程 ---------- */
+function buildSteps(c){
+  const S=[],t=state.tools,self=state.who==='self',Z=k=>c.zones.find(z=>z.k===k);
+  const add=(id,title,art,body,tip)=>S.push({id,title,art,body,tip});
+  const isCut=z=>z.method==='cut'||z.method==='bangs';
+  const cutTool=t.scissors||!t.clipper?'scissors':'clipper';
+
+  add('space','布置场地和光线',artSpace(self&&!t.mirror2),`<ul>
+    <li>选浴室或阳台。灯光从<b>正前方</b>照过来，旁边再补一盏，阴影少，长短才看得清。</li>
+    <li>镜子放在正前方，坐下时镜子中心和眼睛齐平。</li>
+    <li>地上铺旧报纸或拆开的垃圾袋。${t.cape?'围布系好，':'没有围布就用旧床单或在大垃圾袋中间剪个洞套上，'}领口塞一圈纸巾挡碎发。</li>
+    ${self?`<li>后脑看不到：${t.mirror2?'第二面镜子拿在手里，背对大镜子看后脑。':'把手机架在身后，打开前置摄像头录像，或者和自己视频通话。'}</li>`:'<li>帮手站在你身后，椅子周围留出能绕一圈的空间。</li>'}</ul>`);
+
+  const have=[],sub=[];
+  if(t.clipper)have.push('电推剪：充满电。刀头滴 2–3 滴油，空转 10 秒，擦掉多余的油。');
+  if(t.clipper&&state.guards.length)have.push(`卡尺：${[...state.guards].sort((a,b)=>a-b).join(' / ')} mm，按大小摆好。`);
+  if(t.scissors)have.push('平剪：只用来剪头发。家用剪刀、厨房剪刀的刃口太钝，会把发丝压扁，发尾容易分叉。');
+  if(t.thinning)have.push('打薄剪：一边带齿，用来减发量，不用来剪长度。');
+  if(t.comb)have.push('梳子：细齿那头分发片，粗齿那头梳顺。');
+  if(!t.comb)sub.push('梳子：没有的话发片分不整齐，建议买一把细齿梳。');
+  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')sub.push('分区夹 → 长尾夹、黑色发卡、鲨鱼夹。');
+  if(c.mode==='ponytail'&&!t.ties)sub.push('发圈 → 普通橡皮筋，准备 5–6 根，剪完直接剪断。');
+  if(c.wetCut&&!t.spray)sub.push('喷壶 → 湿毛巾，头发干了就按一下。');
+  if(!t.cape)sub.push('围布 → 旧床单或大垃圾袋。');
+  if(self&&!t.mirror2)sub.push('第二面镜子 → 手机前置摄像头。');
+  if(!t.scissors&&t.clipper)sub.push('平剪 → 暂时用推子指间法（见后面的步骤），最好还是买一把。');
+  if(!t.scissors&&!t.clipper)sub.push('平剪 → 必须准备，几十元一把。');
+  add('tools','检查工具，缺的找替代',artTools(t),(have.length?`<p class="sub-h">准备好</p><ul>${have.map(x=>`<li>${x}</li>`).join('')}</ul>`:'')+(sub.length?`<p class="sub-h">缺的用这个代替</p><ul>${sub.map(x=>`<li>${x}</li>`).join('')}</ul>`:''));
+
+  let wk,wt,wb;
+  if(c.mode==='clipper'||c.mode==='finger'){wk='dry';wt='洗净，完全吹干';wb='推子只在干发上用。湿头发贴着头皮，卡尺抬不起来，推完会长短不一；大多数推子也不防水。';}
+  else if(state.texture!=='straight'){wk='curly';wt='干剪：洗净、完全干透';wb='卷发湿的时候被拉直，干了会回缩，湿剪最容易剪多。保持平时的自然卷度，测量时用手指把一缕轻轻拉直。';}
+  else if(c.mode==='ponytail'){wk='dry';wt='洗净，吹干、梳顺';wb='马尾法在干发上最准：头发顺、不打结，皮筋才扎得正、扎得紧。';}
+  else if(c.mode==='mixed'){wk='dry';wt='洗净吹干，推完再打湿';wb='先在干发上完成推子部分。轮到剪刀部分时，再用喷壶把要剪的区域喷到七八成湿。';}
+  else{wk='spray';wt='洗头，擦到七八成干';wb='微湿的头发更服帖，发片好控制。不要滴水；剪的过程中干了就补喷。';}
+  add('wet',wt,artWet(wk),`<p>${wb}</p>`);
+
+  const clipMode=c.mode==='clipper';
+  const mz=c.mode==='ponytail'?Z('back'):Z('top');
+  const mrows=c.zones.map(z=>`<tr><td>${zt(z)}</td><td class="n">${cm(z.L)}</td>${clipMode?'':`<td class="n">${cm(z.first)}</td>`}<td class="n"><b>${cm(z.fin)}</b></td>${clipMode?`<td class="n">${z.pick} mm</td>`:''}</tr>`).join('');
+  add('measure','量长度，定出两轮的位置',artMeasure(mz.L,mz.first,mz.fin,clipMode),`<p>捏住一缕头发拉直，从头皮量到发梢。没有尺子：先用尺子量一次自己食指的宽度（一般 1.5–2 cm），之后就用手指量。</p>
+    <table class="mini"><thead><tr><th>区域</th><th class="n">现在</th>${clipMode?'':'<th class="n">第一刀后</th>'}<th class="n">最终</th>${clipMode?'<th class="n">卡尺</th>':''}</tr></thead><tbody>${mrows}</tbody></table>
+    <p class="note">单位 cm。剪掉的永远是发梢那一端。${clipMode?'卡尺推出来的长度就是卡尺高度，不需要分两轮。':`第一刀只剪掉 ${Math.round((1-c.firstKeep)*100)}%，剩下的 ${Math.round((c.firstKeep-0.5)*100)}% 留给第二轮。`}</p>`);
+
+  const clipZones=c.zones.filter(z=>z.method==='clip');
+  if(clipZones.length){
+    const used=[...new Set(clipZones.map(z=>z.pick))];
+    add('guards','装卡尺：从长到短',artGuards(c.guards,used),`<ul>${clipZones.map(z=>`<li>${zt(z)} 用 ${V(z.pick+' mm')}（目标 ${cm(z.fin*10)} mm，${guardNote(z)}）</li>`).join('')}</ul>
+      <p>先装<b>最长</b>的那个卡尺，把所有推子区域推一遍，这一遍是安全底线；再换小号卡尺，只推需要更短的区域。每次换卡尺都确认已经卡紧。拿不准就再大一号。</p>
+      <p class="note">推子侧面如果有调节杆，往上拨一档大约再长 1–2 mm，可以当“半号”用。</p>`,
+      '每推一次之前低头看一眼卡尺。忘装卡尺推一下，就是一道接近 0 mm 的痕。');
+    add('direction','逆着头发生长方向慢推',artDirection(),`<ul>
+      <li>两侧和后脑：卡尺平贴头皮，从下往上推。</li>
+      <li>头顶：从前额往头顶推，到发旋附近多换几个方向。</li>
+      <li>速度慢一点，每一道和上一道重叠一半。</li>
+      ${clipZones.some(z=>z.L>5)?'<li>头发超过 5 cm 时推子会卡发、拉扯，先用剪刀剪到 4 cm 左右再推。</li>':''}</ul>`);
+  }
+  if(c.usesScissors&&c.mode!=='ponytail'||c.mode==='finger'){
+    add('section','分区，夹好',artSection(),`<p>用梳子尾端划出分区：刘海（前额发际线往后约 5 cm）、头顶（两边太阳穴连线以内）、两侧（耳朵上方）、后脑（再分上下两层）。${c.mode==='mixed'?'推子已经处理好的区域不用再分。':''}不剪的区域夹起来，每次只放下一小片。</p>`);
+  }
+  if(c.mode==='finger'){
+    add('finger','推子指间法（应急）',artFingerCut(Z('top').L,Z('top').first,'clipper','推子指间法：手指夹住发片，推子不装卡尺，沿手指外侧推'),`<ol>
+      <li>取下卡尺。像剪刀指间剪一样，把一片头发垂直头皮拉出，用食指和中指夹住。</li>
+      <li>手指停在下面表格“第一刀后”的长度处，推子刀齿朝外、平贴在手指外侧，慢慢推过去，把手指外的部分推掉。</li>
+      <li>刀齿离手指留 1–2 mm，不要碰皮肤。</li></ol>
+      <ul>${c.zones.map(z=>`<li>${zt(z)} 手指停在 ${V(cm(z.first)+' cm')}</li>`).join('')}</ul>`,
+      '剪口会比剪刀毛糙，第一刀更要保守。剪完后尽快买一把平剪来修。');
+  }
+  const top=Z('top'),front=Z('front'),side=Z('side'),back=Z('back');
+  if(c.mode!=='ponytail'){
+    if(isCut(top)){
+      add('top-guide','头顶：剪出第一条引导线',artFingerCut(top.L,top.first,cutTool),`<ol>
+        <li>从刘海分区后面开始，沿中线取一片约 1 cm 厚、5 cm 宽的头发，梳直。</li>
+        <li>把这片头发提起，和头皮<b>垂直</b>，用食指和中指夹住，往发梢方向滑。</li>
+        <li>手指停在离头皮 ${V(cm(top.first)+' cm')} 的位置，剪掉手指外侧的部分。剪刀和手指平行，只在手指外侧动。</li></ol>`,
+        '这一片就是“引导线”，头顶其余的头发都以它为准。它剪对了，后面就简单了。');
+      add('top-travel','头顶：带着引导线往后、往两边推进',artTravel(),`<p>每次新取一片，都带上一半已剪好的头发。用同样的角度（垂直头皮）提起，剪到和引导线一样长。中线从前往后做完，再向左右各做 2–3 片。</p><p>头顶最高点附近（发旋）多留 0.5 cm，这里剪短了会立起来。</p>`);
+    }
+    if(isCut(front)){
+      add('bangs','刘海：干剪，竖着剪',artBangs(),`<p>刘海干了会往上缩，湿着剪最容易剪短。把刘海梳顺放下，<b>不要拉紧</b>，剪刀竖起来（刀尖朝上），一点点往上剪。</p><p>第一刀剪到离发根约 ${V(cm(front.first)+' cm')}，最终 ${V(cm(front.fin)+' cm')}。${front.fin<8?'刘海会落在眉毛上方，左右用眉尾做参照。':'刘海仍然会过眉，剪完往两边拨开看一下长短。'}</p>`,
+        '剪的时候闭上眼睛，剪完再睁开。碎发掉进眼睛是常见的小事故。');
+    }
+    if(isCut(side)){
+      add('sides','两侧：垂直拉出，手指竖着夹',artSides(side.L,side.first),`<ol>
+        <li>把耳朵上方的头发梳顺，取一片从头侧<b>水平</b>拉出（和头皮垂直）。</li>
+        <li>手指竖着夹住，停在离头皮 ${V(cm(side.first)+' cm')} 处，剪掉手指外侧。</li>
+        <li>耳朵周围用另一只手把耳朵往下按住。</li>
+        <li>做完一侧马上做另一侧，用耳尖、眉尾作参照对比。</li></ol>`);
+    }
+    if(isCut(back)){
+      add('back','后脑：先下层，再上层',artBack(self,t.mirror2),`<p>先把后脑上半部分夹起来，从下层（后颈）开始。同样把头发垂直头皮拉出、手指夹住，留 ${V(cm(back.first)+' cm')}。下层做完放下上层，带着下层的长度一起剪。</p>
+        <p>${self?`后脑不靠眼睛，靠手指量：手指的位置就是长度。${t.mirror2?'每剪完一片用手镜看一次。':'每剪完一片用手机录像看一次。'}`:'这一步交给帮手：站在你身后，按同样的方法做。'}</p>`,
+        self?'后颈两侧最容易剪多。这里第一刀可以再保守一点，留到 65%。':null);
+    }
+    if(clipZones.length&&(c.mode==='mixed'||new Set(clipZones.map(z=>z.pick)).size>1)){
+      add('blend','衔接交界处',artBlend(c.mode==='mixed'),c.mode==='mixed'?
+        `<p>推子区和剪刀区之间会有一道台阶。用梳子把交界处的头发挑起，梳齿斜着离开头皮，剪刀沿梳齿外侧剪掉露出的部分（剪刀梳）。一次只修一点，修完用手摸。</p>`:
+        `<p>两个卡尺的交界处换中间号卡尺。推到交界线时手腕向外翻，像用勺子挖一样把推子挑离头皮，这样交界处不会留下一条线。</p>`);
+    }
+    if(clipZones.length)add('feel','逆着摸，找漏推的地方',artFeel(),`<p>手掌逆着头发方向从下往上摸，扎手、明显更长的点就是漏推的，用同一个卡尺补推。耳后、发旋、后颈两侧最容易漏。</p>`);
+  }else{
+    const tailShort=c.zones.filter(z=>z.method==='cut'&&z.k!=='front');
+    add('tail-tie','扎低马尾，每隔 5 cm 加一根皮筋',artTailTie(),`<p>头发中分，全部梳到后颈正中，贴紧后颈扎一个低马尾。马尾一定要在正中间，否则剪完会一边长一边短。然后沿着马尾每隔约 5 cm 再扎一根皮筋，把马尾“锁直”。</p>${front.method==='bangs'?'<p>刘海太短扎不进去，先夹到一边，最后单独剪。</p>':''}${tailShort.length?`<p>${tailShort.map(z=>z.short).join('、')}太短扎不进去，先夹起来，后面单独剪。</p>`:''}`);
+    add('tail-measure',`从发梢往上量 ${cm(c.tailCut)} cm`,artTailMeasure(c.tailCut,back.L),`<p>从马尾发梢往上量 ${VC(cm(c.tailCut)+' cm')}（后脑长度 ${cm(back.L)} cm 的 ${Math.round((1-c.firstKeep)*100)}%），在这里扎最后一根皮筋。在这根皮筋<b>下方</b> 0.5 cm 处剪，皮筋会把剪下的那一截攥在一起。</p><p class="note">按后脑长度计算。头顶、两侧和后脑长度差不多时最准；头顶明显更长的话，剪完头顶会留得长一些，属于正常。</p>`);
+    add('tail-cut','一小口一小口剪断',artTailCut(t.scissors||!t.clipper),t.scissors||!t.clipper?
+      `<p>马尾太粗时一刀剪不断，硬剪会把头发推歪。剪刀和马尾垂直，从一边开始，每次剪 1 cm 宽，慢慢剪过去。</p>`:
+      `<p>没有剪刀：取下推子卡尺，把马尾拉紧，刀齿贴着皮筋下方，从一侧慢慢推过去。推子会比剪刀慢，也更毛糙，后面要多做一遍点剪（没有剪刀就让发尾保持原样）。</p>`);
+    add('tail-check','放下来，对比两侧',artTailCheck(),`<p>拆掉皮筋，梳顺。把头发分左右两半拉到胸前，用锁骨或衣服上的纽扣做参照，看两边是否一样长。有差别时，<b>只修长的那一边</b>，而且只修差的那一点。</p><p>后面中间会略长一点，形成轻微的 U 形，这是低马尾法的正常结果。</p>`);
+    tailShort.forEach(z=>{add('short-'+z.k,`${z.short}：马尾外的短发用指间剪`,artFingerCut(z.L,z.first,cutTool),`<p>这片头发太短扎不进马尾。把它垂直头皮拉出，手指夹住，留 ${V(cm(z.first)+' cm')}，剪掉手指外侧。方法和长发无关，就是普通的指间剪。</p>`);});
+    if(front.method==='bangs')add('bangs','刘海：干剪，竖着剪',artBangs(),`<p>把刘海放下梳顺，不要拉紧，剪刀竖起来一点点往上剪。第一刀剪到离发根约 ${V(cm(front.first)+' cm')}，最终 ${V(cm(front.fin)+' cm')}。</p>`,'剪的时候闭上眼睛。');
+  }
+  if(c.usesScissors&&c.mode!=='ponytail'){
+    add('cross','交叉检查',artCross(),`<p>换一个方向再检查一遍：刚才横着取发片的地方，现在竖着取，冒出来的一点点剪掉。</p><p>左右对比：从两侧对称的位置各取一缕，同时拉到脸前，看是否一样长。</p>`);
+  }
+  if(c.usesScissors||c.mode==='ponytail'){
+    const thick=state.density==='thick';
+    add('soften',`柔化发尾：点剪${thick&&t.thinning?'＋打薄':''}`,artSoften(),`<p>一刀剪平的发尾会有一条硬线。把剪刀竖起来（和发片平行），刀尖朝发梢方向往里剪 3–5 mm 的小口，每片剪 4–6 下。</p>${thick?(t.thinning?'<p>发量多：用打薄剪在发片中段到发梢之间剪 1 刀，不要靠近发根，否则短发会把上面的头发撑起来。</p>':'<p>发量多但没有打薄剪：点剪剪深一点（5–8 mm），也能减掉一些重量。</p>'):''}`);
+  }
+  if(c.mode==='ponytail')add('layers','可选：加一点层次',artLayers(),`<p>想要层次感：低头，把全部头发梳到额头正上方扎一个高马尾，只剪掉发梢 2–3 cm。</p><p class="note">不要用这个方法剪掉一半长度：头发从额头出发，头顶的头发会被剪掉多得多。</p>`);
+  if(c.mode!=='ponytail'){
+    add('outline','修边：鬓角、耳后、后颈',artOutline(t.clipper),t.clipper?
+      `<p>取下卡尺，推子反过来握（刀齿朝上），只把发际线以外的碎毛推掉。<b>不要把发际线往上推</b>。耳朵周围用手把耳朵按住。</p>`:
+      `<p>用平剪的刀尖贴着皮肤，一点点剪掉发际线以外的碎毛，不要动发际线本身。</p>`);
+  }
+  if(c.mode!=='clipper'){
+    const rows=c.zones.filter(z=>z.method!=='clip').map(z=>`<li>${zt(z)} ${cm(z.first)} → ${cm(z.fin)} cm，再剪 ${VC(cm(z.first-z.fin)+' cm')}</li>`).join('');
+    const ex=c.mode==='ponytail'?back:(c.zones.find(z=>z.method!=='clip')||top);
+    add('second',`第二轮：从 ${Math.round(c.firstKeep*100)}% 修到 50%`,artSecond(ex.short,ex.L,ex.first,ex.fin),
+      `<p>吹干、梳顺，按平时的样子整理好，照镜子看 5 分钟。觉得已经够短，就停在这里，少剪一点完全没问题。还想再短，就用完全相同的方法再剪一次：</p>`+
+      (c.mode==='ponytail'?`<ul><li>重新扎低马尾，从发梢往上量 ${VC(cm(c.tailCut2)+' cm')} 剪掉。</li></ul>`:`<ul>${rows}</ul>`),
+      '第二轮之前一定要先吹干。湿着看长度会让你以为还不够短。');
+  }
+  add('clean','收尾和保养',artClean(t.clipper),`<ul>
+    <li>冲掉脖子上的碎发，用胶带或湿毛巾粘一下更快。</li>
+    ${t.clipper?'<li>推子：刷掉刀头碎发，滴 1–2 滴油，盖上保护盖。</li>':''}
+    ${t.scissors?'<li>剪刀：擦干，在轴上点一滴油，单独收好，不要拿去剪纸。</li>':''}
+    <li>剪下的头发用纸裹好扔进垃圾桶，不要冲进下水道。</li></ul>`);
+  return S;
+}
+function renderSteps(c){
+  const steps=buildSteps(c),done=loadDone();
+  $('#flowTitle').textContent='你的剪发流程：'+MODE[c.mode].flow;
+  const tex={straight:'直发',wavy:'微卷',curly:'卷发'}[state.texture];
+  $('#flowTags').innerHTML=`<span class="tag main">${MODE[c.mode].title}</span><span class="tag">${tex}</span><span class="tag">${state.who==='self'?'自己剪':'有人帮忙'}</span>${c.mode==='clipper'?'':`<span class="tag">第一刀留 ${Math.round(c.firstKeep*100)}%</span>`}<span class="tag">共 ${steps.length} 步</span>`;
+  $('#steps').innerHTML=steps.map((st,i)=>`<li class="step${done[st.id]?' is-done':''}" data-id="${st.id}">
+    <div class="step-art">${st.art}</div>
+    <div class="step-body">
+      <div class="step-head"><span class="step-no">${String(i+1).padStart(2,'0')}</span><h3>${st.title}</h3><label class="done-toggle" for="done-${st.id}"><input type="checkbox" id="done-${st.id}" data-done="${st.id}"${done[st.id]?' checked':''}><span>完成</span></label></div>
+      <div class="step-text">${st.body}</div>
+      ${st.tip?`<p class="step-tip"><b>注意</b>${st.tip}</p>`:''}
+    </div></li>`).join('');
+  updateProgress();
+}
+function updateProgress(){
+  const all=[...document.querySelectorAll('#steps [data-done]')],n=all.filter(x=>x.checked).length;
+  $('#pbar').style.width=(all.length?n/all.length*100:0)+'%';
+  $('#pcount').textContent=`${n} / ${all.length}`;
+}
+
+/* ---------- 意外情况 ---------- */
+function renderCases(c){
+  const t=state.tools;
+  const CASES=[
+    {k:'guard',t:'卡尺不够长',rel:c.hasClipper&&c.zones.some(z=>!z.gOK),p:['推子只能留到卡尺那么长。目标超过最长卡尺时有三条路：<b>①用剪刀</b>，最好；<b>②推剪梳</b>：梳子插进头发，梳齿离头皮的距离就是留下的长度，推子沿梳子外侧推平，需要练习；<b>③推子指间法</b>。','不要直接装最长的卡尺推：那会剪掉远不止一半。']},
+    {k:'noScissors',t:'没有剪刀',rel:!t.scissors,p:['推子取下卡尺，把发片夹在手指间，推子沿手指外侧推（指间法）。能用，但剪口毛糙、速度慢。','理发平剪几十元一把，比厨房剪刀好用得多，值得买。']},
+    {k:'tooShort',t:'不小心剪多了',rel:true,p:['<b>先停手。</b>不要去“补齐”另一边，那样只会越补越短。','只把剪多那处的周围修到能自然过渡就行，不必全头一样短。头发每月约长 1–1.5 cm，剪多 1 cm，大约一个月就看不出来。']},
+    {k:'uneven',t:'两边不一样长',rel:true,p:['在镜子里找固定参照：耳尖、眉尾、下巴、锁骨。两侧各取对称的一缕同时拉到脸前对比。','<b>只修长的那边</b>，一次最多修 0.5 cm，修一次比一次。']},
+    {k:'back',t:'自己看不到后脑',rel:state.who==='self',p:['三个办法：第二面镜子（背对大镜子手持小镜子）；手机架在身后录像或视频通话；后脑用手指量长度，不靠眼睛。','后脑的第一刀再保守一点，留 65%。']},
+    {k:'curly',t:'自然卷 / 卷发',rel:state.texture!=='straight',p:['全程干剪，一缕一缕剪。卷发拉直后的长度比看上去长得多，每缕回弹程度也不同，所以第一刀留 65%。','不建议用推子推较长的卷发，容易卡发。']},
+    {k:'cowlick',t:'发旋或某处总是翘',rel:true,p:['发旋附近剪太短会直接立起来。这里比周围多留 0.5–1 cm。','用推子时，发旋处要从几个方向各推一遍。']},
+    {k:'pull',t:'推子拉头发、卡住',rel:c.hasClipper,p:['通常是头发太长、潮湿或刀头缺油。先用剪刀剪到 4 cm 以内；头发要干；滴油；推慢一点。','拉扯时不要硬推，停下来把卡住的头发取出。']},
+    {k:'step',t:'剪完有台阶、断层',rel:true,p:['交界处没衔接好。剪刀：用点剪把台阶的上沿剪碎；推子：用中间号卡尺在交界处做“挑出”动作。']},
+    {k:'battery',t:'推子推到一半没电',rel:c.hasClipper,p:['先插上电源，很多推子可以边充边用；不行就换剪刀接着做，或者快充 10 分钟。','所以开始之前一定先充满。']},
+    {k:'thick',t:'剪完反而更蓬',rel:state.density==='thick',p:['变短后头发失去重量会撑开。用打薄剪在发片中段到发梢剪 1–2 刀，或者点剪剪深一点。','不要在发根附近打薄。']},
+    {k:'forgot',t:'忘装卡尺推了一道',rel:c.hasClipper,p:['推子最常见的事故：留下一道接近 0 mm 的痕。','补救：周围头发留长盖住；或者整体改成更短的发型。预防：每推之前看一眼卡尺，先装最长的那个。']},
+    {k:'shave',t:'临时想干脆剃短',rel:false,p:['“剃”是剃刀或不装卡尺，留下的长度接近 0，和“只剪掉一半”是两件事。','真要剃短：先用剪刀剪到 3 cm 以内，再用 12、6、3 mm 卡尺依次推，最后才不装卡尺。']},
+    {k:'tail',t:'马尾剪完一边长一边短',rel:c.mode==='ponytail',p:['通常是马尾没扎在正中，或者扎的时候头歪了。','重新梳顺，分左右两半拉到胸前对比，只修长的一边。']},
+    {k:'dry',t:'湿着看觉得还不够短',rel:c.wetCut,p:['湿发颜色深、贴头皮，看起来更长。','第二轮之前一定先完全吹干，按平时的样子整理好再决定。']}
+  ];
+  const list=CASES.filter(x=>x.rel).concat(CASES.filter(x=>!x.rel));
+  $('#cases').innerHTML=list.map(x=>`<article class="case${x.rel?' rel':''}"><svg viewBox="0 0 56 56" aria-hidden="true">${ICON[x.k]()}</svg><div><h3>${x.t}${x.rel?'<span class="pill">和你有关</span>':''}</h3>${x.p.map(q=>`<p>${q}</p>`).join('')}</div></article>`).join('');
+}
+
+/* ---------- 卷尺题头 ---------- */
+function renderTape(){
+  const el=$('#tape');const W=Math.max(300,Math.round(el.clientWidth||800)),H=58,px=W<560?16:22,x0=10,n=Math.floor((W-20)/px),half=Math.round(n/2);
+  let s=`<rect class="tp-band" x="0" y="10" width="${W}" height="34" rx="3"/>`;
+  for(let i=0;i<=n;i++){const x=x0+i*px;s+=`<line class="tp-t" x1="${x}" y1="10" x2="${x}" y2="${i%5===0?27:19}"/>`;if(i%5===0)s+=`<text class="tp-n" x="${x+3}" y="39">${i}</text>`;if(i<n){const xm=x+px/2;s+=`<line class="tp-t" x1="${xm}" y1="10" x2="${xm}" y2="15" opacity=".5"/>`;}}
+  const xh=x0+half*px;
+  s+=`<line class="tp-cut" x1="${xh}" y1="2" x2="${xh}" y2="56"/>`+scissors(xh,4,90,0.3,22)+`<text class="tp-half" x="${xh+8}" y="56">½</text>`;
+  el.setAttribute('viewBox',`0 0 ${W} ${H}`);el.innerHTML=s;
+}
+
+/* ---------- 输入 ---------- */
+function radio(sel,name,opts){$(sel).innerHTML=opts.map(o=>`<label class="chip" for="${name}-${o[0]}"><input type="radio" name="${name}" id="${name}-${o[0]}" value="${o[0]}"><span>${o[1]}</span></label>`).join('');}
+function initInputs(){
+  $('#presets').innerHTML=Object.entries(PRESETS).map(([k,p])=>`<button type="button" class="preset" data-preset="${k}" id="preset-${k}"><b>${p.label}</b><span>${p.sub}</span></button>`).join('');
+  $('#zones').innerHTML=ZONES.map(z=>`<div class="zone-row"><label for="len-${z.k}"><span class="zn">${z.n}</span>${z.name}</label><input type="range" id="len-${z.k}" min="1" max="60" step="0.5" data-zone="${z.k}"><span class="numwrap"><input type="number" id="num-${z.k}" min="1" max="60" step="0.5" data-zone="${z.k}" inputmode="decimal" aria-label="${z.name}长度，厘米"><span>cm</span></span></div>`).join('');
+  radio('#tex','texture',[['straight','直发'],['wavy','微卷'],['curly','卷发']]);
+  radio('#den','density',[['thin','偏少'],['medium','正常'],['thick','偏多']]);
+  radio('#who','who',[['self','自己剪'],['helper','有人帮我剪']]);
+  $('#tools').innerHTML=TOOLS.map(t=>`<label class="tool" for="tool-${t.k}"><input type="checkbox" id="tool-${t.k}" data-tool="${t.k}"><span class="tcard"><svg viewBox="0 0 48 48" aria-hidden="true">${TOOL_ICON[t.k]()}</svg><span class="tname">${t.name}</span><span class="tnote">${t.note}</span></span></label>`).join('');
+  $('#guards').innerHTML=GUARDS.map(g=>`<label class="chip" for="guard-${g}"><input type="checkbox" id="guard-${g}" data-guard="${g}"><span class="mono">${g} mm</span></label>`).join('');
+}
+function syncInputs(){
+  ZONES.forEach(z=>{$('#len-'+z.k).value=state.len[z.k];$('#num-'+z.k).value=state.len[z.k];});
+  ['texture','density','who'].forEach(n=>{const el=document.getElementById(n+'-'+state[n]);if(el)el.checked=true;});
+  TOOLS.forEach(t=>{$('#tool-'+t.k).checked=!!state.tools[t.k];});
+  GUARDS.forEach(g=>{const el=$('#guard-'+g);el.checked=state.guards.includes(g);el.disabled=!state.tools.clipper;});
+  $('#guardHint').textContent=state.tools.clipper?'卡尺侧面印着数字，单位是 mm。':'先在上面勾选“电推剪”，才能选卡尺。';
+  document.querySelectorAll('.preset').forEach(b=>{const p=PRESETS[b.dataset.preset].len;b.classList.toggle('on',ZONES.every(z=>p[z.k]===state.len[z.k]));});
+}
+let last=null;
+function update(){
+  save();syncInputs();
+  const c=compute();last=c;
+  renderVerdict(c);renderProfile(c);renderZTable(c);renderCover(c);renderAlerts(c);renderCompare(c);renderSteps(c);renderCases(c);
+}
+const form=$('#inputs');
+form.addEventListener('submit',e=>e.preventDefault());
+form.addEventListener('input',e=>{
+  const el=e.target;
+  if(el.dataset.zone){let v=parseFloat(el.value);if(isNaN(v))return;v=Math.min(60,Math.max(1,v));state.len[el.dataset.zone]=v;
+    if(el.type==='range')$('#num-'+el.dataset.zone).value=v;else $('#len-'+el.dataset.zone).value=v;
+    save();const c=compute();last=c;renderVerdict(c);renderProfile(c);renderZTable(c);renderCover(c);renderAlerts(c);renderCompare(c);
+    document.querySelectorAll('.preset').forEach(b=>{const p=PRESETS[b.dataset.preset].len;b.classList.toggle('on',ZONES.every(z=>p[z.k]===state.len[z.k]));});
+    clearTimeout(form._t);form._t=setTimeout(()=>{renderSteps(c);renderCases(c);},250);}
+});
+form.addEventListener('change',e=>{
+  const el=e.target;
+  if(el.type==='radio'&&el.name){state[el.name]=el.value;update();}
+  else if(el.dataset.tool){state.tools[el.dataset.tool]=el.checked;update();}
+  else if(el.dataset.guard){const g=+el.dataset.guard;state.guards=el.checked?[...new Set(state.guards.concat(g))]:state.guards.filter(x=>x!==g);update();}
+  else if(el.dataset.zone&&el.type==='number'){update();}
+});
+$('#presets').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;state.len=Object.assign({},PRESETS[b.dataset.preset].len);update();});
+$('#steps').addEventListener('change',e=>{const id=e.target.dataset.done;if(!id)return;const d=loadDone();if(e.target.checked)d[id]=true;else delete d[id];saveDone(d);e.target.closest('.step').classList.toggle('is-done',e.target.checked);updateProgress();});
+$('#resetDone').addEventListener('click',()=>{saveDone({});document.querySelectorAll('#steps [data-done]').forEach(x=>{x.checked=false;x.closest('.step').classList.remove('is-done');});updateProgress();});
+
+initInputs();renderTape();update();
+let rt;
+const onResize=()=>{clearTimeout(rt);rt=setTimeout(()=>{renderTape();if(last){renderProfile(last);renderCover(last);}},120);};
+if(window.ResizeObserver){new ResizeObserver(onResize).observe($('#profile'));new ResizeObserver(onResize).observe($('#tape'));}
+else window.addEventListener('resize',onResize);
+})();
+</script>
