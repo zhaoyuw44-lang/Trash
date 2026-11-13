@@ -109,6 +109,6 @@ async function measure(page, baseSizes) {
     });
   });
   fs.writeFileSync(path.join(__dirname, 'fit_report.json'), JSON.stringify(issues, null, 1));
-  console.log(`figures ${E.length}; labels shrunk ${n}; issues ${issues.length} (see en/fit_report.json)`);
+  console.log(`figures ${E.length} (skipped ${scales.filter(x => !x).length}); labels shrunk ${n}; issues ${issues.length} (see en/fit_report.json)`);
   await browser.close();
 })();
