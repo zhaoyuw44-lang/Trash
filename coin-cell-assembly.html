@@ -239,6 +239,7 @@ details.acc > .acc-body{padding:0 14px 14px}
 .st-step{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;padding:9px 0;border-bottom:1px dashed var(--border)}
 .st-step:last-of-type{border-bottom:0}
 .st-step input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+.st-step .xmark{width:20px;height:20px;margin-top:3px;border-radius:50%;background:var(--danger-soft);color:var(--danger);font-weight:700;font-size:.8rem;line-height:1;display:grid;place-items:center}
 .st-step .main{font-weight:500;line-height:1.55}
 .st-step.done .main{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--border-strong)}
 .st-step .no{font-family:var(--f-mono);font-size:.74rem;color:var(--accent);margin-right:6px}
@@ -248,14 +249,38 @@ details.acc > .acc-body{padding:0 14px 14px}
 .st-det summary::-webkit-details-marker{display:none}
 .st-det[open] summary{margin-bottom:4px}
 .st-det ul{margin:0 0 4px;padding-left:1.2em}
+.st-det a,.st-k a,.st-field a{font-weight:600}
+/* field mode: full-screen, big text; the body scrolls and always starts at the top of the step */
 .st-field{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .st-field .hd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.st-field .ttl{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 10px;line-height:1.35}
 .st-field .sec{font-size:.85rem;color:var(--accent);font-weight:600}
-.st-field .body{flex:1;overflow:auto;display:flex;flex-direction:column;justify-content:center}
+.st-field .pos{font-family:var(--f-mono);font-size:.78rem;white-space:nowrap}
+.st-field .wl{margin:-4px 0 8px;line-height:1.45}
+.st-field .body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;justify-content:flex-start;border-radius:var(--radius-s)}
+.st-field .body > :first-child{margin-top:auto}
+.st-field .body > :last-child{margin-bottom:auto}
+.st-field .body:focus-visible{outline-offset:-2px}
 .st-field .big{font-size:clamp(1.25rem,4.6vw,1.9rem);line-height:1.5;font-weight:600}
+.st-field .warn{color:var(--danger);font-weight:700}
 .st-field .sub{font-size:1rem;color:var(--muted);margin-top:12px;line-height:1.6}
-.st-field .nav{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:12px}
-.st-field .nav .btn{padding:16px;font-size:1.05rem}
+.st-field .sub ul{margin:0;padding-left:1.2em}
+.st-field .sv{list-style:none;margin:0;padding:0;font-size:clamp(1.05rem,3.8vw,1.4rem);line-height:1.5;font-weight:600}
+.st-field .sv li{margin:0;padding:8px 0;border-bottom:1px dashed var(--border)}
+.st-field .sv li:last-child{border-bottom:0}
+.st-field .sv li.done{opacity:.5}
+.st-field .sv .no{font-family:var(--f-mono);font-size:.68em;font-weight:500;color:var(--accent);margin-right:6px}
+.st-field .nav{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:10px;margin-top:12px}
+.st-field .nav .btn{padding:16px 10px;font-size:1.05rem}
+@media (max-height:520px){
+  .st-field{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .st-field .hd{margin-bottom:6px}
+  .st-field .big{font-size:clamp(1.05rem,5.2vh,1.5rem);line-height:1.45}
+  .st-field .sub{font-size:.92rem;margin-top:8px;line-height:1.5}
+  .st-field .sv{font-size:clamp(1rem,4.6vh,1.3rem)}
+  .st-field .nav{margin-top:8px}
+  .st-field .nav .btn{padding:10px 12px;font-size:1rem}
+}
 .st-k input{width:100%;max-width:360px;padding:8px 10px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);margin-bottom:8px}
 /* ---- module: game ---- */
 .gm-levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -282,6 +307,9 @@ details.acc > .acc-body{padding:0 14px 14px}
 .gm-svg{width:100%;height:auto;display:block;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .gm-svg.dragscene{touch-action:none}
 .gm-svg text{font-family:var(--f-body)}
+.gm-svg #gmDrag,.gm-svg .gm-probe{outline:none}
+.gm-svg #gmDrag:focus-visible > circle,.gm-svg .gm-probe:focus-visible .dot{stroke:var(--accent);stroke-width:5}
+.gm-svg .gm-probe.hint .dot,.gm-svg .gm-ring.hint{stroke:var(--ok);stroke-width:6}
 .gm-note{font-size:.95rem;font-weight:600;margin-top:6px;min-height:1.4em}
 .gm-note.good{color:var(--ok)}.gm-note.bad{color:var(--danger)}
 .gm-pbar{position:relative;height:18px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);overflow:hidden;margin-top:10px}
@@ -291,12 +319,14 @@ details.acc > .acc-body{padding:0 14px 14px}
 .gm-xs{margin-top:10px;border-top:1px dashed var(--border);padding-top:8px}
 .gm-xs .t{font-size:.78rem;color:var(--muted);margin-bottom:4px}
 .gm-side{position:sticky;top:76px}
+.gm-scene,.gm-side,#gmEnd,#gmFb,.gm-multi label{scroll-margin-top:72px}
 .gm-prompt h3{margin-bottom:4px}
 .gm-prompt p{font-size:.95rem}
 .gm-acts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .gm-acts .btn{justify-content:flex-start;text-align:left;white-space:normal;font-weight:500;line-height:1.45;padding:10px 12px}
 .gm-acts .btn.wrong{border-color:var(--danger);background:var(--danger-soft);opacity:.75}
 .gm-acts .btn.hint{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.gm-multi label.hint,.gm-glove.hint{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok)}
 .gm-acts .row .btn{flex:1 1 auto;justify-content:center}
 .gm-fb{margin-bottom:10px}
 .gm-fb .feedback{margin-top:0}
@@ -307,6 +337,8 @@ details.acc > .acc-body{padding:0 14px 14px}
 .gm-multi label.r-bad{border-color:var(--danger);background:var(--danger-soft)}
 .gm-multi label.r-miss{border-color:var(--warn);background:var(--warn-soft)}
 .gm-multi input{margin-top:3px;accent-color:var(--accent)}
+.gm-multi .gm-why{display:block;margin-top:4px;font-weight:600;font-size:.84rem}
+.gm-multi .gm-why.bad{color:var(--danger)}.gm-multi .gm-why.miss{color:var(--warn)}
 .gm-gloves{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .gm-glove{border:1px solid var(--border);border-radius:10px;padding:10px 6px;background:var(--surface);cursor:pointer;text-align:center;font-size:.85rem;line-height:1.35}
 .gm-glove .ic{font-size:1.6rem;display:block}
@@ -328,6 +360,9 @@ details.acc > .acc-body{padding:0 14px 14px}
 .gm-cell{border:1px solid var(--border);border-radius:10px;padding:10px;background:var(--surface)}
 .gm-cell .q{font-family:var(--f-mono);font-weight:700;font-size:1.3rem}
 .gm-cell ul{margin:6px 0 0;padding-left:1.1em;font-size:.84rem}
+.gm-viol .small{margin-top:3px}
+.gm-plan ol{margin:4px 0 0;padding-left:1.3em}
+.gm-plan li{margin:4px 0}
 @media (max-width:980px){.gm-main{grid-template-columns:minmax(0,1fr)}.gm-side{position:static}}
 @media (max-width:640px){.gm-levels{grid-template-columns:minmax(0,1fr)}.gm-scores{grid-template-columns:repeat(2,minmax(0,1fr))}.gm-gloves{grid-template-columns:repeat(2,minmax(0,1fr))}.gm-end-top{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -364,7 +399,7 @@ details.acc > .acc-body{padding:0 14px 14px}
   <div class="page-head">
     <div class="eyebrow">07 · Step by step</div>
     <h1>装纽扣电池：详细步骤 <span class="en">(CR2032 · cathode‖Li half cell)</span></h1>
-    <p class="lede">从前一天准备材料，到封口、测电压、收尾带出，一共 11 个阶段。每一步可以打勾；点「为什么 / 注意」看细节和常见错误。在手套箱旁边用手机看时，打开<b>「现场模式」</b>：大字、一屏一步。</p>
+    <p class="lede">从前一天准备材料，到封口、测电压、收尾带出，一共 10 个阶段，最后附一节「出了意外怎么办」。每一步可以打勾；点「为什么 / 注意」看细节和常见错误。在手套箱旁边用手机看时，打开<b>「现场模式」</b>：大字，一屏一步；也可以切到「一屏一阶段」，伸手进箱前先把整个阶段读一遍。</p>
   </div>
 
   <div class="callout danger">
@@ -378,7 +413,7 @@ details.acc > .acc-body{padding:0 14px 14px}
   <div class="callout lab small"><div class="ct">⚑ 数字怎么看</div>页面里的直径、温度、用量、压力、时间都是常见值或教学值，标了 <span class="labnote">以实验室 SOP 为准</span> 的地方，以你们组的书面规程和师兄师姐的示范为准。有的组用的是<b>单独定位密封圈的套件</b>，叠层顺序会不同（例如：正极 → 隔膜 → 密封圈 → 锂片 → 垫片、弹片 → 盖），按本组套件的 SOP 装。壳、盖、密封圈和封口模具要来自同一个供应商、同一个型号。</div>
 
   <div class="st-top no-print">
-    <button class="btn primary" id="stField" type="button">📱 现场模式（一屏一步）</button>
+    <button class="btn primary" id="stField" type="button" aria-haspopup="dialog">📱 现场模式（大字 · 一步 / 一阶段）</button>
     <button class="btn" id="stExpand" type="button">全部展开</button>
     <button class="btn ghost" id="stClear" type="button">清空勾选</button>
     <div class="st-prog"><span id="stCount">0 / 0</span><div class="bar"><i id="stBar"></i></div></div>
@@ -392,7 +427,7 @@ details.acc > .acc-body{padding:0 14px 14px}
     <div class="tbl-wrap"><table class="tbl"><thead><tr><th>现象</th><th>最可能的原因</th><th>怎么查 / 怎么改</th></tr></thead><tbody id="stKb"></tbody></table></div>
   </div>
 
-  <div class="callout info" style="margin-top:20px">
+  <div class="callout info" style="margin-top:20px" id="stGameBox">
     <div class="ct">练一练</div>
     读完以后去玩「装电池模拟游戏」：同样的流程，你自己选、自己拖、自己按，选错会告诉你为什么。
     <div style="margin-top:8px"><button class="btn primary" type="button" id="stToGame">去玩模拟游戏 →</button></div>
@@ -410,7 +445,7 @@ details.acc > .acc-body{padding:0 14px 14px}
   <div id="gmStart">
     <div class="gm-levels" id="gmLevels"></div>
     <div class="callout info small" style="margin-top:14px">
-      <b>怎么玩：</b>右侧（手机上在下方）是任务和可选操作，左侧是现场画面。需要「放正」零件时，用鼠标或手指把零件<b>拖到壳中央</b>；封口时<b>按住</b>加压按钮、在目标区松手；测电压时先选档位，再点表笔位置。顶部状态栏实时显示时间、箱压、O₂/H₂O、溶剂蒸气、电解液瓶和锂片状态。
+      <b>怎么玩：</b>右侧（手机上在下方）是任务和可选操作，左侧是现场画面。需要「放正」零件时，用鼠标或手指把零件<b>拖到绿色虚线圈中央</b>；加电解液时<b>点电池正中</b>滴加；封口时<b>按住</b>加压按钮、盯着指针在绿区松手；测电压时先选档位，再点表笔位置。顶部状态栏实时显示时间、箱压、O₂/H₂O、溶剂蒸气、电解液瓶和锂片状态。<br><b>只用键盘也能玩：</b>Tab 选中零件或表笔点；方向键移动零件 0.5 mm（Shift + 方向键 0.1 mm），Home 把零件移到壳上方，回车放下；空格/回车按住加压。
     </div>
     <div class="callout lab small"><b>⚑ 游戏里的数值（容差、用量、压力刻度、时间）都是教学示意值</b>，只用来练习判断。真实的电解液用量、封口压力、电压窗口、循环次数等 <span class="labnote">以实验室 SOP 为准</span>。</div>
   </div>
@@ -484,26 +519,33 @@ details.acc > .acc-body{padding:0 14px 14px}
 GB.modules['steps'] = { init(root){
   const $ = s => root.querySelector(s);
   const el = GB.el;
+  // Cross-page references: a working link when that page is part of this build (full site),
+  // self-contained text when it is not (the standalone steps + game file) — never a dead reference.
+  const hasPage = id => { const p = document.getElementById(id); return !!(p && p.classList.contains('page')); };
+  const link = (id,name) => '<a href="#'+id+'" data-go="'+id+'">「'+name+'」</a>';
+  const see = (id,name,alt) => hasPage(id)? '详见'+link(id,name)+'页。' : alt;
+  const anteRefs = [['sop','标准操作流程'],['sim','模拟器']].filter(r=>hasPage(r[0]));
   // [main text, detail html (optional), warn flag]
   const S = [
     {id:'A', t:'前一天 / 进箱前准备', en:'Preparation', steps:[
       ['列材料（以 3 颗为例，每样多备 1–2 套）：正极片 4–5 片、锂片 4–5 片、隔膜 6 片、正极壳/负极盖/垫片/弹片各 4 套、电解液分装 0.3–0.5 mL、枪头 ≥10 个、已烘干的无尘纸一小叠。',
-       '<ul><li>正极片：直径 12–14 mm，每片已称重、编号，涂层面朝上放在带盖培养皿里。</li><li>锂片：常见 15.6 mm × 0.25/0.45 mm 或 16 mm × 0.6 mm；保留原包装，只在箱内拆。直径至少比正极大约 1.5 mm。</li><li>隔膜：常用 Celgard 2325/2400（约 25 µm）。配 15.6–16 mm 锂片的半电池，手工组装建议用 18–19 mm；正极壳内径约 19.4 mm，19 mm 已经到上限、必须平躺。干燥氩气里静电大，隔膜容易飞，多备几片。</li><li>电解液：3 颗 × 40 µL = 120 µL，再加预润洗和瓶底死体积。分装瓶标明批号和开封日期。</li></ul>'],
+       '<ul><li>正极片：直径 12–14 mm，每片已称重、编号，涂层面朝上放在带盖培养皿里。</li><li>锂片：常见 15.6 mm × 0.25/0.45 mm 或 16 mm × 0.6 mm；保留原包装，只在箱内拆。直径至少比正极大约 1.5 mm。</li><li>隔膜：常用 Celgard 2325/2400（约 25 µm）。配 15.6–16 mm 锂片的半电池，手工组装建议用 18–19 mm；正极壳内径约 19.4 mm，19 mm 已经到上限、必须平躺。干燥氩气里静电大，隔膜容易飞，多备几片。</li><li>电解液：3 颗 × 40 µL = 120 µL，再加预润洗和瓶底死体积。分装瓶标明批号和开封日期。</li><li>LiPF₆ 电解液本来就含微量 HF（以批次 CoA 为准），颜色正常也按含 HF 处理；和新开瓶或 CoA 描述比明显发黄、发褐或有沉淀就不用，报告负责人。它在湿空气里会冒白烟（遇水水解放出 HF/PF₅），所以任何时候都不在箱外打开。</li></ul>'],
       ['带齐工具：塑料/陶瓷头镊子 2–3 把（一把只夹锂）、移液枪和配套枪头、锂专用冲头（自己冲片时）、PE 膜或称量纸、PTFE 小块或小滚轮、尼龙刷或带护套的手术刀、绝缘垫、万用表（绝缘表笔）、带格子的绝缘电池盒、利器盒、记号笔和记录表。',
        '<ul><li>镊子分开用，是为了不把锂屑带到正极或电解液瓶上。</li><li>有正置换移液器 (positive-displacement pipette) 的话，它最适合挥发性的有机液体。</li><li>箱内清洁只用干无尘纸、塑料小刷或棉签，<b>不用酒精</b>（醇类会让净化柱中毒）。</li></ul>'],
       ['真空干燥：正极常见 110–120 °C、12–16 h；负极 80–110 °C、≥12 h；Celgard 等聚烯烃隔膜 ≤60 °C 过夜最常见（有的组用到 70 °C）；壳、盖、垫片、弹片清洗后 60–80 °C 烘干。锂片和电解液<b>不加热</b>。',
        '<ul><li>温度上限受粘结剂和活性材料限制，以 SOP 为准。</li><li>隔膜<b>绝不能</b>和电极一起在 110–120 °C 下烘：Celgard 2325 在 90 °C、1 h 纵向就收缩约 5%，PE 约 130 °C 闭孔、135 °C 熔化。</li><li>为什么要干燥：残留的水和 LiPF₆ 在任何温度下都会反应生成 HF，降低首效、溶出过渡金属、产气。</li><li>干燥后尽快、最好趁热送进过渡舱。</li></ul>'],
       ['个人防护：棉质或阻燃实验服、安全眼镜；摘掉戒指、手表、手链，剪短指甲。上岗前亲手找到：2.5% 葡萄糖酸钙凝胶（看有效期）、D 类灭火剂、洗眼器和紧急淋浴。',
-       '<ul><li>在箱外接触电解液、漏液电池或沾了电解液的东西时：戴护目镜；只戴薄丁腈手套不够，要戴复合膜手套（如 Silver Shield/4H）或厚丁基手套——碳酸酯会带着 HF 渗透丁腈手套。</li><li>D 类灭火剂认准标签写明可用于锂的：Lith-X（石墨基）或铜粉。NaCl 基的 Met-L-X 适用范围不含锂，不要用它扑锂火。</li><li>新手在负责人签字之前不独自操作锂和 LiPF₆；不要一个人做会产生 HF 的工作。</li></ul>', true],
+       '<ul><li>在箱外接触电解液、漏液电池或沾了电解液的东西时：戴护目镜；只戴薄丁腈手套不够，要戴复合膜手套（如 Silver Shield/4H）或厚丁基手套——碳酸酯会带着 HF 渗透丁腈手套。</li><li>D 类灭火剂认准标签写明可用于锂的：Lith-X（石墨基）或铜粉。NaCl 基的 Met-L-X 适用范围不含锂，不要用它扑锂火。</li><li>锂金属（锂片、锂屑、锂金属半电池）着火<b>绝不用水、CO₂、ABC 干粉或泡沫</b>；干砂只在 SOP 允许、并且完全干燥时才能用。不含金属锂的锂离子电池热失控按本单位 EHS 规定处理，两者做法不同。</li><li>新手在负责人签字之前不独自操作锂和 LiPF₆；不要一个人做会产生 HF 的工作。</li></ul>', true],
       ['前一天还要做：算好每片极片的活性物质质量和测试电流（单位 mg）；向师兄师姐确认装配顺序、电解液用量、垫片和弹片配置、封口压力、静置时间；预约手套箱，看记录本最近有没有异常、有没有在再生。', null],
     ]},
     {id:'B', t:'进箱前检查', en:'Pre-check', steps:[
-      ['屏幕：O₂、H₂O 低于本组开工阈值并且稳定；没有在 Regen/Purge；没有报警；箱压为正、在正常范围。', '常见要求 &lt; 0.5–1 ppm，做锂金属更严。详见「使用前检查」页。'],
+      ['屏幕：O₂、H₂O 低于本组开工阈值并且稳定；没有在 Regen/Purge；没有报警；箱压为正、在正常范围。', '常见要求 &lt; 0.5–1 ppm，做锂金属更严。'+see('precheck','使用前检查','开工阈值以本组 SOP 为准。')],
       ['检查所有箱体手套：没有针孔、裂纹、发黏、变白；手套微微外鼓。', '发现问题：不伸手，挂「停用」牌，报告负责人。', true],
       ['确认工作气是氩气 (Ar)，不是氮气 (N₂)；两个过渡舱的状态和记录本一致。', '锂在 N₂ 里会生成黑色的 Li₃N。'],
     ]},
     {id:'C', t:'物品进箱', en:'Bring in', steps:[
-      ['小件走小过渡舱：回充 → Close → 开外门放物 → 关外门 → 抽真空-保持-回充至少 3 轮 → Close → 伸手开内门取物。', '每轮表针到约 −0.1 MPa 后再保持一会儿。详细操作见「标准操作流程」和「模拟器」页。'],
+      ['小件走小过渡舱：确认内门关好 → 回充到 0 附近 → Close → 开外门放物 → 关外门 → 抽真空-保持-回充至少 3 轮 → Close → 伸手开内门取物 → <b>关紧内门</b>。',
+       '每轮表针到约 −0.1 MPa 后再保持一会儿。'+(anteRefs.length? '详细操作见'+anteRefs.map(r=>link(r[0],r[1])).join('和')+'页。' : '每轮保持多久、一共做几轮，以本组 SOP 为准。')+'内门开着时把阀门转到 Evacuate，抽的就是整个手套箱。'],
       ['多孔材料（无尘纸、成叠的隔膜、纸）先烘干，按 SOP 走大过渡舱长时间或过夜抽真空。', '否则会带进大量水，H₂O 读数飙升。'],
       ['电解液保持原厂密封、直立，放在二次容器里进舱；<b>不要在室内拧松瓶盖</b>，敞口或松盖的电解液绝不抽真空。', '湿气进去会生成 HF；抽真空时溶剂会挥发、喷溅，并进入泵油。按管理员规定的方式进舱。', true],
       ['小零件（垫片、弹片、盖子）装在带盖小盒里，免得回充时被气流吹散。', null],
@@ -573,24 +615,26 @@ GB.modules['steps'] = { init(root){
       ['没用完的锂片、锂箔放回原容器盖紧；电解液原瓶和分装瓶都拧紧，再检查一遍。', null],
       ['废物分开：锂屑/边角料/沾锂 PE 膜 → 锂废料罐；沾电解液的无尘纸、枪头、碎隔膜、外层手套 → 可密封的袋或瓶，标「电解液污染物（LiPF₆，含氟）」；刀片 → 利器盒；剩余电解液 → 密封的废电解液瓶，不和水相废液混放。', '锂废料出箱和处置按本单位 EHS 路线，不自己用水或醇淬灭。', true],
       ['用干无尘纸擦绝缘垫、封口机模具、镊子和天平；工具归位，锐器收好。箱内不用酒精。', null],
-      ['在箱内脱下外层丁腈手套放进废物袋；一只一只慢慢抽手，箱压下降时短踩右踏板 Refill，<b>不让箱压低于 0</b>。', null],
-      ['带出电池：过渡舱是真空就先回充到 0 附近、阀门 Close（状态不明就先做一整套抽充循环）→ 伸手开内门，放进装电池的带盖绝缘盒和密封好的废物 → 关紧内门 → 抽手 → 箱外开外门取出 → 关外门、抽回真空、阀门 Close。', '在楼里转移电池放在密封的二次容器里，不揣口袋。'],
+      ['带出电池（手还在箱内时做）：过渡舱是你进箱后没再动过的状态（两门关、舱内是箱内气、约 0、阀门 Close）→ 开内门，放进装电池的带盖绝缘盒和密封好的废物 → <b>关紧内门</b>。',
+       '<ul><li>过渡舱是真空或状态不明（上一个人可能留下了空气）→ 先按下一步抽手，在箱外回充到 0 附近（状态不明就做一整套抽真空-回充循环）、阀门 Close，再伸手进来放东西、关紧内门。</li><li>在楼里转移电池放在密封的二次容器里，不揣口袋。</li></ul>'],
+      ['抽手：在箱内脱下外层丁腈手套放进箱内废物袋；抽每只手之前先短踩一下右踏板 Refill（本箱踏板标签；换别的箱子先看标签），再一只一只慢慢抽出，箱压还在往下掉就再短踩，<b>不让箱压低于 0</b>。然后在箱外：确认内门关紧、阀门 Close → 开外门取出 → 关外门、抽回真空、阀门 Close。',
+       '抽手会让箱压下降：先补一点气，边抽边看箱压。开外门之前隔着窗再看一眼内门——内门没关好就开外门 = 两门同开。'],
       ['写手套箱记录本：日期、姓名；开始和结束时的 O₂/H₂O 和箱压；用了哪个过渡舱、几轮循环；带进带出了什么；有没有异常。', null],
       ['带出来的东西如果沾了电解液，按 HF 风险处理：戴好合适的手套，在通风橱里处理。', null, true],
     ]},
     {id:'J', t:'上机前', en:'Before testing', steps:[
       ['静置时间到了，用万用表再测一次 OCV 并记录。', null],
       ['电池放进<b>专用扣电夹具</b>，正极壳一面对着夹具的 +/WE 侧；不要用鳄鱼夹直接夹电池。', '鳄鱼夹的齿容易同时咬到壳和盖。'],
-      ['确认测试线属于哪台仪器再接线。照片里的线最像 Gamry：绿 + 蓝 → 正极（壳）；红 + 白（+ 橙）→ 负极（盖）；黑色浮地线不接电池、收好绝缘。Pine 的红、绿含义正好相反。', '详见「测试接线与参数」页。', true],
+      ['确认测试线属于哪台仪器再接线。照片里的线最像 Gamry：绿 + 蓝 → 正极（壳）；红 + 白（+ 橙）→ 负极（盖）；黑色浮地线不接电池、收好绝缘。Pine 的红、绿含义正好相反。', see('wiring','测试接线与参数','线色定义以仪器手册和本组 SOP 为准；拿不准就问负责人，不要凭颜色猜。'), true],
       ['接线、拆线都只在通道 OFF (cell off) 时做。', null, true],
       ['软件读 OCV：必须是正值，并和万用表基本一致（普通万用表本身有几十 mV 误差，差值约 50 mV 以内算一致）；读到负值不要开始。', null],
       ['检查程序：质量单位 mg、电流合理（C/10 约跑 10 h）、电压窗口正确、电压/电流/容量/时间多重安全限值、电流量程固定。然后再点开始。测试中的电池放在不燃的托盘或盒子里，远离可燃物。', null],
     ]},
-    {id:'X', t:'出了意外怎么办（一行版）', en:'If something goes wrong', steps:[
-      ['手套破了：停手，盖好电解液、收好锂片；不踩 Evacuate；慢慢抽手；箱外用胶带临时封住破口，挂停用牌，报告负责人。', null, true],
+    {id:'X', t:'出了意外怎么办（一行版）', en:'If something goes wrong', ref:true, note:'应急参考，不用打勾。上岗前把每一条读熟——真出事时来不及翻手机。', steps:[
+      ['手套破了：停手，先把锂片收进密封容器、再盖好电解液；不踩 Evacuate；慢慢抽手；箱外用胶带临时封住破口，挂停用牌，报告负责人。', null, true],
       ['箱内电解液洒了：盖好瓶子；用干无尘纸吸干，放进「LiPF₆ 污染物」袋；换外层手套；看 O₂/H₂O 读数恢复后再继续。', null],
       ['箱外皮肤沾到电解液：脱掉污染的手套衣物，大量清水冲洗（约 5 分钟），涂 2.5% 葡萄糖酸钙凝胶并持续补涂，立刻就医，告诉医生是含 HF 的 LiPF₆ 电解液；疼痛可能延迟最多 24 小时。眼睛：洗眼器冲 15 分钟，<b>不要往眼睛里涂凝胶</b>。', '冲洗时长以本单位 HF 预案为准。', true],
-      ['箱内冒烟、着火，或测试中电池发热鼓包：手在手套里且安全时用箱内锂专用 D 类粉完全盖住；不开过渡舱、不开箱；断开加热设备；必要时撤离报警。测试中的电池先在软件里停通道，不要徒手拿。', '详见「应急处置」页。', true],
+      ['箱内冒烟、着火，或测试中电池发热鼓包：手在手套里且安全时用箱内锂专用 D 类粉完全盖住（<b>绝不用水、CO₂、ABC 干粉</b>）；不开过渡舱、不开箱；断开加热设备；必要时撤离报警。测试中的电池先在软件里停通道，不要徒手拿。', see('emergency','应急处置','具体做法按本单位应急预案；上岗前先找到箱内 D 类灭火剂和报警电话。'), true],
     ]},
   ];
   const K = [
@@ -601,7 +645,7 @@ GB.modules['steps'] = { init(root){
     ['盖子扣不下去，或封完又弹开','叠层太厚（多放垫片、玻纤隔膜、锂片太厚）；密封圈扭了或放了两个','按本组叠层配置重新核对；检查密封圈'],
     ['盖子歪，卷边成月牙形','在模具里没放正；叠层偏心；模具脏或磨损','放进凹槽正中，从侧面看水平后再加压；清洁或更换模具'],
     ['壳变形、开裂，卷边压塌','压力过大；模具不对；压了两遍；放反了','用本组设定值，只压一次，负极朝上'],
-    ['电池卡在模具里','模具上有电解液残留；壳规格不对','用顶出件或塑料工具取出；每颗擦模具；报告负责人'],
+    ['电池卡住，取不出模具','模具上有电解液残留；壳规格不对','用顶出件或塑料工具取出；每颗擦模具；报告负责人'],
     ['OCV 正常，但容量几乎为 0','正极放反；夹具接触面贴了标签/有胶；漏了垫片或弹片；没封严','认正反面；接触面保持干净；按叠层清单核对'],
     ['容量明显偏低','质量或活性物质比例输错；锂片太小或放偏；浸润不够；正极没干燥透','手算核对；查对中和电解液用量；查干燥条件'],
     ['容量高于理论值','质量单位错（mg/g）；没扣空白箔质量；比例输错','重新核对质量'],
@@ -612,68 +656,184 @@ GB.modules['steps'] = { init(root){
     ['同一批数据很分散','电解液用量、封口压力、静置时间、对中不一致；称量误差','每个参数固定并逐颗记录'],
     ['锂片刮亮后很快变暗或发黑','O₂/H₂O 偏高；工作气不对 (N₂)；电解液敞口溶剂蒸气多','盖好电解液，停止开锂，查读数和气源，报告'],
     ['隔膜发卷、收缩','干燥温度太高','聚烯烃隔膜 ≤60–70 °C（以 SOP 为准）'],
-    ['测试中电池鼓包、发热','短路、过充、参数错','立刻在软件里停掉通道，不要徒手拿，按应急页处理'],
+    ['测试中电池鼓包、发热','短路、过充、参数错','立刻在软件里停掉通道，不要徒手拿，'+(hasPage('emergency')? '按'+link('emergency','应急处置')+'页处理' : '按本单位应急预案处理')],
   ];
+  // html → readable plain text (entities decoded, list items on their own lines)
+  const plain = h => { const d = document.createElement('div'); d.innerHTML = (h||'').replace(/<li>/g,'• ').replace(/<\/li>/g,'\n'); return d.textContent.trim(); };
+  // cross-page links: close field mode first, then use the router (keeps Back working)
+  function onGo(e){
+    const a = e.target.closest && e.target.closest('a[data-go]');
+    if(!a || e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || !hasPage(a.dataset.go)) return;
+    e.preventDefault(); if(fieldEl) closeField(true); GB.go(a.dataset.go);
+  }
+  root.addEventListener('click', onGo);
+
   const done = new Set(GB.store.get('steps-done',[]));
-  let total = 0; const flat = [];
+  let total = 0; const flat = [];   // flat: every line in order, incl. the X reference lines (no checkbox)
   const list = $('#stList'), toc = $('#stToc');
   S.forEach(sec=>{
     const d = el('details',{class:'acc st-sec',id:'st-'+sec.id});
-    const cnt = el('span',{class:'cnt'});
-    d.append(el('summary',null, el('span',{class:'pill accent'}, sec.id), el('span',null, sec.t+' '), el('span',{class:'en'}, sec.en), cnt));
+    const cnt = el('span',{class:'cnt'}); sec.cnt = cnt;
+    d.append(el('summary',null, el('span',{class:'pill '+(sec.ref?'danger':'accent')}, sec.id), el('span',null, sec.t+' '), el('span',{class:'en'}, sec.en), cnt));
     const body = el('div',{class:'acc-body'});
     if(sec.note) body.append(el('div',{class:'callout warn small',html:sec.note}));
     sec.steps.forEach((st,i)=>{
-      const key = sec.id+(i+1); total++; flat.push({sec, i, st, key});
-      const cb = el('input',{type:'checkbox','aria-label':'完成 '+key}); cb.checked = done.has(key);
-      const row = el('div',{class:'st-step'+(cb.checked?' done':'')}, cb,
-        el('div',null, el('div',{class:'main',html:'<span class="no">'+key+'</span>'+(st[2]?'<span class="warn">⚠ </span>':'')+st[0]}),
+      const f = {sec, i, st, key: sec.id+(i+1), cb:null, row:null};
+      let mark;
+      if(sec.ref){ done.delete(f.key); mark = el('span',{class:'xmark','aria-hidden':'true'},'!'); }
+      else { total++; mark = f.cb = el('input',{type:'checkbox','aria-label':'完成 '+f.key}); f.cb.checked = done.has(f.key); }
+      f.row = el('div',{class:'st-step'+(f.cb && f.cb.checked?' done':'')}, mark,
+        el('div',null, el('div',{class:'main',html:'<span class="no">'+f.key+'</span>'+(st[2]?'<span class="warn">⚠ </span>':'')+st[0]}),
           st[1]? el('details',{class:'st-det'}, el('summary',null,'为什么 / 注意 ▾'), el('div',{html:st[1]})) : null));
-      cb.addEventListener('change',()=>{ cb.checked? done.add(key):done.delete(key); row.classList.toggle('done',cb.checked); save(); });
-      body.append(row); sec.cnt = cnt;
+      if(f.cb) f.cb.addEventListener('change',()=>{ setDone(f, f.cb.checked); save(); });
+      body.append(f.row); flat.push(f);
     });
     d.append(body); list.append(d);
     toc.append(el('button',{type:'button',onclick:()=>{ d.open = true; d.scrollIntoView({behavior:'smooth',block:'start'}); }}, sec.id+' '+sec.t));
   });
+  function setDone(f, on){ if(!f.cb) return; on? done.add(f.key) : done.delete(f.key); f.cb.checked = on; f.row.classList.toggle('done', on); }
   function save(){ GB.store.set('steps-done',[...done]); refresh(); }
   function refresh(){
-    $('#stCount').textContent = done.size+' / '+total+' 步';
-    $('#stBar').style.width = (done.size/total*100)+'%';
-    S.forEach(sec=>{ const n = sec.steps.filter((_,i)=>done.has(sec.id+(i+1))).length; sec.cnt.textContent = n+'/'+sec.steps.length; });
-    if(done.size >= Math.ceil(total*0.8)) GB.markDone('steps');
+    const n = flat.filter(f=>f.cb && done.has(f.key)).length;
+    $('#stCount').textContent = n+' / '+total+' 步';
+    $('#stBar').style.width = (n/total*100)+'%';
+    S.forEach(sec=>{ sec.cnt.textContent = sec.ref? sec.steps.length+' 条' : sec.steps.filter((_,i)=>done.has(sec.id+(i+1))).length+'/'+sec.steps.length; });
+    if(n >= Math.ceil(total*0.8)) GB.markDone('steps');
   }
   refresh();
   if(!done.size) root.querySelector('#st-A').open = true;
-  $('#stExpand').addEventListener('click',()=>{ const all = [...root.querySelectorAll('.st-sec')]; const open = all.some(d=>!d.open); all.forEach(d=>d.open=open); $('#stExpand').textContent = open? '全部收起':'全部展开'; });
-  $('#stClear').addEventListener('click',()=>{ if(!confirm('清空所有勾选？（开始下一批电池前用）')) return; done.clear(); root.querySelectorAll('.st-step input').forEach(c=>{ c.checked=false; c.closest('.st-step').classList.remove('done'); }); save(); GB.store.set('steps-field',0); });
-  $('#stToGame').addEventListener('click',()=>GB.go('game'));
-  // troubleshooting
+  // expand / collapse everything (sections + every 为什么 / 注意); the label follows manual toggles
+  const expBtn = $('#stExpand'), secs = [...root.querySelectorAll('.st-sec')];
+  const syncExpand = ()=>{ const all = secs.every(x=>x.open); expBtn.textContent = all? '全部收起':'全部展开'; expBtn.setAttribute('aria-expanded', String(all)); };
+  expBtn.addEventListener('click',()=>{ const open = secs.some(d=>!d.open); secs.forEach(d=>d.open=open); root.querySelectorAll('.st-det').forEach(d=>d.open=open); syncExpand(); });
+  secs.forEach(d=>d.addEventListener('toggle',syncExpand)); syncExpand();
+  $('#stClear').addEventListener('click',()=>{ if(!confirm('清空所有勾选？（开始下一批电池前用）')) return; flat.forEach(f=>setDone(f,false)); done.clear(); save(); fi = 0; GB.store.set('steps-field',0); });
+  if(hasPage('game')) $('#stToGame').addEventListener('click',()=>GB.go('game')); else $('#stGameBox').remove();
+  // troubleshooting (search ignores markup; several words = all must match)
   const kb = $('#stKb');
-  function renderK(q){ kb.innerHTML=''; K.filter(r=>!q || r.join(' ').toLowerCase().includes(q.toLowerCase())).forEach(r=> kb.append(el('tr',null, el('td',null, el('b',null,r[0])), el('td',null,r[1]), el('td',null,r[2])))); if(!kb.children.length) kb.append(el('tr',null, el('td',{colspan:'3',class:'muted'},'没有匹配的条目'))); }
+  const Kx = K.map(r=>({r, s: r.map(plain).join(' ').toLowerCase()}));
+  function renderK(q){
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    kb.innerHTML='';
+    Kx.filter(k=>terms.every(t=>k.s.includes(t))).forEach(({r})=> kb.append(el('tr',null, el('td',null, el('b',null,r[0])), el('td',null,r[1]), el('td',{html:r[2]}))));
+    if(!kb.children.length) kb.append(el('tr',null, el('td',{colspan:'3',class:'muted'},'没有匹配的条目')));
+  }
   renderK(''); $('#stKq').addEventListener('input',e=>renderK(e.target.value.trim()));
-  // field mode
-  let fi = Math.min(GB.store.get('steps-field',0), flat.length-1), fieldEl = null;
+
+  // ---- field mode: full-screen dialog, one step (or one whole stage) per screen ----
+  let fi = Math.max(0, Math.min(GB.store.get('steps-field',0)|0, flat.length-1));
+  let secView = !!GB.store.get('steps-secview', false);
+  let fieldEl = null, live = null, inerted = [], wake = null, wakeFail = false, locking = false;
+  const secFirst = sec => flat.findIndex(f=>f.sec===sec);
+  const wakeNote = ()=> el('div',{class:'small muted wl'},'屏幕可能自动锁定：先把手机自动锁屏调到 5 分钟以上，免得伸手进箱时黑屏。');
+  async function lockOn(){   // keep the screen on while field mode is open (may be blocked, e.g. inside an iframe)
+    if(!fieldEl || wake || locking) return;
+    let ok = false; locking = true;
+    try{
+      if('wakeLock' in navigator && document.visibilityState==='visible'){
+        const w = await navigator.wakeLock.request('screen');
+        if(fieldEl){ wake = w; ok = true; w.addEventListener('release',()=>{ if(wake===w) wake = null; }); } else w.release().catch(()=>{});
+      }
+    }catch(e){ ok = false; }
+    locking = false;
+    if(!fieldEl) return;
+    wakeFail = !ok;
+    const n = fieldEl.querySelector('.wl'), hd = fieldEl.querySelector('.hd');
+    if(wakeFail && !n && hd) hd.after(wakeNote()); else if(!wakeFail && n) n.remove();
+  }
+  const relock = ()=>{ if(fieldEl && document.visibilityState==='visible') lockOn(); };
   function openField(){
     if(fieldEl) return;
     fieldEl = el('div',{class:'st-field',role:'dialog','aria-modal':'true','aria-label':'现场模式'});
-    document.body.append(fieldEl); document.body.style.overflow='hidden'; drawField();
+    live = el('div',{class:'sr-only',role:'status','aria-live':'polite'});
+    fieldEl.append(live);
+    fieldEl.addEventListener('click', onGo);
+    document.body.append(fieldEl); document.body.style.overflow='hidden';
+    inerted = [...document.body.children].filter(n=>n!==fieldEl && n.id!=='toast' && n.tagName!=='SCRIPT' && !n.inert);
+    inerted.forEach(n=>{ n.inert = true; });
     document.addEventListener('keydown', fieldKey);
+    document.addEventListener('visibilitychange', relock);
+    drawField('primary');
+    lockOn();
   }
-  function closeField(){ if(!fieldEl) return; fieldEl.remove(); fieldEl=null; document.body.style.overflow=''; document.removeEventListener('keydown', fieldKey); }
-  function fieldKey(e){ if(e.key==='Escape') closeField(); if(e.key==='ArrowRight') step(1,true); if(e.key==='ArrowLeft') step(-1,false); }
-  function step(d, mark){ if(mark){ done.add(flat[fi].key); root.querySelectorAll('.st-step input')[fi].checked = true; root.querySelectorAll('.st-step')[fi].classList.add('done'); save(); } fi = Math.max(0, Math.min(flat.length-1, fi+d)); GB.store.set('steps-field',fi); drawField(); }
-  function drawField(){
-    const f = flat[fi]; const strip = h => (h||'').replace(/<li>/g,'• ').replace(/<\/li>/g,'\n').replace(/<[^>]+>/g,'').trim();
-    fieldEl.innerHTML='';
-    const close = el('button',{class:'btn sm',type:'button',onclick:closeField},'✕ 退出');
-    fieldEl.append(el('div',{class:'hd'}, el('span',{class:'sec'}, f.sec.id+' · '+f.sec.t), el('span',{class:'small muted',style:{marginLeft:'auto'}}, (fi+1)+' / '+flat.length), close));
-    const body = el('div',{class:'body'}, el('div',{class:'big',html:(f.st[2]?'<span style="color:var(--danger)">⚠ </span>':'')+f.st[0]}));
-    if(f.st[1]) body.append(el('div',{class:'sub',style:{whiteSpace:'pre-line'}}, strip(f.st[1])));
-    if(done.has(f.key)) body.append(el('div',{class:'pill ok',style:{marginTop:'12px',alignSelf:'flex-start'}},'✓ 已完成'));
+  function closeField(leaving){
+    if(!fieldEl) return;
+    fieldEl.remove(); fieldEl = null; live = null;
+    document.body.style.overflow='';
+    inerted.forEach(n=>{ n.inert = false; }); inerted = [];
+    document.removeEventListener('keydown', fieldKey);
+    document.removeEventListener('visibilitychange', relock);
+    if(wake){ wake.release().catch(()=>{}); wake = null; }
+    if(leaving!==true) $('#stField').focus();
+  }
+  window.addEventListener('hashchange',()=>{ if(fieldEl) closeField(true); });   // Back gesture while in field mode
+  function fieldKey(e){
+    if(!fieldEl) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeField(); return; }
+    if(e.key==='Tab'){   // keep focus inside the dialog
+      const f = [...fieldEl.querySelectorAll('a[href],button:not([disabled]),[tabindex="0"]')];
+      const i = f.indexOf(document.activeElement);
+      if(f.length && (e.shiftKey? i<=0 : (i<0 || i===f.length-1))){ e.preventDefault(); f[e.shiftKey? f.length-1 : 0].focus(); }
+      return;
+    }
+    if(e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if(e.key==='ArrowRight'){ e.preventDefault(); move(1); }       // browse only: arrows never tick a step
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); move(-1); }
+  }
+  function move(d){
+    if(secView){ const si = S.indexOf(flat[fi].sec)+d; if(si<0 || si>=S.length) return; fi = secFirst(S[si]); }
+    else { const n = Math.max(0, Math.min(flat.length-1, fi+d)); if(n===fi) return; fi = n; }
+    GB.store.set('steps-field',fi); drawField(d<0? 'prev':'primary');
+  }
+  function advance(){   // primary button: tick (not for X reference lines) and go on
+    const f = flat[fi];
+    if(secView){
+      flat.forEach(x=>{ if(x.sec===f.sec) setDone(x,true); }); save();
+      const si = S.indexOf(f.sec);
+      if(si===S.length-1){ closeField(); return; }
+      fi = secFirst(S[si+1]);
+    } else {
+      setDone(f,true); save();
+      if(fi===flat.length-1){ closeField(); return; }
+      fi++;
+    }
+    GB.store.set('steps-field',fi); drawField('primary');
+  }
+  function drawField(focus){
+    if(!fieldEl) return;
+    const f = flat[fi], sec = f.sec, si = S.indexOf(sec), isX = !!sec.ref;
+    [...fieldEl.children].forEach(n=>{ if(n!==live) n.remove(); });
+    const vt = el('button',{class:'btn sm vt'+(secView?' on':''),type:'button','aria-pressed':String(secView),title:'一屏显示整个阶段：伸手进箱前先把这一阶段读完',
+      onclick:()=>{ secView = !secView; GB.store.set('steps-secview',secView); drawField('toggle'); }}, '一屏一阶段');
+    fieldEl.append(el('div',{class:'hd'},
+      el('div',{class:'ttl'}, el('span',{class:'sec'}, (secView? sec.id : f.key)+' · '+sec.t),
+        el('span',{class:'small muted pos'}, secView? (si+1)+' / '+S.length+' 阶段' : (fi+1)+' / '+flat.length)),
+      vt, el('button',{class:'btn sm',type:'button',onclick:()=>closeField()},'✕ 退出')));
+    if(wakeFail) fieldEl.append(wakeNote());
+    const body = el('div',{class:'body',tabindex:'0',role:'group','aria-label': secView? '本阶段全部步骤' : '本步内容'});
+    if(secView){
+      if(sec.note) body.append(el('div',{class:'callout warn small',style:{marginBottom:'10px'},html:sec.note}));
+      else body.append(el('p',{class:'small muted',style:{margin:'0 0 6px'}},'伸手进箱前，先把这一阶段从头到尾读一遍。'));
+      const ol = el('ol',{class:'sv'});
+      flat.forEach(x=>{ if(x.sec!==sec) return; const ok = !!x.cb && done.has(x.key);
+        ol.append(el('li',{class: ok? 'done':null, html:'<span class="no">'+x.key+'</span>'+(x.st[2]?'<span class="warn">⚠ </span>':'')+x.st[0]+(ok?' <span class="pill ok">✓ 已完成</span>':'')})); });
+      body.append(ol);
+    } else {
+      if(f.i===0 && sec.note) body.append(el('div',{class:'callout warn small',style:{marginBottom:'12px'},html:sec.note}));
+      body.append(el('div',{class:'big',html:(f.st[2]?'<span class="warn">⚠ </span>':'')+f.st[0]}));
+      if(f.st[1]) body.append(el('div',{class:'sub',html:f.st[1]}));
+      if(f.cb && done.has(f.key)) body.append(el('div',{class:'pill ok',style:{marginTop:'12px',alignSelf:'flex-start'}},'✓ 已完成'));
+    }
     fieldEl.append(body);
-    fieldEl.append(el('div',{class:'nav'},
-      el('button',{class:'btn',type:'button',disabled: fi===0? true:null, onclick:()=>step(-1,false)},'← 上一步'),
-      el('button',{class:'btn primary',type:'button',onclick:()=> fi===flat.length-1? (step(0,true), closeField()) : step(1,true)}, fi===flat.length-1? '✓ 完成，退出' : '✓ 做完了，下一步 →')));
+    const last = secView? si===S.length-1 : fi===flat.length-1;
+    const prevOff = secView? si===0 : fi===0;
+    const label = secView? (isX? (last?'退出':'下一部分 →') : (last?'✓ 本阶段做完了，退出':'✓ 本阶段做完了 →'))
+                         : (isX? (last?'退出':'下一条 →') : (last?'✓ 完成，退出':'✓ 做完了，下一步 →'));
+    const prev = el('button',{class:'btn prev',type:'button',disabled: prevOff||null, onclick:()=>move(-1)}, secView? '← 上一阶段' : '← 上一步');
+    const primary = el('button',{class:'btn primary',type:'button',onclick:advance}, label);
+    fieldEl.append(el('div',{class:'nav'}, prev, primary));
+    live.textContent = secView? sec.id+' '+sec.t+'，共 '+sec.steps.length+' 条' : f.key+'：'+plain(f.st[0]);
+    (focus==='toggle'? vt : focus==='prev' && !prevOff? prev : primary).focus({preventScroll:true});
   }
   $('#stField').addEventListener('click',openField);
   window.addEventListener('gb:print-start',()=>{ root.querySelectorAll('.st-det').forEach(d=>{ if(!d.open){ d.open=true; d.dataset.pOpen='1'; } }); });
@@ -689,18 +849,28 @@ GB.modules['game'] = { init(root){
   const fmt1 = v => (Math.round(v*10)/10).toFixed(1);
   const esc = s => String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]);
   const narrow = () => matchMedia('(max-width:980px)').matches;
+  const val = v => typeof v==='function'? v() : v;
+
+  // keyboard mode: after a re-render, focus goes back into the game, so keyboard-only play never drops to <body>
+  let kb = false;
+  root.addEventListener('keydown', e=>{ if(['Tab','Enter',' ','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key)) kb = true; }, true);
+  root.addEventListener('pointerdown', ()=>{ kb = false; }, true);
+  function refocus(sel){ if(!kb) return; const n = $(sel || '#gmActs button:not([disabled]), #gmActs input:not([disabled])'); if(n) n.focus(); }
 
   // ---------------- levels ----------------
   const LV = {
-    1:{name:'新手', cells:1, events:0, hints:true,  jitter:0,    badStart:false, desc:'装 1 颗电池。可以随时点「💡 提示」看正确做法，没有突发事件。适合第一次玩。'},
-    2:{name:'标准', cells:2, events:1, hints:false, jitter:0.25, badStart:false, desc:'装 2 颗电池。没有提示；隔着厚手套手会轻微抖动；会遇到 1 个突发情况。'},
-    3:{name:'进阶', cells:3, events:3, hints:false, jitter:0.45, badStart:true,  desc:'装 3 颗电池。手抖更明显；开工前的读数或手套可能有问题；会遇到 3 个突发情况。'},
+    1:{name:'新手', cells:1, events:0, hints:true,  jitter:0,    badStart:false, desc:'装 1 颗电池。可以随时点「💡 提示」，没有突发事件。用来熟悉流程：用了几次提示会写在成绩单里，通过第 2 关才算完成本页。'},
+    2:{name:'标准', cells:2, events:1, hints:false, jitter:0.25, badStart:false, desc:'装 2 颗电池。没有提示；隔着厚手套手会轻微抖动；封口机每次升压快慢不一；会遇到 1 个突发情况。'},
+    3:{name:'进阶', cells:3, events:3, hints:false, jitter:0.45, badStart:true,  desc:'装 3 颗电池。手抖更明显；开工前的读数或手套可能有问题；可能有电池读数偏低要复测；会遇到 3 个突发情况。'},
   };
   const SEV = {critical:30, major:15, minor:5};
-  const STAGES = [['prep','准备物品'],['check','进箱前检查'],['ante','物品进箱'],['setup','伸手与布置'],['li','准备锂片'],['assemble','组装'],['crimp','封口'],['ocv','测开路电压'],['store','标记存放'],['cleanup','收尾'],['exit','带出与记录']];
+  const STAGES = [['prep','准备物品'],['check','进箱前检查'],['ante','物品进箱'],['setup','伸手与布置'],['li','准备锂片'],['assemble','组装'],['crimp','封口'],['ocv','外观与 OCV'],['store','标记存放'],['cleanup','收尾'],['exit','带出与记录']];
   const STAGE_NAME = Object.fromEntries(STAGES);
-  // geometry (mm) — teaching values
-  const G = { case:10, cath:7.0, sep:9.5, li:7.8, spacer:7.9, K:8, C:{x:240,y:185} };
+  // which section of 「装电池详细步骤」 covers each stage (events → section X)
+  const STEP_SEC = {prep:'A',check:'B',ante:'C',setup:'D',li:'E',assemble:'F',crimp:'G',ocv:'H',store:'H',cleanup:'I',exit:'I'};
+  // geometry (mm, radii) — teaching values. wall = inner radius of the case (Ø ≈ 19.4 mm)
+  const G = { case:10, wall:9.7, cath:7.0, sep:9.5, li:7.8, spacer:7.9, K:8, C:{x:240,y:185} };
+  const TOL = 0.8;   // one number for drag hints, note colour and scoring
 
   let S = null;
 
@@ -721,10 +891,10 @@ GB.modules['game'] = { init(root){
   // ---------------- state ----------------
   function start(level){
     const L = LV[level];
-    S = { level, L, clock: 9*60, boxP:2.0, O2:0.3, H2O:0.5, add:{O2:0,H2O:0}, vapor:0, maxO2:0.3, maxH2O:0.5,
-      arms:0, over:false, bottle:false, bottleSince:null, li:'sealed', liDull:0,
+    S = { level, L, clock: 9*60, boxP:2.0, O2:0.3, H2O:0.5, add:{O2:0,H2O:0}, vapor:0, maxO2:0.3, maxH2O:0.5, prevAir:{o2:0.3,h2o:0.5,p:2.0},
+      arms:0, over:false, bottle:false, bottleSince:null, bottleStage:null, li:'sealed', liDull:0,
       viol:[], vset:new Set(), mistakes:[], cells:[], cellIdx:0, cur:null, stage:null, stageActs:0, sub:null,
-      events:[], fired:new Set(), hints:0, packed:{}, missing:[], log:[], ended:false,
+      events:[], fired:new Set(), hints:0, hintLog:[], packed:{}, missing:[], log:[], ended:false, softDone:false,
       ante:{p:'vac', outer:false, inner:false, valve:'close', cyc:0, weak:0}, stuckOnce:false };
     scheduleEvents();
     $('#gmStart').classList.add('hidden'); $('#gmEnd').classList.add('hidden'); $('#gmPlay').classList.remove('hidden');
@@ -741,7 +911,9 @@ GB.modules['game'] = { init(root){
     const n = S.L.events; if(!n) return;
     const avail = S.level===2 ? pool.filter(e=>['o2','drip','stuck','press'].includes(e.id)) : pool;
     GB.shuffle(avail).slice(0,n).forEach(e=>{
-      S.events.push({...e, cell: e.global? null : Math.floor(Math.random()*S.L.cells), k: e.k0? 0 : Math.floor(rnd(0,3))});
+      // assembly-stage interruptions land somewhere between the separator and the cap (after the first electrolyte drop)
+      S.events.push({...e, cell: e.global? null : Math.floor(Math.random()*S.L.cells),
+        k: e.k0? 0 : (e.stage==='assemble' && !e.sub ? Math.floor(rnd(6,13)) : Math.floor(rnd(0,3)))});
     });
   }
 
@@ -773,9 +945,10 @@ GB.modules['game'] = { init(root){
   }
   function log(t,cls){ S.log.push([S.clock,t,cls]); $('#gmLog').prepend(el('div',{class:cls||''},'['+hhmm(S.clock)+'] '+t)); }
   function fb(kind, html){ $('#gmFb').innerHTML = html? '<div class="feedback '+(kind==='good'?'good':kind==='bad'?'bad':'neutral')+'">'+html+'</div>' : ''; }
-  function violate(id, sev, text){
+  // did = what the player did, fix = the correct action (both plain text, shown in the debrief)
+  function violate(id, sev, text, did, fix, stage){
     if(S.vset.has(id)) { fb('bad','✕ '+text); return; }
-    S.vset.add(id); S.viol.push({id,sev,text,stage:S.stage,cell:S.cur? S.cellIdx+1 : null});
+    S.vset.add(id); S.viol.push({id,sev,text,did:did||null,fix:fix||null,stage:stage||S.stage,cell:S.cur? S.cellIdx+1 : null});
     fb('bad','✕ <b>'+({critical:'严重违规',major:'违规',minor:'小失误'})[sev]+'：</b>'+text);
     log('✕ '+text.replace(/<[^>]+>/g,''),'bad'); renderHUD();
   }
@@ -784,13 +957,15 @@ GB.modules['game'] = { init(root){
   // ---------------- time & atmosphere ----------------
   function advance(min){
     for(let i=0;i<min;i++){
+      S.prevAir = {o2:S.O2, h2o:S.H2O, p:S.boxP};
       S.clock += 1;
       const tO = 0.3 + S.add.O2, tH = 0.5 + S.add.H2O;
       S.O2 += (tO - S.O2)*0.35; S.H2O += (tH - S.H2O)*0.35;
       S.add.O2 *= 0.93; S.add.H2O *= 0.93;
       S.vapor = Math.max(0, Math.min(100, S.vapor + (S.bottle? 6 : -2.5)));
-      if(S.bottle && S.bottleSince!=null && S.clock - S.bottleSince > 3) violate('bottleOpen','minor','电解液瓶已经开着超过 3 分钟。<b>随用随盖</b>：溶剂蒸气会被循环系统带进净化柱，电解液里的 DMC 等也会挥发、改变组成。');
-      if(S.vapor > 60) violate('vapor','major','箱内溶剂蒸气负荷很高（电解液瓶开太久）。这会加速净化柱饱和、可能干扰 O₂ 传感器；以后用完立刻盖紧。');
+      // filed under the stage where the bottle was opened, not where the clock happened to cross the limit
+      if(S.bottle && S.bottleSince!=null && S.clock - S.bottleSince > 3) violate('bottleOpen','minor','电解液瓶已经开着超过 3 分钟。<b>随用随盖</b>：溶剂蒸气会被循环系统带进净化柱，电解液里的 DMC 等也会挥发、改变组成。', '电解液瓶开着超过 3 分钟', '吸完液立刻盖上瓶盖（随用随盖）', S.bottleStage);
+      if(S.vapor > 60) violate('vapor','major','箱内溶剂蒸气负荷很高（电解液瓶开太久）。这会加速净化柱饱和、可能干扰 O₂ 传感器；以后用完立刻盖紧。', '电解液瓶长时间开着', '随用随盖，用完立刻盖紧', S.bottleStage);
       if(S.li==='open' && (S.O2>=1 || S.H2O>=1)) S.liDull += 1;
       // auto pressure control pulls toward +2 mbar
       S.boxP += (2.0 - S.boxP)*0.25;
@@ -798,25 +973,29 @@ GB.modules['game'] = { init(root){
     S.maxO2 = Math.max(S.maxO2,S.O2); S.maxH2O = Math.max(S.maxH2O,S.H2O);
   }
   function bump(o2,h2o){ S.add.O2 += o2; S.add.H2O += h2o; S.O2 += o2*0.6; S.H2O += h2o*0.6; S.maxO2=Math.max(S.maxO2,S.O2); S.maxH2O=Math.max(S.maxH2O,S.H2O); }
-  function openBottle(){ if(!S.bottle){ S.bottle = true; S.bottleSince = S.clock; } }
+  function openBottle(){ if(!S.bottle){ S.bottle = true; S.bottleSince = S.clock; S.bottleStage = S.stage; } }
   function closeBottle(){ S.bottle = false; S.bottleSince = null; }
 
   // ---------------- core: ask ----------------
-  // spec: {title, text, scene:()=>html, opts:[{t, ok:true|false|'soft', why, sev, vid, retry, time, fx, next}], next, keep}
+  // spec: {title, text, scene:()=>html, opts:[{t, ok:true|false|'soft', why, sev, vid, retry, time, fx, next}] | ()=>opts, next, keep, hint}
+  // title/text/opts may be functions, so prompts built before an event fires still show the live state.
   let curSpec = null;
   function ask(spec){ checkpoint(()=>renderAsk(spec)); }
+  const fixOf = spec => ((spec._opts||[]).find(x=>x.ok===true)||{}).t || null;
   function renderAsk(spec){
     curSpec = spec; note('');
     if(spec.scene) $('#gmScene').innerHTML = spec.scene();
-    $('#gmPrompt').innerHTML = '<h3>'+spec.title+'</h3>'+(spec.text? '<p>'+spec.text+'</p>':'');
+    const text = val(spec.text);
+    $('#gmPrompt').innerHTML = '<h3>'+val(spec.title)+'</h3>'+(text? '<p>'+text+'</p>':'');
     const acts = $('#gmActs'); acts.innerHTML=''; acts.dataset.hint = spec.hint || '';
-    const opts = spec.keep? spec.opts : GB.shuffle(spec.opts);
+    spec._opts = val(spec.opts);
+    const opts = spec.keep? spec._opts : GB.shuffle(spec._opts);
     opts.forEach(o=>{
       const b = el('button',{class:'btn',type:'button','data-ok': o.ok===true? '1' : (o.ok==='soft'?'s':'0')}, o.t);
       b.addEventListener('click',()=>choose(o,b,spec));
       acts.append(b);
     });
-    renderHUD(); scrollSide();
+    renderHUD(); scrollSide(); refocus();
   }
   function choose(o,b,spec){
     if(S.ended) return;
@@ -825,10 +1004,10 @@ GB.modules['game'] = { init(root){
     advance(o.time==null? 1 : o.time);
     if(o.ok===true) fb('good','✓ '+(o.why||'对。'));
     else if(o.ok==='soft') fb('neutral','△ '+(o.why||''));
-    else if(o.sev) violate(o.vid || (S.stage+':'+o.t.slice(0,12)), o.sev, o.why);
+    else if(o.sev) violate(o.vid || (S.stage+':'+o.t.slice(0,12)), o.sev, o.why, o.t, fixOf(spec));
     else mistake(o.why);
     renderHUD();
-    if(o.ok!==true && o.retry){ b.disabled = true; b.classList.add('wrong'); return; }
+    if(o.ok!==true && o.retry){ b.disabled = true; b.classList.add('wrong'); refocus(); return; }
     log((o.ok===true?'✓ ':'· ')+o.t, o.ok===true?'good':'');
     const nx = o.next || spec.next; if(nx) nx();
   }
@@ -837,7 +1016,7 @@ GB.modules['game'] = { init(root){
     curSpec = spec; note('');
     if(spec.scene) $('#gmScene').innerHTML = spec.scene();
     $('#gmPrompt').innerHTML = '<h3>'+spec.title+'</h3>'+(spec.text? '<p>'+spec.text+'</p>':'');
-    const acts = $('#gmActs'); acts.innerHTML=''; acts.dataset.hint = '';
+    const acts = $('#gmActs'); acts.innerHTML=''; acts.dataset.hint = '绿框标出的都要选，其余是陷阱。';
     const grid = el('div',{class:'gm-multi'});
     const items = GB.shuffle(spec.items);
     items.forEach(it=>{
@@ -859,98 +1038,125 @@ GB.modules['game'] = { init(root){
         else if(on && it.ok) it._lab.classList.add('r-ok');
       });
       go.remove();
-      const msgs = [];
-      bad.forEach(it=>{ if(it.sev){ S.vset.has('m:'+it.t)||(S.vset.add('m:'+it.t), S.viol.push({id:'m:'+it.t,sev:it.sev,text:it.why,stage:S.stage})); } else S.mistakes.push({text:it.why,stage:S.stage}); msgs.push('✕ 「'+it.t+'」：'+it.why); log('✕ '+it.t,'bad'); });
-      miss.forEach(it=>{ S.mistakes.push({text:'漏选：'+it.t+' —— '+(it.missWhy||it.why),stage:S.stage}); msgs.push('△ 漏了「'+it.t+'」：'+(it.missWhy||it.why)); });
+      // the reason goes right under the item, where the player is looking
+      const why = (it, cls, txt) => it._lab.lastChild.append(el('span',{class:'gm-why '+cls}, txt));
+      bad.forEach(it=>{
+        why(it,'bad','✕ 不该选：'+it.why);
+        if(it.sev){ if(!S.vset.has('m:'+it.t)){ S.vset.add('m:'+it.t); S.viol.push({id:'m:'+it.t,sev:it.sev,text:it.why,did:'选了「'+it.t+'」',fix:'不选「'+it.t+'」',stage:S.stage,cell:null}); } }
+        else S.mistakes.push({text:'「'+it.t+'」：'+it.why,stage:S.stage});
+        log('✕ '+it.t,'bad');
+      });
+      miss.forEach(it=>{ why(it,'miss','△ 漏选：'+(it.missWhy||it.why)); S.mistakes.push({text:'漏选：'+it.t+' —— '+(it.missWhy||it.why),stage:S.stage}); });
       if(spec.after) spec.after(bad, miss);
-      fb(bad.length||miss.length? 'bad':'good', (bad.length||miss.length? msgs.map(m=>'<div style="margin:3px 0">'+m+'</div>').join('') : '✓ 全对。'+(spec.goodWhy||'')));
+      fb(bad.length||miss.length? 'bad':'good', bad.length||miss.length? '✕ '+(bad.length? bad.length+' 项不该选':'')+(bad.length&&miss.length?'、':'')+(miss.length? miss.length+' 项漏选':'')+'——每一项下面写了原因（红框 = 不该选，黄框 = 漏选）。' : '✓ 全对。'+(spec.goodWhy||''));
       renderHUD();
       const cont = el('button',{class:'btn primary',type:'button','data-act':'continue',style:{marginTop:'10px'}}, '继续 →');
       cont.addEventListener('click',()=>spec.next());
       acts.append(cont);
+      const first = items.find(it=> it._lab.classList.contains('r-bad') || it._lab.classList.contains('r-miss'));
+      if(first && narrow()) first._lab.scrollIntoView({block:'center',behavior:'auto'});
+      if(kb) cont.focus({preventScroll: !!first});
     });
     acts.append(go);
-    renderHUD(); scrollSide();
+    renderHUD(); scrollSide(); refocus();
   }
   function scrollSide(){ if(narrow()) $('#gmSide').scrollIntoView({block:'nearest',behavior:'smooth'}); }
-  function scrollScene(){ if(narrow()) root.querySelector('.gm-scene').scrollIntoView({block:'start',behavior:'smooth'}); }
+  function scrollScene(){ if(narrow()) root.querySelector('.gm-scene').scrollIntoView({block:'start',behavior:'auto'}); }
   function note(t, cls){ const n = $('#gmNote'); n.textContent = t || ''; n.className = 'gm-note'+(cls?' '+cls:''); }
+  // hints: highlight the right control (buttons, checkboxes, gloves, pipette step, drag target ring, probe point) + say why
   $('#gmHint').addEventListener('click',()=>{
-    if(!S || !S.L.hints) return;
+    if(!S || !S.L.hints || S.ended) return;
     S.hints++;
-    const bs = [...$('#gmActs').querySelectorAll('[data-ok="1"]')];
+    const h3 = $('#gmPrompt h3'), title = (h3? h3.textContent : '').replace(/^⚠\s*/,'');
+    if(S.hintLog[S.hintLog.length-1] !== title) S.hintLog.push(title);
+    const acts = $('#gmActs');
+    const bs = [...acts.querySelectorAll('[data-ok="1"]:not([disabled])'), ...$('#gmScene').querySelectorAll('[data-hint="1"]')];
     bs.forEach(b=>b.classList.add('hint'));
-    const hintText = $('#gmActs').dataset.hint;
-    if(hintText) GB.toast('💡 '+hintText, 4500);
+    const hintText = acts.dataset.hint;
+    if(hintText) GB.toast('💡 '+hintText, 5000);
     else if(!bs.length) GB.toast('💡 这一步看画面上的说明操作。', 3000);
+    log('💡 看了提示：'+title,'');
   });
   $('#gmQuit').addEventListener('click',()=>{ if(confirm('退出本局？进度不会保存。')){ S.ended = true; showStart(); } });
 
   // ---------------- events ----------------
-  function checkpoint(cont){
+  // only: fire just this event id (the drip event must not be pre-empted by another one at the pipette)
+  function checkpoint(cont, only){
     if(!S || S.ended) return;
-    const ev = S.events.find(e=>!S.fired.has(e.id) && e.stage===S.stage && (e.cell==null || e.cell===S.cellIdx) && S.stageActs>=e.k && (!e.sub || e.sub===S.sub));
+    const ev = S.events.find(e=>!S.fired.has(e.id) && (!only || e.id===only) && e.stage===S.stage && (e.cell==null || e.cell===S.cellIdx) && S.stageActs>=e.k && (!e.sub || e.sub===S.sub));
     if(!ev){ cont(); return; }
     S.fired.add(ev.id);
     log('⚠ 突发：'+ev.id,'ev');
-    EVENTS[ev.id](cont);
+    const tEv = S.clock, c = S.cur;
+    // time spent on the interruption is not counted in the "first drop → crimp" clock (it is penalised separately)
+    EVENTS[ev.id](()=>{ if(c && c.t0!=null && c.crimp==null) c.evT = (c.evT||0) + (S.clock - tEv); cont(); });
   }
   function evAsk(title, text, opts, cont){
-    renderAsk({title:'⚠ '+title, text, opts: opts.map(o=>({...o, next: o.next || cont})), scene: ()=> $('#gmScene').innerHTML });
+    renderAsk({title:'⚠ '+title, text, opts: opts.map(o=>({...o, next: o.next || cont})), scene: ()=> $('#gmDrag') ? sceneBench() : $('#gmScene').innerHTML });
     $('#gmPrompt').prepend(el('div',{class:'gm-event'},'突发情况'));
   }
+  // an open, wetted half-cell left standing during a long interruption is no longer a normal cell
+  function pauseHit(min){ const c = S.cur; if(c && c.ely>0 && c.crimp==null) hit(c,15,'组装中途停了约 '+min+' 分钟，电池敞着口：溶剂挥发，电解液组成和用量都变了（记录里注明，按 SOP 一般作废重做）'); }
+  const wetNow = ()=> S.cur && S.cur.ely>0 && S.cur.crimp==null;
+  const WET_WHY = '已经加了电解液、还没封口的那颗停了这么久，溶剂挥发、用量和组成都变了：在记录表上注明，按 SOP 一般作废重做。';
   const EVENTS = {
     o2(cont){
-      bump(5.5,0.4); renderHUD();
-      evAsk('O₂ 读数在上升', '触摸屏上的 O₂ 从 0.3 ppm 升到了 '+S.O2.toFixed(1)+' ppm，而且还在涨。（后来才知道：隔壁同学开大过渡舱内门前没做完循环。）你手上的锂片和电解液都开着。', [
-        {t:'停手：电解液瓶盖紧，锂片收进密封容器；看看自己的手套和过渡舱有没有问题，报告负责人，等读数回到阈值以下再继续', ok:true, time:25,
-         why:'正确。读数异常时先保护敏感材料、排查原因、报告；等读数恢复再开锂片。', fx(){ closeBottle(); const li = S.li; S.li='sealed_tmp'; S.add.O2 = 0; S.O2 = 0.4; advance(20); S.li = li; log('负责人处理完毕，读数恢复','good'); }},
-        {t:'手上这颗先做完再说，反正很快', ok:false, sev:'major', vid:'ev-o2', why:'读数超过阈值还继续开着锂片做电池：锂片表面会被氧化，这颗电池的数据不可靠；而且没人去找原因。', fx(){ if(S.cur) hit(S.cur,25,'O₂ 超标时继续组装，锂片表面被氧化'); advance(8); S.add.O2=0; }},
-        {t:'自己按触摸屏上的 Purge（吹扫）把 O₂ 降下来', ok:false, sev:'major', vid:'ev-o2b', why:'Purge 只能由受训人员操作，而且没找到原因前吹扫是治标不治本。先停手、封好材料、报告。', fx(){ advance(10); S.add.O2=0; }},
+      const o0 = S.O2; bump(5.5,0.4); renderHUD();
+      const c = S.cur, wet = wetNow();
+      evAsk('O₂ 读数在上升', '触摸屏上的 O₂ 从 '+o0.toFixed(1)+' ppm 升到了 '+S.O2.toFixed(1)+' ppm，而且还在涨。（后来才知道：隔壁同学开大过渡舱内门前没做完循环。）'+
+        (S.li==='open'? '你的锂片已经拆开'+(S.bottle?'，电解液瓶也开着':'')+'。' : '')+(wet? '台面上这颗电池已经加了 '+c.ely+' µL 电解液，还没封口。' : ''), [
+        {t:'停手：收好锂片、盖紧电解液，排查原因并报告，等读数恢复', ok:true, time:0,
+         why:'正确。读数异常时按活性从高到低封好材料：先把锂片收进密封容器，再盖紧电解液；看看自己的手套和过渡舱有没有问题，报告负责人，等读数回到阈值以下再继续（游戏时间 +25 分钟）。'+(wet? WET_WHY:''),
+         fx(){ closeBottle(); const li = S.li; S.li='resealed'; S.add.O2 = 0; advance(25); S.O2 = Math.min(S.O2,0.4); S.li = li; pauseHit(25); log('负责人处理完毕，读数恢复','good'); }},
+        {t:'先把手上这颗封口，封完再收锂片、盖瓶、报告', ok:false, sev:'major', vid:'ev-o2', why:'读数超过阈值还开着锂片和电解液继续做：锂片表面会被氧化，这颗电池的数据不可靠；而且没人去找原因、通知别人。先停手、封好材料、报告。', fx(){ if(S.cur) hit(S.cur,25,'O₂ 超标时继续组装，锂片表面被氧化'); advance(8); S.add.O2=0; }},
+        {t:'自己按触摸屏上的 Purge 把 O₂ 吹下来，接着做', ok:false, sev:'major', vid:'ev-o2b', why:'Purge 只能由受训人员操作，而且没找到原因前吹扫是治标不治本。先停手、封好材料、报告。', fx(){ advance(10); S.add.O2=0; }},
       ], cont);
     },
     glove(cont){
-      bump(0.6,2.2); renderHUD();
-      evAsk('手套可能破了', '你右手食指突然一阵凉意，同时 H₂O 从 0.5 升到 '+S.H2O.toFixed(1)+' ppm。', [
-        {t:'停手：盖好电解液、收好锂片；不踩 Evacuate；慢慢抽出手，检查手上有没有沾到东西；在箱外用胶带临时封住破口，挂「停用」牌，报告负责人', ok:true, time:45,
-         why:'正确。这就是「手套破损」的应急流程。负责人换好手套后，你重新伸手进箱继续（游戏时间 +45 分钟）。', fx(){ closeBottle(); const li = S.li; S.li='sealed_tmp'; S.add.H2O = 0; S.add.O2 = 0; S.H2O = 0.6; S.O2 = 0.35; advance(30); S.li = li; log('负责人更换了手套','good'); }},
-        {t:'忍一忍，先把这颗电池做完', ok:false, sev:'critical', vid:'ev-glove', why:'手套破口会持续让空气和水汽进箱，你的手也可能接触到电解液（HF）。发现破损必须马上停手。', fx(){ if(S.cur) hit(S.cur,30,'手套破损时继续组装，水汽进入'); bump(0,2); advance(6); S.add.H2O=0; }},
-        {t:'马上猛地把两只手都抽出来', ok:false, sev:'major', vid:'ev-glove2', why:'猛地抽手会让箱压骤降，空气反而会从破口吸进来。要先封好材料，再慢慢抽手。', fx(){ S.boxP = -3; bump(0.5,1.5); advance(10); S.add.H2O=0; S.boxP = 2; }},
+      const h0 = S.H2O; bump(0.6,2.2); renderHUD();
+      const c = S.cur, wet = wetNow();
+      evAsk('手套可能破了', '你右手食指突然一阵凉意，同时 H₂O 从 '+h0.toFixed(1)+' 升到 '+S.H2O.toFixed(1)+' ppm。'+(wet? '台面上这颗电池已经加了 '+c.ely+' µL 电解液，还没封口。' : ''), [
+        {t:'停手：收锂片、盖瓶，慢慢抽手，封住破口，挂牌报告', ok:true, time:0,
+         why:'正确，这就是「手套破损」的应急流程：先把锂片收进密封容器、再盖好电解液；<b>不踩 Evacuate</b>（会把更多空气从破口吸进来）；慢慢抽手，抽出来检查手上有没有沾到东西；箱外用胶带临时封住破口，挂「停用」牌，报告负责人。负责人换好手套后，你重新伸手进箱继续（游戏时间 +45 分钟）。'+(wet? WET_WHY:''),
+         fx(){ closeBottle(); const li = S.li; S.li='resealed'; S.add.H2O = 0; S.add.O2 = 0; advance(45); S.H2O = Math.min(S.H2O,0.6); S.O2 = Math.min(S.O2,0.35); S.li = li; pauseHit(45); log('负责人更换了手套','good'); }},
+        {t:'先把手上这颗封好口（只要 1 分钟），再抽手处理破口', ok:false, sev:'critical', vid:'ev-glove', why:'手套破口会持续让空气和水汽进箱，你的手也可能接触到电解液（HF）。发现破损必须马上停手：先封好材料，再慢慢抽手。', fx(){ if(S.cur) hit(S.cur,30,'手套破损时继续组装，水汽进入'); bump(0,2); advance(6); S.add.H2O=0; }},
+        {t:'马上把两只手抽出来，免得湿气越进越多', ok:false, sev:'major', vid:'ev-glove2', why:'猛地抽手会让箱压骤降，空气反而会从破口吸进来；锂片和电解液也还敞着。先封好材料，再慢慢抽手。', fx(){ S.boxP = -3; bump(0.5,1.5); advance(10); S.add.H2O=0; S.boxP = 2; }},
       ], cont);
     },
     drip(cont){
-      evAsk('电解液滴到了手上', '吸电解液的时候，一滴落在了你的外层丁腈手套上。', [
-        {t:'先盖上电解液瓶；在箱内换掉外层丁腈手套；用纸巾吸干台面，纸巾放进密封废物袋', ok:true, time:3, why:'正确。外层手套就是为这种情况准备的：脏了就换，保护黑色手套，也避免把电解液带到别的东西上。处理意外时先把电解液瓶盖上。', fx(){ closeBottle(); }},
-        {t:'在纸巾上蹭一蹭，继续干', ok:false, sev:'minor', vid:'ev-drip', why:'电解液会继续沾到工具、零件和别的地方；外层手套脏了要换。'},
-        {t:'用酒精把手套擦干净', ok:false, sev:'minor', vid:'ev-drip2', why:'箱内不要用醇类擦东西：醇类会让净化柱中毒或饱和。直接换外层手套。'},
+      evAsk('电解液滴到了外层手套上', '吸电解液的时候，一滴落在了你的外层丁腈手套上（箱内，没有碰到皮肤）。', [
+        {t:'盖瓶，换掉外层丁腈手套，台面用干纸吸干', ok:true, time:3, why:'正确。外层手套就是为这种情况准备的：脏了就换，保护黑色手套，也避免把电解液带到别的东西上；沾液的纸放进密封废物袋。（如果是在箱外沾到皮肤，就按 HF 暴露处理：大量清水冲洗、涂葡萄糖酸钙凝胶、立刻就医。）', fx(){ closeBottle(); }},
+        {t:'在干无尘纸上把手套蹭干净，接着吸液、滴加', ok:false, sev:'minor', vid:'ev-drip', why:'电解液会继续沾到工具、零件和别的地方；外层手套脏了要换。'},
+        {t:'用酒精棉把外层手套擦干净，再接着吸液', ok:false, sev:'minor', vid:'ev-drip2', why:'箱内不要用醇类擦东西：醇类会让净化柱中毒或饱和。直接换外层手套。'},
       ], cont);
     },
     press(cont){
-      S.boxP = 9.4; renderHUD();
-      evAsk('箱压突然升高', '箱压升到 +9.4 mbar，手套被顶得很紧，屏幕上的压力还在往上走。', [
-        {t:'手先别往里伸；短踩一下左踏板 Evacuate，看箱压回落', ok:true, time:1, why:'正确。短踩、看读数；降不下来再检查 Refill 踏板是否被压住，并报告。', fx(){ S.boxP = 4.0; }},
-        {t:'踩住右踏板 Refill', ok:false, sev:'major', vid:'ev-press', why:'Refill 是补气、升压，方向反了：箱压会继续升高，手套鼓胀。', fx(){ S.boxP = 12; advance(1); S.boxP=4; }},
-        {t:'不理它，继续干活', ok:false, sev:'minor', vid:'ev-press2', why:'过压会让手套和密封受力；要短踩 Evacuate 修正，降不下来就报告。', fx(){ advance(2); }},
+      S.boxP = Math.max(S.boxP, 9.4); renderHUD();
+      evAsk('箱压突然升高', '箱压升到 +'+fmt1(S.boxP)+' mbar，手套被顶得很紧，屏幕上的压力还在往上走。', [
+        {t: S.arms? '手先别动，短踩左踏板 Evacuate，看箱压回落' : '手先别往里伸，短踩左踏板 Evacuate，看箱压回落', ok:true, time:1, why:'正确。'+(S.arms? '手臂不再往里伸、也别猛抽；':'')+'短踩、看读数；降不下来再检查 Refill 踏板是否被压住，并报告。', fx(){ S.boxP = 4.0; }},
+        {t:(S.arms? '手先别动，' : '手先别往里伸，')+'踩住右踏板 Refill，让箱压稳定下来', ok:false, sev:'major', vid:'ev-press', why:'Refill 是补气、升压，方向反了：箱压会继续升高，手套鼓胀。', fx(){ S.boxP = 12; advance(1); S.boxP=4; }},
+        {t:(S.arms? '手先别动，' : '手先别往里伸，')+'等自动控压过一会儿把箱压拉回来', ok:false, sev:'minor', vid:'ev-press2', why:'过压会让手套和密封受力；要短踩 Evacuate 修正，降不下来就报告。', fx(){ advance(2); }},
       ], cont);
     },
     stuck(cont){
-      evAsk('电池卡在模具里了', '封口泄压后，电池卡在下模里取不出来。', [
-        {t:'用模具配套的塑料顶出工具（或绝缘工具）把它顶出来', ok:true, time:2, why:'正确。用绝缘工具，不碰坏壳体，也不会造成短路。'},
-        {t:'用金属尖头镊子把它撬出来', ok:false, sev:'major', vid:'ev-stuck', why:'金属镊子可能同时碰到壳和盖造成外短路，还会划伤壳体、扎破手套。', fx(){ if(S.cur) hit(S.cur,10,'用金属镊子撬，壳体划伤'); }},
-        {t:'再压一次，让它松开', ok:false, sev:'minor', vid:'ev-stuck2', why:'对封好的电池重复加压可能把壳压变形、造成内短路。用顶出工具。', fx(){ if(S.cur) hit(S.cur,10,'重复加压，壳体可能变形'); }},
+      evAsk('电池卡在模具里了', '取电池时，电池卡在下模里取不出来。', [
+        {t:'用模具配套的塑料顶出件把它顶出来', ok:true, time:2, why:'正确。用绝缘工具，不碰坏壳体，也不会造成短路。'},
+        {t:'用金属尖头镊子沿边缘轻轻把它撬出来', ok:false, sev:'major', vid:'ev-stuck', why:'金属镊子可能同时碰到壳和盖造成外短路，还会划伤壳体、扎破手套。', fx(){ if(S.cur) hit(S.cur,10,'用金属镊子撬，壳体划伤'); }},
+        {t:'再压一次，让它从模具里松开', ok:false, sev:'minor', vid:'ev-stuck2', why:'对封好的电池重复加压可能把壳压变形、造成内短路。用顶出工具。', fx(){ if(S.cur) hit(S.cur,10,'重复加压，壳体可能变形'); }},
       ], cont);
     },
     neighbor(cont){
       evAsk('同学请你帮忙', '旁边工位的同学说：「我的塑料镊子找不到了，借你的金属镊子，把我刚封好的电池夹到电池盒里。」', [
-        {t:'提醒他：金属镊子会同时碰到壳和盖造成短路；把你的塑料镊子借给他用', ok:true, time:1, why:'正确。成品电池一律用绝缘镊子夹。'},
-        {t:'好啊，帮他用金属镊子夹过去', ok:false, sev:'minor', vid:'ev-nb', why:'纽扣电池外壳是正极、盖子是负极，金属镊子一夹就是外短路。'},
+        {t:'提醒他会短路，把你的塑料镊子借给他', ok:true, time:1, why:'正确。成品电池一律用绝缘镊子夹。'},
+        {t:'帮他夹过去：金属镊子只夹壳的侧边，不碰盖子', ok:false, sev:'major', vid:'ev-nb', why:'纽扣电池外壳是正极、盖子是负极，壳和盖之间只隔一圈密封圈；金属镊子尖一滑就同时碰到两者 = 外短路：瞬间大电流放电、发热，这颗电池也废了。成品电池一律用绝缘镊子（「装电池详细步骤」三条底线之一）。'},
       ], cont);
     },
   };
 
   // ---------------- cell model ----------------
   function newCell(){
-    return { n:S.cellIdx+1, q:100, issues:[], layers:[], off:{}, ely:0, liState:S.liState||'shiny', short:false, leak:false, crimp:null, ocv:null, verdict:null, decision:null };
+    return { n:S.cellIdx+1, q:100, issues:[], layers:[], off:{}, ely:0, liState:S.liState||'shiny', short:false, leak:false, soft:false, crimp:null, ocv:null, verdict:null, decision:null,
+      newTip: S.cellIdx===0, t0:null, evT:0 };
   }
   function hit(c, pts, why){ c.q = Math.max(0, c.q - pts); c.issues.push(why); }
   const LAYER = {
@@ -972,16 +1178,21 @@ GB.modules['game'] = { init(root){
   function sceneText(lines, icon){
     return svg('0 0 640 300', '<rect x="10" y="10" width="620" height="280" rx="16" fill="var(--surface-2)" stroke="var(--border)"/>'+
       '<text x="320" y="'+(lines.length>2?95:120)+'" text-anchor="middle" font-size="64">'+icon+'</text>'+
-      lines.map((l,i)=>'<text x="320" y="'+(175+i*28)+'" text-anchor="middle" font-size="19" fill="var(--text)">'+esc(l)+'</text>').join(''));
+      lines.map((l,i)=>'<text x="320" y="'+(175+i*28)+'" text-anchor="middle" font-size="19" fill="var(--text)">'+esc(l)+'</text>').join(''), lines.join('；'));
   }
-  function sceneHMI(o2,h2o,p,trend){
-    const col = v => v>=1? '#ff8c80' : '#9ee6b8';
+  // touch screen: the numbers only (no alarm colours, no words) — the player has to compare them with the threshold
+  function sceneHMI(o2,h2o,p,prev){
+    const v2 = x => x.toFixed(2)+' ppm';
+    const row = (y,lab,now,before)=> '<text x="84" y="'+y+'" font-size="20" fill="#9cc6ec" font-family="monospace">'+lab+'</text>'+
+      (before!=null? '<text x="300" y="'+y+'" font-size="21" fill="#8fb3d4" font-family="monospace">'+before+'</text>' : '')+
+      '<text x="436" y="'+y+'" font-size="26" fill="#e6f0fa" font-family="monospace">'+now+'</text>';
     return svg('0 0 640 300', '<rect x="40" y="20" width="560" height="260" rx="14" fill="#2b2f36"/><rect x="62" y="40" width="516" height="220" rx="8" fill="#0f2740"/>'+
-      '<text x="90" y="80" font-size="20" fill="#9cc6ec">Main</text>'+
-      '<text x="90" y="128" font-size="22" fill="#9cc6ec" font-family="monospace">Box Pressure</text><text x="420" y="128" font-size="26" fill="#9ee6b8" font-family="monospace">'+fmt1(p)+' mbar</text>'+
-      '<text x="90" y="172" font-size="22" fill="#9cc6ec" font-family="monospace">Oxygen</text><text x="420" y="172" font-size="26" fill="'+col(o2)+'" font-family="monospace">'+o2.toFixed(2)+' ppm</text>'+
-      '<text x="90" y="216" font-size="22" fill="#9cc6ec" font-family="monospace">Water</text><text x="420" y="216" font-size="26" fill="'+col(h2o)+'" font-family="monospace">'+h2o.toFixed(2)+' ppm'+(trend?' ↑':'')+'</text>'+
-      '<text x="90" y="246" font-size="14" fill="#6e95b8">Settings · Alarms · Purge · Regen</text>', 'HMI 读数');
+      '<text x="84" y="76" font-size="18" fill="#9cc6ec">Main</text>'+(prev? '<text x="300" y="76" font-size="17" fill="#8fb3d4">1 分钟前</text>':'')+'<text x="436" y="76" font-size="17" fill="#8fb3d4">现在</text>'+
+      row(124,'Box Pressure', fmt1(p)+' mbar', prev? fmt1(prev.p)+' mbar' : null)+
+      row(168,'Oxygen', v2(o2), prev? v2(prev.o2) : null)+
+      row(212,'Water', v2(h2o), prev? v2(prev.h2o) : null)+
+      '<text x="84" y="246" font-size="14" fill="#6e95b8">Settings · Alarms · Purge · Regen</text>',
+      '触摸屏读数：箱压 '+fmt1(p)+' mbar，O₂ '+v2(o2)+'，H₂O '+v2(h2o)+(prev? '；1 分钟前 O₂ '+v2(prev.o2)+'，H₂O '+v2(prev.h2o) : ''));
   }
   function sceneAnte(){
     const a = S.ante, g = a.p==='vac'? -0.1 : 0;
@@ -995,18 +1206,18 @@ GB.modules['game'] = { init(root){
       '<rect x="250" y="110" width="270" height="100" rx="34" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/>'+ (a.p==='air'? '<rect x="250" y="110" width="270" height="100" rx="34" fill="#f5c400" opacity=".25"/>':'') +
       '<text x="385" y="100" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">小过渡舱</text>'+doorIn+doorOut+items+
       '<text x="250" y="232" text-anchor="middle" font-size="13" fill="var(--muted)">内门</text><text x="520" y="232" text-anchor="middle" font-size="13" fill="var(--muted)">外门</text>'+
-      '<circle cx="385" cy="270" r="0"/>'+
       '<circle cx="600" cy="80" r="34" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/><line x1="600" y1="80" x2="600" y2="54" stroke="#d93025" stroke-width="3" stroke-linecap="round" transform="rotate('+ang+' 600 80)"/>'+
       '<text x="600" y="126" text-anchor="middle" font-size="13" fill="var(--text)">'+(g<0?'−0.1':'0')+' MPa</text>'+
       '<rect x="300" y="236" width="170" height="40" rx="8" fill="var(--surface)" stroke="var(--border-strong)"/><text x="385" y="262" text-anchor="middle" font-size="15" fill="var(--text)">阀门：'+({close:'Close',refill:'Refill',evac:'Evacuate'})[a.valve]+'</text>'+
-      '<text x="385" y="30" text-anchor="middle" font-size="14" fill="var(--muted)">完整循环 '+a.cyc+(a.weak?'（另有 '+a.weak+' 次没保持）':'')+'</text>', '过渡舱');
+      '<text x="385" y="30" text-anchor="middle" font-size="14" fill="var(--muted)">完整循环 '+a.cyc+(a.weak?'（另有 '+a.weak+' 次没保持）':'')+'</text>', '过渡舱：表针 '+(g<0?'−0.1':'0')+' MPa，阀门 '+a.valve+'，完整循环 '+a.cyc+' 次');
   }
+  // the surface has to be judged from the picture; the state is only in the accessible name
   function sceneLi(state, size){
     const fill = {shiny:'#cfd5dd', dull:'#9aa0a7', dark:'#4f5359'}[state];
     const spots = state==='dark'? '<circle cx="290" cy="130" r="16" fill="#2f2b28" opacity=".7"/><circle cx="350" cy="175" r="10" fill="#6b4f3a" opacity=".6"/><circle cx="310" cy="190" r="8" fill="#3b3f6b" opacity=".5"/>' : (state==='dull'? '<circle cx="320" cy="150" r="78" fill="#fff" opacity=".08"/>':'<path d="M265 120 Q320 90 375 125" stroke="#fff" stroke-width="10" opacity=".55" fill="none"/>');
     return svg('0 0 640 300', '<rect x="10" y="10" width="620" height="280" rx="16" fill="#3c7a6e" opacity=".25"/>'+
       '<circle cx="320" cy="150" r="90" fill="'+fill+'" stroke="#6b7480" stroke-width="3"/>'+spots+
-      '<text x="320" y="272" text-anchor="middle" font-size="16" fill="var(--text)">锂片'+(size? '（Ø'+size+' mm）':'')+' · 表面：'+({shiny:'光亮的金属色',dull:'发灰、没有光泽',dark:'发黑、有斑点'})[state]+'</text>', '锂片');
+      '<text x="320" y="272" text-anchor="middle" font-size="16" fill="var(--text)">锂片'+(size? '（Ø'+size+' mm）':'')+'</text>', '锂片：'+({shiny:'银白、有光泽',dull:'均匀浅灰、哑光',dark:'发黑、有斑点'})[state]);
   }
   function benchBase(){
     const c = S.cur, C = G.C, K = G.K; let s = '';
@@ -1023,7 +1234,8 @@ GB.modules['game'] = { init(root){
     if(c.layers.includes('cap')) s += '<circle cx="'+C.x+'" cy="'+C.y+'" r="'+(G.case*K-2)+'" fill="#b8c0ca" stroke="#2b2f36" stroke-width="5"/>';
     return s;
   }
-  function sceneBench(extra){ return svg('0 0 640 370', benchBase()+(extra||'')+trayDeco(), '工作台俯视图'); }
+  // tray first, then the step's own drawing (pipette, bottle, gauge) on top of it
+  function sceneBench(extra){ return svg('0 0 640 370', benchBase()+trayDeco()+(extra||''), '工作台俯视图'); }
   function trayDeco(){
     return '<rect x="476" y="20" width="148" height="330" rx="12" fill="var(--surface-2)" stroke="var(--border)"/><text x="550" y="44" text-anchor="middle" font-size="14" fill="var(--muted)">零件盒</text>'+
       '<circle cx="512" cy="300" r="14" fill="#c9ced6" stroke="#6b7480"/><circle cx="550" cy="300" r="12" fill="#23262b"/><circle cx="588" cy="300" r="13" fill="#f4f1e6" stroke="#b5ad8e"/>'+
@@ -1042,20 +1254,26 @@ GB.modules['game'] = { init(root){
       '<path d="'+arc(96,a1,-120+240)+'" stroke="#B42318" stroke-width="16" fill="none" opacity=".35"/>'+
       '<line x1="470" y1="150" x2="470" y2="62" stroke="#d93025" stroke-width="4" stroke-linecap="round" transform="rotate('+ang+' 470 150)"/><circle cx="470" cy="150" r="7" fill="#d93025"/>'+
       '<text x="470" y="205" text-anchor="middle" font-size="22" font-family="monospace" fill="var(--text)">'+Math.round(p)+'</text>'+
-      '<text x="470" y="232" text-anchor="middle" font-size="12" fill="var(--muted)">压力（示意刻度）· 绿区 = 本机设定值</text>', '封口机压力表');
+      '<text x="470" y="232" text-anchor="middle" font-size="12" fill="var(--muted)">压力（示意刻度）· 绿区 = 本机设定值</text>', '封口机压力表：'+Math.round(p)+'，绿区 '+target[0]+'–'+target[1]);
   }
-  function sceneMeter(dial, red, black, reading){
+  // probe points are focusable buttons with a large (r=44) transparent hit area; hintPt marks the next correct point for the level-1 hint
+  function sceneMeter(dial, red, black, reading, hintPt){
     const dials = [['DCV','V⎓ 直流电压'],['ACV','V~ 交流电压'],['OHM','Ω 电阻'],['AMP','A 电流']];
     let d = '';
-    dials.forEach(([k,t],i)=>{ const y = 70+i*38; d += '<rect x="40" y="'+(y-22)+'" width="170" height="30" rx="6" fill="'+(dial===k?'#4F46C8':'var(--surface)')+'" stroke="var(--border-strong)"/><text x="125" y="'+(y-2)+'" text-anchor="middle" font-size="15" fill="'+(dial===k?'#fff':'var(--text)')+'">'+t+'</text>'; });
-    const pt = (k,x,y,label)=>{ const isR = red===k, isB = black===k; const ly = k==='bottom'? y+36 : y-26; return '<g class="gm-probe" data-pt="'+k+'" style="cursor:pointer"><circle cx="'+x+'" cy="'+y+'" r="18" fill="'+(isR?'#d93025':isB?'#222':'var(--surface)')+'" stroke="var(--text)" stroke-width="2"/>'+(isR?'<text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="13" fill="#fff">红</text>':isB?'<text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="13" fill="#fff">黑</text>':'')+'<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="15" fill="var(--text)">'+label+'</text></g>'; };
+    dials.forEach(([k,t],i)=>{ const y = 70+i*38; d += '<rect x="40" y="'+(y-23)+'" width="170" height="32" rx="6" fill="'+(dial===k?'#4F46C8':'var(--surface)')+'" stroke="var(--border-strong)"/><text x="125" y="'+(y-1)+'" text-anchor="middle" font-size="18" fill="'+(dial===k?'#fff':'var(--text)')+'">'+t+'</text>'; });
+    const pt = (k,x,y,label,ly)=>{ const isR = red===k, isB = black===k;
+      return '<g class="gm-probe" data-pt="'+k+'"'+(hintPt===k?' data-hint="1"':'')+' tabindex="0" role="button" aria-label="表笔点在'+label+(isR?'（红表笔在这里）':isB?'（黑表笔在这里）':'')+'" style="cursor:pointer">'+
+        '<circle cx="'+x+'" cy="'+y+'" r="44" fill="transparent"/>'+
+        '<circle class="dot" cx="'+x+'" cy="'+y+'" r="24" fill="'+(isR?'#d93025':isB?'#222':'var(--surface)')+'" stroke="var(--text)" stroke-width="2"/>'+
+        (isR||isB? '<text x="'+x+'" y="'+(y+6)+'" text-anchor="middle" font-size="17" fill="#fff">'+(isR?'红':'黑')+'</text>' : '')+
+        '<text x="'+x+'" y="'+ly+'" text-anchor="middle" font-size="20" fill="var(--text)">'+label+'</text></g>'; };
     return svg('0 0 640 300',
-      '<rect x="20" y="20" width="210" height="260" rx="16" fill="#e8b923" opacity=".9"/><rect x="40" y="200" width="170" height="60" rx="6" fill="#c8d6b9"/><text x="125" y="243" text-anchor="middle" font-size="28" font-family="monospace" fill="#1a1a1a">'+(reading==null?'----':reading)+'</text>'+d+
+      '<rect x="20" y="20" width="210" height="260" rx="16" fill="#e8b923" opacity=".9"/><rect x="40" y="206" width="170" height="58" rx="6" fill="#c8d6b9"/><text x="125" y="246" text-anchor="middle" font-size="28" font-family="monospace" fill="#1a1a1a">'+(reading==null?'----':reading)+'</text>'+d+
       '<rect x="330" y="120" width="230" height="20" rx="4" fill="#b8c0ca" stroke="#2b2f36" stroke-width="2"/>'+
       '<rect x="318" y="140" width="254" height="34" rx="6" fill="#c9ced6" stroke="#6b7480" stroke-width="2"/>'+
       '<rect x="318" y="118" width="14" height="26" fill="#c9ced6" stroke="#6b7480"/><rect x="558" y="118" width="14" height="26" fill="#c9ced6" stroke="#6b7480"/>'+
-      '<text x="445" y="200" text-anchor="middle" font-size="13" fill="var(--muted)">纽扣电池侧视图：上面是负极盖，下面是正极壳</text>'+
-      pt('cap',470,92,'盖子中央') + pt('rim',318,92,'盖子边缘卷边') + pt('bottom',445,244,'壳底'), '万用表和电池');
+      '<text x="445" y="236" text-anchor="middle" font-size="14" fill="var(--muted)">侧视图：上面是负极盖（−），下面和侧壁是正极壳（+）</text>'+
+      pt('cap',470,86,'盖子中央',50) + pt('rim',325,86,'盖子边缘卷边',50) + pt('bottom',604,157,'壳侧壁',207), '万用表和电池'+(reading!=null? '，读数 '+reading+' V':''));
   }
   function sceneTray(){
     const cells = S.cells; let s = '<rect x="60" y="40" width="520" height="200" rx="12" fill="#3f7fd0" opacity=".85"/>';
@@ -1070,12 +1288,12 @@ GB.modules['game'] = { init(root){
     askMulti({ title:'明天要装 '+S.L.cells+' 颗 NMC‖Li 半电池。哪些东西要带进手套箱？', text:'多选（有些是陷阱）。选完点「打包」。',
       scene: ()=> sceneText(['箱外实验台','把要带进箱的东西挑出来'],'🧳'), submit:'打包', time:20,
       items:[
-        {t:'已真空烘干、称重编号的正极片（装在密封盒里）', ok:true, why:'必须带：这是你的工作电极。'},
-        {t:'Celgard 隔膜 Ø19 mm（已按 SOP 低温真空干燥）', ok:true, why:'必须带：隔膜要比两侧电极都大，并且干燥过。'},
-        {t:'已清洗烘干的电池壳、垫片、弹片、负极盖', ok:true, why:'必须带：CR2032 的结构件。'},
+        {t:'已真空烘干、称重编号的正极片（装在带盖培养皿里，盖子不拧死、不封胶带）', ok:true, why:'必须带：这是你的工作电极。容器盖子不拧死，过渡舱才抽得干净。'},
+        {t:'Celgard 隔膜 Ø19 mm（已按 SOP 低温真空干燥，几片装在带盖培养皿里）', ok:true, why:'必须带：隔膜要比两侧电极都大，并且干燥过。成叠的多孔材料按 SOP 走大过渡舱。'},
+        {t:'已清洗烘干的电池壳、垫片、弹片、负极盖（装在带盖小盒里）', ok:true, why:'必须带：CR2032 的结构件。小件装盒，免得回充时被气流吹散。'},
         {t:'锂片（原厂氩气密封包装，进箱后再拆）', ok:true, why:'必须带：半电池的对电极。'},
         {t:'电解液（原厂密封瓶，保持直立，不在室内拧松）', ok:true, why:'必须带。注意不要在室内拧松瓶盖：湿空气进去会生成 HF。'},
-        {t:'移液枪和干燥过的枪头', ok:true, why:'必须带：定量加电解液。'},
+        {t:'移液枪和干燥过的枪头', ok:true, why:'必须带：定量加电解液，每颗电池换一个枪头。'},
         {t:'塑料或陶瓷头的绝缘镊子', ok:true, why:'必须带：夹成品电池只能用绝缘镊子。'},
         {t:'万用表和绝缘表笔', ok:true, why:'必须带：封口后要测开路电压。'},
         {t:'带格子的绝缘电池盒', ok:true, why:'必须带：成品电池分格存放，不叠放、不碰金属。'},
@@ -1084,7 +1302,7 @@ GB.modules['game'] = { init(root){
         {t:'装着半瓶 DMC 的洗瓶（准备冲洗模具）', ok:false, sev:'major', why:'装液体的洗瓶不能进过渡舱抽真空（溶剂沸腾、被抽进泵里）；箱内用溶剂要按实验室规定。'},
         {t:'一小瓶二氯甲烷（擦模具用）', ok:false, sev:'major', why:'卤代溶剂是净化柱的不可逆毒物，而且锂会和卤代溶剂剧烈反应。'},
         {t:'金属尖头镊子（准备用来夹封好的电池）', ok:false, sev:'minor', why:'金属镊子夹成品电池会同时碰到壳和盖 = 外短路。'},
-        {t:'盖子拧得很紧的空玻璃瓶（里面是空气）', ok:false, why:'空瓶里的空气抽不出来，在箱内一开就把 O₂ 和水汽放出来；要带就拧松盖子或敞口放入。'},
+        {t:'盖子拧得很紧的空玻璃瓶（里面是空气）', ok:false, why:'空瓶里的空气抽不出来，在箱内一开就把 O₂ 和水汽放出来；拧死的容器在真空下还可能崩开。要带就拧松盖子或敞口放入。'},
       ],
       after(bad, miss){ S.missing = miss.map(m=>m.t); if(miss.length){ S.clock += 15*miss.length; log('漏带 '+miss.length+' 样东西：中途多开一次过渡舱（时间 +'+(15*miss.length)+' 分钟）','bad'); } },
       next: stagePPE });
@@ -1107,17 +1325,22 @@ GB.modules['game'] = { init(root){
     setStage('check');
     const bad = S.L.badStart && Math.random()<0.5;
     if(bad){ S.O2 = 0.4; S.H2O = 2.6; S.add.H2O = 2.2; }
-    const o2 = S.O2, h2o = S.H2O;
-    ask({ title:'看触摸屏：能开工吗？', text:'你们实验室开锂片的阈值：O₂、H₂O 都 &lt; 1 ppm 且稳定（游戏设定）。'+(bad?'观察了 1 分钟，H₂O 还在慢慢上升。':'观察了 1 分钟，读数稳定。'),
-      scene: ()=> sceneHMI(o2,h2o,2.1,bad),
-      opts: bad ? [
-        {t:'先不开工：H₂O 超过阈值还在升；看记录本、报告负责人，等读数恢复再开始', ok:true, time:30, why:'正确。读数不达标就不开锂片和电解液；先找原因（刚有人带进湿东西？手套？过渡舱？）。', fx(){ S.add.H2O = 0; advance(25); S.H2O = 0.5; S.O2=0.3; log('负责人处理完，H₂O 回到 0.5 ppm','good'); }},
-        {t:'差不多，开工吧；做快一点就行', ok:false, sev:'major', vid:'startBad', why:'读数超过阈值时开锂片，锂片表面会被腐蚀，电池从一开始就是坏的；也没人去找原因。', fx(){ S.liStartBad = true; advance(5); S.add.H2O = 0; }},
-        {t:'按 Regen 让净化柱把水吸掉', ok:false, sev:'major', vid:'regenPress', why:'Regen（再生）要停掉净化十几个小时，只能由负责人操作。', fx(){ advance(5); S.add.H2O=0; }},
-      ] : [
-        {t:'读数达标且稳定：把箱压、O₂、H₂O 写进记录本，然后开工', ok:true, why:'正确。开工前记录读数，出了问题才有据可查。'},
-        {t:'读数挺好的，直接开始，不用记', ok:false, why:'开始和结束时的读数都要写进记录本。'},
-        {t:'先按一下 Purge，让读数更低一点', ok:false, sev:'major', vid:'purgePress', why:'Purge 只能由受训人员操作，会消耗大量氩气，读数达标时没有必要。'},
+    const o2 = S.O2, h2o = S.H2O, prev = bad? {o2:0.4, h2o:2.3, p:2.1} : {o2:0.3, h2o:0.5, p:2.1};
+    const why = '再看一眼屏幕：H₂O '+h2o.toFixed(2)+' ppm，比 1 分钟前（'+prev.h2o.toFixed(2)+'）还高——超过 1 ppm 而且还在升。';
+    // same four options whatever the readings are: the player has to read the numbers
+    ask({ title:'看触摸屏：能开工吗？', text:'你们实验室开锂片的阈值：O₂、H₂O 都 &lt; 1 ppm 且稳定（游戏设定）。你盯着屏幕看了 1 分钟。',
+      scene: ()=> sceneHMI(o2,h2o,2.1,prev),
+      opts:[
+        {t:'读数达标且稳定：箱压、O₂、H₂O 记进记录本，开工', ok:!bad, sev: bad? 'major':null, vid:'startBad',
+         why: bad? why+'读数不达标时开工、开锂片，锂片表面会被腐蚀，电池从一开始就是坏的；也没人去找原因。' : '正确。开工前记录读数，出了问题才有据可查。',
+         fx(){ if(bad){ S.liStartBad = true; advance(5); S.add.H2O = 0; } }},
+        {t:'先不开工：报告负责人，查记录本，等读数恢复', ok: bad? true : 'soft', retry:!bad, time: bad? 30 : 0,
+         why: bad? '正确。读数不达标就不开锂片和电解液；先找原因（刚有人带进湿东西？手套？过渡舱？）。（游戏时间 +30 分钟）' : '读数已经达标且稳定（O₂、H₂O 都 &lt; 1 ppm，和 1 分钟前一样），不用等。',
+         fx(){ if(bad){ S.add.H2O = 0; advance(25); S.H2O = 0.5; S.O2=0.3; log('负责人处理完，H₂O 回到 0.5 ppm','good'); } }},
+        {t:'读数没问题就直接开工，记录本收工时再一起写', ok:false, sev: bad? 'major':null, vid:'startBad',
+         why: bad? why+'这时不能开工。另外开始和结束时的读数都要当场写进记录本。' : '开始和结束时的读数都要当场写进记录本，出了问题才有据可查。',
+         fx(){ if(bad){ S.liStartBad = true; advance(5); S.add.H2O = 0; } }},
+        {t:'先按一下 Purge（或 Regen），让读数再低一点', ok:false, sev:'major', vid:'purgePress', why:'Purge / Regen 只能由受训人员（负责人）操作：Purge 消耗大量氩气，Regen 要停掉净化十几个小时。读数有问题先报告。', fx(){ if(bad){ advance(5); S.add.H2O=0; } }},
       ],
       next: stageGloves });
   }
@@ -1125,32 +1348,32 @@ GB.modules['game'] = { init(root){
     checkpoint(()=>{
       const defect = S.L.badStart && Math.random()<0.45 ? Math.floor(rnd(0,4)) : -1;
       const names = ['左工位 · 左手','左工位 · 右手','右工位 · 左手','右工位 · 右手'];
-      const seen = new Set();
+      const seen = new Set(); let warned = false;
       $('#gmScene').innerHTML = sceneText(['检查 4 只手套','点每一只手套，撑开指尖对着光看'],'🧤');
       $('#gmPrompt').innerHTML = '<h3>检查手套</h3><p>两个工位共 4 只黑手套。逐个点开检查：针孔、裂纹、发黏、发白。你今天在<b>右工位</b>干活。</p>';
-      const acts = $('#gmActs'); acts.innerHTML='';
+      const acts = $('#gmActs'); acts.innerHTML=''; acts.dataset.hint = '4 只手套都要点开检查（两个工位可能共用一个箱体），都看过再点「检查完了」。';
       const grid = el('div',{class:'gm-gloves'});
       names.forEach((n,i)=>{
-        const b = el('button',{class:'gm-glove',type:'button','data-glove':i}, el('span',{class:'ic'},'🧤'), n, el('br'), el('span',{class:'small muted'},'点击检查'));
-        b.addEventListener('click',()=>{ seen.add(i); advance(1); b.classList.add(i===defect?'bad':'ok'); b.querySelector('.small').textContent = i===defect? '指尖发黏，有一个亮点（针孔）' : '完好，微微外鼓'; renderHUD(); });
+        const b = el('button',{class:'gm-glove',type:'button','data-glove':i,'data-ok':'1'}, el('span',{class:'ic'},'🧤'), n, el('br'), el('span',{class:'small muted'},'点击检查'));
+        b.addEventListener('click',()=>{ seen.add(i); advance(1); b.classList.add(i===defect?'bad':'ok'); b.classList.remove('hint'); b.dataset.ok = '0'; b.querySelector('.small').textContent = i===defect? '指尖发黏，有一个亮点（针孔）' : '完好，微微外鼓'; renderHUD(); });
         grid.append(b);
       });
       acts.append(grid);
-      const go = el('button',{class:'btn primary',type:'button','data-act':'glovesDone',style:{marginTop:'10px'}}, '检查完了');
+      const go = el('button',{class:'btn primary',type:'button','data-act':'glovesDone','data-ok':'1',style:{marginTop:'10px'}}, '检查完了');
       go.addEventListener('click',()=>{
-        if(seen.size<4){ mistake('还有 '+(4-seen.size)+' 只手套没检查——4 只都要看（两个工位可能共用一个箱体）。'); return; }
+        if(seen.size<4){ const m = '还有 '+(4-seen.size)+' 只手套没检查——4 只都要看（两个工位可能共用一个箱体）。'; if(!warned){ warned = true; mistake(m); } else fb('bad','✕ '+m); return; }
         if(defect>=0){
           ask({ title:'发现一只手套有问题', text:'「'+names[defect]+'」指尖发黏，有一个针孔。',
             scene: ()=> sceneText(['手套指尖发黏、有针孔'],'⚠️'),
             opts:[
-              {t:'不使用：挂「停用」牌，报告负责人，等受训人员换好手套再开工', ok:true, time:40, why:'正确。破损手套不能用，换手套由受训人员做。（游戏时间 +40 分钟）'},
-              {t:'用胶带从外面补一下，再外戴一层丁腈手套照常用', ok:false, sev:'major', vid:'tapeGlove', why:'胶带只是临时措施，补过的手套会继续漏气。必须停用、报告、更换。'},
-              {t:'不是我这个工位的手套，不用管', ok:false, sev:'minor', vid:'otherGlove', why:'两个工位可能共用一个箱体；发现问题都要报告并挂牌。'},
+              {t:'不用它：挂「停用」牌，报告负责人，等换好手套', ok:true, time:40, why:'正确。破损手套不能用，换手套由受训人员做。（游戏时间 +40 分钟）'},
+              {t:'用胶带从外面补好针孔，外面再套一层丁腈手套照常用', ok:false, sev:'major', vid:'tapeGlove', why:'胶带只是临时措施，补过的手套会继续漏气。必须停用、报告、更换。'},
+              {t:'换另一个工位的手套干活，这只等负责人以后处理', ok:false, sev:'minor', vid:'otherGlove', why:'两个工位共用一个箱体：一只手套有针孔，整个箱子的气氛都受影响。发现问题马上挂牌、报告，换好再开工。'},
             ], next: stageAnte });
         } else { fb('good','✓ 4 只手套都完好。'); log('✓ 手套检查完毕','good'); stageAnte(); }
       });
       acts.append(go);
-      renderHUD();
+      renderHUD(); scrollSide(); refocus();
     });
   }
 
@@ -1161,26 +1384,26 @@ GB.modules['game'] = { init(root){
     ask({ title:'送东西进箱：第一步？', text:'小过渡舱现在是上一位用户留下的状态：两扇门关着，表针在 −0.1 MPa（真空），阀门在 Close。',
       scene: sceneAnte,
       opts:[
-        {t:'确认内门关好；阀门转到 Refill，慢慢回充到 0 附近', ok:true, why:'对。真空状态下外门打不开，要先回充。', fx(){ A.valve='refill'; A.p='atm'; }},
-        {t:'直接打开外门', ok:false, retry:true, why:'打不开：舱内是真空，大气压把门压得死死的。别硬掰——先回充。'},
-        {t:'阀门转到 Evacuate', ok:false, retry:true, why:'它已经是真空了。你要放东西进去，需要先回充到 0。'},
+        {t:'确认内门关好，阀门转 Refill 回充到 0 附近', ok:true, why:'对。真空状态下外门打不开，要先回充。', fx(){ A.valve='refill'; A.p='atm'; }},
+        {t:'确认内门关好，直接打开外门把东西放进去', ok:false, retry:true, why:'打不开：舱内是真空，大气压把门压得死死的。别硬掰——先回充。'},
+        {t:'确认内门关好，阀门转 Evacuate 再多抽一会儿', ok:false, retry:true, why:'它已经是真空了。你要放东西进去，需要先回充到 0。'},
       ], next: ()=> ask({ title:'表针回到 0 附近了。', scene: sceneAnte,
         opts:[
           {t:'阀门转回 Close，再打开外门', ok:true, why:'对。开外门前阀门必须在 Close。', fx(){ A.valve='close'; A.outer=true; A.p='air'; }},
-          {t:'阀门留在 Refill，直接开外门（省一步）', ok:false, sev:'major', vid:'outerValve', why:'开外门时阀门还开着：惰性气体直接往房间里跑，取决于管路设计，还可能让气路和室内空气连通。开外门前一定先关阀。', fx(){ A.valve='close'; A.outer=true; A.p='air'; }},
+          {t:'阀门留在 Refill 保持微正压，再开外门，防止空气进舱', ok:false, sev:'major', vid:'outerValve', why:'开外门时阀门还开着：惰性气体直接往房间里跑，取决于管路设计，还可能让气路和室内空气连通。开外门前一定先关阀。', fx(){ A.valve='close'; A.outer=true; A.p='air'; }},
         ], next: anteLoad }) });
   }
   function anteLoad(){
     const A = S.ante;
     ask({ title:'外门开了。东西怎么放进去？', scene: sceneAnte,
       opts:[
-        {t:'放进去：自封袋打开口子；电解液保持原厂密封、直立放在二次容器里；检查门的密封圈上没有纸屑', ok:true, time:2, why:'对。袋子封死会在真空下胀破；电解液不能在室内拧松。', fx(){ A.items='ante'; }},
-        {t:'把所有瓶盖都拧松（包括电解液），方便抽真空', ok:false, sev:'major', vid:'looseEly', why:'电解液瓶不能在室内拧松：湿空气进去会让 LiPF₆ 水解产生 HF；抽真空时溶剂还会沸腾、被抽进泵里。', fx(){ A.items='ante'; }},
-        {t:'把自封袋封得紧紧的，免得东西撒出来', ok:false, why:'封死的袋子里有空气，抽真空时会鼓胀甚至爆开，空气也换不干净。袋口要打开或扎孔。', fx(){ A.items='ante'; }},
+        {t:'袋口打开、小盒盖子不拧死；电解液原厂密封、直立放二次容器；看一眼门密封圈', ok:true, time:2, why:'对。封死的袋子、拧死的盒子在真空下会鼓胀甚至崩开，里面的空气也换不干净；电解液是例外：不能在室内拧松，按管理员规定的方式进舱。', fx(){ A.items='ante'; }},
+        {t:'所有瓶盖都拧松一圈（包括电解液），方便抽真空；看一眼门密封圈', ok:false, sev:'major', vid:'looseEly', why:'电解液瓶不能在室内拧松：湿空气进去会让 LiPF₆ 水解产生 HF；抽真空时溶剂还会沸腾、被抽进泵里。', fx(){ A.items='ante'; }},
+        {t:'自封袋封紧、小盒盖子拧紧防撒；电解液直立放二次容器；看一眼门密封圈', ok:false, why:'封死的袋子、拧紧的盒子里有空气，抽真空时会鼓胀甚至崩开，空气也换不干净。袋口打开，盒盖盖上但不拧死。', fx(){ A.items='ante'; }},
       ], next: ()=> ask({ title:'关外门', scene: sceneAnte,
         opts:[
-          {t:'轻轻关上外门，扣好卡扣', ok:true, why:'对。关门要轻，抽真空后压差会自动把门压紧。', fx(){ A.outer=false; }},
-          {t:'用力把卡扣拧到最紧', ok:false, why:'过度拧紧会让门和卡扣长期受力（有舱门疲劳破裂的事故报告）；轻轻关好就行。', fx(){ A.outer=false; }},
+          {t:'轻轻关上外门，扣好卡扣就行', ok:true, why:'对。关门要轻，抽真空后压差会自动把门压紧。', fx(){ A.outer=false; }},
+          {t:'用力把卡扣拧到最紧，防止抽真空时漏气', ok:false, why:'过度拧紧会让门和卡扣长期受力（有舱门疲劳破裂的事故报告）；轻轻关好就行，抽真空后压差会把门压紧。', fx(){ A.outer=false; }},
         ], next: anteCycle }) });
   }
   function anteCycle(){
@@ -1188,10 +1411,10 @@ GB.modules['game'] = { init(root){
     ask({ title:'抽真空-回充循环（已完成 '+A.cyc+' 次完整循环）', text:'本实验室规定（游戏设定）：小过渡舱至少 3 次完整循环，每次抽到 −0.1 MPa 附近后保持一会儿。',
       scene: sceneAnte,
       opts:[
-        {t:'阀门 Evacuate：抽到 −0.1 MPa 附近，保持约 2 分钟；再 Refill 回充到 0', ok:true, time:4, why:'一次完整循环。', fx(){ A.cyc++; A.valve='refill'; A.p='atm'; }, next: anteCycle},
-        {t:'抽到 −0.1 MPa 就马上回充（赶时间）', ok:'soft', time:2, why:'表针到底只说明到了粗真空，物品表面的水和气还没来得及脱出。这一次不算完整循环。', fx(){ A.weak++; A.p='atm'; }, next: anteCycle},
-        {t:'循环做完了：阀门转 Close，准备伸手进箱开内门', ok: A.cyc>=3, time:1, sev: A.cyc>=3? null : 'major', vid:'fewCycles',
-         why: A.cyc>=3? '对。'+A.cyc+' 次完整循环，舱里已经是惰性气了。' : '只做了 '+A.cyc+' 次完整循环就准备开内门：残留空气和水汽会进箱。',
+        {t:'阀门 Evacuate 抽到 −0.1 MPa，保持约 2 分钟再 Refill', ok: A.cyc<3? true : 'soft', time:4, why: A.cyc<3? '一次完整循环。' : '已经做够 '+A.cyc+' 次了；多做一次不扣分，只是费时间。', fx(){ A.cyc++; A.valve='refill'; A.p='atm'; }, next: anteCycle},
+        {t:'阀门 Evacuate 抽到 −0.1 MPa，表针一到底马上 Refill 回充', ok:'soft', time:2, why:'表针到底只说明到了粗真空，物品表面的水和气还没来得及脱出。这一次不算完整循环。', fx(){ A.weak++; A.p='atm'; }, next: anteCycle},
+        {t:'循环做完了：阀门转 Close，准备伸手进箱开内门', ok: A.cyc>=3, time:1, sev: A.cyc>=3? null : (A.cyc===0? 'critical' : 'major'), vid:'fewCycles',
+         why: A.cyc>=3? '对。'+A.cyc+' 次完整循环，舱里已经是惰性气了。' : A.cyc===0? '一次循环都没做就开内门 = 把过渡舱里的室内空气直接放进手套箱，所有人的样品都受影响；和「外门开过再开内门」一样，是严重违规。' : '只做了 '+A.cyc+' 次完整循环就准备开内门：残留空气和水汽会进箱。',
          fx(){ A.valve='close'; if(A.cyc<3){ bump([30,4,0.8][A.cyc]||0.5, [3,1,0.4][A.cyc]||0.3); } }, next: stageSetup},
       ]});
   }
@@ -1199,41 +1422,42 @@ GB.modules['game'] = { init(root){
   // ---- 4. setup (arms in, over-gloves, inner door, bench)
   function stageSetup(){
     setStage('setup');
-    ask({ title:'伸手进箱', text:'箱压 +'+fmt1(S.boxP)+' mbar。',
+    ask({ title:'伸手进箱', text:'先看触摸屏（顶部状态栏）上的箱压。',
       scene: sceneAnte,
       opts:[
-        {t:'先伸一只手进去，看箱压', ok:true, time:0, why:'对。一只一只来，手臂会占据箱内体积、让箱压升高。', fx(){ S.arms=1; S.boxP+=3.5; }},
-        {t:'两只手一起快速伸进去', ok:false, sev:'major', vid:'armsFast', why:'箱压猛升超过报警值，手套被顶得鼓胀。一只一只、慢慢伸。', fx(){ S.arms=2; S.boxP = 11.5; }},
+        {t:'先伸一只手进去，边伸边看箱压', ok:true, time:0, why:'对。一只一只来：手臂会占据箱内体积、让箱压升高。', fx(){ S.arms=1; S.boxP+=3.5; }},
+        {t:'两只手同时、慢慢地伸进去，边伸边看箱压', ok:false, sev:'major', vid:'armsFast', why:'两只手臂同时进箱，占的体积一下子翻倍，箱压会超过报警值。一次只伸一只，中间看箱压，必要时短踩 Evacuate。', fx(){ S.arms=2; S.boxP = 11.5; }},
       ], next: ()=> {
         if(S.arms===2){ armsDone(); return; }
-        ask({ title:'一只手在里面了', text:'箱压 +'+fmt1(S.boxP)+' mbar。', scene: sceneAnte,
+        ask({ title:'一只手在里面了', text: ()=> '箱压 +'+fmt1(S.boxP)+' mbar。', scene: sceneAnte,
           opts:[
-            {t:'短踩一下左踏板 Evacuate，再伸另一只手', ok:true, time:0, why:'对。短踩一下、看一下读数。', fx(){ S.boxP-=1.5; S.arms=2; S.boxP+=3.5; }},
-            {t:'直接伸另一只手', ok:'soft', time:0, why:'可以，但箱压会偏高；先短踩 Evacuate 会更稳。', fx(){ S.arms=2; S.boxP+=3.5; }},
-            {t:'踩住右踏板 Refill，再伸另一只手', ok:false, sev:'major', vid:'refillHold', why:'Refill 是补气升压，方向反了；再伸手箱压就超过报警值。', fx(){ S.boxP+=4; S.arms=2; S.boxP+=3.5; }},
+            {t:'短踩左踏板 Evacuate，再伸另一只手', ok:true, time:0, why:'对。短踩一下、看一下读数。', fx(){ S.boxP-=1.5; S.arms=2; S.boxP+=3.5; }},
+            {t:'箱压还没到上限，直接伸另一只手', ok:'soft', time:0, why:'可以，但箱压会偏高；先短踩 Evacuate 会更稳。', fx(){ S.arms=2; S.boxP+=3.5; }},
+            {t:'踩住右踏板 Refill 稳住箱压，再伸另一只手', ok:false, sev:'major', vid:'refillHold', why:'Refill 是补气升压，方向反了；再伸手箱压就超过报警值。', fx(){ S.boxP+=4; S.arms=2; S.boxP+=3.5; }},
           ], next: armsDone });
       }});
   }
   function armsDone(){
     ask({ title:'两只手都进去了。接下来先做什么？', scene: sceneAnte,
       opts:[
-        {t:'在黑手套外面再戴一层丁腈手套', ok:true, time:1, why:'对。外层丁腈手套保护黑手套不被化学品和尖锐物损伤，脏了直接换。', fx(){ S.over=true; }},
-        {t:'直接打开内门拿东西', ok:false, why:'先戴外层丁腈手套，再接触物品。', fx(){ S.over=true; }},
+        {t:'先在黑手套外再戴一层丁腈手套', ok:true, time:1, why:'对。外层丁腈手套保护黑手套不被化学品和尖锐物损伤，脏了直接换。', fx(){ S.over=true; }},
+        {t:'先开内门把东西取进来，摆好台面再戴外层丁腈手套', ok:false, why:'先戴外层丁腈手套，再接触物品：搬东西、拆包装时最容易刮破黑手套。', fx(){ S.over=true; }},
       ], next: ()=> ask({ title:'从箱内打开内门，把东西拿进来', scene: sceneAnte,
         opts:[
-          {t:'确认外门关紧、阀门在 Close；打开内门，取出物品，关紧内门', ok:true, time:2, why:'对。', fx(){ S.ante.inner=true; S.ante.items='box'; S.ante.inner=false; }},
-          {t:'请同学在外面把外门也打开，方便你递东西出去', ok:false, sev:'critical', vid:'bothDoors', why:'两扇门同时打开 = 房间空气直接灌进手套箱，所有人的样品都受影响。永远不能两门同开。', fx(){ bump(40,6); S.ante.items='box'; }},
+          {t:'确认外门关紧、阀门 Close，开内门取物后关紧', ok:true, time:2, why:'对。', fx(){ S.ante.inner=true; S.ante.items='box'; S.ante.inner=false; }},
+          {t:'请同学在箱外打开外门，把漏带的东西直接递进过渡舱', ok:false, sev:'critical', vid:'bothDoors', why:'两扇门同时打开 = 房间空气直接灌进手套箱，所有人的样品都受影响。永远不能两门同开。', fx(){ bump(40,6); S.ante.items='box'; }},
+          {t:'开内门取物，内门先开着，等会儿还要往外送东西', ok:false, sev:'minor', vid:'innerOpen', why:'内门要随手关紧：别人可能在箱外开外门；内门开着把阀门转到 Evacuate 就是在抽整个手套箱。', fx(){ S.ante.items='box'; }},
         ], next: bench }) });
   }
   function bench(){
     ask({ title:'布置工作台', scene: ()=> sceneBench(),
       opts:[
-        {t:'在台面中央铺绝缘垫；零件按组装顺序从左到右排好', ok:true, time:2, why:'对。在绝缘表面上操作，防止电池壳碰到金属台面；按顺序排好不容易漏放。'},
-        {t:'直接在不锈钢台面上组装，省得铺垫子', ok:false, sev:'minor', vid:'noMat', why:'电池放在金属台面上，壳和盖可能通过台面短路；要在绝缘垫上操作。'},
+        {t:'在台面中央铺绝缘垫，零件按组装顺序从左到右排好', ok:true, time:2, why:'对。在绝缘表面上操作，防止电池壳碰到金属台面；按顺序排好不容易漏放。'},
+        {t:'直接在不锈钢台面上组装，零件按顺序排好，省得铺垫子', ok:false, sev:'minor', vid:'noMat', why:'电池放在金属台面上，壳和盖可能通过台面短路；要在绝缘垫上操作。'},
       ], next: ()=> ask({ title:'刀片、冲片器放哪里？', scene: ()=> sceneBench(),
         opts:[
-          {t:'放在固定的工具位：刀口朝外、远离手套口，用完立刻放回', ok:true, time:1, why:'对。刺破手套最常见的原因就是锐器。'},
-          {t:'放在右手边，刀口朝你，方便随手拿', ok:false, sev:'major', vid:'sharps', why:'刀口朝着手套口，手一伸过来就可能被扎破。'},
+          {t:'放在固定工具位，刀口、尖端朝后壁、朝下，用完放回', ok:true, time:1, why:'对。刺破手套最常见的原因就是锐器；手术刀不用时套好护套。'},
+          {t:'放在右手边、刀口朝你，方便随手拿，用完立刻放回', ok:false, sev:'major', vid:'sharps', why:'刀口朝着手套口，手一伸过来就可能被扎破。刀片、冲头尖端朝后壁、朝下。'},
         ], next: stageLi }) });
   }
 
@@ -1242,41 +1466,54 @@ GB.modules['game'] = { init(root){
     setStage('li');
     const state = S.liStartBad ? 'dark' : (S.level===1 ? 'shiny' : pick(S.level===3? ['shiny','dull','dark'] : ['shiny','shiny','dull']));
     S.liState = state;
-    ask({ title:'准备打开锂片包装', scene: ()=> sceneText(['锂片：原厂氩气密封包装'],'📦'),
+    // built from the live readings: opening the Li package is only right when O₂ and H₂O are both < 1 ppm
+    const airBad = S.O2>=1 || S.H2O>=1, o2 = S.O2, h2o = S.H2O;
+    ask({ title:'准备打开锂片包装', text:'开锂片的阈值：O₂、H₂O 都 &lt; 1 ppm 且稳定（游戏设定）。先看一眼触摸屏再决定。',
+      scene: ()=> sceneHMI(o2, h2o, S.boxP, S.prevAir),
       opts:[
-        {t:'先看一眼触摸屏：O₂、H₂O 都达标且稳定，再拆包装', ok:true, time:1, why:'对。养成「开敏感材料前先看读数」的习惯。', fx(){ S.li='open'; }},
-        {t:'直接撕开包装', ok:false, why:'开锂片前先确认读数达标。', fx(){ S.li='open'; }},
+        {t:'读数达标且稳定：拆开锂片包装', ok:!airBad, sev: airBad? 'major':null, vid:'liOpenBad', time:1,
+         why: airBad? '屏幕上 O₂ '+o2.toFixed(2)+' ppm、H₂O '+h2o.toFixed(2)+' ppm，已经超过 1 ppm：这时开锂片，锂片表面会被氧化、受潮，这批电池从一开始就不可靠；也没人去找原因。' : '对。养成「开敏感材料前先看读数」的习惯。',
+         fx(){ S.li='open'; }},
+        {t:'先不拆：报告负责人，等读数回到阈值以下', ok: airBad? true : 'soft', retry:!airBad, time: airBad? 5 : 0,
+         why: airBad? '对。读数不达标就不开锂片：先报告、找原因（过渡舱？手套？刚带进的东西？），等读数回到 1 ppm 以下并稳定再拆。' : '读数已经达标且稳定（O₂、H₂O 都 &lt; 1 ppm），不用等。',
+         fx(){ if(!airBad) return; closeBottle(); let n=0; while((S.O2>=1||S.H2O>=1) && n++<60) advance(5); S.li='open'; log('读数回到阈值以下，拆开锂片','good'); }},
+        {t:'自己按 Purge 把读数吹低一点，再拆包装', ok:false, sev:'major', vid:'purgePress', why:'Purge 只能由受训人员操作，消耗大量氩气；没找到原因前吹扫是治标不治本。读数不达标就先报告、等。', fx(){ S.li='open'; }},
       ], next: ()=> liInspect(state) });
   }
   function liInspect(state){
+    // one neutral option set for every state: the player has to judge the surface from the picture
+    const T = {use:'直接使用', scrape:'用尼龙刷或刀片轻刮到发亮再用', stop:'不用这片：盖好电解液、查读数、报告负责人'};
     const opts = {
       shiny:[
-        {t:'表面光亮：直接使用', ok:true, why:'对。'},
-        {t:'用刀片使劲刮掉一层再用', ok:'soft', why:'光亮的锂片不需要刮；用力刮容易把锂片刮破、带出毛边。'},
-        {t:'不用了，换一片', ok:false, why:'这片是好的，不用浪费。'},
+        {t:T.use, ok:true, why:'对。银白有光泽，不用刮。'},
+        {t:T.scrape, ok:'soft', why:'光亮的锂片不需要刮；刮多了容易刮破、带出毛边。'},
+        {t:T.stop, ok:false, retry:true, why:'这片是好的（银白有光泽），不用浪费。'},
       ],
       dull:[
-        {t:'表面发灰：用尼龙刷或刀片轻轻刮出金属光泽再用', ok:true, time:2, why:'对。新锂片表面有一层钝化膜，轻刮到发亮即可（刮下的碎屑进锂废料罐）。', fx(){ S.liState='shiny'; }},
-        {t:'直接用，没什么区别', ok:false, why:'表面钝化层会增加界面阻抗，数据一致性变差。', fx(){ S.liPenalty=10; }},
+        {t:T.use, ok:false, why:'均匀浅灰、哑光是表面钝化层，直接用会增加界面阻抗，数据一致性变差。', fx(){ S.liPenalty=10; }},
+        {t:T.scrape, ok:true, time:2, why:'对。均匀浅灰哑光是正常的钝化层，轻刮到发亮即可（刮下的碎屑进锂废料罐）。', fx(){ S.liState='shiny'; }},
+        {t:T.stop, ok:'soft', time:3, why:'均匀发灰的锂片刮亮还能用；发黑、有斑点才不用。（你换了一片新的。）', fx(){ S.liState='shiny'; }},
       ],
       dark:[
-        {t:'表面发黑、有斑点：不用这片；盖好电解液，检查 O₂/H₂O 读数，报告负责人', ok:true, time:3, why:'对。发黑说明锂片已经被氧化/氮化或受潮（或箱里溶剂蒸气多）——这本身就是气氛出问题的信号。换一片前先确认读数。', fx(){ S.liState='shiny'; }},
-        {t:'刮一刮照样用', ok:false, sev:'minor', vid:'darkLi', why:'严重变色的锂片不能用，而且要查明原因（气氛？存放？）。', fx(){ S.liPenalty=35; }},
+        {t:T.use, ok:false, sev:'minor', vid:'darkLi', why:'发黑、有斑点的锂片不能用（可能已被氧化、氮化或受潮），而且要先查原因。', fx(){ S.liPenalty=35; }},
+        {t:T.scrape, ok:false, sev:'minor', vid:'darkLi', why:'严重变色刮了也不能用，要先查原因。', fx(){ S.liPenalty=35; }},
+        {t:T.stop, ok:true, time:3, why:'对。发黑可能是包装漏气或存放不当，也可能是箱内气氛有问题（接触过 N₂、O₂/H₂O 偏高、溶剂蒸气多）。先确认读数，再换一片新开的；新开的也发黑就停止开锂、报告负责人。', fx(){ S.liState='shiny'; }},
       ],
     }[state];
-    ask({ title:'检查锂片表面', scene: ()=> sceneLi(state), opts, next: liSize });
+    ask({ title:'检查锂片表面', text:'看画面里锂片的颜色和光泽，决定怎么处理。', scene: ()=> sceneLi(state), opts, next: liSize,
+      hint:'银白有光泽 → 直接用；均匀浅灰哑光 → 轻刮到发亮再用；发黑、有斑点 → 不用，查读数、报告。' });
   }
   function liSize(){
     ask({ title:'冲/选锂片尺寸', text:'正极片 Ø14 mm，隔膜 Ø19 mm。锂片用多大？', scene: ()=> sceneLi(S.liState),
       opts:[
-        {t:'Ø15.6 mm：比正极大一点（完全盖住正极），又比隔膜小', ok:true, time:2, why:'对。锂片要盖住正极，同时四周都留在隔膜里面。', fx(){ S.liSize=15.6; }},
-        {t:'Ø19 mm：和隔膜一样大，盖得更全', ok:false, retry:true, why:'和隔膜一样大，锂片边缘稍一偏就越过隔膜碰到正极 = 内短路。'},
-        {t:'Ø12 mm：小一点省锂', ok:false, retry:true, why:'比正极（Ø14）还小，正极边缘没有正对锂片，电流分布不均、数据不可靠。'},
+        {t:'Ø15.6 mm：比正极大一点，又比隔膜小', ok:true, time:2, why:'对。锂片要完全盖住正极，同时四周都留在隔膜里面。', fx(){ S.liSize=15.6; }},
+        {t:'Ø19 mm：和隔膜一样大，正极盖得最完整', ok:false, retry:true, why:'和隔膜一样大，锂片边缘稍一偏就越过隔膜碰到正极 = 内短路。'},
+        {t:'Ø12 mm：比正极略小，不容易越出隔膜', ok:false, retry:true, why:'比正极（Ø14）还小，正极边缘没有正对锂片，电流分布不均、数据不可靠。'},
       ], next: ()=> ask({ title:'压平锂片、处理边角料', scene: ()=> sceneLi(S.liState, 15.6),
         opts:[
-          {t:'隔着 PE 膜用滚轮/平板轻压平；冲下来的锂屑放进带盖的锂废料罐', ok:true, time:2, why:'对。锂屑不能进普通垃圾或纸巾袋。'},
-          {t:'锂屑先放在台面上，最后一起收', ok:false, why:'锂屑到处放容易被带进纸巾袋或电池里；随手放进锂废料罐。'},
-          {t:'锂屑扔进箱内的纸巾废物袋', ok:false, sev:'major', vid:'liTrash', why:'锂屑和纸巾混在一起，带出箱遇潮可能放热、着火。只进专用锂废料罐。'},
+          {t:'隔着 PE 膜轻压平；锂屑进带盖的锂废料罐', ok:true, time:2, why:'对。锂屑不能进普通垃圾或纸巾袋。'},
+          {t:'锂屑先放在台面一角，最后一起收进锂废料罐', ok:false, why:'锂屑到处放容易被带进纸巾袋或电池里；随手放进锂废料罐。'},
+          {t:'锂屑扔进箱内装纸巾的废物袋，最后一起密封', ok:false, sev:'major', vid:'liTrash', why:'锂屑和纸巾混在一起，带出箱遇潮可能放热、着火。只进专用锂废料罐。'},
         ], next: ()=>{ S.cellIdx = 0; startCell(); } }) });
   }
 
@@ -1318,21 +1555,23 @@ GB.modules['game'] = { init(root){
     if(k==='cath') return need==='case'? '先放正极壳（底座），正极片放在壳里。' : '正极片已经放好了。';
     return '顺序不对：现在应该放「'+n+'」。';
   }
+  const nextLayer = c => ()=>{ c.step++; renderXS(); nextPart(); };
   function placePart(k){
     const c = S.cur;
     if(k==='case'){
+      if(S.cellIdx>0){ c.layers.push('case'); log('✓ 正极壳开口朝上放在绝缘垫中央','good'); fb('good','✓ 正极壳开口朝上放好（和第 1 颗一样）。'); nextLayer(c)(); return; }
       ask({ title:'正极壳怎么放？', scene: ()=> sceneBench(),
         opts:[
-          {t:'开口朝上，放在绝缘垫中央', ok:true, why:'对。', fx(){ c.layers.push('case'); }},
-          {t:'开口朝下', ok:false, retry:true, why:'开口朝下就没法往里放零件了。'},
-        ], next: ()=>{ c.step++; renderXS(); nextPart(); } });
+          {t:'开口朝上，放在绝缘垫中央', ok:true, time:0, why:'对。', fx(){ c.layers.push('case'); }},
+          {t:'开口朝下，放在绝缘垫中央', ok:false, retry:true, why:'开口朝下就没法往里放零件了。'},
+        ], next: nextLayer(c) });
       return;
     }
     if(k==='cath'){
       ask({ title:'正极片哪面朝上？', text:'正极片一面是黑色的涂层（活性物质），一面是铝箔。', scene: ()=> sceneBench(),
         opts:[
-          {t:'涂层面朝上（朝向隔膜）', ok:true, why:'对。涂层要面对隔膜和锂片。'},
-          {t:'铝箔面朝上', ok:false, retry:true, why:'放反了：活性物质朝下贴着壳，没有正对隔膜，电池几乎没有容量。'},
+          {t:'涂层面朝上（朝向隔膜）', ok:true, time:0, why:'对。涂层要面对隔膜和锂片。'},
+          {t:'铝箔面朝上（光亮面朝隔膜）', ok:false, retry:true, why:'放反了：活性物质朝下贴着壳，没有正对隔膜，电池几乎没有容量。'},
         ], next: ()=> dragPlace('cath') });
       return;
     }
@@ -1342,102 +1581,149 @@ GB.modules['game'] = { init(root){
     if(k==='spacer'){
       ask({ title:'放垫片', scene: ()=> sceneBench(),
         opts:[
-          {t:'用镊子把垫片居中、平放在锂片上，不碰壳壁', ok:true, why:'对。垫片把弹片的力均匀传给锂片；它通过弹片和负极盖相连，碰到正极壳就会短路。', fx(){ c.layers.push('spacer'); c.off.spacer={x:(c.off.li||{x:0}).x, y:(c.off.li||{y:0}).y}; }},
-          {t:'随手放上去，偏一点没关系', ok:false, why:'垫片偏了会让受力不均；偏到碰壳壁就短路（垫片经弹片和负极盖相连）。', fx(){ c.layers.push('spacer'); c.off.spacer={x:1.5,y:0.6}; hit(c,8,'垫片偏心'); }},
-        ], next: ()=>{ c.step++; renderXS(); nextPart(); } });
+          {t:'用镊子把垫片居中、平放在锂片上，不碰壳壁', ok:true, time:0, why:'对。垫片把弹片的力均匀传给锂片；它通过弹片和负极盖相连，碰到正极壳就会短路。', fx(){ c.layers.push('spacer'); c.off.spacer={x:(c.off.li||{x:0}).x, y:(c.off.li||{y:0}).y}; }},
+          {t:'垫片放上就行，偏一点封口时会被压回到中间', ok:false, why:'垫片偏了会让受力不均；偏到碰壳壁就短路（垫片经弹片和负极盖相连）。封口不会把它压回中间。', fx(){ c.layers.push('spacer'); c.off.spacer={x:1.5,y:0.6}; hit(c,8,'垫片偏心'); }},
+        ], next: nextLayer(c) });
       return;
     }
     if(k==='spring'){
       ask({ title:'放弹片', scene: ()=> sceneBench(),
         opts:[
-          {t:'把弹片放在垫片正中，不歪、不碰壳壁', ok:true, why:'对。', fx(){ c.layers.push('spring'); }},
-          {t:'再加一个弹片，压得更紧', ok:false, retry:true, why:'两个弹片压紧力过大，封口困难、电池可能变形或压坏隔膜（有的组会用两片垫片，但不是两个弹片——以 SOP 为准）。'},
-        ], next: ()=>{ c.step++; renderXS(); nextPart(); } });
+          {t:'把弹片放在垫片正中，不歪、不碰壳壁', ok:true, time:0, why:'对。', fx(){ c.layers.push('spring'); }},
+          {t:'再叠一个弹片上去，压得更紧、接触更稳', ok:false, retry:true, why:'两个弹片压紧力过大，封口困难、电池可能变形或压坏隔膜（有的组会用两片垫片，但不是两个弹片——以 SOP 为准）。'},
+        ], next: nextLayer(c) });
       return;
     }
     if(k==='cap'){
-      ask({ title:'盖上负极盖', scene: ()=> sceneBench(),
+      ask({ title:'盖上负极盖', text:'这时壳沿和壳内上部可能挂着一点电解液。', scene: ()=> sceneBench(),
         opts:[
-          {t:'盖上负极盖，用镊子轻压；从侧面看一圈，确认没有歪斜、密封圈没翻出来', ok:true, why:'对。', fx(){ c.layers.push('cap'); }},
-          {t:'用手指使劲按下去，让它卡住', ok:false, why:'用力按会让里面的零件错位；轻压、放正就行，封口时机器会压紧。', fx(){ c.layers.push('cap'); hit(c,5,'盖帽按压过猛，可能错位'); }},
-        ], next: ()=>{ c.step++; renderXS(); nextPart(); } });
+          {t:'先用无尘纸角吸干壳沿，再盖盖、镊子背轻压、看水平', ok:true, time:0, why:'对。壳沿的电解液会被压进密封圈：封不严、出白色结晶、腐蚀模具。吸的时候别碰隔膜边缘；盖上后从侧面看一圈，确认没有歪斜、密封圈没翻出来。', fx(){ c.layers.push('cap'); }},
+          {t:'壳沿挂着一点液滴，直接盖盖、用镊子背轻压、看水平', ok:false, why:'壳沿的电解液会被压进密封圈：封不严、出白色结晶、腐蚀模具。盖盖子前先用无尘纸一角吸干（别碰隔膜边缘）。', fx(){ c.layers.push('cap'); hit(c,10,'壳沿有电解液就盖盖'); }},
+          {t:'盖上后用镊子尖用力按到卡住，免得转移时滑掉', ok:false, why:'用力按会让里面的零件错位；用镊子背轻压中央、放正就行，封口时机器会压紧。', fx(){ c.layers.push('cap'); hit(c,5,'盖帽按压过猛，可能错位'); }},
+        ], next: nextLayer(c) });
       return;
     }
   }
 
   // ---- drag-to-centre mini game
+  // One set of numbers (TOL) drives the hint, the note colour and the score. The green ring is drawn where the part is judged:
+  // cathode & separator → case centre; lithium → the cathode actually lying underneath (it must also stay ≥0.3 mm inside the separator).
   function dragPlace(k){
     checkpoint(()=>{
       const c = S.cur, C = G.C, K = G.K;
       const R = {cath:G.cath, sep:G.sep, li:G.li}[k];
       const fill = {cath:'#23262b', sep:'#f4f1e6', li:({shiny:'#c3cad3',dull:'#9aa0a7',dark:'#55595f'})[c.liState]}[k];
       const name = {cath:'正极片', sep:'隔膜', li:'锂片'}[k];
-      let pos = {x:550, y:150}, dragging = false, placed = null;
-      const draw = (msg)=>{
-        const off = {x:(pos.x-C.x)/K, y:(pos.y-C.y)/K}; const d = Math.hypot(off.x,off.y);
+      const ref = k==='li' ? (c.off.cath||{x:0,y:0}) : {x:0,y:0};
+      const RX = C.x+ref.x*K, RY = C.y+ref.y*K, refName = k==='li'? '正极片中心' : '壳中心';
+      const cathOff = c.off.cath||{x:0,y:0}, sepOff = c.off.sep||{x:0,y:0};
+      const judge = o=>{
+        const d = Math.hypot(o.x-ref.x, o.y-ref.y);
+        if(k==='sep'){ const m = G.sep - G.cath - Math.hypot(o.x-cathOff.x, o.y-cathOff.y); return {d, m, ok: d<=TOL && m>=0.5, info:' · 盖住正极，四周最少多出 '+m.toFixed(1)+' mm（要 ≥0.5）'}; }
+        if(k==='li'){ const m = G.sep - G.li - Math.hypot(o.x-sepOff.x, o.y-sepOff.y), dW = Math.hypot(o.x,o.y), wall = dW > G.wall - G.li;
+          return {d, m, dW, ok: d<=TOL && m>=0.3 && !wall, info:' · 离隔膜边缘 '+m.toFixed(1)+' mm（要 ≥0.3）'+(wall? ' · 碰到壳壁':'')}; }
+        return {d, ok: d<=TOL, info:''};
+      };
+      const INTRO = '用鼠标或手指把'+name+'拖到绿色虚线圈的中心再松手。'+{cath:'', sep:'隔膜要平躺在壳底正中，并且完全盖住正极片。', li:'绿圈画在下面正极片的实际位置上；锂片还要整片落在隔膜里面。'}[k];
+      const HINT = '偏离在 '+TOL+' mm 以内（落下后提示文字变绿）再确认。'+{cath:'', sep:'隔膜还要盖住正极，四周至少多出 0.5 mm；Ø19 隔膜在内径约 19.4 mm 的壳里几乎没有余量，偏 '+TOL+' mm 以上就会搭上壳壁。', li:'锂片对准正极片（绿圈），并且离隔膜边缘至少 0.3 mm。'}[k];
+      const INSTR = '<p class="small muted">（拖动画面里带红边的零件。键盘：Tab 选中零件，方向键移动 0.5 mm、Shift + 方向键 0.1 mm，Home 移到壳上方，回车放下）</p>';
+      let pos = {x:550, y:150}, dragging = false, placed = null, redos = 0;
+      const offOf = p => ({x:(p.x-C.x)/K, y:(p.y-C.y)/K});
+      const clamp = p => ({x:Math.max(30,Math.min(620,p.x)), y:Math.max(30,Math.min(345,p.y))});
+      const live = ()=>{ const o = offOf(pos), dr = Math.hypot(o.x-ref.x, o.y-ref.y); return '拖动'+name+'，对准绿色虚线圈的中心 · 当前偏离'+refName+' '+(dr>12?'—':dr.toFixed(1)+' mm'); };
+      const focusPart = ()=>{ const g = $('#gmDrag'); if(g) g.focus({preventScroll:true}); };
+      const draw = (msg, cls)=>{
         $('#gmScene').innerHTML = svg('0 0 640 370', benchBase()+trayDeco()+
-          '<circle cx="'+C.x+'" cy="'+C.y+'" r="'+(R*K)+'" fill="none" stroke="#1E7A46" stroke-width="2" stroke-dasharray="6 5"/>'+
-          '<line x1="'+(C.x-12)+'" y1="'+C.y+'" x2="'+(C.x+12)+'" y2="'+C.y+'" stroke="#1E7A46" stroke-width="2"/><line x1="'+C.x+'" y1="'+(C.y-12)+'" x2="'+C.x+'" y2="'+(C.y+12)+'" stroke="#1E7A46" stroke-width="2"/>'+
-          '<g id="gmDrag" style="cursor:grab"><circle cx="'+pos.x+'" cy="'+pos.y+'" r="'+(R*K)+'" fill="'+fill+'" opacity="'+(k==='sep'?0.85:0.92)+'" stroke="#d93025" stroke-width="2"/>'+
+          '<circle class="gm-ring" data-hint="1" cx="'+RX+'" cy="'+RY+'" r="'+(R*K)+'" fill="none" stroke="#1E7A46" stroke-width="2" stroke-dasharray="6 5"/>'+
+          '<line x1="'+(RX-12)+'" y1="'+RY+'" x2="'+(RX+12)+'" y2="'+RY+'" stroke="#1E7A46" stroke-width="2"/><line x1="'+RX+'" y1="'+(RY-12)+'" x2="'+RX+'" y2="'+(RY+12)+'" stroke="#1E7A46" stroke-width="2"/>'+
+          '<g id="gmDrag" data-tx="'+RX+'" data-ty="'+RY+'" tabindex="0" role="button" aria-label="'+name+(placed? '：已放下' : '：方向键移动 0.5 毫米，Shift 加方向键 0.1 毫米，Home 移到壳上方，回车放下')+'" style="cursor:'+(placed?'default':'grab')+'"><circle cx="'+pos.x+'" cy="'+pos.y+'" r="'+(R*K)+'" fill="'+fill+'" opacity="'+(k==='sep'?0.85:0.92)+'" stroke="#d93025" stroke-width="2"/>'+
           '<text x="'+pos.x+'" y="'+(pos.y+5)+'" text-anchor="middle" font-size="15" fill="'+(k==='cath'?'#fff':'#333')+'">'+name+'</text></g>'+
-          '', '拖动对中');
-        note(msg || ('拖动'+name+'，对准绿色虚线圈的中心 · 当前偏离 '+(d>12?'—':d.toFixed(1)+' mm')), msg && /偏离中心/.test(msg)? (Math.hypot(off.x,off.y)<=1? 'good':'') : '');
+          (k==='li' && c.off.cath? '<circle cx="'+RX+'" cy="'+RY+'" r="'+(G.cath*K)+'" fill="none" stroke="#23262b" stroke-width="1.5" stroke-dasharray="3 4" pointer-events="none"/>' : ''),
+          '拖动对中：'+name);
+        note(msg || live(), cls||'');
         const svgEl = $('#gmScene svg'), g = $('#gmDrag'); svgEl.classList.add('dragscene');
         const toSvg = e => { const r = svgEl.getBoundingClientRect(); return { x:(e.clientX-r.left)/r.width*640, y:(e.clientY-r.top)/r.height*370 }; };
-        g.addEventListener('pointerdown', e=>{ e.preventDefault(); dragging = true; g.setPointerCapture && g.setPointerCapture(e.pointerId); });
-        g.addEventListener('pointermove', e=>{ if(!dragging) return; const p = toSvg(e); pos = {x:Math.max(30,Math.min(620,p.x)), y:Math.max(30,Math.min(345,p.y))}; const cg = $('#gmDrag circle'), ct = $('#gmDrag text'); cg.setAttribute('cx',pos.x); cg.setAttribute('cy',pos.y); ct.setAttribute('x',pos.x); ct.setAttribute('y',pos.y+5); const o={x:(pos.x-C.x)/K,y:(pos.y-C.y)/K}; const dd=Math.hypot(o.x,o.y); note('拖动'+name+'，对准绿色虚线圈的中心 · 当前偏离 '+(dd>12?'—':dd.toFixed(1)+' mm')); });
-        const end = ()=>{ if(!dragging) return; dragging = false; drop(); };
+        g.addEventListener('pointerdown', e=>{ if(placed) return; e.preventDefault(); dragging = true; g.setPointerCapture && g.setPointerCapture(e.pointerId); });
+        g.addEventListener('pointermove', e=>{ if(!dragging) return; pos = clamp(toSvg(e)); const cg = $('#gmDrag circle'), ct = $('#gmDrag text'); cg.setAttribute('cx',pos.x); cg.setAttribute('cy',pos.y); ct.setAttribute('x',pos.x); ct.setAttribute('y',pos.y+5); note(live()); });
+        const end = ()=>{ if(!dragging) return; dragging = false; drop(false); };
         g.addEventListener('pointerup', end); g.addEventListener('pointercancel', end);
+        g.addEventListener('keydown', e=>{
+          if(placed) return;
+          const s = (e.shiftKey? 0.1 : 0.5)*K;
+          const mv = {ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,-s],ArrowDown:[0,s]}[e.key];
+          if(e.key==='Home' || (mv && pos.x > C.x + 12*K)){ e.preventDefault(); pos = {x:RX+2.5*K, y:RY-2*K}; if(!mv){ draw(); focusPart(); return; } }
+          if(mv){ e.preventDefault(); pos = clamp({x:pos.x+mv[0], y:pos.y+mv[1]}); draw(); focusPart(); }
+          else if(e.key==='Enter' || e.key===' '){ e.preventDefault(); drop(true); }
+        });
       };
-      const drop = ()=>{
-        let off = {x:(pos.x-C.x)/K, y:(pos.y-C.y)/K};
-        if(Math.hypot(off.x,off.y) > 7){ draw('没放进壳里，再拖一次'); return; }
+      const drop = (byKey)=>{
+        let off = offOf(pos);
+        if(Math.hypot(off.x,off.y) > 7){ draw('没放进壳里，再拖一次','bad'); if(byKey) focusPart(); return; }
         const j = S.L.jitter; if(j){ off = {x: off.x + rnd(-j,j), y: off.y + rnd(-j,j)}; pos = {x:C.x+off.x*K, y:C.y+off.y*K}; }
-        placed = off; const d = Math.hypot(off.x,off.y);
-        draw(name+'落下，偏离中心 '+d.toFixed(2)+' mm'+(j?'（戴着厚手套，手有点抖）':''));
-        renderPlaceActions(d);
+        placed = off; const jd = judge(off);
+        draw(name+'落下，偏离'+refName+' '+jd.d.toFixed(2)+' mm（要 ≤'+TOL+'）'+jd.info+(j?'（戴着厚手套，手有点抖）':''), jd.ok? 'good':'bad');
+        renderPlaceActions(jd);
+        if(byKey || kb){ const b = $('[data-act="confirmPlace"]'); if(b) b.focus(); }
       };
-      const renderPlaceActions = (d)=>{
+      const renderPlaceActions = (jd)=>{
         const acts = $('#gmActs'); acts.innerHTML='';
         const row = el('div',{class:'row'});
-        const ok = el('button',{class:'btn primary',type:'button','data-act':'confirmPlace'},'确认放好');
-        const redo = el('button',{class:'btn',type:'button','data-act':'redoPlace'},'用镊子轻推，重新调整');
+        const ok = el('button',{class:'btn primary',type:'button','data-act':'confirmPlace','data-ok': jd.ok?'1':'0'},'确认放好');
+        // steps F2/F4/F6: only the cathode may be nudged; a wetted separator or lithium is lifted straight up and re-placed (lithium once)
+        const redoTxt = {cath:'用合拢的镊子尖推边缘微调', sep:'趁还没吸湿，竖直提起来重放', li:'竖直提起来重放（只能一次）'}[k];
+        const redo = el('button',{class:'btn',type:'button','data-act':'redoPlace','data-ok': jd.ok?'0':'1'}, redoTxt);
         ok.addEventListener('click',()=>commit());
-        redo.addEventListener('click',()=>{ advance(1); placed = null; pos = {x:C.x+(Math.random()-0.5)*40, y:C.y+(Math.random()-0.5)*40}; draw(); $('#gmPrompt').querySelector('p').textContent = '再对一次中心。'; acts.innerHTML=''; renderHUD(); });
+        redo.addEventListener('click',()=>{
+          redos++;
+          const over = k!=='cath' && redos>1;
+          if(over){
+            // first extra re-place costs 8/10; each further one 3 more, listed once with a count
+            c.rh = c.rh || {}; const n = c.rh[k] = (c.rh[k]||0) + 1;
+            const base = k==='sep'? '隔膜吸湿后又反复提放，可能起皱、把正极带偏' : '锂片碰到湿隔膜后反复提放，锂面和隔膜被扰动';
+            if(n===1) hit(c, k==='sep'? 8 : 10, base);
+            else { c.q = Math.max(0, c.q - 3); const i = c.issues.findIndex(x=>x.startsWith(base)); if(i>=0) c.issues[i] = base+'（多提放了 '+n+' 次）'; }
+            fb('bad','✕ '+(k==='sep'? '隔膜已经吸湿，再挪会起皱、把正极带偏（这颗电池扣分）。' : '锂片已经重放过一次，再挪会把隔膜带偏（这颗电池扣分）。')); }
+          advance(1); placed = null;
+          if(k!=='cath') pos = {x:RX+(Math.random()-0.5)*40, y:RY+(Math.random()-0.5)*40};
+          draw();
+          $('#gmPrompt').querySelector('p').textContent = over? '这次放好就确认。' : k==='cath'? '用镊子尖把正极片推到绿圈正中，再松手。' : '提起来了。再对一次中心。';
+          acts.innerHTML = INSTR; acts.dataset.hint = HINT; renderHUD(); scrollScene(); if(kb || !narrow()) focusPart();
+        });
         row.append(ok, redo); acts.append(row);
-        acts.dataset.hint = '偏离在 1 mm 以内再确认（锂片和隔膜要更准：游戏里锂片相对隔膜不能偏超过约 1.2 mm）。';
+        acts.dataset.hint = HINT;
       };
       const commit = ()=>{
-        advance(1);
-        c.off[k] = placed; c.layers.push(k==='cath'?'cath':k);
+        advance(0);
+        c.off[k] = placed; c.layers.push(k);
         if(k==='li' && S.liDull>2){ hit(c, Math.min(30, S.liDull*2), '锂片在 O₂/H₂O 超标时暴露了约 '+S.liDull+' 分钟'); S.liDull = 0; }
-        const d = Math.hypot(placed.x,placed.y), rel = (a,b)=> Math.hypot((c.off[a]||{x:0}).x-(c.off[b]||{x:0}).x, (c.off[a]||{y:0}).y-(c.off[b]||{y:0}).y);
+        const jd = judge(placed), d = Math.hypot(placed.x,placed.y);
         let msg = '';
         if(k==='cath'){
-          if(d<=0.8) msg = '✓ 很正（偏 '+d.toFixed(2)+' mm）。';
+          if(d<=TOL) msg = '✓ 很正（偏 '+d.toFixed(2)+' mm）。';
           else if(d<=1.6){ hit(c,5,'正极片稍偏'); msg = '△ 稍偏（'+d.toFixed(2)+' mm），还能接受。'; }
           else if(d<=2.8){ hit(c,15,'正极片偏心'); msg = '✕ 偏心 '+d.toFixed(2)+' mm：边缘离壳壁太近，封口时可能被压坏。'; }
           else { hit(c,30,'正极片碰到壳壁'); msg = '✕ 偏了 '+d.toFixed(2)+' mm，正极片边缘已经碰到壳壁。'; }
         }
         if(k==='sep'){
-          const r = rel('sep','cath'), margin = G.sep - G.cath - r;
-          if(margin >= 0.5) msg = '✓ 隔膜完全盖住正极（四周最少留 '+margin.toFixed(1)+' mm）。';
-          else { c.short = true; hit(c,60,'隔膜没完全盖住正极'); msg = '✕ 隔膜偏了，正极边缘露出来（余量 '+margin.toFixed(1)+' mm）：放锂片后正负极会接触 = 内短路。'; }
+          if(jd.m < 0.5){ c.short = true; hit(c,60,'隔膜没完全盖住正极'); msg = '✕ 隔膜偏了，正极边缘露出来（余量 '+jd.m.toFixed(1)+' mm）：放锂片后正负极会接触 = 内短路。'; }
+          else if(d > TOL){ hit(c,10,'隔膜偏向一侧，边缘搭上壳壁、翘起'); msg = '△ 隔膜盖住了正极，但偏离壳中心 '+d.toFixed(2)+' mm：Ø19 隔膜放进内径约 19.4 mm 的壳，四周只有约 0.2 mm 空隙，偏这么多，一边已经顺着壳壁翘起、可能折边。真实操作里趁还没吸湿竖直提起来重放。'; }
+          else msg = '✓ 隔膜平躺在壳底，盖住整片正极（四周最少多出 '+jd.m.toFixed(1)+' mm）。';
         }
         if(k==='li'){
-          const rs = rel('li','sep'), m = G.sep - G.li - rs, rc = rel('li','cath');
-          if(m < 0.3){ c.short = true; hit(c,60,'锂片越过隔膜边缘'); msg = '✕ 锂片边缘越过了隔膜（余量 '+m.toFixed(1)+' mm）= 内短路。'; }
-          else if(rc > G.li - G.cath){ hit(c,10,'锂片没有完全正对正极'); msg = '△ 锂片在隔膜里面，但没有完全盖住正极（偏 '+rc.toFixed(2)+' mm），电流分布会不均匀。'; }
+          if(jd.m < 0.3){ c.short = true; hit(c,60,'锂片越过隔膜边缘'); msg = '✕ 锂片边缘越过了隔膜（余量 '+jd.m.toFixed(1)+' mm）= 内短路。'; }
+          else if(jd.dW > G.wall - G.li){ c.short = true; hit(c,60,'锂片碰到壳壁'); msg = '✕ 锂片偏了 '+jd.dW.toFixed(2)+' mm，边缘碰到了壳壁（壳是正极）= 短路。'; }
+          else if(jd.d > TOL){ hit(c,10,'锂片没有完全正对正极'); msg = '△ 锂片在隔膜里面，但没有完全盖住正极（偏 '+jd.d.toFixed(2)+' mm），电流分布会不均匀。'; }
           else msg = '✓ 锂片在隔膜里面，也完全盖住了正极。';
         }
         fb(msg.startsWith('✓')?'good': msg.startsWith('△')?'neutral':'bad', msg);
         log(name+'：'+msg.replace(/<[^>]+>/g,''), msg.startsWith('✓')?'good':'');
-        c.step++; renderXS(); renderHUD(); nextPart();
+        c.step++; renderXS(); renderHUD(); $('#gmScene').innerHTML = sceneBench(); nextPart();
       };
-      $('#gmPrompt').innerHTML = '<h3>把'+name+'放到正中间</h3><p>用鼠标或手指把'+name+'拖到绿色虚线圈的中心再松手。'+(k==='li'?'锂片要完全落在隔膜里面。':k==='sep'?'隔膜要完全盖住正极片。':'')+'</p>';
-      $('#gmActs').innerHTML = '<p class="small muted">（拖动画面里带红边的零件）</p>';
-      $('#gmActs').dataset.hint = '把零件拖到绿色十字正中再松手。';
+      $('#gmPrompt').innerHTML = '<h3>把'+name+'放到正中间</h3><p>'+INTRO+'</p>';
+      $('#gmActs').innerHTML = INSTR;
+      $('#gmActs').dataset.hint = HINT;
       draw(); renderHUD(); scrollScene();
+      if(kb || !narrow()) focusPart();
     });
   }
 
@@ -1445,46 +1731,65 @@ GB.modules['game'] = { init(root){
   function pipette(k){
     checkpoint(()=>{
       const c = S.cur; let vol = 20, loaded = 0, dispensed = 0;
-      if(!S.over) violate('noOver','minor','还没戴外层丁腈手套就接触电解液。');
+      if(!S.over) violate('noOver','minor','还没戴外层丁腈手套就接触电解液。', '没戴外层丁腈手套就拿电解液', '伸手进箱后先在黑手套外再戴一层丁腈手套');
       const where = k==='ely1'? '正极片' : '隔膜';
+      const needTip = k==='ely1' && S.cellIdx>0;
+      // fixed order within this step, but not the "correct" top-to-bottom order
+      const order = GB.shuffle(['bottle','tip','prewet','aspirate','dispense'].filter(a=> a!=='tip' || needTip));
+      const dispenseAt = (dmm)=>{
+        advance(0); c.ely += loaded; dispensed += loaded; loaded = 0;
+        let m = '滴加完成：这一步 '+dispensed+' µL，累计 '+c.ely+' µL。', kind = 'good';
+        if(dmm > G.wall - 1.5){ hit(c,15,'电解液滴到了壳壁/壳沿：封口时会跑到密封圈上，漏液'); kind = 'bad'; m = '✕ 滴到壳沿上了（离中心 '+dmm.toFixed(1)+' mm）：封口时会跑到密封圈上、漏液。'+m; }
+        else if(dmm > 3){ hit(c,5,'电解液没滴在正中'); kind = 'neutral'; m = '△ 离中心 '+dmm.toFixed(1)+' mm，尽量滴在正中。'+m; }
+        fb(kind, m); render(); renderHUD();
+      };
       const render = ()=>{
         $('#gmScene').innerHTML = sceneBench('<g><rect x="490" y="70" width="44" height="80" rx="8" fill="#eef3f8" stroke="#8d98a5"/><rect x="498" y="'+(S.bottle?50:58)+'" width="28" height="14" fill="#2c6fb7"'+(S.bottle?' transform="rotate(-30 512 57)"':'')+'/><text x="512" y="120" text-anchor="middle" font-size="11" fill="#333">电解液</text>'+
-          '<rect x="560" y="60" width="16" height="100" rx="6" fill="#d9dde3" stroke="#6b7480"/><rect x="563" y="'+(150-Math.min(80,loaded*1.6))+'" width="10" height="'+Math.min(80,loaded*1.6)+'" fill="#5aa9e6"/><text x="568" y="178" text-anchor="middle" font-size="12" fill="var(--text)">'+loaded+' µL</text></g>');
-        $('#gmPrompt').innerHTML = '<h3>在'+where+'上滴加电解液</h3><p>本游戏的设定值：总量 40 µL，两次各 20 µL（真实用量 <span class="labnote">以课题组 SOP 为准</span>）。新枪头先预润洗。这一步已加 <b>'+dispensed+' µL</b>，累计 <b>'+c.ely+' µL</b>。</p>';
+          '<rect x="560" y="60" width="16" height="100" rx="6" fill="#d9dde3" stroke="#6b7480"/><rect x="563" y="'+(150-Math.min(80,loaded*1.6))+'" width="10" height="'+Math.min(80,loaded*1.6)+'" fill="#5aa9e6"/><text x="568" y="178" text-anchor="middle" font-size="12" fill="var(--text)">'+loaded+' µL</text></g>'+
+          (loaded? '<text x="240" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">枪头里有 '+loaded+' µL：点壳的正中滴下去</text>' : ''));
+        $('#gmPrompt').innerHTML = '<h3>在'+where+'上滴加电解液</h3><p>本游戏的设定值：总量 40 µL，两次各 20 µL（真实用量 <span class="labnote">以课题组 SOP 为准</span>）。'+(needTip? '这是新的一颗：先换新枪头。' : '')+'新枪头先预润洗；吸好液以后，<b>点画面里电池的正中</b>滴加（滴到壳沿会漏液）。这一步已加 <b>'+dispensed+' µL</b>，累计 <b>'+c.ely+' µL</b>。</p>';
         const acts = $('#gmActs'); acts.innerHTML='';
-        const vr = el('div',{class:'gm-vol'}, el('span',{class:'small'},'移液枪量程：'));
+        const vr = el('div',{class:'gm-vol'}, el('span',{class:'small'},'设定体积：'));
         [10,20,30,50].forEach(v=>{ const b = el('button',{class:'btn sm'+(v===vol?' on':''),type:'button','data-vol':v}, v+' µL'); b.addEventListener('click',()=>{ vol=v; render(); }); vr.append(b); });
         acts.append(vr);
-        const mk = (t,act,fn)=>{ const b = el('button',{class:'btn',type:'button','data-act':act},t); b.addEventListener('click',fn); acts.append(b); };
+        const B = {};
+        const mk = (t,act,fn)=>{ const b = el('button',{class:'btn',type:'button','data-act':act},t); b.addEventListener('click',fn); B[act] = b; };
         mk(S.bottle? '盖上瓶盖' : '打开瓶盖','bottle',()=>{ advance(0); if(S.bottle){ closeBottle(); log('盖上电解液瓶','good'); } else { openBottle(); log('打开电解液瓶'); } render(); renderHUD(); });
+        if(needTip) mk(c.newTip? '✓ 已换新枪头' : '换新枪头（旧的退进废物袋）','tip',()=>{
+          if(c.newTip) return;
+          if(loaded){ fb('neutral','枪头里还有电解液，先滴完。'); return; }
+          advance(0); c.newTip = true; c.prewet = false; fb('good','换好新枪头。新枪头要先预润洗。'); render();
+        });
         mk(c.prewet? '✓ 枪头已预润洗' : '预润洗枪头（吸放约 3 次）','prewet',()=>{
           if(!S.bottle){ fb('bad','瓶盖还没打开。'); return; }
-          if(c.prewet){ return; }
+          if(c.prewet) return;
           advance(1); c.prewet = true; fb('good','预润洗完成：枪头里的空气被溶剂蒸气饱和，打出来的量更准。'); render(); renderHUD();
         });
         mk('吸取 '+vol+' µL','aspirate',()=>{
           if(!S.bottle){ fb('bad','瓶盖还没打开。'); return; }
           if(loaded){ fb('neutral','枪头里已经有电解液了，先滴加。'); return; }
+          if(needTip && !c.newTip && !c.tipHit){ c.tipHit = true; hit(c,5,'没换枪头：上一颗用过的枪头可能碰过壳沿或台面'); fb('bad','✕ 还在用上一颗的枪头：每颗电池换新枪头（碰过壳沿、台面或锂的枪头不能再伸进电解液瓶）。'); }
+          if(c.t0==null) c.t0 = S.clock;
           advance(1); loaded = vol; S.sub='ely';
-          const ev = S.events.find(e=>e.id==='drip' && !S.fired.has(e.id) && (e.cell==null||e.cell===S.cellIdx));
-          if(ev){ checkpoint(()=>{ render(); renderHUD(); }); return; }
-          render(); renderHUD();
+          if(S.events.some(e=>e.id==='drip' && !S.fired.has('drip') && (e.cell==null||e.cell===S.cellIdx))){ checkpoint(()=>{ render(); renderHUD(); scrollScene(); }, 'drip'); return; }
+          render(); renderHUD(); scrollScene();
         });
-        mk('滴到'+where+'中央','dispense',()=>{
+        mk('滴到'+where+'中央（或点画面）','dispense',()=>{
           if(!loaded){ fb('bad','枪头里没有电解液。'); return; }
-          advance(0); c.ely += loaded; dispensed += loaded; loaded = 0; fb('good','滴加完成：这一步 '+dispensed+' µL，累计 '+c.ely+' µL。'); render(); renderHUD();
+          dispenseAt(0);
         });
+        order.forEach(a=> acts.append(B[a]));
         const done = el('button',{class:'btn primary',type:'button','data-act':'elyDone'},'这一步完成');
         done.addEventListener('click',()=>{
+          if(loaded){ fb('neutral','枪头里还有 '+loaded+' µL 电解液：先滴到'+where+'中央，再结束这一步。'); return; }
           if(!dispensed){ fb('bad','还没滴加电解液。'); return; }
-          if(loaded){ fb('neutral','枪头里还有电解液：滴完或打回瓶里再结束。'); return; }
-          if(S.bottle) violate('bottleLeftOpen'+S.cellIdx+k,'minor','电解液瓶没盖就去做下一步了。随用随盖！');
+          if(S.bottle) violate('bottleLeftOpen'+S.cellIdx+k,'minor','电解液瓶没盖就去做下一步了。随用随盖！', '开着电解液瓶去做下一步', '滴完立刻盖上瓶盖，再做下一步');
           if(!c.layers.includes('ely')) c.layers.push('ely');
-          if(!c.prewet) hit(c,3,'枪头没有预润洗：挥发性溶剂会从枪头滴落，用量不准');
+          if(!c.prewet && !c.prewetHit){ c.prewetHit = true; hit(c,3,'枪头没有预润洗：挥发性溶剂会从枪头滴落，用量不准'); }
           if(k==='ely2'){
             const V0 = 40, dv = (c.ely - V0)/V0;
             if(c.ely < 20){ hit(c,25,'电解液太少（'+c.ely+' µL，设定 '+V0+' µL），隔膜润湿不充分'); c.dry = true; }
-            else if(c.ely > 80){ hit(c,25,'电解液太多（'+c.ely+' µL，设定 '+V0+' µL），封口时会挤到密封圈外'); c.leak = true; }
+            else if(c.ely > 100){ hit(c,25,'电解液太多（'+c.ely+' µL，设定 '+V0+' µL），超过单层 Celgard 常见上限 100 µL，封口时溢到密封圈、漏液'); c.leak = true; }
             else if(Math.abs(dv) > 0.3) hit(c,15,'电解液用量偏离设定值超过 30%（'+c.ely+' µL，设定 '+V0+' µL）');
             else if(Math.abs(dv) > 0.1) hit(c,5,'电解液用量偏离设定值 10–30%（'+c.ely+' µL，设定 '+V0+' µL）');
           }
@@ -1492,10 +1797,23 @@ GB.modules['game'] = { init(root){
           c.step++; renderXS(); renderHUD(); nextPart();
         });
         acts.append(done);
-        acts.dataset.hint = '顺序：打开瓶盖 →（第一次）预润洗 → 吸取 20 µL → 滴到中央 → 盖上瓶盖 → 这一步完成。';
-        acts.querySelector('[data-act="bottle"]').dataset.ok = '1';
+        acts.dataset.hint = '顺序：打开瓶盖 →'+(needTip? ' 换新枪头 →' : '')+'（新枪头）预润洗 → 设定 20 µL → 吸取 → 点壳的正中滴下去（或按「滴到中央」）→ 盖上瓶盖 → 这一步完成。';
+        // level-1 hint: highlight the one control that comes next
+        const nx = loaded ? 'dispense' : dispensed ? (S.bottle ? 'bottle' : 'elyDone') : !S.bottle ? 'bottle' : (needTip && !c.newTip) ? 'tip' : !c.prewet ? 'prewet' : vol!==20 ? null : 'aspirate';
+        if(nx) acts.querySelector('[data-act="'+nx+'"]').dataset.ok = '1';
+        if(!loaded && !dispensed && vol!==20) acts.querySelector('[data-vol="20"]').dataset.ok = '1';
+        // dispensing by pointing at the cell: the distance from the centre is judged
+        if(loaded){
+          const sv = $('#gmScene svg'); sv.style.cursor = 'crosshair';
+          sv.addEventListener('click', e=>{
+            const r = sv.getBoundingClientRect(); const x = (e.clientX-r.left)/r.width*640, y = (e.clientY-r.top)/r.height*370;
+            const d = Math.hypot(x-G.C.x, y-G.C.y)/G.K;
+            if(d > G.case + 2){ fb('neutral','点在电池上（壳里面）才是滴加。'); return; }
+            dispenseAt(d);
+          });
+        }
       };
-      render(); renderHUD(); scrollSide();
+      render(); renderHUD(); scrollSide(); refocus();
     });
   }
 
@@ -1504,42 +1822,44 @@ GB.modules['game'] = { init(root){
     const c = S.cur;
     ask({ title:'把电池移到封口机', scene: ()=> sceneBench(),
       opts:[
-        {t:'用绝缘镊子整体夹住，保持水平，移到封口机下模', ok:true, why:'对。保持水平，里面的零件就不会错位。'},
-        {t:'用手指捏起来拿过去', ok:false, why:'容易倾斜、让里面的零件错位，手套还会沾到电解液；用绝缘镊子。', fx(){ hit(c,5,'转移时倾斜'); }},
+        {t:'用绝缘镊子夹住壳的侧壁，水平移到下模', ok:true, time:0, why:'对。保持水平，里面的零件就不会错位。'},
+        {t:'用金属镊子夹住壳的侧壁平移到下模（还没封口，不会短路）', ok:false, sev:'minor', vid:'metalTweezer', why:'没封口也已经是一颗完整的电池：盖子经弹片、垫片连着锂，壳连着正极。金属镊子一碰到盖子边缘就短路。用塑料镊子夹壳的外侧壁。', fx(){ hit(c,5,'用金属镊子转移'); }},
+        {t:'用手指捏住上下两面拿过去，更稳', ok:false, why:'容易倾斜、让里面的零件错位，手套还会沾到电解液；用绝缘镊子夹侧壁。', fx(){ hit(c,5,'转移时倾斜'); }},
       ], next: crimpStage });
   }
   function crimpStage(){
     setStage('crimp','第 '+(S.cellIdx+1)+' 颗');
-    const c = S.cur;
     ask({ title:'电池怎么放进模具？', scene: ()=> sceneCrimp(0,[60,75]),
       opts:[
-        {t:'负极盖朝上，正极壳朝下，放正在下模中央', ok:true, why:'对（MTI MSK-110 手册的方向；你们的机器以手册为准）。只压一次，到设定值就停，不保压。'},
-        {t:'翻过来，正极壳朝上', ok:false, retry:true, why:'方向反了：卷边会压错位置，电池变形或封不严。'},
-        {t:'放歪一点没关系，机器会压正', ok:false, retry:true, why:'放歪会把壳压变形、密封不严，甚至内短路。'},
+        {t:'负极盖朝上、正极壳朝下，放在下模正中', ok:true, time:0, why:'对（MTI MSK-110 手册写明负极朝上；你们的机器以手册为准）。只压一次；手动液压机（如 MSK-110）到设定值就停、不保压，电动机按本机设定的保压时间走，新手不改参数。'},
+        {t:'正极壳朝上、负极盖朝下，放在下模正中', ok:false, retry:true, why:'方向反了：卷边会压错位置，电池变形或封不严。'},
+        {t:'放进下模就行，有点歪机器会压正', ok:false, retry:true, why:'放歪会把壳压变形、密封不严，甚至内短路。'},
       ], next: ()=> ask({ title:'加压之前', scene: ()=> sceneCrimp(0,[60,75]),
         opts:[
-          {t:'双手离开模具区，确认手套不在下模附近', ok:true, why:'对。封口机压力很大；夹到手套 = 手套箱破损事故。'},
-          {t:'一只手扶着电池防止歪，另一只手压手柄', ok:false, sev:'major', vid:'pinch', why:'手指和手套会被夹伤/夹破。放正以后手离开再加压。'},
+          {t:'双手和手套都离开模具区，再加压', ok:true, time:0, why:'对。封口机压力很大；夹到手套 = 手套箱破损事故。'},
+          {t:'一只手扶住电池防止歪，另一只手压手柄', ok:false, sev:'critical', vid:'pinch', why:'手指和手套会被夹伤、夹破——这就是手套箱破损事故（「装电池详细步骤」的 ⚠ 项）。放正以后两手离开模具区再加压。'},
         ], next: crimpPress }) });
   }
   function crimpPress(){
     checkpoint(()=>{
       const c = S.cur, T = [60,75]; let p = 0, holding = false, raf = null, last = 0, released = false;
+      // level 2–3: the gauge rises at a different speed each time, so the skill is "watch the needle", not "count 2 seconds"
+      const rate = S.level===1? 32 : rnd(24,38);
       let pfill = null, pval = null;
       const draw = ()=>{ $('#gmScene').innerHTML = sceneCrimp(p,T); if(pfill){ pfill.style.width = Math.min(100,p)+'%'; pval.textContent = '压力 '+Math.round(p)+'（绿区 '+T[0]+'–'+T[1]+'）'; } };
-      $('#gmPrompt').innerHTML = '<h3>加压封口</h3><p><b>按住</b>下面的按钮加压，指针进入<b style="color:#1E7A46">绿区</b>（本机设定值，示意）时松手。压力不够会漏液，压过头会把壳压变形。</p>';
+      $('#gmPrompt').innerHTML = '<h3>加压封口</h3><p><b>按住</b>下面的按钮加压，指针进入<b style="color:#1E7A46">绿区</b>（本机设定值，示意）时松手。压力不够会漏液，压过头会把壳压变形。'+(S.level>1? '每次升压快慢不一样，盯着指针。':'')+'</p>';
       const acts = $('#gmActs'); acts.innerHTML='';
-      const btn = el('button',{class:'btn gm-press',type:'button','data-act':'press'},'按住加压');
-      const loop = (t)=>{ if(!holding) return; const dt = last? (t-last)/1000 : 0; last = t; p = Math.min(100, p + 32*dt); draw(); raf = requestAnimationFrame(loop); };
+      const btn = el('button',{class:'btn gm-press',type:'button','data-act':'press','data-ok':'1'},'按住加压');
+      const loop = (t)=>{ if(!holding) return; const dt = last? (t-last)/1000 : 0; last = t; p = Math.min(100, p + rate*dt); draw(); raf = requestAnimationFrame(loop); };
       const down = e=>{ e.preventDefault(); if(released) return; holding = true; last = 0; btn.classList.add('on'); raf = requestAnimationFrame(loop); };
       const up = ()=>{ if(!holding) return; holding = false; released = true; cancelAnimationFrame(raf); btn.classList.remove('on'); finish(); };
       btn.addEventListener('pointerdown',down); btn.addEventListener('pointerup',up); btn.addEventListener('pointerleave',up); btn.addEventListener('pointercancel',up);
-      btn.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter') && !e.repeat){ down(e); } });
-      btn.addEventListener('keyup',e=>{ if(e.key===' '||e.key==='Enter') up(); });
+      btn.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter') && !e.repeat){ down(e); } else if(e.key===' '||e.key==='Enter') e.preventDefault(); });
+      btn.addEventListener('keyup',e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); up(); } });
       const bar = el('div',{class:'gm-pbar'}, el('div',{class:'zone',style:{left:T[0]+'%',width:(T[1]-T[0])+'%'}})); pfill = el('div',{class:'fill',style:{width:'0%'}}); bar.append(pfill);
       pval = el('div',{class:'gm-pval'},'压力 0（绿区 '+T[0]+'–'+T[1]+'）');
       acts.append(pval, bar, btn);
-      acts.dataset.hint = '按住按钮，看指针进绿区（60–75）就松手。';
+      acts.dataset.hint = '按住按钮，盯着指针，进绿区（60–75）就松手。';
       const finish = ()=>{
         if(p < 20){ released = false; p = 0; draw(); fb('neutral','还没压下去：<b>按住不放</b>，看指针走到绿区再松手。'); return; }
         advance(1); c.crimp = Math.round(p);
@@ -1547,85 +1867,128 @@ GB.modules['game'] = { init(root){
         if(p < 50){ c.leak = true; hit(c,30,'封口压力不足（'+c.crimp+'）'); msg = '✕ 压力不够（'+c.crimp+'）：卷边没压紧，容易漏液。'; }
         else if(p < T[0]){ hit(c,8,'封口压力略低'); msg = '△ 压力略低（'+c.crimp+'）。'; }
         else if(p <= T[1]) msg = '✓ 压力在设定范围（'+c.crimp+'）。';
-        else if(p <= 85){ hit(c,10,'封口压力偏高'); msg = '△ 压力偏高（'+c.crimp+'），壳体可能轻微变形。'; }
-        else { hit(c,30,'封口压力过大，壳体变形'); if(Math.random()<0.5) c.short = true; msg = '✕ 压过头了（'+c.crimp+'）：壳体变形，可能把隔膜压坏造成短路。'; }
-        fb(msg[0]==='✓'?'good':msg[0]==='△'?'neutral':'bad', msg); log('封口 '+msg,'');
+        else if(p <= 85){ hit(c,10,'封口压力偏高'); if(Math.random()<0.35) c.soft = true; msg = '△ 压力偏高（'+c.crimp+'），壳体可能轻微变形。'; }
+        else { hit(c,30,'封口压力过大，壳体变形'); const r = Math.random(); if(r<0.4) c.short = true; else if(r<0.8) c.soft = true; msg = '✕ 压过头了（'+c.crimp+'）：壳体变形，可能把隔膜压坏造成短路。'; }
+        // steps F: first drop → crimp in about 3 minutes (interruption time is not counted here; it is scored by the event)
+        const dt = c.t0==null? 0 : S.clock - c.t0 - (c.evT||0);
+        c.openMin = dt;
+        if(dt > 6){ if(S.level>1) hit(c,5,'从吸第一管电解液到封口用了约 '+dt+' 分钟（游戏时间）'); msg += '<br>另外：从吸第一管电解液到封口用了约 '+dt+' 分钟（游戏时间，不算突发情况）；真实操作尽量在 3 分钟左右完成，溶剂会挥发。'; }
+        fb(msg[0]==='✓'?'good':msg[0]==='△'?'neutral':'bad', msg); log('封口 '+msg.replace(/<[^>]+>/g,' '),'');
         c.layers = c.layers.slice(); renderHUD();
         ask({ title:'取出电池', scene: ()=> sceneCrimp(p,T),
           opts:[
-            {t:'先把压力完全泄掉，再取出电池', ok:true, why:'对。', fx(){ p = 0; }},
-            {t:'带着压力直接把电池撬出来', ok:false, sev:'minor', vid:'noRelease', why:'没泄压就取，模具和电池都会受损，手也可能被夹。先完全泄压。', fx(){ p = 0; hit(c,5,'带压取出'); }},
+            {t:'先把压力完全泄掉，等压头回位，再取出电池', ok:true, time:0, why:'对。', fx(){ p = 0; }},
+            {t:'压头还没完全回位，就趁手把电池撬出来，省时间', ok:false, sev:'minor', vid:'noRelease', why:'没泄压就取，模具和电池都会受损，手也可能被夹。先完全泄压、等压头回位。', fx(){ p = 0; hit(c,5,'带压取出'); }},
           ], next: afterCrimp });
       };
-      draw(); renderHUD(); scrollSide();
+      draw(); renderHUD(); scrollSide(); refocus();
     });
   }
   function afterCrimp(){
     const c = S.cur; S.sub = 'after';
-    const next = ()=> ask({ title: c.leak || c.ely>52 ? '模具上沾了电解液' : '取出电池以后', text: c.leak || c.ely>52 ? '下模边缘有一圈溢出的电解液。' : '下一颗之前，模具怎么处理？', scene: ()=> sceneCrimp(0,[60,75]),
+    const wet = c.leak? 2 : (c.ely>52? 1 : 0);
+    const next = ()=> ask({ title: ['取出电池以后','模具边缘沾了一点电解液','下模上沾了不少电解液'][wet],
+        text: ['下一颗之前，模具怎么处理？','封口时挤出来一点电解液，下模边缘有一圈湿痕。下一颗之前，模具怎么处理？','下模和压头上都沾了不少电解液。下一颗之前，模具怎么处理？'][wet],
+        scene: ()=> sceneCrimp(0,[60,75]),
         opts:[
-          {t:'用干燥的无尘纸擦下模、压头和电池外壳，纸巾放进密封废物袋', ok:true, why:'对。每封一颗都擦一下：电解液会腐蚀模具，屑会让下一颗短路。（箱内不用酒精。）'},
-          {t:'看着挺干净，不用擦，接着压下一颗', ok:false, sev:'minor', vid:'dieDirty'+S.cellIdx, why:'每封一颗都要擦：残留的电解液会腐蚀模具、让下一颗卡住；锂屑、金属屑还可能让下一颗短路。'},
+          {t:'用干无尘纸擦下模和压头，纸放进密封废物袋', ok:true, why:'对。每封一颗都擦一下：电解液会腐蚀模具、让下一颗卡住，屑会让下一颗短路。'},
+          {t:'用酒精棉擦下模和压头，纸放进密封的废物袋', ok:false, sev:'minor', vid:'dieAlcohol', why:'箱内不用酒精等醇类：会让净化柱中毒或饱和。用干无尘纸擦。'},
+          {t:'不用擦，接着压下一颗', ok:false, sev:'minor', vid:'dieDirty'+S.cellIdx, why:'每封一颗都要擦：残留的电解液会腐蚀模具、让下一颗卡住；锂屑、金属屑还可能让下一颗短路。'},
         ], next: stageOCV });
     checkpoint(next);
   }
 
-  // ---- 8. OCV
+  // ---- 8. inspect + OCV
   function stageOCV(){
     setStage('ocv','第 '+(S.cellIdx+1)+' 颗');
     const c = S.cur; let dial = null, red = null, black = null, reading = null;
+    const LBL = {cap:'盖子中央', rim:'盖子边缘卷边', bottom:'壳侧壁'};
+    // L3: at most one cell per run reads low even though it was assembled correctly (burr, poor wetting) — the decision is what is scored
+    if(S.level===3 && !S.softDone && !c.short && !c.leak && !c.soft && Math.random()<0.4){ S.softDone = true; c.soft = true; c.softRandom = true; }
+    const V = ()=> c.short ? (c.vShort || (c.vShort = rnd(0.002,0.04))) : c.soft ? (c.vSoft || (c.vSoft = rnd(2.2,2.8))) : (c.ocvBase || (c.ocvBase = rnd(3.18,3.42)));
+    const kbProbe = pt=>{ if(!kb) return; const n = $('#gmScene .gm-probe[data-pt="'+pt+'"]') || $('#gmScene .gm-probe'); if(n) n.focus(); };
     const draw = ()=>{
-      $('#gmScene').innerHTML = sceneMeter(dial, red, black, reading);
-      $('#gmScene').querySelectorAll('.gm-probe').forEach(g=> g.addEventListener('click',()=> probe(g.dataset.pt)));
+      const hp = !dial || black!=null ? null : red==null ? 'bottom' : red==='bottom' ? 'cap' : null;
+      $('#gmScene').innerHTML = sceneMeter(dial, red, black, reading, hp);
+      $('#gmScene').querySelectorAll('.gm-probe').forEach(g=>{
+        g.addEventListener('click',()=> probe(g.dataset.pt));
+        g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); probe(g.dataset.pt); } });
+      });
+    };
+    const inspect = ()=>{
+      const wet = c.leak, spill = !c.leak && c.ely>52, lowCrimp = c.crimp!=null && c.crimp<50;
+      ask({ title:'擦干净，看外观',
+        text: wet ? (lowCrimp? '用干无尘纸擦卷边和上下两面。擦干后，卷边缝里又慢慢渗出一圈液体；卷边有一段压得不平。' : '用干无尘纸擦卷边和上下两面。擦干后，卷边缝里又渗出液体，卷边一圈发白。')
+            : spill ? '用干无尘纸擦卷边：第一遍擦下一点液体（封口时挤出来的），再擦一遍纸是干的；卷边一圈均匀，盖子水平。'
+            : '用干无尘纸擦卷边和上下两面，纸是干的；卷边一圈均匀，盖子水平。',
+        scene: ()=> sceneText([wet? '擦干后，卷边缝里又渗出液体' : spill? '第一遍擦下一点液体，第二遍干了' : '卷边一圈均匀、干燥'], wet?'💧':'🔍'),
+        opts:[
+          {t:'外观正常：直接测 OCV', ok:!wet && !spill, retry: wet||spill, time:0, why: wet? '擦干后还在渗液 = 卷边没封严，不是「正常」。' : spill? '封口时挤出了液体，要在记录表写「封口溢液」（步骤 H1）。' : '对。'},
+          {t:'记录表写「封口溢液」，再测 OCV', ok:spill, retry:!spill, time:0, why: spill? '对。外观没问题，但这颗的电解液偏多，要记下来，以后分析数据时有据可查。' : wet? '不只是溢液：擦干后还在渗，说明卷边没封严。' : '纸是干的，没有溢液，不用写。'},
+          {t:'记录表写「漏液」，测完 OCV 作废', ok:wet, retry:!wet, time:0, why: wet? '对。封口不严的电池会继续漏液、进湿气，不上机（按损坏电池处理）。' : '擦干后没有再渗液、卷边均匀，不是漏液。'},
+        ], next: step1 });
     };
     const step1 = ()=>{
       ask({ title:'万用表打到哪个档？', text:'表笔插在 V 和 COM 孔。', scene: ()=> sceneMeter(null,null,null,null),
         opts:[
           {t:'直流电压档（V⎓）', ok:true, why:'对。纽扣电池是直流。', fx(){ dial='DCV'; }},
-          {t:'电流档（A）', ok:false, retry:true, sev:'minor', vid:'meterA'+S.cellIdx, why:'电流档的内阻几乎为零，表笔一碰就等于把电池短路。'},
+          {t:'电流档（A）', ok:false, retry:true, sev:'minor', vid:'meterA'+S.cellIdx, why:'电流档是低阻通路：红表笔插在 mA/A 孔时（很多便宜表的 V 和 mA 是同一个「VΩmA」孔），表笔一碰电池就是外短路；表笔在独立 V 孔的表打到 A 档一般读不出数，但同样是危险习惯。测电压前先看档位，再看插孔。'},
           {t:'电阻档（Ω）', ok:false, retry:true, why:'电阻档会往电池上加测试电流，读数没有意义，还会给电池加负载。'},
           {t:'交流电压档（V~）', ok:false, retry:true, why:'电池是直流，交流档读不出正确的开路电压。'},
         ], next: step2 });
     };
     const step2 = ()=>{
       red = null; black = null; reading = null; draw();
-      $('#gmPrompt').innerHTML = '<h3>放表笔</h3><p>在画面上<b>先点红表笔</b>的位置，<b>再点黑表笔</b>的位置。</p>';
-      $('#gmActs').innerHTML = '<p class="small muted">（点画面里电池上的圆点）</p>';
-      $('#gmActs').dataset.hint = '红笔点壳底（+），黑笔点盖子中央（−）。';
+      $('#gmPrompt').innerHTML = '<h3>放表笔</h3><p>电池盖朝上放在绝缘垫上。在画面上<b>先点红表笔</b>的位置，<b>再点黑表笔</b>的位置。</p>';
+      $('#gmActs').innerHTML = '<p class="small muted">（点画面里电池旁边的圆点。键盘：Tab 选中圆点，回车放表笔）</p>';
+      $('#gmActs').dataset.hint = '红表笔点壳的侧壁（+），黑表笔点盖子中央（−）。';
       note('先点红表笔的位置，再点黑表笔的位置');
-      renderHUD(); scrollScene();
+      renderHUD(); scrollScene(); kbProbe('cap');
     };
     const probe = (pt)=>{
-      if(!dial) return;
-      if(red==null){ red = pt; draw(); $('#gmPrompt').querySelector('p').innerHTML = '红表笔放在了「'+({cap:'盖子中央',rim:'盖子边缘卷边',bottom:'壳底'})[pt]+'」。现在点<b>黑表笔</b>的位置。'; return; }
-      if(black==null){
-        if(pt===red){ fb('neutral','两支表笔不能放在同一个地方。'); return; }
-        black = pt; advance(1);
-        const base = c.ocvBase || (c.ocvBase = rnd(3.18,3.42));
-        if(red==='rim' || black==='rim'){
-          violate('rim'+S.cellIdx,'minor','卷边属于正极壳。表笔碰到盖子边缘的卷边，测的是壳对壳（读数≈0），而且表笔同时碰到卷边和盖子就会短路。黑笔放在盖子<b>中央</b>。');
-          reading = '0.000'; draw(); $('#gmActs').innerHTML=''; const rb = el('button',{class:'btn primary',type:'button','data-act':'reprobe'},'重新放表笔'); rb.addEventListener('click',step2); $('#gmActs').append(rb); return;
-        }
-        let v = c.short ? rnd(0.002,0.04) : base;
-        if(red==='cap' && black==='bottom') v = -v;
-        reading = (v<0?'-':'')+Math.abs(v).toFixed(3); c.ocv = v; draw();
-        decide(v);
+      if(!dial || black!=null) return;
+      if(red==null){ red = pt; draw(); $('#gmPrompt').querySelector('p').innerHTML = '红表笔放在了「'+LBL[pt]+'」。现在点<b>黑表笔</b>的位置。'; note('红表笔：'+LBL[pt]+' · 现在点黑表笔的位置'); kbProbe(pt); return; }
+      if(pt===red){ fb('neutral','两支表笔不能放在同一个地方。'); return; }
+      black = pt; advance(1);
+      // the crimp rim is part of the positive case: potentials cap 0, rim +V, side wall +V
+      const v0 = V(), P = {cap:0, rim:v0, bottom:v0}, v = P[red] - P[black];
+      reading = (v<0?'-':'')+Math.abs(v).toFixed(3);
+      $('#gmPrompt').querySelector('p').innerHTML = '红表笔：「'+LBL[red]+'」 · 黑表笔：「'+LBL[black]+'」';
+      if(red==='rim' || black==='rim'){
+        const same = red!=='cap' && black!=='cap';
+        violate('rim'+S.cellIdx,'minor','卷边是正极壳翻上来包住盖子的那一圈，紧贴着负极盖。表笔点在卷边上，笔尖一滑就同时碰到卷边和盖子，等于用表笔把电池短路。'+(same? '这次两支表笔都在正极壳上，读数≈0 是「壳对壳」，不是电池短路。' : '（读数本身没错：卷边属于正极壳，所以能读到电压。）')+'红表笔点壳的侧壁，黑表笔点盖子<b>中央</b>。',
+          '表笔点在了「盖子边缘卷边」', '红表笔点壳侧壁，黑表笔点盖子中央');
+        draw(); note('读数 '+reading+' V · 表笔碰到了卷边','bad');
+        $('#gmPrompt').innerHTML = '<h3>重新放表笔</h3><p>表笔离开卷边，按「红表笔壳侧壁、黑表笔盖子中央」再测一次。</p>';
+        $('#gmActs').innerHTML=''; $('#gmActs').dataset.hint = '';
+        const rb = el('button',{class:'btn primary',type:'button','data-act':'reprobe','data-ok':'1'},'重新放表笔'); rb.addEventListener('click',step2); $('#gmActs').append(rb);
+        scrollSide(); refocus(); return;
       }
+      c.ocv = v; draw(); note('读数 '+reading+' V');
+      decide(v);
     };
     const decide = (v)=>{
-      const short = Math.abs(v) < 1.0, neg = v < 0 && !short;
-      ask({ title:'读数 '+reading+' V，怎么处理？', text:'这是 NMC‖Li 半电池：刚封口的正常开路电压大约 3.0–3.5 V；0–1.0 V 判短路（以你们组同一批电池的历史数据为准）。',
+      const short = Math.abs(v) < 1.0, neg = v < 0 && !short, soft = !short && !neg && Math.abs(v) < 3.0;
+      const keepOk = !short && !neg && !c.leak && !soft, discOk = (short || c.leak) && !neg;
+      const leakWhy = (c.crimp!=null && c.crimp<50 ? '读数虽然正常，但封口压力不足（'+c.crimp+'），卷边没压紧' : '读数虽然正常，但电解液加得太多（'+c.ely+' µL），封口时溢到了密封圈')+'——按漏液/损坏电池处理。';
+      ask({ title:'读数 '+reading+' V，怎么处理？',
+        text:(c.leak? '<b>外观检查：</b>卷边在渗液。' : '')+'这是 NMC‖Li 半电池：刚封口的正常开路电压大约 3.0–3.5 V；0–1.0 V 判短路；1.0 V 到 3.0 V 先复测（以你们组同一批电池的历史数据为准）。',
         scene: ()=> sceneMeter(dial, red, black, reading),
         opts:[
-          {t:'读数正常：保留，准备标记存放', ok: !short && !neg && !c.leak, why: c.leak? '读数虽然正常，但这颗电池漏液了（外壳有电解液、封口压力不足）——漏液的电池按损坏电池处理。' : (short? '接近 0 V 的半电池是内短路，不能保留。' : (neg? '读数是负的：多半是表笔接反了，先检查测量方法。' : '对。')),
-           fx(){ if(!short && !neg && !c.leak) c.verdict='keep'; }, next: !short && !neg && !c.leak? stageStore : null, retry: !( !short && !neg && !c.leak)},
-          {t:'作废：内短路或漏液的电池，单独用绝缘胶带包好，放进报废电池盒', ok: (short || c.leak) && !neg, why: (short||c.leak)? '对。'+(short?'半电池接近 0 V = 内短路。':'漏液的电池按损坏电池处理。')+'报废电池每颗单独绝缘包好。' : '这颗电池的读数没有问题（或者只是表笔接反），不要轻易作废。',
-           fx(){ if((short||c.leak) && !neg) c.verdict='discard'; }, next: (short||c.leak) && !neg? stageStore : null, retry: !((short||c.leak) && !neg)},
-          {t:'先检查测量方法（档位、表笔位置），再测一次', ok: neg, why: neg? '对。读数大小正常但为负 = 表笔接反了：红笔应在壳底（+），黑笔在盖子中央（−）。' : '测量方法没问题，读数可信。',
-           fx(){ }, next: neg? step2 : null, retry: !neg},
+          {t:'读数正常：保留，准备标记存放', ok: keepOk, retry: !keepOk, why: c.leak? leakWhy : short? '接近 0 V 的半电池是内短路，不能保留。' : neg? '读数是负的：多半是表笔接反了，先检查测量方法。' : soft? reading+' V 低于 NMC‖Li 的参考范围 3.0–3.5 V，但又不是 0：可能是软短路（毛刺、锂屑、隔膜被压坏）或浸润差，不能直接保留。' : '对。上机前再测一次。',
+           fx(){ if(keepOk) c.verdict='keep'; }, next: keepOk? stageStore : null},
+          {t:'作废：单独用绝缘胶带包好，放进报废电池盒', ok: discOk? true : (soft && !c.leak? 'soft' : false), retry: !discOk && !soft,
+           why: discOk? '对。'+(short?'半电池接近 0 V = 内短路。':'漏液的电池按损坏电池处理。')+'报废电池每颗单独绝缘包好。' : soft? '可以，但先复测能分清是软短路还是浸润慢。' : '这颗电池的读数没有问题（或者只是表笔接反），不要轻易作废。',
+           fx(){ if(discOk || soft) c.verdict='discard'; }, next: (discOk || soft)? stageStore : null},
+          {t:'先不上机：标记可疑，10–30 分钟后复测', ok: soft && !c.leak? true : (neg? false : 'soft'), retry: !(soft && !c.leak),
+           why: soft && !c.leak? '对（步骤 H4）。低于参考范围但不是 0：可能是软短路或浸润慢，复测再判断。' : neg? '负值先查表笔位置和档位，不用等。' : short? '读数接近 0：复测可以，但半电池接近 0 V 多半就是内短路。' : c.leak? '这颗在漏液，不用等复测。' : '读数在正常范围，可以直接保留；上机前再测一次即可。',
+           next: soft && !c.leak? ()=>{ advance(15); c.ocv2 = Math.abs(v) - rnd(0.1,0.25); c.verdict='discard'; c.recheckMsg = '15 分钟后复测：'+c.ocv2.toFixed(3)+' V，还在往下掉 → 按软短路作废，单独用绝缘胶带包好。'; log(c.recheckMsg,''); stageStore(); } : null},
+          {t:'先检查档位和表笔位置，再测一次', ok: neg? true : 'soft', retry: !neg,
+           why: neg? '对。读数大小正常但为负 = 表笔接反了：红表笔应在壳的侧壁（+），黑表笔在盖子中央（−）。' : short? '读数接近 0：再测一次可以，但多半是内短路。' : '测量方法没问题，读数可信；多测一次不扣分。',
+           next: neg? step2 : null},
         ]});
     };
-    step1();
+    inspect();
   }
 
   // ---- 9. store
@@ -1633,14 +1996,14 @@ GB.modules['game'] = { init(root){
     setStage('store','第 '+(S.cellIdx+1)+' 颗');
     const c = S.cur;
     if(c.verdict==='discard'){
-      fb('neutral','这颗电池已作废（绝缘胶带包好，放进报废盒）。');
-      c.stored = false; S.cells.push(c); nextCellOrCleanup(); return;
+      fb('neutral',(c.recheckMsg? c.recheckMsg+'<br>' : '')+'这颗电池已作废（绝缘胶带包好，放进报废盒）。');
+      c.stored = false; S.cells.push(c); checkpoint(nextCellOrCleanup); return;
     }
     ask({ title:'标记并存放', scene: sceneTray,
       opts:[
-        {t:'用绝缘镊子夹起；编号写在电池盒格位上（或壳的侧面）；单独放一格', ok:true, why:'对。编号不要写在盖面、壳底这些夹具接触面上；电池之间不能互相接触。', fx(){ c.stored = true; }},
-        {t:'编号用记号笔写在盖子中央', ok:false, why:'盖子中央是夹具的接触面，墨水会让接触不良、数据噪声大。写在格位或壳的侧面。', fx(){ c.stored = true; hit(c,5,'编号写在接触面上'); }},
-        {t:'叠在上一颗电池上面，省地方', ok:false, sev:'major', vid:'stackCells', why:'上一颗的壳碰到下一颗的盖 = 串联/短路。每颗单独一格。', fx(){ c.stored = true; hit(c,15,'叠放存放'); }},
+        {t:'绝缘镊子夹起，编号写在格位旁，单独放一格', ok:true, why:'对。编号不要写在盖面、壳底这些夹具接触面上（要写就写在壳的侧壁）；电池之间不能互相接触。', fx(){ c.stored = true; }},
+        {t:'绝缘镊子夹起，编号写在盖子中央，单独放一格', ok:false, why:'盖子中央是夹具的接触面，墨水会让接触不良、数据噪声大。写在格位旁或壳的侧壁。', fx(){ c.stored = true; hit(c,5,'编号写在接触面上'); }},
+        {t:'绝缘镊子夹起，和上一颗叠在同一格，节省格位', ok:false, sev:'major', vid:'stackCells', why:'上一颗的壳碰到下一颗的盖 = 串联/短路。每颗单独一格。', fx(){ c.stored = true; hit(c,15,'叠放存放'); }},
       ], next: ()=>{ S.cells.push(c); $('#gmScene').innerHTML = sceneTray(); nextCellOrCleanup(); } });
   }
   function nextCellOrCleanup(){
@@ -1667,38 +2030,39 @@ GB.modules['game'] = { init(root){
       ],
       after(bad, miss){
         if(!miss.find(m=>m.t.startsWith('电解液瓶'))) closeBottle();
-        if(S.bottle) violate('bottleEnd','minor','离开时电解液瓶还开着。');
+        if(S.bottle) violate('bottleEnd','minor','离开时电解液瓶还开着。', '离开时没盖电解液瓶', '离开前拧紧电解液瓶盖');
         if(!miss.find(m=>m.t.startsWith('剩下的锂片'))) S.li='resealed';
-        else violate('liOpenEnd','minor','锂片没有收回密封容器就离开。');
+        else violate('liOpenEnd','minor','锂片没有收回密封容器就离开。', '剩下的锂片敞着', '剩下的锂片放回密封袋/容器');
       },
       next: stageExit });
   }
 
-  // ---- 11. exit & log
+  // ---- 11. exit & log  (antechamber is loaded while the hands are still in; then arms out; then outside)
   function stageExit(){
     setStage('exit');
     const A = S.ante; A.items='box';
     ask({ title:'电池盒怎么带出去？', scene: sceneAnte,
       opts:[
-        {t:'电池盒装进密封盒（或自封袋），废物袋也密封好，一起带出', ok:true, why:'对。出箱的东西都要先密封。'},
-        {t:'电池盒直接放进过渡舱就行', ok:false, why:'带出箱、在楼里转移电池时，要放在密封的二次容器里。'},
+        {t:'电池盒装进密封盒，废物袋封好，一起带出', ok:true, why:'对。出箱的东西都要先密封。'},
+        {t:'电池盒直接放进过渡舱，废物袋口折一下压住就行', ok:false, why:'沾电解液的废物要密封（遇湿空气会水解出 HF）；带出箱、在楼里转移电池时，要放在密封的二次容器里。'},
       ], next: ()=> ask({ title:'过渡舱现在是什么状态？', text:'你进箱后没有动过它：两门关着，里面是箱内的惰性气体，压力在 0 附近，阀门 Close。',
         scene: sceneAnte,
         opts:[
-          {t:'从箱内打开内门，放入电池盒和废物袋，关紧内门', ok:true, why:'对。过渡舱里是惰性气、状态清楚，可以直接开内门。（如果状态不明，要先做完整循环。）', fx(){ A.inner=true; A.items='ante'; A.inner=false; }},
-          {t:'先去箱外把外门打开，再回来开内门放东西', ok:false, sev:'critical', vid:'exitBoth', why:'外门开过之后舱里就是空气；再开内门就把空气放进箱子了（相当于两门先后打开、没做循环）。', fx(){ bump(25,3); A.items='ante'; }},
-        ], next: ()=> ask({ title:'抽手', text:'箱压 +'+fmt1(S.boxP)+' mbar。', scene: sceneAnte,
+          {t:'从箱内开内门，放入电池盒和废物袋，关紧内门', ok:true, why:'对。过渡舱里是惰性气、状态清楚，可以直接开内门。（如果状态不明，要先抽手、在箱外做完整循环。）', fx(){ A.inner=true; A.items='ante'; A.inner=false; }},
+          {t:'先到箱外打开外门，再回来开内门放电池盒和废物袋', ok:false, sev:'critical', vid:'exitBoth', why:'外门开过之后舱里就是空气；再开内门就把空气放进箱子了（相当于两门先后打开、没做循环）。', fx(){ bump(25,3); A.items='ante'; }},
+        ], next: ()=> ask({ title:'抽手', text: ()=> '箱压 +'+fmt1(S.boxP)+' mbar。抽手会让箱压往下掉。', scene: sceneAnte,
           opts:[
-            {t:'脱掉外层丁腈手套；抽手前先短踩右踏板 Refill，再一只一只慢慢抽出', ok:true, why:'对。抽手会让箱压下降，先补一点气，箱压就不会掉到 0 以下。', fx(){ S.arms=0; S.over=false; S.boxP = 1.6; }},
-            {t:'两只手一起猛地抽出来', ok:false, sev:'major', vid:'armsOutFast', why:'箱压一下子掉到负值，手套被吸进去，室内空气可能渗入。', fx(){ S.arms=0; S.over=false; S.boxP = -6.3; bump(0.4,0.3); }},
+            {t:'脱掉外层丁腈手套；每抽一只前短踩 Refill，慢慢抽，箱压不低于 0', ok:true, why:'对。抽手会让箱压下降：抽每只手之前先短踩一下右踏板 Refill（本箱踏板标签；换别的箱子先看标签）补一点气，再慢慢抽出；箱压还在往下掉就再短踩，不让它低于 0（和「装电池详细步骤」一致）。', fx(){ S.arms=0; S.over=false; S.boxP = 1.6; }},
+            {t:'脱掉外层丁腈手套，两只手一起抽出来，抽完再踩 Refill 把箱压补回来', ok:false, sev:'major', vid:'armsOutFast', why:'两只手一起抽，箱压一下子掉到负值，手套被吸进去，室内空气可能渗入；事后再补气已经晚了。一只一只慢慢抽，每只抽之前先短踩 Refill。', fx(){ S.arms=0; S.over=false; S.boxP = -6.3; bump(0.4,0.3); }},
+            {t:'外层丁腈手套留在箱体手套上，每抽一只前短踩 Refill，慢慢抽', ok:false, why:'沾过电解液、锂屑的外层手套要在箱内脱下、放进废物袋，不留给下一个人。', fx(){ S.arms=0; S.over=false; S.boxP = 1.6; }},
           ], next: ()=> ask({ title:'在箱外取出电池盒', scene: sceneAnte,
             opts:[
-              {t:'隔着窗确认内门关紧、阀门在 Close，再打开外门取出', ok:true, why:'对。', fx(){ A.outer=true; A.items='room'; A.p='air'; }},
-              {t:'阀门转到 Refill 再开外门，好开一点', ok:false, sev:'major', vid:'outerValve2', why:'开外门时阀门必须在 Close。', fx(){ A.outer=true; A.items='room'; A.p='air'; }},
+              {t:'隔窗确认内门关紧、阀门 Close，开外门取出', ok:true, why:'对。', fx(){ A.outer=true; A.items='room'; A.p='air'; }},
+              {t:'阀门转到 Refill 再开外门，门好开一点，省力', ok:false, sev:'major', vid:'outerValve2', why:'开外门时阀门必须在 Close。', fx(){ A.outer=true; A.items='room'; A.p='air'; }},
             ], next: ()=> ask({ title:'取出以后', scene: sceneAnte,
               opts:[
-                {t:'关好外门 → 阀门 Evacuate 抽真空 → 阀门回到 Close（把干净的过渡舱留给下一个人）', ok:true, time:3, why:'对（多数实验室的要求；以你们的 SOP 为准）。', fx(){ A.outer=false; A.p='vac'; A.valve='close'; }},
-                {t:'关上外门就走', ok:false, why:'舱里现在是空气；按多数实验室的规定，要抽成真空留给下一个人，并在记录本里写清楚。', fx(){ A.outer=false; }},
+                {t:'关外门，抽成真空，阀门回到 Close', ok:true, time:3, why:'对：把干净的过渡舱留给下一个人（多数实验室的要求；以你们的 SOP 为准），并在记录本里写清楚。', fx(){ A.outer=false; A.p='vac'; A.valve='close'; }},
+                {t:'关外门，阀门留在 Refill 保持常压，方便下一个人开门', ok:false, why:'舱里现在是空气；阀门留在 Refill 还会一直耗氩气。按多数实验室的规定，关外门后抽成真空、阀门回到 Close（以 SOP 为准）。', fx(){ A.outer=false; }},
               ], next: stageLog }) }) }) }) });
   }
   function stageLog(){
@@ -1718,41 +2082,62 @@ GB.modules['game'] = { init(root){
     S.ended = true;
     const safety = Math.max(0, 100 - S.viol.reduce((a,v)=>a+SEV[v.sev],0));
     const cells = S.cells.length? S.cells : [];
-    const kept = cells.filter(c=>c.verdict==='keep');
-    // a cell that is kept but secretly bad shouldn't happen; discarded good cells lower score
-    cells.forEach(c=>{ if(c.verdict==='discard' && !c.short && !c.leak) hit(c,20,'好电池被误判作废'); });
-    const quality = cells.length? Math.round(cells.reduce((a,c)=> a + (c.short||c.leak? Math.min(c.q,20) : c.q),0)/cells.length) : 0;
+    cells.forEach(c=>{ if(c.verdict==='discard' && !c.short && !c.leak && !c.soft) hit(c,20,'好电池被误判作废'); });
+    // a random defect the player handled correctly is not counted in the quality score
+    const excluded = c => c.softRandom && c.verdict==='discard';
+    const cq = c => (c.short||c.leak||c.soft? Math.min(c.q,20) : c.q);
+    const scored = cells.filter(c=>!excluded(c));
+    const quality = scored.length? Math.round(scored.reduce((a,c)=> a + cq(c),0)/scored.length) : 0;
     const proc = Math.max(0, 100 - 4*S.mistakes.length);
     const total = Math.round(0.45*safety + 0.35*quality + 0.2*proc);
-    const crit = S.viol.some(v=>v.sev==='critical');
-    let rank = total>=90 && !crit ? 'S' : total>=78 && !crit ? 'A' : total>=62 ? 'B' : 'C';
-    const title = {S:'流程扎实：可以申请负责人现场考核了', A:'基本掌握：再看看扣分点', B:'还需要练习：重点看违规项', C:'先回去看「装电池详细步骤」，再来一次'}[rank];
+    const crit = S.viol.some(v=>v.sev==='critical'), maj = S.viol.some(v=>v.sev==='major');
+    const rank = total>=90 && !crit && !maj ? 'S' : total>=78 && !crit ? 'A' : total>=62 ? 'B' : 'C';
+    const TITLE = {S:'流程扎实：可以申请负责人现场考核了', A:'基本掌握：再看看扣分点', B:'还需要练习：重点看违规项', C:'先回去看「装电池详细步骤」，再来一次'};
+    // only level 3 (no hints, 3 cells, events) can suggest the supervisor's hands-on sign-off
+    const title = S.level<3 && rank==='S' ? '第 '+S.level+' 关通过'+(S.hints? '（用了 '+S.hints+' 次提示）' : '')+'：去挑战第 '+(S.level+1)+' 关'+(S.level===1? '（没有提示、有突发情况）' : '（3 颗电池、3 个突发情况）')
+      : S.level<3 && rank==='A' ? '基本掌握：看看扣分点，再去挑战第 '+(S.level+1)+' 关' : TITLE[rank];
     const best = GB.store.get('game-best',{});
     if(!best[S.level] || best[S.level].total < total){ best[S.level] = {total, rank}; GB.store.set('game-best', best); }
-    if(rank==='S' || rank==='A') GB.markDone('game');
+    if((rank==='S' || rank==='A') && S.level>=2 && !S.hints) GB.markDone('game');
     const end = $('#gmEnd'); end.innerHTML='';
     const top = el('div',{class:'card'},
-      el('div',{class:'gm-end-top'}, el('div',{class:'gm-rank '+rank}, rank),
-        el('div',null, el('div',{class:'small muted'},'第 '+S.level+' 关（'+S.L.name+'）· 用时 '+Math.round(S.clock-9*60)+' 分钟（游戏时间）'),
-          el('h2',{style:{margin:'2px 0 4px'}}, title), el('div',{class:'small muted'}, '总分 '+total+' = 安全 ×0.45 + 电池质量 ×0.35 + 操作规范 ×0.2'))),
+      el('div',{class:'gm-end-top'}, el('div',{class:'gm-rank '+rank,'aria-label':'等级 '+rank}, rank),
+        el('div',null, el('div',{class:'small muted'},'第 '+S.level+' 关（'+S.L.name+'）· 用时 '+Math.round(S.clock-9*60)+' 分钟（游戏时间）'+(S.L.hints? ' · 用了 '+S.hints+' 次提示' : '')),
+          el('h2',{style:{margin:'2px 0 4px'}}, title), el('div',{class:'small muted'}, '总分 '+total+' = 安全 ×0.45 + 电池质量 ×0.35 + 操作规范 ×0.2'+(maj && total>=90? '（有违规项，不评 S）' : '')))),
       el('div',{class:'gm-scores'},
         el('div',{class:'readout'}, el('div',{class:'lbl'},'安全'), el('div',{class:'val'}, String(safety))),
         el('div',{class:'readout'}, el('div',{class:'lbl'},'电池质量'), el('div',{class:'val'}, String(quality))),
         el('div',{class:'readout'}, el('div',{class:'lbl'},'操作规范'), el('div',{class:'val'}, String(proc))),
         el('div',{class:'readout'}, el('div',{class:'lbl'},'最高 O₂ / H₂O'), el('div',{class:'val'}, S.maxO2.toFixed(1)+' / '+S.maxH2O.toFixed(1)))));
+    if(S.level===1) top.append(el('div',{class:'callout lab small',style:{marginBottom:'0'}},
+      el('b',null,'第 1 关用来熟悉流程，不算完成本页；'), '通过第 2 关（没有提示）才算。',
+      S.hintLog.length? el('div',{style:{marginTop:'4px'}}, '你在这些步骤看了提示（第 2 关没有提示，先把它们记住）：'+S.hintLog.join('；')) : el('div',{style:{marginTop:'4px'}},'这一局没有看提示。')));
     end.append(top);
+    // what to fix first: the worst violations, each with the correct action and a link to the steps page
+    const SEVORD = {critical:0, major:1, minor:2};
+    const secOf = v => /^ev-/.test(v.id)? 'X' : STEP_SEC[v.stage];
+    const stepBtn = sec => (GB.modules.steps && sec)? el('button',{class:'btn sm ghost',type:'button',style:{marginTop:'6px'},onclick:()=>{ GB.go('steps'); const d = document.getElementById('st-'+sec); if(d){ d.open = true; d.scrollIntoView({block:'start'}); } }},'看「装电池详细步骤」'+sec+' 部分 →') : null;
+    const plan = S.viol.slice().sort((a,b)=>SEVORD[a.sev]-SEVORD[b.sev]).slice(0,4);
+    if(plan.length) end.append(el('div',{class:'callout warn gm-plan',style:{marginTop:'14px'}}, el('div',{class:'ct'},'下次先改这几条'),
+      el('ol',{class:'small'}, ...plan.map(v=> el('li',null, el('b',null, STAGE_NAME[v.stage]+'：'), v.fix? v.fix : v.text.replace(/<[^>]+>/g,''))))));
     const cg = el('div',{class:'gm-cells',style:{marginTop:'14px'}});
     cells.forEach(c=>{
-      const status = c.verdict==='discard'? '已作废' : (c.short? '内短路' : c.leak? '漏液' : '合格');
-      cg.append(el('div',{class:'gm-cell'}, el('div',{class:'small muted'},'电池 #'+c.n+' · '+status+(c.ocv!=null? ' · OCV '+Math.abs(c.ocv).toFixed(3)+' V':'')+(c.crimp!=null? ' · 封口 '+c.crimp:'')+' · 电解液 '+c.ely+' µL'),
-        el('div',{class:'q'}, (c.short||c.leak? Math.min(c.q,20) : c.q)+' 分'),
+      const status = c.verdict==='discard'? (c.soft? '软短路，复测后作废'+(c.softRandom? '（随机缺陷，不计分）':'') : '已作废') : (c.short? '内短路' : c.leak? '漏液' : '合格');
+      cg.append(el('div',{class:'gm-cell'}, el('div',{class:'small muted'},'电池 #'+c.n+' · '+status+(c.ocv!=null? ' · OCV '+Math.abs(c.ocv).toFixed(3)+' V':'')+(c.crimp!=null? ' · 封口 '+c.crimp:'')+' · 电解液 '+c.ely+' µL'+(c.openMin? ' · 加液到封口 '+c.openMin+' 分钟':'')),
+        el('div',{class:'q'}, excluded(c)? '不计分' : cq(c)+' 分'),
+        c.softRandom? el('div',{class:'small muted'},'读数偏低是随机缺陷（比如冲片毛刺、浸润慢），不是你的操作造成的；计分看的是你的处理。') : null,
         c.issues.length? el('ul',null, ...c.issues.map(i=>el('li',null,i))) : el('div',{class:'small',style:{color:'var(--ok)'}},'没有扣分项')));
     });
     end.append(el('h3',{style:{marginTop:'18px'}},'你的电池'), cg);
     const vl = el('div',{class:'card',style:{marginTop:'14px'}}, el('div',{class:'card-title'},'违规与失误（共 '+(S.viol.length+S.mistakes.length)+' 项）'));
     if(!S.viol.length && !S.mistakes.length) vl.append(el('p',{style:{color:'var(--ok)'}},'没有违规，也没有失误。'));
-    S.viol.forEach(v=> vl.append(el('div',{class:'callout '+(v.sev==='critical'?'danger':v.sev==='major'?'danger':'warn'),style:{margin:'8px 0'}}, el('div',{class:'ct'}, ({critical:'严重违规 −30',major:'违规 −15',minor:'小失误 −5'})[v.sev]+' · '+STAGE_NAME[v.stage]+(v.cell?' · 第 '+v.cell+' 颗':'')), el('div',{class:'small',html:v.text}))));
-    if(S.mistakes.length) vl.append(el('details',{class:'acc'}, el('summary',null,'操作规范扣分（选错后重选、漏选等）'), el('div',{class:'acc-body'}, el('ul',{class:'small'}, ...S.mistakes.map(m=>el('li',{html:STAGE_NAME[m.stage]+'：'+m.text}))))));
+    S.viol.forEach(v=> vl.append(el('div',{class:'callout gm-viol '+(v.sev==='minor'?'warn':'danger'),style:{margin:'8px 0'}},
+      el('div',{class:'ct'}, ({critical:'严重违规 −30',major:'违规 −15',minor:'小失误 −5'})[v.sev]+' · '+STAGE_NAME[v.stage]+(v.cell?' · 第 '+v.cell+' 颗':'')),
+      v.did? el('div',{class:'small'}, el('b',null,'你的操作：'), v.did) : null,
+      el('div',{class:'small',html:'<b>为什么不行：</b>'+v.text}),
+      v.fix? el('div',{class:'small'}, el('b',null,'正确做法：'), v.fix) : null,
+      stepBtn(secOf(v)))));
+    if(S.mistakes.length) vl.append(el('details',{class:'acc'}, el('summary',null,'操作规范扣分（选错后重选、漏选等，共 '+S.mistakes.length+' 项）'), el('div',{class:'acc-body'}, el('ul',{class:'small'}, ...S.mistakes.map(m=>el('li',{html:STAGE_NAME[m.stage]+'：'+m.text}))))));
     end.append(vl);
     const row = el('div',{class:'row',style:{marginTop:'14px'}},
       el('button',{class:'btn primary',type:'button',onclick:()=>start(S.level)},'再玩一次'),
