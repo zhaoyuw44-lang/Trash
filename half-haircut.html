@@ -328,6 +328,46 @@ svg .arrow{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round}
 svg .arrowP{fill:none;stroke:var(--panel);stroke-width:2.2;stroke-linecap:round}
 svg .arrowC{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-linecap:round}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* 零基础版新增 */
+.answer{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px 22px;display:grid;gap:8px}
+.answer .eyebrow{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.ans-big{font-family:var(--f-display);font-size:clamp(34px,5vw,48px);line-height:1.05;letter-spacing:.02em}
+.ans-big .arr{color:color-mix(in srgb,var(--paper) 55%,transparent);margin:0 .2em}
+.ans-sub{color:color-mix(in srgb,var(--paper) 82%,transparent);font-size:14.5px}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;align-items:start}
+.rule svg{grid-row:span 2;width:84px;height:84px;background:var(--paper);border-radius:6px}
+.rule h3{font-size:17px}
+.rule p{color:var(--muted);font-size:14px}
+.rule .rn{font:600 12px var(--f-mono);color:var(--accent);display:block;margin-bottom:2px}
+.adv{margin-top:6px}
+.adv-toggle{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;margin:12px 0 4px}
+.adv-toggle input{accent-color:var(--accent);width:16px;height:16px}
+.bigrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+.bigrow input[type=number]{font-size:20px;width:4.4em;padding:6px 8px}
+.gloss-h{font-weight:700;margin:4px 0 10px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px}
+.gl{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:start}
+.gl svg{width:56px;height:56px;background:var(--paper);border-radius:6px;display:block}
+.gl h3{font-size:15.5px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+.gl h3 small{font:500 11.5px var(--f-mono);color:var(--muted)}
+.gl p{font-size:13.5px;color:var(--muted);margin-top:3px}
+.use{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+.use.need{background:var(--accent);color:var(--panel)}
+.use.nice{background:var(--accent-soft);color:var(--ink)}
+.use.no{background:var(--soft);color:var(--muted);font-weight:500}
+.have{font-size:12px;color:var(--muted);margin-left:6px}
+.why{color:var(--muted)}
+.why b{color:var(--ink)}
+.how{display:grid;gap:6px;padding-left:1.4em}
+.how li{padding-left:2px}
+.ok{display:flex;gap:8px;align-items:flex-start;font-size:14px;padding:8px 12px;border-radius:6px;background:var(--accent-soft)}
+.ok svg{width:18px;height:18px;flex:none;margin-top:3px}
+.ok-i{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.red{color:var(--cut);font-weight:700}
+.term{font:500 12px var(--f-mono);color:var(--muted)}
 </style>
 
 <div class="wrap">
@@ -335,75 +375,86 @@ svg .arrowC{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-linecap:round}
   <svg id="tape" class="tape" aria-hidden="true"></svg>
   <div class="hero-grid">
     <div>
-      <p class="eyebrow">一套理发器 · 只剪掉一半长度</p>
+      <p class="eyebrow">零基础 · 在家把头发剪短一半</p>
       <h1>居家对半剪</h1>
-      <p class="lead">先填好每个区域现在多长、手边有哪些工具。页面会算出每处该留多少、该推还是该剪，再按你的情况排出完整流程和每一步的示意图。全程只守一条规矩：<strong>宁长勿短，分两轮剪</strong>。</p>
+      <p class="lead" id="heroLead"></p>
     </div>
-    <dl class="facts">
-      <div><dt>剃</dt><dd>剃刀，或不装卡尺的推子。留 0–1 mm，长度几乎归零。</dd></div>
-      <div><dt>推</dt><dd>推子装卡尺。留下的长度等于卡尺高度，常见最长 12–25 mm。</dd></div>
-      <div><dt>剪</dt><dd>剪刀配手指。手指停在哪里就留多长，长度不限。</dd></div>
-    </dl>
+    <div class="answer" id="answer"></div>
   </div>
 </header>
 
+<section id="rules-sec">
+  <div class="sec-head"><p class="eyebrow">开始之前</p><h2>只要记住三件事</h2></div>
+  <div class="rules" id="rules"></div>
+</section>
+
 <section id="bench">
-  <div class="sec-head"><p class="eyebrow">一 · 诊断</p><h2>你的头发和工具</h2></div>
+  <div class="sec-head"><p class="eyebrow">第一部分 · 你的情况</p><h2>告诉页面你的头发和工具</h2></div>
+  <p class="sec-lead">已经按 18 cm 填好了。不确定的地方保持默认就行，改了任何一项，下面的流程会自动跟着变。</p>
   <div class="bench-grid">
     <form id="inputs" class="panel inputs" autocomplete="off">
-      <fieldset><legend>先套一个接近的起点</legend><div class="presets" id="presets"></div></fieldset>
-      <fieldset><legend>现在每个区域多长</legend><p class="hint">捏住一缕头发拉直，从头皮量到发梢。编号和右边侧面图上的编号对应。</p><div id="zones"></div></fieldset>
+      <fieldset>
+        <legend>头发大概多长</legend>
+        <p class="hint">怎么量：捏住一撮头发拉直，用尺子从头皮量到发梢。</p>
+        <div class="bigrow"><input type="range" id="len-all" min="1" max="60" step="0.5" aria-label="头发长度"><span class="numwrap"><input type="number" id="num-all" min="1" max="60" step="0.5" inputmode="decimal" aria-label="头发长度，厘米"><span>cm</span></span></div>
+        <label class="adv-toggle" for="adv"><input type="checkbox" id="adv">我的头发前后、左右长短差很多，想分别填</label>
+        <div id="zones" class="adv" hidden></div>
+      </fieldset>
       <div class="two">
-        <fieldset><legend>发质</legend><div class="chips" id="tex"></div></fieldset>
-        <fieldset><legend>发量</legend><div class="chips" id="den"></div></fieldset>
+        <fieldset><legend>头发是直的还是卷的</legend><div class="chips" id="tex"></div></fieldset>
+        <fieldset><legend>头发多不多</legend><div class="chips" id="den"></div></fieldset>
       </div>
       <fieldset><legend>谁来剪</legend><div class="chips" id="who"></div></fieldset>
-      <fieldset><legend>工具箱里有什么</legend><p class="hint">点一下切换有 / 没有。缺的东西，流程里会给替代办法。</p><div class="toolgrid" id="tools"></div></fieldset>
-      <fieldset id="guardSet"><legend>有哪些卡尺（限位梳）</legend><p class="hint" id="guardHint">卡尺侧面印着数字，单位是 mm。</p><div class="chips" id="guards"></div></fieldset>
+      <fieldset><legend>手边有哪些东西</legend><p class="hint">点一下切换“有 / 没有”。下面第二部分会解释每样东西是干什么的。</p><div class="toolgrid" id="tools"></div></fieldset>
+      <fieldset id="guardSet"><legend>推子附带的卡尺</legend><p class="hint" id="guardHint">卡尺是套在推子上的塑料梳齿套，上面印着数字（单位 mm）。勾上你有的。</p><div class="chips" id="guards"></div></fieldset>
     </form>
-
     <div class="results">
       <div class="verdict" id="verdict" aria-live="polite"></div>
       <figure class="panel profile">
-        <svg id="profile" role="img" aria-label="侧面轮廓：深色是保留的头发，浅色是要剪掉的部分，红色虚线是最终剪切线"></svg>
+        <svg id="profile" role="img" aria-label="侧面图：深色是留下的头发，浅色是要剪掉的部分，红色虚线是最后剪到的位置"></svg>
         <figcaption class="legend">
-          <span><i class="sw keep"></i>保留的一半</span>
+          <span><i class="sw keep"></i>留下的一半</span>
           <span><i class="sw off"></i>剪掉的一半</span>
-          <span><i class="sw cut"></i>最终剪切线</span>
-          <span>按真实比例绘制，左下角有 10 cm 比例尺</span>
+          <span><i class="sw cut"></i>最后剪到这里</span>
+          <span>按真实比例画，左下角是 10 cm</span>
         </figcaption>
       </figure>
       <div class="panel" id="ztable"></div>
-      <figure class="panel cover">
-        <figcaption><b>推子够得着哪些区域</b>每一行是一个区域：深色是保留的长度，浅色是剪掉的部分，红色竖线是第一刀的位置，圆点是最终长度。圆点落在蓝色区里，才能用推子。</figcaption>
-        <svg id="cover" role="img" aria-label="各区域目标长度与推子卡尺可达范围的对比"></svg>
-      </figure>
       <ul class="alerts" id="alerts"></ul>
     </div>
   </div>
 </section>
 
+<section id="gloss-sec">
+  <div class="sec-head"><p class="eyebrow">第二部分 · 认识工具和用词</p><h2>这些东西是干什么的</h2></div>
+  <p class="sec-lead">每张卡片下面写着这次用不用得上。流程里出现的几个说法，也在这里先解释一遍。</p>
+  <p class="gloss-h">工具</p>
+  <div class="gloss" id="glossTools"></div>
+  <p class="gloss-h" style="margin-top:22px">流程里会用到的几个说法</p>
+  <div class="gloss" id="glossTerms"></div>
+</section>
+
 <section id="compare">
-  <div class="sec-head"><p class="eyebrow">二 · 剃、推、剪</p><h2>长度是由什么决定的</h2></div>
-  <p class="sec-lead">三种方式决定留多长的东西不一样：剃刀贴着头皮，推子靠卡尺的高度，剪刀靠手指的位置。所以“剪掉一半”能不能用推子，只看一件事：一半的长度有没有超过你最长的卡尺。</p>
+  <div class="sec-head"><p class="eyebrow">第三部分 · 为什么</p><h2>剃、推、剪，有什么不一样</h2></div>
+  <p class="sec-lead">很多人以为有推子就能剪短一点。其实推子留多长，完全由卡尺决定，卡尺最长也就一两厘米。看下面三张图就明白了。</p>
   <div class="cmp-grid" id="cmpGrid"></div>
   <div class="cmp-table tablewrap"><table id="cmpTable"></table></div>
 </section>
 
 <section id="flow">
-  <div class="sec-head"><p class="eyebrow">三 · 流程</p><h2 id="flowTitle">你的剪发流程</h2></div>
+  <div class="sec-head"><p class="eyebrow">第四部分 · 一步一步做</p><h2 id="flowTitle">你的剪发流程</h2></div>
   <div class="flow-head" id="flowTags"></div>
   <div class="progress"><div class="pbar"><span id="pbar"></span></div><span class="mono" id="pcount">0 / 0</span><button type="button" class="linkbtn" id="resetDone">清空勾选</button></div>
   <ol class="steps" id="steps"></ol>
 </section>
 
 <section id="cases-sec">
-  <div class="sec-head"><p class="eyebrow">四 · 意外情况</p><h2>出了状况怎么办</h2></div>
-  <p class="sec-lead">标着“和你有关”的几条，是按你上面填的情况挑出来的，建议开剪前先读一遍。</p>
+  <div class="sec-head"><p class="eyebrow">第五部分 · 出了状况</p><h2>出问题了怎么办</h2></div>
+  <p class="sec-lead">标着“和你有关”的，是按你的情况挑出来的，开剪前读一遍。</p>
   <div class="cases" id="cases"></div>
 </section>
 
-<p class="foot">数值按“剪掉一半长度”计算；头发平均每月长 1–1.5 cm。卡尺数字以你手上那套的实际印字为准。</p>
+<p class="foot">头发平均每月长 1–1.5 cm。卡尺数字以你手上那套的实际印字为准。</p>
 </div>
 
 <script>
@@ -411,42 +462,38 @@ svg .arrowC{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-linecap:round}
 'use strict';
 const $=s=>document.querySelector(s);
 const cm=v=>{const r=Math.round(v*10)/10;return Number.isInteger(r)?String(r):r.toFixed(1);};
+const hc=v=>{const r=Math.round(v*2)/2;return Number.isInteger(r)?String(r):r.toFixed(1);};
 let UID=0;const uid=p=>p+(++UID);
-const esc=s=>String(s);
 
 /* ---------- 数据 ---------- */
 const ZONES=[
-  {k:'front',name:'刘海 / 前额',short:'刘海',n:1},
+  {k:'front',name:'前面 / 额头',short:'前面',n:1},
   {k:'top',name:'头顶',short:'头顶',n:2},
-  {k:'side',name:'两侧（耳上）',short:'两侧',n:3},
-  {k:'back',name:'后脑 / 后颈',short:'后脑',n:4}
+  {k:'side',name:'两侧（耳朵上面）',short:'两侧',n:3},
+  {k:'back',name:'后脑 / 脖子后面',short:'后脑',n:4}
 ];
-const PRESETS={
-  buzz:{label:'寸头长长了',sub:'2–3 cm',len:{front:3,top:3,side:2,back:2}},
-  grown:{label:'几个月没剪',sub:'7–12 cm',len:{front:12,top:11,side:7,back:8}},
-  bob:{label:'齐下巴',sub:'20–28 cm',len:{front:20,top:28,side:24,back:26}},
-  long:{label:'过肩长发',sub:'35–45 cm',len:{front:35,top:45,side:42,back:45}}
-};
 const TOOLS=[
-  {k:'clipper',name:'电推剪',note:'理发器主机'},
-  {k:'scissors',name:'平剪',note:'理发剪刀'},
+  {k:'clipper',name:'推子',note:'电动理发器'},
+  {k:'scissors',name:'理发剪刀',note:'也叫平剪'},
   {k:'thinning',name:'打薄剪',note:'一边带齿'},
-  {k:'comb',name:'梳子',note:'细齿最好'},
-  {k:'clips',name:'分区夹',note:'长尾夹也行'},
+  {k:'comb',name:'梳子',note:'细齿的'},
+  {k:'clips',name:'夹子',note:'长尾夹也行'},
   {k:'spray',name:'喷壶',note:'湿毛巾也行'},
-  {k:'ties',name:'发圈',note:'橡皮筋也行'},
-  {k:'mirror2',name:'第二面镜子',note:'或手机录像'},
-  {k:'cape',name:'围布',note:'旧床单也行'}
+  {k:'ties',name:'皮筋',note:'扎头发用'},
+  {k:'mirror2',name:'小镜子',note:'或用手机'},
+  {k:'cape',name:'围布',note:'垃圾袋也行'}
 ];
 const GUARDS=[3,6,9,12,16,19,22,25];
-const DEFAULT={len:{...PRESETS.grown.len},texture:'straight',density:'medium',who:'self',
+const DEFAULT={simple:true,L:18,len:{front:18,top:18,side:18,back:18},texture:'straight',density:'medium',who:'self',
   tools:{clipper:true,scissors:true,thinning:true,comb:true,clips:false,spray:false,ties:false,mirror2:false,cape:true},
   guards:[3,6,9,12]};
-const SKEY='halfcut-state-v1',DKEY='halfcut-done-v1';
+const SKEY='halfcut-state-v2',DKEY='halfcut-done-v2';
 function load(){
   let s=null;try{s=JSON.parse(localStorage.getItem(SKEY)||'null');}catch(e){s=null;}
   const d=JSON.parse(JSON.stringify(DEFAULT));
   if(s&&typeof s==='object'){
+    if(typeof s.simple==='boolean')d.simple=s.simple;
+    if(+s.L>=1&&+s.L<=60)d.L=+s.L;
     if(s.len)for(const z of ZONES){const v=+s.len[z.k];if(v>=1&&v<=60)d.len[z.k]=v;}
     if(['straight','wavy','curly'].includes(s.texture))d.texture=s.texture;
     if(['thin','medium','thick'].includes(s.density))d.density=s.density;
@@ -463,11 +510,12 @@ function saveDone(d){try{localStorage.setItem(DKEY,JSON.stringify(d));}catch(e){
 
 /* ---------- 计算 ---------- */
 function compute(){
+  if(state.simple)ZONES.forEach(z=>{state.len[z.k]=state.L;});
   const t=state.tools,hasClipper=!!t.clipper,sc=!!t.scissors;
   const firstKeep=state.texture==='straight'?0.6:0.65;
   const guards=hasClipper?[...state.guards].sort((a,b)=>a-b):[];
   const maxG=guards.length?guards[guards.length-1]:0;
-  const long=state.len.back>=18;
+  const long=state.len.back>=25;
   const zones=ZONES.map(z=>{
     const L=state.len[z.k],fin=L*0.5,first=L*firstKeep,tmm=fin*10;
     let pick=null;
@@ -484,6 +532,7 @@ function compute(){
   else if(sc)mode=(hasClipper&&zones.some(z=>z.gOK))?'mixed':'scissors';
   else if(hasClipper)mode='finger';
   else mode='none';
+  const topL=state.len.top;
   zones.forEach(z=>{
     let m;
     if(mode==='clipper')m='clip';
@@ -491,7 +540,7 @@ function compute(){
     else if(mode==='ponytail')m=z.k==='front'?(z.L>=18?'tail':'cut'):(z.L>=15?'tail':'cut');
     else if(mode==='finger')m='finger';
     else m='cut';
-    if(m==='cut'&&z.k==='front')m='bangs';
+    if(m==='cut'&&z.k==='front'&&z.L<=12&&z.L<topL*0.8)m='bangs';
     z.method=m;
   });
   const usesScissors=zones.some(z=>z.method==='cut'||z.method==='bangs')||(mode==='ponytail'&&sc);
@@ -500,21 +549,21 @@ function compute(){
     tailCut:state.len.back*(1-firstKeep),tailCut2:state.len.back*(firstKeep-0.5),noTool:!sc&&!hasClipper};
 }
 const MODE={
-  clipper:{title:'用推子推（装卡尺）',ans:'推。装卡尺推，不是剃',diff:2,time:'15–25 分钟',flow:'推子流程'},
-  scissors:{title:'用剪刀剪（指间剪法）',ans:'剪。推子留不了这么长',diff:4,time:'40–70 分钟',flow:'剪刀流程'},
-  mixed:{title:'短的区域推，长的区域剪',ans:'两样都用',diff:3,time:'35–60 分钟',flow:'推＋剪流程'},
-  ponytail:{title:'低马尾法：量好，一次剪',ans:'剪。长发用马尾法最稳',diff:2,time:'15–30 分钟',flow:'马尾流程'},
-  finger:{title:'应急：推子指间法',ans:'只有推子，但要当剪刀用',diff:5,time:'50–80 分钟',flow:'推子指间流程'},
-  none:{title:'先备一把理发平剪',ans:'剪',diff:4,time:'40–70 分钟',flow:'剪刀流程'}
+  clipper:{title:'用推子推（一定要装卡尺）',short:'推子',ans:'推（装卡尺推，不是剃）',diff:2,time:'15–25 分钟',flow:'推子版'},
+  scissors:{title:'用剪刀剪，不用推子',short:'剪刀',ans:'剪',diff:3,time:'45–75 分钟',flow:'剪刀版'},
+  mixed:{title:'短的地方用推子，长的地方用剪刀',short:'推子＋剪刀',ans:'两样都用',diff:3,time:'40–60 分钟',flow:'推子＋剪刀版'},
+  ponytail:{title:'扎一个马尾，一次剪掉',short:'马尾法',ans:'剪（马尾法）',diff:2,time:'15–30 分钟',flow:'马尾版'},
+  finger:{title:'没有剪刀：拿推子当剪刀用（应急）',short:'推子代替剪刀',ans:'只能用推子，但要像剪刀一样用',diff:5,time:'50–80 分钟',flow:'应急版'},
+  none:{title:'先买一把理发剪刀',short:'剪刀',ans:'剪',diff:3,time:'45–75 分钟',flow:'剪刀版'}
 };
 function methodLabel(z){
-  if(z.method==='clip')return `推 · ${z.pick} mm 卡尺`;
-  if(z.method==='bangs')return '剪 · 竖着剪';
+  if(z.method==='clip')return `推子 · ${z.pick} mm 卡尺`;
+  if(z.method==='bangs')return '剪刀 · 竖着剪';
   if(z.method==='tail')return '马尾一次剪';
-  if(z.method==='finger')return '推子指间法';
-  return '剪 · 指间剪';
+  if(z.method==='finger')return '推子代替剪刀';
+  return '剪刀';
 }
-const METHOD_SHORT={clip:'推',cut:'剪',bangs:'剪',tail:'马尾',finger:'推子指间'};
+const METHOD_SHORT={clip:'推',cut:'剪',bangs:'剪',tail:'马尾',finger:'推子代剪'};
 function guardNote(z){
   if(z.method!=='clip')return '';
   const d=z.pick-z.tmm;
@@ -524,6 +573,8 @@ function guardNote(z){
 const zt=z=>`<span class="zt"><i>${z.n}</i>${z.short}</span>`;
 const V=v=>`<span class="val">${v}</span>`;
 const VC=v=>`<span class="valc">${v}</span>`;
+const mainZone=c=>c.mode==='ponytail'?c.zones.find(z=>z.k==='back'):c.zones.find(z=>z.k==='top');
+
 
 /* ---------- SVG 基础件 ---------- */
 function T(x,y,s,cls,anchor){return `<text class="${cls||'lbl'}" x="${(+x).toFixed(1)}" y="${(+y).toFixed(1)}"${anchor?` text-anchor="${anchor}"`:''}>${s}</text>`;}
@@ -657,8 +708,8 @@ function artMeasure(L,first,fin,clipMode){
     if(clipMode)s+=`<line class="hs" x1="${x}" y1="${bot-2}" x2="${x}" y2="${yf}"/><line class="ho" x1="${x}" y1="${yf}" x2="${x}" y2="${top}"/>`;
     else s+=`<line class="hs" x1="${x}" y1="${bot-2}" x2="${x}" y2="${yf}"/><line class="hm" x1="${x}" y1="${yf}" x2="${x}" y2="${y1}"/><line class="ho" x1="${x}" y1="${y1}" x2="${x}" y2="${top}"/>`;}
   s+=`<circle class="skin" cx="122" cy="${top-4}" r="6"/><circle class="skin" cx="133" cy="${top-2}" r="6"/>`;
-  if(!clipMode)s+=`<line class="cutl" x1="108" y1="${y1}" x2="146" y2="${y1}"/>`+T(150,y1-3,`第一刀 ${cm(first)} cm`,'lblc num');
-  s+=`<line class="cutd" x1="108" y1="${yf}" x2="146" y2="${yf}"/>`+T(150,yf+13,`最终 ${cm(fin)} cm`,'lblk num');
+  if(!clipMode)s+=`<line class="cutl" x1="108" y1="${y1}" x2="146" y2="${y1}"/>`+T(150,y1-3,`第一次 ${hc(first)} cm`,'lblc num');
+  s+=`<line class="cutd" x1="108" y1="${yf}" x2="146" y2="${yf}"/>`+T(150,yf+13,`最后 ${hc(fin)} cm`,'lblk num');
   s+=T(150,top+12,'剪掉的是发梢','lbl');
   return wrap(s,`量长度：现在 ${cm(L)} cm，第一刀留 ${cm(first)} cm，最终留 ${cm(fin)} cm`);
 }
@@ -668,7 +719,7 @@ function artSection(){
   s+=`<ellipse class="secfill" cx="${cx}" cy="${cy}" rx="46" ry="58"/>`;
   s+=`<path class="cutl" d="M${cx-24} 36 Q${cx} 46 ${cx+24} 36 M${cx-24} 36 L${cx-26} 92 M${cx+24} 36 L${cx+26} 92 M${cx-45} 92 Q${cx} 100 ${cx+45} 92 M${cx-38} 116 Q${cx} 124 ${cx+38} 116"/>`;
   s+=clipIcon(cx,66,0.55,90)+clipIcon(cx-36,70,0.5,80)+clipIcon(cx+36,70,0.5,100)+clipIcon(cx,106,0.5,0);
-  const L=[[cx+8,30,'刘海',34],[cx+10,58,'头顶',58],[cx+40,82,'两侧',82],[cx+22,104,'后脑上层',106],[cx+16,130,'后脑下层',132]];
+  const L=[[cx+8,30,'前面',34],[cx+10,58,'头顶',58],[cx+40,82,'两侧',82],[cx+22,104,'后脑上层',106],[cx+16,130,'后脑下层',132]];
   L.forEach(a=>{s+=`<line class="dim" x1="${a[0]}" y1="${a[1]}" x2="156" y2="${a[3]-4}"/>`+T(160,a[3],a[2],'lblk');});
   return wrap(s,'俯视图：刘海、头顶、两侧、后脑上下层五个分区');
 }
@@ -679,7 +730,7 @@ function artFingerCut(L,keep,tool,lab){
   s+=fingers(116,y+12,0,1,58)+`<line class="cutl" x1="86" y1="${y}" x2="150" y2="${y}"/>`;
   s+=tool==='clipper'?clipper(152,y-9,180,0.66,0):scissors(184,y-4,180,0.95,10);
   s+=`<line class="dim" x1="70" y1="${bot-9}" x2="70" y2="${y}" marker-start="url(#${id})" marker-end="url(#${id})"/>`;
-  s+=T(64,(y+bot-9)/2+4,`留 ${cm(keep)} cm`,'lblk num','end')+T(140,top+10,'剪掉','lbl');
+  s+=T(64,(y+bot-9)/2+4,`留 ${hc(keep)} cm`,'lblk num','end')+T(140,top+10,'剪掉','lbl');
   if(tool==='clipper')s+=T(200,y+30,'不装卡尺','lblc','middle');
   return wrap(s,lab||`手指夹住发片，手指停在离头皮 ${cm(keep)} cm 处，剪掉手指外侧`);
 }
@@ -716,7 +767,7 @@ function artSides(L,keep){
   let s=`<defs>${mk(id)}</defs>`+headFront(80,80,1.4);
   for(let i=0;i<5;i++){const y=58+i*3;s+=`<line class="hs" x1="${x0}" y1="${y}" x2="${xc}" y2="${y}"/><line class="ho" x1="${xc}" y1="${y}" x2="${x0+len}" y2="${y+(i-2)*1.5}"/>`;}
   s+=fingers(xc-12,64,90,1,46)+`<line class="cutl" x1="${xc}" y1="40" x2="${xc}" y2="92"/>`+scissors(xc+2,118,-90,1.05,10);
-  s+=`<line class="dim" x1="${x0}" y1="34" x2="${xc}" y2="34" marker-start="url(#${id})" marker-end="url(#${id})"/>`+T((x0+xc)/2,28,`留 ${cm(keep)} cm`,'lblk num','middle');
+  s+=`<line class="dim" x1="${x0}" y1="34" x2="${xc}" y2="34" marker-start="url(#${id})" marker-end="url(#${id})"/>`+T((x0+xc)/2,28,`留 ${hc(keep)} cm`,'lblk num','middle');
   s+=T(6,16,'另一只手按住耳朵','lbl');
   return wrap(s,`两侧：头发垂直头皮拉出，手指竖着夹住，留 ${cm(keep)} cm`);
 }
@@ -757,12 +808,12 @@ function artOutline(hasClipper){
 }
 function artSecond(name,L,first,fin){
   const x0=64,W=126,w=v=>v/L*W;
-  const rows=[['原长',L,'barOff'],['第一刀后',first,'barMid'],['最终',fin,'barKeep']];
+  const rows=[['现在',L,'barOff'],['第一次后',first,'barMid'],['最终',fin,'barKeep']];
   let s=T(120,12,`以${name}为例`,'lbl','middle');
-  rows.forEach((r,i)=>{const y=26+i*40;s+=`<rect class="${r[2]}" x="${x0}" y="${y}" width="${w(r[1]).toFixed(1)}" height="16" rx="3"/>`+T(x0-6,y+12,r[0],'lbl','end')+T(x0+w(r[1])+6,y+12,cm(r[1])+' cm','lblk num');});
+  rows.forEach((r,i)=>{const y=26+i*40;s+=`<rect class="${r[2]}" x="${x0}" y="${y}" width="${w(r[1]).toFixed(1)}" height="16" rx="3"/>`+T(x0-6,y+12,r[0],'lbl','end')+T(x0+w(r[1])+6,y+12,hc(r[1])+' cm','lblk num');});
   const id=uid('m');
   s+=`<defs>${mk(id,'mkc')}</defs><path class="arrowC" d="M${(x0+w(first)).toFixed(1)} 86 Q${(x0+w(first)+10).toFixed(1)} 96 ${(x0+w(fin)+3).toFixed(1)} 104" marker-end="url(#${id})"/>`;
-  s+=T(x0+w(first)+16,100,`再剪 ${cm(first-fin)} cm`,'lblc num');
+  s+=T(x0+w(first)+16,100,`再剪 ${hc(first-fin)} cm`,'lblc num');
   return wrap(s,`两轮剪：${cm(L)} cm 先剪到 ${cm(first)} cm，再修到 ${cm(fin)} cm`);
 }
 function artClean(hasClipper){
@@ -998,91 +1049,149 @@ function renderProfile(c){
   el.innerHTML=s;
 }
 
-/* ---------- 覆盖范围图 ---------- */
-function renderCover(c){
-  const el=$('#cover');const W=Math.max(300,Math.round(el.parentElement.clientWidth-40)||520);
-  const rowH=34,top=44,n=c.zones.length,H=top+rowH*n+28;
-  const left=50,rightCol=W<420?112:136,right=W-rightCol,pw=right-left;
-  const maxL=Math.max(...c.zones.map(z=>z.L));
-  let R=Math.max(maxL,c.maxG/10*1.2,2);
-  const step=R<=4?0.5:R<=8?1:R<=16?2:R<=40?5:10;
-  R=Math.ceil(R/step-1e-9)*step;
-  const X=v=>left+v/R*pw;
-  let s='';
-  if(c.maxG>0){const bx=X(c.maxG/10);s+=`<rect class="cv-band" x="${left}" y="${top-12}" width="${Math.max(2,bx-left).toFixed(1)}" height="${rowH*n+12}"/>`;
-    s+=`<text class="cv-head" x="${left}" y="16"><tspan class="k">■</tspan> 蓝色区：推子能留到的长度（≤ ${c.maxG} mm）</text>`;}
-  else s+=`<text class="cv-head" x="${left}" y="16">没有可用的推子卡尺，全部靠剪刀</text>`;
-  const nt=Math.round(R/step),every=pw/nt<28?2:1;
-  for(let i=0;i<=nt;i++){const v=i*step,x=X(v);s+=`<line class="cv-grid" x1="${x.toFixed(1)}" y1="${top-12}" x2="${x.toFixed(1)}" y2="${top+rowH*n}"/>`;if(i%every===0||i===nt)s+=`<text class="cv-tick" x="${x.toFixed(1)}" y="${top+rowH*n+16}" text-anchor="middle">${cm(v)}${i===nt?' cm':''}</text>`;}
-  c.zones.forEach((z,i)=>{const y=top+rowH*i+rowH/2;
-    s+=`<g><title>${z.name}：现在 ${cm(z.L)} cm，第一刀后 ${cm(z.first)} cm，最终 ${cm(z.fin)} cm（${methodLabel(z)}）</title>`;
-    s+=`<text class="cv-lbl" x="${left-10}" y="${y+4}" text-anchor="end">${z.short}</text>`;
-    s+=`<line class="cv-off" x1="${X(0).toFixed(1)}" y1="${y}" x2="${X(z.L).toFixed(1)}" y2="${y}"/><line class="cv-keep" x1="${X(0).toFixed(1)}" y1="${y}" x2="${X(z.fin).toFixed(1)}" y2="${y}"/>`;
-    if(c.mode!=='clipper')s+=`<line class="cv-first" x1="${X(z.first).toFixed(1)}" y1="${y-8}" x2="${X(z.first).toFixed(1)}" y2="${y+8}"/>`;
-    s+=`<circle class="cv-dot${z.method==='clip'?' is-clip':''}" cx="${X(z.fin).toFixed(1)}" cy="${y}" r="5.5"/>`;
-    s+=`<text class="cv-val" x="${right+14}" y="${y+4}">留 ${cm(z.fin)} cm · ${METHOD_SHORT[z.method]}</text></g>`;});
-  el.setAttribute('viewBox',`0 0 ${W} ${H}`);el.setAttribute('height',H);el.innerHTML=s;
-}
 
-/* ---------- 结论、表格、提醒 ---------- */
+/* ---------- 零基础版新增插图 ---------- */
+function artStrip(L,first,fin,extra){
+  const x0=24,x1=216,y=48,h=30,X=v=>x0+v/L*(x1-x0);
+  let s=`<rect class="rulerb" x="${x0}" y="${y}" width="${x1-x0}" height="${h}" rx="2"/>`;
+  const step=L<=20?1:L<=40?2:5;
+  for(let v=0;v<=L+1e-6;v+=step){const x=X(v),big=Math.round(v)%5===0;s+=`<line class="ln thin" x1="${x.toFixed(1)}" y1="${y}" x2="${x.toFixed(1)}" y2="${y+(big?10:6)}"/>`;if(big&&v>0)s+=T(x,y+22,Math.round(v),'lbl num','middle');}
+  const xf=X(first),xn=X(fin);
+  s+=`<line class="arrowC" style="stroke-width:3" x1="${xf.toFixed(1)}" y1="${y-6}" x2="${xf.toFixed(1)}" y2="${y+h+6}"/><line class="ln" style="stroke-width:3" x1="${xn.toFixed(1)}" y1="${y-6}" x2="${xn.toFixed(1)}" y2="${y+h+6}"/>`;
+  s+=T(xf,y-10,`红线 ${hc(first)} cm：第一次`,'lblc num','middle')+T(xn-4,y+h+20,`黑线 ${hc(fin)} cm：最后`,'lblk num','end');
+  s+=`<path class="scalp" d="M${x0-6} ${y-14} L${x0} ${y-14} L${x0} ${y+h+14} L${x0-6} ${y+h+14} Z"/>`+T(x0,y+h+40,'← 这一头贴头皮','lbl');
+  if(extra)s+=T(236,142,extra,'lbl','end');
+  return wrap(s,`量尺纸条：从贴头皮的一端量起，${hc(first)} cm 画红线，${hc(fin)} cm 画黑线`);
+}
+function artStripCut(L,keep,lab){
+  const bot=128,top=14,H=bot-top-6,y=Math.round(bot-6-keep/L*H);
+  let s=`<path class="scalp" d="M30 ${bot} Q120 ${bot-12} 210 ${bot} L210 150 L30 150 Z"/>`;
+  for(let i=0;i<7;i++){const x=106+i*4.5;s+=`<line class="hs" x1="${x}" y1="${bot-9}" x2="${x}" y2="${y}"/><line class="ho" x1="${x}" y1="${y}" x2="${(x+(i-3)*0.8).toFixed(1)}" y2="${top}"/>`;}
+  s+=`<rect class="rulerb" x="86" y="${y-14}" width="12" height="${bot-9-y+14}" rx="1.5"/><line class="arrowC" style="stroke-width:2.6" x1="84" y1="${y}" x2="100" y2="${y}"/>`;
+  s+=fingers(118,y+12,0,1,54)+`<line class="cutl" x1="80" y1="${y}" x2="150" y2="${y}"/>`+scissors(184,y-4,180,0.95,10);
+  s+=T(80,y+4,'纸条红线','lblc','end')+T(80,(y+bot)/2+10,'纸条','lbl','end')+T(140,top+10,'剪掉这段','lbl');
+  return wrap(s,lab||'头发往外拉直，纸条贴头皮，手指夹在红线处，剪掉手指外面');
+}
+function artTest(){
+  let s=headBack(100,52,1.2,{hairPath:`<path class="hairf" d="M-27 12 C-30 -24 -16 -36 0 -36 C16 -36 30 -24 27 12 Q14 22 0 20 Q-14 22 -27 12 Z"/>`});
+  s+=`<circle class="cutl" cx="100" cy="74" r="12" style="fill:none"/>`;
+  s+=`<line class="dim" x1="112" y1="74" x2="156" y2="74"/>`+T(160,70,'先在这里','lblk')+T(160,84,'试一小撮','lbl');
+  s+=T(160,112,'最不显眼','lbl')+T(160,126,'剪坏也看不出','lbl');
+  return wrap(s,'第一刀先剪后颈正中最下面的一小撮，那里最不显眼');
+}
+const RULE_ART=[
+  ()=>`<line class="hs" x1="26" y1="76" x2="26" y2="10"/><line class="hs" x1="58" y1="76" x2="58" y2="40"/><line class="ln thin" x1="14" y1="76" x2="70" y2="76"/><path class="arrow" d="M26 30 l0 -14"/><path class="strike" d="M50 22 L66 38 M66 22 L50 38"/>`,
+  ()=>`<rect class="barOff" x="10" y="14" width="64" height="12" rx="3"/><rect class="barMid" x="10" y="36" width="40" height="12" rx="3"/><rect class="barKeep" x="10" y="58" width="32" height="12" rx="3"/>`,
+  ()=>`<line class="hs" x1="36" y1="78" x2="36" y2="14"/><line class="hs" x1="41" y1="78" x2="41" y2="14"/><line class="hs" x1="46" y1="78" x2="46" y2="14"/>`+fingers(42,44,0,0.8,40)
+];
+const TERM_ICON={
+  piece:()=>{let p='';for(let i=0;i<5;i++)p+=`<line class="hs" x1="${20+i*4}" y1="50" x2="${22+i*3}" y2="14"/>`;return p+`<circle class="skin" cx="26" cy="11" r="5"/><circle class="skin" cx="36" cy="13" r="5"/>`;},
+  section:()=>`<ellipse class="secfill" cx="28" cy="30" rx="18" ry="22"/><path class="cutl" style="stroke-width:1.4" d="M18 14 L18 40 M38 14 L38 40 M11 40 Q28 46 45 40"/>`,
+  guide:()=>{let p='';for(let i=0;i<6;i++){const x=10+i*7;p+=`<line class="${i===0?'hsA':'hs'}" x1="${x}" y1="50" x2="${x}" y2="${i===0?24:24}"/>`+(i>0?`<line class="ho" x1="${x}" y1="24" x2="${x}" y2="8"/>`:'');}return p+`<line class="cutl" style="stroke-width:1.4" x1="6" y1="24" x2="50" y2="24"/>`;},
+  angle:()=>`<path class="scalp" d="M4 50 Q28 44 52 50 L52 56 L4 56 Z"/><line class="hs" x1="26" y1="47" x2="26" y2="8"/><line class="hs" x1="30" y1="47" x2="30" y2="8"/><path class="dim" d="M14 46 L14 36 L26 36"/>`,
+  point:()=>{const st=[0,5,2,6,1,4];let p='';for(let i=0;i<6;i++)p+=`<line class="hs" x1="${12+i*5}" y1="6" x2="${12+i*5}" y2="${38-st[i]}"/>`;return p+scissors(44,54,-115,0.42,8);},
+  thin:()=>{let p='';for(let i=0;i<7;i++)p+=`<line class="${i%2?'ho':'hs'}" x1="${10+i*6}" y1="8" x2="${10+i*6}" y2="${i%2?30:50}"/>`;return p;},
+  guardT:()=>`<path class="guard" d="M14 50 L14 22 Q28 12 42 22 L42 50 Z"/><line class="guardt" x1="21" y1="50" x2="21" y2="20"/><line class="guardt" x1="28" y1="50" x2="28" y2="17"/><line class="guardt" x1="35" y1="50" x2="35" y2="20"/>`+T(28,44,'12','lblk num','middle')
+};
+
+/* ---------- 题头、三件事、结论 ---------- */
+function renderHero(c){
+  const z=mainZone(c);
+  const one=state.simple?`你的头发大约 ${hc(z.L)} cm`:`你的头发最长约 ${hc(Math.max(...c.zones.map(q=>q.L)))} cm`;
+  $('#heroLead').innerHTML=`${one}，剪掉一半，大约留 <strong>${hc(z.fin)} cm</strong>。你不需要任何理发经验：先看“三件事”，再认识一下工具，然后照着第四部分一步一步做，每一步都有图。`;
+  const tool=MODE[c.mode].short;
+  $('#answer').innerHTML=`<p class="eyebrow">一句话答案</p><div class="ans-big">${hc(z.L)}<span class="arr">→</span>${hc(z.fin)} cm</div><p class="ans-sub">用<b>${tool}</b>。${c.mode==='scissors'||c.mode==='none'?`你的推子最多只能留 ${c.maxG?cm(c.maxG/10)+' cm':'1–2 cm'}，你要留 ${hc(z.fin)} cm，用推子会剪得非常短。`:c.mode==='ponytail'?'头发够长，可以扎起来一次剪，最简单。':c.mode==='clipper'?'你要留的长度在卡尺范围内，推子比剪刀更容易推均匀。':''}</p>`;
+}
+function renderRules(c){
+  const z=mainZone(c);
+  const items=[
+    ['宁可剪少，不要剪多','剪少了，随时可以再剪一点；剪多了，只能等它长回来。头发一个月大约只长 1 cm。'],
+    ['分两次剪',c.mode==='clipper'?'推子用卡尺，长度是固定的，不用分两次。拿不准时，先用大一号的卡尺推一遍。':`第一次只剪到 ${hc(z.first)} cm（剪掉 ${hc(z.L-z.first)} cm）。吹干看看，满意就停；还想短，再剪到 ${hc(z.fin)} cm。`],
+    ['一次只剪一小撮','一撮大约一根手指那么宽。一大把一起剪，剪刀会把头发推歪，很难剪齐。']
+  ];
+  $('#rules').innerHTML=items.map((x,i)=>`<article class="rule"><svg viewBox="0 0 84 84" aria-hidden="true">${RULE_ART[i]()}</svg><div><span class="rn">第 ${i+1} 件</span><h3>${x[0]}</h3></div><p>${x[1]}</p></article>`).join('');
+}
 function renderVerdict(c){
   const m=MODE[c.mode],fins=c.zones.map(z=>z.fin),mn=Math.min(...fins),mx=Math.max(...fins);
-  const range=mn===mx?`${cm(mn)} cm`:`${cm(mn)}–${cm(mx)} cm`;
+  const range=mn===mx?`${hc(mn)} cm`:`${hc(mn)}–${hc(mx)} cm`;
   const clipZ=c.zones.filter(z=>z.method==='clip').map(z=>z.short).join('、'),cutZ=c.zones.filter(z=>z.method!=='clip').map(z=>z.short).join('、');
   let sub='';
   switch(c.mode){
-    case 'clipper':sub=`各区目标 ${range}，都在卡尺范围内（最长 ${c.maxG} mm）。卡尺保证每处一样长，自己操作比剪刀稳。`;break;
-    case 'scissors':sub=c.hasClipper?`各区目标 ${range}，可推子最多只能留到卡尺的高度${c.maxG?`（你最长的是 ${c.maxG} mm）`:'（你没选卡尺）'}。用推子会剪掉远不止一半，所以用剪刀。`:`各区目标 ${range}，用剪刀按区域分别剪。`;break;
-    case 'mixed':sub=`${clipZ}的目标在卡尺范围内，用推子更均匀；${cutZ}太长，只能用剪刀。`;break;
-    case 'ponytail':sub=`后脑头发有 ${cm(state.len.back)} cm，扎低马尾后从发梢往上量 ${cm(c.tailCut)} cm 一次剪掉，比一缕一缕剪更齐。${!c.sc&&c.hasClipper?'没有剪刀时，可以用不装卡尺的推子推断马尾。':''}${c.noTool?'你还没有剪的工具，先买一把理发平剪。':''}`;break;
-    case 'finger':sub=`目标 ${range} 超过卡尺${c.maxG?`（最长 ${c.maxG} mm）`:''}，又没有剪刀，只能取下卡尺，让推子沿着手指外侧推。`;break;
-    case 'none':sub='推子和剪刀都没勾选。剪掉一半需要一把理发平剪（几十元），下面的流程按平剪来写。';break;
+    case 'clipper':sub=`你要留 ${range}，在卡尺能做到的范围里（最长 ${c.maxG} mm）。推子装上卡尺，每个地方都会一样长，新手更容易。`;break;
+    case 'scissors':sub=c.hasClipper?`你要留 ${range}。推子留多长由卡尺决定，你最长的卡尺只有 ${c.maxG?c.maxG+' mm（'+cm(c.maxG/10)+' cm）':'——你还没选卡尺'}。用推子会剪掉远远不止一半，所以只能用剪刀。`:`你要留 ${range}，用剪刀一块一块剪。`;break;
+    case 'mixed':sub=`${clipZ}要留的长度推子做得到，用推子更均匀；${cutZ}要留得长，只能用剪刀。`;break;
+    case 'ponytail':sub=`后脑头发有 ${hc(state.len.back)} cm，够扎马尾。扎好后从发梢往上量 ${hc(c.tailCut)} cm 剪掉，一刀就齐。${!c.sc&&c.hasClipper?'没有剪刀的话，取下卡尺用推子推断马尾也行。':''}`;break;
+    case 'finger':sub=`你要留 ${range}，推子卡尺做不到，你又没有剪刀，只能取下卡尺，拿推子沿着手指剪。能用，但最好还是买把剪刀。`;break;
+    case 'none':sub='推子和剪刀都没有。剪短一半需要一把理发剪刀（几十元），流程按剪刀来写。';break;
   }
-  const keep=c.mode==='clipper'?'拿不准时，第一遍用大一号的卡尺。':`第一刀只剪到 ${Math.round(c.firstKeep*100)}%，看过再修到 50%。宁长勿短。`;
   let dots='';for(let i=1;i<=5;i++)dots+=`<i class="${i<=m.diff?'on':''}"></i>`;
   const extra=state.who==='self'&&['scissors','mixed','finger','none'].includes(c.mode)?'，自己剪后脑另加 15 分钟':'';
-  $('#verdict').innerHTML=`<p class="eyebrow">结论</p><h3 class="v-title">${m.title}</h3><p class="v-sub">${sub}</p><p class="v-keep">${keep}</p>
-  <dl class="v-facts"><div><dt>剃还是剪</dt><dd>${m.ans}</dd></div><div><dt>难度</dt><dd><span class="dots" aria-label="难度 ${m.diff} / 5">${dots}</span></dd></div><div><dt>预计用时</dt><dd>${m.time}${extra}</dd></div></dl>`;
+  $('#verdict').innerHTML=`<p class="eyebrow">结论</p><h3 class="v-title">${m.title}</h3><p class="v-sub">${sub}</p>
+  <dl class="v-facts"><div><dt>剃还是剪</dt><dd>${m.ans}</dd></div><div><dt>难度</dt><dd><span class="dots" aria-label="难度 ${m.diff} / 5">${dots}</span></dd></div><div><dt>大概要多久</dt><dd>${m.time}${extra}</dd></div></dl>`;
 }
 function renderZTable(c){
   const clip=c.mode==='clipper';
-  const rows=c.zones.map(z=>`<tr><td>${zt(z)}</td><td class="n">${cm(z.L)}</td>${clip?'':`<td class="n">${cm(z.first)}</td>`}<td class="n"><b>${cm(z.fin)}</b></td><td><span class="mth ${z.method==='clip'?'clip':''}">${methodLabel(z)}</span>${z.method==='clip'?`<span class="gnote">${guardNote(z)}</span>`:''}</td></tr>`).join('');
-  $('#ztable').innerHTML=`<div class="ztitle"><b>每个区域的数值</b><span>单位 cm</span></div><div class="tablewrap"><table><thead><tr><th>区域</th><th class="n">现在</th>${clip?'':'<th class="n">第一刀后</th>'}<th class="n">最终</th><th>用什么</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  const rows=c.zones.map(z=>`<tr><td>${zt(z)}</td><td class="n">${hc(z.L)}</td>${clip?'':`<td class="n">${hc(z.first)}</td>`}<td class="n"><b>${hc(z.fin)}</b></td><td><span class="mth ${z.method==='clip'?'clip':''}">${methodLabel(z)}</span>${z.method==='clip'?`<span class="gnote">${guardNote(z)}</span>`:''}</td></tr>`).join('');
+  $('#ztable').innerHTML=`<div class="ztitle"><b>每个部位剪到多长</b><span>单位 cm，四舍五入到半厘米</span></div><div class="tablewrap"><table><thead><tr><th>部位</th><th class="n">现在</th>${clip?'':'<th class="n">第一次剪到</th>'}<th class="n">最后</th><th>用什么</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 const AL_ICON={info:'<path class="al-i" d="M10 9 L10 15 M10 5.5 L10 6"/><circle class="al-i" cx="10" cy="10" r="8.2"/>',warn:'<path class="al-i" d="M10 2.5 L18.5 17 L1.5 17 Z M10 8 L10 12 M10 14.5 L10 15"/>',cut:'<path class="al-i" d="M4 4 L16 16 M16 4 L4 16"/>'};
 function renderAlerts(c){
   const a=[],t=state.tools;
-  if(c.noTool)a.push(['cut','推子和剪刀都没有：先准备一把理发平剪（几十元），流程按平剪来写。']);
-  if(c.mode==='finger')a.push(['warn','没有剪刀，只能用推子指间法应急，剪口会毛糙。建议先买一把理发平剪。']);
-  if(c.hasClipper&&c.mode!=='finger'&&c.mode!=='ponytail'){const bad=c.zones.filter(z=>!z.gOK);if(bad.length&&bad.length<4)a.push(['info',`${bad.map(z=>z.short).join('、')}的目标超过你最长的卡尺（${c.maxG||0} mm），这些区域不能用推子。`]);}
-  if(state.texture!=='straight')a.push(['info','卷发：全程干剪，第一刀只剪到 65%，卷发回弹后会比拉直时短。']);
-  if(state.who==='self'&&!t.mirror2&&c.mode!=='clipper')a.push(['warn','自己剪又没有第二面镜子：用手机前置摄像头录像看后脑。']);
-  if(c.usesScissors&&!t.comb)a.push(['warn','没有梳子很难分出整齐的发片，建议买一把细齿梳。']);
-  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')a.push(['info','没有分区夹：长尾夹、黑发卡、鲨鱼夹都可以。']);
-  if(c.mode==='ponytail'&&!t.ties)a.push(['warn','马尾法要 5–6 根皮筋：普通橡皮筋就行。']);
-  if(c.wetCut&&!t.spray)a.push(['info','没有喷壶：剪的时候用湿毛巾按一下，保持头发微湿。']);
-  if(state.density==='thick'&&!t.thinning&&c.usesScissors)a.push(['info','发量多又没有打薄剪：点剪剪深一点，也能减掉一些重量。']);
-  if(c.zones.some(z=>z.method==='clip'&&z.L>5))a.push(['warn','推子区域的头发超过 5 cm，直接推容易卡发：先用剪刀剪到 4 cm 左右。']);
+  if(c.noTool)a.push(['cut','推子和剪刀都没有：先买一把理发剪刀（几十元）。']);
+  if(c.mode==='finger')a.push(['warn','没有剪刀，只能拿推子代替，剪口会毛糙。建议先买一把理发剪刀。']);
+  if(state.texture!=='straight')a.push(['info','卷发：要等头发完全干了再剪，第一次只剪到 65%，因为卷发干了会缩回去。']);
+  if(state.who==='self'&&!t.mirror2&&c.mode!=='clipper')a.push(['warn','自己剪、没有小镜子：用手机前置摄像头录像看后脑。']);
+  if(c.usesScissors&&!t.comb)a.push(['warn','没有梳子很难把头发梳直、分出一小撮，建议买一把细齿梳（几块钱）。']);
+  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')a.push(['info','没有夹子：长尾夹、黑色小发卡、鲨鱼夹都可以。']);
+  if(c.mode==='ponytail'&&!t.ties)a.push(['warn','马尾法要 5–6 根皮筋，普通橡皮筋就行。']);
+  if(c.wetCut&&!t.spray)a.push(['info','没有喷壶：剪的时候头发干了，就用湿毛巾按一下。']);
+  if(state.who==='helper')a.push(['info','有人帮忙最好：让对方把第四部分从头读一遍，尤其是“量尺纸条”那一步。']);
   $('#alerts').innerHTML=a.map(x=>`<li class="${x[0]}"><svg viewBox="0 0 20 20" aria-hidden="true">${AL_ICON[x[0]]}</svg><span>${x[1]}</span></li>`).join('');
 }
 
-/* ---------- 原理对比 ---------- */
+/* ---------- 认识工具和用词 ---------- */
+function renderGloss(c){
+  const t=state.tools,z=mainZone(c),cutM=c.usesScissors||c.mode==='none';
+  const clipUsed=c.zones.some(q=>q.method==='clip');
+  const G=[
+    {icon:TOOL_ICON.clipper(),name:'推子',en:'Clipper',have:t.clipper,what:'电动的，刀口来回动，贴着头皮把头发推短。',use:c.mode==='clipper'||c.mode==='mixed'?['这次要用','need']:c.mode==='finger'?['这次拿它代替剪刀','need']:['这次只用来修脖子上的碎毛，可以不用','nice']},
+    {icon:TERM_ICON.guardT(),name:'卡尺 / 限位梳',en:'Guard Comb',have:t.clipper&&state.guards.length>0,what:'套在推子刀口上的塑料梳齿。它有多高，头发就留多长；上面的数字是毫米。',use:clipUsed?['这次要用：决定留多长','need']:[`这次用不上：最长 ${c.maxG||12} mm，你要留 ${hc(z.fin)} cm`,'no']},
+    {icon:TOOL_ICON.scissors(),name:'理发剪刀（平剪）',en:'Shears',have:t.scissors,what:'理发专用剪刀，刃口很利。家里的普通剪刀太钝，会把头发压扁。',use:cutM?['主角：长度全靠它','need']:['可以不用','no']},
+    {icon:TOOL_ICON.thinning(),name:'打薄剪',en:'Thinning Shears',have:t.thinning,what:'一边刀刃上有齿，一刀只剪掉一部分头发。用来让头发变薄，不是用来剪短的。',use:state.density==='thick'&&cutM?['头发多：最后用一下','nice']:['可以不用','no']},
+    {icon:TOOL_ICON.comb(),name:'梳子',en:'Comb',have:t.comb,what:'细齿那头把头发梳直、挑出一小撮；尾巴尖的那头用来在头皮上划线分块。',use:['一定要有','need']},
+    {icon:TOOL_ICON.clips(),name:'夹子',en:'Clips',have:t.clips,what:'把暂时不剪的头发夹住，免得混进来。',use:cutM&&c.mode!=='ponytail'?['很有用','nice']:['可以不用','no']},
+    {icon:TOOL_ICON.spray(),name:'喷壶',en:'Spray Bottle',have:t.spray,what:'头发剪着剪着干了，喷一下让它重新变潮。',use:c.wetCut?['有用，没有就用湿毛巾','nice']:['这次头发要干着剪，用不上','no']},
+    {icon:TOOL_ICON.ties(),name:'皮筋',en:'Hair Ties',have:t.ties,what:'扎马尾用。',use:c.mode==='ponytail'?['一定要有，5–6 根','need']:['用不上','no']},
+    {icon:TOOL_ICON.mirror2(),name:'小镜子',en:'Hand Mirror',have:t.mirror2,what:'背对大镜子，手里拿小镜子，就能看到后脑。手机前置摄像头也一样。',use:state.who==='self'?['自己剪很有用','nice']:['有人帮忙就用不上','no']},
+    {icon:TOOL_ICON.cape(),name:'围布',en:'Cape',have:t.cape,what:'围在脖子上，挡住碎头发。',use:['有用，没有就用垃圾袋','nice']}
+  ];
+  $('#glossTools').innerHTML=G.map(x=>`<article class="gl"><svg viewBox="0 0 ${x.name.startsWith('卡尺')?56:48} ${x.name.startsWith('卡尺')?56:48}" aria-hidden="true">${x.icon}</svg><div><h3>${x.name}<small>${x.en}</small><span class="have">${x.have?'✓ 你有':'✗ 你没有'}</span></h3><p>${x.what}</p><span class="use ${x.use[1]}">${x.use[0]}</span></div></article>`).join('');
+  const TERMS=[
+    {k:'piece',name:'一撮（发片）',en:'Subsection',what:'用梳子挑出来的一小片头发，一根手指厚、两根手指宽。每次只剪一撮。'},
+    {k:'section',name:'分区',en:'Sectioning',what:'剪之前把头发分成几大块：前面、头顶、两侧、后脑。剪哪块就放下哪块，其余夹住。'},
+    {k:'angle',name:'和头皮垂直地拉出来',en:'90° Elevation',what:'把一撮头发朝它从头上长出来的方向拉直，就像头发站起来一样。这样量出来的长度最准。'},
+    {k:'guide',name:'引导线',en:'Guide',what:'第一撮剪好的头发。后面每一撮都带上一点它，剪到和它一样长。'},
+    {k:'point',name:'点剪',en:'Point Cutting',what:'剪刀竖起来，往发梢里剪出小缺口。让发尾看起来软、自然，不是一条硬线。'},
+    {k:'thin',name:'打薄',en:'Thinning',what:'用打薄剪减少头发的数量，不改变长度。头发多、剪完显得蓬时才用。'}
+  ];
+  $('#glossTerms').innerHTML=TERMS.map(x=>`<article class="gl"><svg viewBox="0 0 56 56" aria-hidden="true">${TERM_ICON[x.k]()}</svg><div><h3>${x.name}<small>${x.en}</small></h3><p>${x.what}</p></div></article>`).join('');
+}
+
+/* ---------- 剃推剪对比 ---------- */
 function renderCompare(c){
   const rec=c.mode==='clipper'?1:2;
   const cards=[
-    {big:'剃',sub:'剃刀 / 不装卡尺',art:artCmpShave(),cap:'刀片贴着头皮走，所有头发都被切到 0–1 mm。和“只剪掉一半”是两回事。'},
-    {big:'推',sub:'推子＋卡尺',art:artCmpClip(c.maxG),cap:`卡尺把刀片垫高，高出卡尺的部分被推掉。留多长完全由卡尺决定，${c.maxG?`你最长的卡尺是 ${c.maxG} mm，所以原长 ≤ ${cm(c.maxG/5)} cm 的区域才能用它剪掉一半。`:'你现在没有可用的卡尺。'}`},
-    {big:'剪',sub:'剪刀＋手指',art:artCmpCut(),cap:'手指夹住发片，剪掉手指外侧。手指放在哪里就留多长，所以任何长度都能剪掉一半，代价是要靠手感和检查。'}
+    {big:'剃',sub:'剃刀 / 推子不装卡尺',art:artCmpShave(),cap:'刀片直接贴着头皮，头发全部剪到几乎没有（0–1 mm）。这是剃光头，不是剪短一半。'},
+    {big:'推',sub:'推子＋卡尺',art:artCmpClip(c.maxG),cap:`卡尺把刀口垫高，比卡尺高的头发被推掉。卡尺多高就留多长。${c.maxG?`你最长的卡尺是 ${c.maxG} mm，只有原来不超过 ${cm(c.maxG/5)} cm 的头发，才能用它剪掉一半。`:''}`},
+    {big:'剪',sub:'剪刀＋手指',art:artCmpCut(),cap:'手指夹住一撮头发，剪掉手指外面那段。手指放在哪，就留多长，所以多长的头发都能剪掉一半。'}
   ];
-  $('#cmpGrid').innerHTML=cards.map((x,i)=>`<figure class="cmp-card${i===rec?' rec':''}">${x.art}<h3><span class="big">${x.big}</span><span>${x.sub}</span>${i===rec?'<span class="pill">适合你</span>':''}</h3><figcaption>${x.cap}</figcaption></figure>`).join('');
+  $('#cmpGrid').innerHTML=cards.map((x,i)=>`<figure class="cmp-card${i===rec?' rec':''}">${x.art}<h3><span class="big">${x.big}</span><span>${x.sub}</span>${i===rec?'<span class="pill">这次用这个</span>':''}</h3><figcaption>${x.cap}</figcaption></figure>`).join('');
   const rows=[
-    ['能留的长度','0–1 mm','3–25 mm，看卡尺','任意'],
-    ['能不能剪掉一半','不能',c.maxG?`原长 ≤ ${cm(c.maxG/5)} cm 时可以`:'没有卡尺，不能','能'],
-    ['自己操作难度','低，但不可逆','低','中，后脑偏难'],
-    ['长短是否均匀','很均匀','很均匀，卡尺保证','靠手感，要交叉检查'],
-    ['用时','10 分钟左右','15–25 分钟','40–70 分钟'],
-    ['最常见的事故','长度归零','忘装卡尺，推出一道痕','剪多、左右不齐'],
-    ['剪完的样子','光头 / 极短','整齐，偏短的发型','保留原来的轮廓，只是变短']
+    ['能留多长','0–1 mm','3–25 mm，看卡尺','多长都行'],
+    ['能不能剪掉一半','不能',c.maxG?`原来不超过 ${cm(c.maxG/5)} cm 才行`:'没有卡尺，不能','能'],
+    ['新手难不难','简单，但剃了就回不去','简单','中等，后脑难一点'],
+    ['要多久','10 分钟','15–25 分钟','45–75 分钟'],
+    ['最容易出的错','剃太短','忘装卡尺，推出一道秃痕','剪太多、左右不齐']
   ];
   const col=i=>i===rec+1?' class="reccol"':'';
   $('#cmpTable').innerHTML=`<thead><tr><th></th><th${col(1)}>剃</th><th${col(2)}>推</th><th${col(3)}>剪</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r[0]}</td><td${col(1)}>${r[1]}</td><td${col(2)}>${r[2]}</td><td${col(3)}>${r[3]}</td></tr>`).join('')+`</tbody>`;
@@ -1091,152 +1200,125 @@ function renderCompare(c){
 /* ---------- 流程 ---------- */
 function buildSteps(c){
   const S=[],t=state.tools,self=state.who==='self',Z=k=>c.zones.find(z=>z.k===k);
-  const add=(id,title,art,body,tip)=>S.push({id,title,art,body,tip});
+  const add=(o)=>S.push(o);
   const isCut=z=>z.method==='cut'||z.method==='bangs';
-  const cutTool=t.scissors||!t.clipper?'scissors':'clipper';
+  const same=state.simple||c.zones.every(z=>Math.abs(z.L-c.zones[0].L)<0.01);
+  const top=Z('top'),front=Z('front'),side=Z('side'),back=Z('back');
+  const stripMode=['scissors','none','mixed','finger'].includes(c.mode);
 
-  add('space','布置场地和光线',artSpace(self&&!t.mirror2),`<ul>
-    <li>选浴室或阳台。灯光从<b>正前方</b>照过来，旁边再补一盏，阴影少，长短才看得清。</li>
-    <li>镜子放在正前方，坐下时镜子中心和眼睛齐平。</li>
-    <li>地上铺旧报纸或拆开的垃圾袋。${t.cape?'围布系好，':'没有围布就用旧床单或在大垃圾袋中间剪个洞套上，'}领口塞一圈纸巾挡碎发。</li>
-    ${self?`<li>后脑看不到：${t.mirror2?'第二面镜子拿在手里，背对大镜子看后脑。':'把手机架在身后，打开前置摄像头录像，或者和自己视频通话。'}</li>`:'<li>帮手站在你身后，椅子周围留出能绕一圈的空间。</li>'}</ul>`);
+  add({id:'space',title:'找个地方，把光线弄亮',art:artSpace(self&&!t.mirror2),why:'光线暗就看不清长短，剪完才发现不齐。',how:[
+    '在浴室或阳台放一把椅子。',
+    '镜子放在正前方，坐下时眼睛和镜子中间差不多高。',
+    '灯从前面照过来最好，旁边再开一盏。',
+    '地上铺旧报纸或拆开的垃圾袋，剪完直接卷起来扔。',
+    t.cape?'围布围在脖子上，系紧，领口塞一圈纸巾。':'没有围布：在大垃圾袋底部剪个洞，从头上套下去。',
+    self?(t.mirror2?'手里拿小镜子，背对大镜子，就能看到后脑。':'把手机立在身后，打开前置摄像头录像，剪完一块就看一次后脑。'):'帮你剪的人要能绕着你走一圈。'],
+    ok:'坐好之后，不用歪头就能在镜子里看清头顶和两侧。'});
 
   const have=[],sub=[];
-  if(t.clipper)have.push('电推剪：充满电。刀头滴 2–3 滴油，空转 10 秒，擦掉多余的油。');
-  if(t.clipper&&state.guards.length)have.push(`卡尺：${[...state.guards].sort((a,b)=>a-b).join(' / ')} mm，按大小摆好。`);
-  if(t.scissors)have.push('平剪：只用来剪头发。家用剪刀、厨房剪刀的刃口太钝，会把发丝压扁，发尾容易分叉。');
-  if(t.thinning)have.push('打薄剪：一边带齿，用来减发量，不用来剪长度。');
-  if(t.comb)have.push('梳子：细齿那头分发片，粗齿那头梳顺。');
-  if(!t.comb)sub.push('梳子：没有的话发片分不整齐，建议买一把细齿梳。');
-  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')sub.push('分区夹 → 长尾夹、黑色发卡、鲨鱼夹。');
-  if(c.mode==='ponytail'&&!t.ties)sub.push('发圈 → 普通橡皮筋，准备 5–6 根，剪完直接剪断。');
-  if(c.wetCut&&!t.spray)sub.push('喷壶 → 湿毛巾，头发干了就按一下。');
-  if(!t.cape)sub.push('围布 → 旧床单或大垃圾袋。');
-  if(self&&!t.mirror2)sub.push('第二面镜子 → 手机前置摄像头。');
-  if(!t.scissors&&t.clipper)sub.push('平剪 → 暂时用推子指间法（见后面的步骤），最好还是买一把。');
-  if(!t.scissors&&!t.clipper)sub.push('平剪 → 必须准备，几十元一把。');
-  add('tools','检查工具，缺的找替代',artTools(t),(have.length?`<p class="sub-h">准备好</p><ul>${have.map(x=>`<li>${x}</li>`).join('')}</ul>`:'')+(sub.length?`<p class="sub-h">缺的用这个代替</p><ul>${sub.map(x=>`<li>${x}</li>`).join('')}</ul>`:''));
+  if(t.scissors)have.push('理发剪刀：<b>只用来剪头发</b>。别用家里的剪刀，太钝，会把头发压扁。');
+  if(t.comb)have.push('梳子：细齿的一头梳头发，尖尾巴划线分块。');
+  if(t.clipper)have.push(c.mode==='clipper'||c.mode==='mixed'||c.mode==='finger'?'推子：充满电。刀口滴 2–3 滴油（套装里的小瓶），开机空转 10 秒，擦掉多余的油。':'推子：这次只用来修脖子后面的碎毛，充好电放一边。');
+  if(t.thinning&&state.density==='thick')have.push('打薄剪：最后才用，先放一边。');
+  if(!t.comb)sub.push('梳子：没有的话很难剪齐，花几块钱买一把细齿梳。');
+  if(c.usesScissors&&!t.clips&&c.mode!=='ponytail')sub.push('夹子 → 长尾夹、黑色小发卡、鲨鱼夹都行。');
+  if(c.mode==='ponytail'&&!t.ties)sub.push('皮筋 → 普通橡皮筋，准备 5–6 根。');
+  if(c.wetCut&&!t.spray)sub.push('喷壶 → 一条湿毛巾。');
+  if(self&&!t.mirror2)sub.push('小镜子 → 手机前置摄像头。');
+  if(!t.scissors)sub.push(t.clipper?'剪刀 → 暂时用推子代替（后面有一步专门讲），最好还是买一把。':'剪刀 → 必须买一把理发剪刀。');
+  if(stripMode)have.push('一张硬纸（快递盒、旧卡片）和一把尺子：下一步用来做“量尺纸条”。');
+  add({id:'tools',title:'把要用的东西摆在手边',art:artTools(t),why:'剪到一半找东西，头发会干，也容易乱。',how:have,sub,ok:'伸手就能拿到剪刀、梳子和夹子。'});
 
-  let wk,wt,wb;
-  if(c.mode==='clipper'||c.mode==='finger'){wk='dry';wt='洗净，完全吹干';wb='推子只在干发上用。湿头发贴着头皮，卡尺抬不起来，推完会长短不一；大多数推子也不防水。';}
-  else if(state.texture!=='straight'){wk='curly';wt='干剪：洗净、完全干透';wb='卷发湿的时候被拉直，干了会回缩，湿剪最容易剪多。保持平时的自然卷度，测量时用手指把一缕轻轻拉直。';}
-  else if(c.mode==='ponytail'){wk='dry';wt='洗净，吹干、梳顺';wb='马尾法在干发上最准：头发顺、不打结，皮筋才扎得正、扎得紧。';}
-  else if(c.mode==='mixed'){wk='dry';wt='洗净吹干，推完再打湿';wb='先在干发上完成推子部分。轮到剪刀部分时，再用喷壶把要剪的区域喷到七八成湿。';}
-  else{wk='spray';wt='洗头，擦到七八成干';wb='微湿的头发更服帖，发片好控制。不要滴水；剪的过程中干了就补喷。';}
-  add('wet',wt,artWet(wk),`<p>${wb}</p>`);
+  if(stripMode){
+    const how=['找一张硬一点的纸，剪成一根约 2 cm 宽、比你头发长一点的纸条。'];
+    if(same){how.push(`用尺子从纸条一头量 ${V(hc(top.first)+' cm')}，画一条<span class="red">红线</span>：第一次剪到这里。`,`再从同一头量 ${V(hc(top.fin)+' cm')}，画一条<b>黑线</b>：最后剪到这里。`);}
+    else{how.push('每个部位长度不同，在纸条上给每个部位各画两条线，并写上名字：');c.zones.filter(z=>z.method!=='clip').forEach(z=>how.push(`${zt(z)} 红线 ${V(hc(z.first)+' cm')}，黑线 ${V(hc(z.fin)+' cm')}`));}
+    how.push('从这一头开始量的那端，叫“头皮端”。用的时候，头皮端顶住头皮。');
+    add({id:'strip',title:'做一把“量尺纸条”',art:artStrip(top.L,top.first,top.fin,same?'':'以头顶为例'),why:'用眼睛和手指估长度很不准。一张画好线的纸条，能让每一撮剪得一样长。这是新手最有用的一招。',how,ok:'纸条上有线，红线比黑线离头皮端更远。'});
+  }
 
-  const clipMode=c.mode==='clipper';
-  const mz=c.mode==='ponytail'?Z('back'):Z('top');
-  const mrows=c.zones.map(z=>`<tr><td>${zt(z)}</td><td class="n">${cm(z.L)}</td>${clipMode?'':`<td class="n">${cm(z.first)}</td>`}<td class="n"><b>${cm(z.fin)}</b></td>${clipMode?`<td class="n">${z.pick} mm</td>`:''}</tr>`).join('');
-  add('measure','量长度，定出两轮的位置',artMeasure(mz.L,mz.first,mz.fin,clipMode),`<p>捏住一缕头发拉直，从头皮量到发梢。没有尺子：先用尺子量一次自己食指的宽度（一般 1.5–2 cm），之后就用手指量。</p>
-    <table class="mini"><thead><tr><th>区域</th><th class="n">现在</th>${clipMode?'':'<th class="n">第一刀后</th>'}<th class="n">最终</th>${clipMode?'<th class="n">卡尺</th>':''}</tr></thead><tbody>${mrows}</tbody></table>
-    <p class="note">单位 cm。剪掉的永远是发梢那一端。${clipMode?'卡尺推出来的长度就是卡尺高度，不需要分两轮。':`第一刀只剪掉 ${Math.round((1-c.firstKeep)*100)}%，剩下的 ${Math.round((c.firstKeep-0.5)*100)}% 留给第二轮。`}</p>`);
+  let wt,why,how,ok;
+  if(c.mode==='clipper'||c.mode==='finger'||c.mode==='ponytail'){wt='洗头，然后完全吹干';why=c.mode==='ponytail'?'干的、梳顺的头发，马尾才扎得紧、扎得正。':'推子要在干头发上用。湿头发贴在头皮上，推出来会长短不一。';how=['正常洗头。','用吹风机完全吹干。','用梳子从上往下梳顺，梳到没有打结。'];ok='头发完全干，梳子一梳到底。';}
+  else if(state.texture!=='straight'){wt='洗头，然后等头发完全干';why='卷发湿的时候被拉直了，干了会缩回去。湿着剪，很容易剪太短。';how=['正常洗头，吹干或自然晾干，保持平时的样子。','量长度时，把一撮头发轻轻拉直再量。'];ok='头发完全干，卷的样子和平时一样。';}
+  else if(c.mode==='mixed'){wt='洗头吹干，推完再弄湿';why='推子要干推，剪刀喜欢潮一点的头发。';how=['洗头，完全吹干，先做推子那几步。','轮到剪刀时，用喷壶把要剪的那块喷到潮湿、不滴水。'];ok='推的时候头发是干的，剪的时候是潮的。';}
+  else{wt='洗头，擦到不滴水';why='潮湿的头发更听话，容易梳直，剪得更齐。';how=['正常洗头。','用毛巾把头发擦到不滴水，摸起来有点潮。','用梳子从上往下梳顺，梳到没有打结。',t.spray?'剪的时候哪里干了，用喷壶喷一下。':'剪的时候哪里干了，用湿毛巾按一下。'];ok='头发是潮的，但不会往下滴水。';}
+  add({id:'wet',title:wt,art:artWet(c.mode==='clipper'||c.mode==='finger'||c.mode==='ponytail'||c.mode==='mixed'?'dry':state.texture!=='straight'?'curly':'spray'),why,how,ok});
+
+  if(c.mode==='clipper'||c.mode==='ponytail'){
+    const mz=mainZone(c);
+    add({id:'measure',title:'量一量头发有多长',art:artMeasure(mz.L,mz.first,mz.fin,c.mode==='clipper'),why:'先确认长度，后面的数字才对得上。',how:['捏住一撮头发拉直。','用尺子从头皮量到发梢。','前面、头顶、两侧、后脑各量一撮，和第一部分填的数对一下。'],ok:'量出来的数和第一部分填的差不多。'});
+  }
 
   const clipZones=c.zones.filter(z=>z.method==='clip');
   if(clipZones.length){
-    const used=[...new Set(clipZones.map(z=>z.pick))];
-    add('guards','装卡尺：从长到短',artGuards(c.guards,used),`<ul>${clipZones.map(z=>`<li>${zt(z)} 用 ${V(z.pick+' mm')}（目标 ${cm(z.fin*10)} mm，${guardNote(z)}）</li>`).join('')}</ul>
-      <p>先装<b>最长</b>的那个卡尺，把所有推子区域推一遍，这一遍是安全底线；再换小号卡尺，只推需要更短的区域。每次换卡尺都确认已经卡紧。拿不准就再大一号。</p>
-      <p class="note">推子侧面如果有调节杆，往上拨一档大约再长 1–2 mm，可以当“半号”用。</p>`,
-      '每推一次之前低头看一眼卡尺。忘装卡尺推一下，就是一道接近 0 mm 的痕。');
-    add('direction','逆着头发生长方向慢推',artDirection(),`<ul>
-      <li>两侧和后脑：卡尺平贴头皮，从下往上推。</li>
-      <li>头顶：从前额往头顶推，到发旋附近多换几个方向。</li>
-      <li>速度慢一点，每一道和上一道重叠一半。</li>
-      ${clipZones.some(z=>z.L>5)?'<li>头发超过 5 cm 时推子会卡发、拉扯，先用剪刀剪到 4 cm 左右再推。</li>':''}</ul>`);
+    add({id:'guards',title:'装上卡尺（推子的塑料梳齿套）',art:artGuards(c.guards,[...new Set(clipZones.map(z=>z.pick))]),why:'卡尺套在推子刀口上。它有多高，头发就留多长；上面的数字就是留下的毫米数。',how:[
+      ...clipZones.map(z=>`${zt(z)} 用 ${V(z.pick+' mm')} 的卡尺（${guardNote(z)}）`),
+      '先装<b>最长</b>的那个，把要推的地方全推一遍。这一遍不会推短，是安全的。',
+      '再换短一点的卡尺，只推需要更短的地方。',
+      '每次换完，用力按一下，确认卡尺卡紧了。'],
+      ok:'推子上装着卡尺，用手掰不动。',tip:'每推一次之前，都低头看一眼卡尺还在不在。忘了装卡尺推一下，就是一道几乎光秃的痕。'});
+    add({id:'direction',title:'慢慢推，从下往上',art:artDirection(),why:'头发是往下长的，逆着推才能把每根都推到。',how:['推子平平地贴在头皮上，卡尺贴着头皮。','两边和后脑：从脖子往头顶方向推。','头顶：从额头往后推，头顶的旋附近多换几个方向。','慢一点，每推一道，和上一道重叠一半。',...(clipZones.some(z=>z.L>5)?['头发超过 5 cm 时推子会卡住、拉头发：先用剪刀剪到 4 cm 左右再推。']:[])],ok:'推过的地方摸起来一样长。'});
   }
-  if(c.usesScissors&&c.mode!=='ponytail'||c.mode==='finger'){
-    add('section','分区，夹好',artSection(),`<p>用梳子尾端划出分区：刘海（前额发际线往后约 5 cm）、头顶（两边太阳穴连线以内）、两侧（耳朵上方）、后脑（再分上下两层）。${c.mode==='mixed'?'推子已经处理好的区域不用再分。':''}不剪的区域夹起来，每次只放下一小片。</p>`);
+  if(stripMode&&c.mode!=='finger'||c.mode==='finger'){
+    add({id:'section',title:'把头发分成几块（分区）',art:artSection(),why:'一次只放下一小块剪，其余夹住，就不会剪乱。',how:['用梳子尾巴（尖的那头）在头皮上划线。','前面：从额头往后，大约一个手掌宽。','头顶：两边眉尾往上划到头顶，中间这一长条。','两侧：耳朵上面的头发。','后脑：剩下的部分，在耳朵高度再横着分成上下两块。','每块拧一下，用夹子夹住。'+(c.mode==='mixed'?'推子已经推好的地方不用分。':'')],ok:'头发全被夹住了，只有你要剪的那块放下来。'});
   }
   if(c.mode==='finger'){
-    add('finger','推子指间法（应急）',artFingerCut(Z('top').L,Z('top').first,'clipper','推子指间法：手指夹住发片，推子不装卡尺，沿手指外侧推'),`<ol>
-      <li>取下卡尺。像剪刀指间剪一样，把一片头发垂直头皮拉出，用食指和中指夹住。</li>
-      <li>手指停在下面表格“第一刀后”的长度处，推子刀齿朝外、平贴在手指外侧，慢慢推过去，把手指外的部分推掉。</li>
-      <li>刀齿离手指留 1–2 mm，不要碰皮肤。</li></ol>
-      <ul>${c.zones.map(z=>`<li>${zt(z)} 手指停在 ${V(cm(z.first)+' cm')}</li>`).join('')}</ul>`,
-      '剪口会比剪刀毛糙，第一刀更要保守。剪完后尽快买一把平剪来修。');
+    add({id:'finger',title:'拿推子当剪刀用（应急）',art:artFingerCut(top.L,top.first,'clipper','推子不装卡尺，沿着手指外面推掉多余的头发'),why:'没有剪刀时，推子不装卡尺也能“剪”，只是剪口毛糙一点。',how:['取下所有卡尺。','取一撮头发，往外拉直，用纸条量，手指夹在红线处。','推子刀口朝外，平平地贴着手指外侧，慢慢推过去，把手指外面的头发推掉。','刀口离手指留 1–2 mm，不要碰到皮肤。','一撮一撮把所有部位都这样做。'],ok:'留下的头发和纸条红线一样长。',tip:'剪完尽快买一把理发剪刀，用点剪把毛糙的发尾修软。'});
   }
-  const top=Z('top'),front=Z('front'),side=Z('side'),back=Z('back');
-  if(c.mode!=='ponytail'){
-    if(isCut(top)){
-      add('top-guide','头顶：剪出第一条引导线',artFingerCut(top.L,top.first,cutTool),`<ol>
-        <li>从刘海分区后面开始，沿中线取一片约 1 cm 厚、5 cm 宽的头发，梳直。</li>
-        <li>把这片头发提起，和头皮<b>垂直</b>，用食指和中指夹住，往发梢方向滑。</li>
-        <li>手指停在离头皮 ${V(cm(top.first)+' cm')} 的位置，剪掉手指外侧的部分。剪刀和手指平行，只在手指外侧动。</li></ol>`,
-        '这一片就是“引导线”，头顶其余的头发都以它为准。它剪对了，后面就简单了。');
-      add('top-travel','头顶：带着引导线往后、往两边推进',artTravel(),`<p>每次新取一片，都带上一半已剪好的头发。用同样的角度（垂直头皮）提起，剪到和引导线一样长。中线从前往后做完，再向左右各做 2–3 片。</p><p>头顶最高点附近（发旋）多留 0.5 cm，这里剪短了会立起来。</p>`);
-    }
-    if(isCut(front)){
-      add('bangs','刘海：干剪，竖着剪',artBangs(),`<p>刘海干了会往上缩，湿着剪最容易剪短。把刘海梳顺放下，<b>不要拉紧</b>，剪刀竖起来（刀尖朝上），一点点往上剪。</p><p>第一刀剪到离发根约 ${V(cm(front.first)+' cm')}，最终 ${V(cm(front.fin)+' cm')}。${front.fin<8?'刘海会落在眉毛上方，左右用眉尾做参照。':'刘海仍然会过眉，剪完往两边拨开看一下长短。'}</p>`,
-        '剪的时候闭上眼睛，剪完再睁开。碎发掉进眼睛是常见的小事故。');
-    }
-    if(isCut(side)){
-      add('sides','两侧：垂直拉出，手指竖着夹',artSides(side.L,side.first),`<ol>
-        <li>把耳朵上方的头发梳顺，取一片从头侧<b>水平</b>拉出（和头皮垂直）。</li>
-        <li>手指竖着夹住，停在离头皮 ${V(cm(side.first)+' cm')} 处，剪掉手指外侧。</li>
-        <li>耳朵周围用另一只手把耳朵往下按住。</li>
-        <li>做完一侧马上做另一侧，用耳尖、眉尾作参照对比。</li></ol>`);
-    }
-    if(isCut(back)){
-      add('back','后脑：先下层，再上层',artBack(self,t.mirror2),`<p>先把后脑上半部分夹起来，从下层（后颈）开始。同样把头发垂直头皮拉出、手指夹住，留 ${V(cm(back.first)+' cm')}。下层做完放下上层，带着下层的长度一起剪。</p>
-        <p>${self?`后脑不靠眼睛，靠手指量：手指的位置就是长度。${t.mirror2?'每剪完一片用手镜看一次。':'每剪完一片用手机录像看一次。'}`:'这一步交给帮手：站在你身后，按同样的方法做。'}</p>`,
-        self?'后颈两侧最容易剪多。这里第一刀可以再保守一点，留到 65%。':null);
-    }
-    if(clipZones.length&&(c.mode==='mixed'||new Set(clipZones.map(z=>z.pick)).size>1)){
-      add('blend','衔接交界处',artBlend(c.mode==='mixed'),c.mode==='mixed'?
-        `<p>推子区和剪刀区之间会有一道台阶。用梳子把交界处的头发挑起，梳齿斜着离开头皮，剪刀沿梳齿外侧剪掉露出的部分（剪刀梳）。一次只修一点，修完用手摸。</p>`:
-        `<p>两个卡尺的交界处换中间号卡尺。推到交界线时手腕向外翻，像用勺子挖一样把推子挑离头皮，这样交界处不会留下一条线。</p>`);
-    }
-    if(clipZones.length)add('feel','逆着摸，找漏推的地方',artFeel(),`<p>手掌逆着头发方向从下往上摸，扎手、明显更长的点就是漏推的，用同一个卡尺补推。耳后、发旋、后颈两侧最容易漏。</p>`);
-  }else{
+  const anyCut=c.zones.some(isCut);
+  if(c.mode!=='ponytail'&&anyCut){
+    if(isCut(back))add({id:'test',title:'先在后颈最下面试一刀',art:artTest(),why:'第一刀最紧张。先在最不显眼的地方练一下手，熟悉剪刀和纸条。',how:['松开后脑下面那块。从最下面、正中间取一小撮（一根手指宽）。','梳直，往后拉出来，和头皮垂直。','把纸条的头皮端顶住头皮，纸条贴着这撮头发。','食指和中指夹住头发，往外滑，滑到纸条的<span class="red">红线</span>停下。','剪掉手指外面的部分。剪刀贴着手指外侧，不要碰到手指。'],ok:`剪下来的那段大约 ${hc(back.L-back.first)} cm；留下的和红线一样长。`,art2:null});
+    if(isCut(top))add({id:'top-guide',title:'剪头顶的第一撮：后面都照着它',art:artStripCut(top.L,top.first),why:'这一撮叫<b>引导线</b>。后面每一撮都要和它比，它剪对了，后面就简单。',how:[isCut(front)&&front.method!=='bangs'?'松开前面和头顶两块，从额头那头开始，沿中间取一撮：一根手指厚、两根手指宽。':'松开头顶那块，从最前面开始，沿中间取一撮：一根手指厚、两根手指宽。','梳直，往正上方拉，和头皮垂直。',`纸条头皮端顶住头皮，手指夹住头发滑到<span class="red">红线</span>（离头皮 ${V(hc(top.first)+' cm')}）。`,'剪掉手指外面的部分。'],ok:'这一撮比旁边的头发短，长度正好到纸条红线。'});
+    if(isCut(top))add({id:'top-travel',title:'剪头顶其余的：每次带上一点剪过的',art:artTravel(),why:'新的一撮里混一点剪过的头发，剪刀就有参照，不用每次重新量。',how:['紧挨着刚才那撮，往后再取一撮新的。','把前一撮剪过的头发带一半进来，一起往上拉直。','手指夹住，滑到剪过的那些头发的发梢，剪掉多出来的新头发。','中间一条从前往后剪完，再往左、往右各剪两三撮。','每剪三四撮，用纸条再量一次，防止越剪越短。'],ok:'头顶的头发拉起来，发梢差不多一样高。',tip:'头顶的旋（发旋）附近留长一点点，多留半厘米，不然会翘起来。'});
+    if(front.method==='bangs')add({id:'bangs',title:'剪刘海：干着剪，剪刀竖着',art:artBangs(),why:'刘海干了会往上缩，湿着剪很容易剪短。',how:['等刘海干了，梳顺放下，<b>不要拉紧</b>。','剪刀竖起来，刀尖朝上，一点点往上剪。',`先剪到离发根约 ${V(hc(front.first)+' cm')}，最后 ${V(hc(front.fin)+' cm')}。`],ok:'刘海左右一样长，用眉尾对一下。',tip:'剪刘海时闭上眼睛，剪完再睁开，碎发容易掉进眼睛。'});
+    if(isCut(side))add({id:'sides',title:'剪两侧（耳朵上面）',art:artSides(side.L,side.first),why:'两侧最容易被人看到，左右要一样长。',how:['松开一侧，取一撮耳朵上方的头发，梳直。','往旁边水平拉出去，和头皮垂直。',`纸条顶住头皮，手指竖着夹住，滑到红线（${V(hc(side.first)+' cm')}），剪掉外面。`,'剪耳朵附近时，用另一只手把耳朵往下按住。','一侧剪完，马上剪另一侧。'],ok:'两侧各拉一撮到脸旁边，发梢一样高。'});
+    if(isCut(back))add({id:'back',title:'剪后脑：从下往上',art:artBack(self,t.mirror2),why:'后脑看不见，但长度是纸条和手指决定的，不是眼睛。',how:['先剪下面那块（就是刚才试刀那里，往两边继续）。',`一撮一撮往后拉出来，用纸条量，剪到红线（${V(hc(back.first)+' cm')}）。`,self?(t.mirror2?'每剪完几撮，用小镜子看一下。':'每剪完几撮，用手机录像看一下。'):'这块交给帮手，按同样的方法做。','下面剪完，放下上面那块，带一点下面剪过的头发一起拉出来，剪到一样长。'],ok:'后脑的头发拉出来，长度和纸条红线一样。',tip:self?'脖子后面两边最容易剪多，宁可留长一点。':null});
+    if(c.mode==='mixed')add({id:'blend',title:'把推子和剪刀的交界修顺',art:artBlend(true),why:'推过的地方短、剪过的地方长，中间会有一道“台阶”。',how:['用梳子把交界处的头发挑起来，梳子斜着离开头皮。','剪掉从梳子上面露出来的头发，一次只剪一点。','剪完用手摸，摸不到明显的坎就行。'],ok:'交界处摸起来是慢慢变化的，没有一道坎。'});
+    add({id:'check',title:'检查：左右是不是一样长',art:artCross(),why:'剪的时候是一撮一撮来的，难免有一两撮没对齐。',how:['从左右对称的两个地方，各取一撮，同时拉到脸前面比。','哪边长，只修长的那边，一次只修一点点。','换个方向再看：刚才往上拉着剪的地方，现在往前拉，看有没有漏掉的长头发。'],ok:'左右两撮的发梢平齐。'});
+  }
+  if(clipZones.length)add({id:'feel',title:'用手摸，找漏推的地方',art:artFeel(),why:'推子推漏了眼睛不一定看得出，手一摸就知道。',how:['手掌逆着头发方向，从下往上摸。','扎手、明显更长的地方，就是漏推的。','用同一个卡尺补推一下。耳朵后面、头顶的旋、脖子两边最容易漏。'],ok:'摸一圈都是一样的手感。'});
+
+  if(c.mode==='ponytail'){
     const tailShort=c.zones.filter(z=>z.method==='cut'&&z.k!=='front');
-    add('tail-tie','扎低马尾，每隔 5 cm 加一根皮筋',artTailTie(),`<p>头发中分，全部梳到后颈正中，贴紧后颈扎一个低马尾。马尾一定要在正中间，否则剪完会一边长一边短。然后沿着马尾每隔约 5 cm 再扎一根皮筋，把马尾“锁直”。</p>${front.method==='bangs'?'<p>刘海太短扎不进去，先夹到一边，最后单独剪。</p>':''}${tailShort.length?`<p>${tailShort.map(z=>z.short).join('、')}太短扎不进去，先夹起来，后面单独剪。</p>`:''}`);
-    add('tail-measure',`从发梢往上量 ${cm(c.tailCut)} cm`,artTailMeasure(c.tailCut,back.L),`<p>从马尾发梢往上量 ${VC(cm(c.tailCut)+' cm')}（后脑长度 ${cm(back.L)} cm 的 ${Math.round((1-c.firstKeep)*100)}%），在这里扎最后一根皮筋。在这根皮筋<b>下方</b> 0.5 cm 处剪，皮筋会把剪下的那一截攥在一起。</p><p class="note">按后脑长度计算。头顶、两侧和后脑长度差不多时最准；头顶明显更长的话，剪完头顶会留得长一些，属于正常。</p>`);
-    add('tail-cut','一小口一小口剪断',artTailCut(t.scissors||!t.clipper),t.scissors||!t.clipper?
-      `<p>马尾太粗时一刀剪不断，硬剪会把头发推歪。剪刀和马尾垂直，从一边开始，每次剪 1 cm 宽，慢慢剪过去。</p>`:
-      `<p>没有剪刀：取下推子卡尺，把马尾拉紧，刀齿贴着皮筋下方，从一侧慢慢推过去。推子会比剪刀慢，也更毛糙，后面要多做一遍点剪（没有剪刀就让发尾保持原样）。</p>`);
-    add('tail-check','放下来，对比两侧',artTailCheck(),`<p>拆掉皮筋，梳顺。把头发分左右两半拉到胸前，用锁骨或衣服上的纽扣做参照，看两边是否一样长。有差别时，<b>只修长的那一边</b>，而且只修差的那一点。</p><p>后面中间会略长一点，形成轻微的 U 形，这是低马尾法的正常结果。</p>`);
-    tailShort.forEach(z=>{add('short-'+z.k,`${z.short}：马尾外的短发用指间剪`,artFingerCut(z.L,z.first,cutTool),`<p>这片头发太短扎不进马尾。把它垂直头皮拉出，手指夹住，留 ${V(cm(z.first)+' cm')}，剪掉手指外侧。方法和长发无关，就是普通的指间剪。</p>`);});
-    if(front.method==='bangs')add('bangs','刘海：干剪，竖着剪',artBangs(),`<p>把刘海放下梳顺，不要拉紧，剪刀竖起来一点点往上剪。第一刀剪到离发根约 ${V(cm(front.first)+' cm')}，最终 ${V(cm(front.fin)+' cm')}。</p>`,'剪的时候闭上眼睛。');
-  }
-  if(c.usesScissors&&c.mode!=='ponytail'){
-    add('cross','交叉检查',artCross(),`<p>换一个方向再检查一遍：刚才横着取发片的地方，现在竖着取，冒出来的一点点剪掉。</p><p>左右对比：从两侧对称的位置各取一缕，同时拉到脸前，看是否一样长。</p>`);
+    add({id:'tail-tie',title:'扎一个低马尾，每隔 5 cm 加一根皮筋',art:artTailTie(),why:'头发扎成一束，剪一刀就齐了，最适合新手。',how:['头发从中间分开，全部梳到脖子后面正中间。','贴紧脖子扎一个马尾，一定要在<b>正中间</b>。','顺着马尾往下，每隔约 5 cm 再扎一根皮筋，让马尾保持直直的。',...(front.method!=='tail'?['前面的头发太短扎不进去，先夹到一边，最后单独剪。']:[]),...(tailShort.length?[`${tailShort.map(z=>z.short).join('、')}太短扎不进去，先夹起来，后面单独剪。`]:[])],ok:'马尾在脖子后正中间，摸起来左右对称。'});
+    add({id:'tail-measure',title:`从发梢往上量 ${hc(c.tailCut)} cm`,art:artTailMeasure(c.tailCut,back.L),why:'从发梢量比从头皮量方便，量的就是要剪掉的那段。',how:[`从马尾最下面的发梢往上量 ${VC(hc(c.tailCut)+' cm')}。`,'在这个位置扎最后一根皮筋。','在这根皮筋<b>下面</b> 0.5 cm 处剪，皮筋会把剪下来的头发攥在一起。'],ok:'最后一根皮筋离发梢的距离和上面的数一样。'});
+    add({id:'tail-cut',title:'一小口一小口剪断',art:artTailCut(t.scissors||!t.clipper),why:'马尾很粗，一刀剪不断，硬剪会把头发推歪。',how:t.scissors||!t.clipper?['剪刀和马尾垂直。','从一边开始，每次剪 1 cm 宽，慢慢剪过去。']:['取下推子的卡尺，把马尾拉紧。','刀口贴着皮筋下面，从一边慢慢推过去。'],ok:'剪下来的是整整齐齐的一截。'});
+    add({id:'tail-check',title:'放下来，左右比一比',art:artTailCheck(),why:'马尾稍微歪一点，剪完就会一边长一边短。',how:['拆掉所有皮筋，梳顺。','把头发分成左右两半，拉到胸前。','用锁骨或衣服的扣子当参照，看两边是不是一样长。','有差别时，<b>只修长的那边</b>，只修差的那一点。'],ok:'左右发梢一样高。后面中间稍长一点是正常的。'});
+    tailShort.forEach(z=>add({id:'short-'+z.k,title:`${z.short}：太短扎不进去的头发`,art:artFingerCut(z.L,z.first,'scissors'),why:'这块头发不在马尾里，要单独剪。',how:['取一撮，往外拉直，和头皮垂直。',`手指夹在离头皮 ${V(hc(z.first)+' cm')} 处，剪掉外面。`,'一撮一撮剪完这一块。'],ok:'这块头发拉直后一样长。'}));
+    if(front.method==='bangs'||front.method==='cut')add({id:'bangs',title:'剪前面的头发：干着剪，剪刀竖着',art:artBangs(),why:'前面的头发干了会往上缩，湿着剪很容易剪短。',how:['梳顺放下，不要拉紧。','剪刀竖起来，一点点往上剪。',`先剪到离发根约 ${V(hc(front.first)+' cm')}，最后 ${V(hc(front.fin)+' cm')}。`],ok:'左右一样长。',tip:'剪的时候闭上眼睛。'});
   }
   if(c.usesScissors||c.mode==='ponytail'){
     const thick=state.density==='thick';
-    add('soften',`柔化发尾：点剪${thick&&t.thinning?'＋打薄':''}`,artSoften(),`<p>一刀剪平的发尾会有一条硬线。把剪刀竖起来（和发片平行），刀尖朝发梢方向往里剪 3–5 mm 的小口，每片剪 4–6 下。</p>${thick?(t.thinning?'<p>发量多：用打薄剪在发片中段到发梢之间剪 1 刀，不要靠近发根，否则短发会把上面的头发撑起来。</p>':'<p>发量多但没有打薄剪：点剪剪深一点（5–8 mm），也能减掉一些重量。</p>'):''}`);
+    add({id:'soften',title:'让发尾看起来自然（点剪）',art:artSoften(),why:'一刀剪平的发尾有一条很硬的线，看起来像“锅盖”。',how:['取一撮头发，把剪刀<b>竖起来</b>，刀尖朝着发梢。','往发梢里剪进去 3–5 mm，剪出一些小缺口。','每撮剪四五下就够了，不要剪深。',...(thick&&t.thinning?['头发多的话：用打薄剪在头发中间往外剪一下，每撮最多一下，不要靠近头皮。']:[])],ok:'发尾不再是一条直线，摸起来是软的。'});
   }
-  if(c.mode==='ponytail')add('layers','可选：加一点层次',artLayers(),`<p>想要层次感：低头，把全部头发梳到额头正上方扎一个高马尾，只剪掉发梢 2–3 cm。</p><p class="note">不要用这个方法剪掉一半长度：头发从额头出发，头顶的头发会被剪掉多得多。</p>`);
   if(c.mode!=='ponytail'){
-    add('outline','修边：鬓角、耳后、后颈',artOutline(t.clipper),t.clipper?
-      `<p>取下卡尺，推子反过来握（刀齿朝上），只把发际线以外的碎毛推掉。<b>不要把发际线往上推</b>。耳朵周围用手把耳朵按住。</p>`:
-      `<p>用平剪的刀尖贴着皮肤，一点点剪掉发际线以外的碎毛，不要动发际线本身。</p>`);
+    add({id:'outline',title:'修掉脖子上的碎毛',art:artOutline(t.clipper),why:'脖子干净了，整个发型看起来就利落。',how:t.clipper?['取下推子上所有卡尺。','把推子反过来拿，刀口朝上，轻轻贴着皮肤，把发际线下面零散的小毛推掉。','只推发际线外面的，<b>不要往上推进头发里</b>。']:['用剪刀尖贴着皮肤，一点点剪掉发际线下面零散的小毛。','不要动发际线本身。'],ok:'脖子干净，发际线没有变高。'});
   }
   if(c.mode!=='clipper'){
-    const rows=c.zones.filter(z=>z.method!=='clip').map(z=>`<li>${zt(z)} ${cm(z.first)} → ${cm(z.fin)} cm，再剪 ${VC(cm(z.first-z.fin)+' cm')}</li>`).join('');
+    const list=c.mode==='ponytail'?[`重新扎低马尾，从发梢往上量 ${VC(hc(c.tailCut2)+' cm')} 剪掉。`]:c.zones.filter(z=>z.method!=='clip').map(z=>`${zt(z)} 剪到黑线 ${V(hc(z.fin)+' cm')}，每撮大约再剪掉 ${VC(hc(z.first-z.fin)+' cm')}`);
     const ex=c.mode==='ponytail'?back:(c.zones.find(z=>z.method!=='clip')||top);
-    add('second',`第二轮：从 ${Math.round(c.firstKeep*100)}% 修到 50%`,artSecond(ex.short,ex.L,ex.first,ex.fin),
-      `<p>吹干、梳顺，按平时的样子整理好，照镜子看 5 分钟。觉得已经够短，就停在这里，少剪一点完全没问题。还想再短，就用完全相同的方法再剪一次：</p>`+
-      (c.mode==='ponytail'?`<ul><li>重新扎低马尾，从发梢往上量 ${VC(cm(c.tailCut2)+' cm')} 剪掉。</li></ul>`:`<ul>${rows}</ul>`),
-      '第二轮之前一定要先吹干。湿着看长度会让你以为还不够短。');
+    add({id:'second',title:'吹干看看，再决定剪不剪第二次',art:artSecond(ex.short,ex.L,ex.first,ex.fin),why:'第一次故意留长了一点。现在看到了真实效果，再决定要不要更短。',how:['把头发完全吹干，梳成平时的样子。','照镜子看几分钟。觉得够短了，就结束，少剪一点完全没问题。',`还想再短：${c.mode==='ponytail'?'':'用纸条的<b>黑线</b>，'}按上面完全一样的方法再剪一次：`,...list],ok:'你满意的长度。',tip:'一定要先吹干再看。湿头发看起来比实际长，会让你以为还不够短。'});
   }
-  add('clean','收尾和保养',artClean(t.clipper),`<ul>
-    <li>冲掉脖子上的碎发，用胶带或湿毛巾粘一下更快。</li>
-    ${t.clipper?'<li>推子：刷掉刀头碎发，滴 1–2 滴油，盖上保护盖。</li>':''}
-    ${t.scissors?'<li>剪刀：擦干，在轴上点一滴油，单独收好，不要拿去剪纸。</li>':''}
-    <li>剪下的头发用纸裹好扔进垃圾桶，不要冲进下水道。</li></ul>`);
+  add({id:'clean',title:'收拾和保养',art:artClean(t.clipper),why:'工具保养好，下次还能用。',how:['冲掉脖子上的碎发，用胶带或湿毛巾粘一下更快。',...(t.clipper?['推子：用小刷子刷掉刀口的碎发，滴 1–2 滴油，盖上保护盖。']:[]),...(t.scissors?['剪刀：擦干，单独收好，不要拿去剪纸，会变钝。']:[]),'剪下的头发用纸包好扔进垃圾桶，不要冲进下水道。'],ok:'地上、脖子上都干净了。'});
   return S;
 }
+const OK_SVG='<svg viewBox="0 0 18 18" aria-hidden="true"><path class="ok-i" d="M3 9.5 L7.2 13.5 L15 4.5"/></svg>';
 function renderSteps(c){
   const steps=buildSteps(c),done=loadDone();
   $('#flowTitle').textContent='你的剪发流程：'+MODE[c.mode].flow;
-  const tex={straight:'直发',wavy:'微卷',curly:'卷发'}[state.texture];
-  $('#flowTags').innerHTML=`<span class="tag main">${MODE[c.mode].title}</span><span class="tag">${tex}</span><span class="tag">${state.who==='self'?'自己剪':'有人帮忙'}</span>${c.mode==='clipper'?'':`<span class="tag">第一刀留 ${Math.round(c.firstKeep*100)}%</span>`}<span class="tag">共 ${steps.length} 步</span>`;
+  const tex={straight:'直发',wavy:'有点弯',curly:'卷发'}[state.texture];
+  $('#flowTags').innerHTML=`<span class="tag main">${MODE[c.mode].title}</span><span class="tag">${tex}</span><span class="tag">${state.who==='self'?'自己剪':'有人帮忙'}</span><span class="tag">共 ${steps.length} 步</span><span class="tag">每做完一步，点右边的“完成”</span>`;
   $('#steps').innerHTML=steps.map((st,i)=>`<li class="step${done[st.id]?' is-done':''}" data-id="${st.id}">
     <div class="step-art">${st.art}</div>
     <div class="step-body">
       <div class="step-head"><span class="step-no">${String(i+1).padStart(2,'0')}</span><h3>${st.title}</h3><label class="done-toggle" for="done-${st.id}"><input type="checkbox" id="done-${st.id}" data-done="${st.id}"${done[st.id]?' checked':''}><span>完成</span></label></div>
-      <div class="step-text">${st.body}</div>
+      <div class="step-text">
+        ${st.why?`<p class="why"><b>为什么：</b>${st.why}</p>`:''}
+        <p class="sub-h">怎么做</p>
+        <ol class="how">${st.how.map(x=>`<li>${x}</li>`).join('')}</ol>
+        ${st.sub&&st.sub.length?`<p class="sub-h">缺的东西用这个代替</p><ul>${st.sub.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${st.ok?`<p class="ok">${OK_SVG}<span><b>做对了是这样：</b>${st.ok}</span></p>`:''}
+      </div>
       ${st.tip?`<p class="step-tip"><b>注意</b>${st.tip}</p>`:''}
     </div></li>`).join('');
   updateProgress();
@@ -1251,21 +1333,21 @@ function updateProgress(){
 function renderCases(c){
   const t=state.tools;
   const CASES=[
-    {k:'guard',t:'卡尺不够长',rel:c.hasClipper&&c.zones.some(z=>!z.gOK),p:['推子只能留到卡尺那么长。目标超过最长卡尺时有三条路：<b>①用剪刀</b>，最好；<b>②推剪梳</b>：梳子插进头发，梳齿离头皮的距离就是留下的长度，推子沿梳子外侧推平，需要练习；<b>③推子指间法</b>。','不要直接装最长的卡尺推：那会剪掉远不止一半。']},
-    {k:'noScissors',t:'没有剪刀',rel:!t.scissors,p:['推子取下卡尺，把发片夹在手指间，推子沿手指外侧推（指间法）。能用，但剪口毛糙、速度慢。','理发平剪几十元一把，比厨房剪刀好用得多，值得买。']},
-    {k:'tooShort',t:'不小心剪多了',rel:true,p:['<b>先停手。</b>不要去“补齐”另一边，那样只会越补越短。','只把剪多那处的周围修到能自然过渡就行，不必全头一样短。头发每月约长 1–1.5 cm，剪多 1 cm，大约一个月就看不出来。']},
-    {k:'uneven',t:'两边不一样长',rel:true,p:['在镜子里找固定参照：耳尖、眉尾、下巴、锁骨。两侧各取对称的一缕同时拉到脸前对比。','<b>只修长的那边</b>，一次最多修 0.5 cm，修一次比一次。']},
-    {k:'back',t:'自己看不到后脑',rel:state.who==='self',p:['三个办法：第二面镜子（背对大镜子手持小镜子）；手机架在身后录像或视频通话；后脑用手指量长度，不靠眼睛。','后脑的第一刀再保守一点，留 65%。']},
-    {k:'curly',t:'自然卷 / 卷发',rel:state.texture!=='straight',p:['全程干剪，一缕一缕剪。卷发拉直后的长度比看上去长得多，每缕回弹程度也不同，所以第一刀留 65%。','不建议用推子推较长的卷发，容易卡发。']},
-    {k:'cowlick',t:'发旋或某处总是翘',rel:true,p:['发旋附近剪太短会直接立起来。这里比周围多留 0.5–1 cm。','用推子时，发旋处要从几个方向各推一遍。']},
-    {k:'pull',t:'推子拉头发、卡住',rel:c.hasClipper,p:['通常是头发太长、潮湿或刀头缺油。先用剪刀剪到 4 cm 以内；头发要干；滴油；推慢一点。','拉扯时不要硬推，停下来把卡住的头发取出。']},
-    {k:'step',t:'剪完有台阶、断层',rel:true,p:['交界处没衔接好。剪刀：用点剪把台阶的上沿剪碎；推子：用中间号卡尺在交界处做“挑出”动作。']},
-    {k:'battery',t:'推子推到一半没电',rel:c.hasClipper,p:['先插上电源，很多推子可以边充边用；不行就换剪刀接着做，或者快充 10 分钟。','所以开始之前一定先充满。']},
-    {k:'thick',t:'剪完反而更蓬',rel:state.density==='thick',p:['变短后头发失去重量会撑开。用打薄剪在发片中段到发梢剪 1–2 刀，或者点剪剪深一点。','不要在发根附近打薄。']},
-    {k:'forgot',t:'忘装卡尺推了一道',rel:c.hasClipper,p:['推子最常见的事故：留下一道接近 0 mm 的痕。','补救：周围头发留长盖住；或者整体改成更短的发型。预防：每推之前看一眼卡尺，先装最长的那个。']},
-    {k:'shave',t:'临时想干脆剃短',rel:false,p:['“剃”是剃刀或不装卡尺，留下的长度接近 0，和“只剪掉一半”是两件事。','真要剃短：先用剪刀剪到 3 cm 以内，再用 12、6、3 mm 卡尺依次推，最后才不装卡尺。']},
-    {k:'tail',t:'马尾剪完一边长一边短',rel:c.mode==='ponytail',p:['通常是马尾没扎在正中，或者扎的时候头歪了。','重新梳顺，分左右两半拉到胸前对比，只修长的一边。']},
-    {k:'dry',t:'湿着看觉得还不够短',rel:c.wetCut,p:['湿发颜色深、贴头皮，看起来更长。','第二轮之前一定先完全吹干，按平时的样子整理好再决定。']}
+    {k:'tooShort',t:'不小心剪多了',rel:true,p:['<b>先停手。</b>不要去把另一边也剪短“补齐”，那样只会越补越短。','只把剪多那一撮周围修到看起来自然就行。头发一个月大约长 1 cm，剪多 1 cm，一个月左右就看不出来了。']},
+    {k:'uneven',t:'两边不一样长',rel:true,p:['左右各取对称的一撮，同时拉到脸前比，用耳尖、眉尾、下巴当参照。','<b>只修长的那边</b>，一次最多修半厘米，修一次比一次。']},
+    {k:'back',t:'自己看不到后脑',rel:state.who==='self',p:['用小镜子背对大镜子看；或者把手机立在身后录像。','后脑靠纸条和手指量长度，看不见也能剪准。后脑第一次可以再留长一点。']},
+    {k:'guard',t:'想用推子装最长的卡尺“修一修”',rel:c.hasClipper&&c.zones.some(z=>!z.gOK),p:[`不要。你最长的卡尺只有 ${c.maxG||12} mm，用它推，头发会只剩 ${cm((c.maxG||12)/10)} cm，远远不止剪掉一半。`,'推子这次只用来修脖子上的碎毛。']},
+    {k:'cowlick',t:'某一块头发总是翘起来',rel:true,p:['那里多半是“发旋”（头发打转的地方）。剪太短会直接立起来。','这块比周围多留半厘米到一厘米。']},
+    {k:'curly',t:'我的头发是卷的',rel:state.texture!=='straight',p:['一定要等头发干了再剪，一撮一撮剪。','卷发拉直后比看上去长得多，干了会缩回去，所以第一次只剪到 65%。']},
+    {k:'step',t:'剪完有一道“台阶”',rel:true,p:['是两撮之间没对齐。把剪刀竖起来，在台阶上沿点剪几下，把那道线剪碎。']},
+    {k:'dry',t:'湿着看，觉得还不够短',rel:c.wetCut,p:['湿头发颜色深、贴着头皮，看起来更长。','一定先完全吹干，梳成平时的样子再决定。']},
+    {k:'thick',t:'剪完反而更蓬了',rel:state.density==='thick',p:['头发变短、变轻了，就会撑开。','用打薄剪在头发中间到发梢之间剪一两下，或者点剪剪深一点。不要在靠近头皮的地方打薄。']},
+    {k:'noScissors',t:'没有理发剪刀',rel:!t.scissors,p:['可以拿推子代替（不装卡尺，沿着手指推），但剪口毛糙、很慢。','理发剪刀几十元一把，比家里的剪刀好用太多，值得买。']},
+    {k:'pull',t:'推子拉头发、卡住',rel:c.hasClipper,p:['头发太长、潮湿或刀口缺油都会这样。头发要干，滴一滴油，推慢一点。','卡住时不要硬推，停下来把头发取出来。']},
+    {k:'forgot',t:'忘装卡尺推了一下',rel:c.hasClipper,p:['会留下一道几乎光秃的痕。补救：让周围的头发留长盖住。','预防：用推子之前，永远先低头看一眼卡尺。']},
+    {k:'battery',t:'推子没电了',rel:c.hasClipper&&c.mode!=='scissors',p:['插上电源，很多推子可以边充边用。所以开始前一定先充满。']},
+    {k:'tail',t:'马尾剪完一边长一边短',rel:c.mode==='ponytail',p:['通常是马尾没扎在正中，或扎的时候头歪了。分左右两半拉到胸前比，只修长的一边。']},
+    {k:'shave',t:'不想折腾了，想直接剃短',rel:false,p:['“剃”会让头发几乎没有，跟剪掉一半是两回事，想清楚再做。','真要剃：先用剪刀剪到 3 cm 以内，再用 12、6、3 mm 卡尺依次推，最后才不装卡尺。']}
   ];
   const list=CASES.filter(x=>x.rel).concat(CASES.filter(x=>!x.rel));
   $('#cases').innerHTML=list.map(x=>`<article class="case${x.rel?' rel':''}"><svg viewBox="0 0 56 56" aria-hidden="true">${ICON[x.k]()}</svg><div><h3>${x.t}${x.rel?'<span class="pill">和你有关</span>':''}</h3>${x.p.map(q=>`<p>${q}</p>`).join('')}</div></article>`).join('');
@@ -1273,64 +1355,62 @@ function renderCases(c){
 
 /* ---------- 卷尺题头 ---------- */
 function renderTape(){
-  const el=$('#tape');const W=Math.max(300,Math.round(el.clientWidth||800)),H=58,px=W<560?16:22,x0=10,n=Math.floor((W-20)/px),half=Math.round(n/2);
+  const el=$('#tape');const W=Math.max(300,Math.round(el.clientWidth||800)),H=58,L=state.L||18,px=Math.min(40,(W-30)/L),x0=10,n=Math.floor((W-20)/px),half=L/2;
   let s=`<rect class="tp-band" x="0" y="10" width="${W}" height="34" rx="3"/>`;
-  for(let i=0;i<=n;i++){const x=x0+i*px;s+=`<line class="tp-t" x1="${x}" y1="10" x2="${x}" y2="${i%5===0?27:19}"/>`;if(i%5===0)s+=`<text class="tp-n" x="${x+3}" y="39">${i}</text>`;if(i<n){const xm=x+px/2;s+=`<line class="tp-t" x1="${xm}" y1="10" x2="${xm}" y2="15" opacity=".5"/>`;}}
-  const xh=x0+half*px;
-  s+=`<line class="tp-cut" x1="${xh}" y1="2" x2="${xh}" y2="56"/>`+scissors(xh,4,90,0.3,22)+`<text class="tp-half" x="${xh+8}" y="56">½</text>`;
+  for(let i=0;i<=n;i++){const x=x0+i*px;s+=`<line class="tp-t" x1="${x.toFixed(1)}" y1="10" x2="${x.toFixed(1)}" y2="${i%5===0?27:19}"/>`;if(i%5===0||px>=28)s+=`<text class="tp-n" x="${(x+3).toFixed(1)}" y="39">${i}</text>`;}
+  const xh=x0+half*px,xe=x0+L*px;
+  s+=`<line class="tp-cut" x1="${xh.toFixed(1)}" y1="2" x2="${xh.toFixed(1)}" y2="56"/>`+scissors(xh,4,90,0.3,22)+`<text class="tp-half" x="${(xh+8).toFixed(1)}" y="56">${hc(half)} cm</text>`;
+  if(xe<W-4)s+=`<line class="tp-t" style="stroke-width:3" x1="${xe.toFixed(1)}" y1="4" x2="${xe.toFixed(1)}" y2="50"/><text class="tp-n" x="${(xe+6).toFixed(1)}" y="56">${hc(L)} cm 现在</text>`;
   el.setAttribute('viewBox',`0 0 ${W} ${H}`);el.innerHTML=s;
 }
 
 /* ---------- 输入 ---------- */
 function radio(sel,name,opts){$(sel).innerHTML=opts.map(o=>`<label class="chip" for="${name}-${o[0]}"><input type="radio" name="${name}" id="${name}-${o[0]}" value="${o[0]}"><span>${o[1]}</span></label>`).join('');}
 function initInputs(){
-  $('#presets').innerHTML=Object.entries(PRESETS).map(([k,p])=>`<button type="button" class="preset" data-preset="${k}" id="preset-${k}"><b>${p.label}</b><span>${p.sub}</span></button>`).join('');
   $('#zones').innerHTML=ZONES.map(z=>`<div class="zone-row"><label for="len-${z.k}"><span class="zn">${z.n}</span>${z.name}</label><input type="range" id="len-${z.k}" min="1" max="60" step="0.5" data-zone="${z.k}"><span class="numwrap"><input type="number" id="num-${z.k}" min="1" max="60" step="0.5" data-zone="${z.k}" inputmode="decimal" aria-label="${z.name}长度，厘米"><span>cm</span></span></div>`).join('');
-  radio('#tex','texture',[['straight','直发'],['wavy','微卷'],['curly','卷发']]);
-  radio('#den','density',[['thin','偏少'],['medium','正常'],['thick','偏多']]);
-  radio('#who','who',[['self','自己剪'],['helper','有人帮我剪']]);
+  radio('#tex','texture',[['straight','直的'],['wavy','有点弯'],['curly','卷的']]);
+  radio('#den','density',[['thin','少'],['medium','一般'],['thick','多']]);
+  radio('#who','who',[['self','我自己'],['helper','有人帮我']]);
   $('#tools').innerHTML=TOOLS.map(t=>`<label class="tool" for="tool-${t.k}"><input type="checkbox" id="tool-${t.k}" data-tool="${t.k}"><span class="tcard"><svg viewBox="0 0 48 48" aria-hidden="true">${TOOL_ICON[t.k]()}</svg><span class="tname">${t.name}</span><span class="tnote">${t.note}</span></span></label>`).join('');
   $('#guards').innerHTML=GUARDS.map(g=>`<label class="chip" for="guard-${g}"><input type="checkbox" id="guard-${g}" data-guard="${g}"><span class="mono">${g} mm</span></label>`).join('');
 }
 function syncInputs(){
+  $('#len-all').value=state.L;$('#num-all').value=state.L;$('#adv').checked=!state.simple;$('#zones').hidden=state.simple;
   ZONES.forEach(z=>{$('#len-'+z.k).value=state.len[z.k];$('#num-'+z.k).value=state.len[z.k];});
   ['texture','density','who'].forEach(n=>{const el=document.getElementById(n+'-'+state[n]);if(el)el.checked=true;});
   TOOLS.forEach(t=>{$('#tool-'+t.k).checked=!!state.tools[t.k];});
   GUARDS.forEach(g=>{const el=$('#guard-'+g);el.checked=state.guards.includes(g);el.disabled=!state.tools.clipper;});
-  $('#guardHint').textContent=state.tools.clipper?'卡尺侧面印着数字，单位是 mm。':'先在上面勾选“电推剪”，才能选卡尺。';
-  document.querySelectorAll('.preset').forEach(b=>{const p=PRESETS[b.dataset.preset].len;b.classList.toggle('on',ZONES.every(z=>p[z.k]===state.len[z.k]));});
+  $('#guardHint').textContent=state.tools.clipper?'卡尺是套在推子上的塑料梳齿套，上面印着数字（单位 mm）。勾上你有的。':'你没有推子，这一项可以跳过。';
 }
 let last=null;
-function update(){
-  save();syncInputs();
-  const c=compute();last=c;
-  renderVerdict(c);renderProfile(c);renderZTable(c);renderCover(c);renderAlerts(c);renderCompare(c);renderSteps(c);renderCases(c);
-}
+function renderLive(c){renderHero(c);renderRules(c);renderVerdict(c);renderProfile(c);renderZTable(c);renderAlerts(c);renderCompare(c);renderTape();}
+function update(){save();const c=compute();syncInputs();last=c;renderLive(c);renderGloss(c);renderSteps(c);renderCases(c);}
 const form=$('#inputs');
 form.addEventListener('submit',e=>e.preventDefault());
 form.addEventListener('input',e=>{
-  const el=e.target;
-  if(el.dataset.zone){let v=parseFloat(el.value);if(isNaN(v))return;v=Math.min(60,Math.max(1,v));state.len[el.dataset.zone]=v;
-    if(el.type==='range')$('#num-'+el.dataset.zone).value=v;else $('#len-'+el.dataset.zone).value=v;
-    save();const c=compute();last=c;renderVerdict(c);renderProfile(c);renderZTable(c);renderCover(c);renderAlerts(c);renderCompare(c);
-    document.querySelectorAll('.preset').forEach(b=>{const p=PRESETS[b.dataset.preset].len;b.classList.toggle('on',ZONES.every(z=>p[z.k]===state.len[z.k]));});
-    clearTimeout(form._t);form._t=setTimeout(()=>{renderSteps(c);renderCases(c);},250);}
+  const el=e.target;let v=parseFloat(el.value);
+  if(el.id==='len-all'||el.id==='num-all'){if(isNaN(v))return;v=Math.min(60,Math.max(1,v));state.L=v;if(el.id==='len-all')$('#num-all').value=v;else $('#len-all').value=v;}
+  else if(el.dataset.zone){if(isNaN(v))return;v=Math.min(60,Math.max(1,v));state.len[el.dataset.zone]=v;if(el.type==='range')$('#num-'+el.dataset.zone).value=v;else $('#len-'+el.dataset.zone).value=v;}
+  else return;
+  save();const c=compute();last=c;renderLive(c);
+  clearTimeout(form._t);form._t=setTimeout(()=>{renderGloss(c);renderSteps(c);renderCases(c);},250);
 });
 form.addEventListener('change',e=>{
   const el=e.target;
-  if(el.type==='radio'&&el.name){state[el.name]=el.value;update();}
+  if(el.id==='adv'){state.simple=!el.checked;if(!state.simple)ZONES.forEach(z=>{state.len[z.k]=state.L;});update();}
+  else if(el.type==='radio'&&el.name){state[el.name]=el.value;update();}
   else if(el.dataset.tool){state.tools[el.dataset.tool]=el.checked;update();}
   else if(el.dataset.guard){const g=+el.dataset.guard;state.guards=el.checked?[...new Set(state.guards.concat(g))]:state.guards.filter(x=>x!==g);update();}
-  else if(el.dataset.zone&&el.type==='number'){update();}
+  else if(el.type==='number'){update();}
 });
-$('#presets').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;state.len=Object.assign({},PRESETS[b.dataset.preset].len);update();});
 $('#steps').addEventListener('change',e=>{const id=e.target.dataset.done;if(!id)return;const d=loadDone();if(e.target.checked)d[id]=true;else delete d[id];saveDone(d);e.target.closest('.step').classList.toggle('is-done',e.target.checked);updateProgress();});
 $('#resetDone').addEventListener('click',()=>{saveDone({});document.querySelectorAll('#steps [data-done]').forEach(x=>{x.checked=false;x.closest('.step').classList.remove('is-done');});updateProgress();});
 
-initInputs();renderTape();update();
+initInputs();update();
 let rt;
-const onResize=()=>{clearTimeout(rt);rt=setTimeout(()=>{renderTape();if(last){renderProfile(last);renderCover(last);}},120);};
+const onResize=()=>{clearTimeout(rt);rt=setTimeout(()=>{renderTape();if(last)renderProfile(last);},120);};
 if(window.ResizeObserver){new ResizeObserver(onResize).observe($('#profile'));new ResizeObserver(onResize).observe($('#tape'));}
 else window.addEventListener('resize',onResize);
+
 })();
 </script>
