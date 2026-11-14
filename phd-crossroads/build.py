@@ -14,6 +14,8 @@ import math
 import pathlib
 import re
 
+import abroad
+
 ROOT = pathlib.Path(__file__).resolve().parent
 WARN = []
 
@@ -144,7 +146,7 @@ class Fig:
 # ------------------------------------------------------- 01 decision map
 def fig01():
     f = Fig("01-decision-map", 1080, 560,
-            "决策地图：博士毕业后三条主路线——留美身份接力（工业界/学术界）、回国求职链、第三地备选")
+            "决策地图：博士毕业后三条主路线——留美身份接力（工业界/学术界）、回国求职链、第三地（12 个目的地）")
     # root + trunk
     f.add(rect(16, 230, 144, 100, "k-ink", 12))
     f.add(text(88, 268, "PhD 毕业", "t-h t-inv", "middle"))
@@ -154,7 +156,7 @@ def fig01():
     # bands
     f.add(rect(190, 16, 874, 232, "k-band-us", 14))
     f.add(rect(190, 262, 874, 206, "k-band-cn", 14))
-    f.add(rect(190, 482, 874, 62, "k-band-mute", 14))
+    f.add(rect(190, 482, 874, 62, "k-band-x", 14))
     f.add(text(268, 44, "留在美国 · 身份接力", "t-h t-us"))
     f.add(text(268, 290, "回国发展 · 求职链", "t-h t-cn"))
     # branches from trunk
@@ -200,10 +202,13 @@ def fig01():
     f.add(f.arr("M343,200 V255 H555 V298", "c", dash=True))
     f.add(text(563, 290, "海外博后 → 海外优青等人才项目 → 回国任教", "t-s t-cn"))
     # third country
-    f.add(text(272, 517, "备选（本页不展开）", "t-s"))
-    for i, s in enumerate(["加拿大 Express Entry", "香港 高才通计划", "新加坡 EP", "欧盟 Blue Card"]):
-        x = 420 + i * 152
-        f.add(box(x, 499, 140, 28, s, (), "k-box", "t-s"))
+    f.add(text(272, 517, "第三地 · 12 地对比", "t t-b t-x"))
+    cx = 410
+    for k_, lab in (("canada", "加拿大"), ("uk", "英国"), ("australia", "澳大利亚 · 新西兰"), ("hongkong", "中国香港"),
+                    ("singapore", "新加坡"), ("germany", "欧盟 · 德荷法爱"), ("switzerland", "瑞士"), ("japan", "日本")):
+        w = tw(lab, 11.5) + 20
+        f.add(xlink(k_, box(cx, 500, w, 26, lab, (), "k-x", "t-s"), lab))
+        cx += w + 8
     return f
 
 
@@ -708,15 +713,216 @@ def fig12():
     return f
 
 
-FIGS = [fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11, fig12]
+# ------------------------------------------------ 13–16 third countries
+SHORT = {"germany": "德国", "hongkong": "中国香港", "us": "美国（对照）"}
+
+
+def xname(k):
+    return SHORT.get(k, abroad.X[k]["name"])
+
+
+def xlink(k, inner, label):
+    return f'<a href="#abroad" data-x="{k}" class="hit" aria-label="{esc(label)}">{inner}</a>'
+
+
+def diamond(cx, cy, r, cls):
+    return f'<path d="M{cx:.1f},{cy - r:.1f} L{cx + r:.1f},{cy:.1f} L{cx:.1f},{cy + r:.1f} L{cx - r:.1f},{cy:.1f} Z" class="{cls}"/>'
+
+
+def fig13():
+    X = abroad.X
+    keys = ["us"] + sorted(abroad.ORDER, key=lambda k: (X[k]["pr"][1], X[k]["pr"][0]))
+    f = Fig("13-years-to-pr-and-citizenship", 1080, 700,
+            "从抵达到永久身份与入籍要几年：13 个目的地对照（含常见审理时间，粗估）")
+    x0, k = 352, 53
+    Xp = lambda v: x0 + v * k
+    top = 92
+    rowh = 42
+    # legend
+    lx = 16
+    f.add(rect(lx, 20, 26, 10, "m-ch-x", 3), text(lx + 32, 30, "永久身份（最快 → 常见）", "t-s"))
+    lx += 32 + tw("永久身份（最快 → 常见）", 11.5) + 22
+    f.add(rect(lx, 20, 26, 10, "k-x-soft", 3), text(lx + 32, 30, "先拿到、但不是无条件永居的身份", "t-s"))
+    lx += 32 + tw("先拿到、但不是无条件永居的身份", 11.5) + 22
+    f.add(rect(lx, 20, 26, 10, "k-x-dash", 3), text(lx + 32, 30, "酌情审批，可能拿不到", "t-s"))
+    lx += 32 + tw("酌情审批，可能拿不到", 11.5) + 22
+    f.add(diamond(lx + 6, 25, 6, "m-ink"), f.ln(f"M{lx + 6},25 H{lx + 22}", cls="l-strong"), diamond(lx + 22, 25, 6, "m-ink"),
+          text(lx + 34, 30, "入籍", "t-s"))
+    lx += 34 + tw("入籍", 11.5) + 22
+    f.add(diamond(lx + 6, 25, 6, "k-reform"), text(lx + 18, 30, "改革落地后", "t-s"))
+    # grid
+    bottom = top + rowh * len(keys)
+    for v in range(0, 14):
+        f.add(f.ln(f"M{Xp(v)},{top - 10} V{bottom}", cls="l-grid" if v else "l-axis"))
+        f.add(text(Xp(v), top - 16, f"{v}", "t-xs t-m", "middle"))
+        f.add(text(Xp(v), bottom + 16, f"{v}", "t-xs t-m", "middle"))
+    f.add(text(Xp(13), top - 30, "年", "t-xs", "middle"))
+    f.add(text(Xp(6.5), bottom + 36, "从抵达（美国：从博士毕业）起算的年数，含常见审理时间；按 2026-11 规则粗估，个人情况差异很大", "t-s", "middle"))
+    for i, key in enumerate(keys):
+        o = X[key]
+        cy = top + rowh * i + rowh / 2
+        if i % 2 == 0:
+            f.add(rect(8, cy - rowh / 2, 1064, rowh, "k-zebra", 0))
+        if key == "us":
+            f.add(f.ln(f"M8,{cy + rowh / 2} H1072", cls="l-axis"))
+        inner = text(16, cy - 3, xname(key), "t t-b" + (" t-us" if key == "us" else ""), maxw=320)
+        inner += text(16, cy + 13, o.get("note", ""), "t-xs", maxw=328)
+        f.add(xlink(key, inner, xname(key)) if key != "us" else inner)
+        y = cy - 6
+        if o.get("soft"):
+            a, b = o["soft"]
+            if b - a < 0.05:
+                f.add(f'<circle cx="{Xp(a)}" cy="{cy}" r="6" class="k-x-soft"/>')
+                f.add(text(Xp(a) + 10, cy - 9, o["softname"], "t-xs t-x"))
+            else:
+                f.add(rect(Xp(a), y, (b - a) * k, 12, "k-x-soft", 3))
+                f.add(text(Xp(a), cy - 9, o["softname"], "t-xs t-x"))
+        a, b = o["pr"]
+        cls = "k-x-dash" if o.get("pr_dash") else ("m-ch-x" if key != "us" else "m-us")
+        f.add(rect(Xp(a), y, max(4, (b - a) * k), 12, cls, 3))
+        end = Xp(b)
+        if o.get("cit"):
+            c0, c1 = o["cit"]
+            f.add(f.ln(f"M{end + 4},{cy} H{Xp(c0) - 7}", cls="l-grid l-dash"))
+            if c1 > c0:
+                f.add(f.ln(f"M{Xp(c0)},{cy} H{Xp(c1)}", cls="l-strong"))
+            f.add(diamond(Xp(c0), cy, 6, "m-ink"), diamond(Xp(c1), cy, 6, "m-ink"))
+            end = Xp(c1)
+        else:
+            f.add(text(end + 10, cy + 4, "无入籍步骤（本来就是中国国籍）", "t-xs"))
+        rf = o.get("reform")
+        if rf:
+            if rf[0]:
+                f.add(rect(Xp(rf[0]) - 2, y - 2, 4, 16, "k-reform", 1))
+            if rf[1]:
+                f.add(f.ln(f"M{end + 7},{cy} H{Xp(rf[1]) - 7}", cls="l-w l-dash"))
+                f.add(diamond(Xp(rf[1]), cy, 6, "k-reform"))
+                f.add(text(Xp(rf[1]), cy - 11, "改革后", "t-xs t-w", "middle"))
+    return f
+
+
+def fig14():
+    X = abroad.X
+    rows = abroad.ORDER
+    f = Fig("14-third-country-route-atlas", 1080, 668,
+            "12 个第三地的路线图谱：入境身份 → 过渡条件 → 永久身份 → 入籍")
+    cols = [(120, 262, "入境 / 工作身份", "k-box"), (404, 250, "过渡条件", "k-mute"),
+            (676, 204, "永久身份", "k-x"), (902, 162, "入籍", "k-box")]
+    for x, w, t, _ in cols:
+        f.add(text(x + w / 2, 30, t, "t t-b", "middle"))
+    rowh, top = 48, 46
+    for i, key in enumerate(rows):
+        o = X[key]
+        y = top + i * rowh
+        f.add(text(16, y + 26, xname(key), "t t-b", maxw=100))
+        inner = []
+        for j, ((x, w, _, cls), (t, s)) in enumerate(zip(cols, o["route4"])):
+            c = cls
+            if key == "hongkong" and j == 3:
+                c = "k-mute k-dash"
+            inner.append(box(x, y + 4, w, 38, t, s, c, "t-s t-b", "t-xs"))
+            if j < 3:
+                inner.append(f.arr(f"M{x + w + 2},{y + 23} H{cols[j + 1][0] - 2}"))
+        f.add(xlink(key, "".join(inner), xname(key) + "：查看详情"))
+    f.add(text(16, top + 12 * rowh + 22, "点击任一行，跳到下方该地区的详细面板。年限和门槛见图 13、图 16；“永久身份”在新西兰、爱尔兰、瑞士有不同层级，详见各地区说明。", "t-s"))
+    return f
+
+
+def fig15():
+    f = Fig("15-academic-ranks-world", 1080, 540,
+            "全球学术职级对照：博士后 → 起步教职 → 中级 / 终身 → 正教授，10 个体系")
+    levels = ["博士后 / 研究人员", "起步教职", "中级 · 常与终身挂钩", "正教授"]
+    data = [
+        ("美国 · 加拿大", "us", ["Postdoc", "Assistant Prof（tenure-track）", "Associate Prof（通常获 tenure）", "Full Professor"]),
+        ("英国 · 爱尔兰 · 新西兰", "x", ["Research Associate / Fellow", "Lecturer（爱尔兰称 Asst Prof）", "Senior Lecturer · Reader", "Professor"]),
+        ("澳大利亚", "x", ["Level A 博士后", "Level B Lecturer", "Level C Sr Lecturer · D Assoc", "Level E Professor"]),
+        ("中国香港 · 新加坡", "x", ["Postdoc · Research Fellow", "Assistant Prof（tenure track）", "Associate Prof", "Professor · Chair Prof"]),
+        ("瑞士", "x", ["Postdoc · Senior Scientist", "Assistant Prof（有或无 TT）", "Associate Prof", "Full Professor"]),
+        ("德国", "x", ["wiss. Mitarbeiter（E13 定期）", "Juniorprof. W1 · 研究组组长", "Habilitation · W2", "W3 Professor"]),
+        ("荷兰", "x", ["Postdoc（定期合同）", "Universitair docent（UD）", "Universitair hoofddocent", "Hoogleraar"]),
+        ("法国", "x", ["Postdoc · ATER", "Maître de conférences", "取得 HDR 指导研究资格", "Professeur des universités"]),
+        ("日本", "x", ["博士研究员 PD · 特任", "助教 · 講師", "准教授", "教授"]),
+        ("中国（对照）", "cn", ["博士后 / 师资博后", "讲师 · 预聘助理教授", "副教授 · 副研究员", "教授 · 研究员"]),
+    ]
+    x0, cw, gap = 176, 210, 14
+    for j, lv in enumerate(levels):
+        f.add(text(x0 + j * (cw + gap) + cw / 2, 30, lv, "t t-b", "middle"))
+    rowh, top = 44, 46
+    for i, (name, side, cells) in enumerate(data):
+        y = top + i * rowh
+        tcls = "t t-b" + (" t-us" if side == "us" else " t-cn" if side == "cn" else "")
+        f.add(text(16, y + 25, name, tcls, maxw=156))
+        cls = {"us": "k-us", "cn": "k-cn", "x": "k-x"}[side]
+        for j, c in enumerate(cells):
+            x = x0 + j * (cw + gap)
+            f.add(box(x, y + 5, cw, 32, c, (), cls, "t-s t-b"))
+            if j < 3:
+                f.add(f.arr(f"M{x + cw + 1},{y + 21} H{x + cw + gap - 1}"))
+    yb = top + len(data) * rowh + 18
+    f.add(text(16, yb, "层级只是大致对应。法国 MCF 和荷兰 UD 一入职就是长期岗位；德国 W1 一般最长 6 年，传统路线要先拿 Habilitation；", "t-s"))
+    f.add(text(16, yb + 20, "日本“特任”多为定期合同；英联邦的 Lecturer 起薪和职责与美国 Assistant Professor 接近，但没有统一的 tenure 评审。", "t-s"))
+    return f
+
+
+def fig16():
+    fx = abroad.FX
+    f = Fig("16-work-visa-salary-floors", 1080, 560,
+            "主要工作签证的最低工资门槛（折合美元/年，示意汇率）")
+    rows = [
+        ("英国 · Skilled Worker", [("STEM 博士底线", 33400, "GBP"), ("一般门槛", 41700, "GBP")]),
+        ("爱尔兰 · CSEP", [("应届", 36848, "EUR"), ("清单职位", 40904, "EUR"), ("非清单", 68911, "EUR")]),
+        ("新西兰 · SMC", [("时薪 35 × 2,080", 72800, "NZD")]),
+        ("荷兰 · 高技术移民", [("应届", 3122 * 12, "EUR"), ("30 岁以下", 4357 * 12, "EUR"), ("30 岁以上", 5942 * 12, "EUR")]),
+        ("法国 · Talent", [("合格雇员", 39582, "EUR"), ("蓝卡", 59373, "EUR")]),
+        ("德国 · 欧盟蓝卡", [("应届 / 短缺", 45934, "EUR"), ("标准", 50700, "EUR")]),
+        ("澳大利亚 · 482", [("Core", 79423, "AUD"), ("Specialist", 146576, "AUD")]),
+        ("新加坡 · EP（2026）", [("23 岁", 5600 * 12, "SGD"), ("30 岁", 7223 * 12, "SGD"), ("45 岁+", 10700 * 12, "SGD")]),
+        ("日本 · 高度专门职ロ", [("硬门槛", 3000000, "JPY")]),
+    ]
+    x0, k = 236, 7.4  # px per USD 1k
+    Xp = lambda usd_k: x0 + usd_k * k
+    top, rowh = 60, 44
+    bottom = top + rowh * len(rows)
+    for v in range(0, 111, 10):
+        f.add(f.ln(f"M{Xp(v):.1f},{top - 8} V{bottom}", cls="l-grid" if v else "l-axis"))
+        f.add(text(Xp(v), bottom + 16, f"{v}k" if v else "0", "t-xs t-m", "middle"))
+    f.add(text(Xp(55), bottom + 36, "美元 / 年（千）", "t-xs", "middle"))
+    f.add(text(16, 30, "每个点是一档门槛（标签为当地货币）。门槛只是“最低能签”，不等于市场工资；荷兰为月薪 × 12，不含 8% 假期津贴。", "t-s"))
+    sym = {"GBP": "£", "EUR": "€", "NZD": "NZ$", "AUD": "A$", "SGD": "S$", "JPY": "¥"}
+    for i, (name, pts) in enumerate(rows):
+        cy = top + i * rowh + rowh / 2
+        if i % 2 == 0:
+            f.add(rect(8, cy - rowh / 2, 1064, rowh, "k-zebra", 0))
+        f.add(text(16, cy + 4, name, "t t-b", maxw=214))
+        xs = [Xp(v * fx[c] / 1000) for _, v, c in pts]
+        if len(xs) > 1:
+            f.add(f.ln(f"M{min(xs):.1f},{cy} H{max(xs):.1f}", cls="l-x"))
+        for j, ((lab, v, c), x) in enumerate(zip(pts, xs)):
+            usd = v * fx[c] / 1000
+            f.add(f'<circle cx="{x:.1f}" cy="{cy}" r="5.5" class="m-ch-x"><title>{esc(name)} {esc(lab)}：'
+                  f'{sym[c]}{v:,.0f} ≈ ${usd:.0f}k</title></circle>')
+            local = f"{sym[c]}{v / 1e6:g}M" if c == "JPY" else f"{sym[c]}{v / 1000:.1f}k"
+            up = j % 2 == 0
+            f.add(text(x, cy - 10 if up else cy + 19, f"{lab} {local}", "t-xs", "middle"))
+    yb = bottom + 58
+    f.add(text(16, yb, "没有统一数额的：加拿大（GTS 按现行工资）、中国香港（按市场水平）、瑞士（按当地行业惯例工资）、美国 H-1B（按 LCA 现行工资）。", "t-s"))
+    rates = " · ".join(f"1 {c} = {v:.4g} USD" for c, v in fx.items() if c in sym)
+    f.add(text(16, yb + 20, "示意汇率（只用于比较量级，非实时）：" + rates, "t-xs"))
+    return f
+
+
+FIGS = [fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11, fig12,
+        fig13, fig14, fig15, fig16]
 
 # standalone stylesheet (literal tokens; light + dark)
 TOK_LIGHT = dict(paper="#F3F5F4", paper2="#E8ECEB", card="#FFFFFF", ink="#16202A", ink2="#4E5A66", line="#CDD5D6",
                  us="#2B4C9B", ustint="#E4EBF8", uswash="#EEF2FA", cn="#B03A2E", cntint="#F8E4E0", cnwash="#FBF0EE",
-                 mute="#9AA4AE", chcn="#B03A2E", chrow="#6B5FB5")
+                 mute="#9AA4AE", chcn="#B03A2E", chrow="#6B5FB5",
+                 x="#0E6B63", xtint="#DDF0EC", xwash="#ECF6F4", chx="#008A7A", chw="#B87A12")
 TOK_DARK = dict(paper="#11161C", paper2="#1A2129", card="#171E26", ink="#E4E9EE", ink2="#A2ADB8", line="#2F3A46",
                 us="#8EADF2", ustint="#1C2A47", uswash="#16203A", cn="#F08C7A", cntint="#3B211E", cnwash="#2A1A19",
-                mute="#5D6873", chcn="#D9644F", chrow="#8A80D0")
+                mute="#5D6873", chcn="#D9644F", chrow="#8A80D0",
+                x="#6CCFC4", xtint="#123230", xwash="#0F2422", chx="#1FA39C", chw="#BD822A")
 
 SVG_RULES = """
 .f-bg{fill:var(--paper)}
@@ -753,13 +959,24 @@ text{font-family:var(--sans)}
 .t-b{font-weight:700}
 .t-m{font-family:var(--mono)}
 .t-us{fill:var(--us)} .t-cn{fill:var(--cn)} .t-inv{fill:var(--paper)}
+.k-x{fill:var(--x-tint);stroke:var(--x);stroke-width:1.2}
+.k-band-x{fill:var(--x-wash)}
+.k-x-soft{fill:var(--x-tint);stroke:var(--ch-x);stroke-width:1.2}
+.k-x-dash{fill:var(--x-tint);stroke:var(--ch-x);stroke-width:1.6;stroke-dasharray:4 3}
+.k-reform{fill:var(--card);stroke:var(--ch-w);stroke-width:2}
+.k-zebra{fill:var(--paper-2);opacity:.45}
+.m-ch-x{fill:var(--ch-x)}
+.l-x{fill:none;stroke:var(--ch-x);stroke-width:2}
+.l-w{fill:none;stroke:var(--ch-w);stroke-width:1.5}
+.t-x{fill:var(--x)} .t-w{fill:var(--ch-w)}
 """
 
 
 def tokens_css(t):
     return (f"--paper:{t['paper']};--paper-2:{t['paper2']};--card:{t['card']};--ink:{t['ink']};--ink-2:{t['ink2']};"
             f"--line:{t['line']};--us:{t['us']};--us-tint:{t['ustint']};--us-wash:{t['uswash']};--cn:{t['cn']};"
-            f"--cn-tint:{t['cntint']};--cn-wash:{t['cnwash']};--mute:{t['mute']};--ch-cn:{t['chcn']};--ch-row:{t['chrow']}")
+            f"--cn-tint:{t['cntint']};--cn-wash:{t['cnwash']};--mute:{t['mute']};--ch-cn:{t['chcn']};--ch-row:{t['chrow']};"
+            f"--x:{t['x']};--x-tint:{t['xtint']};--x-wash:{t['xwash']};--ch-x:{t['chx']};--ch-w:{t['chw']}")
 
 
 STANDALONE_CSS = (
@@ -790,8 +1007,13 @@ def main():
             WARN.append(f"template has no slot for {f.key}")
         tpl = tpl.replace(marker, f.inline())
         (svgdir / f"{f.key}.svg").write_text(f.standalone(STANDALONE_CSS), encoding="utf-8")
+    for name, fn in abroad.HTML.items():
+        marker = f"<!--@html:{name}-->"
+        if marker not in tpl:
+            WARN.append(f"template has no slot for {name}")
+        tpl = tpl.replace(marker, fn())
     tpl = tpl.replace("/*@svg-rules*/", scope_css(SVG_RULES, ".fig-svg"))
-    left = re.findall(r"<!--@fig:[^>]+-->", tpl)
+    left = re.findall(r"<!--@(?:fig|html):[^>]+-->", tpl)
     if left:
         WARN.append(f"unfilled slots: {left}")
     (ROOT / "index.html").write_text(tpl, encoding="utf-8")

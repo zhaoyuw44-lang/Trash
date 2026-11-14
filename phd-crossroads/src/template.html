@@ -10,6 +10,7 @@
   --us:#2B4C9B; --us-tint:#E4EBF8; --us-wash:#EEF2FA;
   --cn:#B03A2E; --cn-tint:#F8E4E0; --cn-wash:#FBF0EE;
   --ch-cn:#B03A2E; --ch-row:#6B5FB5;
+  --x:#0E6B63; --x-tint:#DDF0EC; --x-wash:#ECF6F4; --ch-x:#008A7A; --ch-w:#B87A12;
   --mute:#9AA4AE; --ok:#23704A; --ok-tint:#E2F1E8; --warn:#93600F; --warn-tint:#F7ECD8; --off:#5E6873; --off-tint:#E6E9EC;
   --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
   --serif:"Noto Serif SC","Songti SC","STSong",serif;
@@ -23,6 +24,7 @@
     --cn:#F08C7A; --cn-tint:#3B211E; --cn-wash:#2A1A19;
     --mute:#5D6873; --ok:#72CC97; --ok-tint:#183326; --warn:#E3B160; --warn-tint:#352812; --off:#A3ADB8; --off-tint:#232B34;
     --ch-cn:#D9644F; --ch-row:#8A80D0;
+    --x:#6CCFC4; --x-tint:#123230; --x-wash:#0F2422; --ch-x:#1FA39C; --ch-w:#BD822A;
     color-scheme:dark;
   }
 }
@@ -32,6 +34,7 @@
   --cn:#F08C7A; --cn-tint:#3B211E; --cn-wash:#2A1A19;
   --mute:#5D6873; --ok:#72CC97; --ok-tint:#183326; --warn:#E3B160; --warn-tint:#352812; --off:#A3ADB8; --off-tint:#232B34;
   --ch-cn:#D9644F; --ch-row:#8A80D0;
+  --x:#6CCFC4; --x-tint:#123230; --x-wash:#0F2422; --ch-x:#1FA39C; --ch-w:#BD822A;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -69,7 +72,7 @@ nav.chapters a{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align
   padding:7px 10px;border-radius:8px;font-size:14px;line-height:1.35}
 nav.chapters a small{grid-column:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;opacity:.8}
 nav.chapters a .dot{width:8px;height:8px;border-radius:50%;background:var(--mute);transform:translateY(-1px)}
-nav.chapters a[data-side="u"] .dot{background:var(--us)} nav.chapters a[data-side="c"] .dot{background:var(--cn)}
+nav.chapters a[data-side="u"] .dot{background:var(--us)} nav.chapters a[data-side="c"] .dot{background:var(--cn)} nav.chapters a[data-side="x"] .dot{background:var(--x)}
 nav.chapters a:hover{background:var(--paper-2);color:var(--ink)}
 nav.chapters a[aria-current="page"]{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--line)}
 .rail-note{margin-top:18px;font-size:12px;color:var(--ink-2);line-height:1.6;padding:0 10px}
@@ -107,7 +110,7 @@ main{min-width:0;padding-top:22px}
 .stamp{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.06em;
   padding:3px 9px;border:1.5px solid currentColor;border-radius:4px;transform:rotate(-2.5deg);white-space:nowrap;line-height:1.4;background:var(--card)}
 .stamp.live{color:var(--ok)} .stamp.prop{color:var(--warn)} .stamp.held{color:var(--off);border-style:double;border-width:3px}
-.stamp.data{color:var(--us)} .stamp.cnst{color:var(--cn)}
+.stamp.data{color:var(--us)} .stamp.cnst{color:var(--cn)} .stamp.x{color:var(--x)}
 
 /* policy watch */
 .watch{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid var(--line)}
@@ -180,7 +183,7 @@ legend{font-size:13px;color:var(--ink-2);padding:0;margin-bottom:6px}
 .route ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2)}
 .route .side{display:grid;gap:14px;align-content:start}
 .badge{display:inline-block;font-size:11px;font-family:var(--mono);padding:0 6px;border-radius:4px;margin-right:6px;vertical-align:1px;border:1px solid currentColor}
-.badge.u{color:var(--us)} .badge.c{color:var(--cn)} .badge.b{color:var(--ink-2)}
+.badge.u{color:var(--us)} .badge.c{color:var(--cn)} .badge.b{color:var(--ink-2)} .badge.x{color:var(--x)}
 
 .out{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
 .out div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:2px;background:var(--paper)}
@@ -208,6 +211,45 @@ summary::after{content:"+";font-family:var(--mono);color:var(--ink-2)}
 details[open] summary::after{content:"−"}
 details ol,details ul{margin:0 0 14px;padding-left:22px;display:grid;gap:4px;font-size:14px;color:var(--ink-2)}
 details p{font-size:14px;color:var(--ink-2);margin-bottom:14px}
+
+/* third countries */
+.xtabs{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 8px);z-index:4;background:var(--paper);padding:8px 0}
+.xpanel{display:grid;gap:18px;scroll-margin-top:120px;border-top:3px solid var(--x);padding-top:18px}
+.xhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.xhead h3{font-size:26px;font-weight:900}
+.xhead h3 small{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink-2);margin-left:8px}
+.xfacts{display:flex;flex-wrap:wrap;gap:8px}
+.xverdict{font-size:16px;max-width:78ch;line-height:1.8}
+.xprc{background:var(--x-wash);border:1px solid var(--x);border-radius:var(--r);padding:12px 16px}
+.xprc h4{color:var(--x);margin-bottom:4px}
+.xprc ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.xbest{display:grid;gap:8px;max-width:80ch}
+.xbest p,.xbest li{font-size:14.5px}
+.xbest ul,.xbest ol,.card ol{margin:0;padding-left:20px;display:grid;gap:4px}
+.xroutes{display:grid;gap:8px}
+.xroutes > h4{margin-bottom:2px}
+.xroute summary{align-items:baseline}
+.xroute summary small{display:block;font-family:var(--mono);font-weight:500;font-size:11.5px;color:var(--ink-2)}
+.xroute summary .badge{flex-shrink:0}
+.xroute summary::after{margin-left:6px}
+.xroute dl,.xedu dl{margin:0 0 14px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 14px;font-size:14px}
+.xroute dt,.xedu dt{color:var(--ink-2);font-size:12.5px;padding-top:2px}
+.xroute dd,.xedu dd{margin:0;min-width:0;display:grid;gap:4px}
+.xroute dd ul,.xroute dd ol,.xedu dd ul,.xedu dd ol{margin:0;padding-left:18px;color:var(--ink)}
+.xroute dd a{word-break:break-all}
+.xnum{color:var(--ink)!important}
+.xnote{display:grid;gap:6px}
+.xnote p,.xnote li{font-size:13.5px}
+.xwatch li{grid-template-columns:96px minmax(0,1fr);padding:12px 4px}
+.xsrc{font-size:12.5px!important}
+.xsrc a{word-break:break-all}
+.xpro h4{color:var(--ok)} .xcon h4{color:var(--warn)}
+.xtbl table{min-width:1480px}
+.xtbl td:nth-child(5){min-width:92px}
+.xtbl tbody th a{text-decoration:none;border-bottom:1.5px solid var(--x);color:var(--ink)}
+tr.xbase{background:var(--us-wash)}
+.xwarn{color:var(--warn);font-size:12.5px}
+.card.x{border-color:var(--x)}
 
 /* checklist */
 .progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-2)}
@@ -244,6 +286,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 .lb-body svg{display:block;height:auto}
 
 @media (max-width:1000px){
+  .xtabs{top:calc(env(safe-area-inset-top, 0px) + 46px)}
   .shell{grid-template-columns:minmax(0,1fr)}
   nav.chapters{position:sticky;top:env(safe-area-inset-top, 0px);z-index:6;background:var(--paper);padding:8px 0;
     margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
@@ -256,6 +299,11 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 }
 @media (max-width:760px){
   .grid2,.grid3,.vcards,.gloss{grid-template-columns:minmax(0,1fr)}
+  .xroute dl,.xedu dl{grid-template-columns:minmax(0,1fr);gap:2px}
+  .xroute dd,.xedu dd{margin-bottom:8px}
+  .xwatch li{grid-template-columns:minmax(0,1fr)}
+  .xtabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+  .xtabs .chip{white-space:nowrap}
   .route{grid-template-columns:minmax(0,1fr)}
   .watch li{grid-template-columns:minmax(0,1fr)}
   .vcard dl{grid-template-columns:54px minmax(0,1fr)}
@@ -266,9 +314,9 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 
 <div class="shell">
 <header class="mast">
-  <div class="mast-top"><span>资料核对至 <b>2026-11-12</b></span><span>美国移民政策 · 中国人才政策 · 中美教育体系</span><span>不构成法律意见</span></div>
+  <div class="mast-top"><span>资料核对至 <b>2026-11-14</b></span><span>美国移民政策 · 中国人才政策 · 12 个第三地 · 教育体系</span><span>不构成法律意见</span></div>
   <h1>博士毕业去留<span>地图</span></h1>
-  <p class="lede">毕业后的每条路，都是一串需要按时交接的文件。这份地图把美国的身份接力（OPT、H-1B、绿卡）、回国的求职链（认证、签约、落户），以及两国的教育体系画在一起，并标出 2026 年仍在变动的政策。</p>
+  <p class="lede">毕业后的每条路，都是一串需要按时交接的文件。这份地图把美国的身份接力（OPT、H-1B、绿卡）、回国的求职链（认证、签约、落户）、加拿大、英国、澳洲、香港、新加坡、欧洲和日本等 12 个第三地的移民路线，以及各地的教育体系画在一起，并标出 2026 年仍在变动的政策。</p>
   <div class="mrz" aria-label="两条主线的关键文件"><span class="u">F-1 ▸ I-765 OPT ▸ I-983 STEM OPT ▸ I-129 H-1B ▸ I-140 ▸ I-485</span><i>┃</i><span class="c">学历学位认证 ▸ 签约 ▸ 落户 ▸ 社保·公积金</span></div>
 </header>
 
@@ -278,12 +326,13 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <li><a href="#us-visa" data-nav="us-visa" data-side="u"><span class="dot"></span>美国签证<small>OPT · H-1B · O-1</small></a></li>
     <li><a href="#green-card" data-nav="green-card" data-side="u"><span class="dot"></span>绿卡<small>EB-1 · NIW · PERM</small></a></li>
     <li><a href="#china" data-nav="china" data-side="c"><span class="dot"></span>回国发展<small>认证 · 求职 · 落户</small></a></li>
+    <li><a href="#abroad" data-nav="abroad" data-side="x"><span class="dot"></span>第三地<small>加 · 英 · 澳 · 港 · 新 · 欧 · 日</small></a></li>
     <li><a href="#edu-cn" data-nav="edu-cn" data-side="c"><span class="dot"></span>中国教育体系<small>K-12 → 博士</small></a></li>
     <li><a href="#edu-us" data-nav="edu-us" data-side="u"><span class="dot"></span>美国教育体系<small>K-12 → PhD</small></a></li>
     <li><a href="#plan" data-nav="plan"><span class="dot"></span>时间规划<small>年历 · 清单</small></a></li>
     <li><a href="#glossary" data-nav="glossary"><span class="dot"></span>术语与来源<small>Glossary</small></a></li>
   </ol>
-  <p class="rail-note">蓝色 = 美国路线，红色 = 中国路线。每张图都可以点“放大查看”。</p>
+  <p class="rail-note">蓝色 = 美国路线，红色 = 中国路线，青色 = 第三地。每张图都可以点“放大查看”。</p>
 </nav>
 
 <main>
@@ -291,14 +340,14 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 <section class="view" data-view="overview" aria-labelledby="h-overview">
   <div class="vh">
     <span class="kicker">Overview · 先看全局</span>
-    <h2 id="h-overview">三条路，两条接力链</h2>
-    <p>留在美国，靠的是一段接一段的合法身份：F-1 → OPT → STEM OPT → H-1B 或 O-1 → 绿卡，任何一棒掉了都要重新规划。回国则是另一条链：学历认证 → 求职签约 → 落户 → 待遇落实。两条链在毕业后的头 1–3 年可以并行，所以越早想清楚主路线和后备路线越好。</p>
+    <h2 id="h-overview">三条路：留美、回国、第三地</h2>
+    <p>留在美国，靠的是一段接一段的合法身份：F-1 → OPT → STEM OPT → H-1B 或 O-1 → 绿卡，任何一棒掉了都要重新规划。回国则是另一条链：学历认证 → 求职签约 → 落户 → 待遇落实。两条链在毕业后的头 1–3 年可以并行，所以越早想清楚主路线和后备路线越好。第三条路是去加拿大、英国、澳洲、香港、新加坡、欧洲或日本：不少地方 2–3 年就能拿到永久身份，但入籍会让你失去中国国籍。</p>
   </div>
 
   <figure class="fig">
     <div class="fig-head"><span class="fig-no">图 1 · 决策地图</span><button class="btn" data-zoom>放大查看</button></div>
     <div class="fig-scroll"><!--@fig:01-decision-map--></div>
-    <figcaption>点击方框可跳到对应章节。<b>虚线</b>是最常见的“两边都不放弃”的路径：在海外做博后，满足海外工作年限后申报海外优青等人才项目回国任教。</figcaption>
+    <figcaption>点击方框可跳到对应章节。<b>虚线</b>是最常见的“两边都不放弃”的路径：在海外做博后，满足海外工作年限后申报海外优青等人才项目回国任教。底部青色一栏是<b>第三地</b>，点任一地区会打开它的详细面板。</figcaption>
   </figure>
 
   <section class="tool" aria-labelledby="h-finder">
@@ -307,6 +356,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <fieldset><legend>长期更想在哪里</legend><div class="seg">
         <label><input type="radio" name="where" value="us"><span>美国</span></label>
         <label><input type="radio" name="where" value="cn"><span>中国</span></label>
+        <label><input type="radio" name="where" value="x"><span>第三地</span></label>
         <label><input type="radio" name="where" value="open" checked><span>还没想好</span></label></div></fieldset>
       <fieldset><legend>职业方向</legend><div class="seg">
         <label><input type="radio" name="track" value="acad"><span>学术</span></label>
@@ -363,6 +413,12 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
         <p>EB-1 <span class="num">2023-08-01</span> · EB-2 <span class="num">2021-10-01</span> · EB-3 <span class="num">2022-01-22</span>。本月 USCIS 允许按 Dates for Filing 递交 I-485。</p></div></li>
       <li><span class="stamp cnst">生效 · 中国</span><div><h4>2027 年度国考</h4>
         <p>年龄 18–38 周岁，2027 届应届硕博放宽到 43 周岁以下；报名 2026-10 已结束，笔试 2026-11-29。下一轮约 2027 年 10 月报名。</p></div></li>
+      <li><span class="stamp prop">已宣布 · 英国</span><div><h4>英国“挣得定居”：永居基准 5 年 → 10 年</h4>
+        <p>2026-11-02 政府咨询答复：5 年中 3 年收入 ≥ £50,271 可 5 年；≥ £125,141 或“最高人才组”可 3 年；HPI 时间不计入。实施日期未定。</p>
+        <p class="you">去英国前按 10 年做最坏打算；Global Talent 预计仍在 3 年通道。</p></div></li>
+      <li><span class="stamp live">生效 · 加拿大</span><div><h4>Express Entry CRS 改革</h4>
+        <p>2026-11-03 起向“高薪职业”加分，有效 offer 不再需要 LMIA；改革期间暂停抽选重算分数。</p>
+        <p class="you">博士 150 分不变，加拿大工作经验和职业工资水平更关键。详见<a href="#abroad">第三地</a>。</p></div></li>
       <li><span class="stamp cnst">生效 · 中国</span><div><h4>K 字签证</h4>
         <p>2025-10-01 起面向外籍青年 STEM 人才，不需要国内单位邀请。中国公民本人不适用，但与外籍配偶、或你将来想招的外籍学生和博后有关。</p></div></li>
     </ol>
@@ -690,6 +746,88 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <div class="card"><h4>保留的美国资源</h4><p>保留一张美国信用卡和银行账户，方便以后开会、合作和管理 401(k)；把美国手机号转成低价套餐用于接收验证码。</p></div>
     </div>
   </section>
+  <p class="next"><a href="#abroad">下一章：第三地 →</a></p>
+</section>
+
+<!-- ============================================================ ABROAD -->
+<section class="view" data-view="abroad" aria-labelledby="h-x" hidden>
+  <div class="vh">
+    <span class="kicker">Third Countries · 第三地</span>
+    <h2 id="h-x">第三地：12 个目的地怎么比</h2>
+    <p>除了留在美国或回国，美国博士还可以去加拿大、英国、澳大利亚、新西兰、中国香港、新加坡、德国（欧盟蓝卡）、荷兰、法国、爱尔兰、瑞士和日本。本章每个地区都由研究员核对官方来源，再由另一人逆向核查；数字截至 <b>2026-11-14</b>，没能确认的都单独列在各地区的“尚未核实”里。</p>
+  </div>
+
+  <section class="blk" aria-labelledby="h-x-prc">
+    <h3 id="h-x-prc">先弄清楚：永居和入籍对中国公民的区别</h3>
+    <div class="grid3">
+      <div class="card x"><h4>拿永居，不影响国籍</h4><p>各地的永居（PR、ILR、C 证、永住等）都是居留身份，你仍是中国公民，护照照常使用。真正改变国籍的是<b>入籍</b>。</p></div>
+      <div class="card x"><h4>入籍 = 失去中国国籍</h4><p>《国籍法》第 9 条：定居外国的中国公民，自愿加入或取得外国国籍的，即自动丧失中国国籍。中国不承认双重国籍，所以对方国家“允许双重国籍”对你不起作用。</p></div>
+      <div class="card x"><h4>入籍之后要处理的事</h4><p>中国护照和身份证随之失效，须办理<b>户口注销</b>；回国要办签证（或其他外国人证件）；国内房产、社保、继承等手续改按外籍人士办理。</p></div>
+      <div class="card x"><h4>“定居国外”与户口</h4><p>按 2009 年国务院侨办的定义：取得住在国长期或永久居留权，并已连续居留 2 年、2 年内累计居留不少于 18 个月，即视为华侨（定居国外）。部分地方据此要求或推动注销户口，各地执行不一，办事前问清当地公安。</p></div>
+      <div class="card x"><h4>孩子的国籍</h4><p>《国籍法》第 5 条：父母一方是中国公民、孩子出生在外国，孩子有中国国籍；但父母已<b>定居国外</b>、孩子出生时就有外国国籍的，不具有中国国籍。所以“出生时你持工签还是永居”会影响孩子。各地出生地规则见下表最后几列。</p></div>
+      <div class="card x"><h4>香港不一样，科研审查要留意</h4><p>香港永久居民不涉及国籍变动，但办特区护照或回乡证时可能要处理内地户口，需向内地公安和香港入境处确认。加拿大（敏感技术研究政策，2024 起）、英国（部分学科的 ATAS 审批）等对与特定机构有关联的研究人员有额外审查，本科院校若在相关名单上，学术路线要提前查。</p></div>
+    </div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 13 · 到永久身份和入籍要几年</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:13-years-to-pr-and-citizenship--></div>
+    <figcaption>同一口径：<b>从抵达起算</b>（美国从博士毕业起算），含常见审理时间。浅色条是先拿到、但还不是无条件永居的身份（新西兰居民签证、爱尔兰 Stamp 4、瑞士教授任命）；虚线条是新加坡这种酌情审批、可能拿不到的情况；琥珀色是已宣布或拟议的改革落地后的年限。点左侧地名可以打开详细面板。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-x-tbl">
+    <h3 id="h-x-tbl">一张表对比</h3>
+    <p class="sub">表格较宽，可以左右滑动。点地名打开详细面板。“在当地出生的孩子”是概括，具体以各地国籍法为准。</p>
+    <!--@html:abroad-table-->
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 14 · 12 地路线图谱</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:14-third-country-route-atlas--></div>
+    <figcaption>每一行是该地对美国博士最常用的一条路。多数地方的结构都一样：<b>先拿雇主担保或人才类工作身份</b>，满足居住年限后转永久身份，再满足更长的居住和语言要求后入籍。</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 16 · 工作签证的最低工资门槛</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:16-work-visa-salary-floors--></div>
+    <figcaption>折合美元按统一的示意汇率，只用来比较量级。悬停在点上可以看到当地货币原值。门槛多数每年 1 月或 7 月调整。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-x-pick">
+    <h3 id="h-x-pick">按你的优先级挑</h3>
+    <div class="grid3">
+      <div class="card"><h4>最快拿到永久身份</h4><p>加拿大（工作 12 个月后走 Express Entry，约 1.5–2.5 年）、德国（蓝卡 21 个月 + B1 德语）、日本（高度人才 80 分满 1 年）、澳大利亚 858（获邀即永居）。新西兰居民签证约 1 年，但首 2 年有旅行条件。</p></div>
+      <div class="card"><h4>不想放弃中国国籍</h4><p>只拿永居、不入籍，哪里都不影响国籍。中国香港是唯一一个“最终身份”也不涉及国籍的地方：7 年后成为永久性居民，没有入籍这一步。</p></div>
+      <div class="card"><h4>走学术路线</h4><p>英国 Global Talent（有认可学术岗位可走快速背书）、法国 Talent 研究员卡（无工资门槛）、德国 §18d 研究者居留、瑞士（获任命教授常当场拿 C 证）、港新高校（薪资高、tenure track 与美国相近）。</p></div>
+      <div class="card"><h4>工业界、看重收入</h4><p>瑞士工资水平最高（ETH 助理教授 2026 年薪 CHF 161,458 起）；新加坡、中国香港个税低，税后收入有竞争力。英国、欧洲大陆和日本的名义工资明显低于美国，比较时要把税、房租和公共服务一起算。</p></div>
+      <div class="card"><h4>不想学新语言</h4><p>英语就够的：加拿大、英国、澳大利亚、新西兰、爱尔兰、新加坡、中国香港。德国、法国、日本、瑞士的长期身份和入籍要考当地语言（德国 B1，法国 B1/B2，日本 2027 年起把日语纳入永住考量）。</p></div>
+      <div class="card"><h4>2026 年政策变数最大</h4><p>英国（永居基准拟延长到 10 年）、爱尔兰（入籍拟从 5 年改为 8 年）、新西兰（大选后可能收紧）、加拿大（CRS 刚改、Express Entry 拟合并）。这些地方要按“改革后”的数字做最坏打算。</p></div>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-x-detail">
+    <h3 id="h-x-detail">逐个看：路线、费用、家属、教育和 2026 年的变化</h3>
+    <p class="sub">选一个地区。每条签证路线都可以展开，看关键要求、费用、审理时间和官方来源；最后一项列出这次没能核实的内容。</p>
+    <!--@html:abroad-panels-->
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 15 · 全球学术职级对照</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:15-academic-ranks-world--></div>
+    <figcaption>把各地的职称放到同一把尺子上。想在第三地找教职，先弄清目标岗位相当于美国的哪一级、是不是长期岗位。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-x-edu">
+    <h3 id="h-x-edu">教育体系速览：义务教育、博士年限和起步教职</h3>
+    <p class="sub">每个地区面板里还有学制、大学学位和学术职级的完整说明。</p>
+    <!--@html:abroad-edu-->
+  </section>
+
+  <section class="blk" aria-labelledby="h-x-more">
+    <h3 id="h-x-more">还可以考虑（只做了初步整理，未逐项核实）</h3>
+    <p class="sub">审稿人建议补充的其他目的地。台湾对大陆护照持有人基本不可行；阿联酋只有长期居留，没有永居和入籍路径。</p>
+    <!--@html:abroad-others-->
+  </section>
   <p class="next"><a href="#edu-cn">下一章：中国教育体系 →</a></p>
 </section>
 
@@ -811,7 +949,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <p class="sub" id="g-none" hidden>没有匹配的术语。</p>
 
   <section class="blk" aria-labelledby="h-src">
-    <h3 id="h-src">主要来源（2026-11-12 检索）</h3>
+    <h3 id="h-src">主要来源（2026-11-12 至 11-14 检索）</h3>
     <ol class="src">
       <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students" target="_blank" rel="noopener">OPT for F-1 Students</a> · <a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-extension-for-stem-students-stem-opt" target="_blank" rel="noopener">STEM OPT Extension</a> · <a href="https://studyinthestates.dhs.gov/stem-opt-hub" target="_blank" rel="noopener">Study in the States STEM OPT Hub</a></li>
       <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-first-preference-eb-1" target="_blank" rel="noopener">EB-1</a> · <a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-second-preference-eb-2" target="_blank" rel="noopener">EB-2 / NIW</a> · <a href="https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement" target="_blank" rel="noopener">O-1</a> · <a href="https://www.uscis.gov/policy-manual" target="_blank" rel="noopener">Policy Manual</a></li>
@@ -824,6 +962,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <li>DOL 现行工资提案：<a href="https://www.dol.gov/newsroom/releases/eta/eta20260326-0" target="_blank" rel="noopener">DOL 新闻稿（2026-03-26）</a></li>
       <li>国考 2027 年度公告：<a href="https://www.news.cn/edu/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html" target="_blank" rel="noopener">新华网</a>；K 字签证：<a href="https://www.chinanews.com.cn/gn/2025/08-14/10464960.shtml" target="_blank" rel="noopener">中新网四部门解读</a></li>
       <li>学历学位认证：<a href="https://www.cscse.edu.cn/" target="_blank" rel="noopener">中国留学服务中心</a>；海外优青与青年科学基金：<a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委员会</a></li>
+      <!--@html:abroad-sources-->
       <li>学前一年免费与育儿补贴：<a href="https://www.news.cn/20250929/f2215fdf3dd4419b95a3dccaa54d2e00/c.html" target="_blank" rel="noopener">新华网</a>；上海留学人员落户：<a href="https://m.thepaper.cn/newsDetail_forward_33705260" target="_blank" rel="noopener">澎湃新闻</a></li>
     </ol>
   </section>
@@ -885,11 +1024,13 @@ function route() {
   const P = +v.power, stem = v.stem === "yes";
   const steps = [], hedge = [], risk = [];
   const B = s => `<span class="badge ${s}">${s === "u" ? "美" : s === "c" ? "中" : "两边"}</span>`;
-  const wantUS = v.where !== "cn", wantCN = v.where !== "us";
+  const wantX = v.where === "x";
+  const wantUS = v.where !== "cn" && !wantX, wantCN = v.where !== "us" && !wantX;
   const acad = v.track !== "ind", ind = v.track !== "acad";
   let title = "";
   if (v.where === "us") title = acad && !ind ? "留美 · 学术路线" : ind && !acad ? "留美 · 工业界路线" : "留美 · 学术与工业界都投";
   else if (v.where === "cn") title = acad && !ind ? "回国 · 高校 / 院所路线" : ind && !acad ? "回国 · 企业路线" : "回国 · 高校与企业都投";
+  else if (wantX) title = acad && !ind ? "第三地 · 学术路线" : ind && !acad ? "第三地 · 工业界路线" : "第三地 · 学术与工业界都投";
   else title = "两边都保留，先用 OPT 争取时间";
 
   if (wantUS) steps.push(`${B("u")}毕业前 90 天内请 DSO 推荐并递交 OPT（I-765）。OPT 在开始前可以放弃，先申请不吃亏。`);
@@ -914,9 +1055,32 @@ function route() {
       steps.push(`${B("c")}想进体制内：国考 10 月报名，年龄 38 岁以下（应届硕博 43 岁以下），需先完成学历认证。`);
     }
   }
+  if (wantX) {
+    const X = s => `<span class="badge x">${s}</span>`;
+    steps.push(`${X("第三地")}先挑 2–3 个目标地，用<a href="#abroad">第三地</a>章节的图 13 和对比表比较永居年限、语言和工资门槛。`);
+    steps.push(`${B("u")}毕业前照样申请 OPT：在美国多工作一两年，对加拿大联邦技术工人、日本高度人才积分、英国 Global Talent 都有帮助，也给求职留出时间。`);
+    if (acad) {
+      steps.push(`${X("学术")}英国：拿到认可大学的博士级研究岗，可走 Global Talent 快速背书（约 2 周）；毕业于 HPI 名单内的 34 所美国大学，还可先拿 3 年 HPI 签证。`);
+      steps.push(`${X("学术")}欧洲大陆：法国 Talent 研究员卡没有工资门槛；德国 §18d 研究者居留；荷兰大学科研岗只需达到最低收入标准。瑞士获任命的教授常当场拿 C 证。`);
+      steps.push(`${X("学术")}加拿大博后用 C44 免 LMIA 工签，做满 12 个月后可走 Express Entry；港新高校的 tenure track 与美国相近，薪资高。`);
+    }
+    if (ind) {
+      steps.push(`${X("工业界")}加拿大全球人才通道约 2 周出签；德国欧盟蓝卡年薪 €50,700（应届 €45,934）；荷兰毕业 3 年内用应届门槛 €3,122/月；爱尔兰 CSEP 21 个月转 Stamp 4。`);
+      steps.push(`${X("工业界")}新加坡 EP 要过 COMPASS 40 分，PR 由 ICA 酌情审批；日本高度专门职博士计 30 分，80 分满 1 年可申请永住。`);
+    }
+    if (P >= 3) steps.push(`${X("成果突出")}英国 Global Talent（杰出人才 / 杰出潜力）、澳大利亚 858 国家创新签证（邀请制，获邀即永居）、香港优才都值得一试。`);
+    hedge.push("同时保留美国 H-1B 抽签资格：第三地的 offer 和美国抽签结果可以等到同一时间再选。");
+    hedge.push("香港是唯一不涉及国籍变动的长期选项；本科院校在高才通名单上的，可以把它当后备。");
+    if (v.family !== "single") hedge.push("比较配偶能否工作：加拿大要求你的职业为 TEER 0/1 且工签剩余 16 个月以上；新加坡持 DP 的配偶不能直接工作。");
+    risk.push("入籍任何国家都会自动丧失中国国籍（《国籍法》第 9 条）；只拿永居不影响国籍。");
+    risk.push("2026 年变数：英国永居基准拟延长到 10 年；爱尔兰入籍拟改为 8 年；新西兰大选后可能收紧；加拿大 CRS 刚改。");
+    if (acad) risk.push("学术岗留意科研安全审查：加拿大敏感技术研究政策、英国部分学科的 ATAS 等。");
+    if (v.family === "kids") risk.push("孩子国籍：你已在当地拿到永居（定居国外）后出生、且出生即有当地国籍的孩子，不具有中国国籍（《国籍法》第 5 条）。");
+  }
   if (v.where === "open") {
     hedge.push("两边同时投：美国职位和国内秋招 / 高校岗位的时间线有重叠，拿到 offer 再比较。");
     hedge.push("海外博后 2–3 年对两边都加分：美国这边积累 NIW / EB-1 证据，中国这边满足海外优青的海外年限。");
+    hedge.push("还有第三条路：加拿大、德国、日本等地 2–3 年可拿永久身份，详见“第三地”章节。");
   }
   if (v.where === "us") {
     hedge.push("后备一：cap-exempt 雇主（大学、附属医院、非营利研究机构）免抽签。");
@@ -1224,7 +1388,29 @@ const G = [
   ["K 字签证", "K Visa", "中国 2025-10-01 起为外籍青年 STEM 人才设立的签证，无需国内单位邀请。"],
   ["旅行证", "PRC Travel Document", "中国驻外使领馆为具有中国国籍的海外出生儿童等签发的旅行证件。"],
   ["国考", "中央机关公务员考试", "每年 10 月报名、11 月底至 12 月初笔试。"],
-  ["学位法", "Degree Law of the PRC", "2025-01-01 施行，学位分为学术学位和专业学位。"]
+  ["学位法", "Degree Law of the PRC", "2025-01-01 施行，学位分为学术学位和专业学位。"],
+  ["国籍法第 9 条", "PRC Nationality Law Art. 9", "定居外国的中国公民自愿加入外国国籍，即自动丧失中国国籍；只拿外国永居不受影响。"],
+  ["国籍法第 5 条", "PRC Nationality Law Art. 5", "父母已定居国外、孩子出生时即有外国国籍的，孩子不具有中国国籍。"],
+  ["华侨 / 定居国外", "Overseas Chinese", "取得外国长期或永久居留权，并连续居留 2 年、2 年内累计不少于 18 个月。"],
+  ["Express Entry", "加拿大快速通道", "加拿大联邦经济移民的申请池，按 CRS 分数和类别抽选发邀请。"],
+  ["CRS", "Comprehensive Ranking System", "Express Entry 综合打分；博士学历计 150 分（无配偶）。"],
+  ["CEC", "Canadian Experience Class", "加拿大经验类：在加拿大做满 12 个月技术工作后可申请永居。"],
+  ["GTS", "Global Talent Stream", "加拿大全球人才通道：LMIA 约 10 个工作日，工签约 2 周。"],
+  ["C44", "加拿大博士后免 LMIA 工签代码", "已获或即将获博士学位、以研究为主的博士后职位。"],
+  ["ILR", "Indefinite Leave to Remain", "英国无限期居留（定居），现行 3 或 5 年；改革后基准拟为 10 年。"],
+  ["Global Talent", "英国全球人才签证", "需 Royal Society、RAEng、British Academy 或 UKRI 背书，不绑雇主。"],
+  ["HPI", "High Potential Individual", "英国高潜力人才签证：名单内大学博士可拿 3 年，不需 offer，不计入定居年限。"],
+  ["482 / 186 / 858", "澳大利亚签证类别", "482 雇主担保工签；186 雇主提名永居；858 国家创新签证（邀请制永居）。"],
+  ["SMC", "Skilled Migrant Category", "新西兰技术移民积分类别，6 分可申请居民签证。"],
+  ["高才通 / 优才", "TTPS / QMAS", "香港人才入境计划；高才通 B/C 类只看本科院校是否在名单上。"],
+  ["EP / COMPASS", "Employment Pass", "新加坡就业准证及其 40 分评分框架。"],
+  ["欧盟蓝卡", "EU Blue Card", "欧盟高技能工作居留；德国 2026 年薪门槛 €50,700。"],
+  ["Niederlassungserlaubnis", "德国永居", "蓝卡工作 21 个月 + B1 德语可申请（A1 德语为 27 个月）。"],
+  ["kennismigrant", "荷兰高技术移民", "按年龄和应届身份设月薪门槛，配偶可自由工作。"],
+  ["Talent 研究员卡", "Carte Talent – chercheur", "法国研究人员居留卡，无工资门槛。"],
+  ["CSEP / Stamp 4", "Ireland", "爱尔兰关键技能就业许可；满 21 个月转 Stamp 4（可续，不是永居）。"],
+  ["C 证", "Niederlassungsbewilligung C", "瑞士定居许可；获任命教授常当场获发。"],
+  ["高度专门职 / 永住", "Highly Skilled Professional", "日本积分制签证；80 分满 1 年、70 分满 3 年可申请永住。"]
 ];
 const gl = $("#gloss");
 gl.innerHTML = G.map(([a, b, c]) => `<div data-q="${esc((a + b + c).toLowerCase())}"><dt>${esc(a)}<span class="num">${esc(b)}</span></dt><dd>${esc(c)}</dd></div>`).join("");
@@ -1233,6 +1419,30 @@ $("#g-q").addEventListener("input", e => {
   $$("#gloss > div").forEach(d => { const hit = !q || d.dataset.q.includes(q); d.hidden = !hit; if (hit) n++; });
   $("#g-none").hidden = n > 0;
 });
+
+/* ---------------- third-country panels */
+const xTabs = $$(".xtabs .chip");
+function showX(k, scroll) {
+  if (!$(`#x-${k}`)) k = "canada";
+  $$(".xpanel").forEach(p => { p.hidden = p.dataset.xpanel !== k; });
+  xTabs.forEach(b => b.setAttribute("aria-pressed", b.dataset.x === k ? "true" : "false"));
+  store.set("phd-map-x", k);
+  if (scroll) $(`#x-${k}`).scrollIntoView({block: "start"});
+}
+xTabs.forEach(b => b.addEventListener("click", () => showX(b.dataset.x)));
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest("a[data-x]");
+  if (!a) return;
+  e.preventDefault();
+  if (!$("#lb").hidden) $("#lb").hidden = true;
+  if (location.hash !== "#abroad") {
+    try { history.pushState(null, "", "#abroad"); } catch (err) {}
+    show("abroad", false);
+  }
+  showX(a.dataset.x, true);
+});
+window.addEventListener("popstate", () => show(location.hash.slice(1), true));
+showX(store.get("phd-map-x", "canada"), false);
 
 /* ---------------- lightbox */
 const lb = $("#lb"), lbBody = $("#lb-body");
@@ -1251,6 +1461,7 @@ $("#lb-in").addEventListener("click", () => { zoom = Math.min(zoom * 1.25, 4); s
 $("#lb-out").addEventListener("click", () => { zoom = Math.max(zoom / 1.25, 0.5); setZoom(); });
 const closeLb = () => { lb.hidden = true; lbBody.innerHTML = ""; if (lastBtn) lastBtn.focus(); };
 $("#lb-close").addEventListener("click", closeLb);
+lbBody.addEventListener("click", e => { const a = e.target.closest("a[href^='#']"); if (a && !a.dataset.x) closeLb(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
 })();
 </script>
