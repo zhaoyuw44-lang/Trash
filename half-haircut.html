@@ -390,7 +390,7 @@ svg .arrowC{fill:none;stroke:var(--cut);stroke-width:1.8;stroke-linecap:round}
 
 <section id="bench">
   <div class="sec-head"><p class="eyebrow">第一部分 · 你的情况</p><h2>告诉页面你的头发和工具</h2></div>
-  <p class="sec-lead">已经按 18 cm 填好了。不确定的地方保持默认就行，改了任何一项，下面的流程会自动跟着变。</p>
+  <p class="sec-lead">已经按头顶 18 cm、两侧 8 cm 填好了。前面（18 cm）和后脑（10 cm）是估计值，量一下再改。改了任何一项，下面的流程会自动跟着变。</p>
   <div class="bench-grid">
     <form id="inputs" class="panel inputs" autocomplete="off">
       <fieldset>
@@ -484,10 +484,10 @@ const TOOLS=[
   {k:'cape',name:'围布',note:'垃圾袋也行'}
 ];
 const GUARDS=[3,6,9,12,16,19,22,25];
-const DEFAULT={simple:true,L:18,len:{front:18,top:18,side:18,back:18},texture:'straight',density:'medium',who:'self',
+const DEFAULT={simple:false,L:18,len:{front:18,top:18,side:8,back:10},texture:'straight',density:'medium',who:'self',
   tools:{clipper:true,scissors:true,thinning:true,comb:true,clips:false,spray:false,ties:false,mirror2:false,cape:true},
   guards:[3,6,9,12]};
-const SKEY='halfcut-state-v2',DKEY='halfcut-done-v2';
+const SKEY='halfcut-state-v3',DKEY='halfcut-done-v3';
 function load(){
   let s=null;try{s=JSON.parse(localStorage.getItem(SKEY)||'null');}catch(e){s=null;}
   const d=JSON.parse(JSON.stringify(DEFAULT));
@@ -1100,7 +1100,8 @@ function renderHero(c){
   const one=state.simple?`你的头发大约 ${hc(z.L)} cm`:`你的头发最长约 ${hc(Math.max(...c.zones.map(q=>q.L)))} cm`;
   $('#heroLead').innerHTML=`${one}，剪掉一半，大约留 <strong>${hc(z.fin)} cm</strong>。你不需要任何理发经验：先看“三件事”，再认识一下工具，然后照着第四部分一步一步做，每一步都有图。`;
   const tool=MODE[c.mode].short;
-  $('#answer').innerHTML=`<p class="eyebrow">一句话答案</p><div class="ans-big">${hc(z.L)}<span class="arr">→</span>${hc(z.fin)} cm</div><p class="ans-sub">用<b>${tool}</b>。${c.mode==='scissors'||c.mode==='none'?`你的推子最多只能留 ${c.maxG?cm(c.maxG/10)+' cm':'1–2 cm'}，你要留 ${hc(z.fin)} cm，用推子会剪得非常短。`:c.mode==='ponytail'?'头发够长，可以扎起来一次剪，最简单。':c.mode==='clipper'?'你要留的长度在卡尺范围内，推子比剪刀更容易推均匀。':''}</p>`;
+  const each=state.simple?'':`<p class="ans-sub">${c.zones.map(q=>`${q.short} ${hc(q.L)} → <b>${hc(q.fin)}</b>`).join('　')}（cm）</p>`;
+  $('#answer').innerHTML=`<p class="eyebrow">一句话答案</p><div class="ans-big">${state.simple?'':'头顶 '}${hc(z.L)}<span class="arr">→</span>${hc(z.fin)} cm</div>${each}<p class="ans-sub">用<b>${tool}</b>。${c.mode==='scissors'||c.mode==='none'?`你的推子最多只能留 ${c.maxG?cm(c.maxG/10)+' cm':'1–2 cm'}，你要留 ${hc(z.fin)} cm，用推子会剪得非常短。`:c.mode==='ponytail'?'头发够长，可以扎起来一次剪，最简单。':c.mode==='clipper'?'你要留的长度在卡尺范围内，推子比剪刀更容易推均匀。':''}</p>`;
 }
 function renderRules(c){
   const z=mainZone(c);
@@ -1273,6 +1274,7 @@ function buildSteps(c){
     if(front.method==='bangs')add({id:'bangs',title:'剪刘海：干着剪，剪刀竖着',art:artBangs(),why:'刘海干了会往上缩，湿着剪很容易剪短。',how:['等刘海干了，梳顺放下，<b>不要拉紧</b>。','剪刀竖起来，刀尖朝上，一点点往上剪。',`先剪到离发根约 ${V(hc(front.first)+' cm')}，最后 ${V(hc(front.fin)+' cm')}。`],ok:'刘海左右一样长，用眉尾对一下。',tip:'剪刘海时闭上眼睛，剪完再睁开，碎发容易掉进眼睛。'});
     if(isCut(side))add({id:'sides',title:'剪两侧（耳朵上面）',art:artSides(side.L,side.first),why:'两侧最容易被人看到，左右要一样长。',how:['松开一侧，取一撮耳朵上方的头发，梳直。','往旁边水平拉出去，和头皮垂直。',`纸条顶住头皮，手指竖着夹住，滑到红线（${V(hc(side.first)+' cm')}），剪掉外面。`,'剪耳朵附近时，用另一只手把耳朵往下按住。','一侧剪完，马上剪另一侧。'],ok:'两侧各拉一撮到脸旁边，发梢一样高。'});
     if(isCut(back))add({id:'back',title:'剪后脑：从下往上',art:artBack(self,t.mirror2),why:'后脑看不见，但长度是纸条和手指决定的，不是眼睛。',how:['先剪下面那块（就是刚才试刀那里，往两边继续）。',`一撮一撮往后拉出来，用纸条量，剪到红线（${V(hc(back.first)+' cm')}）。`,self?(t.mirror2?'每剪完几撮，用小镜子看一下。':'每剪完几撮，用手机录像看一下。'):'这块交给帮手，按同样的方法做。','下面剪完，放下上面那块，带一点下面剪过的头发一起拉出来，剪到一样长。'],ok:'后脑的头发拉出来，长度和纸条红线一样。',tip:self?'脖子后面两边最容易剪多，宁可留长一点。':null});
+    if(!same&&isCut(top)&&isCut(side))add({id:'blend-cut',title:'把头顶和两侧的交界修顺',art:artBlend(true),why:`头顶留 ${hc(top.fin)} cm、两侧留 ${hc(side.fin)} cm，两块交界的地方（太阳穴往上那一圈）容易留下一个突出的“角”。`,how:['松开交界处的头发，取一撮：一半是头顶剪过的，一半是两侧剪过的。','把这撮头发斜着往外拉（介于往上和往旁边之间）。','你会看到头顶的发梢和两侧的发梢之间有一个凸出来的角。手指斜着夹住，把这个角剪掉，让两边的发梢连成一条斜线。','沿着交界一圈，一撮一撮做完，左右两边都要做。'],ok:'用手从两侧往头顶摸上去，长度是慢慢变长的，没有突然的坎。',tip:'只剪那个“角”，不要碰头顶和两侧已经剪好的长度。'});
     if(c.mode==='mixed')add({id:'blend',title:'把推子和剪刀的交界修顺',art:artBlend(true),why:'推过的地方短、剪过的地方长，中间会有一道“台阶”。',how:['用梳子把交界处的头发挑起来，梳子斜着离开头皮。','剪掉从梳子上面露出来的头发，一次只剪一点。','剪完用手摸，摸不到明显的坎就行。'],ok:'交界处摸起来是慢慢变化的，没有一道坎。'});
     add({id:'check',title:'检查：左右是不是一样长',art:artCross(),why:'剪的时候是一撮一撮来的，难免有一两撮没对齐。',how:['从左右对称的两个地方，各取一撮，同时拉到脸前面比。','哪边长，只修长的那边，一次只修一点点。','换个方向再看：刚才往上拉着剪的地方，现在往前拉，看有没有漏掉的长头发。'],ok:'左右两撮的发梢平齐。'});
   }
