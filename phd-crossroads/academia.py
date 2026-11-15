@@ -119,9 +119,23 @@ def block(b, i):
             f'<div class="abody">{body}</div></details>')
 
 
-def panel(key, label, side):
-    s = SEC[key]
-    out = [f'<div class="apanel side-{side}" id="a-{key}" data-apanel="{key}" hidden>',
+WEST_FILE = ROOT / "data" / "west-academia.json"
+WEST = json.loads(WEST_FILE.read_text(encoding="utf-8")) if WEST_FILE.exists() else {"sections": []}
+WSEC = {s["key"]: s for s in WEST["sections"]}
+WORDER = [
+    ("bay-area", "旧金山湾区", "u"),
+    ("socal", "洛杉矶与南加州", "u"),
+    ("seattle-pnw", "西雅图与太平洋西北", "u"),
+    ("chicago", "芝加哥", "u"),
+    ("uc-system", "加州大学系统", "u"),
+    ("west-policy", "四州政策", "u"),
+]
+WORDER = [o for o in WORDER if o[0] in WSEC]
+
+
+def panel(s, label, side, group):
+    key = s["key"]
+    out = [f'<div class="apanel side-{side}" id="{group}-{key}" data-apanel="{key}" data-group="{group}" hidden>',
            f'<div class="xhead"><h3>{esc(s["title_zh"])}<small>{esc(label)}</small></h3></div>',
            f'<p class="xverdict">{cell(s["lede_zh"])}</p>']
     if s.get("takeaways"):
@@ -139,30 +153,41 @@ def panel(key, label, side):
     return "".join(out)
 
 
-def tabs():
-    b = "".join(f'<button class="chip side-{side}" data-a="{k}" aria-pressed="false">{esc(label)}</button>'
-                for k, label, side in ORDER)
-    return f'<div class="chips atabs" role="group" aria-label="选择主题">{b}</div>'
+def tabs(order, group, label):
+    b = "".join(f'<button class="chip side-{side}" data-a="{k}" aria-pressed="false">{esc(lab)}</button>'
+                for k, lab, side in order)
+    return f'<div class="chips atabs" data-group="{group}" role="group" aria-label="{esc(label)}">{b}</div>'
 
 
 def panels():
-    return tabs() + "".join(panel(*o) for o in ORDER)
+    return tabs(ORDER, "a", "选择主题") + "".join(panel(SEC[k], lab, side, "a") for k, lab, side in ORDER)
 
 
-def all_sources():
+def west_panels():
+    if not WORDER:
+        return ""
+    return tabs(WORDER, "w", "选择地区") + "".join(panel(WSEC[k], lab, side, "w") for k, lab, side in WORDER)
+
+
+def sources_for(order, secs, prefix):
     out = []
-    for k, label, _ in ORDER:
+    for k, label, _ in order:
         urls = []
-        for b in SEC[k].get("blocks", []):
+        for b in secs[k].get("blocks", []):
             urls += b.get("sources") or []
             urls += [it.get("source", "") for it in b.get("items") or []]
         links = src_links(urls)
         if links:
-            out.append(f"<li>高校工作 · {esc(label)}：{' · '.join(links[:14])}</li>")
+            out.append(f"<li>{prefix} · {esc(label)}：{' · '.join(links[:14])}</li>")
     return "".join(out)
+
+
+def all_sources():
+    return sources_for(ORDER, SEC, "高校工作") + sources_for(WORDER, WSEC, "西海岸与芝加哥")
 
 
 HTML = {
     "acad-panels": panels,
+    "west-panels": west_panels,
     "acad-sources": all_sources,
 }

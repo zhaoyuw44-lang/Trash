@@ -1911,16 +1911,25 @@ $$("#offer-calc input, #offer-calc select").forEach(el => el.addEventListener("i
 }));
 ocLoad("p1");
 
-/* ---------------- academic-jobs panels */
-const aTabs = $$(".atabs .chip");
-function showA(k, scroll) {
-  if (!$(`#a-${k}`)) k = "us-career";
-  $$(".apanel").forEach(p => { p.hidden = p.dataset.apanel !== k; });
-  aTabs.forEach(b => b.setAttribute("aria-pressed", b.dataset.a === k ? "true" : "false"));
-  store.set("phd-map-a", k);
-  if (scroll) $(`#a-${k}`).scrollIntoView({block: "start"});
+/* ---------------- academic-jobs panels (tab groups: a = topics, w = West Coast + Chicago) */
+const AKEY = {a: "phd-map-a", w: "phd-map-w"}, ADEF = {a: "us-career", w: "bay-area"};
+function showA(k, scroll, g = "a") {
+  if (!$(`#${g}-${k}`)) k = ADEF[g];
+  if (!$(`#${g}-${k}`)) return;
+  $$(`.apanel[data-group="${g}"]`).forEach(p => { p.hidden = p.dataset.apanel !== k; });
+  $$(`.atabs[data-group="${g}"] .chip`).forEach(b => b.setAttribute("aria-pressed", b.dataset.a === k ? "true" : "false"));
+  store.set(AKEY[g], k);
+  if (scroll) $(`#${g}-${k}`).scrollIntoView({block: "start"});
 }
-aTabs.forEach(b => b.addEventListener("click", () => { showA(b.dataset.a, false); const p = $(`#a-${b.dataset.a}`); if (p.getBoundingClientRect().top < 0) p.scrollIntoView({block: "start"}); }));
+$$(".atabs").forEach(t => {
+  const g = t.dataset.group;
+  t.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+    showA(b.dataset.a, false, g);
+    const p = $(`#${g}-${b.dataset.a}`);
+    if (p.getBoundingClientRect().top < 0) p.scrollIntoView({block: "start"});
+  }));
+  showA(store.get(AKEY[g], ADEF[g]), false, g);
+});
 document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest("a[data-a]");
   if (!a) return;
@@ -1930,9 +1939,8 @@ document.addEventListener("click", e => {
     try { history.pushState(null, "", "#academia"); } catch (err) {}
     show("academia", false);
   }
-  showA(a.dataset.a, true);
+  showA(a.dataset.a, true, a.dataset.g || "a");
 });
-showA(store.get("phd-map-a", "us-career"), false);
 
 /* ---------------- lightbox */
 const lb = $("#lb"), lbBody = $("#lb-body");
