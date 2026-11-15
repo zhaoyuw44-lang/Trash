@@ -251,6 +251,51 @@ tr.xbase{background:var(--us-wash)}
 .xwarn{color:var(--warn);font-size:12.5px}
 .card.x{border-color:var(--x)}
 
+/* academic jobs */
+nav.chapters a[data-side="b"] .dot{background:linear-gradient(90deg,var(--us) 50%,var(--cn) 50%)}
+.card.u{border-top:3px solid var(--us)} .card.c{border-top:3px solid var(--cn)}
+.atabs{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 8px);z-index:4;background:var(--paper);padding:8px 0}
+.atabs .chip.side-u{border-color:var(--us)} .atabs .chip.side-c{border-color:var(--cn)}
+.atabs .chip[aria-pressed="true"]{border-color:var(--ink)}
+.apanel{display:grid;gap:18px;scroll-margin-top:120px;border-top:3px solid var(--ink);padding-top:18px}
+.apanel.side-u{border-top-color:var(--us)} .apanel.side-c{border-top-color:var(--cn)}
+.ablock{display:grid;gap:8px;min-width:0}
+.ablock h4{font-size:15px}
+.atbl tbody th{white-space:normal;min-width:110px;max-width:220px}
+.atbl td{min-width:96px}
+.atbl a,.anote a{word-break:break-all}
+.anote{font-size:13px;color:var(--ink-2);max-width:96ch}
+.alist{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;max-width:96ch}
+.asrc{font-size:12px;color:var(--ink-2);margin-left:4px}
+.asrc a{word-break:break-all}
+.st{display:inline-block;font-size:11px;line-height:1.6;padding:0 6px;border-radius:4px;margin-right:6px;white-space:nowrap;vertical-align:1px}
+.st.ok{color:var(--ok);background:var(--ok-tint)} .st.mid{color:var(--warn);background:var(--warn-tint)} .st.no{color:var(--off);background:var(--off-tint)}
+.atake{background:var(--paper-2);border-color:var(--line)} .atake h4{color:var(--ink)}
+.amyth dl{margin:0 0 14px;display:grid;gap:2px 0;font-size:14px}
+.amyth dt{font-weight:600;margin-top:8px} .amyth dd{margin:0;color:var(--ink-2)}
+.atbl2{min-width:760px}
+.atbl2 tbody th{white-space:nowrap}
+.secgrid .card h4{font-size:15px}
+/* offer calculator */
+.oc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.oc-side{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;gap:12px;min-width:0}
+.oc-side.us{border-top:3px solid var(--us)} .oc-side.cn{border-top:3px solid var(--cn)}
+.oc-side legend{display:flex;align-items:center;gap:4px;padding:0 4px;color:var(--ink)}
+.field input[type=number]{font:inherit;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 10px;width:9.5em;max-width:100%}
+.field select:disabled,.field input:disabled{opacity:.45}
+.oc-bars{display:grid;gap:8px}
+.oc-bar{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:8px;font-size:13px}
+.oc-track{display:flex;height:18px;border-radius:6px;overflow:hidden;background:var(--paper-2)}
+.oc-track i{display:block;height:100%}
+.b-cash{background:var(--ch-x)} .b-save{background:var(--ch-row)} .b-soc{background:var(--mute)} .b-tax{background:var(--ch-w)}
+.oc-key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);padding-left:48px}
+.oc-key span{display:inline-flex;align-items:center;gap:6px}
+.oc-key i{display:inline-block;width:12px;height:12px;border-radius:3px}
+.oc-tbl{min-width:560px}
+.oc-tbl td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.oc-tbl td small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--ink-2)}
+.oc-read{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;max-width:96ch}
+
 /* checklist */
 .progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-2)}
 .bar{flex:1;height:6px;background:var(--paper-2);border-radius:99px;overflow:hidden;max-width:320px}
@@ -286,7 +331,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 .lb-body svg{display:block;height:auto}
 
 @media (max-width:1000px){
-  .xtabs{top:calc(env(safe-area-inset-top, 0px) + 46px)}
+  .xtabs,.atabs{top:calc(env(safe-area-inset-top, 0px) + 46px)}
   .shell{grid-template-columns:minmax(0,1fr)}
   nav.chapters{position:sticky;top:env(safe-area-inset-top, 0px);z-index:6;background:var(--paper);padding:8px 0;
     margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
@@ -304,6 +349,10 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   .xwatch li{grid-template-columns:minmax(0,1fr)}
   .xtabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
   .xtabs .chip{white-space:nowrap}
+  .atabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+  .atabs .chip{white-space:nowrap}
+  .oc-grid{grid-template-columns:minmax(0,1fr)}
+  .oc-key{padding-left:0}
   .route{grid-template-columns:minmax(0,1fr)}
   .watch li{grid-template-columns:minmax(0,1fr)}
   .vcard dl{grid-template-columns:54px minmax(0,1fr)}
@@ -314,9 +363,9 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 
 <div class="shell">
 <header class="mast">
-  <div class="mast-top"><span>资料核对至 <b>2026-11-14</b></span><span>美国移民政策 · 中国人才政策 · 12 个第三地 · 教育体系</span><span>不构成法律意见</span></div>
+  <div class="mast-top"><span>资料核对至 <b>2026-11-15</b></span><span>美国移民政策 · 中国人才政策 · 12 个第三地 · 美中高校教职 · 教育体系</span><span>不构成法律意见</span></div>
   <h1>博士毕业去留<span>地图</span></h1>
-  <p class="lede">毕业后的每条路，都是一串需要按时交接的文件。这份地图把美国的身份接力（OPT、H-1B、绿卡）、回国的求职链（认证、签约、落户）、加拿大、英国、澳洲、香港、新加坡、欧洲和日本等 12 个第三地的移民路线，以及各地的教育体系画在一起，并标出 2026 年仍在变动的政策。</p>
+  <p class="lede">毕业后的每条路，都是一串需要按时交接的文件。这份地图把美国的身份接力（OPT、H-1B、绿卡）、回国的求职链（认证、签约、落户）、加拿大、英国、澳洲、香港、新加坡、欧洲和日本等 12 个第三地的移民路线、美中两国高校教职的待遇与城市政策，以及各地的教育体系画在一起，并标出 2026 年仍在变动的政策。</p>
   <div class="mrz" aria-label="两条主线的关键文件"><span class="u">F-1 ▸ I-765 OPT ▸ I-983 STEM OPT ▸ I-129 H-1B ▸ I-140 ▸ I-485</span><i>┃</i><span class="c">学历学位认证 ▸ 签约 ▸ 落户 ▸ 社保·公积金</span></div>
 </header>
 
@@ -327,12 +376,13 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <li><a href="#green-card" data-nav="green-card" data-side="u"><span class="dot"></span>绿卡<small>EB-1 · NIW · PERM</small></a></li>
     <li><a href="#china" data-nav="china" data-side="c"><span class="dot"></span>回国发展<small>认证 · 求职 · 落户</small></a></li>
     <li><a href="#abroad" data-nav="abroad" data-side="x"><span class="dot"></span>第三地<small>加 · 英 · 澳 · 港 · 新 · 欧 · 日</small></a></li>
+    <li><a href="#academia" data-nav="academia" data-side="b"><span class="dot"></span>高校工作<small>美 · 中 · 港澳 · 城市 · 福利</small></a></li>
     <li><a href="#edu-cn" data-nav="edu-cn" data-side="c"><span class="dot"></span>中国教育体系<small>K-12 → 博士</small></a></li>
     <li><a href="#edu-us" data-nav="edu-us" data-side="u"><span class="dot"></span>美国教育体系<small>K-12 → PhD</small></a></li>
     <li><a href="#plan" data-nav="plan"><span class="dot"></span>时间规划<small>年历 · 清单</small></a></li>
     <li><a href="#glossary" data-nav="glossary"><span class="dot"></span>术语与来源<small>Glossary</small></a></li>
   </ol>
-  <p class="rail-note">蓝色 = 美国路线，红色 = 中国路线，青色 = 第三地。每张图都可以点“放大查看”。</p>
+  <p class="rail-note">蓝色 = 美国路线，红色 = 中国路线，青色 = 第三地，蓝红各半 = 两边对照。每张图都可以点“放大查看”。</p>
 </nav>
 
 <main>
@@ -419,6 +469,9 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <li><span class="stamp live">生效 · 加拿大</span><div><h4>Express Entry CRS 改革</h4>
         <p>2026-11-03 起向“高薪职业”加分，有效 offer 不再需要 LMIA；改革期间暂停抽选重算分数。</p>
         <p class="you">博士 150 分不变，加拿大工作经验和职业工资水平更关键。详见<a href="#abroad">第三地</a>。</p></div></li>
+      <li><span class="stamp live">生效 · 州法</span><div><h4>佛州、德州、印第安纳的购房与高校规则</h4>
+        <p>佛州 SB 264 与 SB 846、德州 SB 17（2025-09-01）、印第安纳 SEA 256（2026-07-01）限制与中国有关的购房或高校合作。前两州的购房法以“住所地在中国”为要件。</p>
+        <p class="you">去这几个州任教或买房前，先看<a href="#academia">高校工作 · 美国城市</a>。</p></div></li>
       <li><span class="stamp cnst">生效 · 中国</span><div><h4>K 字签证</h4>
         <p>2025-10-01 起面向外籍青年 STEM 人才，不需要国内单位邀请。中国公民本人不适用，但与外籍配偶、或你将来想招的外籍学生和博后有关。</p></div></li>
     </ol>
@@ -828,6 +881,191 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <p class="sub">审稿人建议补充的其他目的地。台湾对大陆护照持有人基本不可行；阿联酋只有长期居留，没有永居和入籍路径。</p>
     <!--@html:abroad-others-->
   </section>
+  <p class="next"><a href="#academia">下一章：高校工作 →</a></p>
+</section>
+
+<!-- ============================================================ ACADEMIA -->
+<section class="view" data-view="academia" aria-labelledby="h-a" hidden>
+  <div class="vh">
+    <span class="kicker">Academic Jobs · 高校工作</span>
+    <h2 id="h-a">在美国或中国的大学工作：职位、城市、政策和福利</h2>
+    <p>这一章并排比较美国和中国（含港澳）的高校教职与博士后：聘用体系、薪资、启动经费、城市房价和税、各地人才政策、退休和家庭福利，以及在两国之间流动的风险。研究分 10 个主题，每个主题都经过逆向核查、审稿和二次事实核对，数字截至 <b>2026-11-15</b>。中国城市的落户和补贴细则大多只能在国内网络访问，这次没有核实到的都标为“未核实”，没有凭印象补。</p>
+  </div>
+
+  <section class="blk" aria-labelledby="h-a-sum">
+    <h3 id="h-a-sum">先看结论</h3>
+    <div class="grid3">
+      <div class="card u"><h4>美国：起薪高，但只发 9 个月</h4><p>AAUP 2025–26：博士授予院校助理教授平均 <b>105,052 美元</b>（公立 100,452，私立 125,261）；CS 新聘中位数 128,000，经济学博士点新聘平均 158,593。这些都是学年薪资，暑期 2–3 个月要靠自己的经费。博士后下限多参照 NIH NRSA 第 0 级 <b>63,480 美元</b>。</p></div>
+      <div class="card c"><h4>中国：公告多写“面议”，看合同</h4><p>顶尖高校和新型研究型大学大多不公开数字。2025–26 年能查到的：西南交大助理教授 18–23 万元，浙大“求是博士后”校发 30 万元，中科大苏州高研院特任副研究员不少于 42 万元。宣传里“安家费最高 XXX 万”多数指国家级人才。</p></div>
+      <div class="card c"><h4>城市补贴：条件比金额重要</h4><p>深圳新引进博士补贴 10 万元：35 岁以下，在编人员和已领博士后补贴者不能领，分两次发放，实施办法约在 2027-04 到期。多数补贴要计个税，与编制或其他补贴互斥，离职要退。按深圳挂牌均价算，10 万元约合 1.5 平方米。</p></div>
+      <div class="card"><h4>房价：两边都在分化</h4><p>美国学术都市圈中位成交价从香槟 24 万美元到圣何塞 148 万美元；房贷利率 7.11%（2026-11-12）。中国 21 个大中城市二手住宅只有上海同比上涨，成都、长沙、武汉等跌 5% 以上；5 年期 LPR 为 3.5%。</p></div>
+      <div class="card"><h4>经费环境都变了</h4><p>NIH 全部研究项目资助率 FY2025 降到 13.0%（早期研究者 R01 类为 18.5%），2025 年有数千项 NIH/NSF 资助被终止。NSFC 2026 年集中接收 470,561 项申请，青年科学基金 C 类资助数增加 50.1%，官方没有公布分类资助率。</p></div>
+      <div class="card"><h4>身份与研究安全</h4><p>美国高校 H-1B 免抽签；10 万美元入境付款目前被法院撤销执行，而且本来就不适用于境内转身份。真正要小心的是：在美国做联邦资助项目的关键人员期间，参加中国政府资助的人才计划，可能被认定为参加“恶意外国人才招募计划”（MFTRP），见下文。</p></div>
+    </div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 17 · 入职后头 8 年的时间线</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:17-first-seven-years--></div>
+    <figcaption>美国的 tenure 时钟和中国常见的“3+3”预聘期长度相近，但两边真正卡人的节点不同：美国是经费和绿卡排期（中国大陆出生者 EB-1 落后约 3.3 年），中国是聘期考核指标和补贴的服务期条款。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-a-sys">
+    <h3 id="h-a-sys">两套体系并排看</h3>
+    <p class="sub">表格较宽，可以左右滑动。更细的数字和来源在下方“逐项看”的各个主题里。</p>
+    <div class="tbl"><table class="atbl2">
+      <thead><tr><th>维度</th><th>美国高校</th><th>中国高校（内地）</th></tr></thead>
+      <tbody>
+        <tr><th>起步职位</th><td>助理教授（Assistant Professor, tenure-track），或先做 1–3 年博士后；另有大量非长聘岗位（教学教授、研究科学家）</td><td>预聘-长聘制（tenure-track）助理教授 / 副研究员；传统事业编制的讲师、副教授；师资博士后作为入口</td></tr>
+        <tr><th>考核期</th><td>AAUP 原则：试用期最长 7 年，一般第 3 年中期评估、第 6 年 tenure 评审；生育、照护等可延长时钟</td><td>常见“3+3”共 6 年；编制岗没有“非升即走”，靠职称评审晋升。2025–26 年部分学校改为入编、不再实行非升即走（媒体报道）</td></tr>
+        <tr><th>不通过</th><td>通常还有 1 年终止聘期，之后离开</td><td>多数不再续聘或转为其他岗位，以合同为准</td></tr>
+        <tr><th>工资口径</th><td>多为 9 个月学年合同，暑期工资靠经费支付、不保证；NSF 一般每年最多计 2 个月</td><td>年薪制，或“基本工资 + 绩效 + 津贴”；公告里的“综合年薪”可能含单位社保或城市补贴，要问清</td></tr>
+        <tr><th>公开的起步数字</th><td>AAUP 博士院校助理教授平均 105,052 美元；CS 新聘中位数 128,000；商学院新博士美洲区中位数 135,000</td><td>西南交大助理教授 18–23 万元；中国矿大助理教授 22.5 万元；北大医学部博雅博后 20 万元 + 租房补贴 6 万元/年</td></tr>
+        <tr><th>启动经费</th><td>实验学科常见几十万到百万美元以上，没有权威的全国统计；理论学科以暑期工资、学生和差旅为主</td><td>差异极大：西南交大理工科 10 万元；西交大青年拔尖计划 200 万元以上；海南大学给海外优青入选者 300 万元</td></tr>
+        <tr><th>住房</th><td>少数学校有购房贷款或补贴；多数靠自己租买</td><td>安家费、购房补贴、人才公寓、城市人才补贴，常分期发放并附服务期</td></tr>
+        <tr><th>身份</th><td>高校 H-1B 免抽签；教职 PERM 可走特殊程序（选定后 18 个月内递交）；EB-1B 要求 tenure-track 或可比的长期研究岗</td><td>没有身份问题；海外工作年限影响海外优青等项目资格</td></tr>
+        <tr><th>退休</th><td>私立多为 403(b)，AAUP 统计雇主退休缴费平均约占工资 11.1%；部分州立系统不缴社保税（如俄亥俄 STRS）</td><td>编制内：基本养老个人 8%、职业年金个人 4%（单位另缴）；公积金双方各 5%–12%；合同制通常没有职业年金</td></tr>
+        <tr><th>研究安全</th><td>联邦资助项目的高级 / 关键人员不得参加恶意外国人才招募计划；须披露外国任职和资助</td><td>出国（境）证照集中保管等内部规定各校不一；人类遗传资源、重要数据出境有审批要求</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 18 · 美国学术岗位薪资</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:18-us-academic-pay--></div>
+    <figcaption>圆点是平均值或中位数，横线是 P10–P90 区间（AAUP 一行是公立到私立的平均值）。实心蓝点为长聘轨教职，空心为非长聘岗位，青色为博士后。悬停在点上可看原值。</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 19 · 美国 28 个学术都市圈：房价、税和物价</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:19-us-academic-metros--></div>
+    <figcaption>同一份 12 万美元的工资，在德州、佛州、华盛顿州不交州所得税，在纽约市要交约 8.5%。但房价差距大得多：同样的税后收入，在香槟或匹兹堡买得起房，在湾区只能租。佛州、德州的购房法以“住所地在中国”为要件，长期合法在美居住者通常可以买自住房，详见“美国 · 城市”。</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 20 · 中国学术城市的房价水平与走势</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:20-china-academic-cities-housing--></div>
+    <figcaption>左边是挂牌价，适合看贵贱；右边是国家统计局指数，适合看涨跌。两者口径不同，不能混用。苏州、合肥、成都、西安等城市这次没有拿到可引用的单价。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-a-sec">
+    <h3 id="h-a-sec">研究安全：在美国期间申请中国项目要先弄清的事</h3>
+    <p class="sub">美国《芯片与科学法》（CHIPS and Science Act）第 10632、10638 条规定：当前参加“恶意外国人才招募计划”（malign foreign talent recruitment program, MFTRP）的人，不得担任联邦资助项目的高级 / 关键人员（senior/key personnel）。认定要同时满足两点：一是对方提供报酬（包括科研经费、头衔、承诺的未来报酬），换取特定行为，例如违反联邦资助条款接受外国教职、难以解约、必须以中方单位名义申请经费、与美方职责冲突；二是由“受关注国家”（包括中国）资助，或列在美国国防部 1286 清单上。能源部（DOE）把受关注国家资助的人才计划一律视为 MFTRP；NSF 和 NIH 只禁止“当前参加”，但要求申请时和每年做一次认证。</p>
+    <div class="grid3 secgrid">
+      <div class="card"><h4>谁会受影响</h4><p>以自己为 PI 申请 F32、K99、R01、NSF 项目的人，以及在项目里被列为高级 / 关键人员的人。只从经费里领工资、没有被列为关键人员的博士后不在法定认证范围内，但仍要遵守本校的利益冲突和投入冲突（COI / COC）政策。</p></div>
+      <div class="card"><h4>只递交申请算不算参加</h4><p>法律和各机构都没有明文规定。但 NSF 的披露表要求在履历（Biosketch）和在研及待批支持表（Current and Pending (Other) Support）里写明对外国政府资助计划的“当前或待定参与或申请”。签“意向性工作协议”本身，可能已经让你成了协议一方。</p></div>
+      <div class="card"><h4>正常学术往来不算</h4><p>白宫科技政策办公室（OSTP）2024 年指南列出的例外：公开发表、参加国际会议、学术报告、指导外国学生、访问学者和学术休假。持续的兼职聘任不在例外之列；没有报酬的名誉职位也要披露。隐瞒外国任职或资助会构成虚假认证。</p></div>
+    </div>
+    <div class="tbl"><table class="atbl2">
+      <thead><tr><th>情形</th><th>怎么认定</th><th>要披露什么、什么时候</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><th>在美期间申请 NSFC 青年科学基金 A 类（海外可申请的单列赛道）</th><td>获批并签约后，DOE 一律视为 MFTRP；在 NSF / NIH 项目下，如果合同要求全职到岗、须以中方单位申请经费、与美方职责冲突，很可能被认定。2026 轮已结束（到岗截止 2026-11-30），2027 年指南尚未发布。</td><td>关键人员须在 Biosketch 和 C&amp;P 中披露“申请”；签约或获批后更新，到岗前退出关键角色；单位须在 5 个工作日内报告 DOE</td><td><span class="st mid">规则已核实，个案认定未定</span></td></tr>
+        <tr><th>海外优青（NSFC 优秀青年科学基金项目（海外））</th><td>NSFC 是中国政府资助机构；获资助须辞去海外工作、全职回国至少 3 年。2026 年申报已于 6-15 截止。</td><td>同上</td><td><span class="st mid">规则已核实，个案认定未定</span></td></tr>
+        <tr><th>国家海外高层次人才引进计划青年项目（QM / 启明）</th><td>没有公开的官方指南。据路透社 2023 年报道，它是“千人计划”的主要继承项目，后者列在国防部 1286 清单上。入选或签约后极可能被认定为参加 MFTRP。</td><td>申请时就向本校研究安全办公室申报；入选或签约后不得继续担任关键人员</td><td><span class="st mid">承继关系为二手报道</span></td></tr>
+        <tr><th>还在美国时与中国高校签 offer（含启动经费、安家费）</th><td>逐案判断。到岗日在离开美方岗位之后的普通雇佣合同，NSF / NIH 没有公开表态；DOE 倾向一律视为 MFTRP。违约金、退还安家费等难以解约的条款会加重风险。</td><td>外国任职列入 Biosketch，本单位以外的启动经费列入 C&amp;P；NIH 要求提交外国任职合同副本。已签但尚未开始的职位是否必须列入，没有找到明文</td><td><span class="st no">未核实</span></td></tr>
+        <tr><th>在中国高校兼职或 adjunct 聘任</th><td>带报酬、头衔或经费，并伴有投入冲突、须招人、须申请中方经费等特征的，构成 MFTRP；DOE 一律视为 MFTRP。</td><td>Biosketch 须列出本单位以外的所有任职，无论有无报酬；接受前向本校申报（COC 审批）</td><td><span class="st mid">披露规则已核实</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="anote">比较稳妥的顺序（多所美国高校研究安全办公室的建议）：拿到中方书面条款 → 交本校研究安全或 COI 办公室审 → 退出联邦项目的关键人员角色或离职 → 再签约、到岗、申报人才项目。来源：<a href="https://www.law.cornell.edu/uscode/text/42/19237" target="_blank" rel="noopener">42 U.S.C. 19237</a> · <a href="https://www.nsf.gov/notices/important/important-notice-no-149-updates-nsf-research-security/in149" target="_blank" rel="noopener">NSF Important Notice 149</a> · <a href="https://www.energy.gov/ia/prohibition-malign-foreign-talent-recruitment-program-participation" target="_blank" rel="noopener">DOE</a> · <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/02/OSTP-Foreign-Talent-Recruitment-Program-Guidelines.pdf" target="_blank" rel="noopener">OSTP 2024 指南</a>。NIH 官网（grants.nih.gov）2026-11-15 仍无法访问，NIH 部分依据高校转述。</p>
+  </section>
+
+  <section class="tool" aria-labelledby="h-oc" id="offer-calc">
+    <div class="tool-head"><h3 id="h-oc">美中 offer 到手对比计算器</h3><span class="tag-ex">示例数字 · 改成你的 offer</span></div>
+    <div class="chips" role="group" aria-label="载入示例">
+      <button class="chip" data-oc="p1" aria-pressed="true">CS 助理教授：罗利 vs 成都</button>
+      <button class="chip" data-oc="p2" aria-pressed="false">博士后：波士顿 vs 杭州</button>
+      <button class="chip" data-oc="p3" aria-pressed="false">州立大学：哥伦布 vs 西安</button>
+    </div>
+    <p class="sub" id="oc-note"></p>
+    <div class="oc-grid">
+      <fieldset class="oc-side us">
+        <legend><span class="badge u">美国</span>年薪单位：美元</legend>
+        <div class="fields">
+          <label class="field" for="oc-ub">基本年薪<input type="number" id="oc-ub" min="0" step="1000"></label>
+          <label class="field" for="oc-uterm">合同<select id="oc-uterm"><option value="9">9 个月（学年）</option><option value="12">12 个月</option></select></label>
+          <label class="field" for="oc-usum">暑期工资（月）<input type="number" id="oc-usum" min="0" max="3" step="0.5"></label>
+          <label class="field" for="oc-ust">州 / 城市<select id="oc-ust"></select></label>
+          <label class="field" for="oc-ustat">税务与社保身份<select id="oc-ustat">
+            <option value="res">税务居民：缴 FICA 7.65%</option>
+            <option value="nr">非居民 F/J：免 FICA，无标准扣除</option>
+            <option value="noss">州立养老系统：不缴社保税，只缴 Medicare</option>
+          </select></label>
+          <label class="field" for="oc-ufile">报税方式<select id="oc-ufile"><option value="single">单身</option><option value="mfj">已婚合并申报</option></select></label>
+          <label class="field" for="oc-uret">个人退休缴款 %<input type="number" id="oc-uret" min="0" max="30" step="0.5"></label>
+          <label class="field" for="oc-uer">雇主退休缴款 %<input type="number" id="oc-uer" min="0" max="30" step="0.5"></label>
+          <label class="field" for="oc-uhp">医保自付（月）<input type="number" id="oc-uhp" min="0" step="10"></label>
+          <label class="check" for="oc-utreaty"><input type="checkbox" id="oc-utreaty">按中美协定第 19 条免联邦所得税</label>
+        </div>
+        <div class="fields">
+          <label class="field" for="oc-uhome">房价（美元）<input type="number" id="oc-uhome" min="0" step="5000"></label>
+          <label class="field" for="oc-urate">房贷利率 %<input type="number" id="oc-urate" min="0" step="0.01"></label>
+          <label class="field" for="oc-uptax">房产税 %/年<input type="number" id="oc-uptax" min="0" step="0.1"></label>
+        </div>
+      </fieldset>
+      <fieldset class="oc-side cn">
+        <legend><span class="badge c">中国</span>年薪单位：人民币</legend>
+        <div class="fields">
+          <label class="field" for="oc-cb">税前年薪（含绩效）<input type="number" id="oc-cb" min="0" step="5000"></label>
+          <label class="field" for="oc-cbase">缴费基数占工资 %<input type="number" id="oc-cbase" min="0" max="100" step="5"></label>
+          <label class="field" for="oc-ccap">基数上限（元/月）<input type="number" id="oc-ccap" min="0" step="100"></label>
+          <label class="field" for="oc-chf">公积金比例 %<input type="number" id="oc-chf" min="5" max="12" step="1"></label>
+          <label class="check" for="oc-cnj"><input type="checkbox" id="oc-cnj">事业编制（职业年金个人 4%、单位 8%）</label>
+          <label class="field" for="oc-cset">安家费 / 补贴总额<input type="number" id="oc-cset" min="0" step="10000"></label>
+          <label class="field" for="oc-cyrs">分几年发<input type="number" id="oc-cyrs" min="1" max="10" step="1"></label>
+          <label class="check" for="oc-ctaxset"><input type="checkbox" id="oc-ctaxset">补贴要计个税</label>
+          <label class="field" for="oc-cded">专项附加扣除<select id="oc-cded"><option value="0">不填</option><option value="18000">住房租金（省会等）1,500/月</option><option value="12000">首套房贷利息 1,000/月</option></select></label>
+          <label class="check" for="oc-cold"><input type="checkbox" id="oc-cold">赡养老人（独生子女 3,000/月）</label>
+        </div>
+        <div class="fields">
+          <label class="field" for="oc-ccity">城市房价（元/㎡）<select id="oc-ccity"></select></label>
+          <label class="field" for="oc-cppm">或自填单价<input type="number" id="oc-cppm" min="0" step="500"></label>
+          <label class="field" for="oc-carea">面积 ㎡<input type="number" id="oc-carea" min="20" step="5"></label>
+          <label class="field" for="oc-crate">房贷利率 %<input type="number" id="oc-crate" min="0" step="0.01"></label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="fields">
+      <label class="field" for="oc-kids">孩子数（两边都用）<input type="number" id="oc-kids" min="0" max="5" step="1"></label>
+      <label class="field" for="oc-down">首付比例 %<input type="number" id="oc-down" min="0" max="100" step="5"></label>
+      <label class="field" for="oc-fx">市场汇率 元/美元<input type="number" id="oc-fx" step="0.001"></label>
+      <label class="field" for="oc-ppp">PPP 元/国际元<input type="number" id="oc-ppp" step="0.001"></label>
+    </div>
+    <div class="oc-bars" id="oc-bars" aria-hidden="true"></div>
+    <div class="tbl"><table class="oc-tbl" id="oc-tbl"></table></div>
+    <ul class="oc-read" id="oc-read"></ul>
+    <p class="sub">算法：美国按 2026 年联邦税率表（Rev. Proc. 2025-32）、标准扣除、FICA（社保税工资上限 184,500 美元）和子女税收抵免（每孩 2,200 美元）；单一税率的州按“税率 ×（工资 − 免税额）”计算，累进税制的州（加州、纽约、马里兰、威斯康星、明尼苏达、密苏里、犹他）按 8 万、12 万、16 万美元三档有效税率插值，只是近似；市税按工资全额计；州税一律按单身估算。加州另扣 SDI 1.3%，华盛顿州另扣 WA Cares 0.58%。中国按综合所得年度税率表，扣除 6 万元基本减除、个人社保 10.5%（养老 8%、医疗 2%、失业 0.5%）、公积金和职业年金，以及子女每孩 2,000 元/月等专项附加扣除。没算进去的：年终奖单独计税、课时费、横向经费、美国医保税前扣除、各地社保细则。月供按等额本息 30 年计。缴费基数上限默认 30,000 元/月只是占位：北京 2026-07 起为 36,348 元，福建（含厦门）为 22,893 元，其他城市请查当地人社局。</p>
+  </section>
+
+
+  <section class="blk" aria-labelledby="h-a-detail">
+    <h3 id="h-a-detail">逐项看：职位、城市、福利、港澳、算账、跨境风险和家庭</h3>
+    <p class="sub">选一个主题。每个主题先给结论，再给表格和来源；“二手”指来自媒体、律所或高校转述，“未核实”指这次没能打开官方原文。</p>
+    <!--@html:acad-panels-->
+  </section>
+
+  <section class="blk" aria-labelledby="h-a-ask">
+    <h3 id="h-a-ask">签 offer 前要谈清楚的事</h3>
+    <div class="grid2">
+      <div class="card u"><h4>美国 offer</h4><ul>
+        <li>合同是 9 个月还是 12 个月；暑期工资是否有学院保底，保几年</li>
+        <li>启动经费总额、可用年限、能否支付暑期工资和学生，剩余经费能否结转</li>
+        <li>教学负担和前两年的课程减免；tenure 时钟能否因生育、照护延长</li>
+        <li>医学院软钱岗位：学校承担工资的比例、过渡经费（bridge funding）</li>
+        <li>学校是否尽快启动绿卡：教职 PERM 要在选定后 18 个月内递交</li>
+        <li>退休计划等待期和归属期；州立大学是否不缴社保税</li>
+        <li>配偶安置（dual-career）、子女学费福利、购房贷款项目</li>
+      </ul></div>
+      <div class="card c"><h4>中国 offer</h4><ul>
+        <li>年薪口径：税前还是税后，是否包含单位社保、公积金和城市人才补贴</li>
+        <li>编制、聘期、考核指标（论文、项目、教学），不通过的处理方式</li>
+        <li>安家费和购房补贴：分几年发、服务期多长、提前离职怎么退</li>
+        <li>启动经费的来源（学校、学院、国家项目配套）和使用期限</li>
+        <li>住房（人才公寓年限、租金）、子女入学（附属学校）、配偶安置</li>
+        <li>城市补贴由谁申报、是否和编制或博士后补贴互斥</li>
+        <li>出国（境）证照管理、因公出国审批、兼职和外部合作规定</li>
+      </ul></div>
+    </div>
+  </section>
   <p class="next"><a href="#edu-cn">下一章：中国教育体系 →</a></p>
 </section>
 
@@ -949,7 +1187,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <p class="sub" id="g-none" hidden>没有匹配的术语。</p>
 
   <section class="blk" aria-labelledby="h-src">
-    <h3 id="h-src">主要来源（2026-11-12 至 11-14 检索）</h3>
+    <h3 id="h-src">主要来源（2026-11-12 至 11-15 检索）</h3>
     <ol class="src">
       <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students" target="_blank" rel="noopener">OPT for F-1 Students</a> · <a href="https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-extension-for-stem-students-stem-opt" target="_blank" rel="noopener">STEM OPT Extension</a> · <a href="https://studyinthestates.dhs.gov/stem-opt-hub" target="_blank" rel="noopener">Study in the States STEM OPT Hub</a></li>
       <li>USCIS：<a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-first-preference-eb-1" target="_blank" rel="noopener">EB-1</a> · <a href="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-second-preference-eb-2" target="_blank" rel="noopener">EB-2 / NIW</a> · <a href="https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement" target="_blank" rel="noopener">O-1</a> · <a href="https://www.uscis.gov/policy-manual" target="_blank" rel="noopener">Policy Manual</a></li>
@@ -963,6 +1201,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <li>国考 2027 年度公告：<a href="https://www.news.cn/edu/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html" target="_blank" rel="noopener">新华网</a>；K 字签证：<a href="https://www.chinanews.com.cn/gn/2025/08-14/10464960.shtml" target="_blank" rel="noopener">中新网四部门解读</a></li>
       <li>学历学位认证：<a href="https://www.cscse.edu.cn/" target="_blank" rel="noopener">中国留学服务中心</a>；海外优青与青年科学基金：<a href="https://www.nsfc.gov.cn/" target="_blank" rel="noopener">国家自然科学基金委员会</a></li>
       <!--@html:abroad-sources-->
+      <!--@html:acad-sources-->
       <li>学前一年免费与育儿补贴：<a href="https://www.news.cn/20250929/f2215fdf3dd4419b95a3dccaa54d2e00/c.html" target="_blank" rel="noopener">新华网</a>；上海留学人员落户：<a href="https://m.thepaper.cn/newsDetail_forward_33705260" target="_blank" rel="noopener">澎湃新闻</a></li>
     </ol>
   </section>
@@ -1037,7 +1276,7 @@ function route() {
   if (wantUS) {
     if (stem) steps.push(`${B("u")}OPT 到期前 90 天内申请 STEM OPT（雇主需 E-Verify + I-983），授权期合计 36 个月，可参加 3–4 次 H-1B 抽签。`);
     else steps.push(`${B("u")}非 STEM 学位只有 12 个月 OPT，通常只有 1 次抽签机会：入职前就请雇主参加当年 3 月注册，或直接选 cap-exempt 雇主。`);
-    if (acad) steps.push(`${B("u")}博后 / 研究岗优先找大学或非营利研究机构，用 cap-exempt H-1B 免抽签；接 J-1 前确认是否受 212(e) 两年回国限制。`);
+    if (acad) steps.push(`${B("u")}博后 / 研究岗优先找大学或非营利研究机构，用 cap-exempt H-1B 免抽签；接 J-1 前确认是否受 212(e) 两年回国限制。各城市房价、州税和州法见<a href="#academia">高校工作</a>。`);
     if (ind) steps.push(`${B("u")}工业界 offer 问清三件事：H-1B 定在哪个工资级别（决定抽签权重）、是否支持 STEM OPT、多久启动绿卡。`);
     if (P >= 3) steps.push(`${B("u")}成果很突出：O-1A 免抽签；同一套证据准备 EB-1A，${acad ? "拿到教职后再加 EB-1B" : "雇主也可以同时走 EB-1B 或 PERM"}。`);
     else if (P === 2) steps.push(`${B("u")}尽早递交 NIW（自主申请，锁定优先日），同时让雇主走 PERM 或 EB-1B，两条并行。`);
@@ -1048,13 +1287,14 @@ function route() {
       steps.push(`${B("c")}毕业前 12 个月起关注目标高校招聘和海外青年学者论坛；拿到学位就办学历学位认证。`);
       if (P >= 2) steps.push(`${B("c")}若想冲海外优青：在海外做满 36 个月全职博后（读博不算），40 岁左右以下，春季申报。也可以直接谈预聘制岗位。`);
       else steps.push(`${B("c")}先做一段博后（海外或国内师资博后）攒代表作，再谈预聘制岗位，起点会更高。`);
-      steps.push(`${B("c")}签约前把预聘期限、考核指标、启动经费、住房和子女入学写进合同。`);
+      steps.push(`${B("c")}签约前把预聘期限、考核指标、启动经费、住房和子女入学写进合同；用<a href="#academia">高校工作</a>章节的计算器把中美 offer 换成同一口径比较。`);
     }
     if (ind) {
       steps.push(`${B("c")}企业研发：秋招在毕业前一年 8–11 月（提前批 7 月起），错过可走春招 3–5 月或社招；两年择业期内可按应届生。`);
       steps.push(`${B("c")}想进体制内：国考 10 月报名，年龄 38 岁以下（应届硕博 43 岁以下），需先完成学历认证。`);
     }
   }
+  if (acad && wantUS && wantCN) risk.push("在美国做联邦资助项目的关键人员期间，申请或接受中国政府资助的人才计划，可能被认定为参加恶意外国人才招募计划（MFTRP），先和学校研究安全办公室确认。");
   if (wantX) {
     const X = s => `<span class="badge x">${s}</span>`;
     steps.push(`${X("第三地")}先挑 2–3 个目标地，用<a href="#abroad">第三地</a>章节的图 13 和对比表比较永居年限、语言和工资门槛。`);
@@ -1410,7 +1650,32 @@ const G = [
   ["Talent 研究员卡", "Carte Talent – chercheur", "法国研究人员居留卡，无工资门槛。"],
   ["CSEP / Stamp 4", "Ireland", "爱尔兰关键技能就业许可；满 21 个月转 Stamp 4（可续，不是永居）。"],
   ["C 证", "Niederlassungsbewilligung C", "瑞士定居许可；获任命教授常当场获发。"],
-  ["高度专门职 / 永住", "Highly Skilled Professional", "日本积分制签证；80 分满 1 年、70 分满 3 年可申请永住。"]
+  ["高度专门职 / 永住", "Highly Skilled Professional", "日本积分制签证；80 分满 1 年、70 分满 3 年可申请永住。"],
+  ["AAUP", "American Association of University Professors", "美国大学教授协会；每年发布全职教师薪资调查，并提出试用期最长 7 年的原则。"],
+  ["R1 / R2", "Carnegie Research Activity", "卡内基研究活动分类：2025 年 R1 共 187 所、R2 共 139 所，按研究支出和博士授予数的固定门槛划分。"],
+  ["tenure 时钟", "Tenure clock", "从入职到 tenure 评审的年数，一般第 6 年评审；生育、照护等可申请延长。"],
+  ["9 个月合同 / 暑期工资", "Academic-year pay / summer salary", "美国教职多按学年发薪，暑期 2–3 个月的工资要从科研经费里出，并不保证。"],
+  ["启动经费", "Startup package", "新教职的科研启动资金，用于设备、学生、实验室改造等；实验学科远高于理论学科。"],
+  ["软钱岗位", "Soft-money position", "医学院常见：工资相当部分要靠自己申请的经费支付。"],
+  ["PERM 特殊程序", "Special handling (20 CFR 656.18)", "大学教职的劳工证可用招聘时的竞争性遴选结果，须在选定后 18 个月内递交。"],
+  ["NRSA", "Kirschstein-NRSA stipend", "NIH 博士后津贴标准；FY2026 第 0 级 63,480 美元/年，许多学校以此为下限。"],
+  ["ESI", "Early Stage Investigator", "NIH 早期研究者：取得博士学位 10 年内、尚未拿过大型 NIH 项目的独立研究者，评审时有单独资助线。"],
+  ["NSF CAREER", "Faculty Early Career Development", "NSF 面向未获 tenure 的助理教授的五年期项目。"],
+  ["MFTRP", "Malign Foreign Talent Recruitment Program", "恶意外国人才招募计划；参加者不得担任联邦资助项目的高级 / 关键人员。"],
+  ["403(b) / ORP", "Retirement plans", "美国非营利机构的退休账户 / 州立大学的可选退休计划；59½ 岁前取出一般加征 10%。"],
+  ["FICA", "Social Security + Medicare", "工资税 7.65%：社保税 6.2%（2026 年工资上限 184,500 美元）+ Medicare 1.45%。F/J 非居民免缴。"],
+  ["协定第 19 条", "US–China Tax Treaty Art. 19", "来美教学或研究的中国居民，相关收入累计 3 年内免美国联邦所得税；读博多年后是否适用要个案判断。"],
+  ["预聘-长聘制", "Tenure-track (China)", "中国高校的“非升即走”体系，常见 3+3 共 6 年，通过后长聘。"],
+  ["事业编制", "Public-institution establishment", "事业单位正式人员身份，参加机关事业单位养老保险和职业年金。"],
+  ["师资博士后", "Faculty-track postdoc", "高校以博士后名义招聘、出站可留校任教的岗位。"],
+  ["五险二金", "Social insurance + housing fund", "养老、医疗、失业、工伤、生育保险，加住房公积金和职业年金（编制内）。"],
+  ["职业年金", "Occupational annuity", "机关事业单位的补充养老：单位 8%、个人 4%。"],
+  ["专项附加扣除", "Special additional deductions", "个税扣除项：子女教育、3 岁以下婴幼儿照护每孩 2,000 元/月，住房租金、房贷利息、赡养老人等。"],
+  ["安家费", "Relocation / settling-in allowance", "学校或城市给新引进人员的一次性补贴，常分期发放并附服务期；一般要计个税。"],
+  ["海外优青", "NSFC Excellent Young Scientists (Overseas)", "要求在海外正式教研岗位连续工作满 36 个月，资助 100–300 万元，获批后须全职回国。"],
+  ["双一流", "Double First-Class", "教育部“世界一流大学和一流学科”建设计划，第二轮名单 2022 年公布。"],
+  ["RGC / ECS", "Hong Kong Research Grants Council", "香港研资局；早期职业计划（ECS）只限任职头 3 年申请。"],
+  ["MPF / 约满酬金", "Mandatory Provident Fund / gratuity", "香港强积金和合约期满酬金；港校常把两者合计定为基本薪金的 15%。"]
 ];
 const gl = $("#gloss");
 gl.innerHTML = G.map(([a, b, c]) => `<div data-q="${esc((a + b + c).toLowerCase())}"><dt>${esc(a)}<span class="num">${esc(b)}</span></dt><dd>${esc(c)}</dd></div>`).join("");
@@ -1444,6 +1709,223 @@ document.addEventListener("click", e => {
 window.addEventListener("popstate", () => show(location.hash.slice(1), true));
 showX(store.get("phd-map-x", "canada"), false);
 
+/* ---------------- offer calculator */
+const OC = {
+  fed: {
+    single: [[0, .10], [12400, .12], [50400, .22], [105700, .24], [201775, .32], [256225, .35], [640600, .37]],
+    mfj: [[0, .10], [24800, .12], [100800, .22], [211400, .24], [403550, .32], [512450, .35], [768700, .37]]
+  },
+  std: {single: 16100, mfj: 32200},
+  ssCap: 184500,
+  // [label, kind, ...]: "f" = flat rate % on (wage - exemption) + city % on wage; "i" = interpolate effective % at $80k/$120k/$160k (+ flat local %)
+  // last item = extra payroll % (CA SDI, WA Cares). Sources: Tax Foundation 2026 rates, city tax pages (see 两边怎么算账).
+  states: {
+    NC: ["北卡（罗利、达勒姆）", "f", 3.99, 12750, 0, 0],
+    MA: ["马萨诸塞（波士顿）", "f", 5.0, 4400, 0, 0],
+    CA: ["加州（另扣 SDI 1.3%）", "i", 4.01, 5.78, 6.66, 0, 1.3],
+    NY: ["纽约州（非纽约市）", "i", 4.65, 5.03, 5.25, 0, 0],
+    NYC: ["纽约市居民", "i", 7.99, 8.55, 8.85, 0, 0],
+    WA: ["华盛顿州（另扣 WA Cares 0.58%）", "f", 0, 0, 0, 0.58],
+    TX: ["德州", "f", 0, 0, 0, 0],
+    FL: ["佛州", "f", 0, 0, 0, 0],
+    PA: ["宾州（非费城）", "f", 3.07, 0, 0, 0],
+    PHL: ["费城居民", "f", 3.07, 0, 3.735, 0],
+    MD: ["马里兰（含县税约 3%）", "i", 4.30, 4.54, 4.77, 3.0, 0],
+    GA: ["佐治亚（亚特兰大）", "f", 5.19, 12000, 0, 0],
+    MI: ["密歇根（安娜堡）", "f", 4.25, 5900, 0, 0],
+    WI: ["威斯康星（麦迪逊）", "i", 4.05, 4.68, 4.90, 0, 0],
+    MN: ["明尼苏达（双城）", "i", 4.90, 5.53, 6.08, 0, 0],
+    IL: ["伊利诺伊（芝加哥、香槟）", "f", 4.95, 2925, 0, 0],
+    MO: ["密苏里（圣路易斯郊区）", "i", 3.53, 3.92, 4.11, 0, 0],
+    STL: ["圣路易斯市居民", "i", 3.53, 3.92, 4.11, 1.0, 0],
+    OH: ["俄亥俄（非哥伦布）", "f", 2.75, 28450, 0, 0],
+    CMH: ["哥伦布市居民", "f", 2.75, 28450, 2.5, 0],
+    UT: ["犹他（盐湖城）", "i", 4.30, 4.50, 4.50, 0, 0],
+    CO: ["科罗拉多（丹佛、博尔德）", "f", 4.4, 16100, 0, 0],
+    AZ: ["亚利桑那（凤凰城）", "f", 2.5, 8350, 0, 0]
+  },
+  iit: [[0, .03, 0], [36000, .10, 2520], [144000, .20, 16920], [300000, .25, 31920], [420000, .30, 52920], [660000, .35, 85920], [960000, .45, 181920]],
+  // creprice asking price, yuan per m2 (about 2026-10)
+  cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["自填", 0]],
+  presets: {
+    p1: {note: "美国：CRA Taulbee 2025 CS 新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
+      ub: 128000, uterm: "9", usum: 0, ust: "NC", ustat: "res", ufile: "single", uret: 5, uer: 10, uhp: 150, utreaty: false, uhome: 444000, urate: 7.11, uptax: 1.0,
+      cb: 230000, cbase: 100, ccap: 30000, chf: 12, cnj: false, cset: 240000, cyrs: 6, ctaxset: true, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20},
+    p2: {note: "美国：NIH NRSA FY2026 第 0 级 63,480 美元；假设持 J-1、仍是非居民，并按协定第 19 条免联邦所得税（能否适用须问学校税务办公室，取消勾选可看不免税的结果）；马萨诸塞是否承认协定未核实，这里照常征州税。中国：浙江大学 2026 年“求是博士后”校发年薪 30 万元（导师可另加），按博士后（非编制）计算。",
+      ub: 63480, uterm: "12", usum: 0, ust: "MA", ustat: "nr", ufile: "single", uret: 0, uer: 0, uhp: 100, utreaty: true, uhome: 737000, urate: 7.11, uptax: 1.1,
+      cb: 300000, cbase: 100, ccap: 30000, chf: 12, cnj: false, cset: 0, cyrs: 1, ctaxset: true, cded: "18000", cold: false, ccity: "杭州", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20},
+    p3: {note: "美国：AAUP 2025–26 公立博士院校助理教授平均 100,452 美元；俄亥俄州立大学教职工参加 STRS/ARP，不缴社保税，个人缴 14%；雇主 14% 中有一部分（OSU 为 2.91%）划给州养老金，这里按 11.09% 记入个人账户。已婚、1 个孩子。中国：西安交通大学青年拔尖人才计划“特聘研究员”基本薪酬 30 万元/年，一次性安家费 35 万元（公告写明税后），按编制计算；西安没有可核实的房价，请自填。",
+      ub: 100452, uterm: "9", usum: 0, ust: "CMH", ustat: "noss", ufile: "mfj", uret: 14, uer: 11.09, uhp: 350, utreaty: false, uhome: 316000, urate: 7.11, uptax: 1.6,
+      cb: 300000, cbase: 100, ccap: 30000, chf: 12, cnj: true, cset: 350000, cyrs: 5, ctaxset: false, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
+      kids: 1, down: 20}
+  }
+};
+const ocEl = id => $("#oc-" + id);
+$("#oc-ust").innerHTML = Object.entries(OC.states).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join("");
+$("#oc-ccity").innerHTML = OC.cities.map(([c, p]) => `<option value="${c}">${c}${p ? " · " + p.toLocaleString("en-US") : ""}</option>`).join("");
+function ocProg(x, br) {
+  let t = 0;
+  for (let i = 0; i < br.length; i++) {
+    const lo = br[i][0], hi = i + 1 < br.length ? br[i + 1][0] : Infinity;
+    if (x > lo) t += (Math.min(x, hi) - lo) * br[i][1];
+  }
+  return t;
+}
+function ocStateTax(st, w) {
+  const s = OC.states[st];
+  if (s[1] === "f") return Math.max(0, w - s[3]) * s[2] / 100 + w * s[4] / 100;
+  const pts = [[10000, 0], [80000, s[2]], [120000, s[3]], [160000, s[4]]];
+  let r = s[4];
+  for (let i = 1; i < pts.length; i++) {
+    if (w <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; r = y0 + (y1 - y0) * Math.max(0, w - x0) / (x1 - x0); break; }
+  }
+  return w * r / 100 + w * s[5] / 100;
+}
+function ocPmt(principal, ratePct, years) {
+  const r = ratePct / 100 / 12, n = years * 12;
+  if (principal <= 0) return 0;
+  return r ? principal * r / (1 - Math.pow(1 + r, -n)) : principal / n;
+}
+const num = id => { const v = parseFloat(ocEl(id).value); return isFinite(v) ? v : 0; };
+function ocUS() {
+  const base = num("ub"), nine = ocEl("uterm").value === "9", sum = nine ? Math.min(num("usum"), 3) : 0;
+  const gross = base + (nine ? base / 9 * sum : 0);
+  const stat = ocEl("ustat").value, file = stat === "nr" ? "single" : ocEl("ufile").value, kids = Math.round(num("kids"));
+  const ret = gross * num("uret") / 100;
+  let fica = 0;
+  if (stat === "res") fica = Math.min(gross, OC.ssCap) * .062 + gross * .0145 + Math.max(0, gross - (file === "mfj" ? 250000 : 200000)) * .009;
+  if (stat === "noss") fica = gross * .0145 + Math.max(0, gross - (file === "mfj" ? 250000 : 200000)) * .009;
+  let fed = 0, ctc = 0;
+  if (!ocEl("utreaty").checked) {
+    const taxable = Math.max(0, gross - ret - (stat === "nr" ? 0 : OC.std[file]));
+    fed = ocProg(taxable, OC.fed[file]);
+  }
+  if (stat !== "nr" && kids > 0) {
+    const agi = gross - ret, thr = file === "mfj" ? 400000 : 200000;
+    const full = Math.max(0, kids * 2200 - Math.ceil(Math.max(0, agi - thr) / 1000) * 50);
+    const nonref = Math.min(fed, full);
+    const refd = Math.min(full - nonref, kids * 1700, Math.max(0, .15 * (gross - 2500)));
+    ctc = nonref + refd;
+    fed -= ctc;
+  }
+  const st = ocEl("ust").value, sw = gross - ret;
+  const state = ocStateTax(st, sw);
+  const extra = gross * OC.states[st][OC.states[st].length - 1] / 100;
+  const health = num("uhp") * 12;
+  const cash = gross - ret - fica - fed - state - extra - health;
+  const er = gross * num("uer") / 100;
+  const price = num("uhome"), down = num("down") / 100;
+  const pmt = price ? ocPmt(price * (1 - down), num("urate"), 30) + price * num("uptax") / 100 / 12 : 0;
+  return {gross, tax: fed, ctc, fica, state: state + extra, health, ret, cash, saved: ret + er, er, price, downAmt: price * down, pmt, sum};
+}
+function ocCN() {
+  const gross = num("cb"), kids = Math.round(num("kids"));
+  const base = Math.min(gross / 12 * num("cbase") / 100, num("ccap") || Infinity);
+  const soc = base * 12 * .105, hf = base * 12 * num("chf") / 100, nj = ocEl("cnj").checked ? base * 12 * .04 : 0;
+  const yrs = Math.max(1, Math.round(num("cyrs"))), sub = num("cset") / yrs, taxSub = ocEl("ctaxset").checked;
+  const ded = 60000 + soc + hf + nj + kids * 24000 + parseFloat(ocEl("cded").value) + (ocEl("cold").checked ? 36000 : 0);
+  const taxable = Math.max(0, gross + (taxSub ? sub : 0) - ded);
+  let iit = 0;
+  for (let i = OC.iit.length - 1; i >= 0; i--) if (taxable > OC.iit[i][0]) { iit = taxable * OC.iit[i][1] - OC.iit[i][2]; break; }
+  const cash = gross + sub - soc - hf - nj - iit;
+  const saved = hf * 2 + nj + (ocEl("cnj").checked ? base * 12 * .08 : 0);
+  const city = OC.cities.find(c => c[0] === ocEl("ccity").value);
+  const ppm = num("cppm") || (city ? city[1] : 0);
+  const price = ppm * num("carea"), down = num("down") / 100;
+  const pmt = price ? ocPmt(price * (1 - down), num("crate"), 30) : 0;
+  return {gross, sub, soc, hf, nj, iit, cash, saved, base, price, ppm, downAmt: price * down, pmt, taxable};
+}
+const f0 = v => Math.round(v).toLocaleString("en-US");
+const pct = (a, b) => b > 0 ? Math.round(a / b * 100) + "%" : "—";
+function ocRun() {
+  const u = ocUS(), c = ocCN(), fx = num("fx") || 6.676, ppp = num("ppp") || 3.398;
+  const rows = [
+    ["税前收入", `$${f0(u.gross)}` + (u.sum ? `<small>含暑期 ${u.sum} 个月</small>` : ""), `¥${f0(c.gross + c.sub)}` + (c.sub ? `<small>含每年补贴 ¥${f0(c.sub)}</small>` : "")],
+    ["所得税", `$${f0(u.tax)}` + (u.ctc ? `<small>已减子女抵免 $${f0(u.ctc)}</small>` : ""), `¥${f0(c.iit)}<small>应纳税所得额 ¥${f0(c.taxable)}</small>`],
+    ["州税 / 地方税", `$${f0(u.state)}`, "—"],
+    ["社保 / FICA（个人）", `$${f0(u.fica)}`, `¥${f0(c.soc)}<small>基数 ¥${f0(c.base)}/月 × 10.5%</small>`],
+    ["退休 / 公积金 / 年金（个人）", `$${f0(u.ret)}`, `¥${f0(c.hf + c.nj)}`],
+    ["医保自付", `$${f0(u.health)}`, "已含在社保里"],
+    ["税后现金 / 年", `<b>$${f0(u.cash)}</b>`, `<b>¥${f0(c.cash)}</b>`],
+    ["税后现金 / 月", `$${f0(u.cash / 12)}`, `¥${f0(c.cash / 12)}`],
+    ["强制储蓄（个人 + 单位）", `$${f0(u.saved)}<small>其中雇主 $${f0(u.er)}</small>`, `¥${f0(c.saved)}<small>公积金双方 + 年金</small>`],
+    ["中国到手折美元", "—", `$${f0(c.cash / fx)}<small>市场汇率 ${fx}</small>`],
+    ["中国到手按购买力折算", "—", `${f0(c.cash / ppp)} 国际元<small>PPP ${ppp}，全国平均物价，不适用一线城市房价</small>`],
+    ["房价 / 首付", u.price ? `$${f0(u.price)} / $${f0(u.downAmt)}` : "—", c.price ? `¥${f0(c.price)} / ¥${f0(c.downAmt)}<small>${f0(c.ppm)} 元/㎡ × ${num("carea")} ㎡</small>` : "请选城市或自填单价"],
+    ["月供占税后月收入", u.price ? `${pct(u.pmt, u.cash / 12)}<small>月供 $${f0(u.pmt)}（含房产税）</small>` : "—", c.price ? `${pct(c.pmt, c.cash / 12)}<small>月供 ¥${f0(c.pmt)}</small>` : "—"],
+    ["首付 = 几年税后现金", u.price ? (u.downAmt / u.cash).toFixed(1) + " 年" : "—", c.price ? (c.downAmt / c.cash).toFixed(1) + " 年" : "—"]
+  ];
+  $("#oc-tbl").innerHTML = "<thead><tr><th>项目</th><th>美国</th><th>中国</th></tr></thead><tbody>" +
+    rows.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("") + "</tbody>";
+  const seg = (o, parts) => {
+    const tot = parts.reduce((a, p) => a + Math.max(0, p[1]), 0) || 1;
+    return `<div class="oc-bar"><span class="oc-lab">${o}</span><div class="oc-track">` +
+      parts.map(p => `<i class="${p[0]}" style="width:${(Math.max(0, p[1]) / tot * 100).toFixed(2)}%" title="${p[2]}：${(Math.max(0, p[1]) / tot * 100).toFixed(0)}%"></i>`).join("") + "</div></div>";
+  };
+  $("#oc-bars").innerHTML =
+    seg("美国", [["b-cash", u.cash, "税后现金"], ["b-save", u.ret, "退休缴款"], ["b-soc", u.fica + u.health, "FICA 与医保"], ["b-tax", u.tax + u.state, "所得税"]]) +
+    seg("中国", [["b-cash", c.cash, "税后现金"], ["b-save", c.hf + c.nj, "公积金与年金"], ["b-soc", c.soc, "社保"], ["b-tax", c.iit, "个税"]]) +
+    `<div class="oc-key"><span><i class="b-cash"></i>税后现金</span><span><i class="b-save"></i>强制储蓄（个人部分）</span><span><i class="b-soc"></i>社保 / FICA / 医保</span><span><i class="b-tax"></i>所得税</span></div>`;
+  const read = [];
+  read.push(`中国 offer 的税后现金按市场汇率约为美国的 <b>${pct(c.cash / fx, u.cash)}</b>，按全国平均购买力折算约为 <b>${pct(c.cash / ppp, u.cash)}</b>。真实答案在两者之间，取决于你在哪个城市生活、是否买房。`);
+  if (u.price && c.price) read.push(`首付分别相当于美国 <b>${(u.downAmt / u.cash).toFixed(1)}</b> 年、中国 <b>${(c.downAmt / c.cash).toFixed(1)}</b> 年的税后现金；月供分别占税后月收入的 <b>${pct(u.pmt, u.cash / 12)}</b> 和 <b>${pct(c.pmt, c.cash / 12)}</b>。`);
+  read.push(`强制储蓄：美国 $${f0(u.saved)}，中国 ¥${f0(c.saved)}。美国退休账户 59½ 岁前取出一般要多交 10% 附加税；中国公积金可用于买房和租房。`);
+  if (ocEl("ustat").value === "noss") read.push("选了“州立养老系统”：这份工作不累积美国社保积分（Social Security credits）。离开美国后，州养老金个人缴款通常可以退回，但雇主部分往往拿不到，具体看归属期。");
+  if (ocEl("utreaty").checked) read.push("协定免税累计最多 3 年，超过后是否追溯补税、何时起算，各校税务办公室说法不一；也有学校不接受刚读完博士的人主张这一条。");
+  $("#oc-read").innerHTML = read.map(s => `<li>${s}</li>`).join("");
+}
+function ocLoad(k) {
+  const p = OC.presets[k];
+  for (const [id, v] of Object.entries(p)) {
+    if (id === "note") continue;
+    const el = ocEl(id);
+    if (!el) continue;
+    if (el.type === "checkbox") el.checked = v; else el.value = v;
+  }
+  ocEl("fx").value = 6.676; ocEl("ppp").value = 3.398;
+  $("#oc-note").textContent = p.note;
+  $$("[data-oc]").forEach(b => b.setAttribute("aria-pressed", b.dataset.oc === k ? "true" : "false"));
+  ocSync();
+  ocRun();
+}
+function ocSync() {
+  const nine = ocEl("uterm").value === "9";
+  ocEl("usum").disabled = !nine;
+  ocEl("ufile").disabled = ocEl("ustat").value === "nr";
+}
+$$("[data-oc]").forEach(b => b.addEventListener("click", () => ocLoad(b.dataset.oc)));
+$$("#offer-calc input, #offer-calc select").forEach(el => el.addEventListener("input", () => {
+  $$("[data-oc]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  ocSync();
+  ocRun();
+}));
+ocLoad("p1");
+
+/* ---------------- academic-jobs panels */
+const aTabs = $$(".atabs .chip");
+function showA(k, scroll) {
+  if (!$(`#a-${k}`)) k = "us-career";
+  $$(".apanel").forEach(p => { p.hidden = p.dataset.apanel !== k; });
+  aTabs.forEach(b => b.setAttribute("aria-pressed", b.dataset.a === k ? "true" : "false"));
+  store.set("phd-map-a", k);
+  if (scroll) $(`#a-${k}`).scrollIntoView({block: "start"});
+}
+aTabs.forEach(b => b.addEventListener("click", () => showA(b.dataset.a)));
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest("a[data-a]");
+  if (!a) return;
+  e.preventDefault();
+  if (!$("#lb").hidden) $("#lb").hidden = true;
+  if (location.hash !== "#academia") {
+    try { history.pushState(null, "", "#academia"); } catch (err) {}
+    show("academia", false);
+  }
+  showA(a.dataset.a, true);
+});
+showA(store.get("phd-map-a", "us-career"), false);
+
 /* ---------------- lightbox */
 const lb = $("#lb"), lbBody = $("#lb-body");
 let zoom = 1.4, lbW = 1080, lastBtn = null;
@@ -1461,7 +1943,7 @@ $("#lb-in").addEventListener("click", () => { zoom = Math.min(zoom * 1.25, 4); s
 $("#lb-out").addEventListener("click", () => { zoom = Math.max(zoom / 1.25, 0.5); setZoom(); });
 const closeLb = () => { lb.hidden = true; lbBody.innerHTML = ""; if (lastBtn) lastBtn.focus(); };
 $("#lb-close").addEventListener("click", closeLb);
-lbBody.addEventListener("click", e => { const a = e.target.closest("a[href^='#']"); if (a && !a.dataset.x) closeLb(); });
+lbBody.addEventListener("click", e => { const a = e.target.closest("a[href^='#']"); if (a && !a.dataset.x && !a.dataset.a) closeLb(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
 })();
 </script>

@@ -15,6 +15,7 @@ import pathlib
 import re
 
 import abroad
+import academia
 
 ROOT = pathlib.Path(__file__).resolve().parent
 WARN = []
@@ -911,8 +912,282 @@ def fig16():
     return f
 
 
+# ------------------------------------------------ 17–20 academic jobs
+def fig17():
+    f = Fig("17-first-seven-years", 1080, 600,
+            "入职后头 8 年：美国 tenure-track 与中国预聘-长聘的考核、身份、经费和补贴时间线")
+    x0, k = 214, 102
+    Xp = lambda v: x0 + v * k
+    top = 56
+    f.add(text(16, 28, "横轴是入职后的年数。菱形 = 关键节点，色条 = 持续的窗口期，虚线 = 视情况而定。", "t-s"))
+    lanes = [
+        ("us", "考核"), ("us", "身份与绿卡"), ("us", "经费"),
+        ("cn", "考核"), ("cn", "补贴与安家费"), ("cn", "基金与人才项目"),
+    ]
+    rowh = 72
+    bottom = top + 18 + rowh * 6 + 12
+    # bands
+    f.add(rect(8, top, 1064, rowh * 3 + 6, "k-band-us", 12))
+    f.add(rect(8, top + rowh * 3 + 18, 1064, rowh * 3 + 6, "k-band-cn", 12))
+    for v in range(0, 9):
+        f.add(f.ln(f"M{Xp(v)},{top - 6} V{bottom - 4}", cls="l-grid"))
+        f.add(text(Xp(v), bottom + 12, f"第 {v} 年" if v else "入职", "t-xs t-m", "middle"))
+    ys = []
+    for i, (side, name) in enumerate(lanes):
+        y = top + 6 + i * rowh + (12 if side == "cn" else 0)
+        ys.append(y)
+        f.add(text(22, y + 24, ("美国 · " if side == "us" else "中国 · ") + name, "t t-b " + ("t-us" if side == "us" else "t-cn"), maxw=186))
+    us_bar, cn_bar = "k-solid-us", "k-solid-cn"
+
+    def bar(a, b, y, label, cls, tcls="t-xs", dash=False, below=None):
+        x1, x2 = Xp(a), Xp(b)
+        c = cls + (" k-dash" if dash else "")
+        f.add(rect(x1, y, x2 - x1, 12, c, 6))
+        f.add(text(x1 + 4, y - 5, label, tcls, maxw=max(x2 - x1, 260) + 200))
+        if below:
+            f.add(text(x1 + 4, y + 26, below, "t-xs", maxw=max(x2 - x1, 300) + 200))
+
+    def dm(v, y, label, side, anchor="middle", dy=-9):
+        f.add(diamond(Xp(v), y + 6, 7, "m-us" if side == "us" else "m-cn"))
+        if label:
+            f.add(text(Xp(v), y + dy, label, "t-xs t-b", anchor))
+
+    # US 考核
+    y = ys[0] + 26
+    bar(0, 6, y, "试用期（probationary）：AAUP 规定最长 7 年", "k-us")
+    dm(3, y, "第 3 年 中期评估", "us", dy=30)
+    dm(6, y, "第 6 年 tenure 评审", "us", dy=30)
+    bar(6, 7, y, "", "k-cn-wash", dash=True)
+    f.add(text(Xp(6) + 10, y - 5, "未通过：一般还有 1 年终止聘期", "t-xs"))
+    f.add(text(Xp(0.05), y + 30, "生育、照护等可延长时钟", "t-xs", None))
+    # US 身份
+    y = ys[1] + 26
+    dm(0, y, "", "us")
+    f.add(text(Xp(0) + 10, y - 5, "高校 H-1B 免抽签（cap-exempt），全年可递", "t-xs"))
+    bar(0, 1.5, y + 22, "", "k-us")
+    f.add(text(Xp(1.5) + 8, y + 32, "PERM 特殊程序：须在“选定你”后 18 个月内递交（岗位须含教学）；EB-1B / NIW 可并行", "t-xs"))
+    f.add(text(Xp(5.0), y - 5, "中国大陆出生排期（2026-11）：EB-1 约落后 3.3 年，EB-2 约 5.1 年", "t-xs t-us", "middle"))
+    # US 经费
+    y = ys[2] + 26
+    bar(0, 6, y, "NSF CAREER：未获 tenure 的助理教授可申请", "k-us")
+    bar(0, 8, y + 22, "", "k-us", dash=True)
+    f.add(text(Xp(0) + 4, y + 46, "NIH 早期研究者（ESI）：取得博士学位后 10 年内（博士后年数也算在内）", "t-xs"))
+    # CN 考核
+    y = ys[3] + 26
+    bar(0, 3, y, "首个聘期（常见 3 年）", "k-cn")
+    bar(3, 6, y, "第二个聘期", "k-cn")
+    dm(3, y, "中期考核", "cn", dy=30)
+    dm(6, y, "长聘评审", "cn", dy=30)
+    bar(6, 7, y, "", "k-cn-wash", dash=True)
+    f.add(text(Xp(6) + 10, y - 5, "未通过：多数不再续聘或转岗", "t-xs"))
+    f.add(text(Xp(0.05), y + 30, "编制岗不同：入编后长期聘用，按职称评审逐级晋升", "t-xs"))
+    # CN 补贴
+    y = ys[4] + 26
+    dm(0.25, y, "", "cn")
+    dm(1.25, y, "", "cn")
+    f.add(text(Xp(0.25) - 6, y - 5, "深圳博士补贴 10 万：在深缴社保满 3 个月领 30%，再连续缴满 12 个月领 70%", "t-xs"))
+    bar(0, 5, y + 22, "", "k-cn", dash=True)
+    f.add(text(Xp(5) + 8, y + 32, "安家费 / 购房补贴常分年发放，服务期内离职按合同退还", "t-xs"))
+    # CN 基金
+    y = ys[5] + 26
+    for v in range(0, 8):
+        dm(v + 0.2, y, "", "cn")
+    f.add(text(Xp(0.2) - 6, y - 5, "国家自然科学基金每年春季集中接收申请（2026 年为 3 月）", "t-xs"))
+    f.add(text(Xp(0.05), y + 30, "海外优青：须在海外正式教研岗位连续工作满 36 个月才能申请（在美国期间申请涉及 MFTRP，见下文）", "t-xs"))
+    f.add(text(16, bottom + 34, "时间线按常见做法和 2026-11 规则绘制，各校聘期、补贴和服务期以合同为准；排期按 2026 年 11 月签证公告的最终行动日估算。", "t-s"))
+    return f
+
+
+US_PAY = [
+    # (group, label, value, lo, hi, note)
+    ("教职", "AAUP 博士院校 · 助理教授平均", 105052, 100452, 125261, "公立 100,452 · 私立 125,261"),
+    ("教职", "AAUP 硕士院校 · 助理教授平均", 84212, None, None, ""),
+    ("教职", "AAUP 学士院校 · 助理教授平均", 81819, None, None, ""),
+    ("教职", "CS · 新聘助理教授中位数（9 个月）", 128000, 105900, 151667, "P10–P90"),
+    ("教职", "经济学博士点 · 新聘平均起薪", 158593, None, None, ""),
+    ("教职", "商学院新博士 · 美洲区中位数", 135000, None, None, "平均 152,550"),
+    ("教职", "数学与统计 · 新聘（CUPA-HR，含教学型院校）", 79417, None, None, "2024-11"),
+    ("非长聘", "CS 教学教授中位数", 114344, None, None, ""),
+    ("非长聘", "CS 研究科学家中位数", 126250, None, None, ""),
+    ("博士后", "NIH NRSA 第 0 级（FY2026）", 63480, None, None, "许多学校以此为下限"),
+    ("博士后", "加州大学 UC 第 0 级（2026-10 起）", 71491, None, None, ""),
+    ("博士后", "MIT 最低线（2026-07 起）", 73308, None, None, ""),
+    ("博士后", "斯坦福最低线（FY27）", 79056, None, None, ""),
+    ("博士后", "CS 博士后市场中位数", 66504, 53587, 79466, "P10–P90"),
+]
+
+
+def fig18():
+    f = Fig("18-us-academic-pay", 1080, 650,
+            "美国学术岗位薪资：AAUP 院校平均、分学科新聘、非长聘和博士后下限（美元/年）")
+    x0, k = 380, 3.6  # px per USD 1k, from 50k
+    Xp = lambda v: x0 + (v / 1000 - 50) * k
+    top, rowh, gh = 64, 32, 24
+    n = len(US_PAY)
+    groups = []
+    ys, y = [], top
+    for g, *_ in US_PAY:
+        if g not in groups:
+            groups.append(g)
+            y += gh
+        ys.append(y)
+        y += rowh
+    bottom = y + 8
+    f.add(text(16, 26, "教职为学年（9 个月）薪资，不含暑期工资；博士后为 12 个月。各调查口径不同（平均 / 中位数，新聘 / 在职），只能看量级。", "t-s"))
+    for v in range(50, 241, 10):
+        f.add(f.ln(f"M{Xp(v * 1000):.1f},{top - 10} V{bottom}", cls="l-grid" if v % 50 else "l-axis"))
+        if v % 20 == 0:
+            f.add(text(Xp(v * 1000), top - 16, f"{v}k", "t-xs t-m", "middle"))
+    cap = Xp(228000)
+    f.add(f.ln(f"M{cap:.1f},{top - 10} V{bottom}", cls="l-w"))
+    f.add(text(cap - 4, bottom + 16, "NIH 计费工资上限 228k（2026）", "t-xs t-w", "end"))
+    prev = None
+    for i, (g, lab, v, lo, hi, note) in enumerate(US_PAY):
+        cy = ys[i] + rowh / 2
+        if g != prev:
+            f.add(text(16, ys[i] - 8, {"教职": "长聘轨教职（学年薪资）", "非长聘": "非长聘岗位", "博士后": "博士后（12 个月）"}[g], "t-xs t-b t-us"))
+            prev = g
+        if i % 2 == 0:
+            f.add(rect(8, cy - rowh / 2, 1064, rowh, "k-zebra", 0))
+        f.add(text(16, cy + 4, lab, "t-s", maxw=x0 - 30))
+        if lo and hi:
+            f.add(f.ln(f"M{Xp(lo):.1f},{cy} H{Xp(hi):.1f}", cls="l l-us"))
+            for e in (lo, hi):
+                f.add(f.ln(f"M{Xp(e):.1f},{cy - 5} V{cy + 5}", cls="l l-us"))
+        cls = "m-us" if g == "教职" else ("m-bg-us" if g == "非长聘" else "m-ch-x")
+        f.add(f'<circle cx="{Xp(v):.1f}" cy="{cy}" r="6" class="{cls}"><title>{esc(lab)}：${v:,}</title></circle>')
+        lx = (Xp(hi) if hi else Xp(v)) + 10
+        f.add(text(lx, cy + 4, f"{v / 1000:.1f}k" + (f" · {note}" if note else ""), "t-xs"))
+    f.add(text(16, bottom + 40, "来源：AAUP 2025–26、CRA Taulbee 2025、AEA 2025–26、AACSB 2026、CUPA-HR 2024–25、NIH NOT-OD-26-044 及各校博士后薪资页。", "t-xs"))
+    return f
+
+
+US_METROS = [
+    # name, zillow median sale price $k (2026-08), state+local effective tax at $120k single (%), RPP 2024, law flag
+    ("圣何塞（斯坦福）", 1482, 5.8, 110.4, ""),
+    ("旧金山-奥克兰（伯克利、UCSF）", 1163, 5.8, 115.6, ""),
+    ("洛杉矶（UCLA、USC、加州理工）", 978, 5.8, 113.6, ""),
+    ("圣迭戈（UCSD）", 931, 5.8, 111.9, ""),
+    ("波士顿（哈佛、MIT）", 737, 4.8, 108.3, ""),
+    ("纽约市（哥大、NYU）", 717, 8.5, 112.6, ""),
+    ("西雅图（UW）", 715, 0.0, 111.1, ""),
+    ("丹佛 / 博尔德", 593, 3.8, 105.8, ""),
+    ("华盛顿特区", 584, 6.1, 108.9, ""),
+    ("盐湖城（犹他大学）", 548, 4.5, 100.9, ""),
+    ("奥斯汀（UT Austin）", 465, 0.0, 98.1, "TX"),
+    ("凤凰城（ASU）", 447, 2.2, 103.3, ""),
+    ("罗利（北卡州立）", 444, 3.6, 98.2, ""),
+    ("麦迪逊（UW-Madison）", 437, 4.9, 97.3, ""),
+    ("达勒姆-教堂山（杜克、UNC）", 433, 3.6, 97.6, ""),
+    ("巴尔的摩（JHU）", 417, 7.5, 104.5, ""),
+    ("安娜堡（密歇根大学）", 412, 4.0, 100.9, ""),
+    ("费城（宾大）", 395, 6.8, 102.6, ""),
+    ("双城（明尼苏达大学）", 387, 5.5, 104.8, ""),
+    ("亚特兰大（佐治亚理工、埃默里）", 385, 4.7, 100.1, ""),
+    ("芝加哥（芝大、西北）", 365, 4.8, 103.6, ""),
+    ("休斯顿（莱斯、贝勒医学院）", 337, 0.0, 98.6, "TX"),
+    ("哥伦布（俄亥俄州立）", 316, 4.6, 95.5, ""),
+    ("盖恩斯维尔（佛罗里达大学）", 293, 0.0, 96.7, "FL"),
+    ("圣路易斯（WashU）", 289, 3.9, 95.1, ""),
+    ("底特律（韦恩州立）", 290, 6.4, 100.3, ""),
+    ("匹兹堡（CMU、匹大）", 258, 6.1, 94.7, ""),
+    ("香槟-厄巴纳（UIUC）", 243, 4.8, 92.7, ""),
+]
+
+
+def fig19():
+    rows = sorted(US_METROS, key=lambda r: -r[1])
+    rowh = 21
+    top = 74
+    H = top + rowh * len(rows) + 70
+    f = Fig("19-us-academic-metros", 1080, H,
+            "美国 28 个学术都市圈：房价中位数、年薪 12 万美元时的州加地方所得税、地区价格平价（RPP）")
+    x0, k = 300, 0.34  # px per $1k
+    f.add(text(16, 26, "房价：Zillow 都市圈中位成交价（2026-08）；税率：单身、仅工资、年薪 12 万美元时州税 + 市税的粗估有效税率；", "t-s"))
+    f.add(text(16, 44, "RPP：BEA 2024 地区价格平价，全美 = 100。色块标出对中国公民有特别州法的州（佛州、德州）。", "t-s"))
+    bx = x0 + 1500 * k + 40  # tax column
+    rx = bx + 150
+    f.add(text(x0, top - 10, "房价中位数（千美元）", "t-xs t-b"))
+    f.add(text(bx, top - 10, "州 + 市税", "t-xs t-b"))
+    f.add(text(rx, top - 10, "RPP", "t-xs t-b"))
+    for v in (250, 500, 750, 1000, 1250, 1500):
+        f.add(f.ln(f"M{x0 + v * k:.1f},{top - 4} V{top + rowh * len(rows)}", cls="l-grid"))
+        f.add(text(x0 + v * k, top + rowh * len(rows) + 14, f"{v}", "t-xs t-m", "middle"))
+    for i, (name, p, tax, rpp, flag) in enumerate(rows):
+        y = top + i * rowh
+        cy = y + rowh / 2
+        if i % 2 == 0:
+            f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
+        f.add(text(16, cy + 4, name, "t-s", maxw=x0 - 26))
+        cls = "k-solid-us" if p >= 700 else ("k-us" if p >= 380 else "k-mute")
+        f.add(rect(x0, cy - 6, p * k, 12, cls, 3) )
+        f.add(text(x0 + p * k + 6, cy + 4, f"{p:,}", "t-xs t-m"))
+        # tax bar (scale: 1% = 12px)
+        f.add(rect(bx, cy - 5, max(tax * 12, 1.5), 10, "m-ch-x", 2))
+        f.add(text(bx + max(tax * 12, 1.5) + 5, cy + 4, f"{tax:.1f}%" if tax else "0", "t-xs t-m"))
+        f.add(text(rx, cy + 4, f"{rpp:.1f}", "t-xs t-m"))
+        if flag:
+            lab = {"TX": "德州 SB 17", "FL": "佛州 SB 264 / 846"}[flag]
+            w = tw(lab, 10.5) + 12
+            px = x0 + p * k + 48
+            f.add(rect(px, cy - 8, w, 16, "k-reform", 8), text(px + 6, cy + 4, lab, "t-xs t-w"))
+    yb = top + rowh * len(rows) + 38
+    f.add(text(16, yb, "深色 = 70 万美元以上，浅色 = 38 万–70 万，灰色 = 38 万以下。印第安纳 SEA 256（普渡所在州）2026-07-01 起限制非绿卡中国公民买房，有例外。", "t-xs"))
+    f.add(text(16, yb + 18, "税率不含联邦税和 FICA；纽约市按居民计；巴尔的摩含马里兰县税约 3%；圣路易斯为郊区居民（市内居民另加 1%）。", "t-xs"))
+    return f
+
+
+CN_PRICE = [("深圳", 67326), ("上海", 60392), ("北京", 53849), ("广州", 38171), ("杭州", 34229), ("南京", 22055), ("东莞", 18996)]
+CN_INDEX = [("上海", 100.8), ("深圳", 98.5), ("宁波", 98.2), ("大连", 97.9), ("北京", 97.5), ("广州", 97.1), ("合肥", 96.9),
+            ("杭州", 96.8), ("重庆", 96.5), ("兰州", 96.2), ("厦门", 96.0), ("南京", 95.6), ("哈尔滨", 95.6), ("郑州", 95.3),
+            ("济南", 95.2), ("青岛", 95.0), ("西安", 94.9), ("武汉", 94.7), ("天津", 94.7), ("长沙", 94.5), ("成都", 94.4)]
+
+
+def fig20():
+    f = Fig("20-china-academic-cities-housing", 1080, 600,
+            "中国学术城市房价：7 城二手房挂牌均价与 90 平方米总价；21 城二手住宅价格同比指数（2026-09）")
+    # left: price level
+    f.add(text(16, 28, "房价水平：二手住宅挂牌均价（creprice，约 2026-10）", "t t-b"))
+    f.add(text(16, 46, "条 = 90 ㎡ 挂牌总价（万元）。挂牌价通常高于成交价，且全市均价掩盖了城区与远郊的差距。", "t-xs"))
+    x0, k = 80, 0.56  # px per 万元
+    top = 74
+    for v in (0, 200, 400, 600):
+        f.add(f.ln(f"M{x0 + v * k:.1f},{top - 6} V{top + 7 * 42}", cls="l-grid" if v else "l-axis"))
+        f.add(text(x0 + v * k, top + 7 * 42 + 14, f"{v}", "t-xs t-m", "middle"))
+    f.add(text(x0 + 300 * k, top + 7 * 42 + 32, "90 ㎡ 总价（万元）", "t-xs", "middle"))
+    for i, (c, p) in enumerate(CN_PRICE):
+        cy = top + i * 42 + 18
+        tot = p * 90 / 10000
+        f.add(text(16, cy + 4, c, "t t-b"))
+        f.add(rect(x0, cy - 9, tot * k, 18, "k-solid-cn" if tot > 400 else "k-cn", 3))
+        f.add(text(x0 + tot * k + 6, cy + 4, f"{tot:.0f} 万 · {p:,} 元/㎡", "t-xs t-m"))
+    # Shenzhen subsidy callout
+    yb = top + 7 * 42 + 56
+    f.add(rect(16, yb, 470, 64, "k-cn-wash", 10))
+    f.add(text(28, yb + 22, "深圳新引进博士补贴 10 万元 ≈ 1.5 ㎡", "t t-b t-cn"))
+    f.add(text(28, yb + 42, "按 67,326 元/㎡ 折算。人才补贴的价值要按当地房价看，", "t-xs"))
+    f.add(text(28, yb + 56, "且多数补贴需计个税、分期发放、与编制或其他补贴互斥。", "t-xs"))
+    # right: index
+    rx0 = 600
+    f.add(text(rx0, 28, "走势：二手住宅价格同比（国家统计局，2026-09）", "t t-b"))
+    f.add(text(rx0, 46, "上年同月 = 100；指数只看涨跌，不能比较贵贱。", "t-xs"))
+    ix = lambda v: rx0 + 70 + (v - 94) * 52
+    top2, rh = 72, 22.5
+    for v in (94, 95, 96, 97, 98, 99, 100, 101):
+        f.add(f.ln(f"M{ix(v):.1f},{top2 - 6} V{top2 + rh * len(CN_INDEX)}", cls="l-axis" if v == 100 else "l-grid"))
+        f.add(text(ix(v), top2 + rh * len(CN_INDEX) + 14, f"{v}", "t-xs t-m", "middle"))
+    for i, (c, v) in enumerate(CN_INDEX):
+        cy = top2 + i * rh + rh / 2
+        f.add(text(rx0, cy + 4, c, "t-s"))
+        f.add(f.ln(f"M{ix(100):.1f},{cy} H{ix(v):.1f}", cls="l" if v < 100 else "l-w"))
+        f.add(f'<circle cx="{ix(v):.1f}" cy="{cy}" r="5" class="{"m-ink2" if v < 100 else "m-ch-w"}"><title>{c}：{v}</title></circle>')
+        f.add(text(ix(v) - 9 if v < 100 else ix(v) + 9, cy + 4, f"{v - 100:+.1f}%", "t-xs t-m", "end" if v < 100 else None))
+    f.add(text(rx0, top2 + rh * len(CN_INDEX) + 34, "21 城中只有上海同比上涨；中西部城市普遍下跌 4%–6%。", "t-xs"))
+    return f
+
+
 FIGS = [fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11, fig12,
-        fig13, fig14, fig15, fig16]
+        fig13, fig14, fig15, fig16, fig17, fig18, fig19, fig20]
 
 # standalone stylesheet (literal tokens; light + dark)
 TOK_LIGHT = dict(paper="#F3F5F4", paper2="#E8ECEB", card="#FFFFFF", ink="#16202A", ink2="#4E5A66", line="#CDD5D6",
@@ -969,6 +1244,7 @@ text{font-family:var(--sans)}
 .l-x{fill:none;stroke:var(--ch-x);stroke-width:2}
 .l-w{fill:none;stroke:var(--ch-w);stroke-width:1.5}
 .t-x{fill:var(--x)} .t-w{fill:var(--ch-w)}
+.m-ch-w{fill:var(--ch-w)}
 """
 
 
@@ -1007,7 +1283,7 @@ def main():
             WARN.append(f"template has no slot for {f.key}")
         tpl = tpl.replace(marker, f.inline())
         (svgdir / f"{f.key}.svg").write_text(f.standalone(STANDALONE_CSS), encoding="utf-8")
-    for name, fn in abroad.HTML.items():
+    for name, fn in {**abroad.HTML, **academia.HTML}.items():
         marker = f"<!--@html:{name}-->"
         if marker not in tpl:
             WARN.append(f"template has no slot for {name}")
