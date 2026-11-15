@@ -254,10 +254,10 @@ tr.xbase{background:var(--us-wash)}
 /* academic jobs */
 nav.chapters a[data-side="b"] .dot{background:linear-gradient(90deg,var(--us) 50%,var(--cn) 50%)}
 .card.u{border-top:3px solid var(--us)} .card.c{border-top:3px solid var(--cn)}
-.atabs{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 8px);z-index:4;background:var(--paper);padding:8px 0}
+.atabs{position:sticky;top:env(safe-area-inset-top, 0px);z-index:4;background:var(--paper);padding:16px 0 8px}
 .atabs .chip.side-u{border-color:var(--us)} .atabs .chip.side-c{border-color:var(--cn)}
 .atabs .chip[aria-pressed="true"]{border-color:var(--ink)}
-.apanel{display:grid;gap:18px;scroll-margin-top:120px;border-top:3px solid var(--ink);padding-top:18px}
+.apanel{display:grid;gap:18px;scroll-margin-top:150px;border-top:3px solid var(--ink);padding-top:18px}
 .apanel.side-u{border-top-color:var(--us)} .apanel.side-c{border-top-color:var(--cn)}
 .ablocks{display:grid;gap:8px}
 .ablock{min-width:0}
@@ -295,6 +295,7 @@ details.ablock + details.ablock{margin-top:0}
 .oc-key span{display:inline-flex;align-items:center;gap:6px}
 .oc-key i{display:inline-block;width:12px;height:12px;border-radius:3px}
 .oc-tbl{min-width:560px}
+@media (max-width:640px){.oc-tbl{min-width:0;font-size:13px}.oc-tbl th:first-child{width:30%}.oc-tbl th,.oc-tbl td{padding-inline:6px}}
 .oc-tbl td{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .oc-tbl td small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--ink-2)}
 .oc-read{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;max-width:96ch}
@@ -898,12 +899,12 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <section class="blk" aria-labelledby="h-a-sum">
     <h3 id="h-a-sum">先看结论</h3>
     <div class="grid3">
-      <div class="card u"><h4>美国：起薪高，但只发 9 个月</h4><p>AAUP 2025–26：博士授予院校助理教授平均 <b>105,052 美元</b>（公立 100,452，私立 125,261）；计算机类（CS、CE 和信息学院）新聘中位数 128,000，经济学博士点新聘平均 158,593。这些都是学年薪资，暑期 2–3 个月要靠自己的经费。博士后下限多参照 NIH NRSA 第 0 级 <b>63,480 美元</b>。</p></div>
+      <div class="card u"><h4>美国：薪资高，但多按 9 个月发</h4><p>AAUP 2025–26：博士授予院校全体在职助理教授平均 <b>105,052 美元</b>（不是起薪；公立 100,452，私立独立 125,261）；计算机类（CS、CE 和信息学院）新聘中位数 128,000，经济学博士点新聘平均 158,593。这些多为学年薪资（AEA 没有注明合同月数），暑期 2–3 个月要靠经费或学院支持。博士后下限多参照 NIH NRSA 第 0 级 <b>63,480 美元</b>。</p></div>
       <div class="card c"><h4>中国：公告多写“面议”，看合同</h4><p>顶尖高校和新型研究型大学大多不公开数字。2025–26 年能查到的：西南交大助理教授 18–23 万元，浙大“求是博士后”校发 30 万元，中科大苏州高研院特任副研究员不少于 42 万元。宣传里“安家费最高 XXX 万”多数指国家级人才。</p></div>
-      <div class="card c"><h4>城市补贴：条件比金额重要</h4><p>深圳新引进博士补贴 10 万元：35 岁以下，在编人员和已领博士后补贴者不能领，分两次发放，实施办法约在 2027-04 到期。多数补贴要计个税，与编制或其他补贴互斥，离职要退。按深圳挂牌均价算，10 万元约合 1.5 平方米。大湾区“个税超 15% 部分补贴”只给境外人才，只持中国护照、没有国外长期居留权的美国博士不符合。</p></div>
+      <div class="card c"><h4>城市补贴：条件比金额重要</h4><p>深圳新引进博士补贴 10 万元：35 岁以下，在编人员和已领博士后补贴者不能领，分两次发放，实施办法约在 2027-04 到期。多数补贴要计个税，常与编制或其他补贴互斥，提前离职可能要退还。按深圳挂牌均价算，10 万元约合 1.5 平方米。大湾区“个税超 15% 部分补贴”只给境外人才，只持中国护照、没有国外长期居留权的美国博士不符合。</p></div>
       <div class="card"><h4>房价：两边都在分化</h4><p>美国学术都市圈中位成交价从香槟 24 万美元到圣何塞 148 万美元；房贷利率 7.11%（2026-11-12）。中国 21 个大中城市二手住宅只有上海同比上涨，成都、长沙、武汉等跌 5% 以上；5 年期 LPR 为 3.5%，2026-10-01 起首套小户型（150 万元、120 ㎡以下）商贷另贴息 1 个百分点。</p></div>
-      <div class="card"><h4>经费环境都变了</h4><p>NIH 全部研究项目资助率 FY2025 降到 13.0%（早期研究者 R01 类为 18.5%），2025 年有数千项 NIH/NSF 资助被终止。NSFC 2026 年集中接收 470,561 项申请，青年科学基金 C 类资助数增加 50.1%，官方没有公布分类资助率。</p></div>
-      <div class="card"><h4>身份与研究安全</h4><p>美国高校 H-1B 免抽签；10 万美元入境付款目前被法院撤销执行，而且本来就不适用于境内转身份。真正要小心的是：在美国做联邦资助项目的关键人员期间，参加中国政府资助的人才计划，可能被认定为参加“恶意外国人才招募计划”（MFTRP），见下文。</p></div>
+      <div class="card"><h4>经费环境都变了</h4><p>NIH 全部研究项目（RPG）资助率 FY2025 为 13.0%（早期研究者 R01 类为 18.5%），2025 年有数千项 NIH/NSF 资助被终止。NSFC 2026 年集中接收 470,561 项申请，青年科学基金 C 类资助数增加 50.1%，官方没有公布分类资助率。</p></div>
+      <div class="card"><h4>身份与研究安全</h4><p>美国高校 H-1B 免抽签。10 万美元缴费目前因法院命令不征收（上诉未决，DHS 称命令被撤销后会恢复征收）；境内 F-1/OPT 转 H-1B 只要获批就不缴，被认定不符合境内条件或审结前出境则须缴。真正要小心的是：在美国做联邦资助项目的关键人员期间，参加中国政府资助的人才计划，可能被认定为参加“恶意外国人才招募计划”（MFTRP），见下文。</p></div>
     </div>
   </section>
 
@@ -920,14 +921,14 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <thead><tr><th>维度</th><th>美国高校</th><th>中国高校（内地）</th></tr></thead>
       <tbody>
         <tr><th>起步职位</th><td>助理教授（Assistant Professor, tenure-track），或先做 1–3 年博士后；另有大量非长聘岗位（教学教授、研究科学家）</td><td>预聘-长聘制（tenure-track）助理教授 / 副研究员；传统事业编制的讲师、副教授；师资博士后作为入口</td></tr>
-        <tr><th>考核期</th><td>AAUP 原则：试用期最长 7 年，一般第 3 年中期评估、第 6 年 tenure 评审；生育、照护等可延长时钟</td><td>常见“3+3”共 6 年；编制岗没有“非升即走”，靠职称评审晋升。2025–26 年部分学校改为入编、不再实行非升即走（媒体报道）</td></tr>
+        <tr><th>考核期</th><td>AAUP 原则：试用期最长 7 年；常见做法是第 3 年中期评估、第 6 年 tenure 评审；生育、照护等可延长时钟</td><td>常见“3+3”共 6 年；编制岗没有“非升即走”，靠职称评审晋升。2025–26 年部分学校改为入编、不再实行非升即走（媒体报道）</td></tr>
         <tr><th>不通过</th><td>通常还有 1 年终止聘期，之后离开</td><td>多数不再续聘或转为其他岗位，以合同为准</td></tr>
         <tr><th>工资口径</th><td>多为 9 个月学年合同，暑期工资靠经费支付、不保证；NSF 一般每年最多计 2 个月</td><td>年薪制，或“基本工资 + 绩效 + 津贴”；公告里的“综合年薪”可能含单位社保或城市补贴，要问清</td></tr>
-        <tr><th>公开的起步数字</th><td>AAUP 博士院校助理教授平均 105,052 美元；计算机类新聘中位数 128,000；商学院新博士美洲区中位数 135,000</td><td>西南交大助理教授 18–23 万元；中国矿大助理教授 22.5 万元；北大医学部博雅博后 20 万元 + 租房补贴 6 万元/年</td></tr>
-        <tr><th>启动经费</th><td>实验学科常见几十万到百万美元以上，没有权威的全国统计；理论学科以暑期工资、学生和差旅为主</td><td>差异极大：西南交大理工科 10 万元；西交大青年拔尖计划 200 万元以上；海南大学给海外优青入选者 300 万元</td></tr>
+        <tr><th>公开的起步数字</th><td>AAUP 博士院校全体在职助理教授平均 105,052 美元（不是起薪）；计算机类新聘中位数 128,000；商学院新博士美洲区中位数 135,000</td><td>西南交大助理教授 18–23 万元；中国矿大助理教授 22.5 万元；北大医学部博雅博后 20 万元 + 租房补贴 6 万元/年</td></tr>
+        <tr><th>启动经费</th><td>实验学科常见几十万到百万美元以上，没有权威的全国统计；理论学科以暑期工资、学生和差旅为主</td><td>差异极大：西南交大理工科 10 万元；西交大青年拔尖计划 200 万元以上（院系转载，未核实）；海南大学给海外优青入选者 300 万元</td></tr>
         <tr><th>住房</th><td>少数学校有购房贷款或补贴；多数靠自己租买</td><td>安家费、购房补贴、人才公寓、城市人才补贴，常分期发放并附服务期</td></tr>
-        <tr><th>身份</th><td>高校 H-1B 免抽签；教职 PERM 可走特殊程序（选定后 18 个月内递交）；EB-1B 要求 tenure-track 或可比的长期研究岗</td><td>没有身份问题；海外工作年限影响海外优青等项目资格</td></tr>
-        <tr><th>退休</th><td>私立多为 403(b)，AAUP 统计雇主退休缴费平均约占工资 11.1%；部分州立系统不缴社保税（如俄亥俄 STRS）</td><td>编制内：基本养老个人 8%、职业年金个人 4%（单位另缴）；公积金双方各 5%–12%；合同制通常没有职业年金</td></tr>
+        <tr><th>身份</th><td>高校 H-1B 免抽签；教职（须含教学）PERM 可走特殊程序（选定后 18 个月内递交）；EB-1B 要求 tenure-track 或可比的长期研究岗</td><td>没有身份问题；海外工作年限影响海外优青等项目资格</td></tr>
+        <tr><th>退休</th><td>私立多为 403(b)；AAUP 统计雇主退休缴费平均约占工资 11.1%（公立 12.2%，私立独立 8.9%）；部分州立系统不缴社保税（如俄亥俄 STRS）</td><td>编制内：基本养老个人 8%、职业年金个人 4%（单位另缴）；公积金双方各 5%–12%；合同制通常没有职业年金</td></tr>
         <tr><th>研究安全</th><td>联邦资助项目的高级 / 关键人员不得参加恶意外国人才招募计划；须披露外国任职和资助</td><td>出国（境）证照集中保管等内部规定各校不一；人类遗传资源、重要数据出境有审批要求</td></tr>
       </tbody>
     </table></div>
@@ -936,13 +937,13 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <figure class="fig">
     <div class="fig-head"><span class="fig-no">图 18 · 美国学术岗位薪资</span><button class="btn" data-zoom>放大查看</button></div>
     <div class="fig-scroll"><!--@fig:18-us-academic-pay--></div>
-    <figcaption>圆点是平均值或中位数，横线是 P10–P90 区间（AAUP 一行是公立到私立的平均值）。“计算机类”是 CRA Taulbee 调查的全部美国单位（CS、CE 和信息学院）；只看 CS 系在任助理教授，中位数为 131,115 美元。实心蓝点为长聘轨教职，空心为非长聘岗位，青色为博士后。悬停在点上可看原值。</figcaption>
+    <figcaption>圆点是平均值或中位数，横线是 P10–P90 区间（AAUP 一行是公立到私立的平均值）。“计算机类”是 CRA Taulbee 调查的全部美国单位（CS、CE 和信息学院）；只看 CS 系在任助理教授，中位数为 131,115 美元。实心蓝点为助理教授（AAUP 一行含约 28.3% 非长聘），空心为非长聘岗位，青色为博士后。悬停在点上可看原值。</figcaption>
   </figure>
 
   <figure class="fig">
-    <div class="fig-head"><span class="fig-no">图 19 · 美国 38 个学术都市圈：房价、税和物价</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-head"><span class="fig-no">图 19 · 美国 39 个学术都市圈：房价、税和物价</span><button class="btn" data-zoom>放大查看</button></div>
     <div class="fig-scroll"><!--@fig:19-us-academic-metros--></div>
-    <figcaption>同一份 12 万美元的工资，在德州、佛州、华盛顿州不交州所得税，在纽约市要交约 8.5%。但房价差距大得多：同样的税后收入，在香槟或匹兹堡买得起房，在湾区只能租。佛州、德州的购房法以“住所地在中国”为要件，长期合法在美居住者通常可以买自住房；印第安纳 SEA 256（普渡所在州）2026-07-01 起限制非绿卡中国公民买房，有例外。详见“美国 · 城市”。</figcaption>
+    <figcaption>同一份 12 万美元的工资，在德州、佛州、华盛顿州不交州所得税，在纽约市要交约 8.5%。但房价差距大得多：同样的税后收入，在香槟或匹兹堡买得起房，在湾区只能租。佛州、德州的购房法以“住所地在中国”为要件（住所地和签证类型不完全对应，法院的相关推理不是安全港）：德州豁免合法在美居住者购买自住宅；佛州只允许持有效非旅游签证者买 1 处 2 英亩以内、距军事设施 5 英里以外的住宅，并须 30 天内登记。印第安纳 SEA 256（普渡所在州）2026-07-01 起限制非绿卡中国公民买房，有例外。详见“美国 · 城市”。</figcaption>
   </figure>
 
   <figure class="fig">
@@ -957,19 +958,19 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <div class="grid3 secgrid">
       <div class="card"><h4>谁会受影响</h4><p>以自己为 PI 申请 F32、K99、R01、NSF 项目的人，以及在项目里被列为高级 / 关键人员的人。只从经费里领工资、没有被列为关键人员的博士后不在法定认证范围内，但仍要遵守本校的利益冲突和投入冲突（COI / COC）政策。</p></div>
       <div class="card"><h4>只递交申请算不算参加</h4><p>法律和各机构都没有明文规定。但 NSF 的披露表要求在履历（Biosketch）和在研及待批支持表（Current and Pending (Other) Support）里写明对外国政府资助计划的“当前或待定参与或申请”。签“意向性工作协议”本身，可能已经让你成了协议一方。</p></div>
-      <div class="card"><h4>正常学术往来不算</h4><p>白宫科技政策办公室（OSTP）2024 年指南列出的例外：公开发表、参加国际会议、学术报告、指导外国学生、访问学者和学术休假。持续的兼职聘任不在例外之列；没有报酬的名誉职位也要披露。隐瞒外国任职或资助会构成虚假认证。</p></div>
+      <div class="card"><h4>正常学术往来不算</h4><p>白宫科技政策办公室（OSTP）2024 年指南列出的例外：公开发表、参加国际会议、学术报告、指导外国学生、访问学者和学术休假；但如果活动由国防部 1286 清单上的院校资助或组织，不能豁免。持续的兼职聘任不在例外之列；没有报酬的名誉职位也要披露。隐瞒外国任职或资助会构成虚假认证。</p></div>
     </div>
     <div class="tbl"><table class="atbl2">
       <thead><tr><th>情形</th><th>怎么认定</th><th>要披露什么、什么时候</th><th>状态</th></tr></thead>
       <tbody>
-        <tr><th>在美期间申请 NSFC 青年科学基金 A 类（海外可申请的单列赛道）</th><td>获批并签约后，DOE 一律视为 MFTRP；在 NSF / NIH 项目下，如果合同要求全职到岗、须以中方单位申请经费、与美方职责冲突，很可能被认定。2026 轮已结束（到岗截止 2026-11-30），2027 年指南尚未发布。</td><td>关键人员须在 Biosketch 和 C&amp;P 中披露“申请”；签约或获批后更新，到岗前退出关键角色；单位须在 5 个工作日内报告 DOE</td><td><span class="st mid">规则已核实，个案认定未定</span></td></tr>
+        <tr><th>在美期间申请 NSFC 青年科学基金 A 类（海外可申请的单列赛道）</th><td>获批并签约后，DOE 一律视为 MFTRP；在 NSF / NIH 项目下，如果合同要求全职到岗、须以中方单位申请经费、与美方职责冲突，很可能被认定。2026 轮已结束（到岗截止 2026-11-30），2027 年指南尚未发布。</td><td>关键人员须在 Biosketch 和 C&amp;P 中披露“申请”；签约或获批后更新，到岗前退出关键角色；单位须在 5 个工作日内报告 DOE</td><td>关键人员须在 Biosketch 和 C&amp;P 中披露“申请”，并书面告知本校研究安全办公室；最迟在签署工作合同或意向协议（成为协议一方）之前退出关键角色；签约或获批后更新 C&amp;P，单位须在 5 个工作日内报告 DOE</td></tr>
         <tr><th>海外优青（NSFC 优秀青年科学基金项目（海外））</th><td>NSFC 是中国政府资助机构；获资助须辞去海外工作、全职回国至少 3 年。2026 年申报已于 6-15 截止。</td><td>同上</td><td><span class="st mid">规则已核实，个案认定未定</span></td></tr>
-        <tr><th>国家海外高层次人才引进计划青年项目（QM / 启明）</th><td>没有公开的官方指南。据路透社 2023 年报道，它是“千人计划”的主要继承项目，后者列在国防部 1286 清单上。入选或签约后极可能被认定为参加 MFTRP。</td><td>申请时就向本校研究安全办公室申报；入选或签约后不得继续担任关键人员</td><td><span class="st mid">承继关系为二手报道</span></td></tr>
-        <tr><th>还在美国时与中国高校签 offer（含启动经费、安家费）</th><td>逐案判断。到岗日在离开美方岗位之后的普通雇佣合同，NSF / NIH 没有公开表态；DOE 倾向一律视为 MFTRP。违约金、退还安家费等难以解约的条款会加重风险。</td><td>外国任职列入 Biosketch，本单位以外的启动经费列入 C&amp;P；NIH 要求提交外国任职合同副本。已签但尚未开始的职位是否必须列入，没有找到明文</td><td><span class="st no">未核实</span></td></tr>
+        <tr><th>国家海外高层次人才引进计划青年项目（QM / 启明）</th><td>没有公开的官方指南。据路透社 2023 年报道，它是“千人计划”的主要继承项目，后者列在国防部 1286 清单上。入选或签约后极可能被认定为参加 MFTRP。</td><td>申请时就向本校研究安全办公室申报；入选或签约后不得继续担任关键人员</td><td>申请时在 Biosketch 和 C&amp;P 中披露“申请”，并向本校研究安全办公室申报；最迟在签约前退出关键人员角色</td></tr>
+        <tr><th>还在美国时与中国高校签 offer（含启动经费、安家费）</th><td>逐案判断。到岗日在离开美方岗位之后的普通雇佣合同，NSF / NIH 没有公开表态；DOE 倾向一律视为 MFTRP。违约金、退还安家费等难以解约的条款会加重风险。</td><td>外国任职列入 Biosketch，本单位以外的启动经费列入 C&amp;P；NIH 要求提交外国任职合同副本。已签但尚未开始的职位是否必须列入，没有找到明文</td><td>签约前书面告知本校研究安全办公室，最迟在签约前退出关键人员角色或离职；外国任职列入 Biosketch，本单位以外的启动经费列入 C&amp;P；NIH 要求提交外国任职合同副本</td></tr>
         <tr><th>在中国高校兼职或 adjunct 聘任</th><td>带报酬、头衔或经费，并伴有投入冲突、须招人、须申请中方经费等特征的，构成 MFTRP；DOE 一律视为 MFTRP。</td><td>Biosketch 须列出本单位以外的所有任职，无论有无报酬；接受前向本校申报（COC 审批）</td><td><span class="st mid">披露规则已核实</span></td></tr>
       </tbody>
     </table></div>
-    <p class="anote">比较稳妥的顺序（多所美国高校研究安全办公室的建议）：拿到中方书面条款 → 交本校研究安全或 COI 办公室审 → 退出联邦项目的关键人员角色或离职 → 再签约、到岗、申报人才项目。来源：<a href="https://www.law.cornell.edu/uscode/text/42/19237" target="_blank" rel="noopener">42 U.S.C. 19237</a> · <a href="https://www.nsf.gov/notices/important/important-notice-no-149-updates-nsf-research-security/in149" target="_blank" rel="noopener">NSF Important Notice 149</a> · <a href="https://www.energy.gov/ia/prohibition-malign-foreign-talent-recruitment-program-participation" target="_blank" rel="noopener">DOE</a> · <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/02/OSTP-Foreign-Talent-Recruitment-Program-Guidelines.pdf" target="_blank" rel="noopener">OSTP 2024 指南</a>。NIH 官网（grants.nih.gov）2026-11-15 仍无法访问，NIH 部分依据高校转述。</p>
+    <p class="anote">比较稳妥的顺序（多所美国高校研究安全办公室的建议）：拿到中方书面条款 → 交本校研究安全或 COI 办公室审 → 在签任何工作合同或意向协议之前，退出联邦项目的关键人员角色或离职 → 再签约、到岗。来源：<a href="https://www.law.cornell.edu/uscode/text/42/19237" target="_blank" rel="noopener">42 U.S.C. 19237</a> · <a href="https://www.nsf.gov/notices/important/important-notice-no-149-updates-nsf-research-security/in149" target="_blank" rel="noopener">NSF Important Notice 149</a> · <a href="https://www.energy.gov/ia/prohibition-malign-foreign-talent-recruitment-program-participation" target="_blank" rel="noopener">DOE</a> · <a href="https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/02/OSTP-Foreign-Talent-Recruitment-Program-Guidelines.pdf" target="_blank" rel="noopener">OSTP 2024 指南</a>。NIH 官网（grants.nih.gov）2026-11-15 仍无法访问，NIH 部分依据高校转述。</p>
   </section>
 
   <section class="tool" aria-labelledby="h-oc" id="offer-calc">
@@ -1618,15 +1619,11 @@ const G = [
   ["AC21", "21 世纪美国竞争力法", "允许 H-1B 超过 6 年延期，以及 I-485 待审满 180 天后换同类工作。"],
   ["H-4 EAD", "H-4 配偶工作许可", "H-1B 主申请人 I-140 获批后，配偶可申请。"],
   ["Dual-status", "双重身份纳税年", "同一年里既是非居民又是居民（如离境当年）的报税方式。"],
-  ["FICA", "社保和医保税", "非居民的 F-1/OPT 收入可免；读博超过 5 个日历年后通常不再免。"],
   ["学历学位认证", "CSCSE Credential Evaluation", "中国留学服务中心对国外学位的官方认证，考公、落户、评职称都要用。"],
   ["择业期", "应届身份", "国家规定的两年择业期内未就业的毕业生，可按应届生报考，具体以招录公告为准。"],
   ["档案", "人事档案", "影响职称评定、政审和社保视同缴费年限，存放在单位或人才服务中心。"],
   ["编制", "事业 / 行政编制", "机关事业单位的人员编制，意味着更稳定的岗位和保障。"],
-  ["预聘-长聘", "中国版 tenure-track", "预聘期考核通过后转长聘，未通过即“非升即走”。"],
-  ["师资博士后", "Faculty-track Postdoc", "高校聘用的博士后岗位，出站后可能直接留校任教。"],
   ["双一流 / 985 / 211", "重点高校标签", "国家重点建设高校的标签，招聘中还常看“第一学历”。"],
-  ["海外优青", "优秀青年科学基金项目（海外）", "面向博士后在海外全职工作满 36 个月、约 40 岁以下的青年人才。"],
   ["落户", "取得常住户口", "影响子女入学、购房、社保和部分考试资格。"],
   ["北京市工作居住证", "Beijing Work Residence Permit", "未落户人员享受部分市民待遇的证件。"],
   ["K 字签证", "K Visa", "中国 2025-10-01 起为外籍青年 STEM 人才设立的签证，无需国内单位邀请。"],
@@ -1661,13 +1658,13 @@ const G = [
   ["9 个月合同 / 暑期工资", "Academic-year pay / summer salary", "美国教职多按学年发薪，暑期 2–3 个月的工资要从科研经费里出，并不保证。"],
   ["启动经费", "Startup package", "新教职的科研启动资金，用于设备、学生、实验室改造等；实验学科远高于理论学科。"],
   ["软钱岗位", "Soft-money position", "医学院常见：工资相当部分要靠自己申请的经费支付。"],
-  ["PERM 特殊程序", "Special handling (20 CFR 656.18)", "大学教职的劳工证可用招聘时的竞争性遴选结果，须在选定后 18 个月内递交。"],
+  ["PERM 特殊程序", "Special handling (20 CFR 656.18)", "含教学职责的大学教师岗位，劳工证可用招聘时的竞争性遴选结果，须在选定后 18 个月内递交；纯研究岗不适用。"],
   ["NRSA", "Kirschstein-NRSA stipend", "NIH 博士后津贴标准；FY2026 第 0 级 63,480 美元/年，许多学校以此为下限。"],
   ["ESI", "Early Stage Investigator", "NIH 早期研究者：取得博士学位 10 年内、尚未拿过大型 NIH 项目的独立研究者，评审时有单独资助线。"],
   ["NSF CAREER", "Faculty Early Career Development", "NSF 面向未获 tenure 的助理教授的五年期项目。"],
   ["MFTRP", "Malign Foreign Talent Recruitment Program", "恶意外国人才招募计划；参加者不得担任联邦资助项目的高级 / 关键人员。"],
   ["403(b) / ORP", "Retirement plans", "美国非营利机构的退休账户 / 州立大学的可选退休计划；59½ 岁前取出一般加征 10%。"],
-  ["FICA", "Social Security + Medicare", "工资税 7.65%：社保税 6.2%（2026 年工资上限 184,500 美元）+ Medicare 1.45%。F/J 非居民免缴。"],
+  ["FICA", "Social Security + Medicare", "工资税 7.65%：社保税 6.2%（2026 年工资上限 184,500 美元）+ Medicare 1.45%。F/J 非居民免缴；F-1 在美满 5 个日历年后通常成为税务居民，不再免。"],
   ["协定第 19 条", "US–China Tax Treaty Art. 19", "来美教学或研究的中国居民，相关收入累计 3 年内免美国联邦所得税；读博多年后是否适用要个案判断。"],
   ["预聘-长聘制", "Tenure-track (China)", "中国高校的“非升即走”体系，常见 3+3 共 6 年，通过后长聘。"],
   ["事业编制", "Public-institution establishment", "事业单位正式人员身份，参加机关事业单位养老保险和职业年金。"],
@@ -1677,7 +1674,6 @@ const G = [
   ["专项附加扣除", "Special additional deductions", "个税扣除项：子女教育、3 岁以下婴幼儿照护每孩 2,000 元/月，住房租金、房贷利息、赡养老人等。"],
   ["安家费", "Relocation / settling-in allowance", "学校或城市给新引进人员的一次性补贴，常分期发放并附服务期；一般要计个税。"],
   ["海外优青", "NSFC Excellent Young Scientists (Overseas)", "要求在海外正式教研岗位连续工作满 36 个月，资助 100–300 万元，获批后须全职回国。"],
-  ["双一流", "Double First-Class", "教育部“世界一流大学和一流学科”建设计划，第二轮名单 2022 年公布。"],
   ["RGC / ECS", "Hong Kong Research Grants Council", "香港研资局；早期职业计划（ECS）只限任职头 3 年申请。"],
   ["MPF / 约满酬金", "Mandatory Provident Fund / gratuity", "香港强积金和合约期满酬金；港校常把两者合计定为基本薪金的 15%。"]
 ];
@@ -1732,7 +1728,7 @@ const OC = {
     WA: ["华盛顿州（另扣 WA Cares 0.58%）", "f", 0, 0, 0, 0.58],
     TX: ["德州", "f", 0, 0, 0, 0],
     FL: ["佛州", "f", 0, 0, 0, 0],
-    PA: ["宾州（非费城）", "f", 3.07, 0, 0, 0],
+    PA: ["宾州（非费城，地方所得税按约 1%；匹兹堡 3%）", "f", 3.07, 0, 1.0, 0],
     PHL: ["费城居民", "f", 3.07, 0, 3.735, 0],
     MD: ["马里兰（含县税约 3%）", "i", 4.30, 4.54, 4.77, 3.0, 0],
     GA: ["佐治亚（亚特兰大）", "f", 5.19, 12000, 0, 0],
@@ -1755,7 +1751,7 @@ const OC = {
   // creprice asking price, yuan per m2 (about 2026-10)
   cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["自填", 0]],
   presets: {
-    p1: {note: "美国：CRA Taulbee 2025 计算机类（全部美国单位，含 CS、CE 和信息学院）新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
+    p1: {note: "美国：CRA Taulbee 2025 计算机类（全部美国单位，含 CS、CE 和信息学院）新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价；退休缴款 5% / 10% 只是假设，北卡公立大学的实际比例未核实。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
       ub: 128000, uterm: "9", usum: 0, ust: "NC", ustat: "res", ufile: "single", uret: 5, uer: 10, uhp: 150, utreaty: false, uhome: 444000, urate: 7.11, uptax: 1.0,
       cb: 230000, cbase: 100, ccapcity: "四川（成都）", ccap: 23493, chf: 12, cnj: false, cset: 240000, cyrs: 6, ctaxset: true, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
       kids: 0, down: 20},
@@ -1763,7 +1759,7 @@ const OC = {
       ub: 63480, uterm: "12", usum: 0, ust: "MA", ustat: "nr", ufile: "single", uret: 0, uer: 0, uhp: 100, utreaty: true, uhome: 737000, urate: 7.11, uptax: 1.1,
       cb: 300000, cbase: 100, ccapcity: "浙江（杭州）", ccap: 25611, chf: 12, cnj: false, cset: 0, cyrs: 1, ctaxset: true, cded: "18000", cold: false, ccity: "杭州", cppm: "", carea: 90, crate: 3.5,
       kids: 0, down: 20},
-    p3: {note: "美国：AAUP 2025–26 公立博士院校助理教授平均 100,452 美元；俄亥俄州立大学教职工参加 STRS/ARP，不缴社保税，个人缴 14%；雇主 14% 中有一部分（OSU 为 2.91%）划给州养老金，这里按 11.09% 记入个人账户。已婚、1 个孩子。中国：西安交通大学青年拔尖人才计划“特聘研究员”基本薪酬 30 万元/年，一次性安家费 35 万元（公告写明税后），按编制计算；西安没有可核实的房价，请自填。",
+    p3: {note: "美国：AAUP 2025–26 公立博士院校助理教授平均 100,452 美元；俄亥俄州立大学教职工参加 STRS/ARP，不缴社保税，个人缴 14%；雇主 14% 中有一部分（OSU 为 2.91%）划给州养老金，这里按 11.09% 记入个人账户。已婚、1 个孩子。中国：西安交通大学青年拔尖人才计划“特聘研究员”基本薪酬 30 万元/年，安家费 35 万元（公告写明税后；院系转载、页面无日期，未核实），这里粗略按 5 年平摊；公告没有写是否入编，这里假设为事业编制；西安没有可核实的房价，请自填。",
       ub: 100452, uterm: "9", usum: 0, ust: "CMH", ustat: "noss", ufile: "mfj", uret: 14, uer: 11.09, uhp: 350, utreaty: false, uhome: 316000, urate: 7.11, uptax: 1.6,
       cb: 300000, cbase: 100, ccapcity: "西安", ccap: 23685, chf: 12, cnj: true, cset: 350000, cyrs: 5, ctaxset: false, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
       kids: 1, down: 20}
@@ -1772,7 +1768,7 @@ const OC = {
 const ocEl = id => $("#oc-" + id);
 $("#oc-ust").innerHTML = Object.entries(OC.states).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join("");
 $("#oc-ccapcity").innerHTML = OC.caps.map(([c, v]) => `<option value="${c}">${c}${v ? " · " + v.toLocaleString("en-US") : ""}</option>`).join("");
-$("#oc-ccapcity").addEventListener("change", e => { const c = OC.caps.find(x => x[0] === e.target.value); if (c && c[1]) ocEl("ccap").value = c[1]; });
+$("#oc-ccapcity").addEventListener("input", e => { const c = OC.caps.find(x => x[0] === e.target.value); if (c && c[1]) ocEl("ccap").value = c[1]; });
 $("#oc-ccity").innerHTML = OC.cities.map(([c, p]) => `<option value="${c}">${c}${p ? " · " + p.toLocaleString("en-US") : ""}</option>`).join("");
 function ocProg(x, br) {
   let t = 0;
@@ -1782,16 +1778,17 @@ function ocProg(x, br) {
   }
   return t;
 }
-function ocStateTax(st, w) {
+function ocStateTax(st, w, g = w) {
+  // w = wages after pre-tax retirement (state base); g = gross wages (local wage taxes, and PA, which does not exclude 403(b) deferrals)
   const s = OC.states[st];
-  if (s[1] === "f") return Math.max(0, w - s[3]) * s[2] / 100 + w * s[4] / 100;
-  if (s[1] === "o") return (w - 2400 > s[3] ? 332 + (w - 2400 - s[3]) * s[2] / 100 : 0) + w * s[4] / 100;  // Ohio 2026: $332 + 2.75% over $26,050 (ORC 5747.02)
+  if (s[1] === "f") return Math.max(0, (st === "PA" || st === "PHL" ? g : w) - s[3]) * s[2] / 100 + g * s[4] / 100;
+  if (s[1] === "o") { const ex = w <= 40000 ? 2400 : w <= 80000 ? 2150 : 1900; return (w - ex > s[3] ? 332 + (w - ex - s[3]) * s[2] / 100 : 0) + g * s[4] / 100; }  // Ohio 2026: $332 + 2.75% over $26,050 (ORC 5747.02)
   const pts = [[10000, 0], [80000, s[2]], [120000, s[3]], [160000, s[4]]];
   let r = s[4];
   for (let i = 1; i < pts.length; i++) {
     if (w <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; r = y0 + (y1 - y0) * Math.max(0, w - x0) / (x1 - x0); break; }
   }
-  return w * r / 100 + w * s[5] / 100;
+  return w * r / 100 + (st === "MD" ? w : g) * s[5] / 100;
 }
 function ocPmt(principal, ratePct, years) {
   const r = ratePct / 100 / 12, n = years * 12;
@@ -1821,7 +1818,7 @@ function ocUS() {
     fed -= ctc;
   }
   const st = ocEl("ust").value, sw = gross - ret;
-  const state = ocStateTax(st, sw);
+  const state = ocStateTax(st, sw, gross);
   const extra = gross * OC.states[st][OC.states[st].length - 1] / 100;
   const health = num("uhp") * 12;
   const cash = gross - ret - fica - fed - state - extra - health;
@@ -1863,7 +1860,7 @@ function ocRun() {
     ["强制储蓄（个人 + 单位）", `$${f0(u.saved)}<small>其中雇主 $${f0(u.er)}</small>`, `¥${f0(c.saved)}<small>公积金双方 + 年金</small>`],
     ["中国到手折美元", "—", `$${f0(c.cash / fx)}<small>市场汇率 ${fx}</small>`],
     ["中国到手按购买力折算", "—", `${f0(c.cash / ppp)} 国际元<small>PPP ${ppp}，全国平均物价，不适用一线城市房价</small>`],
-    ["房价 / 首付", u.price ? `$${f0(u.price)} / $${f0(u.downAmt)}` : "—", c.price ? `¥${f0(c.price)} / ¥${f0(c.downAmt)}<small>${f0(c.ppm)} 元/㎡ × ${num("carea")} ㎡</small>` : "请选城市或自填单价"],
+    ["房价 / 首付", u.price ? `$${f0(u.price)} / $${f0(u.downAmt)}` : "—", c.price ? `¥${f0(c.price)} / ¥${f0(c.downAmt)}<small>${f0(c.ppm)} 元/㎡ × ${num("carea")} ㎡</small>` : "请选城市或自填单价，并填面积"],
     ["月供占税后月收入", u.price ? `${pct(u.pmt, u.cash / 12)}<small>月供 $${f0(u.pmt)}（含房产税）</small>` : "—", c.price ? `${pct(c.pmt, c.cash / 12)}<small>月供 ¥${f0(c.pmt)}</small>` : "—"],
     ["首付 = 几年税后现金", u.price ? (u.downAmt / u.cash).toFixed(1) + " 年" : "—", c.price ? (c.downAmt / c.cash).toFixed(1) + " 年" : "—"]
   ];
@@ -1908,6 +1905,7 @@ function ocSync() {
 $$("[data-oc]").forEach(b => b.addEventListener("click", () => ocLoad(b.dataset.oc)));
 $$("#offer-calc input, #offer-calc select").forEach(el => el.addEventListener("input", () => {
   $$("[data-oc]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  $("#oc-note").textContent = "已改成自填数字；上面示例的来源说明不再适用。";
   ocSync();
   ocRun();
 }));
@@ -1922,7 +1920,7 @@ function showA(k, scroll) {
   store.set("phd-map-a", k);
   if (scroll) $(`#a-${k}`).scrollIntoView({block: "start"});
 }
-aTabs.forEach(b => b.addEventListener("click", () => showA(b.dataset.a)));
+aTabs.forEach(b => b.addEventListener("click", () => { showA(b.dataset.a, false); const p = $(`#a-${b.dataset.a}`); if (p.getBoundingClientRect().top < 0) p.scrollIntoView({block: "start"}); }));
 document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest("a[data-a]");
   if (!a) return;

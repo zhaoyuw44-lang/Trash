@@ -954,7 +954,7 @@ def fig17():
 
     # US 考核
     y = ys[0] + 26
-    bar(0, 6, y, "试用期（probationary）：AAUP 规定最长 7 年", "k-us")
+    bar(0, 6, y, "试用期（probationary）：AAUP 原则最长 7 年", "k-us")
     dm(3, y, "第 3 年 中期评估", "us", dy=30)
     dm(6, y, "第 6 年 tenure 评审", "us", dy=30)
     bar(6, 7, y, "", "k-cn-wash", dash=True)
@@ -965,13 +965,13 @@ def fig17():
     dm(0, y, "", "us")
     f.add(text(Xp(0) + 10, y - 5, "高校 H-1B 免抽签（cap-exempt），全年可递", "t-xs"))
     bar(0, 1.5, y + 22, "", "k-us")
-    f.add(text(Xp(1.5) + 8, y + 32, "PERM 特殊程序：须在“选定你”后 18 个月内递交（岗位须含教学）；EB-1B / NIW 可并行", "t-xs"))
+    f.add(text(Xp(1.5) + 8, y + 32, "PERM 特殊程序：须在“选定你”（通常早于入职数月）后 18 个月内递交，岗位须含教学；EB-1B / NIW 可并行", "t-xs"))
     f.add(text(Xp(5.0), y - 5, "中国大陆出生排期（2026-11）：EB-1 约落后 3.3 年，EB-2 约 5.1 年", "t-xs t-us", "middle"))
     # US 经费
     y = ys[2] + 26
     bar(0, 6, y, "NSF CAREER：未获 tenure 的助理教授可申请", "k-us")
     bar(0, 8, y + 22, "", "k-us", dash=True)
-    f.add(text(Xp(0) + 4, y + 46, "NIH 早期研究者（ESI）：取得博士学位后 10 年内（博士后年数也算在内）", "t-xs"))
+    f.add(text(Xp(0) + 4, y + 46, "NIH 早期研究者（ESI）：取得博士学位后 10 年内；读博后做博士后的年数要扣掉，虚线长度因人而异", "t-xs"))
     # CN 考核
     y = ys[3] + 26
     bar(0, 3, y, "首个聘期（常见 3 年）", "k-cn")
@@ -1033,7 +1033,7 @@ def fig18():
         ys.append(y)
         y += rowh
     bottom = y + 8
-    f.add(text(16, 26, "教职为学年（9 个月）薪资，不含暑期工资；博士后为 12 个月。各调查口径不同（平均 / 中位数，新聘 / 在职），只能看量级。", "t-s"))
+    f.add(text(16, 26, "AAUP 为学年（9–10 个月）口径，CRA 为 9 个月，AEA、AACSB、CUPA-HR 未注明月数；均不含暑期工资；博士后为年薪。口径不同，只能看量级。", "t-s"))
     for v in range(50, 241, 10):
         f.add(f.ln(f"M{Xp(v * 1000):.1f},{top - 10} V{bottom}", cls="l-grid" if v % 50 else "l-axis"))
         if v % 20 == 0:
@@ -1045,7 +1045,7 @@ def fig18():
     for i, (g, lab, v, lo, hi, note) in enumerate(US_PAY):
         cy = ys[i] + rowh / 2
         if g != prev:
-            f.add(text(16, ys[i] - 8, {"教职": "长聘轨教职（学年薪资）", "非长聘": "非长聘岗位", "博士后": "博士后（12 个月）"}[g], "t-xs t-b t-us"))
+            f.add(text(16, ys[i] - 8, {"教职": "助理教授（AAUP 含非长聘；学年薪资）", "非长聘": "非长聘岗位", "博士后": "博士后（年薪）"}[g], "t-xs t-b t-us"))
             prev = g
         if i % 2 == 0:
             f.add(rect(8, cy - rowh / 2, 1064, rowh, "k-zebra", 0))
@@ -1071,7 +1071,8 @@ US_METROS = [
     ("波士顿（哈佛、MIT）", 737, 4.8, 108.3, ""),
     ("纽约市（哥大、NYU）", 717, 8.5, 112.6, ""),
     ("西雅图（UW）", 715, 0.0, 111.1, ""),
-    ("丹佛 / 博尔德", 593, 3.8, 105.8, ""),
+    ("丹佛（丹佛大学、矿业学院）", 593, 3.8, 105.8, ""),
+    ("博尔德（CU Boulder）", 730, 3.8, 105.2, ""),
     ("华盛顿特区", 584, 6.1, 108.9, ""),
     ("盐湖城（犹他大学）", 548, 4.5, 100.9, ""),
     ("奥斯汀（UT Austin）", 465, 0.0, 98.1, "TX"),
@@ -1111,7 +1112,7 @@ def fig19():
     top = 74
     H = top + rowh * len(rows) + 70
     f = Fig("19-us-academic-metros", 1080, H,
-            "美国 38 个学术都市圈：房价中位数、年薪 12 万美元时的州加地方所得税、地区价格平价（RPP）")
+            "美国 39 个学术都市圈：房价中位数、年薪 12 万美元时的州加地方所得税、地区价格平价（RPP）")
     x0, k = 300, 0.34  # px per $1k
     f.add(text(16, 26, "房价：Zillow 都市圈中位成交价（2026-08）；税率：单身、仅工资、年薪 12 万美元时州税 + 市税的粗估有效税率；", "t-s"))
     f.add(text(16, 44, "RPP：BEA 2024 地区价格平价，全美 = 100。色块标出对中国公民有特别州法的州（佛州、德州、印第安纳）。", "t-s"))
@@ -1142,7 +1143,7 @@ def fig19():
             px = x0 + p * k + 48
             f.add(rect(px, cy - 8, w, 16, "k-reform", 8), text(px + 6, cy + 4, lab, "t-xs t-w"))
     yb = top + rowh * len(rows) + 38
-    f.add(text(16, yb, "深色 = 70 万美元以上，浅色 = 38 万–70 万，灰色 = 38 万以下。普渡、德州农工、耶鲁等 10 个新增大学城的州 + 市税为本页按 2026 年税率粗算（含县税、地方挣得所得税、学区附加税）。", "t-xs"))
+    f.add(text(16, yb, "实心条 = 70 万美元以上，蓝框条 = 38 万–70 万，灰框条 = 38 万以下。普渡、德州农工、耶鲁等 10 个新增大学城的州 + 市税为本页按 2026 年税率粗算（含县税、地方挣得所得税、学区附加税）。", "t-xs"))
     f.add(text(16, yb + 18, "税率不含联邦税和 FICA；纽约市按居民计；巴尔的摩含马里兰县税约 3%；圣路易斯为郊区居民（市内居民另加 1%）。", "t-xs"))
     return f
 
@@ -1192,7 +1193,7 @@ def fig20():
         f.add(f.ln(f"M{ix(100):.1f},{cy} H{ix(v):.1f}", cls="l" if v < 100 else "l-w"))
         f.add(f'<circle cx="{ix(v):.1f}" cy="{cy}" r="5" class="{"m-ink2" if v < 100 else "m-ch-w"}"><title>{c}：{v}</title></circle>')
         f.add(text(ix(v) - 9 if v < 100 else ix(v) + 9, cy + 4, f"{v - 100:+.1f}%", "t-xs t-m", "end" if v < 100 else None))
-    f.add(text(rx0, top2 + rh * len(CN_INDEX) + 34, "21 城中只有上海同比上涨；中西部城市普遍下跌 4%–6%。", "t-xs"))
+    f.add(text(rx0, top2 + rh * len(CN_INDEX) + 34, "只有上海同比上涨；成都、长沙、武汉、天津、西安跌 5% 以上，重庆、兰州、合肥跌 3%–4%。", "t-xs"))
     return f
 
 

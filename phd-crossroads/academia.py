@@ -51,6 +51,10 @@ def status_badge(s):
     for k, cls in ST_ZH.items():
         if s.startswith(k) or s.lower().startswith(k):
             return f'<span class="st {cls}">{esc(s)}</span>'
+    hits = [cls for k, cls in ST_ZH.items() if k in s]
+    if hits:
+        cls = "ok" if set(hits) == {"ok"} else ("no" if "ok" not in hits and "no" in hits else "mid")
+        return f'<span class="st {cls}">{esc(s)}</span>'
     return cell(s)
 
 
