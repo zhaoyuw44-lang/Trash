@@ -156,6 +156,12 @@ table.small{min-width:560px}
 .trgrid dd{margin:0}
 .safety{background:var(--crit-soft);border-radius:10px;padding:16px 18px}
 .safety ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px}
+.prepall{background:var(--surface);border:1px solid var(--rule);border-radius:9px;padding:14px 18px;margin-bottom:12px}
+.prepall ol{margin:8px 0 0;padding-left:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px 28px;font-size:14px}
+.prepall ol li::marker{font:600 12px var(--f-mono);color:var(--accent)}
+.prepall .own{margin:12px 0 0;font-size:14px;background:var(--warn-soft);border-radius:6px;padding:8px 12px}
+.prepgrid h3 small{font:500 12px var(--f-mono);color:var(--muted);margin-left:8px}
+.prepgrid article.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 footer.foot{padding-block:28px 40px;color:var(--muted);font-size:12.5px}
 footer.foot p{margin:0 0 4px;max-width:100ch}
 
@@ -327,6 +333,58 @@ footer.foot p{margin:0 0 4px;max-width:100ch}
     </div>
   </section>
 
+  <section class="sheet" id="prep">
+    <header>
+      <h2>制样</h2>
+      <p>以 5 mm 管、约 0.6 mL 溶液、室温探头为准的常规用量。信噪比与浓度成正比、与 √扫描次数成正比，所以浓度减半时，要达到同样的信噪比需要约 4 倍时间。当前所选的核以蓝框标出。</p>
+    </header>
+    <div class="prepall">
+      <h3>所有核通用</h3>
+      <ol>
+        <li>先在小瓶里溶解：称样 → 加约 0.6 mL 氘代溶剂 → 完全溶解后再转移到 NMR 管。不要在管里直接溶固体。</li>
+        <li>有不溶物或浑浊：用塞了一小团玻璃棉的巴斯德吸管过滤进管。颗粒会让匀场变差、峰变宽。</li>
+        <li>液面高度约 4–5 cm（0.55–0.65 mL）。太少难匀场，太多浪费样品。</li>
+        <li>管子干净、干燥、无划痕，额定场强不低于谱仪场强。标签只贴在管口附近。</li>
+        <li>溶剂既要完全溶解样品，残留峰又不能挡住你关心的区域（见下方残留峰表）。</li>
+        <li>怕水的样品（锂盐、异氰酸酯等）：在手套箱或干燥条件下制样，用分子筛干燥过的溶剂，管帽缠封口膜或用 J. Young 管。</li>
+        <li>定量 (qNMR)：用分析天平分别称样品和内标并记录质量；内标峰不能与样品峰重叠。</li>
+        <li>高粘度样品（聚合物、聚合物电解质）峰会变宽：适当稀释，或在较高温度下测（变温先问管理员）。</li>
+      </ol>
+      <p class="own"><b>NCO 封端预聚物（HDI 类）：</b>NCO 会和水、醇反应。用干燥的 CDCl₃，不要用 CD₃OD 或 D₂O；制好尽快测。放久了在 ¹H 谱上会看到 CH₂NCO（≈ 3.29 ppm）变少、脲类峰出现。</p>
+    </div>
+    <div class="trgrid prepgrid">
+      <article data-prep="H1"><h3>¹H<small>2–10 mg</small></h3><dl>
+        <dt>用量</dt><dd>小分子 2–10 mg；聚合物 5–20 mg。</dd>
+        <dt>溶剂</dt><dd>常规氘代溶剂。CDCl₃ 放久会偏酸，对酸敏感的样品用新开封的，或先过一小段碱性氧化铝。</dd>
+        <dt>参考</dt><dd>残留溶剂峰；需要时加 TMS（不少 CDCl₃ 已自带）。</dd>
+        <dt>注意</dt><dd>太浓会使峰变宽，并导致接收器溢出 (ADC overflow)。</dd></dl></article>
+      <article data-prep="C13"><h3>¹³C<small>20–80 mg</small></h3><dl>
+        <dt>用量</dt><dd>小分子 20–50 mg；聚合物 30–80 mg，在溶解度和粘度允许的范围内越浓越好。</dd>
+        <dt>溶剂</dt><dd>同 ¹H，可以用同一管：先测 ¹H 确认样品没问题再测 ¹³C。</dd>
+        <dt>参考</dt><dd>溶剂峰，如 CDCl₃ 三重峰中间线 77.16 ppm。</dd>
+        <dt>定量</dt><dd>加弛豫试剂 Cr(acac)₃（约 0.02–0.05 M）缩短 T₁，配合 inverse-gated 去耦。它会让 ¹H 谱变宽，所以先测完 ¹H 再加。</dd></dl></article>
+      <article data-prep="F19"><h3>¹⁹F<small>1–10 mg</small></h3><dl>
+        <dt>用量</dt><dd>灵敏度约为 ¹H 的 83%，1–10 mg 足够；也可以和 ¹H 共用同一管。</dd>
+        <dt>溶剂与管</dt><dd>普通玻璃管即可。含 HF 或会水解出 HF 的样品（如 LiPF₆）会腐蚀玻璃：用干燥溶剂、尽快测，必要时用 FEP / PTFE 内衬。</dd>
+        <dt>内标</dt><dd>定量时称量加入，如 3,5-双(三氟甲基)苯甲酸（qNMR 常用标准物）或 PhCF₃（易挥发，称完马上盖好）。</dd>
+        <dt>注意</dt><dd>先测一张只有溶剂的空白谱，认出探头含氟部件产生的背景峰。</dd></dl></article>
+      <article data-prep="Li7"><h3>⁷Li<small>mM – 1 M</small></h3><dl>
+        <dt>用量</dt><dd>灵敏度约为 ¹H 的 27%，几 mM 到 1 M 都能直接测；电解液原液可以直接装管。</dd>
+        <dt>溶剂与管</dt><dd>锂盐易吸水：在手套箱里制样，管口封好或用 J. Young 管。常用 DMSO-d₆、CD₃CN、丙酮-d₆、D₂O。</dd>
+        <dt>参考</dt><dd>同轴内管装 LiCl / D₂O（如 1 M），同时作 0 ppm 外标和锁场信号。不要把参考物直接加进样品。</dd>
+        <dt>注意</dt><dd>想测不加氘代溶剂的电解液原样，用同轴内管最干净。聚合物电解质很粘，峰会变宽。</dd></dl></article>
+      <article data-prep="P31"><h3>³¹P<small>5–20 mg</small></h3><dl>
+        <dt>用量</dt><dd>5–20 mg（灵敏度约为 ¹H 的 6.6%）。</dd>
+        <dt>参考</dt><dd>85% H₃PO₄ 装在同轴内管里或单独测，不要加进样品。</dd>
+        <dt>内标</dt><dd>定量时称量加入峰不重叠的含磷化合物，如磷酸三苯酯（有机溶剂）。</dd>
+        <dt>注意</dt><dd>LiPF₆ 遇水会水解，谱中出现 PO₂F₂⁻ 等新峰；用干燥溶剂。</dd></dl></article>
+      <article><h3>¹¹B · ²⁹Si<small>背景峰</small></h3><dl>
+        <dt>管</dt><dd>硼硅玻璃管和探头本身都会给出宽背景峰：用石英管或 PTFE / FEP 内衬，或测空白谱扣除。</dd>
+        <dt>²⁹Si</dt><dd>灵敏度低、T₁ 长：样品尽量浓，常加 Cr(acac)₃ 缩短 T₁。</dd>
+        <dt>参考</dt><dd>¹¹B：BF₃·OEt₂ 外标；²⁹Si：TMS。</dd></dl></article>
+    </div>
+  </section>
+
   <section class="sheet" id="nuclei">
     <header>
       <h2>核参数速查</h2>
@@ -433,7 +491,7 @@ function content(k,i){
       Li7:['tip','非氘代的 Li 电解液或聚合物：放一根同轴内管 (coaxial insert)，内装 D₂O + LiCl。它同时提供 ²H 锁场信号和 ⁷Li 的 0 ppm 外标，本例模拟谱就是这种装法。'],
       P31:['tip','³¹P 常用 85% H₃PO₄ 作 0 ppm 外标：装在同轴内管里，或另测一次参考样品。']}[k];
     return {title:'放入样品',en:'Eject / Insert',path:['按钮条','Eject','Insert'],
-      doList:['用深度规 (depth gauge) 把 spinner 调到正确位置。溶液高度约 4–5 cm（5 mm 管约 0.55–0.65 mL），无气泡、无颗粒。',
+      doList:['用深度规 (depth gauge) 把 spinner 调到正确位置。溶液高度约 4–5 cm（5 mm 管约 0.55–0.65 mL），无气泡、无颗粒。各核的用量和制样要点见下方<a href="#prep">「制样」</a>。',
         '用无尘纸擦净管外壁，管帽压紧。',
         '点 <b>Eject</b>：等气流把上一个样品托出后取走，把你的样品（带 spinner）轻放在气垫上。',
         '点 <b>Insert</b>，样品缓慢降入探头。等状态栏的 <i>Spin Regulating</i> 消失。'],
@@ -993,6 +1051,7 @@ const NUCROWS=[
 ];
 function renderNucTable(){
   const cur=NUC[S.nuc].tn;
+  document.querySelectorAll('[data-prep]').forEach(e=>e.classList.toggle('cur',e.dataset.prep===S.nuc));
   $('#nucTable').innerHTML=`<thead><tr><th>核</th><th>自旋 I</th><th>天然丰度</th><th>相对灵敏度<br>(¹³C = 1)</th><th>Ξ / %</th><th>频率 @ ${S.field} MHz</th><th>0 ppm 参考</th><th>常见范围 / ppm</th><th>要点</th></tr></thead><tbody>`+
     NUCROWS.map(r=>`<tr class="${r[1]===cur?'cur':''}"><td class="nuc">${r[0]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td><td class="num">${r[5].toFixed(6)}</td><td class="num">${(S.field*r[5]/100).toFixed(2)} MHz</td><td>${r[6]}</td><td class="num">${r[7]}</td><td>${r[8]}</td></tr>`).join('')+'</tbody>';
 }
