@@ -1064,10 +1064,10 @@ def fig18():
 
 US_METROS = [
     # name, zillow median sale price $k (2026-08), state+local effective tax at $120k single (%), RPP 2024, law flag
-    ("圣何塞（斯坦福）", 1482, 5.8, 110.4, ""),
-    ("旧金山-奥克兰（伯克利、UCSF）", 1163, 5.8, 115.6, ""),
-    ("洛杉矶（UCLA、USC、UCI）", 978, 5.8, 113.6, ""),
-    ("圣迭戈（UCSD）", 931, 5.8, 111.9, ""),
+    ("圣何塞（斯坦福）", 1482, 5.6, 110.4, ""),
+    ("旧金山-奥克兰（伯克利、UCSF）", 1163, 5.6, 115.6, ""),
+    ("洛杉矶（UCLA、USC、UCI）", 978, 5.6, 113.6, ""),
+    ("圣迭戈（UCSD）", 931, 5.6, 111.9, ""),
     ("波士顿（哈佛、MIT）", 737, 4.8, 108.3, ""),
     ("纽约市（哥大、NYU）", 717, 8.5, 112.6, ""),
     ("西雅图（UW）", 715, 0.0, 111.1, ""),
@@ -1100,7 +1100,7 @@ US_METROS = [
     ("伊萨卡（康奈尔）", 415, 5.0, 103.3, ""),
     ("州立学院（宾州州立）", 386, 5.3, 96.8, ""),
     ("纳什维尔（范德堡）", 468, 0.0, 96.3, ""),
-    ("萨克拉门托（UC Davis）", 576, 5.8, 106.7, ""),
+    ("萨克拉门托（UC Davis）", 576, 5.6, 106.7, ""),
     ("爱荷华城（爱荷华大学）", 310, 3.4, 91.5, ""),
     ("图森（亚利桑那大学）", 343, 2.3, 96.9, ""),
 ]
@@ -1197,8 +1197,108 @@ def fig20():
     return f
 
 
+WEST_GROUPS = [
+    # (group label, header note, [(name, asst avg $k or None, postdoc min $k or None, metro price $k or None, metro)])
+    ("旧金山湾区", "房价：圣何塞 148 万、旧金山-奥克兰 116 万 · 1BR 租金：旧金山市 4,430、圣何塞市 2,890 · 州税 5.6%", [
+        ("Stanford", 167.3, 79.056, 1482, "圣何塞"),
+        ("UC Berkeley", 144.6, 71.491, 1163, "旧金山-奥克兰"),
+        ("UC Santa Cruz", 134.8, 71.491, None, ""),
+        ("University of San Francisco（私立）", 120.9, None, 1163, "旧金山-奥克兰"),
+        ("San José State（CSU）", 105.0, None, 1482, "圣何塞"),
+        ("San Francisco State（CSU）", 102.9, None, 1163, "旧金山-奥克兰"),
+        ("Gladstone（研究所）", None, 70.304, None, ""),
+    ]),
+    ("洛杉矶与南加州", "房价：洛杉矶 98 万、圣迭戈 93 万 · 1BR 租金：洛杉矶市 2,300、圣迭戈市 2,210 · 州税 5.6%", [
+        ("UC San Diego", 142.3, 71.491, 931, "圣迭戈"),
+        ("UCLA", 139.8, 71.491, 978, "洛杉矶"),
+        ("UC Irvine", 133.8, 71.491, 978, "洛杉矶（含橙县）"),
+        ("UC Santa Barbara", 133.3, 71.491, None, ""),
+        ("USC（私立）", 126.1, 70.304, 978, "洛杉矶"),
+        ("UC Riverside", 122.0, 71.491, None, ""),
+        ("San Diego State（CSU）", 107.6, None, 931, "圣迭戈"),
+        ("Cal State LA（CSU）", 101.9, None, 978, "洛杉矶"),
+        ("Caltech（私立）", None, 75.268, 978, "洛杉矶"),
+    ]),
+    ("西雅图与太平洋西北", "房价：西雅图 72 万、波特兰 55 万 · 1BR 租金：西雅图都会区 1,900、波特兰 1,390 · 州税：华盛顿 0、俄勒冈约 7.6%", [
+        ("UW Bothell", 114.6, 68.46, 715, "西雅图"),
+        ("UW Seattle", 112.3, 68.46, 715, "西雅图"),
+        ("UW Tacoma", 98.7, 68.46, 715, "西雅图"),
+        ("University of Oregon（Eugene）", 97.3, 63.48, None, ""),
+        ("Reed College（私立）", 96.5, None, 550, "波特兰"),
+        ("Portland State", 89.6, None, 550, "波特兰"),
+        ("Washington State（Pullman）", 88.7, 62.232, None, ""),
+        ("OHSU（波特兰）", None, 69.275, 550, "波特兰"),
+    ]),
+    ("芝加哥", "房价：芝加哥都会区 36.5 万、香槟-厄巴纳 24 万 · 1BR 租金：芝加哥市约 2,300 · 州税约 4.8%", [
+        ("University of Chicago", 144.5, 63.48, 365, "芝加哥"),
+        ("Northwestern", 134.2, 63.48, 365, "芝加哥"),
+        ("UIC（公立，SURS）", 120.0, 63.48, 365, "芝加哥"),
+        ("UIUC（公立，SURS）", 114.6, 45.395, 243, "香槟-厄巴纳"),
+        ("Loyola Chicago（私立）", 107.3, None, 365, "芝加哥"),
+        ("DePaul（私立）", 103.6, None, 365, "芝加哥"),
+    ]),
+]
+
+
+def fig21():
+    rowh, gh = 22, 40
+    n = sum(len(g[2]) for g in WEST_GROUPS)
+    top = 116
+    H = top + n * rowh + len(WEST_GROUPS) * gh + 96
+    f = Fig("21-west-chicago-pay-vs-housing", 1080, H,
+            "西海岸与芝加哥高校：助理教授平均薪资、博士后最低年薪，以及都市圈房价中位数相当于几年助理教授薪资")
+    f.add(text(16, 26, "蓝点 = AAUP 2025–26 全校助理教授平均薪资（9–10 个月口径，不是起薪）；青点 = 博士后最低年薪（机构规定的下限）。", "t-s"))
+    f.add(text(16, 44, "右侧条 = 所在都市圈 Zillow 中位成交价（2026-08）÷ 助理教授平均薪资，即“房价是几年税前薪资”。只看量级。", "t-s"))
+    x0, k = 350, 2.6  # salary axis: px per $1k from 40k
+    X = lambda v: x0 + (v - 40) * k
+    rx0, rk = 742, 15  # ratio axis: px per 1x
+    axy0 = top - 14
+    f.add(text(X(40) - 12, axy0 - 24, "年薪（千美元）", "t-xs t-b"))
+    f.add(text(rx0 - 4, axy0 - 24, "房价 ÷ 助理教授平均薪资（倍）", "t-xs t-b"))
+    yend = top + n * rowh + len(WEST_GROUPS) * gh
+    for v in range(40, 181, 20):
+        f.add(f.ln(f"M{X(v):.1f},{axy0} V{yend}", cls="l-grid"))
+        f.add(text(X(v), axy0 - 4, f"{v}", "t-xs t-m", "middle"))
+    for r in range(0, 15, 2):
+        f.add(f.ln(f"M{rx0 + r * rk:.1f},{axy0} V{yend}", cls="l-grid" if r else "l-axis"))
+        f.add(text(rx0 + r * rk, axy0 - 3, f"{r}", "t-xs t-m", "middle"))
+    y = top
+    for gname, gnote, rows in WEST_GROUPS:
+        f.add(rect(8, y + 4, 1064, gh - 8, "k-band-us", 6))
+        f.add(text(18, y + gh / 2 + 5, gname, "t t-b t-us"))
+        f.add(text(18 + tw(gname, 13) * 1.05 + 14, y + gh / 2 + 4, gnote, "t-xs", maxw=1040 - tw(gname, 13) * 1.05 - 14))
+        y += gh
+        for i, (name, asst, pd, price, metro) in enumerate(rows):
+            cy = y + rowh / 2
+            if i % 2 == 0:
+                f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
+            f.add(text(18, cy + 4, name, "t-s", maxw=x0 - 40))
+            if asst and pd:
+                f.add(f.ln(f"M{X(pd):.1f},{cy} H{X(asst):.1f}", cls="l-grid"))
+            if pd:
+                f.add(f'<circle cx="{X(pd):.1f}" cy="{cy}" r="5" class="m-ch-x"><title>{esc(name)} 博士后最低：${pd * 1000:,.0f}</title></circle>')
+            if asst:
+                f.add(f'<circle cx="{X(asst):.1f}" cy="{cy}" r="6" class="m-us"><title>{esc(name)} 助理教授平均：${asst * 1000:,.0f}</title></circle>')
+                f.add(text(X(asst) + 10, cy + 4, f"{asst:.1f}k", "t-xs t-m"))
+            elif pd:
+                f.add(text(X(pd) + 9, cy + 4, f"博后 {pd:.1f}k（无 AAUP 数据）", "t-xs t-m"))
+            if asst and price:
+                ratio = price / asst
+                cls = "k-solid-us" if ratio >= 7 else ("k-us" if ratio >= 4 else "k-mute")
+                f.add(rect(rx0, cy - 6, ratio * rk, 12, cls, 3))
+                f.add(text(rx0 + ratio * rk + 6, cy + 4, f"{ratio:.1f} · {metro}", "t-xs t-m"))
+            elif asst:
+                f.add(text(rx0 + 6, cy + 4, "所在都市圈无同口径房价", "t-xs"))
+            y += rowh
+    f.add(text(16, yend + 24, "读法：同样是 R1 公立大学，UC Berkeley 助理教授平均薪资是 UIC 的 1.2 倍，但湾区房价是芝加哥的 3.2 倍，所以“房价 ÷ 薪资”是 8.0 对 3.0。", "t-xs"))
+    f.add(text(16, yend + 42, "AAUP 平均含各学科和非长聘，商学、经济、工程、医学通常更高；UC 的 off-scale 薪资普遍，公开薪资表只是下限。UCSF、Caltech、OHSU 不在 AAUP 附录中。", "t-xs"))
+    f.add(text(16, yend + 60, "来源：AAUP 2025–26 附录 I；UC Table 23、Stanford、Gladstone、Caltech UAW 2478、USC、UW、OHSU、UIUC 博士后薪资页；Zillow 都市圈中位成交价；Zumper 租金。", "t-xs"))
+    return f
+
+
+
 FIGS = [fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11, fig12,
-        fig13, fig14, fig15, fig16, fig17, fig18, fig19, fig20]
+        fig13, fig14, fig15, fig16, fig17, fig18, fig19, fig20, fig21]
 
 # standalone stylesheet (literal tokens; light + dark)
 TOK_LIGHT = dict(paper="#F3F5F4", paper2="#E8ECEB", card="#FFFFFF", ink="#16202A", ink2="#4E5A66", line="#CDD5D6",

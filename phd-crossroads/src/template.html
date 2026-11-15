@@ -316,7 +316,7 @@ details.ablock + details.ablock{margin-top:0}
 .gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin:0}
 .gloss div{padding:10px 0;border-bottom:1px solid var(--line);display:grid;gap:2px;min-width:0}
 .gloss dt{font-weight:700;font-size:14px}
-.gloss dt .num{font-weight:500;color:var(--ink-2);font-size:12px;margin-left:6px}
+.gloss dt .num{font-weight:500;color:var(--ink-2);font-size:12px;margin-left:6px;white-space:normal;overflow-wrap:anywhere}
 .gloss dd{margin:0;font-size:13.5px;color:var(--ink-2)}
 .src{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2);columns:1}
 .src a{word-break:break-word}
@@ -979,6 +979,10 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <button class="chip" data-oc="p1" aria-pressed="true">CS 助理教授：罗利 vs 成都</button>
       <button class="chip" data-oc="p2" aria-pressed="false">博士后：波士顿 vs 杭州</button>
       <button class="chip" data-oc="p3" aria-pressed="false">州立大学：哥伦布 vs 西安</button>
+      <button class="chip" data-oc="p4" aria-pressed="false">UC Berkeley 助理教授 vs 西安</button>
+      <button class="chip" data-oc="p5" aria-pressed="false">博士后：西雅图 UW vs 深圳</button>
+      <button class="chip" data-oc="p6" aria-pressed="false">博士后：洛杉矶 UCLA vs 北京</button>
+      <button class="chip" data-oc="p7" aria-pressed="false">UIC 助理教授：芝加哥 vs 成都</button>
     </div>
     <p class="sub" id="oc-note"></p>
     <div class="oc-grid">
@@ -1038,7 +1042,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <div class="oc-bars" id="oc-bars" aria-hidden="true"></div>
     <div class="tbl"><table class="oc-tbl" id="oc-tbl"></table></div>
     <ul class="oc-read" id="oc-read"></ul>
-    <p class="sub">算法：美国按 2026 年联邦税率表（Rev. Proc. 2025-32）、标准扣除、FICA（社保税工资上限 184,500 美元）和子女税收抵免（每孩 2,200 美元）；单一税率的州按“税率 ×（工资 − 免税额）”计算，累进税制的州（加州、纽约、马里兰、威斯康星、明尼苏达、密苏里、犹他）按 8 万、12 万、16 万美元三档有效税率插值，只是近似；市税按工资全额计；州税一律按单身估算。加州另扣 SDI 1.3%，华盛顿州另扣 WA Cares 0.58%。中国按综合所得年度税率表，扣除 6 万元基本减除、个人社保 10.5%（养老 8%、医疗 2%、失业 0.5%）、公积金和职业年金，以及子女每孩 2,000 元/月等专项附加扣除。没算进去的：年终奖单独计税、课时费、横向经费、美国医保税前扣除、各地社保细则。月供按等额本息 30 年计。缴费基数上限按各地 2026 年公布值（多数来自官方通知或媒体转载，武汉等未查到的请自填）；高校实际缴费基数常低于全部年薪，可用“缴费基数占工资 %”调整。中国房贷利率默认 5 年期 LPR 3.5%，公积金贷款首套 5 年以上为 2.6%；2026-10-01 起首套商业贷款另有 1 个百分点贴息，但限房价 150 万元以下、面积 120 ㎡以下。</p>
+    <p class="sub">算法：美国按 2026 年联邦税率表（Rev. Proc. 2025-32）、标准扣除、FICA（社保税工资上限 184,500 美元）和子女税收抵免（每孩 2,200 美元）；单一税率的州按“税率 ×（工资 − 免税额）”计算，累进税制的州（加州、俄勒冈、纽约、马里兰、威斯康星、明尼苏达、密苏里、犹他）按 8 万、12 万、16 万美元三档有效税率插值，只是近似；市税按工资全额计；州税一律按单身估算。加州私立雇主另扣 SDI 1.3%（UC 不参加 SDI，不扣）；华盛顿州另扣带薪家事假 PFML 约 0.81% 和长期护理 WA Cares 0.58%（2026 年起持 H-1B 等工作签证者自动豁免 WA Cares）；俄勒冈另扣 Paid Leave Oregon 0.6% 和全州交通税 0.1%，Portland 居民的 SHS、PFA 地方税只对 12.5 万美元以上的部分征收，未计入。加州 2026 年有效税率按 FTB 公布的 2026 年级距重算（12 万美元约 5.64%）；俄勒冈按 2026 年预扣公式估算，并假设联邦税扣减用满。中国按综合所得年度税率表，扣除 6 万元基本减除、个人社保 10.5%（养老 8%、医疗 2%、失业 0.5%）、公积金和职业年金，以及子女每孩 2,000 元/月等专项附加扣除。没算进去的：年终奖单独计税、课时费、横向经费、美国医保税前扣除、各地社保细则。月供按等额本息 30 年计。缴费基数上限按各地 2026 年公布值（多数来自官方通知或媒体转载，武汉等未查到的请自填）；高校实际缴费基数常低于全部年薪，可用“缴费基数占工资 %”调整。中国房贷利率默认 5 年期 LPR 3.5%，公积金贷款首套 5 年以上为 2.6%；2026-10-01 起首套商业贷款另有 1 个百分点贴息，但限房价 150 万元以下、面积 120 ㎡以下。</p>
   </section>
 
 
@@ -1046,6 +1050,28 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <h3 id="h-a-detail">逐项看：职位、城市、福利、港澳、算账、跨境风险和家庭</h3>
     <p class="sub">选一个主题。每个主题先给结论，再给表格和来源（前两张表默认展开，其余点标题展开）；“二手”指来自媒体、律所或高校转述，“未核实”指这次没能打开官方原文。</p>
     <!--@html:acad-panels-->
+  </section>
+
+  <section class="blk" aria-labelledby="h-a-west">
+    <h3 id="h-a-west">重点：旧金山湾区、洛杉矶、西雅图和芝加哥</h3>
+    <p class="sub">这四个地区高校、研究所和国家实验室最集中，但工资、房价、州税和对中国公民的限制差别很大。先看图 21 的量级，再选地区看细节。数据截至 2026-11-15；薪资是 AAUP 全校平均或机构规定的最低线，不是你会拿到的 offer。</p>
+    <div class="grid3 secgrid">
+      <div class="card"><h4>工资高的地方房价更高</h4><p>Stanford 助理教授平均 16.7 万美元，是 UIC 的 1.4 倍；但圣何塞都市圈房价是芝加哥的 4 倍。按“房价 ÷ 助理教授平均年薪”，湾区研究型大学约 8–9 倍（CSU 超过 11 倍），洛杉矶和圣迭戈约 6.5–8 倍，西雅图约 6–7 倍，芝加哥约 2.5–3.5 倍。</p></div>
+      <div class="card"><h4>四个州的税和扣款各不相同</h4><p>年薪 12 万美元、单身：华盛顿州所得税 0，伊利诺伊约 4.8%，加州约 5.6%，俄勒冈约 7.6%。UC 不参加加州 SDI；伊利诺伊州立大学（UIC、UIUC）参加 SURS，不缴社保税，个人缴 8%。</p></div>
+      <div class="card"><h4>中国公民要先查的限制</h4><p>Lawrence Livermore（NNSA）自 2025-04-15 起原则上不让中国公民进入非公共区域；NASA 博后项目（含 JPL、Ames）不接受没有绿卡的中国公民。这次没有发现大学本身按国籍限制聘用的规定，但涉及出口管制的方向可能需要许可。H-1B 的 10 万美元费用和相关诉讼见各地区面板。</p></div>
+    </div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 21 · 西海岸与芝加哥：薪资和房价</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:21-west-chicago-pay-vs-housing--></div>
+    <figcaption>每行一所学校。蓝点是 AAUP 2025–26 助理教授平均薪资，青点是博士后最低年薪，右侧是所在都市圈中位成交价除以助理教授平均薪资。UC Santa Cruz、UCSB、UC Riverside、俄勒冈大学和华盛顿州立大学所在地没有同口径的都市圈房价，所以不画比值。悬停在点上可看原值。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-a-west2">
+    <h3 id="h-a-west2">分地区看：学校、薪资、住房、税、社区和近期事件</h3>
+    <p class="sub">选一个地区。“加州大学系统”讲 UC 十个校区共用的薪资表、退休、医保和购房贷款；“四州政策”把加州、华盛顿、俄勒冈、伊利诺伊的税、扣款、房产税、购房限制和家庭福利放在一起。</p>
+    <!--@html:west-panels-->
   </section>
 
   <section class="blk" aria-labelledby="h-a-ask">
@@ -1675,7 +1701,13 @@ const G = [
   ["安家费", "Relocation / settling-in allowance", "学校或城市给新引进人员的一次性补贴，常分期发放并附服务期；一般要计个税。"],
   ["海外优青", "NSFC Excellent Young Scientists (Overseas)", "要求在海外正式教研岗位连续工作满 36 个月，资助 100–300 万元，获批后须全职回国。"],
   ["RGC / ECS", "Hong Kong Research Grants Council", "香港研资局；早期职业计划（ECS）只限任职头 3 年申请。"],
-  ["MPF / 约满酬金", "Mandatory Provident Fund / gratuity", "香港强积金和合约期满酬金；港校常把两者合计定为基本薪金的 15%。"]
+  ["MPF / 约满酬金", "Mandatory Provident Fund / gratuity", "香港强积金和合约期满酬金；港校常把两者合计定为基本薪金的 15%。"],
+  ["Off-scale 薪资", "Off-scale salary", "加州大学 (UC) 在公开薪资表之外另加的部分。薪资表只是下限（2026-10 助理教授 Step 1 为 84,100 美元），多数教职实际拿 off-scale，谈 offer 时可以争取。"],
+  ["MOP / ZIP", "Mortgage Origination Program / Zero Interest Program", "UC 给教师的购房贷款：MOP 是学校直接发放的浮动利率房贷，最低首付 10%；ZIP 是 Berkeley 等校区的零息补充贷款。名额按校区每年分配，可能暂停。"],
+  ["SDI", "California State Disability Insurance", "加州州残障保险，2026 年员工扣工资的 1.3%、不封顶。UC 不参加 SDI，私立大学和研究所的员工要扣。"],
+  ["PFML / WA Cares", "WA Paid Family & Medical Leave / WA Cares Fund", "华盛顿州的带薪家事假（员工约 0.81%）和长期护理保险（0.58%）扣款；2026 年起持 H-1B 等工作签证者自动豁免 WA Cares。"],
+  ["SURS", "State Universities Retirement System (Illinois)", "伊利诺伊州立大学（UIC、UIUC 等）的退休系统：员工缴 8%，不缴社保税，只缴 Medicare；入职 6 个月内在三种方案中选一，不能改。"],
+  ["NNSA 实验室", "NNSA national security laboratories", "Lawrence Livermore、Los Alamos、Sandia。2025-04-15 起中国等国公民原则上不得进入非公共区域，需能源部长逐案豁免。LBNL、SLAC、Argonne、Fermilab 属 DOE 科学办公室，不在此列。"]
 ];
 const gl = $("#gloss");
 gl.innerHTML = G.map(([a, b, c]) => `<div data-q="${esc((a + b + c).toLowerCase())}"><dt>${esc(a)}<span class="num">${esc(b)}</span></dt><dd>${esc(c)}</dd></div>`).join("");
@@ -1722,10 +1754,13 @@ const OC = {
   states: {
     NC: ["北卡（罗利、达勒姆）", "f", 3.99, 12750, 0, 0],
     MA: ["马萨诸塞（波士顿）", "f", 5.0, 4400, 0, 0],
-    CA: ["加州（另扣 SDI 1.3%）", "i", 4.01, 5.78, 6.66, 0, 1.3],
+    CA: ["加州 · 私立或非 UC 雇主（另扣 SDI 1.3%）", "i", 3.83, 5.64, 6.56, 0, 1.3],
+    CAUC: ["加州 · UC 员工（UC 不参加 SDI）", "i", 3.83, 5.64, 6.56, 0, 0],
     NY: ["纽约州（非纽约市）", "i", 4.65, 5.03, 5.25, 0, 0],
     NYC: ["纽约市居民", "i", 7.99, 8.55, 8.85, 0, 0],
-    WA: ["华盛顿州（另扣 WA Cares 0.58%）", "f", 0, 0, 0, 0.58],
+    WA: ["华盛顿州（另扣 PFML 0.81% + WA Cares 0.58%）", "f", 0, 0, 0, 1.39],
+    WAV: ["华盛顿州 · 持 H-1B 等工作签证（WA Cares 自动豁免，只扣 PFML 0.81%）", "f", 0, 0, 0, 0.81],
+    OR: ["俄勒冈（Portland 以外；另扣带薪假 0.6% + 交通税 0.1%）", "i", 6.75, 7.63, 8.62, 0, 0.7],
     TX: ["德州", "f", 0, 0, 0, 0],
     FL: ["佛州", "f", 0, 0, 0, 0],
     PA: ["宾州（非费城，地方所得税按约 1%；匹兹堡 3%）", "f", 3.07, 0, 1.0, 0],
@@ -1762,7 +1797,23 @@ const OC = {
     p3: {note: "美国：AAUP 2025–26 公立博士院校助理教授平均 100,452 美元；俄亥俄州立大学教职工参加 STRS/ARP，不缴社保税，个人缴 14%；雇主 14% 中有一部分（OSU 为 2.91%）划给州养老金，这里按 11.09% 记入个人账户。已婚、1 个孩子。中国：西安交通大学青年拔尖人才计划“特聘研究员”基本薪酬 30 万元/年，安家费 35 万元（公告写明税后；院系转载、页面无日期，未核实），这里粗略按 5 年平摊；公告没有写是否入编，这里假设为事业编制；西安没有可核实的房价，请自填。",
       ub: 100452, uterm: "9", usum: 0, ust: "CMH", ustat: "noss", ufile: "mfj", uret: 14, uer: 11.09, uhp: 350, utreaty: false, uhome: 316000, urate: 7.11, uptax: 1.6,
       cb: 300000, cbase: 100, ccapcity: "西安", ccap: 23685, chf: 12, cnj: true, cset: 350000, cyrs: 5, ctaxset: false, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
-      kids: 1, down: 20}
+      kids: 1, down: 20},
+    p4: {note: "美国：UC Berkeley 助理教授 AAUP 2025–26 全校平均 144,600 美元（学年制，不是起薪；UC 薪资表 Step 1 只有 84,100）。UC 不参加加州 SDI。退休按 UCRP 2016 Tier：个人税前 7%；UCRP 养老金本身不进个人账户，这里只把指定教师 DC 补充账户的 5% 记作雇主缴款。医保为 2027 年 Kaiser 单人月保费 131 美元。房价为旧金山-奥克兰都市圈 Zillow 2026-08 中位成交价；房产税按 1.2% 估算（Prop 13 基本税率 1% 加地方债务附加，约数）。中国：沿用西安交通大学青年拔尖人才“特聘研究员”30 万元/年、安家费 35 万元（未核实），假设事业编制；西安房价请自填。",
+      ub: 144600, uterm: "9", usum: 0, ust: "CAUC", ustat: "res", ufile: "single", uret: 7, uer: 5, uhp: 131, utreaty: false, uhome: 1163000, urate: 7.11, uptax: 1.2,
+      cb: 300000, cbase: 100, ccapcity: "西安", ccap: 23685, chf: 12, cnj: true, cset: 350000, cyrs: 5, ctaxset: false, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20},
+    p5: {note: "美国：UW 博士后最低年薪 68,460 美元（UAW 4121 合同；该合同 2026-08-31 到期，续约在调解中）。假设已转 H-1B、是税务居民：2026 年起持工作签证者自动豁免 WA Cares，只扣 PFML。退休和医保自付未核实，医保 100 美元只是假设。房价为西雅图都市圈 Zillow 2026-08 中位成交价，房产税按 King County 有效税率 0.76%。中国：南方科技大学某课题组博士后综合年薪 33 万元起（含广东省、深圳市博士后补贴，二手），不住公租房的另有住房补贴 2,800 元/月、发 2 年（税前）。",
+      ub: 68460, uterm: "12", usum: 0, ust: "WAV", ustat: "res", ufile: "single", uret: 0, uer: 0, uhp: 100, utreaty: false, uhome: 715000, urate: 7.11, uptax: 0.76,
+      cb: 330000, cbase: 100, ccapcity: "广东（深圳、广州）", ccap: 27603, chf: 12, cnj: false, cset: 67200, cyrs: 2, ctaxset: true, cded: "18000", cold: false, ccity: "深圳", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20},
+    p6: {note: "美国：UC 博士后最低年薪（Table 23 Level 0，2026-10-01 起）71,491 美元，UCLA 适用。按税务居民计算（在美 5 年以上的 F-1 博士通常已是居民）；UC 不参加 SDI。博后的退休和医保自付未核实，医保 100 美元只是假设。房价为洛杉矶都市圈 Zillow 2026-08 中位成交价，房产税按 1.1% 估算。中国：北京大学医学部“博雅博士后”基本年薪 20 万元（税前），租房补贴 6 万元/年，这里按 2 年共 12 万元计；2026 年两批申请均已截止。",
+      ub: 71491, uterm: "12", usum: 0, ust: "CAUC", ustat: "res", ufile: "single", uret: 0, uer: 0, uhp: 100, utreaty: false, uhome: 978000, urate: 7.11, uptax: 1.1,
+      cb: 200000, cbase: 100, ccapcity: "北京", ccap: 36348, chf: 12, cnj: false, cset: 120000, cyrs: 2, ctaxset: true, cded: "18000", cold: false, ccity: "北京", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20},
+    p7: {note: "美国：UIC 助理教授 AAUP 2025–26 全校平均 120,000 美元。UIC 参加伊利诺伊州立大学退休系统 SURS：不缴社保税，只缴 Medicare，个人缴 8%（比例来自另一所州立大学 HR 页面，二手）；SURS Traditional 是确定给付型养老金，不进个人账户，这里雇主缴款记 0。医保 150 美元只是假设。房价为芝加哥都市圈 Zillow 2026-08 中位成交价，房产税按 Cook County 有效税率 1.73%。中国：沿用西南交通大学“青年学者岗”23 万元和安家费 24 万元（二手），成都房价请自填。",
+      ub: 120000, uterm: "9", usum: 0, ust: "IL", ustat: "noss", ufile: "single", uret: 8, uer: 0, uhp: 150, utreaty: false, uhome: 365000, urate: 7.11, uptax: 1.73,
+      cb: 230000, cbase: 100, ccapcity: "四川（成都）", ccap: 23493, chf: 12, cnj: false, cset: 240000, cyrs: 6, ctaxset: true, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
+      kids: 0, down: 20}
   }
 };
 const ocEl = id => $("#oc-" + id);
