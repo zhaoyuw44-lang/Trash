@@ -259,8 +259,11 @@ nav.chapters a[data-side="b"] .dot{background:linear-gradient(90deg,var(--us) 50
 .atabs .chip[aria-pressed="true"]{border-color:var(--ink)}
 .apanel{display:grid;gap:18px;scroll-margin-top:120px;border-top:3px solid var(--ink);padding-top:18px}
 .apanel.side-u{border-top-color:var(--us)} .apanel.side-c{border-top-color:var(--cn)}
-.ablock{display:grid;gap:8px;min-width:0}
-.ablock h4{font-size:15px}
+.ablocks{display:grid;gap:8px}
+.ablock{min-width:0}
+details.ablock + details.ablock{margin-top:0}
+.ablock summary small{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--ink-2);margin-left:auto;padding-left:12px}
+.abody{display:grid;gap:8px;padding-bottom:14px;min-width:0}
 .atbl tbody th{white-space:normal;min-width:110px;max-width:220px}
 .atbl td{min-width:96px}
 .atbl a,.anote a{word-break:break-all}
@@ -895,7 +898,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <section class="blk" aria-labelledby="h-a-sum">
     <h3 id="h-a-sum">先看结论</h3>
     <div class="grid3">
-      <div class="card u"><h4>美国：起薪高，但只发 9 个月</h4><p>AAUP 2025–26：博士授予院校助理教授平均 <b>105,052 美元</b>（公立 100,452，私立 125,261）；CS 新聘中位数 128,000，经济学博士点新聘平均 158,593。这些都是学年薪资，暑期 2–3 个月要靠自己的经费。博士后下限多参照 NIH NRSA 第 0 级 <b>63,480 美元</b>。</p></div>
+      <div class="card u"><h4>美国：起薪高，但只发 9 个月</h4><p>AAUP 2025–26：博士授予院校助理教授平均 <b>105,052 美元</b>（公立 100,452，私立 125,261）；计算机类（CS、CE 和信息学院）新聘中位数 128,000，经济学博士点新聘平均 158,593。这些都是学年薪资，暑期 2–3 个月要靠自己的经费。博士后下限多参照 NIH NRSA 第 0 级 <b>63,480 美元</b>。</p></div>
       <div class="card c"><h4>中国：公告多写“面议”，看合同</h4><p>顶尖高校和新型研究型大学大多不公开数字。2025–26 年能查到的：西南交大助理教授 18–23 万元，浙大“求是博士后”校发 30 万元，中科大苏州高研院特任副研究员不少于 42 万元。宣传里“安家费最高 XXX 万”多数指国家级人才。</p></div>
       <div class="card c"><h4>城市补贴：条件比金额重要</h4><p>深圳新引进博士补贴 10 万元：35 岁以下，在编人员和已领博士后补贴者不能领，分两次发放，实施办法约在 2027-04 到期。多数补贴要计个税，与编制或其他补贴互斥，离职要退。按深圳挂牌均价算，10 万元约合 1.5 平方米。大湾区“个税超 15% 部分补贴”只给境外人才，只持中国护照、没有国外长期居留权的美国博士不符合。</p></div>
       <div class="card"><h4>房价：两边都在分化</h4><p>美国学术都市圈中位成交价从香槟 24 万美元到圣何塞 148 万美元；房贷利率 7.11%（2026-11-12）。中国 21 个大中城市二手住宅只有上海同比上涨，成都、长沙、武汉等跌 5% 以上；5 年期 LPR 为 3.5%，2026-10-01 起首套小户型（150 万元、120 ㎡以下）商贷另贴息 1 个百分点。</p></div>
@@ -920,7 +923,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
         <tr><th>考核期</th><td>AAUP 原则：试用期最长 7 年，一般第 3 年中期评估、第 6 年 tenure 评审；生育、照护等可延长时钟</td><td>常见“3+3”共 6 年；编制岗没有“非升即走”，靠职称评审晋升。2025–26 年部分学校改为入编、不再实行非升即走（媒体报道）</td></tr>
         <tr><th>不通过</th><td>通常还有 1 年终止聘期，之后离开</td><td>多数不再续聘或转为其他岗位，以合同为准</td></tr>
         <tr><th>工资口径</th><td>多为 9 个月学年合同，暑期工资靠经费支付、不保证；NSF 一般每年最多计 2 个月</td><td>年薪制，或“基本工资 + 绩效 + 津贴”；公告里的“综合年薪”可能含单位社保或城市补贴，要问清</td></tr>
-        <tr><th>公开的起步数字</th><td>AAUP 博士院校助理教授平均 105,052 美元；CS 新聘中位数 128,000；商学院新博士美洲区中位数 135,000</td><td>西南交大助理教授 18–23 万元；中国矿大助理教授 22.5 万元；北大医学部博雅博后 20 万元 + 租房补贴 6 万元/年</td></tr>
+        <tr><th>公开的起步数字</th><td>AAUP 博士院校助理教授平均 105,052 美元；计算机类新聘中位数 128,000；商学院新博士美洲区中位数 135,000</td><td>西南交大助理教授 18–23 万元；中国矿大助理教授 22.5 万元；北大医学部博雅博后 20 万元 + 租房补贴 6 万元/年</td></tr>
         <tr><th>启动经费</th><td>实验学科常见几十万到百万美元以上，没有权威的全国统计；理论学科以暑期工资、学生和差旅为主</td><td>差异极大：西南交大理工科 10 万元；西交大青年拔尖计划 200 万元以上；海南大学给海外优青入选者 300 万元</td></tr>
         <tr><th>住房</th><td>少数学校有购房贷款或补贴；多数靠自己租买</td><td>安家费、购房补贴、人才公寓、城市人才补贴，常分期发放并附服务期</td></tr>
         <tr><th>身份</th><td>高校 H-1B 免抽签；教职 PERM 可走特殊程序（选定后 18 个月内递交）；EB-1B 要求 tenure-track 或可比的长期研究岗</td><td>没有身份问题；海外工作年限影响海外优青等项目资格</td></tr>
@@ -933,7 +936,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <figure class="fig">
     <div class="fig-head"><span class="fig-no">图 18 · 美国学术岗位薪资</span><button class="btn" data-zoom>放大查看</button></div>
     <div class="fig-scroll"><!--@fig:18-us-academic-pay--></div>
-    <figcaption>圆点是平均值或中位数，横线是 P10–P90 区间（AAUP 一行是公立到私立的平均值）。实心蓝点为长聘轨教职，空心为非长聘岗位，青色为博士后。悬停在点上可看原值。</figcaption>
+    <figcaption>圆点是平均值或中位数，横线是 P10–P90 区间（AAUP 一行是公立到私立的平均值）。“计算机类”是 CRA Taulbee 调查的全部美国单位（CS、CE 和信息学院）；只看 CS 系在任助理教授，中位数为 131,115 美元。实心蓝点为长聘轨教职，空心为非长聘岗位，青色为博士后。悬停在点上可看原值。</figcaption>
   </figure>
 
   <figure class="fig">
@@ -1040,7 +1043,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
 
   <section class="blk" aria-labelledby="h-a-detail">
     <h3 id="h-a-detail">逐项看：职位、城市、福利、港澳、算账、跨境风险和家庭</h3>
-    <p class="sub">选一个主题。每个主题先给结论，再给表格和来源；“二手”指来自媒体、律所或高校转述，“未核实”指这次没能打开官方原文。</p>
+    <p class="sub">选一个主题。每个主题先给结论，再给表格和来源（前两张表默认展开，其余点标题展开）；“二手”指来自媒体、律所或高校转述，“未核实”指这次没能打开官方原文。</p>
     <!--@html:acad-panels-->
   </section>
 
@@ -1752,7 +1755,7 @@ const OC = {
   // creprice asking price, yuan per m2 (about 2026-10)
   cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["自填", 0]],
   presets: {
-    p1: {note: "美国：CRA Taulbee 2025 CS 新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
+    p1: {note: "美国：CRA Taulbee 2025 计算机类（全部美国单位，含 CS、CE 和信息学院）新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
       ub: 128000, uterm: "9", usum: 0, ust: "NC", ustat: "res", ufile: "single", uret: 5, uer: 10, uhp: 150, utreaty: false, uhome: 444000, urate: 7.11, uptax: 1.0,
       cb: 230000, cbase: 100, ccapcity: "四川（成都）", ccap: 23493, chf: 12, cnj: false, cset: 240000, cyrs: 6, ctaxset: true, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
       kids: 0, down: 20},
@@ -1782,7 +1785,7 @@ function ocProg(x, br) {
 function ocStateTax(st, w) {
   const s = OC.states[st];
   if (s[1] === "f") return Math.max(0, w - s[3]) * s[2] / 100 + w * s[4] / 100;
-  if (s[1] === "o") return (w > s[3] ? 332 + (w - s[3]) * s[2] / 100 : 0) + w * s[4] / 100;  // Ohio 2026: $332 + 2.75% over $26,050 (ORC 5747.02)
+  if (s[1] === "o") return (w - 2400 > s[3] ? 332 + (w - 2400 - s[3]) * s[2] / 100 : 0) + w * s[4] / 100;  // Ohio 2026: $332 + 2.75% over $26,050 (ORC 5747.02)
   const pts = [[10000, 0], [80000, s[2]], [120000, s[3]], [160000, s[4]]];
   let r = s[4];
   for (let i = 1; i < pts.length; i++) {

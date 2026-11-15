@@ -58,7 +58,7 @@ def table(b):
     cols = b.get("columns") or []
     rows = b.get("rows") or []
     if not cols or not rows:
-        return ""
+        return []
     stcol = len(cols) - 1 if re.search(r"状态|核实", cols[-1]) else -1
     width = max(640, min(1500, 132 * len(cols)))
     head = "".join(f"<th>{esc(c)}</th>" for c in cols)
@@ -81,13 +81,13 @@ def table(b):
     links = src_links(b.get("sources") or [])
     if links:
         out.append(f'<p class="xsrc">来源：{" · ".join(links)}</p>')
-    return f'<div class="ablock">{"".join(out)}</div>'
+    return out
 
 
 def lst(b):
     items = b.get("items") or []
     if not items:
-        return ""
+        return []
     lis = []
     for it in items:
         cls, lab = ST.get(it.get("status", "verified"), ST["verified"])
@@ -100,7 +100,19 @@ def lst(b):
     out = [f"<h4>{esc(b['title_zh'])}</h4>", f'<ul class="alist">{"".join(lis)}</ul>']
     if b.get("note_zh"):
         out.append(f'<p class="anote">{cell(b["note_zh"])}</p>')
-    return f'<div class="ablock">{"".join(out)}</div>'
+    return out
+
+
+def block(b, i):
+    out = table(b) if b.get("kind") == "table" else lst(b)
+    if not out:
+        return ""
+    head, body = out[0], "".join(out[1:])
+    title = head[4:-5]  # strip <h4> </h4>
+    n = len(b.get("rows") or b.get("items") or [])
+    unit = "行" if b.get("kind") == "table" else "条"
+    return (f'<details class="ablock"{" open" if i < 2 else ""}><summary>{title}<small>{n} {unit}</small></summary>'
+            f'<div class="abody">{body}</div></details>')
 
 
 def panel(key, label, side):
@@ -111,8 +123,7 @@ def panel(key, label, side):
     if s.get("takeaways"):
         out.append('<div class="xprc atake"><h4>要记住的几条</h4><ul>' +
                    "".join(f"<li>{cell(t)}</li>" for t in s["takeaways"]) + "</ul></div>")
-    for b in s.get("blocks", []):
-        out.append(table(b) if b.get("kind") == "table" else lst(b))
+    out.append('<div class="ablocks">' + "".join(block(b, i) for i, b in enumerate(s.get("blocks", []))) + "</div>")
     if s.get("misconceptions"):
         out.append('<details class="amyth"><summary>常见误解</summary><dl>' +
                    "".join(f"<dt>✗ {cell(m['myth_zh'])}</dt><dd>{cell(m['fact_zh'])}</dd>" for m in s["misconceptions"]) +
