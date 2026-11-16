@@ -1726,7 +1726,14 @@ const G = [
   ["SDI", "California State Disability Insurance", "加州州残障保险，2026 年员工扣工资的 1.3%、不封顶。UC 不参加 SDI，私立大学和研究所的员工要扣。"],
   ["PFML / WA Cares", "WA Paid Family & Medical Leave / WA Cares Fund", "华盛顿州的带薪家事假（员工约 0.81%）和长期护理保险（0.58%）扣款；2026 年起持 H-1B 等工作签证者自动豁免 WA Cares。"],
   ["SURS", "State Universities Retirement System (Illinois)", "伊利诺伊州立大学（UIC、UIUC 等）的退休系统：员工缴 8%，不缴社保税，只缴 Medicare；入职 6 个月内在三种方案中选一，不能改。"],
-  ["NNSA 实验室", "NNSA national security laboratories", "Lawrence Livermore、Los Alamos、Sandia。2025-04-15 起中国等国公民原则上不得进入非公共区域，需能源部长逐案豁免。LBNL、SLAC、Argonne、Fermilab 属 DOE 科学办公室，不在此列。"]
+  ["NNSA 实验室", "NNSA national security laboratories", "Lawrence Livermore、Los Alamos、Sandia。2025-04-15 起中国等国公民原则上不得进入非公共区域，需能源部长逐案豁免。LBNL、SLAC、Argonne、Fermilab 属 DOE 科学办公室，不在此列。"],
+  ["视同出口", "Deemed export (EAR)", "在美国境内把受出口管制的技术或源代码交给外国人，视同出口到此人的国籍国。没有绿卡的中国公民（含 F-1、OPT、H-1B）都适用；需要许可时由雇主向商务部 BIS 申请，2025 年平均审 62 天。"],
+  ["ECCN / EAR99", "Export Control Classification Number", "出口管制清单上的分类编码。高分子相关的有 1C008（如 PEEK、PEKK、部分聚酰亚胺）、1E001（相关开发和生产技术）、3E905（GAA 晶体管技术）。不在清单上的一般物项归 EAR99，基本不需要许可。"],
+  ["ITAR / U.S. person", "International Traffic in Arms Regulations", "国务院管理的国防物品和技术规则。U.S. person 指公民、绿卡持有者和受保护难民等，不含 F-1、OPT、H-1B。中国在 126.1 拒绝政策名单上，所以 ITAR 岗位对没有绿卡的中国公民基本关闭。"],
+  ["实体清单 / 1260H 清单", "BIS Entity List / DoD 1260H list", "两份不同的美国名单。实体清单（商务部）限制向名单企业出口；1260H 清单（国防部“中国军事企业”）主要影响国防采购和合同。在名单企业工作本身不违法，对个人赴美签证的影响没有公开规则。"],
+  ["RSU", "Restricted Stock Units", "限制性股票单位，按归属表（常见 4 年）分批到账，到账时按市价计入工资收入并预扣税。计算器里把它和奖金一起填在“奖金与股票”。"],
+  ["TS&D", "Technical Service & Development", "化工和材料公司的技术服务与开发岗：在客户现场用自家材料解决配方和工艺问题，介于研发和销售之间。Dow 等公司的高分子博士常从这里起步。"],
+  ["竞业限制", "Non-compete (中国劳动合同法第 23–24 条)", "中国法律规定最长 2 年，只适用于高管、高级技术人员和负有保密义务的人员，期间用人单位须按月支付经济补偿。美国各州规则不同，加州基本不承认竞业条款。"]
 ];
 const gl = $("#gloss");
 gl.innerHTML = G.map(([a, b, c]) => `<div data-q="${esc((a + b + c).toLowerCase())}"><dt>${esc(a)}<span class="num">${esc(b)}</span></dt><dd>${esc(c)}</dd></div>`).join("");

@@ -1296,9 +1296,201 @@ def fig21():
     return f
 
 
+# ------------------------------------------------- 22 polymer PhD → industry map
+IND_SKILLS = ["合成配方", "表征测试", "成型加工", "界面粘接", "膜/电化学", "计算数据"]
+# (sector, panel key, PRC barrier level 0-2, barrier note, skills 2=core 1=useful 0=rare, titles, pay low/high $k, pay note)
+IND_MAP = [
+    ("半导体与先进封装", "semis", 1, "先进工艺需许可，封装材料较少",
+     (2, 2, 1, 2, 0, 1), ("Process Engineer（芯片厂、设备商）", "Packaging R&D / Module Engineer", "Scientist（光刻胶、CMP 等材料供应商）"),
+     94, 160, "TSMC AZ 9.4 万 → AMAT 中位 16 万"),
+    ("电池与新能源", "energy", 0, "国防资金项目、DOE 实验室例外",
+     (2, 2, 2, 1, 2, 0), ("Materials / Cell Engineer", "Scientist（电解质、隔膜、粘结剂）", "Process Engineer（电芯厂）"),
+     64, 188, "日韩电芯厂 6.4 万 → QuantumScape 18.8 万"),
+    ("化工、特种聚合物与消费品", "chem", 0, "多为 EAR99；担保意愿差别大",
+     (2, 2, 2, 2, 1, 0), ("Research Scientist / Sr. Research Specialist", "TS&D（技术服务与开发）Scientist", "Product Development Engineer"),
+     78, 152, "Dow 入口 7.8–12.2 万；3M 12.4–15.2 万"),
+    ("科技大厂硬件与 AI 材料", "tech", 0, "消费电子低；ITAR 岗位关闭",
+     (1, 2, 2, 2, 0, 1), ("Materials Engineer（塑料、胶粘、涂层）", "Reliability / Failure Analysis", "AI 材料公司 Platform Scientist"),
+     108, 187, "Lila 10.8–18.7 万；Apple 多要经验"),
+    ("医疗器械与制药", "med", 0, "民用器械、制药一般不涉及",
+     (1, 2, 2, 1, 0, 0), ("R&D / Materials Engineer（导管、植入物）", "Drug Product / Formulation Scientist", "Packaging / Quality Engineer"),
+     90, 171, "LCA 多为 9–16 万；Amgen 12.6–17.1 万"),
+    ("转行：仪器、数据、咨询", "pivot", 1, "国防、航天、国家安全岗关闭",
+     (0, 1, 0, 0, 0, 2), ("Applications Scientist（仪器公司）", "Data Scientist / Consultant", "Patent Agent（非公民只能有限资格）"),
+     100, 250, "仪器应用科学家 10 万 → 量化 25 万"),
+]
+
+
+def fig22():
+    top, rowh = 128, 68
+    n = len(IND_MAP)
+    H = top + n * rowh + 92
+    f = Fig("22-polymer-phd-industry-map", 1080, H,
+            "高分子材料博士去美国业界：六个方向分别用到哪些技能、常见职位名、应届可参考的年度基本工资，以及中国籍的主要门槛")
+    f.add(text(16, 26, "每行一个方向。圆点 = 编辑根据各方向招聘启事的判断：实心 = 核心技能，空心 = 有用，空白 = 很少用到。", "t-s"))
+    f.add(text(16, 44, "右侧条 = 美国应届或入门岗位的年度基本工资（千美元，不含奖金和股票），来自 2025 年 H-1B LCA 或 2026 年招聘启事。", "t-s"))
+    sx0, sdx = 262, 56
+    tx0 = 580
+    px0, pk = 836, 1.08  # pay axis: px per $1k from 50k
+    P = lambda v: px0 + (v - 50) * pk
+    hy = top - 20
+    f.add(text(16, hy, "方向（第二行 = 中国籍门槛）", "t-xs t-b"))
+    for i, s in enumerate(IND_SKILLS):
+        f.add(text(sx0 + i * sdx, hy, s, "t-xs t-b", "middle", maxw=sdx - 2))
+    f.add(text(tx0, hy, "常见职位名", "t-xs t-b"))
+    f.add(text(px0 - 4, hy - 16, "年度基本工资（千美元）", "t-xs t-b"))
+    yend = top + n * rowh
+    for v in range(50, 251, 50):
+        f.add(f.ln(f"M{P(v):.1f},{hy - 8} V{yend}", cls="l-grid"))
+        f.add(text(P(v), hy, f"{v}", "t-xs t-m", "middle"))
+    lev = {0: ("门槛低", "t-xs t-b t-x"), 1: ("门槛中", "t-xs t-b t-w"), 2: ("门槛高", "t-xs t-b t-cn")}
+    for r, (name, key, bl, bnote, sk, titles, lo, hi, pnote) in enumerate(IND_MAP):
+        y = top + r * rowh
+        cy = y + rowh / 2
+        if r % 2 == 0:
+            f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
+        f.add(text(16, y + 24, name, "t t-b", maxw=sx0 - sdx / 2 - 22))
+        lab, cls = lev[bl]
+        f.add(text(16, y + 42, lab, cls))
+        f.add(text(16 + tw(lab, 10.5) * 1.05 + 6, y + 42, bnote, "t-xs", maxw=sx0 - sdx / 2 - 22 - tw(lab, 10.5) * 1.05 - 6))
+        for i, v in enumerate(sk):
+            cx = sx0 + i * sdx
+            if v == 2:
+                f.add(f'<circle cx="{cx}" cy="{cy}" r="8" class="m-us"><title>{esc(name)}：{IND_SKILLS[i]}是核心技能</title></circle>')
+            elif v == 1:
+                f.add(f'<circle cx="{cx}" cy="{cy}" r="6.5" class="m-bg-us"><title>{esc(name)}：{IND_SKILLS[i]}有用</title></circle>')
+            else:
+                f.add(f'<circle cx="{cx}" cy="{cy}" r="2" class="m-mute"/>')
+        for j, t in enumerate(titles):
+            f.add(text(tx0, y + 18 + j * 16, t, "t-xs", maxw=px0 - tx0 - 20))
+        f.add(f'<rect x="{P(lo):.1f}" y="{cy - 13:g}" width="{(hi - lo) * pk:.1f}" height="12" rx="3" class="k-us"><title>{esc(name)}：${lo}k–{hi}k</title></rect>')
+        f.add(text(px0, cy + 13, f"{lo}–{hi}k", "t-xs t-m t-b"))
+        f.add(text(px0, cy + 27, pnote, "t-xs", maxw=1072 - px0))
+    f.add(text(16, yend + 24, "读法：高分子博士最“对口”的是化工与消费品和电池（技能几乎全用上），但起薪不是最高；半导体和科技大厂付得更多，看重加工、可靠性和量产经验。", "t-xs"))
+    f.add(text(16, yend + 42, "门槛只看中国籍（无绿卡）本身：低 = 一般只需签证担保；中 = 部分岗位要出口许可或 U.S. person；高 = 基本关闭。各方向详情、来源和例外见下方面板。", "t-xs"))
+    f.add(text(16, yend + 60, "工资范围是不同公司、不同岗位拼起来的区间，不是同一个岗位的上下限；湾区和中西部差别很大。来源：h1bdata.info（DOL LCA 2025）、各公司招聘页、BLS OEWS 2025。", "t-xs"))
+    return f
+
+# ------------------------------------------------- 23 industry pay by company
+# kind: L = H-1B LCA 2025 range, P = job posting range, X = posting that needs years of experience,
+#       C = closed to PRC nationals without green card (ITAR). med = median ($k) or None
+IND_PAY = [
+    ("半导体与先进封装", [
+        ("Intel · Process Engineer（全美 792 条 LCA）", "L", 80.2, 171.3, 112.7),
+        ("Intel · 封装研发（PhD 加 1 年）", "P", 133.8, 188.9, None),
+        ("Applied Materials · 工艺岗（35 条 LCA）", "L", 87.1, 196.5, 160.0),
+        ("Lam Research · 工艺岗（60 条 LCA）", "L", 95.2, 169.9, 137.1),
+        ("TSMC Arizona · 工艺与整合（LCA）", "L", 94.2, 124.7, 104.0),
+        ("Entegris · 高分子表征科学家（二手）", "P", 114.0, 144.0, None),
+        ("Nvidia · 封装开发（8–12 年以上）", "X", 168.0, 345.0, None),
+    ]),
+    ("电池与新能源", [
+        ("QuantumScape · 工程岗（LCA）", "L", 110.8, 187.8, None),
+        ("Solid Power · 工程岗（LCA）", "L", 130.0, 180.0, None),
+        ("Tesla · Materials Engineer（4 条 LCA）", "L", 113.9, 155.0, 127.4),
+        ("LG Energy Solution 密歇根（LCA）", "L", 64.0, 108.8, None),
+        ("SK Battery America 佐治亚（LCA）", "L", 65.0, 80.0, None),
+    ]),
+    ("化工、特种聚合物与消费品", [
+        ("Dow · PhD 入口职级（62 条 LCA）", "L", 78.0, 121.9, 110.9),
+        ("3M · Sr. Product Development Eng.（不担保 H-1B）", "P", 124.1, 151.7, None),
+        ("P&G · PhD Scientist（3 条 LCA）", "L", 128.0, 146.0, None),
+        ("Corning · 研发（12 条 LCA）", "L", 100.7, 153.3, 110.8),
+        ("ExxonMobil · 研发（3 条 LCA）", "L", 135.0, 189.6, 144.1),
+    ]),
+    ("科技大厂硬件与 AI 材料", [
+        ("Apple · Materials Engineer - Polymers", "X", 147.4, 272.1, None),
+        ("Lila Sciences · 软物质科学家（两岗）", "P", 108.0, 187.0, None),
+        ("SpaceX · 聚合物材料工程师（ITAR）", "C", 100.0, 160.0, None),
+    ]),
+    ("医疗器械与制药", [
+        ("Amgen · Process Development Sr. Scientist", "P", 126.1, 170.6, None),
+        ("Edwards · 研发 Principal Engineer（LCA）", "L", 108.5, 159.4, None),
+        ("Boston Scientific · 研发科学家（LCA）", "L", 94.2, 156.6, None),
+        ("Medtronic · 材料与研发（LCA）", "L", 96.0, 127.4, None),
+    ]),
+    ("转行", [
+        ("仪器应用科学家（Bruker、Micromeritics）", "L", 100.0, 111.9, None),
+        ("MBB 咨询 Consultant（LCA）", "L", 182.7, 202.0, None),
+        ("Citadel Securities · 量化研究（43 条 LCA）", "L", 200.0, 330.0, 250.0),
+    ]),
+]
+IND_PAY_CN = []  # (label, low 万元, high 万元, note) — filled from the China supplement
+
+
+def fig23():
+    rowh, gh = 21, 32
+    n = sum(len(g[1]) for g in IND_PAY)
+    top = 118
+    cn_h = (len(IND_PAY_CN) * rowh + gh + 64) if IND_PAY_CN else 0
+    yend = top + n * rowh + len(IND_PAY) * gh
+    H = yend + cn_h + 100
+    f = Fig("23-industry-pay-by-company", 1080, H,
+            "美国业界：高分子相关岗位的年度基本工资区间，按方向和公司排列（千美元）" + ("；下方为中国大厂博士年包（万元）" if IND_PAY_CN else ""))
+    f.add(text(16, 26, "每行一个公司或岗位。深色条 = 2025 年 H-1B LCA 认证工资范围；浅色条 = 2026 年招聘启事区间；灰条 = 要求多年经验，应届拿不到。", "t-s"))
+    f.add(text(16, 44, "竖线 = 中位数。红色虚线条 = ITAR 岗位，对没有绿卡的中国公民基本不开放。全部是年度基本工资，不含奖金、股票和签字费。", "t-s"))
+    x0, k = 352, 2.3  # px per $1k from 50k
+    X = lambda v: x0 + (v - 50) * k
+    axy = top - 14
+    f.add(text(X(50) - 8, axy - 22, "年度基本工资（千美元）", "t-xs t-b"))
+    for v in range(50, 351, 50):
+        f.add(f.ln(f"M{X(v):.1f},{axy} V{yend}", cls="l-grid"))
+        f.add(text(X(v), axy - 4, f"{v}", "t-xs t-m", "middle"))
+    cls = {"L": "k-solid-us", "P": "k-us", "X": "k-mute", "C": "k-cn-wash"}
+    kind = {"L": "LCA", "P": "招聘启事", "X": "招聘启事，要求多年经验", "C": "ITAR 岗位"}
+    y = top
+    for gname, rows in IND_PAY:
+        f.add(rect(8, y + 4, 1064, gh - 8, "k-band-us", 6))
+        f.add(text(18, y + gh / 2 + 5, gname, "t t-b t-us"))
+        y += gh
+        for i, (name, kd, lo, hi, med) in enumerate(rows):
+            cy = y + rowh / 2
+            if i % 2 == 0:
+                f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
+            f.add(text(18, cy + 4, name, "t-s", maxw=x0 - 30))
+            tip = f"{name}：${lo:g}k–{hi:g}k（{kind[kd]}）" + (f"，中位数 ${med:g}k" if med else "")
+            f.add(f'<rect x="{X(lo):.1f}" y="{cy - 6:g}" width="{(hi - lo) * k:.1f}" height="12" rx="3" class="{cls[kd]}"><title>{esc(tip)}</title></rect>')
+            if med:
+                f.add(f.ln(f"M{X(med):.1f},{cy - 9:g} V{cy + 9:g}", cls="l-tick"))
+            lab = f"{lo:g}–{hi:g}" + (f" · 中位 {med:g}" if med else "")
+            if kd == "X":
+                lab += " · 要经验"
+            if kd == "C":
+                lab += " · 不对中国籍开放"
+            if X(hi) + 8 + tw(lab, 10.5) < 1068:
+                f.add(text(X(hi) + 8, cy + 4, lab, "t-xs t-m"))
+            else:
+                f.add(text(X(lo) - 8, cy + 4, lab, "t-xs t-m", "end"))
+            y += rowh
+    if IND_PAY_CN:
+        y += 24
+        f.add(text(16, y, "回国对照：中国大厂博士年包（万元人民币，税前，含年终奖；不换算成美元）", "t t-b t-cn"))
+        y += 14
+        cx0, ck = 352, 7.0  # px per 万元 from 0
+        CX = lambda v: cx0 + v * ck
+        for v in range(0, 101, 20):
+            f.add(f.ln(f"M{CX(v):.1f},{y} V{y + len(IND_PAY_CN) * rowh + 8}", cls="l-grid"))
+            f.add(text(CX(v), y - 2, f"{v}", "t-xs t-m", "middle"))
+        y += 8
+        for i, (name, lo, hi, note) in enumerate(IND_PAY_CN):
+            cy = y + rowh / 2
+            if i % 2 == 0:
+                f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
+            f.add(text(18, cy + 4, name, "t-s", maxw=cx0 - 30))
+            f.add(f'<rect x="{CX(lo):.1f}" y="{cy - 6:g}" width="{max((hi - lo) * ck, 3):.1f}" height="12" rx="3" class="k-cn"><title>{esc(name)}：{lo:g}–{hi:g} 万元</title></rect>')
+            f.add(text(CX(hi) + 8, cy + 4, f"{lo:g}–{hi:g} 万 · {note}", "t-xs", maxw=1068 - CX(hi) - 8))
+            y += rowh
+        yend2 = y
+    else:
+        yend2 = yend
+    f.add(text(16, yend2 + 26, "读法：同一家公司 LCA 区间很宽，因为混合了不同级别和地区；应届博士通常落在区间下半段。招聘启事区间的上限多对应资深级别。", "t-xs"))
+    f.add(text(16, yend2 + 44, "LCA 是雇主为 H-1B 申报的工资，只反映雇外国人的岗位；条数少（1–3 条）时只是个例。咨询和量化的 base 高，但竞争者来自所有专业。", "t-xs"))
+    f.add(text(16, yend2 + 62, "来源：h1bdata.info（DOL LCA，2025 年递交）、各公司招聘页（2026 年，部分为第三方转载，见各方向面板的状态标注）。", "t-xs"))
+    return f
+
 
 FIGS = [fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11, fig12,
-        fig13, fig14, fig15, fig16, fig17, fig18, fig19, fig20, fig21]
+        fig13, fig14, fig15, fig16, fig17, fig18, fig19, fig20, fig21, fig22, fig23]
 
 # standalone stylesheet (literal tokens; light + dark)
 TOK_LIGHT = dict(paper="#F3F5F4", paper2="#E8ECEB", card="#FFFFFF", ink="#16202A", ink2="#4E5A66", line="#CDD5D6",
