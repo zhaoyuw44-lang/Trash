@@ -770,7 +770,18 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
   var el = document.getElementById('livemap');
   if (!window.L || !el) { if (el) el.style.display='none'; var f=document.getElementById('mapfallback'); if(f) f.style.display='block'; return; }
   var map = L.map(el, {scrollWheelZoom:false});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18, attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+  // OpenStreetMap and CARTO tiles are blocked for pages opened as local files, so use Esri tiles (with a second Esri style as fallback).
+  var providers = [
+    ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, attribution:'Tiles &copy; Esri'}],
+    ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {maxZoom:19, attribution:'Tiles &copy; Esri'}]
+  ];
+  var pi = 0, errors = 0, tiles = L.tileLayer(providers[0][0], providers[0][1]).addTo(map);
+  tiles.on('tileerror', function(){
+    if (++errors > 4 && pi < providers.length - 1) {
+      pi++; errors = 0; map.removeLayer(tiles);
+      tiles = L.tileLayer(providers[pi][0], providers[pi][1]).addTo(map);
+    }
+  });
   var layer = L.layerGroup().addTo(map);
   function show(key){
     var c = CITIES[key]; layer.clearLayers();
