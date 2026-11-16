@@ -1415,14 +1415,22 @@ IND_PAY = [
         ("Citadel Securities · 量化研究（43 条 LCA）", "L", 200.0, 330.0, 250.0),
     ]),
 ]
-IND_PAY_CN = []  # (label, low 万元, high 万元, note) — filled from the China supplement
+IND_PAY_CN = [  # (label, low 万元, high 万元, note)
+    ("万华化学 · 博士研发（2026 届简章）", 45, 45, "税前，简章原文"),
+    ("宁德时代 · 春招宣讲口径", 30, 70, "“博士 30–70 万起”，宣传口径"),
+    ("中芯国际 · 工艺研发（一例）", 31.5, 37.8, "21k × 12 + 年终 3–6 个月，二手"),
+    ("华为 · 常规博士（一例，算法岗）", 55, 55, "2022 年总包，非材料岗，二手"),
+    ("宝钢湛江 · 博士（国企）", 30, 30, "另有一次性补贴 55 万元"),
+    ("长江存储 · 博士后（非正式岗）", 40, 60, "综合年薪，二手"),
+    ("全国博士平均起薪 × 12", 30.1, 30.1, "前程无忧：2025 届月均 25,082 元"),
+]
 
 
 def fig23():
     rowh, gh = 21, 32
     n = sum(len(g[1]) for g in IND_PAY)
     top = 118
-    cn_h = (len(IND_PAY_CN) * rowh + gh + 64) if IND_PAY_CN else 0
+    cn_h = (len(IND_PAY_CN) * rowh + gh + 78) if IND_PAY_CN else 0
     yend = top + n * rowh + len(IND_PAY) * gh
     H = yend + cn_h + 100
     f = Fig("23-industry-pay-by-company", 1080, H,
@@ -1463,11 +1471,12 @@ def fig23():
                 f.add(text(X(lo) - 8, cy + 4, lab, "t-xs t-m", "end"))
             y += rowh
     if IND_PAY_CN:
-        y += 24
-        f.add(text(16, y, "回国对照：中国大厂博士年包（万元人民币，税前，含年终奖；不换算成美元）", "t t-b t-cn"))
-        y += 14
+        y += 30
+        f.add(text(16, y, "回国对照：中国大厂博士年包（万元人民币；多为招聘方口径或个例，不是完整 offer；不换算成美元）", "t t-b t-cn"))
+        y += 40
         cx0, ck = 352, 7.0  # px per 万元 from 0
         CX = lambda v: cx0 + v * ck
+        f.add(text(CX(0) - 8, y - 18, "年包（万元）", "t-xs t-b"))
         for v in range(0, 101, 20):
             f.add(f.ln(f"M{CX(v):.1f},{y} V{y + len(IND_PAY_CN) * rowh + 8}", cls="l-grid"))
             f.add(text(CX(v), y - 2, f"{v}", "t-xs t-m", "middle"))
@@ -1477,15 +1486,20 @@ def fig23():
             if i % 2 == 0:
                 f.add(rect(8, y, 1064, rowh, "k-zebra", 0))
             f.add(text(18, cy + 4, name, "t-s", maxw=cx0 - 30))
-            f.add(f'<rect x="{CX(lo):.1f}" y="{cy - 6:g}" width="{max((hi - lo) * ck, 3):.1f}" height="12" rx="3" class="k-cn"><title>{esc(name)}：{lo:g}–{hi:g} 万元</title></rect>')
-            f.add(text(CX(hi) + 8, cy + 4, f"{lo:g}–{hi:g} 万 · {note}", "t-xs", maxw=1068 - CX(hi) - 8))
+            rng = f"{lo:g}" if lo == hi else f"{lo:g}–{hi:g}"
+            if lo == hi:
+                f.add(f'<circle cx="{CX(lo):.1f}" cy="{cy:g}" r="6" class="m-ch-cn"><title>{esc(name)}：{rng} 万元</title></circle>')
+            else:
+                f.add(f'<rect x="{CX(lo):.1f}" y="{cy - 6:g}" width="{(hi - lo) * ck:.1f}" height="12" rx="3" class="k-cn"><title>{esc(name)}：{rng} 万元</title></rect>')
+            f.add(text(CX(hi) + 10, cy + 4, f"{rng} 万 · {note}", "t-xs", maxw=1068 - CX(hi) - 10))
             y += rowh
         yend2 = y
     else:
         yend2 = yend
     f.add(text(16, yend2 + 26, "读法：同一家公司 LCA 区间很宽，因为混合了不同级别和地区；应届博士通常落在区间下半段。招聘启事区间的上限多对应资深级别。", "t-xs"))
     f.add(text(16, yend2 + 44, "LCA 是雇主为 H-1B 申报的工资，只反映雇外国人的岗位；条数少（1–3 条）时只是个例。咨询和量化的 base 高，但竞争者来自所有专业。", "t-xs"))
-    f.add(text(16, yend2 + 62, "来源：h1bdata.info（DOL LCA，2025 年递交）、各公司招聘页（2026 年，部分为第三方转载，见各方向面板的状态标注）。", "t-xs"))
+    f.h = int(yend2 + 80)
+    f.add(text(16, yend2 + 62, "来源：h1bdata.info（DOL LCA，2025 年递交）、各公司招聘页（2026 年，部分为第三方转载）；中国：企业招聘简章、高校就业网转载、个人自述和前程无忧白皮书，状态见“中国大厂与国企”面板。", "t-xs"))
     return f
 
 
