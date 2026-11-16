@@ -434,6 +434,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <li><a href="#china" data-nav="china" data-side="c"><span class="dot"></span>回国发展<small>认证 · 求职 · 落户</small></a></li>
     <li><a href="#abroad" data-nav="abroad" data-side="x"><span class="dot"></span>第三地<small>加 · 英 · 澳 · 港 · 新 · 欧 · 日</small></a></li>
     <li><a href="#academia" data-nav="academia" data-side="b"><span class="dot"></span>高校工作<small>美 · 中 · 港澳 · 城市 · 福利</small></a></li>
+    <li><a href="#industry" data-nav="industry" data-side="b"><span class="dot"></span>业界工作<small>大厂 · 高分子材料博士</small></a></li>
     <li><a href="#edu-cn" data-nav="edu-cn" data-side="c"><span class="dot"></span>中国教育体系<small>K-12 → 博士</small></a></li>
     <li><a href="#edu-us" data-nav="edu-us" data-side="u"><span class="dot"></span>美国教育体系<small>K-12 → PhD</small></a></li>
     <li><a href="#plan" data-nav="plan"><span class="dot"></span>时间规划<small>年历 · 清单</small></a></li>
@@ -1093,6 +1094,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
           <label class="field" for="oc-ub">基本年薪<input type="number" id="oc-ub" min="0" step="1000"></label>
           <label class="field" for="oc-uterm">合同<select id="oc-uterm"><option value="9">9 个月（学年）</option><option value="12">12 个月</option></select></label>
           <label class="field" for="oc-usum">暑期工资（月）<input type="number" id="oc-usum" min="0" max="3" step="0.5"></label>
+          <label class="field" for="oc-ubonus">奖金与股票（每年）<input type="number" id="oc-ubonus" min="0" step="1000"></label>
           <label class="field" for="oc-ust">州 / 城市<select id="oc-ust"></select></label>
           <label class="field" for="oc-ustat">税务与社保身份<select id="oc-ustat">
             <option value="res">税务居民：缴 FICA 7.65%</option>
@@ -1115,6 +1117,8 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
         <legend><span class="badge c">中国</span>年薪单位：人民币</legend>
         <div class="fields">
           <label class="field" for="oc-cb">税前年薪（含绩效）<input type="number" id="oc-cb" min="0" step="5000"></label>
+          <label class="field" for="oc-cbonus">年终奖<input type="number" id="oc-cbonus" min="0" step="5000"></label>
+          <label class="check" for="oc-cbsep"><input type="checkbox" id="oc-cbsep">年终奖单独计税（政策执行至 2027-12-31）</label>
           <label class="field" for="oc-cbase">缴费基数占工资 %<input type="number" id="oc-cbase" min="0" max="100" step="5"></label>
           <label class="field" for="oc-ccapcity">社保所在地<select id="oc-ccapcity"></select></label>
           <label class="field" for="oc-ccap">基数上限（元/月）<input type="number" id="oc-ccap" min="0" step="100"></label>
@@ -1143,7 +1147,7 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
     <div class="oc-bars" id="oc-bars" aria-hidden="true"></div>
     <div class="tbl"><table class="oc-tbl" id="oc-tbl"></table></div>
     <ul class="oc-read" id="oc-read"></ul>
-    <p class="sub">算法：美国按 2026 年联邦税率表（Rev. Proc. 2025-32）、标准扣除、FICA（社保税工资上限 184,500 美元）和子女税收抵免（每孩 2,200 美元）；单一税率的州按“税率 ×（工资 − 免税额）”计算，累进税制的州（加州、俄勒冈、纽约、马里兰、威斯康星、明尼苏达、密苏里、犹他）按 8 万、12 万、16 万美元三档有效税率插值，只是近似；市税按工资全额计；州税一律按单身估算。加州私立雇主另扣 SDI 1.3%（UC 不参加 SDI，不扣）；华盛顿州另扣带薪家事假 PFML 约 0.81% 和长期护理 WA Cares 0.58%（2026 年起持 H-1B 等工作签证者自动豁免 WA Cares）；俄勒冈另扣 Paid Leave Oregon 0.6% 和全州交通税 0.1%，Portland 居民的 SHS、PFA 地方税只对 12.5 万美元以上的部分征收，未计入。加州 2026 年有效税率按 FTB 公布的 2026 年级距重算（12 万美元约 5.64%）；俄勒冈按 2026 年预扣公式估算，并假设联邦税扣减用满。中国按综合所得年度税率表，扣除 6 万元基本减除、个人社保 10.5%（养老 8%、医疗 2%、失业 0.5%）、公积金和职业年金，以及子女每孩 2,000 元/月等专项附加扣除。没算进去的：年终奖单独计税、课时费、横向经费、美国医保税前扣除、各地社保细则。月供按等额本息 30 年计。缴费基数上限按各地 2026 年公布值（多数来自官方通知或媒体转载，武汉等未查到的请自填）；高校实际缴费基数常低于全部年薪，可用“缴费基数占工资 %”调整。中国房贷利率默认 5 年期 LPR 3.5%，公积金贷款首套 5 年以上为 2.6%；2026-10-01 起首套商业贷款另有 1 个百分点贴息，但限房价 150 万元以下、面积 120 ㎡以下。</p>
+    <p class="sub">算法：美国按 2026 年联邦税率表（Rev. Proc. 2025-32）、标准扣除、FICA（社保税工资上限 184,500 美元）和子女税收抵免（每孩 2,200 美元）；单一税率的州按“税率 ×（工资 − 免税额）”计算，累进税制的州（加州、俄勒冈、纽约、马里兰、威斯康星、明尼苏达、密苏里、犹他）按 8 万、12 万、16 万美元三档有效税率插值，只是近似；市税按工资全额计；州税一律按单身估算。加州私立雇主另扣 SDI 1.3%（UC 不参加 SDI，不扣）；华盛顿州另扣带薪家事假 PFML 约 0.81% 和长期护理 WA Cares 0.58%（2026 年起持 H-1B 等工作签证者自动豁免 WA Cares）；俄勒冈另扣 Paid Leave Oregon 0.6% 和全州交通税 0.1%，Portland 居民的 SHS、PFA 地方税只对 12.5 万美元以上的部分征收，未计入。加州 2026 年有效税率按 FTB 公布的 2026 年级距重算（12 万美元约 5.64%）；俄勒冈按 2026 年预扣公式估算，并假设联邦税扣减用满。中国按综合所得年度税率表，扣除 6 万元基本减除、个人社保 10.5%（养老 8%、医疗 2%、失业 0.5%）、公积金和职业年金，以及子女每孩 2,000 元/月等专项附加扣除。美国“奖金与股票”按工资计税（RSU 归属时按市价计入工资），不计入退休缴款基数；中国年终奖可选单独计税（按月度税率表，政策执行至 2027-12-31）或并入综合所得，不计入社保基数。没算进去的：课时费、横向经费、美国医保税前扣除、各地社保细则。月供按等额本息 30 年计。缴费基数上限按各地 2026 年公布值（多数来自官方通知或媒体转载，武汉等未查到的请自填）；高校实际缴费基数常低于全部年薪，可用“缴费基数占工资 %”调整。中国房贷利率默认 5 年期 LPR 3.5%，公积金贷款首套 5 年以上为 2.6%；2026-10-01 起首套商业贷款另有 1 个百分点贴息，但限房价 150 万元以下、面积 120 ㎡以下。</p>
   </section>
 
 
@@ -1290,10 +1294,25 @@ BASE = 120,000 − 8,750 − 2,910 = $108,340；州税 ≈ $678 + (108,340 − 1
       </ul></div>
     </div>
   </section>
-  <p class="next"><a href="#edu-cn">下一章：中国教育体系 →</a></p>
+  <p class="next"><a href="#industry">下一章：业界工作 →</a></p>
 </section>
 
 <!-- ============================================================ EDU CN -->
+<section class="view" data-view="industry" aria-labelledby="h-i" hidden>
+  <div class="vh">
+    <span class="kicker">Industry · 业界工作</span>
+    <h2 id="h-i">去大厂：高分子材料博士在美国和中国业界能做什么</h2>
+    <!--@html:ind-intro-->
+  </div>
+<!--@html:ind-body-->
+  <section class="blk" aria-labelledby="h-i-detail">
+    <h3 id="h-i-detail">逐个方向看：公司、岗位、薪资、限制和近况</h3>
+    <p class="sub">选一个方向。每个方向先给结论，再给表格和来源（前两张表默认展开）；“二手”指来自媒体、薪资网站或论坛，“未核实”指这次没能打开一手来源。</p>
+    
+  </section>
+  <p class="next"><a href="#edu-cn">下一章：中国教育体系 →</a></p>
+</section>
+
 <section class="view" data-view="edu-cn" aria-labelledby="h-ecn" hidden>
   <div class="vh">
     <span class="kicker">China's Education System · 中国教育体系</span>
@@ -1975,6 +1994,8 @@ const OC = {
   // 2026 social-insurance base caps (yuan/month); see 中国 · 城市政策
   caps: [["北京", 36348], ["上海", 37731], ["广东（深圳、广州）", 27603], ["江苏（南京、苏州）", 25127], ["浙江（杭州）", 25611],
     ["西安", 23685], ["四川（成都）", 23493], ["福建（厦门）", 22893], ["安徽（合肥）", 21772], ["自填", 0]],
+  // monthly table, used for the annual one-off bonus taxed separately (财政部 税务总局公告 2023 年第 30 号, to 2027-12-31)
+  iitm: [[0, .03, 0], [3000, .10, 210], [12000, .20, 1410], [25000, .25, 2660], [35000, .30, 4410], [55000, .35, 7160], [80000, .45, 15160]],
   iit: [[0, .03, 0], [36000, .10, 2520], [144000, .20, 16920], [300000, .25, 31920], [420000, .30, 52920], [660000, .35, 85920], [960000, .45, 181920]],
   // creprice asking price, yuan per m2 (about 2026-10)
   cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["自填", 0]],
@@ -2042,9 +2063,9 @@ function ocPmt(principal, ratePct, years) {
 const num = id => { const v = parseFloat(ocEl(id).value); return isFinite(v) ? v : 0; };
 function ocUS() {
   const base = num("ub"), nine = ocEl("uterm").value === "9", sum = nine ? Math.min(num("usum"), 3) : 0;
-  const gross = base + (nine ? base / 9 * sum : 0);
+  const pay = base + (nine ? base / 9 * sum : 0), bonus = num("ubonus"), gross = pay + bonus;
   const stat = ocEl("ustat").value, file = stat === "nr" ? "single" : ocEl("ufile").value, kids = Math.round(num("kids"));
-  const ret = gross * num("uret") / 100;
+  const ret = pay * num("uret") / 100;
   let fica = 0;
   if (stat === "res") fica = Math.min(gross, OC.ssCap) * .062 + gross * .0145 + Math.max(0, gross - (file === "mfj" ? 250000 : 200000)) * .009;
   if (stat === "noss") fica = gross * .0145 + Math.max(0, gross - (file === "mfj" ? 250000 : 200000)) * .009;
@@ -2066,10 +2087,10 @@ function ocUS() {
   const extra = gross * OC.states[st][OC.states[st].length - 1] / 100;
   const health = num("uhp") * 12;
   const cash = gross - ret - fica - fed - state - extra - health;
-  const er = gross * num("uer") / 100;
+  const er = pay * num("uer") / 100;
   const price = num("uhome"), down = num("down") / 100;
   const pmt = price ? ocPmt(price * (1 - down), num("urate"), 30) + price * num("uptax") / 100 / 12 : 0;
-  return {gross, tax: fed, ctc, fica, state: state + extra, health, ret, cash, saved: ret + er, er, price, downAmt: price * down, pmt, sum};
+  return {gross, bonus, tax: fed, ctc, fica, state: state + extra, health, ret, cash, saved: ret + er, er, price, downAmt: price * down, pmt, sum};
 }
 function ocCN() {
   const gross = num("cb"), kids = Math.round(num("kids"));
@@ -2080,21 +2101,34 @@ function ocCN() {
   const taxable = Math.max(0, gross + (taxSub ? sub : 0) - ded);
   let iit = 0;
   for (let i = OC.iit.length - 1; i >= 0; i--) if (taxable > OC.iit[i][0]) { iit = taxable * OC.iit[i][1] - OC.iit[i][2]; break; }
-  const cash = gross + sub - soc - hf - nj - iit;
+  const bonus = num("cbonus"), sep = ocEl("cbsep").checked;
+  let btax = 0;
+  if (bonus > 0) {
+    if (sep) {
+      for (let i = OC.iitm.length - 1; i >= 0; i--) if (bonus / 12 > OC.iitm[i][0]) { btax = bonus * OC.iitm[i][1] - OC.iitm[i][2]; break; }
+    } else {
+      const t2 = taxable + bonus;
+      let all = 0;
+      for (let i = OC.iit.length - 1; i >= 0; i--) if (t2 > OC.iit[i][0]) { all = t2 * OC.iit[i][1] - OC.iit[i][2]; break; }
+      btax = all - iit;
+    }
+  }
+  iit += btax;
+  const cash = gross + bonus + sub - soc - hf - nj - iit;
   const saved = hf * 2 + nj + (ocEl("cnj").checked ? base * 12 * .08 : 0);
   const city = OC.cities.find(c => c[0] === ocEl("ccity").value);
   const ppm = num("cppm") || (city ? city[1] : 0);
   const price = ppm * num("carea"), down = num("down") / 100;
   const pmt = price ? ocPmt(price * (1 - down), num("crate"), 30) : 0;
-  return {gross, sub, soc, hf, nj, iit, cash, saved, base, price, ppm, downAmt: price * down, pmt, taxable};
+  return {gross: gross + bonus, bonus, btax, sep, sub, soc, hf, nj, iit, cash, saved, base, price, ppm, downAmt: price * down, pmt, taxable};
 }
 const f0 = v => Math.round(v).toLocaleString("en-US");
 const pct = (a, b) => b > 0 ? Math.round(a / b * 100) + "%" : "—";
 function ocRun() {
   const u = ocUS(), c = ocCN(), fx = num("fx") || 6.676, ppp = num("ppp") || 3.398;
   const rows = [
-    ["税前收入", `$${f0(u.gross)}` + (u.sum ? `<small>含暑期 ${u.sum} 个月</small>` : ""), `¥${f0(c.gross + c.sub)}` + (c.sub ? `<small>含每年补贴 ¥${f0(c.sub)}</small>` : "")],
-    ["所得税", `$${f0(u.tax)}` + (u.ctc ? `<small>已减子女抵免 $${f0(u.ctc)}</small>` : ""), `¥${f0(c.iit)}<small>应纳税所得额 ¥${f0(c.taxable)}</small>`],
+    ["税前收入", `$${f0(u.gross)}` + (u.sum ? `<small>含暑期 ${u.sum} 个月</small>` : "") + (u.bonus ? `<small>含奖金与股票 $${f0(u.bonus)}</small>` : ""), `¥${f0(c.gross + c.sub)}` + (c.sub ? `<small>含每年补贴 ¥${f0(c.sub)}</small>` : "") + (c.bonus ? `<small>含年终奖 ¥${f0(c.bonus)}</small>` : "")],
+    ["所得税", `$${f0(u.tax)}` + (u.ctc ? `<small>已减子女抵免 $${f0(u.ctc)}</small>` : ""), `¥${f0(c.iit)}<small>应纳税所得额 ¥${f0(c.taxable)}</small>` + (c.bonus ? `<small>其中年终奖 ¥${f0(c.btax)}（${c.sep ? "单独计税" : "并入综合所得"}）</small>` : "")],
     ["州税 / 地方税", `$${f0(u.state)}`, "—"],
     ["社保 / FICA（个人）", `$${f0(u.fica)}`, `¥${f0(c.soc)}<small>基数 ¥${f0(c.base)}/月 × 10.5%</small>`],
     ["退休 / 公积金 / 年金（个人）", `$${f0(u.ret)}`, `¥${f0(c.hf + c.nj)}`],
@@ -2128,7 +2162,7 @@ function ocRun() {
   $("#oc-read").innerHTML = read.map(s => `<li>${s}</li>`).join("");
 }
 function ocLoad(k) {
-  const p = OC.presets[k];
+  const p = Object.assign({ubonus: 0, cbonus: 0, cbsep: true}, OC.presets[k]);
   for (const [id, v] of Object.entries(p)) {
     if (id === "note") continue;
     const el = ocEl(id);
@@ -2156,7 +2190,7 @@ $$("#offer-calc input, #offer-calc select").forEach(el => el.addEventListener("i
 ocLoad("p1");
 
 /* ---------------- academic-jobs panels (tab groups: a = topics, w = West Coast + Chicago) */
-const AKEY = {a: "phd-map-a", w: "phd-map-w"}, ADEF = {a: "us-career", w: "bay-area"};
+const AKEY = {a: "phd-map-a", w: "phd-map-w", i: "phd-map-i"}, ADEF = {a: "us-career", w: "bay-area", i: "semis"};
 function showA(k, scroll, g = "a") {
   if (!$(`#${g}-${k}`)) k = ADEF[g];
   if (!$(`#${g}-${k}`)) return;
@@ -2179,11 +2213,12 @@ document.addEventListener("click", e => {
   if (!a) return;
   e.preventDefault();
   if (!$("#lb").hidden) $("#lb").hidden = true;
-  if (location.hash !== "#academia") {
-    try { history.pushState(null, "", "#academia"); } catch (err) {}
-    show("academia", false);
+  const g = a.dataset.g || "a", vw = g === "i" ? "industry" : "academia";
+  if (location.hash !== "#" + vw) {
+    try { history.pushState(null, "", "#" + vw); } catch (err) {}
+    show(vw, false);
   }
-  showA(a.dataset.a, true, a.dataset.g || "a");
+  showA(a.dataset.a, true, g);
 });
 
 /* ---------------- lightbox */

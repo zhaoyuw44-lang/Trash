@@ -169,6 +169,30 @@ def west_panels():
     return tabs(WORDER, "w", "选择地区") + "".join(panel(WSEC[k], lab, side, "w") for k, lab, side in WORDER)
 
 
+IND_FILE = ROOT / "data" / "industry.json"
+IND = json.loads(IND_FILE.read_text(encoding="utf-8")) if IND_FILE.exists() else {"sections": []}
+ISEC = {s["key"]: s for s in IND["sections"]}
+IORDER = [
+    ("semis", "半导体与封装", "u"),
+    ("energy", "电池与新能源", "u"),
+    ("chem", "化工与消费品", "u"),
+    ("tech", "科技大厂与 AI 材料", "u"),
+    ("med", "医疗器械与制药", "u"),
+    ("pivot", "转行", "u"),
+    ("export", "出口管制与安全审查", "b"),
+    ("visa", "业界身份路线", "u"),
+    ("job-search", "求职与薪资基准", "u"),
+    ("cn-industry", "中国大厂与国企", "c"),
+]
+IORDER = [o for o in IORDER if o[0] in ISEC]
+
+
+def ind_panels():
+    if not IORDER:
+        return ""
+    return tabs(IORDER, "i", "选择方向") + "".join(panel(ISEC[k], lab, side, "i") for k, lab, side in IORDER)
+
+
 def sources_for(order, secs, prefix):
     out = []
     for k, label, _ in order:
@@ -183,11 +207,13 @@ def sources_for(order, secs, prefix):
 
 
 def all_sources():
-    return sources_for(ORDER, SEC, "高校工作") + sources_for(WORDER, WSEC, "西海岸与芝加哥")
+    return (sources_for(ORDER, SEC, "高校工作") + sources_for(WORDER, WSEC, "西海岸与芝加哥")
+            + sources_for(IORDER, ISEC, "业界工作"))
 
 
 HTML = {
     "acad-panels": panels,
     "west-panels": west_panels,
+    "ind-panels": ind_panels,
     "acad-sources": all_sources,
 }
