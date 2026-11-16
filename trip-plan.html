@@ -41,7 +41,7 @@ h3{font-size:18px;margin:20px 0 8px}
 .muted{color:var(--muted)}
 .en{color:var(--blue);font-weight:600}
 a{color:var(--blue)}
-svg{display:block;width:100%;height:auto}
+.card svg,.day svg{display:block;width:100%;height:auto}
 svg text{font-family:inherit}
 .t-ink{fill:var(--ink)} .t-muted{fill:var(--muted)} .t-blue{fill:var(--blue)} .t-red{fill:var(--red)}
 .s-line{stroke:var(--line)} .f-card{fill:var(--card)} .f-bg{fill:var(--bg)}
@@ -67,6 +67,15 @@ th{color:var(--muted);font-weight:600;font-size:13px}
 .strike{text-decoration:line-through;color:var(--muted)}
 .progress{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin:6px 0 2px}
 .progress i{display:block;height:100%;width:0;background:#0f8b8d;transition:width .3s}
+
+.maptabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.maptabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.maptabs button.on{background:#0f8b8d;color:#fff;border-color:#0f8b8d}
+.livemap{height:420px;border-radius:16px;border:1px solid var(--line);overflow:hidden;background:var(--chip)}
+@media (max-width:640px){.livemap{height:360px}}
+.leaflet-container{font-family:inherit}
+.pin{display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.lbl{background:rgba(255,255,255,.92);border:none;box-shadow:0 1px 3px rgba(0,0,0,.25);color:#1b2333;font-weight:700;font-size:12px;padding:2px 6px}
 footer{color:var(--muted);font-size:13px;margin-top:40px}
 </style>
 </head>
@@ -338,6 +347,16 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
   </svg>
 </div>
 
+<h3>在地图上看：推荐住的区域</h3>
+<p class="muted" style="margin-top:0">绿色 = 推荐住的区域；黄色 = 白天可以、晚上注意；红色 = 不要去或不要步行穿过；★ = 推荐酒店；● = 要去的地方。点一下图标可以看名字。范围是大致示意，不是精确边界。</p>
+<div class="maptabs" role="tablist">
+  <button data-city="bos" class="on" role="tab">Boston（4 晚）</button>
+  <button data-city="mia" role="tab">Miami（2 晚）</button>
+  <button data-city="fll" role="tab">Fort Lauderdale（1 晚）</button>
+</div>
+<div id="livemap" class="livemap"></div>
+<p id="mapfallback" class="muted" style="display:none">地图需要联网才能显示。离线时请看下方“地图”一节的示意图。</p>
+<div class="card" id="mapnote" style="margin-top:8px"></div>
 <h3>① Boston（12/22–26，4 晚）：North Station / West End</h3>
 <div class="card scroll">
   <table>
@@ -677,6 +696,99 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
     });
   });
   update();
+})();
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+  var G='#2e8b57', Y='#d99a1e', R='#c0392b';
+  var CITIES = {
+    bos: {
+      view:[42.3560,-71.0780], zoom:13,
+      note:'<b>Boston：住 North Station / West End / North End（绿色）。</b>两场 Celtics 走路去；North End 吃饭近；去 Harvard、MIT 坐 Red Line 或 Uber 10–15 分钟。<br>黄色的 <b>Boston Common、Downtown Crossing</b> 白天走 Freedom Trail 没问题，晚上不要穿过；<b>Chinatown</b> 吃完晚饭叫车回。红色 Mass &amp; Cass 不顺路，不要去。',
+      zones:[
+        {c:G, t:'推荐住：North Station / West End / North End', p:[[42.3698,-71.0690],[42.3698,-71.0590],[42.3672,-71.0520],[42.3620,-71.0505],[42.3598,-71.0560],[42.3606,-71.0660]]},
+        {c:Y, t:'Boston Common：白天可以，晚上别穿过', p:[[42.3576,-71.0708],[42.3572,-71.0622],[42.3530,-71.0618],[42.3520,-71.0690]]},
+        {c:Y, t:'Downtown Crossing / Chinatown：晚上叫车', p:[[42.3572,-71.0618],[42.3575,-71.0570],[42.3505,-71.0580],[42.3495,-71.0640],[42.3530,-71.0640]]},
+        {c:R, t:'Mass & Cass 一带：不要去', circle:[42.3332,-71.0731], r:450}
+      ],
+      pts:[
+        {s:'★', c:G, ll:[42.3658,-71.0617], n:'★ citizenM Boston North Station（首选）'},
+        {s:'★', c:G, ll:[42.3618,-71.0578], n:'Canopy by Hilton Boston Downtown'},
+        {s:'★', c:G, ll:[42.3640,-71.0630], n:'The Boxer Boston'},
+        {s:'★', c:Y, ll:[42.3518,-71.0634], n:'HI Boston 青旅（在 Chinatown，晚上叫车）'},
+        {s:'●', c:'#007a33', ll:[42.3662,-71.0621], n:'TD Garden（Celtics 12/23、12/25）', lab:'TD Garden'},
+        {s:'●', c:'#a51c30', ll:[42.3744,-71.1169], n:'Harvard（12/23 上午）', lab:'Harvard'},
+        {s:'●', c:'#8a8b8c', ll:[42.3601,-71.0942], n:'MIT（12/23 下午）', lab:'MIT'},
+        {s:'●', c:'#7c3aed', ll:[42.3394,-71.0940], n:'MFA Boston（12/24）'},
+        {s:'●', c:'#7c3aed', ll:[42.3382,-71.0991], n:'Gardner Museum（12/24）'},
+        {s:'●', c:'#7c3aed', ll:[42.3426,-71.0857], n:'Symphony Hall · Holiday Pops（12/24）', lab:'Symphony Hall'},
+        {s:'●', c:'#c0392b', ll:[42.3550,-71.0656], n:'Freedom Trail 起点（12/25 白天）'},
+        {s:'✈', c:'#e9822f', ll:[42.3656,-71.0096], n:'Logan 机场', lab:'Logan'}
+      ]
+    },
+    mia: {
+      view:[25.7900,-80.2050], zoom:12,
+      note:'<b>Miami：住 Brickell（绿色）。</b>Dolphins 散场的 Uber Shuttle 到这里；去 Vizcaya、Little Havana 约 10 分钟，去 MIA 机场约 15 分钟。<br>想住海边可以选黄色的 <b>South Beach</b>，白天很好，深夜注意扒手和“天价饮料”。从 Brickell 去 Wynwood 坐 Uber，<b>不要步行穿过红色的 Overtown</b>。',
+      zones:[
+        {c:G, t:'推荐住：Brickell', p:[[25.7712,-80.1950],[25.7712,-80.1880],[25.7610,-80.1888],[25.7555,-80.1925],[25.7575,-80.1990],[25.7665,-80.1990]]},
+        {c:Y, t:'South Beach：备选，深夜注意', p:[[25.7905,-80.1400],[25.7905,-80.1285],[25.7690,-80.1310],[25.7690,-80.1405]]},
+        {c:Y, t:'Wynwood：白天好，晚上叫车', p:[[25.8060,-80.2040],[25.8060,-80.1950],[25.7960,-80.1950],[25.7960,-80.2040]]},
+        {c:R, t:'Overtown：不要步行穿过', p:[[25.7800,-80.2080],[25.7955,-80.2080],[25.7955,-80.1965],[25.7800,-80.1965]]},
+        {c:R, t:'Liberty City：不要去', circle:[25.8360,-80.2170], r:1300}
+      ],
+      pts:[
+        {s:'★', c:G, ll:[25.7650,-80.1937], n:'★ citizenM Miami Brickell（首选）'},
+        {s:'★', c:G, ll:[25.7623,-80.1930], n:'Hyatt Centric Brickell Miami'},
+        {s:'★', c:Y, ll:[25.7768,-80.1905], n:'YOTEL Miami（Downtown，紧挨 Brickell）'},
+        {s:'●', c:'#008e97', ll:[25.9580,-80.2389], n:'Hard Rock Stadium（Dolphins 12/27）', lab:'Hard Rock Stadium'},
+        {s:'●', c:'#7c3aed', ll:[25.7443,-80.2105], n:'Vizcaya（12/28 上午）', lab:'Vizcaya'},
+        {s:'●', c:'#0f9d9a', ll:[25.7654,-80.2527], n:'Versailles · Little Havana', lab:'Little Havana'},
+        {s:'●', c:'#0f9d9a', ll:[25.8010,-80.1990], n:'Wynwood Walls'},
+        {s:'✈', c:'#e9822f', ll:[25.7959,-80.2870], n:'MIA 机场（12/26 落地）', lab:'MIA'}
+      ]
+    },
+    fll: {
+      view:[26.1150,-80.2100], zoom:11,
+      note:'<b>Fort Lauderdale：住 Las Olas Boulevard（绿色）。</b>晚上走路就能吃饭；去 Panthers 球馆约 25 分钟，12/29 去 FLL 机场约 15 分钟。<br>黄色的 downtown 以西一带晚上比较冷清，不要走路去；海滩白天很好，深夜别独自去。',
+      zones:[
+        {c:G, t:'推荐住：Las Olas Boulevard', p:[[26.1210,-80.1460],[26.1210,-80.1290],[26.1168,-80.1290],[26.1168,-80.1460]]},
+        {c:G, t:'Fort Lauderdale Beach：白天', p:[[26.1400,-80.1060],[26.1400,-80.1020],[26.1050,-80.1030],[26.1050,-80.1070]]},
+        {c:Y, t:'downtown 以西：晚上别步行', p:[[26.1400,-80.1720],[26.1400,-80.1500],[26.1180,-80.1500],[26.1180,-80.1720]]}
+      ],
+      pts:[
+        {s:'★', c:G, ll:[26.1191,-80.1424], n:'★ Hyatt Centric Las Olas（首选）'},
+        {s:'★', c:G, ll:[26.1194,-80.1365], n:'Riverside Hotel'},
+        {s:'●', c:'#c8102e', ll:[26.1584,-80.3256], n:'Amerant Bank Arena（Panthers 12/28）', lab:'Panthers 球馆'},
+        {s:'●', c:'#e9822f', ll:[26.1520,-80.3195], n:'Sawgrass Mills（看球前吃饭）'},
+        {s:'✈', c:'#e9822f', ll:[26.0726,-80.1527], n:'FLL 机场（12/29 回 STL）', lab:'FLL'}
+      ]
+    }
+  };
+  var el = document.getElementById('livemap');
+  if (!window.L || !el) { if (el) el.style.display='none'; var f=document.getElementById('mapfallback'); if(f) f.style.display='block'; return; }
+  var map = L.map(el, {scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18, attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+  var layer = L.layerGroup().addTo(map);
+  function show(key){
+    var c = CITIES[key]; layer.clearLayers();
+    c.zones.forEach(function(z){
+      var shape = z.circle ? L.circle(z.circle, {radius:z.r}) : L.polygon(z.p);
+      shape.setStyle({color:z.c, weight:2, fillColor:z.c, fillOpacity:.25}).bindPopup(z.t).bindTooltip(z.t,{sticky:true}).addTo(layer);
+    });
+    c.pts.forEach(function(p){
+      var icon = L.divIcon({className:'', html:'<div class="pin" style="width:26px;height:26px;background:'+p.c+'">'+p.s+'</div>', iconSize:[26,26], iconAnchor:[13,13]});
+      var m = L.marker(p.ll, {icon:icon}).bindPopup(p.n).addTo(layer);
+      if (p.lab) m.bindTooltip(p.lab, {permanent:true, direction:'right', offset:[12,0], className:'lbl'});
+    });
+    map.setView(c.view, c.zoom);
+    document.getElementById('mapnote').innerHTML = c.note;
+    document.querySelectorAll('.maptabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-city')===key); });
+  }
+  document.querySelectorAll('.maptabs button').forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('data-city')); }); });
+  show('bos');
 })();
 </script>
 </body>
