@@ -984,6 +984,9 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
       <button class="chip" data-oc="p5" aria-pressed="false">博士后：西雅图 UW vs 深圳</button>
       <button class="chip" data-oc="p6" aria-pressed="false">博士后：洛杉矶 UCLA vs 北京</button>
       <button class="chip" data-oc="p7" aria-pressed="false">UIC 助理教授：芝加哥 vs 成都</button>
+      <button class="chip" data-oc="i1" aria-pressed="false">业界：Applied Materials 圣克拉拉 vs 中芯国际 上海</button>
+      <button class="chip" data-oc="i2" aria-pressed="false">业界：Intel 封装 凤凰城 vs 宁德时代 宁德</button>
+      <button class="chip" data-oc="i3" aria-pressed="false">业界：Dow 米德兰 vs 万华化学 烟台</button>
     </div>
     <p class="sub" id="oc-note"></p>
     <div class="oc-grid">
@@ -1109,9 +1112,65 @@ footer.disc{grid-column:2;margin-top:48px;padding-top:18px;border-top:1px solid 
   <div class="vh">
     <span class="kicker">Industry · 业界工作</span>
     <h2 id="h-i">去大厂：高分子材料博士在美国和中国业界能做什么</h2>
-    <!--@html:ind-intro-->
+    <p>这一章讲高分子材料博士（中国公民、在美国毕业、没有绿卡）去业界能做什么。美国分六个方向：半导体与先进封装、电池与新能源、化工与消费品、科技大厂与 AI 材料、医疗器械与制药、转行；另有中国大厂、国企和外企在华研发，以及贯穿所有方向的出口管制和签证。研究分 10 个主题，每个主题都经过研究、逆向核查、编辑和跨主题一致性检查，数字截至 <b>2026-11-16</b>。美国薪资主要来自 H-1B LCA（雇主为外国员工申报的年度基本工资）和招聘启事，不含奖金和股票。</p>
   </div>
-<!--@html:ind-body-->
+  <section class="blk" aria-labelledby="h-i-sum">
+    <h3 id="h-i-sum">先看结论</h3>
+    <div class="grid3 secgrid">
+      <div class="card"><h4>最对口的方向，工资不一定最高</h4><p>化工与消费品、电池几乎能用上全部高分子技能（合成、配方、表征、加工、界面），应届年度基本工资多在 8–15 万美元。半导体芯片厂和设备商、科技大厂付得更多（LCA 中位数约 10–16 万），但更看重工艺、可靠性和量产经验。参照：NCSES 2024 调查中，新博士去业界的预期基本工资中位数，物理科学 12 万美元，工程 12.5 万。</p></div>
+      <div class="card"><h4>成绩好有用，但代替不了工作年限</h4><p>应届博士的入口是 New College Grad、Engineer I/II、Scientist、Dow 的 Senior Research Specialist 一类职级。Apple、Nvidia、Lam 的高薪岗位要求 PhD 加 5 年，或 8–12 年以上经验，27–35 万美元的上限不是新博士的预期。GPA 和论文主要在 PhD 实习和应届筛选时起作用，所以读博期间最值钱的是一段工业实习。</p></div>
+      <div class="card"><h4>中国籍的门槛在哪里</h4><p>国防和航天（ITAR 岗位，如 SpaceX、Boeing Defense、Anduril）基本关闭。GAA 先进工艺（3E905，2024-09-06 以后入职）以及 PI、PEEK、碳纤维的开发和生产技术（1E001），一般要雇主先申请视同出口许可，BIS 2025 年平均审 62 天。封装材料、化工、消费品、医疗器械多数不受影响。更常见的门槛是雇主不愿担保：3M 部分岗位写明不担保，P&amp;G 2025 年只递交了 7 条 LCA。</p></div>
+      <div class="card"><h4>签证：H-1B 抽签按工资加权</h4><p>OPT 加 STEM OPT 最长 36 个月；STEM OPT 要求雇主加入 E-Verify。FY2027 起 H-1B 按工资级别加权抽签，DHS 估算 Level I 中签率约 15%，Level IV 超过 61%，所以谈 offer 时先谈基本工资。取消 D/S、把 OPT 申请窗口从 60 天缩到 30 天的规则 2026-09-14 被法院暂缓，但可能在上诉后生效，所以 OPT 最好在学业结束前递交。另有两项高额收费提案（OPT 首次 7 万美元、H-1B 103,265 美元），截至 2026-11-16 都没有定稿。</p></div>
+      <div class="card"><h4>2025–2026 年行情分化</h4><p>收缩的：Dow 宣布裁约 4,500 人；Intel 员工从 8.84 万降到 8.11 万；SK Battery America 裁 958 人；电动车电芯厂普遍减产。扩张的：TSMC Arizona（总投资 1,650 亿美元，含 2 座先进封装厂）、Micron 的 HBM 封装材料、Sila 负极厂、Celgard 隔膜线，以及 AI 材料公司（Lila Sciences 累计融资 5.5 亿美元）。</p></div>
+      <div class="card c"><h4>回国进大厂：先看简章口径，补贴另算</h4><p>能核实的博士薪酬多是招聘方口径或个例：万华化学 2026 届博士研发写明税前 45 万元/年；宁德时代宣讲口径为“博士 30–70 万起”；中芯国际一例工艺岗约 31.5–37.8 万元。城市补贴另算，多数对企业员工开放，例如深圳 10 万元、烟台每年 3.6 万元发 3 年。华为、中芯国际、宁德时代、比亚迪、长鑫、长江存储、京东方都在美国国防部 1260H 清单上，但没有找到官方规则把在这些公司工作过和美国拒签挂钩。</p></div>
+    </div>
+  </section>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 22 · 高分子技能对应哪些业界方向</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:22-polymer-phd-industry-map--></div>
+    <figcaption>每行一个方向。圆点是根据各方向招聘启事做的编辑判断，不是统计结果；右侧是美国应届或入门岗位的年度基本工资区间，由不同公司和岗位拼成。门槛只看中国籍（无绿卡）本身。</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <div class="fig-head"><span class="fig-no">图 23 · 按公司看薪资</span><button class="btn" data-zoom>放大查看</button></div>
+    <div class="fig-scroll"><!--@fig:23-industry-pay-by-company--></div>
+    <figcaption>美国部分以千美元计，是年度基本工资，不含奖金、股票和签字费。深色条是 2025 年 H-1B LCA 的范围，浅色条是 2026 年招聘启事，灰条要求多年经验。下方红色部分是中国大厂博士年包（万元人民币），多为招聘方口径或个例，不换算成美元。悬停在条上可看原值。</figcaption>
+  </figure>
+
+  <section class="blk" aria-labelledby="h-i-calc">
+    <h3 id="h-i-calc">把业界 offer 放进计算器</h3>
+    <p class="sub">“高校工作”一章的美中 offer 计算器已经支持奖金、股票（RSU）和中国的年终奖。下面几个示例会切换到那个计算器并载入数字；示例的来源和假设写在计算器上方，改成你自己的 offer 即可。</p>
+    <div class="chips" role="group" aria-label="载入业界示例">
+      <button class="chip" data-ocgo="i1">业界：Applied Materials 圣克拉拉 vs 中芯国际 上海</button>
+      <button class="chip" data-ocgo="i2">业界：Intel 封装 凤凰城 vs 宁德时代 宁德</button>
+      <button class="chip" data-ocgo="i3">业界：Dow 米德兰 vs 万华化学 烟台</button>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-i-ask">
+    <h3 id="h-i-ask">签业界 offer 前要问清楚的事</h3>
+    <div class="grid2">
+      <div class="card u"><h4>美国公司</h4><ul>
+        <li>基本工资对应劳工部（DOL）哪个工资级别：级别越高，H-1B 加权抽签的机会越多</li>
+        <li>公司是否担保 H-1B 和绿卡，PERM 在入职后多久启动；同一公司不同岗位的政策可能不同</li>
+        <li>雇主是否加入 E-Verify（STEM OPT 必需），能否在 OPT 期间就开始工作</li>
+        <li>岗位是否接触受控技术；如需视同出口许可，由谁申请，等待期间做什么</li>
+        <li>RSU 的归属表（常见 4 年）、签字费和搬家费的服务期与返还条款</li>
+        <li>被裁员时：H-1B 现在有最长 60 天宽限期（DHS 2026-09 提议取消，未定稿）；公司是否承担回国交通费</li>
+        <li>竞业、保密和发明转让条款；离职时不带走任何公司资料</li>
+      </ul></div>
+      <div class="card c"><h4>中国公司</h4><ul>
+        <li>年包口径：月薪 × 几个月，年终奖是否保底，有没有股票、分红或签字费</li>
+        <li>城市人才补贴和安家费：由谁申报，分几年发，服务期多长，提前离职怎么退</li>
+        <li>能否办理落户；是否需要先做教育部留学服务中心的学历学位认证</li>
+        <li>社保和公积金按实际工资还是按最低基数缴，公积金比例多少</li>
+        <li>竞业限制的范围、期限（法定最长 2 年）和按月支付的补偿</li>
+        <li>工作制度：倒班、on-call、加班和调休规则</li>
+        <li>公司是否在美国实体清单或 1260H 清单上，对今后赴美出差、探亲可能有什么影响</li>
+      </ul></div>
+    </div>
+  </section>
   <section class="blk" aria-labelledby="h-i-detail">
     <h3 id="h-i-detail">逐个方向看：公司、岗位、薪资、限制和近况</h3>
     <p class="sub">选一个方向。每个方向先给结论，再给表格和来源（前两张表默认展开）；“二手”指来自媒体、薪资网站或论坛，“未核实”指这次没能打开一手来源。</p>
@@ -1793,7 +1852,7 @@ const OC = {
     PHL: ["费城居民", "f", 3.07, 0, 3.735, 0],
     MD: ["马里兰（含县税约 3%）", "i", 4.30, 4.54, 4.77, 3.0, 0],
     GA: ["佐治亚（亚特兰大）", "f", 5.19, 12000, 0, 0],
-    MI: ["密歇根（安娜堡）", "f", 4.25, 5900, 0, 0],
+    MI: ["密歇根（安娜堡、米德兰；无城市所得税）", "f", 4.25, 5900, 0, 0],
     WI: ["威斯康星（麦迪逊）", "i", 4.05, 4.68, 4.90, 0, 0],
     MN: ["明尼苏达（双城）", "i", 4.90, 5.53, 6.08, 0, 0],
     IL: ["伊利诺伊（芝加哥、香槟）", "f", 4.95, 2925, 0, 0],
@@ -1807,12 +1866,12 @@ const OC = {
   },
   // 2026 social-insurance base caps (yuan/month); see 中国 · 城市政策
   caps: [["北京", 36348], ["上海", 37731], ["广东（深圳、广州）", 27603], ["江苏（南京、苏州）", 25127], ["浙江（杭州）", 25611],
-    ["西安", 23685], ["四川（成都）", 23493], ["福建（厦门）", 22893], ["安徽（合肥）", 21772], ["自填", 0]],
+    ["西安", 23685], ["四川（成都）", 23493], ["福建（厦门）", 22893], ["安徽（合肥）", 21772], ["山东（烟台）", 22863], ["自填", 0]],
   // monthly table, used for the annual one-off bonus taxed separately (财政部 税务总局公告 2023 年第 30 号, to 2027-12-31)
   iitm: [[0, .03, 0], [3000, .10, 210], [12000, .20, 1410], [25000, .25, 2660], [35000, .30, 4410], [55000, .35, 7160], [80000, .45, 15160]],
   iit: [[0, .03, 0], [36000, .10, 2520], [144000, .20, 16920], [300000, .25, 31920], [420000, .30, 52920], [660000, .35, 85920], [960000, .45, 181920]],
   // creprice asking price, yuan per m2 (about 2026-10)
-  cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["自填", 0]],
+  cities: [["深圳", 67326], ["上海", 60392], ["北京", 53849], ["广州", 38171], ["杭州", 34229], ["南京", 22055], ["东莞", 18996], ["宁德", 11560], ["烟台", 6744], ["自填", 0]],
   presets: {
     p1: {note: "美国：CRA Taulbee 2025 计算机类（全部美国单位，含 CS、CE 和信息学院）新聘助理教授中位数（9 个月），罗利房价为 Zillow 2026-08 中位成交价；退休缴款 5% / 10% 只是假设，北卡公立大学的实际比例未核实。中国：西南交通大学 2026 年公告“青年学者岗”23–28 万元（含省市资助）取下限，安家费 24 万元（聘期内每年 3 万，转正后发剩余 15 万），这里粗略按 6 年平摊；成都没有可核实的房价，请自填。",
       ub: 128000, uterm: "9", usum: 0, ust: "NC", ustat: "res", ufile: "single", uret: 5, uer: 10, uhp: 150, utreaty: false, uhome: 444000, urate: 7.11, uptax: 1.0,
@@ -1841,7 +1900,16 @@ const OC = {
     p7: {note: "美国：UIC 助理教授 AAUP 2025–26 全校平均 120,000 美元。UIC 参加伊利诺伊州立大学退休系统 SURS：不缴社保税，只缴 Medicare，个人缴 8%（比例来自另一所州立大学 HR 页面，二手）；SURS Traditional 是确定给付型养老金，不进个人账户，这里雇主缴款记 0。医保 150 美元只是假设。房价为芝加哥都市圈 Zillow 2026-08 中位成交价，房产税按 Cook County 有效税率 1.73%。中国：沿用西南交通大学“青年学者岗”23 万元和安家费 24 万元（二手），成都房价请自填。",
       ub: 120000, uterm: "9", usum: 0, ust: "IL", ustat: "noss", ufile: "single", uret: 8, uer: 0, uhp: 150, utreaty: false, uhome: 365000, urate: 7.11, uptax: 1.73,
       cb: 230000, cbase: 100, ccapcity: "四川（成都）", ccap: 23493, chf: 12, cnj: false, cset: 240000, cyrs: 6, ctaxset: true, cded: "18000", cold: false, ccity: "自填", cppm: "", carea: 90, crate: 3.5,
-      kids: 0, down: 20}
+      kids: 0, down: 20},
+    i1: {note: "美国：Applied Materials 工艺岗 2025 年 H-1B LCA 中位数 160,000 美元（35 条，范围 87,090–196,547），按加州私营雇主计 SDI；401(k) 个人 6%、公司匹配 5%、医保每月 150 美元都是假设；奖金和股票没有公开数字，填 0。房价为圣何塞都市圈 Zillow 2026-08 中位成交价。中国：中芯国际一例上海 985 博士自述（2024-09，二手）：基本 21k × 12，年终 3–6 个月取 4.5 个月；餐补和签字费没算。上海公积金按 7%。上海社保和公积金 2026 年度缴费基数上限都是 37,731 元/月。上海没有市级博士生活补贴，世界前 500 高校海外博士可直接申办落户。",
+      uterm: "12", usum: 0, ustat: "res", ufile: "single", uret: 6, uer: 5, uhp: 150, utreaty: false, urate: 7.11, ubonus: 0, ub: 160000, ust: "CA", uhome: 1482000, uptax: 1.2,
+      cbase: 100, cnj: false, cded: "18000", cold: false, carea: 90, crate: 3.5, cbsep: true, kids: 0, down: 20, cb: 252000, cbonus: 94500, ccapcity: "上海", ccap: 37731, chf: 7, cset: 0, cyrs: 1, ctaxset: true, ccity: "上海", cppm: ""},
+    i2: {note: "美国：Intel 封装研发岗 2026 年招聘启事区间 133,800–188,890 美元（要求 PhD 加 1 年经验），取下限；另有奖金和股票，金额未公开，填 0。401(k) 和医保为假设。房价为凤凰城都市圈 Zillow 2026-08 中位成交价，房产税 0.44%（Tax Foundation 的 Maricopa County 有效税率，基于 2024 ACS）。中国：宁德时代 2026 春招宣讲口径“博士 30–70 万起/年”取下限 30 万元（宣传口径，不是个人 offer，未写是否含年终奖，所以年终奖填 0）；宁德“天湖人才”博士住房补助每月 3,000 元 × 36 个月 = 10.8 万元（二手）。福建 2026 年社保缴费基数上限 22,893 元/月，全省统一（二手）；宁德公积金按 12%，计算器用社保基数近似公积金基数（宁德公积金上限实为 27,166）。宁德房价为 creprice 2026-10 挂牌均价 11,560 元/平方米。",
+      uterm: "12", usum: 0, ustat: "res", ufile: "single", uret: 6, uer: 5, uhp: 150, utreaty: false, urate: 7.11, ubonus: 0, ub: 133800, ust: "AZ", uhome: 447000, uptax: 0.44,
+      cbase: 100, cnj: false, cded: "18000", cold: false, carea: 90, crate: 3.5, cbsep: true, kids: 0, down: 20, cb: 300000, cbonus: 0, ccapcity: "福建（厦门）", ccap: 22893, chf: 12, cset: 108000, cyrs: 3, ctaxset: true, ccity: "宁德", cppm: ""},
+    i3: {note: "美国：Dow PhD 入口职级 Senior Research Specialist 2025 年 H-1B LCA 中位数 110,864 美元（62 条）；Dow 另有奖金机会，金额未公开，填 0；401(k) 和医保为假设。房价为 Zillow 米德兰市 2026-09 典型房价（ZHVI），房产税按 Midland County 有效税率 1.39%（Tax Foundation，买房后税基会重估，实际可能更高）。中国：万华化学 2026 届校招简章写博士研发“税前 45w/年”（已核实），没有拆分年终奖，所以整笔填在年薪；烟台企业博士生活补贴每年 3.6 万元 × 3 年（另有购房补贴 20–26 万元，须买房，没算）。山东 2026 年度社保缴费基数上限 22,863 元/月（鲁人社字〔2026〕75 号，媒体转载）；烟台公积金按 12%，计算器用社保基数近似公积金基数（烟台公积金上限实为 28,692）。烟台房价为 creprice 2026-10 挂牌均价 6,744 元/平方米。",
+      uterm: "12", usum: 0, ustat: "res", ufile: "single", uret: 6, uer: 5, uhp: 150, utreaty: false, urate: 7.11, ubonus: 0, ub: 110864, ust: "MI", uhome: 252073, uptax: 1.39,
+      cbase: 100, cnj: false, cded: "18000", cold: false, carea: 90, crate: 3.5, cbsep: true, kids: 0, down: 20, cb: 450000, cbonus: 0, ccapcity: "山东（烟台）", ccap: 22863, chf: 12, cset: 108000, cyrs: 3, ctaxset: true, ccity: "烟台", cppm: ""}
   }
 };
 const ocEl = id => $("#oc-" + id);
@@ -1995,6 +2063,13 @@ function ocSync() {
   ocEl("ufile").disabled = ocEl("ustat").value === "nr";
 }
 $$("[data-oc]").forEach(b => b.addEventListener("click", () => ocLoad(b.dataset.oc)));
+$$("[data-ocgo]").forEach(b => b.addEventListener("click", () => {
+  try { history.pushState(null, "", "#academia"); } catch (err) {}
+  show("academia", false);
+  ocLoad(b.dataset.ocgo);
+  const el = $("#offer-calc");
+  if (el && el.scrollIntoView) el.scrollIntoView({block: "start"});
+}));
 $$("#offer-calc input, #offer-calc select").forEach(el => el.addEventListener("input", () => {
   $$("[data-oc]").forEach(b => b.setAttribute("aria-pressed", "false"));
   $("#oc-note").textContent = "已改成自填数字；上面示例的来源说明不再适用。";
