@@ -492,15 +492,15 @@ x = R.x; yc = R.corrected;
 fitA = @(lab) fit_area_of(R.fitTable(2:end, :), lab) * R.scale;
 
 % ------------------------------------------------ Figure 1: structure + spectrum
-f1 = figure('Color', 'w', 'Units', 'centimeters', 'Position', [2 2 17.8 13.2], ...
-    'PaperUnits', 'centimeters', 'PaperPosition', [0 0 17.8 13.2], 'PaperSize', [17.8 13.2]);
+f1 = figure('Color', 'w', 'Units', 'centimeters', 'Position', [2 2 17.8 16.0], ...
+    'PaperUnits', 'centimeters', 'PaperPosition', [0 0 17.8 16.0], 'PaperSize', [17.8 16.0]);
 
 % (a) structure with proton labels
-axS = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.02 0.66 0.96 0.32]);
+axS = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.01 0.50 0.98 0.49]);
 draw_structure(axS, C, opt, FS, LW);
 
 % (b) spectrum
-axP = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.06 0.13 0.90 0.50]);
+axP = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.06 0.11 0.90 0.40]);
 view = x > 0.6 & x < 5.2;
 small = view & (x < 3.45 | x > 3.85) & (x < 1.56 | x > 1.66);
 top = max(yc(small));                       % scale to the small signals; PEG/H2O truncated
@@ -589,85 +589,119 @@ export_fig_files(f2, fullfile(fdir, [fname '_nmr_fits']));
 end
 
 function draw_structure(ax, C, opt, FS, LW)
-% skeletal formula of one arm with proton labels a-i (bond length 1, zigzag 120 deg)
+% Full skeletal structure of the star prepolymer (every arm drawn), proton labels a-i.
+% Bond length 1, 120 deg zigzag along each arm axis. Only the EO segment uses a bracket
+% (n-1 repeats; the last EO unit is drawn explicitly so that b and c can be labelled).
 axes(ax); cla(ax); hold(ax, 'on'); axis(ax, 'equal'); axis(ax, 'off');
-c30 = cosd(30);
-seq = {'C','d'; 'O',''; 'C','c'; 'C','c'; 'O',''; 'C','c'; 'C','b'; 'O',''; ...
-       'C',''; 'N','a'; 'C','f'; 'C','h'; 'C','i'; 'C','i'; 'C','g'; 'C','e'; 'N',''};
-P = zeros(size(seq, 1) + 1, 2);                % P(1) = core "R"
-for k = 1:size(seq, 1)
-    up = mod(k, 2) == 1;
-    P(k + 1, :) = P(k, :) + [c30, 0.5 * (2 * up - 1)];
+lw = LW * 1.3; blue = [0.10 0.35 0.70];
+isGE = strcmp(C.name(1:2), 'GE');
+if isGE                                        % glycerol: C2 (CH) at origin, C1/C3 (CH2)
+    core = [0 0; cosd(60) sind(60); cosd(300) sind(300)];
+    cbonds = [1 2; 1 3];
+    arms = [2 15; 3 -15; 1 180];               % [attachment atom, arm axis angle]
+else                                           % pentaerythritol: C plus four CH2
+    core = [0 0; cosd(45) sind(45); cosd(135) sind(135); cosd(225) sind(225); cosd(315) sind(315)];
+    cbonds = [1 2; 1 3; 1 4; 1 5];
+    arms = [2 15; 3 165; 4 195; 5 -15];
 end
-nN = size(P, 1);
-P(end + 1, :) = P(nN, :) + [1 0];              % C of NCO
-P(end + 1, :) = P(nN, :) + [2 0];              % O of NCO
-k_co = 9 + 1; k_nh = 10 + 1;                   % carbonyl C and amide N (indices in P)
-for k = 1:nN - 1
-    plot(ax, P(k:k + 1, 1), P(k:k + 1, 2), 'k', 'LineWidth', LW * 1.4);
+for k = 1:size(cbonds, 1)
+    plot(ax, core(cbonds(k, :), 1), core(cbonds(k, :), 2), 'k', 'LineWidth', lw);
 end
-dbl = @(p1, p2) plot(ax, [p1(1) p2(1); p1(1) p2(1)]' + [0 0; 0 0], ...
-    [p1(2) p2(2); p1(2) p2(2)]' + repmat([-0.07 0.07], 2, 1), 'k', 'LineWidth', LW * 1.4);
-dbl(P(nN, :), P(nN + 1, :)); dbl(P(nN + 1, :), P(nN + 2, :));
-pc = P(k_co, :);                                % C=O up
-plot(ax, [pc(1) - 0.07 pc(1) - 0.07], [pc(2) pc(2) + 0.9], 'k', 'LineWidth', LW * 1.4);
-plot(ax, [pc(1) + 0.07 pc(1) + 0.07], [pc(2) pc(2) + 0.9], 'k', 'LineWidth', LW * 1.4);
-pn = P(k_nh, :);                                % N-H down
-plot(ax, [pn(1) pn(1)], [pn(2) pn(2) - 0.75], 'k', 'LineWidth', LW * 1.4);
-atom = @(p, s) text(ax, p(1), p(2), s, 'FontSize', FS + 2, 'HorizontalAlignment', 'center', ...
-    'VerticalAlignment', 'middle', 'BackgroundColor', 'w', 'Margin', 0.5);
-atom(P(1, :), 'R');
-for k = 1:size(seq, 1)
-    if ~strcmp(seq{k, 1}, 'C'), atom(P(k + 1, :), seq{k, 1}); end
-end
-atom(P(nN + 1, :), 'C'); atom(P(nN + 2, :), 'O');
-atom(pc + [0 1.0], 'O'); atom(pn + [0 -0.9], 'H');
-% bracket around the repeating unit (atoms 3-5 of the arm = P(4:6))
-xb1 = mean(P(3:4, 1)); xb2 = mean(P(6:7, 1)); yb = [min(P(3:7, 2)) - 0.5, max(P(3:7, 2)) + 0.55];
-plot(ax, [xb1 + 0.12 xb1 xb1 xb1 + 0.12], [yb(1) yb(1) yb(2) yb(2)], 'k', 'LineWidth', LW * 1.2);
-plot(ax, [xb2 - 0.12 xb2 xb2 xb2 - 0.12], [yb(1) yb(1) yb(2) yb(2)], 'k', 'LineWidth', LW * 1.2);
-rep = 'n-1';
-text(ax, xb2 - 0.05, yb(1) - 0.12, rep, 'FontSize', FS, 'FontAngle', 'italic', 'VerticalAlignment', 'top');
-% big bracket around the whole arm, subscript = number of arms
-xa1 = mean(P(1:2, 1)); xa2 = P(end, 1) + 0.45; ya = [min(P(:, 2)) - 1.25, max(P(:, 2)) + 1.45];
-plot(ax, [xa1 + 0.15 xa1 xa1 xa1 + 0.15], [ya(1) ya(1) ya(2) ya(2)], 'k', 'LineWidth', LW * 1.2);
-plot(ax, [xa2 - 0.15 xa2 xa2 xa2 - 0.15], [ya(1) ya(1) ya(2) ya(2)], 'k', 'LineWidth', LW * 1.2);
-text(ax, xa2 + 0.08, ya(1), sprintf('%d', C.f), 'FontSize', FS + 1, 'VerticalAlignment', 'top');
-% proton labels (italic letters): above peaks, below valleys
-for k = 1:size(seq, 1)
-    L = seq{k, 2};
-    if isempty(L), continue, end
-    p = P(k + 1, :);
-    if k + 1 == k_nh
-        q = p + [0.42 -0.9];
-    elseif k == 6                               % CH2 right after the bracket: keep clear of n-1
-        q = p + [0.42 -0.45];
-    elseif P(k + 1, 2) > P(k, 2)
-        q = p + [0 0.5];
-    else
-        q = p + [0 -0.5];
+allP = core;
+seq = {'O',''; 'C','c'; 'C','c'; 'O',''; 'C','c'; 'C','b'; 'O',''; 'C','co'; 'N','a'; ...
+       'C','f'; 'C','h'; 'C','i'; 'C','i'; 'C','g'; 'C','e'; 'N',''};
+for a = 1:size(arms, 1)
+    S = core(arms(a, 1), :); phi = arms(a, 2);
+    nb = cbonds(any(cbonds == arms(a, 1), 2), :); nb = nb(nb ~= arms(a, 1));
+    back = sum(core(nb, :) - S, 1); back = back / norm(back);       % direction to core neighbours
+    cand = phi + [30 -30];
+    ang = arrayfun(@(t) acosd(max(-1, min(1, dot(back, [cosd(t) sind(t)])))), cand);
+    [~, ib] = min(abs(ang - 120)); sgn = sign(cand(ib) - phi);
+    P = S;
+    for k = 1:size(seq, 1)
+        t = phi + sgn * 30 * (-1) ^ (k - 1);
+        P(end + 1, :) = P(end, :) + [cosd(t) sind(t)]; %#ok<AGROW>
     end
-    text(ax, q(1), q(2), L, 'FontSize', FS + 1, 'FontAngle', 'italic', 'FontWeight', 'bold', ...
-        'Color', [0.10 0.35 0.70], 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    u = [cosd(phi) sind(phi)];
+    P(end + 1, :) = P(end, :) + u; P(end + 1, :) = P(end - 1, :) + 2 * u;   % N=C=O along the axis
+    nP = size(P, 1);
+    for k = 1:nP - 3
+        plot(ax, P(k:k + 1, 1), P(k:k + 1, 2), 'k', 'LineWidth', lw);
+    end
+    v = [-u(2) u(1)] * 0.075;
+    for k = nP - 2:nP - 1                       % double bonds N=C and C=O
+        plot(ax, P(k:k + 1, 1) + v(1), P(k:k + 1, 2) + v(2), 'k', 'LineWidth', lw);
+        plot(ax, P(k:k + 1, 1) - v(1), P(k:k + 1, 2) - v(2), 'k', 'LineWidth', lw);
+    end
+    opendir = @(k) -((P(k - 1, :) - P(k, :)) + (P(k + 1, :) - P(k, :))) / ...
+        norm((P(k - 1, :) - P(k, :)) + (P(k + 1, :) - P(k, :)));
+    % carbonyl C=O and amide N-H
+    kc = find(strcmp(seq(:, 2), 'co')) + 1; dco = opendir(kc); w = [-dco(2) dco(1)] * 0.075;
+    pO = P(kc, :) + dco;
+    plot(ax, [P(kc, 1) pO(1)] + w(1), [P(kc, 2) pO(2)] + w(2), 'k', 'LineWidth', lw);
+    plot(ax, [P(kc, 1) pO(1)] - w(1), [P(kc, 2) pO(2)] - w(2), 'k', 'LineWidth', lw);
+    kn = find(strcmp(seq(:, 2), 'a')) + 1; dnh = opendir(kn); pH = P(kn, :) + 0.8 * dnh;
+    plot(ax, [P(kn, 1) pH(1)], [P(kn, 2) pH(2)], 'k', 'LineWidth', lw);
+    % bracket around [CH2-CH2-O] (seq 2-4 = P 3-5), crossing bonds P2-P3 and P5-P6
+    for side = 1:2
+        if side == 1, q1 = P(2, :); q2 = P(3, :); else, q1 = P(5, :); q2 = P(6, :); end
+        M = (q1 + q2) / 2; bu = (q2 - q1) / norm(q2 - q1); bv = [-bu(2) bu(1)];
+        lip = bu * 0.14 * (2 * (side == 1) - 1);
+        L = [M + 0.6 * bv + lip; M + 0.6 * bv; M - 0.6 * bv; M - 0.6 * bv + lip];
+        plot(ax, L(:, 1), L(:, 2), 'k', 'LineWidth', LW * 1.1);
+        if side == 2
+            ends = [M + 0.6 * bv; M - 0.6 * bv]; [~, lo] = min(ends(:, 2));
+            text(ax, ends(lo, 1) + 0.05 * sign(u(1) + 0.01), ends(lo, 2) - 0.12, 'n-1', 'FontSize', FS - 1, ...
+                'FontAngle', 'italic', 'HorizontalAlignment', 'center', 'VerticalAlignment', 'top');
+        end
+    end
+    % atom symbols (white background hides the bond ends)
+    atom = @(p, s) text(ax, p(1), p(2), s, 'FontSize', FS + 1, 'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'middle', 'BackgroundColor', 'w', 'Margin', 0.3);
+    for k = 1:size(seq, 1)
+        if ~strcmp(seq{k, 1}, 'C'), atom(P(k + 1, :), seq{k, 1}); end
+    end
+    atom(P(nP - 1, :), 'C'); atom(P(nP, :), 'O'); atom(pO, 'O'); atom(pH, 'H');
+    % proton labels
+    for k = 1:size(seq, 1)
+        L = seq{k, 2};
+        if isempty(L) || strcmp(L, 'co'), continue, end
+        if strcmp(L, 'a')
+            q = pH + 0.42 * [-dnh(2) dnh(1)] * sign(u(1) + 0.01);
+        else
+            q = P(k + 1, :) + 0.5 * opendir(k + 1);
+        end
+        text(ax, q(1), q(2), L, 'FontSize', FS, 'FontAngle', 'italic', 'FontWeight', 'bold', ...
+            'Color', blue, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+    end
+    allP = [allP; P; pO; pH]; %#ok<AGROW>
 end
-% formula and core definition
-x0 = P(end, 1) + 1.3;
-if strcmp(C.name(1:2), 'GE')
-    l1 = 'GE-EO-(HDI)_3';
-    l2 = 'C_3H_5[O(CH_2CH_2O)_nC(O)NH(CH_2)_6NCO]_3';
-    l3 = 'R-CH_2 (d) = glycerol C1/C3; C2 arm: R = CH';
-    l4 = sprintf('n = %.2f (supplier: 6-7; M_n ~1000)', opt.NominalN);
+% core labels d
+for k = 1:size(core, 1)
+    if ~isGE && k == 1, continue, end           % quaternary C carries no H
+    if isGE && k == 1, q = core(1, :) + [0.35 0]; else, q = core(k, :) + 0.5 * core(k, :) / norm(core(k, :)) .* [0.2 1]; end
+    text(ax, q(1), q(2), 'd', 'FontSize', FS, 'FontAngle', 'italic', 'FontWeight', 'bold', ...
+        'Color', blue, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+end
+% name and average molecular formula (no repeat-unit notation)
+EO = opt.NominalN * C.f;
+if isGE
+    nC = 27 + 2 * EO; nH = 44 + 4 * EO; nO = 9 + EO; nN = 6;
+    t1 = 'GE-EO-(HDI)_3: three-arm NCO-terminated prepolymer (glycerol core)';
+    t3 = sprintf('n = %.2f EO per arm (supplier: n = 6-7, M_n ~1000); d = glycerol CH_2-CH-CH_2', opt.NominalN);
 else
-    l1 = 'PE-EO-(HDI)_4';
-    l2 = 'C[CH_2O(CH_2CH_2O)_nC(O)NH(CH_2)_6NCO]_4';
-    l3 = 'R = quaternary C; CH_2 (d) of the core';
-    l4 = sprintf('a+b+c+d EO ~15 (n = %.2f per arm)', opt.NominalN);
+    nC = 37 + 2 * EO; nH = 60 + 4 * EO; nO = 12 + EO; nN = 8;
+    t1 = 'PE-EO-(HDI)_4: four-arm NCO-terminated prepolymer (pentaerythritol core)';
+    t3 = sprintf('n = %.2f EO per arm (15/4 EO/OH, M_n ~797); d = C(CH_2O)_4', opt.NominalN);
 end
-text(ax, x0, 1.1, l1, 'FontSize', FS + 1, 'FontWeight', 'bold');
-text(ax, x0, 0.35, l2, 'FontSize', FS);
-text(ax, x0, -0.4, l3, 'FontSize', FS - 0.5, 'Color', [0.3 0.3 0.3]);
-text(ax, x0, -1.1, l4, 'FontSize', FS - 0.5, 'Color', [0.3 0.3 0.3]);
-xlim(ax, [-0.6 x0 + 9.5]); ylim(ax, [ya(1) - 0.3, ya(2) + 0.3]);
+Mn = C.M_core + C.M_EO * EO + C.M_HDI * C.f;
+t2 = sprintf('average formula C_{%.1f}H_{%.1f}N_{%d}O_{%.1f},  M_n \\approx %.0f g mol^{-1}', nC, nH, nN, nO, Mn);
+xmin = min(allP(:, 1)) - 0.6; xmax = max(allP(:, 1)) + 0.6;
+ymin = min(allP(:, 2)) - 0.7; ymax = max(allP(:, 2)) + 0.6;
+text(ax, xmin, ymin - 0.3, t1, 'FontSize', FS + 1, 'FontWeight', 'bold', 'VerticalAlignment', 'top');
+text(ax, xmin, ymin - 1.35, t2, 'FontSize', FS, 'VerticalAlignment', 'top');
+text(ax, xmin, ymin - 2.3, t3, 'FontSize', FS - 0.5, 'Color', [0.3 0.3 0.3], 'VerticalAlignment', 'top');
+xlim(ax, [xmin xmax]); ylim(ax, [ymin - 3.3, ymax]);
 hold(ax, 'off');
 end
 
