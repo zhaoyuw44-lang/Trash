@@ -1,6 +1,8 @@
 function R = prepolymer_nmr_fit(dataFile, varargin)
 %PREPOLYMER_NMR_FIT  1H NMR area analysis of HDI-capped ethoxylated polyol prepolymers.
 %
+%   R = prepolymer_nmr_fit                            % pop-up: choose file(s), then GE or PE
+%   R = prepolymer_nmr_fit([], 'SF', 500)             % pop-up with options (multi-select = batch)
 %   R = prepolymer_nmr_fit('spectrum.csv')            % glycerol ethoxylate (3-arm) default
 %   R = prepolymer_nmr_fit('spectrum.xlsx','Polyol','PE')  % pentaerythritol ethoxylate (4-arm)
 %
@@ -62,6 +64,36 @@ function R = prepolymer_nmr_fit(dataFile, varargin)
 %   Example
 %     R = prepolymer_nmr_fit('3arm_peg_hdi.csv','Polyol','GE','SF',400);
 %     disp(R.derived)
+
+% ---------------------------------------------------------------- file pop-up
+% called without a file name -> pick one or several files in a dialog;
+% if 'Polyol' is not given, a second pop-up asks for GE or PE
+if nargin < 1 || isempty(dataFile)
+    [fn, fp] = uigetfile({'*.csv;*.txt;*.xlsx;*.xls', 'NMR spectrum (col 1 ppm, col 2 intensity)'; ...
+        '*.*', 'All files'}, 'Select 1H NMR spectrum file(s)', 'MultiSelect', 'on');
+    if isequal(fn, 0)
+        disp('No file selected.'); R = []; return
+    end
+    if ischar(fn), fn = {fn}; end
+    files = cellfun(@(s) fullfile(fp, s), fn, 'UniformOutput', false);
+    if ~any(strcmpi(varargin(1:2:end), 'Polyol'))
+        choice = questdlg('Which prepolymer is in these files?', 'Prepolymer type', ...
+            'GE (glycerol, 3-arm)', 'PE (pentaerythritol, 4-arm)', 'GE (glycerol, 3-arm)');
+        if isempty(choice)
+            disp('Cancelled.'); R = []; return
+        end
+        varargin = [varargin, {'Polyol', choice(1:2)}];
+    end
+    if numel(files) > 1                     % batch: one result (and output file set) per spectrum
+        R = cell(numel(files), 1);
+        for k = 1:numel(files)
+            fprintf('\n===== %s =====\n', files{k});
+            R{k} = prepolymer_nmr_fit(files{k}, varargin{:});
+        end
+        return
+    end
+    dataFile = files{1};
+end
 
 % ---------------------------------------------------------------- options
 p = inputParser;
