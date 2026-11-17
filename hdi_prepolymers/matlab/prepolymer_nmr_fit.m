@@ -482,51 +482,204 @@ end
 end
 
 function make_plots(R, C, opt, fname, fdir)
+% Journal-style figures (ACS/RSC conventions): Arial, 7-9 pt at final size,
+% double-column width 17.8 cm, no y-axis for NMR, reversed delta axis, outward ticks,
+% thin lines, letters a-i matching the structure, integrals under the baseline.
+% Output: PNG (600 dpi) + vector PDF/SVG when the platform supports it.
+FS = 8; LW = 0.75; FONT = 'Arial';
+set(0, 'DefaultAxesFontName', FONT, 'DefaultTextFontName', FONT);
 x = R.x; yc = R.corrected;
-inView = x > 0.5 & x < 5.3;
-top = max(yc(inView & (x < 3.55 | x > 3.85)));          % scale to the small peaks
-f1 = figure('Color', 'w', 'Position', [80 80 1200 560]);
-hold on
-cols = lines(numel(R.regions));
+fitA = @(lab) fit_area_of(R.fitTable(2:end, :), lab) * R.scale;
+
+% ------------------------------------------------ Figure 1: structure + spectrum
+f1 = figure('Color', 'w', 'Units', 'centimeters', 'Position', [2 2 17.8 13.2], ...
+    'PaperUnits', 'centimeters', 'PaperPosition', [0 0 17.8 13.2], 'PaperSize', [17.8 13.2]);
+
+% (a) structure with proton labels
+axS = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.02 0.66 0.96 0.32]);
+draw_structure(axS, C, opt, FS, LW);
+
+% (b) spectrum
+axP = axes('Parent', f1, 'Units', 'normalized', 'Position', [0.06 0.13 0.90 0.50]);
+view = x > 0.6 & x < 5.2;
+small = view & (x < 3.45 | x > 3.85) & (x < 1.56 | x > 1.66);
+top = max(yc(small));                       % scale to the small signals; PEG/H2O truncated
+plot(axP, x, yc, 'k', 'LineWidth', LW);
+hold(axP, 'on');
+set(axP, 'XDir', 'reverse', 'Box', 'off', 'TickDir', 'out', 'FontSize', FS, 'LineWidth', LW, ...
+    'YColor', 'none', 'YTick', []);
+xlim(axP, [0.7 5.15]); ylim(axP, [-0.45 1.22] * top);
+xlabel(axP, '\delta (ppm)', 'FontSize', FS + 1);
+% peak letters (above peaks) and integrals (under the baseline)
+lab = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
+pos = struct('a', 4.85, 'b', 4.21, 'c', 3.64, 'd', 3.53, 'e', 3.29, 'f', 3.16, 'g', 1.61, 'h', 1.50, 'i', 1.36);
+if strcmp(C.name(1:2), 'PE'), pos.d = 3.42; end
+for k = 1:numel(lab)
+    L = lab{k}; d0 = pos.(L);
+    m = abs(x - d0) < 0.03;
+    if ~any(m), continue, end
+    h = min(max(yc(m)), 1.02 * top);
+    if any(strcmp(L, {'c', 'g'})), h = 1.02 * top; end
+    if strcmp(L, 'd') && strcmp(C.name(1:2), 'GE'), h = 0.22 * top; end
+    text(axP, d0, h + 0.05 * top, L, 'FontSize', FS + 1, 'FontAngle', 'italic', ...
+        'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+end
+text(axP, 1.565, 0.97 * top, 'H_2O', 'FontSize', FS - 1, 'HorizontalAlignment', 'left', 'Color', [0.35 0.35 0.35]);
+text(axP, 3.60, 0.93 * top, '//', 'FontSize', FS, 'HorizontalAlignment', 'center', 'Color', [0.35 0.35 0.35]);
+% integral bars: direct integrals, fitted areas for g / h / i (marked *)
+bars = {};
 for k = 1:numel(R.regions)
     r = R.regions(k);
-    patch([r.lo r.hi r.hi r.lo], [0 0 1.15 1.15] * top, cols(k, :), 'FaceAlpha', 0.12, 'EdgeColor', 'none');
-    text((r.lo + r.hi) / 2, 1.18 * top, sprintf('%s\n%.2f', r.label, R.normArea(k)), ...
-        'HorizontalAlignment', 'center', 'FontSize', 8);
+    if any(strcmp(r.label, {'g+H2O', 'h', 'i', 'alloNH'})), continue, end
+    if any(strcmp(r.label, {'ureaNH', 'hexCH3'})) && abs(R.normArea(k)) < 0.2, continue, end
+    bars(end + 1, :) = {r.lo, r.hi, sprintf('%.2f', R.normArea(k))}; %#ok<AGROW>
 end
-plot(x, yc, 'k', 'LineWidth', 0.8);
-set(gca, 'XDir', 'reverse', 'Box', 'on');
-xlim([0.6 5.2]); ylim([-0.05 1.35] * top);
-xlabel('\delta (ppm)'); ylabel('intensity (baseline-corrected)');
-title(sprintf('%s - regions and normalised areas (b = %d H); c(+d) truncated', C.name, 2 * C.f), ...
-    'Interpreter', 'none');
-D = R.D;
-txt = sprintf(['EO/molecule %.2f   n/arm %.2f   Mn(polyol) %.0f   Mn(prepolymer) %.0f\n' ...
-    'theor. NCO %.2f wt%%   free HDI %.3f mol/mol (%.2f wt%%)   urea %.3f mol/mol\n' ...
-    'NCO expected by titration %.2f wt%%'], D.EO, D.n, D.Mn_polyol, D.Mn_pp, D.NCO_theor, ...
-    D.x, D.wtHDI, D.y, D.NCO_titr);
-text(5.15, 0.98 * top, txt, 'FontSize', 8, 'VerticalAlignment', 'top', 'BackgroundColor', 'w');
-hold off
-print(f1, fullfile(fdir, [fname '_nmr_regions.png']), '-dpng', '-r200');
-
-f2 = figure('Color', 'w', 'Position', [80 80 1200 420]);
-for w = 1:numel(R.fits)
-    subplot(1, numel(R.fits), w);
-    fr = R.fits{w};
-    hold on
-    plot(fr.x, fr.y, 'k', 'LineWidth', 0.8);
-    plot(fr.x, fr.comp + repmat(fr.baseline, 1, size(fr.comp, 2)), 'LineWidth', 0.9);
-    plot(fr.x, fr.total, 'r--', 'LineWidth', 1);
-    for k = 1:numel(fr.res)
-        text(fr.res(k).center, max(fr.y) * (1.02 + 0.06 * mod(k - 1, 2)), ...
-            sprintf('%s %.2f', fr.res(k).label, fr.res(k).area * R.scale), ...
-            'HorizontalAlignment', 'center', 'FontSize', 8);
+for L = {'g', 'h', 'i'}
+    a = fitA(L{1});
+    if ~isnan(a)
+        rr = R.regions(strcmp({R.regions.label}, L{1}));
+        if isempty(rr), rr = R.regions(strcmp({R.regions.label}, 'g+H2O')); rr.hi = 1.66; end
+        bars(end + 1, :) = {rr.lo, rr.hi, sprintf('%.2f*', a)}; %#ok<AGROW>
     end
-    hold off
-    set(gca, 'XDir', 'reverse', 'Box', 'on');
-    xlim([min(fr.x) max(fr.x)]);
-    ylim([min(min(fr.y), 0) max(fr.y) * 1.18]);
-    title(fr.name); xlabel('\delta (ppm)');
 end
-print(f2, fullfile(fdir, [fname '_nmr_fits.png']), '-dpng', '-r200');
+for k = 1:size(bars, 1)
+    lo = bars{k, 1}; hi = bars{k, 2};
+    plot(axP, [lo hi], [-0.07 -0.07] * top, 'k', 'LineWidth', LW);
+    plot(axP, [lo lo], [-0.10 -0.04] * top, 'k', 'LineWidth', LW);
+    plot(axP, [hi hi], [-0.10 -0.04] * top, 'k', 'LineWidth', LW);
+    text(axP, (lo + hi) / 2, -0.12 * top, bars{k, 3}, 'FontSize', FS - 1, ...
+        'HorizontalAlignment', 'right', 'VerticalAlignment', 'middle', 'Rotation', 90);
+end
+text(axP, 5.13, -0.38 * top, sprintf(['integrals normalised to b = %d H; * = area from peak fitting ' ...
+    '(g under H_2O); CDCl_3, %d MHz'], 2 * C.f, opt.SF), 'FontSize', FS - 1, 'Color', [0.3 0.3 0.3]);
+hold(axP, 'off');
+export_fig_files(f1, fullfile(fdir, [fname '_nmr_figure']));
+
+% ------------------------------------------------ Figure 2: deconvolution panels
+nW = numel(R.fits);
+f2 = figure('Color', 'w', 'Units', 'centimeters', 'Position', [2 2 17.8 6.2], ...
+    'PaperUnits', 'centimeters', 'PaperPosition', [0 0 17.8 6.2], 'PaperSize', [17.8 6.2]);
+cols = [0.17 0.47 0.84; 0.92 0.41 0.20; 0.11 0.69 0.48; 0.93 0.63 0.00; 0.91 0.48 0.64; 0.38 0.31 0.84];
+for w = 1:nW
+    ax = subplot(1, nW, w);
+    fr = R.fits{w};
+    hold(ax, 'on');
+    plot(ax, fr.x, fr.y, 'k', 'LineWidth', LW);
+    for k = 1:size(fr.comp, 2)
+        plot(ax, fr.x, fr.comp(:, k) + fr.baseline, 'Color', cols(mod(k - 1, 6) + 1, :), 'LineWidth', LW);
+    end
+    plot(ax, fr.x, fr.total, '--', 'Color', [0.8 0 0], 'LineWidth', LW);
+    ymax = max(fr.y);
+    for k = 1:numel(fr.res)                     % component list in the upper-right corner
+        lbl = fr.res(k).label;
+        if strcmp(lbl, 'H2O'), lbl = 'H_2O'; end
+        text(ax, min(fr.x), ymax * (1.18 - 0.085 * (k - 1)), ...
+            sprintf('%s  %.2f H', lbl, fr.res(k).area * R.scale), 'FontSize', FS - 1, ...
+            'HorizontalAlignment', 'right', 'Color', cols(mod(k - 1, 6) + 1, :) * 0.8);
+    end
+    hold(ax, 'off');
+    set(ax, 'XDir', 'reverse', 'Box', 'off', 'TickDir', 'out', 'FontSize', FS, 'LineWidth', LW, ...
+        'YColor', 'none', 'YTick', []);
+    xlim(ax, [min(fr.x) max(fr.x)]); ylim(ax, [min(min(fr.y), 0) ymax * 1.22]);
+    text(ax, max(fr.x), ymax * 1.18, 'fit - - -', 'FontSize', FS - 1, 'Color', [0.8 0 0], 'HorizontalAlignment', 'left');
+    xlabel(ax, '\delta (ppm)', 'FontSize', FS + 1);
+    title(ax, ['(' char('a' + w - 1) ') ' fr.name], 'FontSize', FS + 1, 'FontWeight', 'normal');
+end
+export_fig_files(f2, fullfile(fdir, [fname '_nmr_fits']));
+end
+
+function draw_structure(ax, C, opt, FS, LW)
+% skeletal formula of one arm with proton labels a-i (bond length 1, zigzag 120 deg)
+axes(ax); cla(ax); hold(ax, 'on'); axis(ax, 'equal'); axis(ax, 'off');
+c30 = cosd(30);
+seq = {'C','d'; 'O',''; 'C','c'; 'C','c'; 'O',''; 'C','c'; 'C','b'; 'O',''; ...
+       'C',''; 'N','a'; 'C','f'; 'C','h'; 'C','i'; 'C','i'; 'C','g'; 'C','e'; 'N',''};
+P = zeros(size(seq, 1) + 1, 2);                % P(1) = core "R"
+for k = 1:size(seq, 1)
+    up = mod(k, 2) == 1;
+    P(k + 1, :) = P(k, :) + [c30, 0.5 * (2 * up - 1)];
+end
+nN = size(P, 1);
+P(end + 1, :) = P(nN, :) + [1 0];              % C of NCO
+P(end + 1, :) = P(nN, :) + [2 0];              % O of NCO
+k_co = 9 + 1; k_nh = 10 + 1;                   % carbonyl C and amide N (indices in P)
+for k = 1:nN - 1
+    plot(ax, P(k:k + 1, 1), P(k:k + 1, 2), 'k', 'LineWidth', LW * 1.4);
+end
+dbl = @(p1, p2) plot(ax, [p1(1) p2(1); p1(1) p2(1)]' + [0 0; 0 0], ...
+    [p1(2) p2(2); p1(2) p2(2)]' + repmat([-0.07 0.07], 2, 1), 'k', 'LineWidth', LW * 1.4);
+dbl(P(nN, :), P(nN + 1, :)); dbl(P(nN + 1, :), P(nN + 2, :));
+pc = P(k_co, :);                                % C=O up
+plot(ax, [pc(1) - 0.07 pc(1) - 0.07], [pc(2) pc(2) + 0.9], 'k', 'LineWidth', LW * 1.4);
+plot(ax, [pc(1) + 0.07 pc(1) + 0.07], [pc(2) pc(2) + 0.9], 'k', 'LineWidth', LW * 1.4);
+pn = P(k_nh, :);                                % N-H down
+plot(ax, [pn(1) pn(1)], [pn(2) pn(2) - 0.75], 'k', 'LineWidth', LW * 1.4);
+atom = @(p, s) text(ax, p(1), p(2), s, 'FontSize', FS + 2, 'HorizontalAlignment', 'center', ...
+    'VerticalAlignment', 'middle', 'BackgroundColor', 'w', 'Margin', 0.5);
+atom(P(1, :), 'R');
+for k = 1:size(seq, 1)
+    if ~strcmp(seq{k, 1}, 'C'), atom(P(k + 1, :), seq{k, 1}); end
+end
+atom(P(nN + 1, :), 'C'); atom(P(nN + 2, :), 'O');
+atom(pc + [0 1.0], 'O'); atom(pn + [0 -0.9], 'H');
+% bracket around the repeating unit (atoms 3-5 of the arm = P(4:6))
+xb1 = mean(P(3:4, 1)); xb2 = mean(P(6:7, 1)); yb = [min(P(3:7, 2)) - 0.5, max(P(3:7, 2)) + 0.55];
+plot(ax, [xb1 + 0.12 xb1 xb1 xb1 + 0.12], [yb(1) yb(1) yb(2) yb(2)], 'k', 'LineWidth', LW * 1.2);
+plot(ax, [xb2 - 0.12 xb2 xb2 xb2 - 0.12], [yb(1) yb(1) yb(2) yb(2)], 'k', 'LineWidth', LW * 1.2);
+rep = 'n-1';
+text(ax, xb2 - 0.05, yb(1) - 0.12, rep, 'FontSize', FS, 'FontAngle', 'italic', 'VerticalAlignment', 'top');
+% big bracket around the whole arm, subscript = number of arms
+xa1 = mean(P(1:2, 1)); xa2 = P(end, 1) + 0.45; ya = [min(P(:, 2)) - 1.25, max(P(:, 2)) + 1.45];
+plot(ax, [xa1 + 0.15 xa1 xa1 xa1 + 0.15], [ya(1) ya(1) ya(2) ya(2)], 'k', 'LineWidth', LW * 1.2);
+plot(ax, [xa2 - 0.15 xa2 xa2 xa2 - 0.15], [ya(1) ya(1) ya(2) ya(2)], 'k', 'LineWidth', LW * 1.2);
+text(ax, xa2 + 0.08, ya(1), sprintf('%d', C.f), 'FontSize', FS + 1, 'VerticalAlignment', 'top');
+% proton labels (italic letters): above peaks, below valleys
+for k = 1:size(seq, 1)
+    L = seq{k, 2};
+    if isempty(L), continue, end
+    p = P(k + 1, :);
+    if k + 1 == k_nh
+        q = p + [0.42 -0.9];
+    elseif k == 6                               % CH2 right after the bracket: keep clear of n-1
+        q = p + [0.42 -0.45];
+    elseif P(k + 1, 2) > P(k, 2)
+        q = p + [0 0.5];
+    else
+        q = p + [0 -0.5];
+    end
+    text(ax, q(1), q(2), L, 'FontSize', FS + 1, 'FontAngle', 'italic', 'FontWeight', 'bold', ...
+        'Color', [0.10 0.35 0.70], 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle');
+end
+% formula and core definition
+x0 = P(end, 1) + 1.3;
+if strcmp(C.name(1:2), 'GE')
+    l1 = 'GE-EO-(HDI)_3';
+    l2 = 'C_3H_5[O(CH_2CH_2O)_nC(O)NH(CH_2)_6NCO]_3';
+    l3 = 'R-CH_2 (d) = glycerol C1/C3; C2 arm: R = CH';
+    l4 = sprintf('n = %.2f (supplier: 6-7; M_n ~1000)', opt.NominalN);
+else
+    l1 = 'PE-EO-(HDI)_4';
+    l2 = 'C[CH_2O(CH_2CH_2O)_nC(O)NH(CH_2)_6NCO]_4';
+    l3 = 'R = quaternary C; CH_2 (d) of the core';
+    l4 = sprintf('a+b+c+d EO ~15 (n = %.2f per arm)', opt.NominalN);
+end
+text(ax, x0, 1.1, l1, 'FontSize', FS + 1, 'FontWeight', 'bold');
+text(ax, x0, 0.35, l2, 'FontSize', FS);
+text(ax, x0, -0.4, l3, 'FontSize', FS - 0.5, 'Color', [0.3 0.3 0.3]);
+text(ax, x0, -1.1, l4, 'FontSize', FS - 0.5, 'Color', [0.3 0.3 0.3]);
+xlim(ax, [-0.6 x0 + 9.5]); ylim(ax, [ya(1) - 0.3, ya(2) + 0.3]);
+hold(ax, 'off');
+end
+
+function export_fig_files(fig, base)
+print(fig, [base '.png'], '-dpng', '-r600');
+try
+    if exist('exportgraphics', 'file') || exist('exportgraphics', 'builtin')
+        exportgraphics(fig, [base '.pdf'], 'ContentType', 'vector');
+    else
+        print(fig, [base '.svg'], '-dsvg');
+    end
+catch err
+    warning('vector export skipped: %s', err.message);
+end
 end
