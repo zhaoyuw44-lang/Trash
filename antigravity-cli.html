@@ -153,6 +153,7 @@ footer ul{margin:0;padding-left:1.1rem}
 <nav class="nav" aria-label="章节">
   <div class="wrap">
     <a href="#two">两分钟</a>
+    <a href="#why">为何用 CLI</a>
     <a href="#knobs">三个旋钮</a>
     <a href="#start">第一次</a>
     <a href="#choose">怎么启动</a>
@@ -175,7 +176,7 @@ footer ul{margin:0;padding-left:1.1rem}
     <p class="eyebrow">Google Antigravity CLI · 本地阅读稿</p>
     <h1>在终端里用 <span class="mono">agy</span></h1>
     <p class="zh">先看清你在拧哪三个旋钮，再决定这一次要不要让它自己改文件。</p>
-    <p class="lede">Antigravity CLI 是 Google Antigravity 的终端界面（TUI）。二进制就叫 <code>agy</code>。它能读仓库、改文件、跑命令、派子代理（subagent），也能被脚本以无头方式调用。这份说明按 2026-11-19 的官方文档整理。产品在改，你机器上的 <code>agy --help</code> 和会话里的 <code>/help</code> 优先于这里的任何一张表。</p>
+    <p class="lede">Antigravity CLI 是 Google Antigravity 的终端界面（TUI）。二进制就叫 <code>agy</code>。它能读仓库、改文件、跑命令、派子代理（subagent），也能被脚本以无头方式调用。若你平时开的是 Claude 的窗口，先看<a href="#why">什么时候该留在终端</a>。这份说明按 2026-11-19 的官方文档整理。产品在改，你机器上的 <code>agy --help</code> 和会话里的 <code>/help</code> 优先于这里的任何一张表。</p>
     <p class="meta">用浏览器直接打开这个文件即可。不需要本地服务器。官方安装与参考：<a href="https://antigravity.google/docs/getting-started/">Getting started</a> · <a href="https://antigravity.google/docs/cli/reference/">CLI reference</a></p>
     <div class="tldr">
       <p class="eyebrow">只看这一段也能开工</p>
@@ -189,6 +190,74 @@ footer ul{margin:0;padding-left:1.1rem}
         <li>模型目录会变。用 <code>agy models</code> 抄 slug。无头模式下写错模型会直接失败，不会悄悄换一个。</li>
       </ol>
     </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow">和 Claude 的窗口比</p>
+    <h2>仓库和检查已经在这个 shell 里</h2>
+    <p class="lede">用 CLI 的理由不是终端更高尚。是这件工作的上下文、工具链和“怎样算做完”已经在当前这个 shell 里，再打开一个窗口只是把它们重讲一遍。</p>
+    <p>Claude 的图形界面有两层，离开它们的理由不一样。<b>聊天</b>（claude.ai，或 Claude Desktop 的 Chat）从你贴进去的文字开始，它看不见当前目录，也跑不了你仓库里的测试。<b>Code 页</b>是 Claude Code 的图形壳：侧栏里可以并排多条会话，按文件看 diff 并在行上留言，本地会话还能开浏览器预览、在 macOS 上用 iOS 模拟器。那是用来看的。agy 是另一套产品：Google 账号、Antigravity 的配额，从你 <code>cd</code> 进去的目录开始。</p>
+    <div class="grid2">
+      <article class="card accent">
+        <p class="tag">聊天窗口做不到</p>
+        <h3>失败日志不用再贴一次</h3>
+        <p>测试刚挂在终端里。路径、堆栈和将要改的文件都在滚动区中。agy 直接读这个目录，改完可以再跑你写明的检查。聊天要等你把这些复制过去，再把补丁复制回来。</p>
+      </article>
+      <article class="card">
+        <p class="tag">人已经在那台机器上</p>
+        <h3>SSH 进去之后就在原地做</h3>
+        <p>Claude Desktop 也能从笔记本连到一台远程机器。窗口仍留在你的电脑上。SSH 会话里它没有 Browser 窗格的工具，不能自己点开应用做验证；你仍可以点 HTML 路径做预览。人已经坐在构建机的 shell 里时，在项目目录运行 <code>agy</code>，少一次来回。进程放在 <code>tmux</code> 里，断开连接它还在。</p>
+      </article>
+      <article class="card">
+        <p class="tag">窗口没有退出码</p>
+        <h3>脚本和 CI 需要一个进程</h3>
+        <p><code>agy -p</code> 把回答打到 stdout，诊断打到 stderr，然后退出。Claude Desktop 的 Code 页是交互式的。Claude 自己的打印模式在 <code>claude</code> 这个 CLI 里，不在窗口里。要 Antigravity 的权限和沙箱时，用 <code>agy -p</code>。</p>
+      </article>
+      <article class="card">
+        <p class="tag">没人盯着也成立</p>
+        <h3>许可写在这台机器上</h3>
+        <p>窗口的默认姿态是你看着它做。agy 把姿态写成 <code>~/.gemini/antigravity-cli/settings.json</code>：沙箱、Deny、以及 <code>default</code> 下逐个文件的 diff。无头模式里没有人点 Yes，该问的工具会被软拒绝，而不是静默拿到整台机器。</p>
+      </article>
+    </div>
+    <div class="callout ok">
+      <strong>模型不是引擎。</strong> <code>agy models</code> 的列表里可以出现 Claude 的 slug，那只说明这一轮推理可以走那个模型，计费和许可仍是 Antigravity 的。它不会因此变成 Claude Code：没有 Code 页的浏览器预览、云端会话和行内评论，项目说明读的是 <code>AGENTS.md</code> 或 <code>GEMINI.md</code>。要的是 <code>CLAUDE.md</code>、Desktop 的窗格或合上笔记本还能跑的云端会话，就打开 Claude，或在终端里用 <code>claude</code>。
+    </div>
+    <h3>按你现在面对的东西选</h3>
+    <div class="choices" role="group" aria-label="和 Claude 窗口怎么选">
+      <button type="button" aria-pressed="true" data-why="log">终端里有一份失败</button>
+      <button type="button" aria-pressed="false" data-why="ssh">人在远端 shell 里</button>
+      <button type="button" aria-pressed="false" data-why="pipe">要交进脚本</button>
+      <button type="button" aria-pressed="false" data-why="look">要看着 diff 评论</button>
+      <button type="button" aria-pressed="false" data-why="think">还没有仓库</button>
+    </div>
+    <article class="panel" data-why-panel="log">
+      <p class="eyebrow">留在终端</p>
+      <div class="cmd">agy --mode=plan</div>
+      <p>先让它读失败和相关文件，写出计划。范围清楚后再改，并写上要跑的检查。聊天窗口要你当搬运工；Code 页能做这件事，但你得先离开这块已经印着报错的屏幕。</p>
+    </article>
+    <article class="panel" data-why-panel="ssh" hidden>
+      <p class="eyebrow">留在终端</p>
+      <div class="cmd">cd ~/src/the-repo && agy</div>
+      <p>工具链、依赖和密钥在这台机器上。Desktop 从笔记本连过来时，浏览器自动验证用不上，创建 PR 还要求远端已经装好 <code>gh</code> 并且登录过。人在 shell 里，就在 shell 里做。</p>
+    </article>
+    <article class="panel" data-why-panel="pipe" hidden>
+      <p class="eyebrow">留在终端</p>
+      <div class="cmd">agy -p "根据退出码说明测试为何失败" --output-format json</div>
+      <p>调用方要的是一个进程：退出码、<code>status</code>、可解析的 <code>response</code>。窗口给不了这些。若你要的是 Claude Code 的引擎而不是 Antigravity，对应命令是 <code>claude -p</code>，同样不在图形界面里。</p>
+    </article>
+    <article class="panel" data-why-panel="look" hidden>
+      <p class="eyebrow">打开 Claude Desktop 的 Code 页</p>
+      <div class="cmd">Claude → Code</div>
+      <p>这一次窗口更合适。你可以按文件看 diff、在某一行留言再一次性提交，本地会话里让它打开浏览器点自己的页面。agy 有 <code>/diff</code> 和 <kbd>Ctrl</kbd>+<kbd>R</kbd>，那是终端里的审阅，不是并排窗格。Code 页的权限模式也和 agy 的 <kbd>Shift</kbd>+<kbd>Tab</kbd> 不是同一套开关。</p>
+    </article>
+    <article class="panel" data-why-panel="think" hidden>
+      <p class="eyebrow">留在聊天</p>
+      <div class="cmd">Claude → Chat</div>
+      <p>还没有目录、没有测试、没有一份要落盘的改动。聊天就是为想、写、读一份材料准备的。硬在空目录里启动 agy，只是让一个编码代理替你做一个还没成形的决定。</p>
+    </article>
+    <p class="muted">Code 页还有两件终端替不了的事：合上笔记本之后仍继续的云端会话，以及让 Claude 打开电脑上的其他应用、控制屏幕。任务属于这两件时，用 Desktop。描述据 2026-11-19 的 <a href="https://code.claude.com/docs/en/desktop">Claude Desktop</a> 与 <a href="https://code.claude.com/docs/en/platforms">平台说明</a>。</p>
   </div>
 </section>
 
@@ -864,6 +933,8 @@ jq -r '.response' <<<"$result"</code></pre></div>
       <li><a href="https://antigravity.google/docs/cli/commands/permissions/">/permissions</a></li>
       <li><a href="https://antigravity.google/docs/cli/troubleshooting/">CLI troubleshooting</a></li>
       <li><a href="https://antigravity.google/product/antigravity-cli/">产品页</a></li>
+      <li><a href="https://code.claude.com/docs/en/desktop">Claude Desktop（Code 页）</a></li>
+      <li><a href="https://code.claude.com/docs/en/platforms">Claude Code 的各个界面</a></li>
     </ul>
     <p>Codelab《Hands-on with Antigravity CLI》（更新于 2026-09，示例版本 1.1.27）对 strict、always-proceed 的描述比现行参考更粗，模型表也已过时。行为冲突时以 CLI reference 和 modes 页为准。</p>
   </div>
@@ -932,6 +1003,7 @@ jq -r '.response' <<<"$result"</code></pre></div>
     });
   }
   wire("scenario", "scenario-panel");
+  wire("why", "why-panel");
   wire("rule", "rule-panel");
 
   var keyCopy = {
