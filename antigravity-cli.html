@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var t=localStorage.getItem("agy-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<title>Antigravity CLI 用法</title>
+<meta name="description" content="如何使用 Google Antigravity CLI（agy）：执行模式、权限顺序、按键在不同场合的含义，以及无头脚本。">
+<noscript><style>.panel[hidden]{display:flex !important}</style></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F1EA; --surface:#FFFCF7; --sunk:#EBE6DC; --ink:#1C1915; --muted:#5C564C; --rule:#DDD6C8;
+  --accent:#0C6B62; --accent-soft:#E2F1EE; --warn:#8A4B12; --warn-soft:#F8EEDD;
+  --bad:#8E2F2A; --bad-soft:#F8E6E3; --ok:#1D6B42; --ok-soft:#E3F2E8; --plan:#2E4580; --plan-soft:#E6EAF4;
+  --f-display:"Newsreader","Noto Serif SC","Songti SC","STSong",serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono","Sarasa Mono SC",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121410; --surface:#1A1D18; --sunk:#242822; --ink:#E8E4DA; --muted:#A39C90; --rule:#33382F;
+    --accent:#7DCFC4; --accent-soft:#14302C; --warn:#E2B06A; --warn-soft:#2E2416;
+    --bad:#F0A09A; --bad-soft:#351C1A; --ok:#8DCFAB; --ok-soft:#15281C; --plan:#A9BBE8; --plan-soft:#1A2236;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121410; --surface:#1A1D18; --sunk:#242822; --ink:#E8E4DA; --muted:#A39C90; --rule:#33382F;
+  --accent:#7DCFC4; --accent-soft:#14302C; --warn:#E2B06A; --warn-soft:#2E2416;
+  --bad:#F0A09A; --bad-soft:#351C1A; --ok:#8DCFAB; --ok-soft:#15281C; --plan:#A9BBE8; --plan-soft:#1A2236;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--paper)}
+.skip{position:absolute;left:12px;top:-40px;background:var(--ink);color:var(--paper);padding:.4rem .7rem;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:920px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right));min-width:0}
+.grid2>*,.grid3>*,.grid4>*,.card,.panel,.tldr,.callout,.step,.step .body,.codebox{min-width:0}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.25;margin:0;text-wrap:balance;line-break:strict}
+h2{font-size:1.85rem}
+h3{font-size:1.22rem}
+p{margin:0}
+a{color:var(--accent)}
+code,kbd,.mono{font-family:var(--f-mono)}
+code{font-size:.88em;background:var(--sunk);padding:.08em .35em;border-radius:4px;overflow-wrap:anywhere}
+pre code{background:none;padding:0;font-size:.86rem;line-height:1.55}
+pre{white-space:pre-wrap;overflow-wrap:anywhere}
+kbd{font-size:.8em;border:1px solid var(--rule);border-bottom-width:2px;border-radius:5px;padding:.04em .38em;background:var(--surface);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,select,input{font:inherit;color:inherit}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.lede{color:var(--muted);max-width:68ch}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;gap:.2rem;align-items:center;overflow-x:auto;scrollbar-width:none;padding-block:.4rem}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:.84rem;padding:.22rem .55rem;border-radius:999px;white-space:nowrap}
+.nav a:hover{background:var(--sunk);color:var(--ink)}
+.nav a.on{background:var(--ink);color:var(--paper)}
+.theme{flex:none;margin-left:auto;border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:.2rem .65rem;cursor:pointer;font-size:.8rem;color:var(--muted)}
+
+section{padding-block:3rem 0}
+section>.wrap{display:flex;flex-direction:column;gap:1.15rem}
+.hero{padding-block:2.4rem 0}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.15rem);letter-spacing:-.02em}
+.hero .zh{font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(1.05rem,2.4vw,1.35rem);color:var(--muted);font-weight:600}
+.meta{font-size:.88rem;color:var(--muted)}
+
+.card,.tldr,.callout,.panel,.codebox{background:var(--surface);border:1px solid var(--rule);border-radius:12px}
+.tldr{padding:1.05rem 1.2rem;display:flex;flex-direction:column;gap:.7rem}
+.tldr ol{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:.45rem}
+.tldr li{padding-left:.15rem}
+.tldr li b{font-weight:600}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:760px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+.card{padding:1rem 1.05rem;display:flex;flex-direction:column;gap:.4rem}
+.card h3{font-size:1.12rem}
+.card .tag{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.card.warn{background:var(--warn-soft)}
+.card.bad{background:var(--bad-soft)}
+.card.ok{background:var(--ok-soft)}
+.card.plan{background:var(--plan-soft)}
+.card.accent{background:var(--accent-soft)}
+
+.callout{padding:.85rem 1rem;border-left:3px solid var(--warn);background:var(--warn-soft)}
+.callout.bad{border-left-color:var(--bad);background:var(--bad-soft)}
+.callout.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.callout strong{font-weight:600}
+
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:2.2rem 1fr;gap:.7rem}
+.step .n{font-family:var(--f-mono);color:var(--accent);padding-top:.15rem}
+.step .body{border-left:1px solid var(--rule);padding:0 0 1.1rem .9rem;display:flex;flex-direction:column;gap:.3rem}
+.step:last-child .body{border-left-color:transparent;padding-bottom:0}
+
+.codebox{position:relative;padding:2.15rem 1rem .8rem}
+.codebox pre{margin:0}
+.copy{position:absolute;top:.45rem;right:.45rem;border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:.1rem .55rem;font-size:.75rem;cursor:pointer;color:var(--muted)}
+.copy:hover{color:var(--ink)}
+
+.choices{display:flex;flex-wrap:wrap;gap:.4rem}
+.choices button,.filters button{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:.28rem .7rem;cursor:pointer;font-size:.88rem}
+.choices button[aria-pressed="true"],.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.panel{padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem}
+.panel[hidden]{display:none}
+.cmd{font-family:var(--f-mono);font-size:.95rem;background:var(--sunk);padding:.45rem .7rem;border-radius:8px;overflow-wrap:anywhere}
+
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:.45rem .55rem;border-bottom:1px solid var(--rule)}
+th{font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+.scroll table{min-width:640px}
+caption{text-align:left;padding:.7rem .8rem .2rem;font-weight:600}
+
+.keygrid{display:grid;grid-template-columns:1fr 1.4fr;gap:.75rem}
+@media(max-width:760px){.keygrid{grid-template-columns:1fr}}
+.result{min-height:7.5rem}
+.result h3{margin-bottom:.25rem}
+
+.filters{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.search{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:.35rem .8rem;min-width:min(100%,16rem)}
+tr.gone{display:none}
+.hit{font-variant-numeric:tabular-nums}
+
+footer{padding:2.4rem 0 3rem;color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;flex-direction:column;gap:.6rem}
+footer ul{margin:0;padding-left:1.1rem}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+@media print{
+  .nav,.copy,.theme,.choices,.filters{display:none!important}
+  .panel[hidden]{display:flex!important}
+  body{background:#fff;color:#000}
+  a{color:#000}
+  section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<nav class="nav" aria-label="章节">
+  <div class="wrap">
+    <a href="#two">两分钟</a>
+    <a href="#knobs">三个旋钮</a>
+    <a href="#start">第一次</a>
+    <a href="#choose">怎么启动</a>
+    <a href="#turn">一轮对话</a>
+    <a href="#modes">模式</a>
+    <a href="#perms">权限</a>
+    <a href="#daily">每天</a>
+    <a href="#keys">按键</a>
+    <a href="#script">脚本</a>
+    <a href="#memory">让它记住</a>
+    <a href="#pitfalls">容易踩错</a>
+    <a href="#ref">速查</a>
+    <button type="button" class="theme" id="theme">主题</button>
+  </div>
+</nav>
+
+<main id="main">
+<section class="hero" id="two">
+  <div class="wrap">
+    <p class="eyebrow">Google Antigravity CLI · 本地阅读稿</p>
+    <h1>在终端里用 <span class="mono">agy</span></h1>
+    <p class="zh">先看清你在拧哪三个旋钮，再决定这一次要不要让它自己改文件。</p>
+    <p class="lede">Antigravity CLI 是 Google Antigravity 的终端界面（TUI）。二进制就叫 <code>agy</code>。它能读仓库、改文件、跑命令、派子代理（subagent），也能被脚本以无头方式调用。这份说明按 2026-11-19 的官方文档整理。产品在改，你机器上的 <code>agy --help</code> 和会话里的 <code>/help</code> 优先于这里的任何一张表。</p>
+    <p class="meta">用浏览器直接打开这个文件即可。不需要本地服务器。官方安装与参考：<a href="https://antigravity.google/docs/getting-started/">Getting started</a> · <a href="https://antigravity.google/docs/cli/reference/">CLI reference</a></p>
+    <div class="tldr">
+      <p class="eyebrow">只看这一段也能开工</p>
+      <ol>
+        <li>在<b>项目目录</b>里运行 <code>agy</code>。信任提示指的是：允许它在这个目录里读、改、执行。不要在家目录里点 Yes。</li>
+        <li>CLI <code>1.5.7</code> 起，沙箱可用且是个人账号时，启动模式是 <code>auto</code>：工作区里的编辑直接落盘，命令默认进终端沙箱（terminal sandbox），需要跑到沙箱外的命令会先被评估，不可逆的仍会停下来问你。</li>
+        <li>不熟的仓库用 <code>agy --mode=plan</code>。想看每一处 diff，用 <kbd>Shift</kbd>+<kbd>Tab</kbd> 转回 <code>default</code>，直到状态栏上的模式字消失。</li>
+        <li>跑偏时按 <kbd>Esc</kbd> 或 <kbd>Ctrl</kbd>+<kbd>C</kbd> 打断这一轮。<code>/rewind</code> 把对话退回早先某条。<code>/clear</code> 会重置上下文。<kbd>Ctrl</kbd>+<kbd>L</kbd> 只重画屏幕。</li>
+        <li>脚本用 <code>agy -p</code>。回答在 stdout，诊断在 stderr。先开一次交互会话完成登录。无头模式下，本来该问你的工具会被软拒绝（soft-deny），进程仍可能以 0 退出。</li>
+        <li>细规则写成 <code>action(target)</code>，例如 <code>command(git diff)</code>。拒绝（Deny）高于询问（Ask），询问高于允许（Allow）。<code>command(git)</code> 盖不住 <code>git log $(whoami)</code> 这种带命令替换的行，那种行会退回询问。</li>
+        <li>模型目录会变。用 <code>agy models</code> 抄 slug。无头模式下写错模型会直接失败，不会悄悄换一个。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="knobs">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">先分开三样东西</p>
+      <h2>应用、CLI、SDK 不是同一个开关</h2>
+      <p class="lede">同一个 Google 账号可以打通 Antigravity 的几处入口，但权限预设的名字并不互通。把桌面应用里的 Turbo 当成 CLI 的 auto，是最常见的误配。</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <caption>三个入口</caption>
+        <thead><tr><th></th><th>CLI</th><th>应用 / IDE</th><th>Python SDK</th></tr></thead>
+        <tbody>
+          <tr><td>你在哪</td><td>终端里的 <code>agy</code></td><td>Antigravity 应用，或编辑器侧栏</td><td>你自己的 Python 进程</td></tr>
+          <tr><td>适合</td><td>已经在 shell、SSH、CI 里</td><td>看界面、长任务、浏览器</td><td>把 agent 嵌进程序</td></tr>
+          <tr><td>安装</td><td>官方安装脚本，二进制默认在 <code>~/.local/bin/agy</code></td><td><a href="https://antigravity.google/download">antigravity.google/download</a> 或编辑器市场</td><td><code>pip install google-antigravity</code></td></tr>
+          <tr><td>容易混的键</td><td><kbd>Ctrl</kbd>+<kbd>K</kbd> 批准状态栏里等待中的 subagent</td><td>应用里 <kbd>Cmd</kbd>/<kbd>Ctrl</kbd>+<kbd>K</kbd> 是会话搜索</td><td>没有这套键</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid3">
+      <article class="card accent">
+        <p class="tag">旋钮 1 · 执行模式</p>
+        <h3><code>agentMode</code></h3>
+        <p><code>default</code>、<code>accept-edits</code>、<code>auto</code>、<code>plan</code>。决定这一轮对<b>工作区编辑</b>和<b>要不要先写计划</b>的姿态。会话中按 <kbd>Shift</kbd>+<kbd>Tab</kbd> 循环，或启动时加 <code>--mode</code>。</p>
+      </article>
+      <article class="card">
+        <p class="tag">旋钮 2 · 工具许可</p>
+        <h3><code>toolPermission</code></h3>
+        <p><code>request-review</code>（默认）、<code>proceed-in-sandbox</code>、<code>always-proceed</code>、<code>strict</code>。这是全局安全预设，叠在细规则上面。<code>strict</code> 会压过 <code>auto</code>，连读文件也要问，Allow 规则也压不住。</p>
+      </article>
+      <article class="card">
+        <p class="tag">旋钮 3 · 沙箱</p>
+        <h3>终端沙箱</h3>
+        <p>操作系统级隔离，不是第四种执行模式。macOS 用 <code>sandbox-exec</code>，Linux 用内核命名空间，Windows 用进程安全环境。<code>auto</code> 会自己打开它。其它模式用 <code>--sandbox</code> 或 <code>enableTerminalSandbox</code>。</p>
+      </article>
+    </div>
+    <div class="callout">
+      <strong>应用文档里的四档预设</strong>是 Request Review、Default、Auto、Turbo。CLI 没有名为 Turbo 的模式。应用的 Turbo 关掉沙箱、放行命令和全盘文件，接近 CLI 的 <code>always-proceed</code>，不是 <code>auto</code>。CLI 的 <code>auto</code> 仍然把命令关在沙箱里，出沙箱的高风险动作会停下来问。
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <p class="eyebrow">第一次</p>
+    <h2>装好、登录、只信任这个仓库</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="body">
+        <h3>安装</h3>
+        <p>官方一键安装会把脚本直接送进 shell。想先看脚本，就先下载再执行。Windows 用 PowerShell 的 <code>irm … | iex</code>，或 CMD 的 <code>install.cmd</code>。二进制默认落在 <code>~/.local/bin/agy</code>（Windows 为 <code>%LOCALAPPDATA%\agy\bin</code>）。</p>
+        <div class="codebox"><button type="button" class="copy">复制</button><pre><code>curl -fsSL https://antigravity.google/cli/install.sh -o /tmp/agy-install.sh
+# 读完再执行
+bash /tmp/agy-install.sh
+agy --version</code></pre></div>
+      </div></div>
+      <div class="step"><div class="n">2</div><div class="body">
+        <h3>让 shell 找得到它</h3>
+        <p>安装器有时加不进 <code>PATH</code>。官方排错页写的是 <code>export PATH="~/.local/bin:$PATH"</code>。双引号里的 <code>~</code> 在 bash 里不会展开，这一行会失效。用 <code>$HOME</code>。</p>
+        <div class="codebox"><button type="button" class="copy">复制</button><pre><code>echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+agy --version</code></pre></div>
+      </div></div>
+      <div class="step"><div class="n">3</div><div class="body">
+        <h3>在项目目录里启动，完成登录</h3>
+        <p>令牌进系统钥匙串（macOS Keychain、Linux secret-service、Windows Credential Manager）。本机会打开浏览器。SSH 上它改为打印一个要在本地浏览器打开的链接。<code>/logout</code> 会清掉保存的凭证。也可以用 Google Cloud 项目登录；把请求直接打到 Gemini API 时，在设置里把 <code>modelProvider</code> 设为 <code>gemini</code>，并提供 <code>GEMINI_API_KEY</code>。</p>
+        <div class="codebox"><button type="button" class="copy">复制</button><pre><code>mkdir -p ~/src/agy-demo && cd ~/src/agy-demo
+agy</code></pre></div>
+      </div></div>
+      <div class="step"><div class="n">4</div><div class="body">
+        <h3>第一次还会问两件外观上的事，然后问你信不信任这个目录</h3>
+        <p>配色和渲染模式可以以后在 <code>/config</code> 里改。渲染模式 <code>default</code> 把对话留在当前终端滚动区，全屏面板才用备用屏幕；<code>always</code> 整页都在备用屏幕里，关掉后上面的输出不进 shell 历史。信任会写进 <code>~/.gemini/antigravity-cli/settings.json</code> 的 <code>trustedWorkspaces</code>。你点过 Yes 的目录，下次不再问。</p>
+      </div></div>
+      <div class="step"><div class="n">5</div><div class="body">
+        <h3>给一个收得回来的第一句</h3>
+        <p>官方入门示例是让它写一个抓取网页正文的 Python 脚本。在 <code>default</code> 下，创建文件前会要你确认；在 <code>auto</code> 下，工作区写入和沙箱内命令会自己进行。看完用 <code>/diff</code>。离开用 <code>/exit</code>，或在空提示框上按 <kbd>Ctrl</kbd>+<kbd>D</kbd>。</p>
+      </div></div>
+    </div>
+    <p class="muted">更新用 <code>agy update</code>。CLI 自己也会在后台检查更新，锁文件在 <code>~/.gemini/antigravity-cli/updater/</code>。不想自动更新：<code>export AGY_CLI_DISABLE_AUTO_UPDATE=true</code>。</p>
+  </div>
+</section>
+
+<section id="choose">
+  <div class="wrap">
+    <p class="eyebrow">这一次</p>
+    <h2>按你现在的处境启动</h2>
+    <p class="lede">模式可以中途换。启动时选对，是为了让第一轮就处在你真的看得住的松紧上。</p>
+    <div class="choices" role="group" aria-label="选择处境">
+      <button type="button" aria-pressed="true" data-scenario="plan">不熟这个仓库</button>
+      <button type="button" aria-pressed="false" data-scenario="default">每处 diff 都要看</button>
+      <button type="button" aria-pressed="false" data-scenario="edits">文件可以自己改</button>
+      <button type="button" aria-pressed="false" data-scenario="auto">日常，沙箱可用</button>
+      <button type="button" aria-pressed="false" data-scenario="ask">只问一句</button>
+      <button type="button" aria-pressed="false" data-scenario="ci">交给脚本</button>
+      <button type="button" aria-pressed="false" data-scenario="goal">做到检查通过为止</button>
+    </div>
+    <article class="panel" data-scenario-panel="plan">
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy --mode=plan</div>
+      <p>plan 会在你的提示前加上 <code>/plan</code>。它先用只读搜索和读文件摸清代码，写出一份实现计划等你点头，然后再改。需求自己也没想清时，进去第一句用 <code>/grill-me</code>：它一题一题问，每题附一个建议答案。</p>
+      <p class="muted">公司账号或这台机器没有沙箱时，<code>auto</code> 不会出现。plan 不受这个限制。</p>
+    </article>
+    <article class="panel" data-scenario-panel="default" hidden>
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy --mode=default</div>
+      <p>改文件前给你一份带语法高亮的 diff。已有文件：<kbd>1</kbd> 接受，<kbd>2</kbd> 拒绝，<kbd>f</kbd> 打开全屏 diff。拒绝时把焦点放在 No 上，按 <kbd>Tab</kbd> 可以写“改成这样”，再按 <kbd>Enter</kbd>。这条确认不会被 <kbd>Esc</kbd> 关掉。新文件的面板上，<kbd>Esc</kbd> 等于拒绝创建。</p>
+      <p class="muted"><code>1.5.7</code> 起默认可能已是 auto。状态栏右下角没有模式字，才是 default。</p>
+    </article>
+    <article class="panel" data-scenario-panel="edits" hidden>
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy --mode=accept-edits</div>
+      <p>工作区里的创建、修改、替换直接落盘，后台 subagent 的写入也继承这个模式，不会在队列里等你。终端命令仍然按权限预设询问。适合你信得过这批编辑、但还想亲手放行每一条 shell。</p>
+    </article>
+    <article class="panel" data-scenario-panel="auto" hidden>
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy</div>
+      <p>个人账号、沙箱可用、CLI <code>1.5.7+</code> 时，这就是 auto，不必再写 <code>--mode=auto</code>。工作区编辑自动通过。命令默认在沙箱里跑，沙箱默认只能看见工作区和临时目录，默认没有网络。必须出沙箱的命令会先被评估：构建、测试、lint、格式化这类可逆动作可以自己跑，不可逆或高风险的仍会问。</p>
+      <p class="muted">可用范围：macOS / Linux 自 CLI <code>1.3.5</code>，Windows 自 <code>1.4.4</code>。Windows 沙箱需要 Windows 11 24H2 且含 2026 年 8 月的更新。企业账号没有 auto；<code>--mode=auto</code> 会落到 default，无头模式会先打印警告。</p>
+    </article>
+    <article class="panel" data-scenario-panel="ask" hidden>
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy -p "用一句话说明 git rebase 做什么"</div>
+      <p>问完即退出，没有后续回合。回答在 stdout。想接着问，加上 <code>-c</code>（继续最近一次对话）或 <code>--conversation &lt;id&gt;</code>。想打开 TUI 并带上第一句，用 <code>agy -i "…"</code>，会话会留下来。</p>
+    </article>
+    <article class="panel" data-scenario-panel="ci" hidden>
+      <p class="eyebrow">启动</p>
+      <div class="cmd">agy -p "列出这个仓库的测试命令" --output-format json</div>
+      <p>先在有终端的环境里交互登录一次。CI 上没有缓存凭证时，它会以 authentication required 退出，而不是挂起等你。本来要弹确认的工具会被软拒绝：退出码仍可能是 0，说明写在 stderr。要放行，事先写 <code>permissions.allow</code>，不要图省事加 <code>--dangerously-skip-permissions</code>。</p>
+    </article>
+    <article class="panel" data-scenario-panel="goal" hidden>
+      <p class="eyebrow">进会话之后</p>
+      <div class="cmd">/goal 为 parser 补上空输入测试，并让 npm test 通过</div>
+      <p><code>/goal</code> 会一直做到目标被验证完成，中间不再停下来问你下一步。所以目标里要有你机器上真能跑的检查。仓库还不熟时，先用 plan 把范围圈住，再下 goal。想看它中途有没有跑偏，<kbd>Esc</kbd> 仍然能打断。</p>
+    </article>
+  </div>
+</section>
+
+<section id="turn">
+  <div class="wrap">
+    <p class="eyebrow">一轮里实际发生什么</p>
+    <h2>你写提示，它调用工具，你来批准</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="body">
+        <h3>工作区就是你启动时所在的目录</h3>
+        <p>额外目录用 <code>/add-dir</code> 或重复的 <code>--add-dir</code>。工作区外的读写默认要问；<code>allowNonWorkspaceAccess</code> 默认关着。创建工作区外的文件时，面板会多一个“始终允许工作区外访问”。那是持久放宽，不是这一次的例外。</p>
+      </div></div>
+      <div class="step"><div class="n">2</div><div class="body">
+        <h3>你写任务。需要钉死文件时用 <code>@</code></h3>
+        <p>输入 <code>@</code> 会补全路径，agent 拿到的是完整路径。截图用 <kbd>Ctrl</kbd>+<kbd>V</kbd> 贴进提示框。多行用 <kbd>Shift</kbd>+<kbd>Enter</kbd>、<kbd>Ctrl</kbd>+<kbd>J</kbd> 或 <kbd>Alt</kbd>+<kbd>Enter</kbd>。长提示按 <kbd>Ctrl</kbd>+<kbd>G</kbd>，会交到 <code>$EDITOR</code>（设置项 <code>editor</code>，默认 auto）。</p>
+      </div></div>
+      <div class="step"><div class="n">3</div><div class="body">
+        <h3>它读规则，再调用工具</h3>
+        <p>仓库根上的 <code>AGENTS.md</code> 或 <code>GEMINI.md</code> 会在启动时被读走。工具包括读文件、改文件、跑命令、网页、MCP、以及后台 subagent。每一动都过权限引擎。觉得它“什么都没做”时，按 <kbd>Ctrl</kbd>+<kbd>O</kbd> 展开工具轨迹，或把 <code>/config</code> 里的 Verbosity 调到 high。</p>
+      </div></div>
+      <div class="step"><div class="n">4</div><div class="body">
+        <h3>你在旁边看，而不是等它结束再看</h3>
+        <p>命令确认是 <kbd>y</kbd> / <kbd>n</kbd>。正在等你批准一条命令时，<kbd>Ctrl</kbd>+<kbd>G</kbd> 的含义变了：它在 CLI 内部打开全屏编辑器，让你改完命令再批准，这时它不会去叫外部编辑器。subagent 卡在确认上时，<kbd>Alt</kbd>+<kbd>J</kbd> 跳到下一个，<kbd>Ctrl</kbd>+<kbd>K</kbd> 批准状态栏里那一条。</p>
+      </div></div>
+      <div class="step"><div class="n">5</div><div class="body">
+        <h3>生成途中你又打了一句</h3>
+        <p>默认 <code>queuedMessages</code> 是 <code>queue</code>：这句话等到当前回合结束再送。设成 <code>send-immediately</code> 则会打断当前回合。 <kbd>Alt</kbd>+<kbd>M</kbd> 走与当前设置相反的那一条。</p>
+      </div></div>
+    </div>
+    <div class="grid2">
+      <article class="card bad">
+        <p class="tag">范围是空的</p>
+        <h3>修一下登录</h3>
+        <p>它会自己猜文件、自己猜“修好”的标准，然后在 auto 里把猜测写进磁盘。</p>
+      </article>
+      <article class="card ok">
+        <p class="tag">结果、边界、检查都在</p>
+        <h3>超时后仍显示成功</h3>
+        <p>只改 <code>src/auth/session.ts</code> 和它的测试。先写一条失败测试，再改实现，最后跑 <code>npm test</code>。失败就停，把摘要贴出来。不要动迁移。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <p class="eyebrow">执行模式</p>
+    <h2>四个模式各放行什么</h2>
+    <p>循环顺序是 <code>default</code> → <code>accept-edits</code> → <code>auto</code> → <code>plan</code> → <code>default</code>。没有 auto 的环境会从 accept-edits 直接到 plan。状态栏写出当前的非 default 模式。default 正在等文件确认时，<kbd>Shift</kbd>+<kbd>Tab</kbd> 会切到 accept-edits 或 auto，并接受尚未确认的工作区写入。</p>
+    <div class="grid4">
+      <article class="card">
+        <p class="tag">default</p>
+        <h3>先看 diff，命令也问</h3>
+        <p>适合敏感重构。设置里写成 <code>"agentMode": ""</code>。文件确认用 1 / 2 / f，不是 y / n。</p>
+      </article>
+      <article class="card ok">
+        <p class="tag">accept-edits</p>
+        <h3>编辑放手，命令仍问</h3>
+        <p>工作区内的 <code>write_to_file</code>、替换类编辑自动通过。shell 仍走 <code>toolPermission</code> 和细规则。</p>
+      </article>
+      <article class="card accent">
+        <p class="tag">auto</p>
+        <h3>编辑放手，命令进沙箱</h3>
+        <p>出沙箱前先评估。可逆的开发命令可以自己跑，不可逆的仍问。企业账号和没有沙箱的机器上看不到这一档。</p>
+      </article>
+      <article class="card plan">
+        <p class="tag">plan</p>
+        <h3>先写计划再改</h3>
+        <p>提示会被加上 <code>/plan</code>。已经处在 plan 时，不必再手打一遍。旧的 <code>/planning</code> 和 <code>/fast</code> 在 1.1.0 移除了。</p>
+      </article>
+    </div>
+    <div class="callout ok">
+      <strong>细规则压过模式。</strong> <code>/permissions</code> 里的 Deny、Ask、Allow，以及 <code>--dangerously-skip-permissions</code> 和 <code>strict</code>，在四种模式里都生效。plan 不是“只读锁”：文档说计划阶段用只读搜索和读文件，但命令仍然经过同一套权限。
+    </div>
+    <p>启动标志是 <code>--mode</code>，没有 <code>--permission-mode</code>。沙箱也不会出现在 <kbd>Shift</kbd>+<kbd>Tab</kbd> 的循环里。要持久改默认：<code>/config</code> 里改 Agent Mode，立刻写入 <code>settings.json</code>。省略 <code>agentMode</code> 时，可用环境下从 1.5.7 起按 auto 启动。</p>
+  </div>
+</section>
+
+<section id="perms">
+  <div class="wrap">
+    <p class="eyebrow">权限引擎</p>
+    <h2>一条动作怎么被裁判</h2>
+    <p>每个敏感动作都是 <code>action(target)</code>。动作有 <code>read_file</code>、<code>write_file</code>、<code>read_url</code>、<code>execute_url</code>、<code>download_url</code>、<code>command</code>、<code>mcp</code>。企业账号的旧规则里还有单独的 <code>unsandboxed</code>。写路径隐含读同一路径；拒绝读则同时拒绝写。</p>
+    <div class="scroll">
+      <table>
+        <caption>命中顺序。上面的赢。</caption>
+        <thead><tr><th>层</th><th>结果</th></tr></thead>
+        <tbody>
+          <tr><td>Deny</td><td>任何模式都直接挡住，包括沙箱里本来能跑的命令。</td></tr>
+          <tr><td><code>strict</code></td><td>连读文件也要问，即使 Allow 写了这条。它压过 auto。</td></tr>
+          <tr><td>Ask</td><td>比 Allow 优先。文档里的例子：Ask 里有 <code>command(*)</code>，Allow 里有 <code>command(git)</code>，结果是每条命令都问。</td></tr>
+          <tr><td><code>--dangerously-skip-permissions</code></td><td>本会话按 always-proceed 自动批准工具请求，包含写文件和执行命令。Ask 和 Deny 仍然算数。无头文档明确建议只在你完全信任提示和环境时使用。</td></tr>
+          <tr><td>Allow</td><td>精确放行，不再问。</td></tr>
+          <tr><td>模式与预设的默认</td><td>上面都没写到时：工作区内读写通常放行；网页和 MCP 默认问；命令在 request-review 下问，在沙箱开启且 proceed-in-sandbox 或 auto 下，沙箱内放行。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>前缀匹配会在这些写法上关掉</h3>
+    <p>Allow 里的 <code>command(git)</code> 按词前缀匹配。<code>git status &amp;&amp; git log</code> 可以放行。一旦出现命令替换 <code>$(…)</code>、反引号、进程替换、算术扩展、花括号展开、非字面命令名、网络或文件描述符重定向，以及会执行子命令的参数（如 <code>git -c core.pager=…</code>、<code>tar --to-command</code>），整行改为必须和规则逐字相同，否则退回询问。<code>git log $(whoami)</code> 因此不会被 <code>command(git)</code> 静默放行。</p>
+    <div class="choices" role="group" aria-label="权限例子">
+      <button type="button" aria-pressed="true" data-rule="chain">git 链</button>
+      <button type="button" aria-pressed="false" data-rule="subst">命令替换</button>
+      <button type="button" aria-pressed="false" data-rule="askstar">Ask 通配</button>
+      <button type="button" aria-pressed="false" data-rule="push">git push</button>
+      <button type="button" aria-pressed="false" data-rule="sandbox">沙箱内外</button>
+    </div>
+    <article class="panel" data-rule-panel="chain">
+      <p class="eyebrow">Allow：command(git)</p>
+      <div class="cmd">git status &amp;&amp; git log</div>
+      <p>放行。管道、<code>&amp;&amp;</code> / <code>||</code> / <code>;</code>、引号、普通 <code>$VAR</code>、简单文件重定向，以及 <code>timeout</code>、<code>env</code> 这类透明包装，仍然走前缀匹配。包装内部的命令会再评一次。</p>
+    </article>
+    <article class="panel" data-rule-panel="subst" hidden>
+      <p class="eyebrow">Allow：command(git)</p>
+      <div class="cmd">git log $(whoami)</div>
+      <p>询问。前缀匹配被关掉。除非有一条规则和整行逐字相同，或 <code>regex:</code> 规则覆盖原始整行。</p>
+    </article>
+    <article class="panel" data-rule-panel="askstar" hidden>
+      <p class="eyebrow">Ask：command(*)　Allow：command(git)</p>
+      <div class="cmd">git status</div>
+      <p>询问。Deny &gt; Ask &gt; Allow。通配的 Ask 会盖住更具体的 Allow。想少问 git，就要拿掉这条 Ask，而不是再加一条 Allow。</p>
+    </article>
+    <article class="panel" data-rule-panel="push" hidden>
+      <p class="eyebrow">Allow：command(git push)</p>
+      <div class="cmd">git push</div>
+      <p>放行，并且可以在沙箱外跑，因为 push 需要网络，而沙箱默认没有网络。<code>command(git)</code> 会把 status、commit、reset、push 一起放进来。希望 push 仍由你点头时，只写 <code>command(git status)</code>、<code>command(git diff)</code>、<code>command(git log)</code> 这种更短的前缀。</p>
+    </article>
+    <article class="panel" data-rule-panel="sandbox" hidden>
+      <p class="eyebrow">没有细规则，沙箱开着</p>
+      <div class="cmd">npm test</div>
+      <p>沙箱内：auto 与 proceed-in-sandbox 下直接跑。沙箱外：default / request-review 会问；auto 会先评估，可逆的放行，不可逆的问。沙箱在这台机器上不可用时（CLI 1.4.4 起），<code>--sandbox</code> 没有效果，<code>proceed-in-sandbox</code> 退回 request-review 的行为。</p>
+    </article>
+    <h3>一份偏紧、但日常能用的设置</h3>
+    <p>文件在 <code>~/.gemini/antigravity-cli/settings.json</code>。项目级、各 Antigravity 产品共享、以及全局，是 <code>/permissions</code> 里的三个范围。交互面板里 <kbd>A</kbd> 添加，<kbd>E</kbd> 编辑，<kbd>D</kbd> 删除，左右键切换 allow / deny / ask。手改 JSON 后若启动报错，用 <code>/config</code> 改回去更稳。编辑器可加 schema 做校验。</p>
+    <div class="codebox"><button type="button" class="copy">复制</button><pre><code>{
+  "$schema": "https://antigravity.google/schemas/v1/settings.json",
+  "agentMode": "accept-edits",
+  "enableTerminalSandbox": true,
+  "toolPermission": "proceed-in-sandbox",
+  "notifications": true,
+  "verbosity": "medium",
+  "permissions": {
+    "allow": [
+      "command(git status)",
+      "command(git diff)",
+      "command(git log)",
+      "command(regex:npm run (build|lint|test))"
+    ],
+    "deny": [
+      "command(sudo)",
+      "command(rm -rf)",
+      "write_file(.git/)"
+    ]
+  }
+}</code></pre></div>
+    <p class="muted">沙箱的文件系统白名单来自这些规则：<code>write_file</code> 的路径可写，<code>read_file</code> 的路径只读，其余不可见（Windows 上用户配置目录之外的文件夹仍可读）。<code>read_url</code> 的域名会进入沙箱的出站名单，所以它同时放行“抓网页 markdown”和沙箱里的 <code>curl</code> / <code>npm</code>。浏览器 subagent 打开页面看的是 <code>execute_url</code>，<code>read_url</code> 不算数。<code>localhost</code> 按端口分开，<code>mail.google.com</code> 这类敏感 Google 子域要单独写规则。</p>
+  </div>
+</section>
+
+<section id="daily">
+  <div class="wrap">
+    <p class="eyebrow">坐在终端前</p>
+    <h2>每天真的会用到的命令</h2>
+    <p>在提示框里打 <code>/</code> 会出补全。<kbd>Tab</kbd> 接受高亮项。下面按你要做的事分组。完整名单在文末，可搜索。</p>
+    <div class="grid2">
+      <article class="card">
+        <p class="tag">看</p>
+        <h3><code>/diff</code> · <code>/context</code> · <code>/usage</code></h3>
+        <p><code>/diff</code> 按轮次、改动和提交看差异。<kbd>Ctrl</kbd>+<kbd>R</kbd> 或 <code>/artifact</code> 审计划之类的产物：<kbd>y</kbd> / <kbd>n</kbd> 单条，<kbd>Shift</kbd>+<kbd>A</kbd> 全部接受，<kbd>Shift</kbd>+<kbd>R</kbd> 全部拒绝，<kbd>p</kbd> 预览，<kbd>Esc</kbd> 提交审阅结果并返回。<code>/context</code> 看上下文窗口占了多少。<code>/usage</code>（别名 <code>/quota</code>）看配额，<code>/credits</code> 看额度。</p>
+      </article>
+      <article class="card">
+        <p class="tag">问一句，不岔开主线</p>
+        <h3><code>/btw</code> · <code>/copy</code></h3>
+        <p><code>/btw 这个函数是谁调用的？</code> 在后台回答，不把主对话带跑。<code>/copy</code> 复制上一条回答，<code>/copy 2</code> 复制倒数第二条，<code>/copy btw</code> 复制最近一次旁问。</p>
+      </article>
+      <article class="card">
+        <p class="tag">想清楚再动手</p>
+        <h3><code>/plan</code> · <code>/grill-me</code></h3>
+        <p><code>/plan</code> 先勘察、澄清、写出可审阅的实现计划。产物审阅策略 <code>artifactReviewPolicy</code> 默认 <code>asks-for-review</code>，它会等你。这个键不影响文件编辑本身。<code>/grill-me</code> 适合需求还糊的时候。</p>
+      </article>
+      <article class="card">
+        <p class="tag">放手，但要有终点</p>
+        <h3><code>/goal</code> · <code>/boost</code> · <code>/effort</code></h3>
+        <p><code>/goal</code> 做到可验证完成才停。<code>/boost</code> 做一轮多 agent 深度推理，比普通一句更重。<code>/effort</code> 调当前模型的推理力度，TUI 文档的范围是 <code>low</code> 到 <code>max</code>，视模型而定；无头文档的例子用 low、medium、high。以补全和 <code>agy --help</code> 为准。</p>
+      </article>
+      <article class="card">
+        <p class="tag">平行与外部</p>
+        <h3><code>/agents</code> · <code>/tasks</code> · <code>/browser</code></h3>
+        <p><code>/agents</code> 切换自定义 agent，并看后台 subagent。<code>/tasks</code> 看后台 shell 日志。<code>/browser</code> 把网页核对和浏览器里的调试交给 browser subagent。<code>/swarm</code> 起一组具名 worker 加一个 verifier，共用消息板，<kbd>Alt</kbd>+<kbd>S</kbd> 打开板。<code>/teamwork</code> 面向长周期协作，文档标明付费方案。</p>
+      </article>
+      <article class="card">
+        <p class="tag">会话本身</p>
+        <h3><code>/resume</code> · <code>/fork</code> · <code>/rewind</code></h3>
+        <p><code>/resume</code>（<code>/switch</code>、<code>/conversation</code>）打开历史。启动时继续最近一次用 <code>agy -c</code>，指定 id 用 <code>--conversation</code>。<code>/fork</code> 克隆当前线程去试另一条路，不行就 <code>/resume</code> 回来。<code>/rewind</code> 退回早先某条消息。<code>/rename</code> 给线程起名，免得选择器里全是 Untitled。</p>
+      </article>
+    </div>
+    <div class="scroll">
+      <table>
+        <caption>会话卫生</caption>
+        <thead><tr><th>你要的结果</th><th>用</th><th>容易按成</th></tr></thead>
+        <tbody>
+          <tr><td>屏幕干净，对话还在</td><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td><code>/clear</code> 会重置上下文</td></tr>
+          <tr><td>换一个新话题</td><td><code>/clear</code> 或 <code>/new</code></td><td>只清屏幕，模型仍带着旧上下文</td></tr>
+          <tr><td>撤销一段走歪的对话</td><td><code>/rewind</code></td><td>关掉 <code>agy</code> 再开，并不自动回到改坏之前的那句话</td></tr>
+          <tr><td>平行试一种写法</td><td><code>/fork</code>，失败后 <code>/resume</code></td><td>在同一条线程里把试验和主线缠在一起</td></tr>
+          <tr><td>接着昨天</td><td><code>agy -c</code> 或 <code>/resume</code></td><td>把整段记录再贴一遍</td></tr>
+          <tr><td>临时问一句</td><td><code>/btw</code></td><td>写进主提示，后面的修改都带着这句跑</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="keys">
+  <div class="wrap">
+    <p class="eyebrow">同一个键</p>
+    <h2>先看你处在哪种场合</h2>
+    <p>键位可以在 <code>/keybindings</code> 里改。下表是默认绑定在文档里写明的行为。选场合，再选键。</p>
+    <div class="keygrid">
+      <div>
+        <div class="choices" role="group" aria-label="场合" id="ctx">
+          <button type="button" aria-pressed="true" data-ctx="gen">正在生成</button>
+          <button type="button" aria-pressed="false" data-ctx="empty">提示框是空的</button>
+          <button type="button" aria-pressed="false" data-ctx="typed">提示框里有字</button>
+          <button type="button" aria-pressed="false" data-ctx="edit">正在确认文件修改</button>
+        </div>
+        <div class="choices" role="group" aria-label="按键" id="key" style="margin-top:.5rem">
+          <button type="button" aria-pressed="true" data-key="esc">Esc</button>
+          <button type="button" aria-pressed="false" data-key="c">Ctrl+C</button>
+          <button type="button" aria-pressed="false" data-key="d">Ctrl+D</button>
+          <button type="button" aria-pressed="false" data-key="tab">Shift+Tab</button>
+        </div>
+      </div>
+      <article class="panel result" id="keyResult" aria-live="polite">
+        <h3>正在生成 · Esc</h3>
+        <p>打断这一轮，停掉正在流出的文本，把提示框还给你。打开页面后可以选择场合和按键。</p>
+      </article>
+    </div>
+    <div class="grid2">
+      <article class="card">
+        <p class="tag">Ctrl+G 有两义</p>
+        <h3>平常它打开外部编辑器</h3>
+        <p>用来写长提示，编辑器由 <code>editor</code> 设置或 <code>$EDITOR</code> 决定。当 agent 正在请你批准一条命令时，同一个键改为在 CLI 内部把命令展开成全屏文本，让你改完再批准。这一义是固定的，不调用外部编辑器。</p>
+      </article>
+      <article class="card warn">
+        <p class="tag">Ctrl+K 不是命令面板</p>
+        <h3>它批准等待中的 subagent</h3>
+        <p>应用里的 <kbd>Ctrl</kbd>+<kbd>K</kbd> / <kbd>Cmd</kbd>+<kbd>K</kbd> 用来搜会话。CLI 里搜历史会话是 <code>/resume</code>。<kbd>Ctrl</kbd>+<kbd>K</kbd> 会立刻批准状态栏提示的那条 subagent 动作。从别的工具带过来的肌肉记忆会在这里误批准。</p>
+      </article>
+    </div>
+    <div class="scroll">
+      <table>
+        <caption>其余默认键。生成和菜单之外也成立的那些。</caption>
+        <thead><tr><th>键</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Enter</kbd></td><td>提交提示或菜单选择。</td></tr>
+          <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd> / <kbd>Ctrl</kbd>+<kbd>J</kbd> / <kbd>Alt</kbd>+<kbd>Enter</kbd></td><td>换行，不提交。</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>重画并清掉视觉缓冲。对话还在。</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>展开或折叠工具轨迹。</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>打开产物审阅。</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>V</kbd></td><td>粘贴文本、图片或视频。</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>J</kbd></td><td>跳到下一个正在等确认的 subagent。</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>M</kbd></td><td>按与“排队 / 立即发送”相反的方式送出这一句。</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>把整个 CLI 挂起，回到 shell。用 <code>fg</code> 回来。</td></tr>
+          <tr><td><kbd>F5</kbd></td><td>开始或停止语音听写。<code>/voice live</code> 是对话，<code>/voice dictate</code> 和 <code>/record</code> 是听写。</td></tr>
+          <tr><td><kbd>y</kbd> / <kbd>n</kbd></td><td>命令和多数工具确认。文件 diff 用 <kbd>1</kbd> / <kbd>2</kbd>。</td></tr>
+          <tr><td>提示框内 <kbd>Ctrl</kbd>+<kbd>A</kbd> / <kbd>Ctrl</kbd>+<kbd>E</kbd></td><td>移到行首 / 行尾。有字时 <kbd>Ctrl</kbd>+<kbd>D</kbd> 是向前删除。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">Vim 编辑是另一套：<code>editorMode</code> 设为 <code>vim</code> 后，提示框变成模态编辑。它和“用哪个外部程序”的 <code>editor</code> 不是同一个键。<code>vimInsertFirst</code> 为 true 时，从插入模式开始，单独的 Enter 会提交。</p>
+  </div>
+</section>
+
+<section id="script">
+  <div class="wrap">
+    <p class="eyebrow">无头模式</p>
+    <h2>给脚本和 CI 用的是另一个契约</h2>
+    <p><code>-p</code>、<code>--print</code>、<code>--prompt</code> 是一回事：跑完一条提示就退出。stdout 只有回答，错误、登录提示、进度和权限通知在 stderr。因此可以安全地写 <code>answer=$(agy -p "…")</code>。</p>
+    <div class="grid3">
+      <article class="card">
+        <p class="tag">text</p>
+        <h3>给人看</h3>
+        <p>默认。回答原文，不加包装。</p>
+      </article>
+      <article class="card">
+        <p class="tag">json</p>
+        <h3>给程序收尾</h3>
+        <p>结束时一行 JSON。<code>response</code> 是文本，<code>conversation_id</code> 用来续聊，<code>status</code> 是终态，<code>usage</code> 里有输入、输出、思考和缓存 token。</p>
+      </article>
+      <article class="card">
+        <p class="tag">stream-json</p>
+        <h3>边跑边看</h3>
+        <p>NDJSON。先一条 <code>init</code>，然后若干 <code>step_update</code>（含工具的 <code>tool_info</code>），最后一条 <code>result</code>。</p>
+      </article>
+    </div>
+    <div class="codebox"><button type="button" class="copy">复制</button><pre><code>agy models
+agy -p "用一句话说明这个仓库怎么跑测试" \
+  --output-format json \
+  --model gemini-3.8-flash-medium \
+  | jq -r '.response'</code></pre></div>
+    <p><code>--model</code> 后面的字符串从 <code>agy models</code> 第一列抄。上面的 <code>gemini-3.8-flash-medium</code> 只是无头文档里出现过的样子，不是一份稳定目录。写错时无头模式不会悄悄换默认模型：退出码非 0，<code>status</code> 为 <code>ERROR</code>，错误文本里带上当前可用模型。</p>
+    <h3>结构化输出</h3>
+    <p><code>--json-schema</code> 接受 JSON 字符串、schema 文件路径，或 <code>string</code> / <code>number</code> / <code>integer</code> / <code>boolean</code>。解析后的对象在 <code>structured_output</code>，<code>response</code> 仍是它的字符串形式。</p>
+    <div class="codebox"><button type="button" class="copy">复制</button><pre><code>agy -p "把 v2.14.3 拆成整数 major、minor、patch" \
+  --output-format json \
+  --json-schema '{"type":"object","properties":{"major":{"type":"integer"},"minor":{"type":"integer"},"patch":{"type":"integer"}},"required":["major","minor","patch"]}' \
+  | jq '.structured_output'</code></pre></div>
+    <h3>多轮放在同一个进程里</h3>
+    <p><code>--continue</code> 每次都是新进程，能接上上下文，但会重复启动。<code>--input-format stream-json</code> 从 stdin 逐条喂提示，必须配 <code>--output-format stream-json</code>。每条用户消息是一行 <code>{"event":"user","message":{"content":"…"}}</code>。内容块只允许 <code>text</code>。关掉 stdin 才会在当前回合结束后退出。在收到本轮 <code>result</code> 之前写出下一句，或者等进程退出才去读 stdout，都会卡死或丢中间回合。</p>
+    <div class="callout bad">
+      <strong>流里不要塞 <code>/model</code>、<code>/usage</code> 这种由 CLI 自己回答的斜杠命令。</strong> 会话会以错误结束，退出码 2。它们要单独跑，例如 <code>agy -p /model</code>。同时，<code>-p</code> 带上的提示在 stdin 流模式下会被丢掉，提示只能来自 stdin。
+    </div>
+    <h3>退出码和“它其实没做”</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>status</th><th>含义</th></tr></thead>
+        <tbody>
+          <tr><td><code>SUCCESS</code></td><td>跑完并给出了回答。工具被软拒绝时也可以是它，退出码 0。</td></tr>
+          <tr><td><code>ERROR</code></td><td>失败。未知模型、坏的流输入等。退出码非 0。</td></tr>
+          <tr><td><code>CANCELED</code> / <code>INTERRUPTED</code></td><td>取消，或例如收到 SIGINT。</td></tr>
+          <tr><td><code>WAITING</code></td><td>停在等待输入。</td></tr>
+          <tr><td><code>INVALID</code> / <code>RUNNING</code></td><td>非法状态，或没有走到终态。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>工作区内的读写默认放行。shell 这类默认要问的动作，在无头模式里无人可问，于是软拒绝，并在 stderr 写明工具名和怎样放行。检查 CI 时要同时看 <code>status</code> 和 stderr，不能只看退出码。</p>
+    <div class="codebox"><button type="button" class="copy">复制</button><pre><code>#!/usr/bin/env bash
+set -euo pipefail
+result=$(agy -p "根据 package.json 写出测试命令，不要改文件。" \
+  --output-format json \
+  --print-timeout 10m)
+status=$(jq -r '.status' <<<"$result")
+if [[ "$status" != "SUCCESS" ]]; then
+  jq -r '.error' <<<"$result" >&2
+  exit 1
+fi
+jq -r '.response' <<<"$result"</code></pre></div>
+    <p class="muted">超时有两处文档：无头指南写默认最多等 5 分钟，<code>--print-timeout 15m</code> 可以放宽；命令参考表把同一标志的默认写成 <code>0s</code>，并说明 0 表示等到本轮结束。以你安装的 <code>agy --help</code> 为准。</p>
+    <p>选模型和 agent：<code>agy models</code>、<code>agy agents</code>，再用 <code>--model</code>、<code>--agent</code>、<code>--effort</code>。slug 看起来会像 <code>gemini-3.8-flash-medium</code> 这种字符串，目录本身会变，不要从旧文章里抄。</p>
+  </div>
+</section>
+
+<section id="memory">
+  <div class="wrap">
+    <p class="eyebrow">第二次就不必再解释</p>
+    <h2>把纠正留在仓库里，而不是留在聊天里</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="body">
+        <h3>仓库根放 <code>AGENTS.md</code> 或 <code>GEMINI.md</code></h3>
+        <p>写测试命令、不能动的目录、风格、已废弃的入口。agent 启动时会读。这比每次在提示里重复更稳，也比把个人习惯写进全局规则更不容易污染别的仓库。</p>
+      </div></div>
+      <div class="step"><div class="n">2</div><div class="body">
+        <h3>同一类纠正出现第二次，用 <code>/learn</code></h3>
+        <p>它把这次会话里的纠正收成一条 rule 或 skill 提案，给你审，而不是悄悄改掉你的配置。</p>
+      </div></div>
+      <div class="step"><div class="n">3</div><div class="body">
+        <h3>技能、插件、MCP、钩子走各自的命令</h3>
+        <p><code>/skills</code> 查看，<code>/skills reload</code> 从磁盘重载。<code>/plugin</code> 可以 <code>install</code> / <code>uninstall</code> / <code>enable</code> / <code>disable</code> / <code>list</code>。<code>/mcp</code> 管 MCP server。<code>/hooks</code> 看 pre-flight 和 post-format 脚本。不确定该改哪一种时，用 <code>/agy-customizations</code>，它会把官方的定制说明载进来再动手。CLI 自己怎么用，问 <code>/antigravity-guide</code>。</p>
+      </div></div>
+      <div class="step"><div class="n">4</div><div class="body">
+        <h3>给它一个能自己跑的检查</h3>
+        <p>官方最佳实践把这件事放在提示技巧之前：仓库里要有测试、构建或格式化命令。没有就先让它补测试。然后要求它跑，并根据输出自己改。没有这个环，auto 和 <code>/goal</code> 只是更快地写完未经检验的改动。</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pitfalls">
+  <div class="wrap">
+    <p class="eyebrow">文档里已经点过名的</p>
+    <h2>这些地方和直觉相反</h2>
+    <div class="grid2">
+      <article class="card bad"><h3>在 <code>$HOME</code> 点了信任</h3><p>信任按目录记住。家目录被信任之后，之后从家目录启动都会带着读、改、执行的许可。只信任具体仓库。</p></article>
+      <article class="card bad"><h3>用 Shift+Tab 来“跳过”diff</h3><p>确认文件修改时，它会切换到更松的模式并接受排队中的工作区写入。拒绝用 <kbd>2</kbd>。</p></article>
+      <article class="card bad"><h3>无头模式只看退出码</h3><p>软拒绝仍是 0。该跑的测试可能根本没跑。看 stderr，或事先写 Allow。</p></article>
+      <article class="card bad"><h3><code>command(git)</code> 当作“只读 git”</h3><p>前缀会盖住 push、reset、commit。出沙箱的 push 若被 Allow，就不再问你。</p></article>
+      <article class="card warn"><h3>企业账号上写了 <code>--mode=auto</code></h3><p>auto 不提供。CLI 改以 default 运行。无头模式会警告。不要在 CI 脚本里假设 auto 生效。</p></article>
+      <article class="card warn"><h3>沙箱不可用却打开了 proceed-in-sandbox</h3><p>1.4.4 起这会表现成 request-review。Windows 10、较旧的 Windows 11、禁掉非特权用户命名空间的 Linux 容器，都可能没有沙箱。</p></article>
+      <article class="card warn"><h3>钥匙串在 SSH / 无界面 Linux 上是锁着的</h3><p>症状是启动卡住，或 <code>secret keyring is locked</code>。macOS 需要解锁 login keychain。Linux 需要可用的 D-Bus 会话和钥匙串守护进程。无头环境先在交互会话登录一次。</p></article>
+      <article class="card warn"><h3>SSH 里贴不进截图</h3><p>图形剪贴板不走普通 SSH 流。iTerm2、Ghostty 和 OSC 52 才能把图片送进 <kbd>Ctrl</kbd>+<kbd>V</kbd>。tmux 里要 <code>set -s set-clipboard on</code>。</p></article>
+      <article class="card"><h3>更新锁把启动挂住</h3><p>提示 <code>update.lock</code> 时，锁在 <code>~/.gemini/antigravity-cli/updater/update.lock</code>。确认没有正在更新的进程后可以删掉这个锁。安装目录需要你的用户可写。</p></article>
+      <article class="card"><h3>备用屏幕让你找不到滚动记录</h3><p>那是 <code>altScreenMode: always</code>。改成 <code>default</code> 后，对话留在终端自己的滚动区里。全屏面板仍会临时用备用屏幕。</p></article>
+      <article class="card"><h3>从博客抄了一串模型名</h3><p>动手实验文档（2026-09）里的模型表已经不能当目录。用 <code>agy models</code>。交互式 <code>/model</code> 的选择会写进设置并保持；单次换模型而不改默认的参数形式，以 <code>/</code> 补全为准。</p></article>
+      <article class="card"><h3>把应用的权限截图拿来配 CLI</h3><p>Turbo、Request Review 是应用预设。CLI 里对应去拧的是 <code>agentMode</code>、<code>toolPermission</code>、<code>enableTerminalSandbox</code> 和 <code>permissions</code>。</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="ref">
+  <div class="wrap">
+    <p class="eyebrow">附录</p>
+    <h2>斜杠命令、启动标志、设置</h2>
+    <div class="filters">
+      <input class="search" id="q" type="search" placeholder="过滤命令或说明" aria-label="过滤斜杠命令">
+      <button type="button" aria-pressed="true" data-cat="all">全部</button>
+      <button type="button" aria-pressed="false" data-cat="会话">会话</button>
+      <button type="button" aria-pressed="false" data-cat="规划">规划</button>
+      <button type="button" aria-pressed="false" data-cat="推理">推理</button>
+      <button type="button" aria-pressed="false" data-cat="任务">任务</button>
+      <button type="button" aria-pressed="false" data-cat="配置">配置</button>
+      <button type="button" aria-pressed="false" data-cat="账号">账号</button>
+      <span class="muted hit" id="hit"></span>
+    </div>
+    <div class="scroll">
+      <table id="cmds">
+        <caption>TUI 内命令。来自 CLI reference。</caption>
+        <thead><tr><th>命令</th><th>类</th><th>做什么</th></tr></thead>
+        <tbody>
+          <tr data-cat="工作区"><td><code>/add-dir &lt;路径&gt;</code></td><td>工作区</td><td>把另一个目录加入当前工作区。</td></tr>
+          <tr data-cat="任务"><td><code>/agents</code></td><td>任务</td><td>切换自定义 agent，查看后台 subagent。</td></tr>
+          <tr data-cat="任务"><td><code>/agy-customizations [请求]</code></td><td>任务</td><td>按官方说明创建或修改 rules、skills、plugins、hooks、MCP。</td></tr>
+          <tr data-cat="帮助"><td><code>/antigravity-guide [问题]</code></td><td>帮助</td><td>用官方文档回答用法和配置问题。</td></tr>
+          <tr data-cat="审阅"><td><code>/artifact</code></td><td>审阅</td><td>打开产物审阅面板。</td></tr>
+          <tr data-cat="推理"><td><code>/boost &lt;任务&gt;</code></td><td>推理</td><td>按需做多 agent 深度推理。</td></tr>
+          <tr data-cat="任务"><td><code>/browser &lt;任务&gt;</code></td><td>任务</td><td>把浏览、界面核对、浏览器内调试交给 browser subagent。</td></tr>
+          <tr data-cat="会话"><td><code>/btw &lt;问题&gt;</code></td><td>会话</td><td>后台回答，不打断主对话。</td></tr>
+          <tr data-cat="帮助"><td><code>/changelog</code></td><td>帮助</td><td>版本说明。无头模式下改为打印。</td></tr>
+          <tr data-cat="会话"><td><code>/clear</code></td><td>会话</td><td>清屏并重置对话上下文。别名 <code>/new</code>。</td></tr>
+          <tr data-cat="工作区"><td><code>/codesearch &lt;查询&gt;</code></td><td>工作区</td><td>代码搜索。别名 <code>/cs</code>、<code>/search</code>。</td></tr>
+          <tr data-cat="配置"><td><code>/config</code></td><td>配置</td><td>设置面板。别名 <code>/settings</code>。</td></tr>
+          <tr data-cat="会话"><td><code>/context</code></td><td>会话</td><td>上下文用量。</td></tr>
+          <tr data-cat="会话"><td><code>/copy [n|btw]</code></td><td>会话</td><td>复制最近一条、倒数第 n 条，或最近的 <code>/btw</code>。</td></tr>
+          <tr data-cat="账号"><td><code>/credits</code></td><td>账号</td><td>剩余额度与购买链接。</td></tr>
+          <tr data-cat="审阅"><td><code>/diff</code></td><td>审阅</td><td>按轮次、改动、提交查看 diff。</td></tr>
+          <tr data-cat="配置"><td><code>/effort [级别]</code></td><td>配置</td><td>查看或设置推理力度。</td></tr>
+          <tr data-cat="会话"><td><code>/exit</code></td><td>会话</td><td>退出。别名 <code>/quit</code>。</td></tr>
+          <tr data-cat="帮助"><td><code>/feedback</code></td><td>帮助</td><td>提交反馈。</td></tr>
+          <tr data-cat="会话"><td><code>/fork</code></td><td>会话</td><td>克隆当前线程。别名 <code>/branch</code>。</td></tr>
+          <tr data-cat="推理"><td><code>/goal &lt;目标&gt;</code></td><td>推理</td><td>直到目标被验证完成，中间不再征求下一步。</td></tr>
+          <tr data-cat="规划"><td><code>/grill-me [任务]</code></td><td>规划</td><td>一题一题访谈，每题带建议答案，然后再做。</td></tr>
+          <tr data-cat="帮助"><td><code>/help</code></td><td>帮助</td><td>命令与快捷键。</td></tr>
+          <tr data-cat="任务"><td><code>/hooks</code></td><td>任务</td><td>查看 pre-flight / post-format 钩子。</td></tr>
+          <tr data-cat="配置"><td><code>/keybindings</code></td><td>配置</td><td>修改快捷键。</td></tr>
+          <tr data-cat="任务"><td><code>/learn [指示]</code></td><td>任务</td><td>把纠正收成可审阅的 rule 或 skill 提案。</td></tr>
+          <tr data-cat="账号"><td><code>/logout</code></td><td>账号</td><td>退出并清除钥匙串中的令牌。</td></tr>
+          <tr data-cat="任务"><td><code>/mcp</code></td><td>任务</td><td>管理 MCP server。</td></tr>
+          <tr data-cat="配置"><td><code>/model</code></td><td>配置</td><td>选择模型并记住。单次换模型的写法见补全。</td></tr>
+          <tr data-cat="工作区"><td><code>/open &lt;路径&gt;</code></td><td>工作区</td><td>用系统默认程序打开。</td></tr>
+          <tr data-cat="配置"><td><code>/permissions</code></td><td>配置</td><td>管理 allow / ask / deny。范围分项目、共享、全局。</td></tr>
+          <tr data-cat="规划"><td><code>/plan [任务]</code></td><td>规划</td><td>勘察并写出可审阅的实现计划。</td></tr>
+          <tr data-cat="任务"><td><code>/plugin</code></td><td>任务</td><td>插件面板，或 install / uninstall / enable / disable / list。别名 <code>/plugins</code>。</td></tr>
+          <tr data-cat="会话"><td><code>/rename &lt;名字&gt;</code></td><td>会话</td><td>重命名当前线程。</td></tr>
+          <tr data-cat="会话"><td><code>/remote-control [on|off]</code></td><td>会话</td><td>开关当前终端的 Remote Control。启动时也可用 <code>--remote-control</code>。</td></tr>
+          <tr data-cat="会话"><td><code>/resume</code></td><td>会话</td><td>打开历史会话。别名 <code>/switch</code>、<code>/conversation</code>。</td></tr>
+          <tr data-cat="会话"><td><code>/rewind</code></td><td>会话</td><td>退回早先某条消息。别名 <code>/undo</code>。</td></tr>
+          <tr data-cat="任务"><td><code>/schedule &lt;指示&gt;</code></td><td>任务</td><td>一次性定时，或按 cron 叫醒 agent。</td></tr>
+          <tr data-cat="任务"><td><code>/skills</code></td><td>任务</td><td>查看 skills。<code>/skills reload</code> 从磁盘重载。</td></tr>
+          <tr data-cat="配置"><td><code>/statusline</code></td><td>配置</td><td>状态栏。</td></tr>
+          <tr data-cat="任务"><td><code>/tasks</code></td><td>任务</td><td>后台 shell 任务和日志。</td></tr>
+          <tr data-cat="推理"><td><code>/swarm &lt;任务&gt;</code></td><td>推理</td><td>具名 worker 加 verifier，共用消息板。</td></tr>
+          <tr data-cat="推理"><td><code>/swarm board</code></td><td>推理</td><td>全屏打开 swarm 板。<kbd>Alt</kbd>+<kbd>S</kbd>。</td></tr>
+          <tr data-cat="推理"><td><code>/teamwork &lt;任务&gt;</code></td><td>推理</td><td>长周期多 agent。付费方案。</td></tr>
+          <tr data-cat="配置"><td><code>/title [on|off]</code></td><td>配置</td><td>是否更新终端窗口标题。</td></tr>
+          <tr data-cat="账号"><td><code>/usage</code></td><td>账号</td><td>配额。别名 <code>/quota</code>。</td></tr>
+          <tr data-cat="会话"><td><code>/voice</code></td><td>会话</td><td><code>/voice live</code> 对话，<code>/voice dictate</code> 听写。<code>/record</code> 一律听写。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>进程外面的子命令和标志</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>写法</th><th>默认</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>agy</code></td><td></td><td>在当前目录打开 TUI。</td></tr>
+          <tr><td><code>agy --version</code> / <code>--help</code></td><td></td><td>版本与本机标志。以这个输出为准。</td></tr>
+          <tr><td><code>agy update</code></td><td></td><td>更新二进制。</td></tr>
+          <tr><td><code>agy models</code> / <code>agy agents</code></td><td></td><td>列出模型 slug 和 agent。</td></tr>
+          <tr><td><code>--mode</code></td><td>空，即按设置；1.5.7+ 可用时为 auto</td><td><code>accept-edits</code>、<code>auto</code>、<code>plan</code>。auto 不可用时落到 default。</td></tr>
+          <tr><td><code>--model</code> / <code>--effort</code> / <code>--agent</code></td><td></td><td>只影响这次进程。</td></tr>
+          <tr><td><code>--add-dir</code></td><td>无</td><td>可重复。</td></tr>
+          <tr><td><code>-c</code> / <code>--continue</code></td><td>关</td><td>继续最近一次对话。</td></tr>
+          <tr><td><code>--conversation</code></td><td></td><td>按 id 续上。id 来自 json 输出的 <code>conversation_id</code>。</td></tr>
+          <tr><td><code>-i</code> / <code>--prompt-interactive</code></td><td></td><td>带第一句打开 TUI，然后留下。</td></tr>
+          <tr><td><code>-p</code> / <code>--print</code> / <code>--prompt</code></td><td></td><td>无头，跑完退出。</td></tr>
+          <tr><td><code>--output-format</code></td><td><code>text</code></td><td><code>text</code>、<code>json</code>、<code>stream-json</code>。</td></tr>
+          <tr><td><code>--input-format</code></td><td><code>text</code></td><td><code>stream-json</code> 时从 stdin 读多轮，且输出也必须是 stream-json。</td></tr>
+          <tr><td><code>--json-schema</code></td><td></td><td>约束结构化输出。</td></tr>
+          <tr><td><code>--print-timeout</code></td><td>见正文</td><td>无头等待上限。参考表写 <code>0s</code> 表示等到结束；无头指南写默认 5 分钟。</td></tr>
+          <tr><td><code>--disable-slash-commands</code></td><td>关</td><td>无头时把以 <code>/</code> 开头的提示当普通文本。</td></tr>
+          <tr><td><code>--sandbox</code></td><td>关</td><td>本次强制沙箱。机器不支持时（1.4.4+）无效果。</td></tr>
+          <tr><td><code>--dangerously-skip-permissions</code></td><td>关</td><td>自动批准工具请求。Deny / Ask 仍在。</td></tr>
+          <tr><td><code>--remote-control</code> / <code>--remote-agent</code></td><td>关</td><td>启动时建立远程控制，或把对话放到 Remote Agents。<code>--project</code> 指定项目，<code>--new-project</code> 新建。</td></tr>
+          <tr><td><code>--log-file</code></td><td></td><td>改日志路径。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>值得手改的设置键</h3>
+    <p class="muted">其余键（配色、动画、历史条数、状态栏脚本、配额用尽后是否使用 AI credits）都在同一份 reference 里。配色包括 light、dark、solarized、色盲友好、tokyo night，以及跟随终端的 <code>terminal</code>。</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>键</th><th>默认</th><th>取值里真正改变行为的</th></tr></thead>
+        <tbody>
+          <tr><td><code>agentMode</code></td><td>可用时 <code>auto</code>，否则 default</td><td><code>""</code>、<code>accept-edits</code>、<code>auto</code>、<code>plan</code></td></tr>
+          <tr><td><code>toolPermission</code></td><td><code>request-review</code></td><td><code>proceed-in-sandbox</code>、<code>always-proceed</code>、<code>strict</code></td></tr>
+          <tr><td><code>enableTerminalSandbox</code></td><td>false</td><td>true 时命令进操作系统隔离。auto 会自己打开。</td></tr>
+          <tr><td><code>permissions</code></td><td>空</td><td><code>allow</code> / <code>ask</code> / <code>deny</code> 三个字符串数组。</td></tr>
+          <tr><td><code>allowNonWorkspaceAccess</code></td><td>false</td><td>true 仍受模式和规则约束。</td></tr>
+          <tr><td><code>artifactReviewPolicy</code></td><td><code>asks-for-review</code></td><td><code>always-proceed</code> 不再等你审计划。不改变文件编辑的确认。</td></tr>
+          <tr><td><code>altScreenMode</code></td><td><code>default</code></td><td><code>always</code> 或 <code>never</code>。<code>never</code> 只能写在文件里。</td></tr>
+          <tr><td><code>verbosity</code></td><td><code>medium</code></td><td><code>high</code> 展示每次工具调用；<code>low</code> 只留回答。</td></tr>
+          <tr><td><code>queuedMessages</code></td><td><code>queue</code></td><td><code>send-immediately</code> 会打断正在进行的回合。</td></tr>
+          <tr><td><code>notifications</code></td><td>false</td><td>true 时，需要你批准、需要回答、或回合结束，会响铃并弹桌面通知。</td></tr>
+          <tr><td><code>editor</code> / <code>editorMode</code></td><td><code>auto</code> / <code>default</code></td><td>外部程序，以及提示框是否用 Vim。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>启动失败时先对这四条</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>现象</th><th>处理</th></tr></thead>
+        <tbody>
+          <tr><td><code>agy: command not found</code></td><td><code>export PATH="$HOME/.local/bin:$PATH"</code> 后重开终端。注意用 <code>$HOME</code>，不要给 <code>~</code> 加引号。</td></tr>
+          <tr><td>钥匙串锁定或 D-Bus 警告</td><td>解锁系统钥匙串。Linux 上先有一个 D-Bus 会话。详见<a href="https://antigravity.google/docs/cli/troubleshooting/">故障排除</a>。</td></tr>
+          <tr><td><code>update.lock</code></td><td>确认没有更新进程后删除 <code>~/.gemini/antigravity-cli/updater/update.lock</code>，或设置 <code>AGY_CLI_DISABLE_AUTO_UPDATE=true</code>。</td></tr>
+          <tr><td>SSH 里粘贴图片失败</td><td>换支持剪贴板通道的终端，并在 tmux 打开 <code>set -s set-clipboard on</code>。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>核对日期：2026-11-19（美中时间）。这是一份阅读稿，不是 Antigravity 的产品界面。</p>
+    <ul>
+      <li><a href="https://antigravity.google/docs/getting-started/">Get started</a></li>
+      <li><a href="https://antigravity.google/docs/cli/modes/">Choose an execution mode</a></li>
+      <li><a href="https://antigravity.google/docs/cli/reference/">CLI commands, keybindings, flags, settings</a></li>
+      <li><a href="https://antigravity.google/docs/cli/headless/">Headless mode</a></li>
+      <li><a href="https://antigravity.google/docs/cli/best-practices/">CLI best practices</a></li>
+      <li><a href="https://antigravity.google/docs/permissions/">Permissions</a></li>
+      <li><a href="https://antigravity.google/docs/sandbox/">Terminal sandbox</a></li>
+      <li><a href="https://antigravity.google/docs/cli/commands/permissions/">/permissions</a></li>
+      <li><a href="https://antigravity.google/docs/cli/troubleshooting/">CLI troubleshooting</a></li>
+      <li><a href="https://antigravity.google/product/antigravity-cli/">产品页</a></li>
+    </ul>
+    <p>Codelab《Hands-on with Antigravity CLI》（更新于 2026-09，示例版本 1.1.27）对 strict、always-proceed 的描述比现行参考更粗，模型表也已过时。行为冲突时以 CLI reference 和 modes 页为准。</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme");
+  function themeLabel() {
+    var t = root.getAttribute("data-theme");
+    themeBtn.textContent = t === "dark" ? "深色" : t === "light" ? "浅色" : "跟随系统";
+  }
+  themeLabel();
+  themeBtn.addEventListener("click", function () {
+    var t = root.getAttribute("data-theme");
+    var next = t === "dark" ? "light" : t === "light" ? "" : "dark";
+    if (next) root.setAttribute("data-theme", next);
+    else root.removeAttribute("data-theme");
+    try {
+      if (next) localStorage.setItem("agy-theme", next);
+      else localStorage.removeItem("agy-theme");
+    } catch (e) {}
+    themeLabel();
+  });
+
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var code = btn.parentElement.querySelector("code");
+      var text = code ? code.textContent : "";
+      var done = function () {
+        btn.textContent = "已复制";
+        setTimeout(function () { btn.textContent = "复制"; }, 1200);
+      };
+      var fallback = function () {
+        var range = document.createRange();
+        range.selectNodeContents(code);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        if (ok) done();
+        else btn.textContent = "已选中";
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+    });
+  });
+
+  function wire(groupAttr, panelAttr) {
+    var buttons = document.querySelectorAll("[data-" + groupAttr + "]");
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-" + groupAttr);
+        buttons.forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b === btn));
+        });
+        document.querySelectorAll("[data-" + panelAttr + "]").forEach(function (p) {
+          p.hidden = p.getAttribute("data-" + panelAttr) !== id;
+        });
+      });
+    });
+  }
+  wire("scenario", "scenario-panel");
+  wire("rule", "rule-panel");
+
+  var keyCopy = {
+    "gen|esc": ["正在生成 · Esc", "打断这一轮，停掉正在流出的文本，把提示框还给你。"],
+    "gen|c": ["正在生成 · Ctrl+C", "打断当前回合。没有正在跑的回合时，再按一次才退出。"],
+    "gen|d": ["正在生成 · Ctrl+D", "文档只规定了提示框为空时退出、有字时向前删除，没有把 Ctrl+D 定义成停止键。停止用 Esc 或 Ctrl+C。"],
+    "gen|tab": ["正在生成 · Shift+Tab", "可以中途换模式，文档说明这不必重启，也不会因此打断正在进行的任务。右下角会出现 accept-edits、auto 或 plan；回到 default 时模式字消失。"],
+    "empty|esc": ["提示框是空的 · Esc", "关掉打开的面板。参考对 Esc 的第三条是清空空提示框。"],
+    "empty|c": ["提示框是空的 · Ctrl+C", "当前没有回合在跑时，连按两次退出 CLI。"],
+    "empty|d": ["提示框是空的 · Ctrl+D", "退出 TUI，回到原来的 shell。/exit 做同一件事。"],
+    "empty|tab": ["提示框是空的 · Shift+Tab", "循环 default → accept-edits → auto → plan。这台机器没有 auto 时，从 accept-edits 直接到 plan。"],
+    "typed|esc": ["提示框里有字 · Esc", "有面板就先关面板。参考写的是清空空提示框，没有说 Esc 会删掉你已经打上的草稿。"],
+    "typed|c": ["提示框里有字 · Ctrl+C", "没有正在跑的回合时，连按两次退出。参考没有要求提示框必须为空，这一点和 Ctrl+D 不同。"],
+    "typed|d": ["提示框里有字 · Ctrl+D", "向前删除一个字符，不退出。"],
+    "typed|tab": ["提示框里有字 · Shift+Tab", "照样循环模式。换行用 Shift+Enter、Ctrl+J 或 Alt+Enter。"],
+    "edit|esc": ["正在确认文件修改 · Esc", "已有文件的修改确认会一直留着，直到你按 1 接受或 2 拒绝。新文件的创建确认上，Esc 等于拒绝创建。先看面板标题是文件修改还是 Allow creation。"],
+    "edit|c": ["正在确认文件修改 · Ctrl+C", "参考没有写 Ctrl+C 会接受或拒绝 diff。接受按 1，拒绝按 2。想拒绝并改口：停在 No 上按 Tab，写下要求，再 Enter。全屏 diff 按 f。"],
+    "edit|d": ["正在确认文件修改 · Ctrl+D", "参考没有给这个组合单独的含义。拒绝修改用 2，不要用 Ctrl+D 来关面板。"],
+    "edit|tab": ["正在确认文件修改 · Shift+Tab", "会切到 accept-edits 或 auto，并接受尚未确认的工作区写入，包括排队的 subagent 写入。想拒绝时按 2。"]
+  };
+  var ctx = "gen", key = "esc";
+  var out = document.getElementById("keyResult");
+  function renderKey() {
+    var item = keyCopy[ctx + "|" + key];
+    out.innerHTML = "<h3></h3><p></p>";
+    out.querySelector("h3").textContent = item[0];
+    out.querySelector("p").textContent = item[1];
+  }
+  function press(group, attr, current, assign) {
+    document.querySelectorAll("#" + group + " button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        assign(btn.getAttribute(attr));
+        document.querySelectorAll("#" + group + " button").forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b === btn));
+        });
+        renderKey();
+      });
+    });
+  }
+  press("ctx", "data-ctx", ctx, function (v) { ctx = v; });
+  press("key", "data-key", key, function (v) { key = v; });
+  renderKey();
+
+  var q = document.getElementById("q");
+  var rows = Array.prototype.slice.call(document.querySelectorAll("#cmds tbody tr"));
+  var hit = document.getElementById("hit");
+  var cat = "all";
+  function applyFilter() {
+    var s = (q.value || "").trim().toLowerCase();
+    var n = 0;
+    rows.forEach(function (row) {
+      var okCat = cat === "all" || row.getAttribute("data-cat") === cat;
+      var okText = !s || row.textContent.toLowerCase().indexOf(s) !== -1;
+      var show = okCat && okText;
+      row.classList.toggle("gone", !show);
+      if (show) n += 1;
+    });
+    hit.textContent = n + " / " + rows.length;
+  }
+  document.querySelectorAll(".filters button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      cat = btn.getAttribute("data-cat");
+      document.querySelectorAll(".filters button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      applyFilter();
+    });
+  });
+  q.addEventListener("input", applyFilter);
+  applyFilter();
+
+  var links = Array.prototype.slice.call(document.querySelectorAll(".nav a"));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = "#" + entry.target.id;
+        links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === id); });
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0.01 });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
