@@ -142,7 +142,7 @@ figs.conjugation = () => {
   });
   b += text(cx[0] + 64, 175, "大", { size: 15, fill: COL.red, weight: "bold" });
   b += text(cx[1] + 64, 175, "变小", { size: 15, fill: COL.red, weight: "bold" });
-  b += text(cx[2] - 74, 175, "最小", { size: 15, anchor: "end", fill: COL.red, weight: "bold" });
+  b += text(cx[2], 176, "最小", { size: 15, anchor: "middle", fill: COL.red, weight: "bold" });
   // structures
   b += conj(cx[0] - 13, 320, 1, 26, 14);
   b += conj(cx[1] - 65, 320, 5, 26, 14);
@@ -313,8 +313,7 @@ figs.backbone_side = () => {
     b += rect(x + 15, ys - 150, 24, 122, COL.amberLight, { rx: 12, stroke: COL.amber, sw: 1.5 });
     b += rect(x + 62, ys + 28, 24, 122, COL.amberLight, { rx: 12, stroke: COL.amber, sw: 1.5 });
   });
-  b += text(200, ys + 7, "主链 Backbone", { size: 16, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
-  b += text(145, 60, "侧链", { size: 17, anchor: "middle", weight: "bold", fill: "#A35A12" });
+  b += text(200, ys + 7, "主链", { size: 17, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
   b += lines(410, 60, ["侧链 Side chain", "· 调节能级", "· 提高溶解性", "· 提供功能相互作用"], { size: 17, fill: "#A35A12", weight: "bold", lh: 26 });
   b += lines(410, 250, ["主链", "· 决定能级", "· 提供导电通路"], { size: 17, fill: COL.siDark, weight: "bold", lh: 26 });
   return svg(W, H, b);
@@ -354,16 +353,16 @@ figs.side_groups = () => {
 
 // ---------- Energy-level alignment ----------
 figs.level_align = () => {
-  const W = 640, H = 450;
+  const W = 640, H = 500;
   let b = "";
-  const Y = (v) => 400 - v * 85; // potential vs Li, 0..4 V upward
+  const Y = (v) => 440 - v * 85; // potential vs Li, 0..4 V upward
   b += line(150, Y(0) + 10, 150, Y(4.3), COL.ink, 3) + head(150, Y(4.3) - 8, -Math.PI / 2, COL.ink, 13);
   for (let v = 0; v <= 4; v++) {
     b += line(142, Y(v), 150, Y(v), COL.ink, 2) + text(136, Y(v) + 6, `${v} V`, { size: 16, anchor: "end", fill: COL.text2 });
     b += text(70, Y(v) + 6, `${(-1.4 - v).toFixed(1)}`, { size: 16, anchor: "end", fill: COL.muted });
   }
-  b += text(150, Y(4.3) - 20, "电位 vs Li/Li^{+}", { size: 16, anchor: "middle", weight: "bold" });
-  b += lines(50, Y(4.3) - 34, ["对应能量", "（eV，真空为 0）"], { size: 15, anchor: "middle", fill: COL.muted, lh: 19 });
+  b += text(150, 34, "电位 vs Li/Li^{+}", { size: 16, anchor: "middle", weight: "bold" });
+  b += text(48, 34, "能量 / eV", { size: 15, anchor: "middle", fill: COL.muted, weight: "bold" });
   // zones
   b += rect(170, Y(1), 200, Y(0.01) - Y(1), "#DCE3E9", { rx: 6 });
   b += text(270, Y(0.5) + 6, "Si 工作区 0.01–1 V", { size: 17, anchor: "middle", weight: "bold", fill: COL.siDark });
@@ -375,7 +374,7 @@ figs.level_align = () => {
   b += arrow(495, Y(1.15) + 8, 495, Y(0.15), { color: COL.purple, width: 3, head: 12 });
   b += lines(505, Y(0.6), ["整个 Si 工作区", "保持导电"], { size: 15, fill: COL.purple, lh: 19 });
   b += lines(395, Y(3.55), ["S 正极：电位高，", "对能级的要求不同"], { size: 16, fill: "#8A6A00", weight: "bold", lh: 21 });
-  b += text(320, 440, "电位越高 ↔ 电子能量越低（两条刻度方向相反）", { size: 15, anchor: "middle", fill: COL.muted });
+  b += text(320, 488, "左列能量以真空为 0：电位越高 ↔ 电子能量越低", { size: 15, anchor: "middle", fill: COL.muted });
   return svg(W, H, b);
 };
 
@@ -412,13 +411,13 @@ figs.processing = () => {
   for (let k = 0; k < 5; k++) b += ringPath(poly(55 + k * 62, 90, 22, 6, 0), COL.siDark, 3) + (k < 4 ? line(77 + k * 62, 90, 95 + k * 62, 90, COL.siDark, 3) : "");
   b += text(190, 135, "全共轭：刚、难溶", { size: 16, anchor: "middle", fill: COL.text2 });
   // kinked chain
-  const pts = [[60, 230], [118, 215], [176, 238], [234, 190], [292, 215]];
+  const pts = [[60, 215], [118, 200], [176, 223], [234, 175], [292, 200]];
   pts.forEach(([x, y], k) => {
     b += ringPath(poly(x, y, 22, 6, 0), k === 2 ? COL.teal : COL.siDark, 3);
     if (k === 2) b += atom(x + 11, y + 19, "N", "#3A62B5", 15);
     if (k < 4) b += line(x + 20, y + (pts[k + 1][1] - y) * 0.2, pts[k + 1][0] - 20, pts[k + 1][1] - (pts[k + 1][1] - y) * 0.2, COL.siDark, 3);
   });
-  b += text(190, 272, "加入吡啶：更柔、更易溶", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
+  b += text(190, 274, "加入吡啶：更柔、更易溶", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
   // m-cresol swelling
   b += text(570, 36, "② 间甲酚溶胀 PANi", { size: 18, anchor: "middle", weight: "bold", fill: "#A35A12" });
   b += `<path d="${smooth([[420, 150], [450, 100], [490, 140], [455, 175], [430, 130], [470, 110], [500, 160], [470, 190]])}" fill="none" stroke="#A35A12" stroke-width="4"/>`;
@@ -441,7 +440,7 @@ figs.design_map = () => {
     b += rect(x + 30, i % 2 ? 239 : 117, 20, 78, COL.amberLight, { rx: 10, stroke: COL.amber, sw: 1.5 });
   });
   b += text(320, 224, "主链", { size: 17, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
-  b += text(240, 108, "侧链", { size: 16, anchor: "middle", weight: "bold", fill: "#A35A12" });
+  b += text(262, 150, "侧链", { size: 16, weight: "bold", fill: "#A35A12" });
   const box = (x, y, w, t, sub, col) => rect(x, y, w, 70, "#FFFFFF", { rx: 14, stroke: col, sw: 3 }) + text(x + w / 2, y + 30, t, { size: 18, anchor: "middle", weight: "bold", fill: col }) + text(x + w / 2, y + 56, sub, { size: 15, anchor: "middle", fill: COL.text2 });
   b += box(10, 20, 230, "能级匹配", "与 Si / S 的工作电位相容", COL.purple);
   b += box(400, 20, 230, "电子传输快", "共轭、掺杂、连续通路", COL.red);
