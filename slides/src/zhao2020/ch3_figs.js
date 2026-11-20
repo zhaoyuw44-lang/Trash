@@ -22,7 +22,7 @@ const wavy = (x1, x2, y, amp, per, c, w = 4) => {
 // Ion palette by charge
 const IONC = { 1: COL.purple, 2: COL.red, 3: "#7A1F1A" };
 const bigIon = (x, y, r, label, z) =>
-  circ(x, y, r, IONC[z]) + text(x, y + Math.min(r, 26) * 0.38, label, { size: Math.max(15, Math.round(Math.min(r, 30) * 0.75)), anchor: "middle", fill: "#FFFFFF", weight: "bold" });
+  circ(x, y, r, IONC[z]) + text(x, y + Math.min(r, 26) * 0.38, label, { size: Math.max(16, Math.round(Math.min(r, 30) * 0.75)), anchor: "middle", fill: "#FFFFFF", weight: "bold" });
 
 // ---------- Title motif: ions of different size/charge ----------
 figs.title_motif = () => {
@@ -89,7 +89,7 @@ figs.li_na_solv = () => {
 
 // ---------- Na SSE timeline ----------
 figs.tl_na = () => {
-  const W = 1180, H = 330;
+  const W = 700, H = 330;
   const ev = [
     { year: "1967", who: ["Yao & Kummer"], what: ["β-Al_{2}O_{3}"], color: COL.purple },
     { year: "1976", who: ["Goodenough 等"], what: ["NASICON"], color: COL.purple },
@@ -98,7 +98,7 @@ figs.tl_na = () => {
     { year: "2013", who: ["Matsuo 等"], what: ["Na_{2}(BH_{4})(NH_{2})"], color: COL.text2 },
     { year: "2018", who: ["Zhang 等"], what: ["Na_{11}Sn_{2}PS_{12}"], color: COL.sulfur },
   ];
-  return svg(W, H, timeline(W, H, ev, { axisY: 165, left: 110, right: 1050, whoSize: 19, whatSize: 18, yearSize: 28 }));
+  return svg(W, H, timeline(W, H, ev, { axisY: 165, left: 70, right: 620, whoSize: 17, whatSize: 16, yearSize: 24 }));
 };
 
 // ---------- beta-alumina conduction plane: Li / Na / K fit ----------
@@ -113,7 +113,7 @@ figs.beta_plane = () => {
     s += circ(x0 + 20, 120, 8, COL.red) + circ(x0 + 170, 120, 8, COL.red);
     s += bigIon(x0 + 95 + dx, 120 + (dx ? 22 : 0), r, label, 1);
     s += text(x0 + 95, 236, verdict[0], { size: 17, anchor: "middle", weight: "bold", fill: c });
-    s += lines(x0 + 95, 264, verdict.slice(1), { size: 15, anchor: "middle", fill: COL.text2, lh: 22 });
+    s += lines(x0 + 95, 264, verdict.slice(1), { size: 16, anchor: "middle", fill: COL.text2, lh: 22 });
     return s;
   };
   b += pan(10, "Li⁺", 0.76 * 28, -42, ["偏离中心", "贴着 O 不走"], COL.red);
@@ -236,7 +236,7 @@ figs.mv_strategies = () => {
     pts.forEach(([x, y]) => (b += bigIon(x, y, 15, "Mg", 2)));
     b += line(x0 + 130, 112, x0 + 190, 112, COL.ink, 2) + line(x0 + 130, 104, x0 + 130, 120, COL.ink, 2) + line(x0 + 190, 104, x0 + 190, 120, COL.ink, 2);
     b += text(x0 + 160, 102, "3.59 Å", { size: 16, anchor: "middle", weight: "bold" });
-    b += text(x0 + tw / 2, 262, "阴离子骨架围成的隧道", { size: 15, anchor: "middle", fill: COL.muted });
+    b += text(x0 + tw / 2, 262, "阴离子骨架围成的隧道", { size: 16, anchor: "middle", fill: COL.muted });
   }
   // tile 3: substitution creates vacancy
   {
@@ -323,13 +323,13 @@ figs.zn_options = () => {
     const x0 = 5 + 2 * (tw + gap);
     b += rect(x0 + 175, 70, 30, 180, COL.tealLight);
     [100, 150, 200].forEach((y) => (b += text(x0 + 190, y + 6, "+", { size: 18, anchor: "middle", weight: "bold", fill: COL.teal })));
-    b += anionX(x0 + 110, 120, 15) + text(x0 + 110, 100, "OH⁻", { size: 15, anchor: "middle", weight: "bold", fill: COL.teal });
+    b += anionX(x0 + 110, 120, 15) + text(x0 + 110, 100, "OH⁻", { size: 16, anchor: "middle", weight: "bold", fill: COL.teal });
     b += arrow(x0 + 128, 120, x0 + 270, 120, { color: COL.teal, width: 3.5, head: 13 });
     b += check(x0 + 300, 120, 12);
-    b += circ(x0 + 270, 210, 18, COL.red) + text(x0 + 270, 216, "Zn", { size: 15, anchor: "middle", fill: "#FFFFFF", weight: "bold" });
+    b += circ(x0 + 270, 210, 18, COL.red) + text(x0 + 270, 216, "Zn", { size: 16, anchor: "middle", fill: "#FFFFFF", weight: "bold" });
     b += arrow(x0 + 248, 210, x0 + 214, 210, { color: COL.red, width: 3, head: 12 });
     b += cross(x0 + 150, 210, 12);
-    b += text(x0 + 300, 250, "[Zn(NH_{3})_{6}]^{2+}", { size: 15, anchor: "middle", fill: COL.red, weight: "bold" });
+    b += text(x0 + 300, 250, "[Zn(NH_{3})_{6}]^{2+}", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
   }
   return svg(W, H, b);
 };

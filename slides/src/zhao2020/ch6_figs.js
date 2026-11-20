@@ -366,7 +366,7 @@ figs.pentagon = () => {
     b += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="46" fill="${c}"/>`;
     b += text(x, y + 6, zh, { size: 18, anchor: "middle", fill: "#FFFFFF", weight: "bold" });
     const ly = i === 0 ? y - 56 : y + 68;
-    b += text(x, ly, en, { size: 15, anchor: "middle", fill: c, weight: "bold" });
+    b += text(x, ly, en, { size: 17, anchor: "middle", fill: c, weight: "bold" });
   });
   return svg(W, H, b);
 };

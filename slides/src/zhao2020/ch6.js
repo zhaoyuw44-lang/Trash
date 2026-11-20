@@ -64,6 +64,7 @@ async function build(outFile, figDir) {
   d.column(s, 7.6, 2.0, 5.15, [
     { kind: "def", head: "第 5 章讲了什么", tint: true, body: "五类设计策略：提高电导率、拓宽窗口、抑制枝晶、提高选择性、降低界面电阻。" },
     { kind: "matters", head: "本章要回答", tint: true, body: "这些 SSE 用在哪里最划算？要做到多薄、多轻？原文对下一步研究有什么建议？" },
+    { kind: "why", head: "本章的读法", tint: true, body: "前五章看材料，本章看整个电池：数据多来自原文 Table 2，最后用一页把六章串起来。" },
   ]);
   s.addNotes("前五章讲材料本身：发展史、传输机理、各类 SSE、失效模式和设计策略。本章把视角放大到整个电池：哪些体系最需要 SSE、SSE 要满足什么硬指标，最后是原文的展望和全文回顾。");
 
@@ -146,18 +147,18 @@ async function build(outFile, figDir) {
   s = d.slide("CONTENT");
   s.addText("Table 2 一览：用 SSE 的高能量密度电池体系", { placeholder: "title" });
   const t2 = [
-    ["NCM811", 800, 0], ["NCA", 760, 0], ["Li₂MnO₃·LiMO₂", 900, 0],
+    ["NCM811", 800, 0], ["NCA", 760, 0], ["富锂 Li₂MnO₃·LiMO₂", 900, 0],
     ["Li–S", 2669, 1], ["Na–S", 1245, 1], ["K–S", 917, 1],
-    ["Li–O₂（Li₂O₂）", 3458, 2], ["Na–O₂（Na₂O₂）", 1605, 2], ["Na–O₂（NaO₂）", 1108, 2], ["K–O₂（KO₂）", 935, 2],
-    ["Li–O₂（水系）", 2172, 2], ["Na–O₂（水系）", 1281, 2], ["Zn–空气", 1218, 2], ["Al–空气（实验值）", 3364, 2],
+    ["Li–O₂ → Li₂O₂", 3458, 2], ["Na–O₂ → Na₂O₂", 1605, 2], ["Na–O₂ → NaO₂", 1108, 2], ["K–O₂ → KO₂", 935, 2],
+    ["Li–O₂ 水系", 2172, 2], ["Na–O₂ 水系", 1281, 2], ["Zn–空气", 1218, 2], ["Al–空气 实验值", 3364, 2],
     ["Li–CO₂", 1876, 3], ["Na–CO₂", 1125, 3],
   ];
   const fam = [["嵌入式正极", HEX.dk2], ["金属–S", HEX.accent5], ["金属–O₂ / 空气", HEX.accent2], ["金属–CO₂", HEX.accent4]];
   s.addChart(d.pres.charts.BAR, fam.map(([n], k) => ({ name: n, labels: t2.map((r) => r[0]), values: t2.map((r) => (r[2] === k ? r[1] : 0)) })), {
-    x: 0.5, y: 1.15, w: 7.2, h: 5.6, barDir: "bar", barGrouping: "stacked", barGapWidthPct: 35, catAxisOrientation: "maxMin",
+    x: 0.5, y: 1.1, w: 7.2, h: 5.72, barDir: "bar", barGrouping: "stacked", barGapWidthPct: 35, catAxisOrientation: "maxMin",
     chartColors: fam.map((f) => f[1]),
-    catAxisLabelFontSize: 12, catAxisLabelColor: HEX.dk1, catAxisLabelFontFace: "+mn-lt",
-    valAxisLabelFontSize: 11, valAxisLabelColor: HEX.dk2, valAxisMinVal: 0, valAxisMaxVal: 3600, valAxisMajorUnit: 1000,
+    catAxisLabelFontSize: 11, catAxisLabelColor: HEX.dk1, catAxisLabelFontFace: "+mn-lt",
+    catAxisLabelFrequency: 1, valAxisLabelFontSize: 11, valAxisLabelColor: HEX.dk2, valAxisMinVal: 0, valAxisMaxVal: 3600, valAxisMajorUnit: 1000,
     valGridLine: { color: "E3E8EC", size: 1 }, catGridLine: { style: "none" },
     showTitle: true, title: "理论能量密度（Wh kg⁻¹）", titleFontSize: 14, titleColor: HEX.dk1, titleFontFace: "+mn-lt",
     showLegend: true, legendPos: "b", legendFontSize: 12, legendColor: HEX.dk1, legendFontFace: "+mn-lt",
@@ -322,10 +323,10 @@ async function build(outFile, figDir) {
   // ---------------- 21. Errata ----------------
   s = d.slide("CONTENT");
   s.addText("阅读校注：第 17–19 页与 Table 2", { placeholder: "title" });
-  d.block(s, { x: 0.6, y: 1.35, w: 5.95, kind: "note", tint: true, head: "① Table 2：水系 Li–O₂ / Na–O₂ 的能量密度", body: "按方程式中的无水产物计算：4 LiOH（95.8 g）→ 1119 mAh g⁻¹ × 3.4 V ≈ 3800 Wh kg⁻¹；表中 2172 对应 LiOH·H₂O（167.8 g → 639 mAh g⁻¹）。NaOH 同理：1281 对应 NaOH·H₂O，无水约 1860。表中方程式未写出结晶水。" });
-  d.block(s, { x: 6.8, y: 1.35, w: 5.95, kind: "note", tint: true, head: "② Table 2：两处拼写", body: "“pillar[5] quinine”应为 pillar[5]quinone（醌；奎宁 quinine 是药物）；“PAN@Li₁.₄All₀.₄Ge₁.₆(PO₄)₃”中的 All 应为 Al。" });
-  d.block(s, { x: 6.8, y: 3.45, w: 5.95, kind: "note", tint: true, head: "③ 第 17 页与 Table 2：格式", body: "“30-KWh battery pack” 应为 kWh；“Li2MnO3LiNixMnyCozO2”应写作复合物 Li₂MnO₃·LiMO₂（中间缺“·”）。" });
-  d.block(s, { x: 0.6, y: 4.6, w: 12.15, kind: "def", tint: true, head: "核算：其余数值", body: "我们按“理论容量 × 电压”复算了 Table 2 的 Li–S、Na–S、K–S、Li₂O₂、Na₂O₂、NaO₂、KO₂、Li–CO₂、Na–CO₂ 各值，均与原文一致；第 17 页 500 Wh kg⁻¹ 的 SSE 面密度（< 2 mg cm⁻²）也复算一致。Zn–空气的 1218 Wh kg⁻¹ 未能用常规算法（按 ZnO 约 1090，按 Zn 约 1360）复现，原文未说明计算基准。" });
+  const e1 = d.block(s, { x: 0.6, y: 1.35, w: 5.95, kind: "note", tint: true, head: "① Table 2：水系 Li–O₂ / Na–O₂ 的能量密度", body: "按方程式中的无水产物计算：4 LiOH（95.8 g）→ 1119 mAh g⁻¹ × 3.4 V ≈ 3800 Wh kg⁻¹；表中 2172 对应 LiOH·H₂O（167.8 g → 639 mAh g⁻¹）。NaOH 同理：1281 对应 NaOH·H₂O，无水约 1860。表中方程式未写出结晶水。" });
+  const e2 = d.block(s, { x: 6.8, y: 1.35, w: 5.95, kind: "note", tint: true, head: "② Table 2：两处拼写", body: "“pillar[5] quinine”应为 pillar[5]quinone（醌；奎宁 quinine 是药物）；“PAN@Li₁.₄All₀.₄Ge₁.₆(PO₄)₃”中的 All 应为 Al。" });
+  const e3 = d.block(s, { x: 6.8, y: e2 + 0.25, w: 5.95, kind: "note", tint: true, head: "③ 第 17 页与 Table 2：格式", body: "“30-KWh battery pack” 应为 kWh；“Li2MnO3LiNixMnyCozO2”应写作复合物 Li₂MnO₃·LiMO₂（中间缺“·”）。" });
+  d.block(s, { x: 0.6, y: Math.max(e1, e3) + 0.35, w: 12.15, kind: "def", tint: true, head: "核算：其余数值", body: "我们按“理论容量 × 电压”复算了 Table 2 的 Li–S、Na–S、K–S、Li₂O₂、Na₂O₂、NaO₂、KO₂、Li–CO₂、Na–CO₂ 各值，均与原文一致；第 17 页 500 Wh kg⁻¹ 的 SSE 面密度（< 2 mg cm⁻²）也复算一致。Zn–空气的 1218 Wh kg⁻¹ 未能用常规算法（按 ZnO 约 1090，按 Zn 约 1360）复现，原文未说明计算基准。" });
   s.addNotes("校注①是理解数值的关键：金属–空气电池的能量密度很依赖“算不算产物里的水和氧”。以 LiOH·H2O 为基准，相当于把放电产物的全部质量计入。读其他文献的金属–空气数据时，也要先看清计算基准。");
 
   // ---------------- 22. Summary ----------------

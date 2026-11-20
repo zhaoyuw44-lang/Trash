@@ -93,11 +93,11 @@ async function build(outFile, figDir) {
   d.caption(s, "硫化物数据取自原文 Table 1；LGPS 取 Kamaya 等 2011 年报道值；液态电解液（1 M LiPF₆ 碳酸酯）约 10 mS cm⁻¹ 为公认量级。", { x: 0.6, y: 5.65, w: 6.9, h: 0.5 });
   d.stat(s, { x: 7.85, y: 1.3, w: 2.4, value: "~1", unit: "mS cm⁻¹", label: "多类 SSE 已达到的室温电导率", color: "accent2" });
   d.stat(s, { x: 10.4, y: 1.3, w: 2.4, value: "25", unit: "mS cm⁻¹", label: "最好的硫化物，超过液体", color: "accent1" });
-  d.column(s, 7.85, 2.95, 4.9, [
+  d.column(s, 7.85, 2.7, 4.9, [
     { kind: "hist", body: "2011 年 Kamaya、Kanno 等报道 LGPS（Li₁₀GeP₂S₁₂），室温约 12 mS cm⁻¹，第一次让固体追平液体。2016 年 Kato 等把纪录推到 25 mS cm⁻¹。" },
     { kind: "why", body: "以前：氧化物（如 LLZO）室温电导率多在 1 mS cm⁻¹ 以下。把骨架换成更大、更“软”的 S²⁻ 后，又高了一到两个数量级。" },
     { kind: "matters", body: "电导率这道门槛被跨过后，研究重心转向界面、稳定性和成本（第 4、5 章）。" },
-  ]);
+  ], 0.14);
   s.addNotes("注意横轴是对数坐标：Li₃PS₄ 与最好的硫化物差了两个多数量级。原文说的“comparable to liquid electrolytes（与液体相当）”指的是约 1 mS cm⁻¹ 的量级；常用液态电解液其实在 10 mS cm⁻¹ 左右，所以只有少数最好的硫化物真正“超过”液体。");
 
   // ---------------- 5. Why now ②: safety & form factor ----------------
