@@ -58,24 +58,71 @@ figs.interphase_reqs = () => {
 figs.fig5c = () => {
   const W = 1180, H = 380;
   let b = "";
-  const panel = (x, title, c, fill, electrodeFill, elabel, ligs, pros) => {
+  const panel = (x, title, c, fill, electrodeFill, elabel, ligs, solvLabel, pros) => {
     let s = text(x + 280, 28, title, { size: 20, anchor: "middle", weight: "bold", fill: c });
     s += `<path d="M${x},60 A150,150 0 0 1 ${x + 150},210 L${x},210 Z" fill="${electrodeFill}"/>`;
     s += `<path d="M${x},44 A166,166 0 0 1 ${x + 166},210 L${x + 150},210 A150,150 0 0 0 ${x},60 Z" fill="${fill}"/>`;
     s += text(x + 50, 190, elabel, { size: 17, weight: "bold", fill: "#FFFFFF" });
-    s += solvated(x + 340, 120, ligs, { r: 18, dist: 42, rx: 20, ry: 12 });
-    s += rect(x, 240, 560, 130, fill, { rx: 12, opacity: 0.55 });
+    s += solvated(x + 285, 118, ligs, { r: 17, dist: 40, rx: 19, ry: 11 });
+    s += text(x + 455, 124, solvLabel, { size: 17, anchor: "middle", fill: c, weight: "bold" });
+    s += rect(x, 238, 560, 134, fill, { rx: 12, opacity: 0.45 });
     pros.forEach(([ok, t], i) => {
-      const yy = 268 + i * 28;
+      const yy = 266 + i * 29;
       s += ok ? check(x + 24, yy - 6, 8, COL.teal, 3) : cross(x + 24, yy - 6, 7, COL.red, 3);
-      s += text(x + 44, yy, t, { size: 17, weight: "bold" });
+      s += text(x + 46, yy, t, { size: 17, weight: "bold" });
     });
     return s;
   };
-  b += panel(20, "溶剂衍生、富有机 SEI", COL.teal, "#9CC9E0", "#56636F", "石墨", "SSSA", [[1, "Li⁺ 传输快"], [1, "表面覆盖均匀"], [0, "怕体积变化"], [0, "容易被溶剂渗透"]]);
-  b += panel(600, "阴离子衍生、富无机 SEI", COL.red, COL.redLight, "#7C8B99", "Li / Si", "AAWA", [[1, "化学与电化学稳定性高"], [1, "耐体积变化"], [1, "抑制枝晶和溶剂渗透"], [0, "较难均匀形成"]]);
-  b += text(400, 110, "强配位溶剂", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
-  b += text(980, 110, "阴离子 + 弱配位溶剂", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
+  b += panel(20, "溶剂衍生、富有机 SEI", COL.teal, "#9CC9E0", "#56636F", "石墨", "SSSA", "强配位溶剂主导", [[1, "Li⁺ 传输快"], [1, "表面覆盖均匀"], [0, "怕大体积变化"], [0, "容易被溶剂渗透"]]);
+  b += panel(600, "阴离子衍生、富无机 SEI", COL.red, COL.redLight, "#7C8B99", "Li / Si", "AAWA", "阴离子 + 弱配位溶剂", [[1, "化学与电化学稳定性高"], [1, "耐大体积变化"], [1, "抑制枝晶和溶剂渗透"], [0, "较难均匀形成"]]);
+  return svg(W, H, b);
+};
+
+// ---------- Fig. 5c (right): LiF interfacial slip & crack resistance index ----------
+figs.lif_mech = () => {
+  const W = 640, H = 470;
+  let b = "";
+  // Top: modulated Li+ flux + interfacial slip
+  b += text(320, 26, "均化 Li⁺ 通量 + 弱粘附界面滑移", { size: 19, anchor: "middle", weight: "bold", fill: COL.sei });
+  b += rect(40, 132, 560, 62, COL.sulfurLight, { rx: 8, stroke: COL.sulfur, sw: 2 });
+  b += text(320, 170, "Li 金属负极（横向均匀沉积）", { size: 17, anchor: "middle", weight: "bold" });
+  b += arrow(220, 146, 120, 146, { color: COL.amber, width: 3, head: 10 });
+  b += arrow(420, 146, 520, 146, { color: COL.amber, width: 3, head: 10 });
+  // SEI wave with LiF / Li2O crystallites
+  b += `<path d="M40,124 Q180,96 320,104 Q460,112 600,124 L600,132 L40,132 Z" fill="${COL.redLight}" opacity="0.75"/>`;
+  [[250, 96, COL.red], [285, 86, COL.amber], [320, 94, COL.red], [355, 88, COL.amber], [390, 96, COL.red], [302, 72, COL.red], [342, 72, COL.amber]].forEach(([cx, cy, c]) => {
+    b += circle(cx, cy, 10, c, { stroke: "#FFFFFF", sw: 1.5 });
+  });
+  b += text(150, 74, "Li_{2}O", { size: 16, anchor: "middle", weight: "bold", fill: COL.amber });
+  b += line(184, 70, 274, 84, COL.amber, 2);
+  b += text(485, 74, "LiF（高界面能、弱粘附）", { size: 16, anchor: "middle", weight: "bold", fill: COL.red });
+  b += line(400, 74, 355, 86, COL.red, 2);
+  // Bottom: SEI crack resistance index (qualitative ranking from Fig. 5c)
+  b += text(330, 232, "无机 SEI 组分的抗裂指数对比（据 Fig. 5c 示意排序）", { size: 17, anchor: "middle", weight: "bold", fill: COL.ink });
+  const baseY = 392;
+  b += line(90, baseY, 615, baseY, COL.ink, 2.5);
+  b += line(90, 255, 90, 448, COL.ink, 2.5);
+  b += lines(44, 286, ["抗裂", "高 ↑"], { size: 16, anchor: "middle", fill: COL.red, weight: "bold", lh: 22 });
+  b += lines(44, 418, ["易裂", "负 ↓"], { size: 16, anchor: "middle", fill: COL.siDark, weight: "bold", lh: 22 });
+  const bars = [
+    ["LiF", 118, COL.red],
+    ["Li_{2}CO_{3}", 92, COL.sei],
+    ["Li_{2}O", 70, COL.amber],
+    ["LiCl", 28, COL.teal],
+    ["Li_{2}S", 18, COL.purple],
+    ["Li_{3}N", 10, COL.si],
+    ["Li_{3}PS_{4}", -40, COL.siDark],
+  ];
+  bars.forEach(([lbl, h, c], i) => {
+    const bx = 112 + i * 71;
+    if (h >= 0) {
+      b += rect(bx, baseY - h, 42, h, c, { rx: 4 });
+      b += text(bx + 21, baseY - h - 8, lbl, { size: 16, anchor: "middle", weight: "bold", fill: c });
+    } else {
+      b += rect(bx, baseY, 42, -h, c, { rx: 4 });
+      b += text(bx + 21, baseY - h + 21, lbl, { size: 16, anchor: "middle", weight: "bold", fill: c });
+    }
+  });
   return svg(W, H, b);
 };
 
@@ -83,7 +130,7 @@ figs.fig5c = () => {
 figs.anion_path = () => {
   const W = 1180, H = 300;
   let b = "";
-  b += flow(10, 30, 210, 110, 34, [
+  b += flow(15, 30, 206, 110, 30, [
     { t: ["减少配位 Li⁺ 的", "溶剂分子"], c: COL.teal },
     { t: ["阴离子进入", "溶剂化层"], c: COL.purple },
     { t: ["Li⁺–阴离子络合", "阴离子还原电位↑"], c: COL.amber },
@@ -97,11 +144,11 @@ figs.anion_path = () => {
     ["“盐溶于预盐”：仿 FSI 结构的溶剂", COL.red],
     ["离子液体", COL.siDark],
   ];
-  b += text(10, 190, "常用手段：", { size: 18, weight: "bold" });
+  b += text(15, 190, "常用手段：", { size: 18, weight: "bold" });
   tools.forEach(([t, c], i) => {
-    const x = 10 + (i % 3) * 390, y = 210 + Math.floor(i / 3) * 44;
-    b += rect(x, y, 370, 36, "#FFFFFF", { rx: 18, stroke: c, sw: 2.5 });
-    b += text(x + 185, y + 24, t, { size: 17, anchor: "middle", weight: "bold", fill: c });
+    const x = 15 + (i % 3) * 388, y = 210 + Math.floor(i / 3) * 44;
+    b += rect(x, y, 368, 36, "#FFFFFF", { rx: 18, stroke: c, sw: 2.5 });
+    b += text(x + 184, y + 24, t, { size: 17, anchor: "middle", weight: "bold", fill: c });
   });
   return svg(W, H, b);
 };
@@ -114,18 +161,18 @@ figs.bilayer = () => {
   b += rect(30, 230, 600, 70, COL.sei);
   const R = rng(6);
   const comps = [["LiF", COL.red], ["Li_{2}O", COL.amber], ["Li_{3}N", COL.purple], ["LiF_{x}H_{y}", COL.teal], ["Li_{3}P", COL.siDark]];
-  for (let i = 0; i < 30; i++) b += rect((35 + R() * 585).toFixed(1), (235 + R() * 55).toFixed(1), 10, 10, comps[i % 5][1], { rx: 2 });
+  for (let i = 0; i < 30; i++) b += rect((35 + R() * 445).toFixed(1), (235 + R() * 55).toFixed(1), 10, 10, comps[i % 5][1], { rx: 2 });
   b += rect(30, 150, 600, 80, "#F0D9C0");
-  b += path("M40,190 C100,160 140,215 200,185 C260,160 300,215 360,185 C420,160 460,215 520,185 C560,170 590,200 620,188", COL.sei, 3);
+  b += path("M40,190 C100,160 140,215 200,185 C260,160 300,215 360,185 C420,160 450,205 480,188", COL.sei, 3);
   b += rect(30, 60, 600, 90, COL.electrolyte);
   b += text(330, 112, "电解液", { size: 18, anchor: "middle", weight: "bold", fill: "#3A7CA5" });
-  b += text(640, 195, "外层：富有机", { size: 16, anchor: "end", weight: "bold", fill: COL.sei });
-  b += text(640, 270, "内层：富无机", { size: 16, anchor: "end", weight: "bold", fill: "#FFFFFF" });
+  b += text(618, 195, "外层：富有机", { size: 16, anchor: "end", weight: "bold", fill: COL.sei });
+  b += text(618, 270, "内层：富无机", { size: 16, anchor: "end", weight: "bold", fill: "#FFFFFF" });
   comps.forEach(([t, c], i) => {
     const x = 50 + i * 120;
     b += rect(x, 385, 14, 14, c, { rx: 2 }) + text(x + 22, 398, t, { size: 16, weight: "bold" });
   });
-  b += text(330, 40, "内层无机：稳定、调匀 Li⁺ 通量；外层有机：导离子、像“粘结剂”、抑制溶解", { size: 15, anchor: "middle", fill: COL.text2 });
+  b += text(330, 40, "内层无机：稳定、调匀 Li⁺ 通量；外层有机：导离子、像“粘结剂”、抑制溶解", { size: 16, anchor: "middle", fill: COL.text2 });
   return svg(W, H, b);
 };
 
@@ -201,6 +248,39 @@ figs.transport_modes = () => {
   return svg(W, H, b);
 };
 
+// ---------- PFG-NMR trap: neutral ion pairs diffuse but carry zero charge ----------
+figs.pfg_trap = () => {
+  const W = 640, H = 370;
+  let b = "";
+  // Left panel: ideal dissociated
+  b += rect(16, 16, 294, 338, "#E8F4F3", { rx: 14, stroke: COL.teal, sw: 2.5 });
+  b += text(163, 48, "理想完全解离", { size: 19, anchor: "middle", weight: "bold", fill: COL.teal });
+  b += text(163, 74, "（Nernst–Einstein 成立）", { size: 16, anchor: "middle", fill: COL.text2 });
+  b += ion(95, 140, { r: 16 }) + arrow(118, 140, 232, 140, { color: COL.purple, width: 3.5, head: 12 });
+  b += text(175, 124, "电场下向右移", { size: 16, anchor: "middle", fill: COL.purple, weight: "bold" });
+  b += circle(225, 220, 16, COL.redLight, { stroke: COL.red, sw: 2 }) + text(225, 226, "−", { size: 20, anchor: "middle", weight: "bold", fill: COL.red });
+  b += arrow(202, 220, 90, 220, { color: COL.red, width: 3.5, head: 12 });
+  b += text(145, 204, "电场下向左移", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
+  b += rect(34, 272, 258, 66, "#FFFFFF", { rx: 10 });
+  b += lines(163, 300, ["各自独立运动", "扩散系数 ≈ 电荷传输"], { size: 16, anchor: "middle", weight: "bold", fill: COL.teal, lh: 24 });
+
+  // Right panel: ion pairs & aggregates
+  b += rect(330, 16, 294, 338, "#FBEDEC", { rx: 14, stroke: COL.red, sw: 2.5 });
+  b += text(477, 48, "真实离子对 / 聚集体", { size: 19, anchor: "middle", weight: "bold", fill: COL.red });
+  b += text(477, 74, "（高浓 / 弱溶剂化常见）", { size: 16, anchor: "middle", fill: COL.text2 });
+  // neutral pair
+  b += rect(375, 114, 96, 50, "#FFFFFF", { rx: 25, stroke: COL.amber, sw: 2, dash: "5 4" });
+  b += ion(404, 139, { r: 15 });
+  b += circle(442, 139, 15, COL.redLight, { stroke: COL.red, sw: 2 }) + text(442, 145, "−", { size: 19, anchor: "middle", weight: "bold", fill: COL.red });
+  b += arrow(478, 139, 578, 139, { color: COL.amber, width: 3, head: 11, dash: "6 4" });
+  b += text(530, 122, "热扩散算进 D", { size: 16, anchor: "middle", fill: COL.amber, weight: "bold" });
+  b += text(477, 198, "净电荷 = 0", { size: 18, anchor: "middle", weight: "bold", fill: COL.red });
+  b += cross(405, 232, 9, COL.red, 3.5) + text(424, 238, "电场拉不动，电流 = 0", { size: 16, weight: "bold", fill: COL.red });
+  b += rect(348, 272, 258, 66, "#FFFFFF", { rx: 10 });
+  b += lines(477, 300, ["PFG-NMR 测的是自扩散", "会错估真实 Li⁺ 电荷贡献"], { size: 16, anchor: "middle", weight: "bold", fill: COL.red, lh: 24 });
+  return svg(W, H, b);
+};
+
 // ---------- Bruce–Vincent method ----------
 figs.bv_method = () => {
   const W = 620, H = 390;
@@ -239,7 +319,7 @@ figs.runaway = () => {
   b += `<g transform="translate(26 ${(Y0 + Y1) / 2}) rotate(-90)">` + text(0, 0, "升温速率（°C/min）", { size: 17, anchor: "middle", weight: "bold" }) + `</g>`;
   const pts = [[100, 0.04], [115, 0.05], [130, 0.1], [145, 0.22], [152, 0.32], [165, 0.6], [180, 1.2], [200, 3], [212, 6], [222, 12], [228, 35], [232, 150], [236, 500], [245, 900], [270, 1400], [300, 2000]];
   b += `<polyline points="${pts.map(([t, r]) => `${xT(t).toFixed(1)},${yR(r).toFixed(1)}`).join(" ")}" fill="none" stroke="${COL.ink}" stroke-width="4" stroke-linejoin="round"/>`;
-  const zone = (t0, t1, c, n, label) => rect(xT(t0), Y1, xT(t1) - xT(t0), Y0 - Y1, c, { opacity: 0.18 }) + pill(xT((t0 + t1) / 2) - 18, Y0 - 44, 36, 30, c, n, { size: 17 }) + lines(xT((t0 + t1) / 2), Y1 + 24, label, { size: 15, anchor: "middle", weight: "bold", fill: c, lh: 20 });
+  const zone = (t0, t1, c, n, label) => rect(xT(t0), Y1, xT(t1) - xT(t0), Y0 - Y1, c, { opacity: 0.18 }) + pill(xT((t0 + t1) / 2) - 18, Y0 - 44, 36, 30, c, n, { size: 17 }) + lines(xT((t0 + t1) / 2), Y1 + 24, label, { size: 16, anchor: "middle", weight: "bold", fill: c, lh: 22 });
   b += zone(100, 150, COL.sei, "1", ["SEI", "分解"]);
   b += zone(150, 205, COL.purple, "2", ["负极与", "电解液反应"]);
   b += zone(205, 230, COL.red, "3", ["正极", "放氧", "串扰"]);
@@ -256,12 +336,12 @@ figs.arc_scale = () => {
   b += rect(20, 40, 190, 300, COL.light, { rx: 14, stroke: COL.siDark, sw: 3 });
   for (let i = 0; i < 9; i++) b += circle(35, 60 + i * 32, 5, COL.siDark) + circle(195, 60 + i * 32, 5, COL.siDark);
   b += rect(85, 140, 60, 140, COL.ink, { rx: 10 }) + text(115, 215, "电池", { size: 16, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
-  b += line(150, 60, 150, 160, COL.red, 3) + text(160, 90, "热电偶", { size: 15, fill: COL.red, weight: "bold" });
+  b += line(150, 60, 150, 160, COL.red, 3) + text(158, 90, "热电偶", { size: 16, fill: COL.red, weight: "bold" });
   b += text(115, 370, "绝热条件 ARC", { size: 17, anchor: "middle", weight: "bold" });
   // comparison bars (log scale)
   const X0 = 270;
   b += text(X0, 40, "ARC 测试需要的电池容量（对数示意）", { size: 16, weight: "bold" });
-  const bar = (y, w, c, t, s) => rect(X0, y, w, 46, c, { rx: 8 }) + text(X0 + 12, y + 30, t, { size: 17, weight: "bold", fill: "#FFFFFF" }) + text(X0, y + 72, s, { size: 15, fill: COL.text2 });
+  const bar = (y, w, c, t, s) => rect(X0, y, w, 46, c, { rx: 8 }) + text(X0 + 12, y + 30, t, { size: 17, weight: "bold", fill: "#FFFFFF" }) + text(X0, y + 72, s, { size: 16, fill: COL.text2 });
   b += bar(70, 360, COL.ink, "常规大电池 ~1–3 Ah", "正极材料 4–15 g，制造成本高");
   b += bar(190, 150, COL.red, "≥20 mAh", "圆柱软包小电池：正极 < 1 g");
   b += text(X0, 330, "Ah 级 → mAh 级：用量降一个数量级以上", { size: 17, weight: "bold", fill: COL.teal });
@@ -270,7 +350,7 @@ figs.arc_scale = () => {
 
 // ---------- Safety beyond nonflammability ----------
 figs.safety_layers = () => {
-  const W = 1180, H = 260;
+  const W = 1180, H = 220;
   let b = "";
   const items = [
     { t: "挥发与可燃性", s: ["LiPF₆/环状碳酸酯", "易燃"], c: COL.amber },
@@ -278,7 +358,7 @@ figs.safety_layers = () => {
     { t: "反应性气体与酸", s: ["跨电极迁移", "引发对侧放热"], c: COL.purple },
     { t: "固态也不自动安全", s: ["接触失效、化学机械", "降解、气相串扰"], c: COL.red },
   ];
-  items.forEach((it, i) => (b += card(20 + i * 290, 10, 270, 220, it.t, it.s, it.c, { bs: 18, th: 46, ts: 20 })));
+  items.forEach((it, i) => (b += card(20 + i * 290, 12, 270, 185, it.t, it.s, it.c, { bs: 18, th: 48, ts: 20 })));
   return svg(W, H, b);
 };
 
