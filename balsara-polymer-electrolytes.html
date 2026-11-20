@@ -1,0 +1,1766 @@
+<title>Balsara 聚合物电解质学习站</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Nitash P. Balsara 课题组聚合物电解质研究的交互式学习网站：从 Li⁺ 溶剂化到聚合物漂移、迁移数、极限电流与全固态电池。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code','svg'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+<style>
+/* Layout: a sticky chapter rail on the left and a ~46rem reading column; a "transport spine" (分子结构 → … → 全电池) runs across the top and lights up the step each chapter belongs to. Species keep one color everywhere: Li⁺ crimson (its flame-test color), TFSI⁻ indigo, polymer/solvent amber. */
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --sunk:#E6EBED; --ink:#13202A; --muted:#55636E; --rule:#CFD8DD;
+  --accent:#0D5C78; --accent-soft:#DCEBF1;
+  --li:#B3203A; --li-soft:#F6E1E5; --tf:#3A4CB0; --tf-soft:#E3E6F7; --poly:#9A6300; --poly-soft:#F5EAD3;
+  --ok:#2A7448; --ok-soft:#DFF0E5; --bad:#AE3530; --bad-soft:#F7E2E0;
+  --meas:#2A7448; --theo:#3A4CB0; --illu:#8A5A00;
+  --f-display:"Source Serif 4","Noto Serif SC","Songti SC",Georgia,serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --rail:15.5rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1417; --surface:#151D22; --sunk:#1C262C; --ink:#E2E9ED; --muted:#98A6B0; --rule:#2A363D;
+    --accent:#5DB6D6; --accent-soft:#16303B;
+    --li:#E25C78; --li-soft:#3A1820; --tf:#7686E6; --tf-soft:#1E2344; --poly:#BA8020; --poly-soft:#33270F;
+    --ok:#62C08A; --ok-soft:#14291D; --bad:#EE7F78; --bad-soft:#36191A;
+    --meas:#62C08A; --theo:#8E9CF2; --illu:#E0A843;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1417; --surface:#151D22; --sunk:#1C262C; --ink:#E2E9ED; --muted:#98A6B0; --rule:#2A363D;
+  --accent:#5DB6D6; --accent-soft:#16303B;
+  --li:#E25C78; --li-soft:#3A1820; --tf:#7686E6; --tf-soft:#1E2344; --poly:#BA8020; --poly-soft:#33270F;
+  --ok:#62C08A; --ok-soft:#14291D; --bad:#EE7F78; --bad-soft:#36191A;
+  --meas:#62C08A; --theo:#8E9CF2; --illu:#E0A843;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4.5rem)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.78;-webkit-font-smoothing:antialiased;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.28;margin:0;font-weight:600}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:2px}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+button,select,input{font:inherit;color:inherit}
+.li{color:var(--li);font-weight:600}.tf{color:var(--tf);font-weight:600}.po{color:var(--poly);font-weight:600}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--rule)}
+.topbar-in{display:flex;align-items:center;gap:1rem;padding-block:.55rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.02rem;white-space:nowrap}
+.brand small{font-family:var(--f-mono);font-weight:400;color:var(--muted);font-size:.72rem;margin-left:.4rem}
+.spine{display:flex;align-items:center;gap:.15rem;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.spine::-webkit-scrollbar{display:none}
+.spine a{font-size:.74rem;white-space:nowrap;text-decoration:none;color:var(--muted);padding:.2rem .5rem;border-radius:999px;border:1px solid transparent}
+.spine a.on{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.spine i{color:var(--rule);font-style:normal;font-size:.7rem}
+.levels{display:flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;flex-shrink:0}
+.levels button{border:0;background:transparent;padding:.25rem .6rem;font-size:.78rem;cursor:pointer;color:var(--muted)}
+.levels button[aria-pressed="true"]{background:var(--accent);color:var(--surface);font-weight:600}
+@media (max-width:760px){.spine{display:none}.brand small{display:none}.topbar-in{justify-content:space-between}}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);max-width:84rem;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:2.5rem}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem);align-self:start;max-height:calc(100vh - 4rem);overflow-y:auto;padding-block:1.6rem 2rem;font-size:.86rem}
+.rail h4{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:1.1rem 0 .35rem}
+.rail ol,.rail ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.rail a{display:flex;gap:.55rem;text-decoration:none;color:var(--ink);padding:.28rem .5rem;border-radius:6px;line-height:1.4}
+.rail a span.n{font-family:var(--f-mono);color:var(--muted);font-size:.75rem;min-width:1.3rem;padding-top:.1rem}
+.rail a:hover{background:var(--sunk)}
+.rail a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.mobile-nav{display:none}
+@media (max-width:1000px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .rail{display:none}
+  .mobile-nav{display:block;padding-block:.8rem 0}
+  .mobile-nav select{width:100%;padding:.5rem;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+}
+main{min-width:0;padding-block:1rem 5rem}
+.col{max-width:46rem}
+
+/* ---------- hero ---------- */
+.hero{padding-block:2.6rem 2rem;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(1.9rem,4.2vw,2.9rem);margin:.5rem 0 .9rem;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--li)}
+.hero .lede{font-size:1.06rem;color:var(--muted);max-width:44rem}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;margin-top:1.4rem}
+.chain a{font-size:.86rem;padding:.3rem .7rem;border-radius:6px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:var(--ink)}
+.chain a:hover{border-color:var(--accent);color:var(--accent)}
+.chain span{color:var(--muted)}
+.qs{margin-top:1.8rem;display:grid;gap:.5rem}
+.qs a{display:grid;grid-template-columns:2rem 1fr;gap:.4rem;text-decoration:none;color:var(--ink);padding:.55rem .8rem;border-radius:8px;border:1px solid var(--rule);background:var(--surface)}
+.qs a:hover{border-color:var(--accent)}
+.qs b{font-family:var(--f-mono);color:var(--accent);font-weight:500}
+
+/* ---------- chapters ---------- */
+section.ch{padding-block:3.2rem 1rem;border-bottom:1px solid var(--rule)}
+.ch-head{display:grid;gap:.4rem;margin-bottom:1.4rem}
+.ch-head .k{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+.ch-head h2{font-size:clamp(1.5rem,3vw,2rem)}
+.ch-head .q{font-size:.98rem;color:var(--muted);border-left:3px solid var(--li);padding-left:.8rem;margin-top:.3rem}
+section.ch h3{font-size:1.22rem;margin:2rem 0 .6rem}
+section.ch h4{font-size:1.02rem;margin:1.3rem 0 .4rem}
+.prose{display:grid;gap:.9rem}
+.prose ul,.prose ol{margin:0;padding-left:1.25rem;display:grid;gap:.35rem}
+.lvl-tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;padding:.05rem .45rem;border-radius:4px;border:1px solid var(--rule);color:var(--muted);vertical-align:2px;margin-right:.4rem}
+[data-level]{display:grid;gap:.9rem}
+[data-level="2"]>.lvl-tag{color:var(--accent);border-color:var(--accent)}
+[data-level="3"]>.lvl-tag{color:var(--li);border-color:var(--li)}
+body[data-max-level="1"] [data-level="2"],body[data-max-level="1"] [data-level="3"],body[data-max-level="2"] [data-level="3"]{display:none}
+
+/* evidence badges */
+.ev{display:inline-block;font-family:var(--f-mono);font-size:.66rem;padding:.02rem .4rem;border-radius:4px;vertical-align:2px;font-weight:500;letter-spacing:.03em;white-space:nowrap}
+.ev.m{color:var(--meas);background:var(--ok-soft)}
+.ev.t{color:var(--theo);background:var(--tf-soft)}
+.ev.i{color:var(--illu);background:var(--poly-soft)}
+.ev.u{color:var(--bad);background:var(--bad-soft)}
+.cite{font-size:.8em;font-family:var(--f-mono);text-decoration:none;color:var(--accent);white-space:nowrap}
+.cite:hover{text-decoration:underline}
+
+.callout{border:1px solid var(--rule);background:var(--surface);border-radius:10px;padding:1rem 1.1rem;display:grid;gap:.6rem}
+.callout.warn{border-color:var(--li);background:var(--li-soft)}
+.callout.key{border-color:var(--accent);background:var(--accent-soft)}
+.callout h4{margin:0;font-size:.98rem}
+.eq{overflow-x:auto;padding:.3rem 0;margin:.2rem 0}
+.eq-note{font-size:.88rem;color:var(--muted)}
+
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;background:var(--sunk);font-size:.8rem}
+tr:last-child td{border-bottom:0}
+
+/* ---------- figures ---------- */
+figure.fig{margin:1.6rem 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden;max-width:56rem}
+.fig-head{display:flex;flex-wrap:wrap;gap:.4rem .8rem;align-items:baseline;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid var(--rule)}
+.fig-head b{font-family:var(--f-display);font-size:1rem}
+.fig-body{padding:1rem;display:grid;gap:.9rem}
+.fig-body svg{display:block;width:100%;height:auto;max-width:100%}
+.fig-body canvas{display:block;width:100%;max-width:100%;border-radius:8px;background:var(--sunk)}
+figcaption{padding:.7rem 1rem;border-top:1px solid var(--rule);font-size:.84rem;color:var(--muted);background:var(--bg)}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.6rem 1.2rem}
+.ctrl{display:grid;gap:.15rem;min-width:0}
+.ctrl label{font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;gap:.5rem}
+.ctrl label output{font-family:var(--f-mono);color:var(--ink);font-size:.78rem}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.seg{display:flex;flex-wrap:wrap;gap:.3rem}
+.seg button{border:1px solid var(--rule);background:var(--surface);border-radius:6px;padding:.25rem .65rem;font-size:.8rem;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.5rem}
+.readout div{background:var(--sunk);border-radius:8px;padding:.45rem .65rem;min-width:0}
+.readout span{display:block;font-size:.72rem;color:var(--muted)}
+.readout b{font-family:var(--f-mono);font-size:.95rem;font-weight:500;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;vertical-align:-1px;margin-right:.3rem}
+svg text{font-family:var(--f-body)}
+.svg-ink{fill:var(--ink)}.svg-muted{fill:var(--muted)}
+.svg-li{fill:var(--li)}.svg-tf{fill:var(--tf)}.svg-poly{fill:var(--poly)}
+.stroke-rule{stroke:var(--rule)}.stroke-ink{stroke:var(--ink)}.stroke-muted{stroke:var(--muted)}
+
+/* ---------- quiz ---------- */
+.quiz{margin-top:2rem;border:1px solid var(--rule);border-radius:12px;background:var(--surface);padding:1rem 1.1rem;display:grid;gap:1.1rem}
+.quiz>h4{margin:0;font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.qq{display:grid;gap:.45rem}
+.qq p{font-weight:500}
+.qq .opts{display:grid;gap:.35rem}
+.qq button{text-align:left;border:1px solid var(--rule);background:var(--bg);border-radius:8px;padding:.45rem .7rem;cursor:pointer;line-height:1.5}
+.qq button:hover{border-color:var(--accent)}
+.qq button.right{border-color:var(--ok);background:var(--ok-soft)}
+.qq button.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qq .why{font-size:.88rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:.7rem}
+
+/* ---------- bib / glossary ---------- */
+.search{width:100%;padding:.6rem .8rem;border:1px solid var(--rule);border-radius:8px;background:var(--surface);margin-bottom:.8rem}
+.bib{display:grid;gap:.7rem}
+.bib article{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:.8rem 1rem;display:grid;gap:.35rem}
+.bib .meta{font-size:.8rem;color:var(--muted)}
+.bib .t{font-family:var(--f-display);font-weight:600;font-size:1rem;line-height:1.4}
+.bib .ann{font-size:.88rem}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.66rem;border-radius:999px;padding:.02rem .5rem;border:1px solid var(--rule);color:var(--muted);margin-right:.25rem}
+.pill.p0{border-color:var(--li);color:var(--li)}.pill.p1{border-color:var(--accent);color:var(--accent)}
+dl.gloss{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);gap:0;border:1px solid var(--rule);border-radius:10px;background:var(--surface);overflow:hidden}
+dl.gloss dt,dl.gloss dd{padding:.55rem .8rem;border-bottom:1px solid var(--rule);margin:0}
+dl.gloss dt{font-weight:600;background:var(--sunk)}
+dl.gloss dt small{display:block;font-family:var(--f-mono);font-weight:400;font-size:.72rem;color:var(--muted)}
+@media (max-width:560px){dl.gloss{grid-template-columns:minmax(0,1fr)}dl.gloss dt{border-bottom:0}}
+.hide{display:none!important}
+footer{padding-block:2rem 3rem;font-size:.82rem;color:var(--muted)}
+</style>
+
+<style>
+.tipwrap{position:relative}
+.tip{position:absolute;z-index:5;pointer-events:none;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:.45rem .6rem;font-size:.78rem;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,.12);min-width:10rem;font-family:var(--f-mono)}
+.struct{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.8rem}
+.struct>div{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:.8rem;display:grid;gap:.4rem;min-width:0}
+.struct svg{width:100%;height:auto}
+.struct b{font-family:var(--f-display)}
+.answers{display:grid;gap:.8rem}
+.answers details{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:.7rem 1rem}
+.answers summary{cursor:pointer;font-weight:600;font-family:var(--f-display)}
+.answers details[open] summary{margin-bottom:.5rem}
+.bars{display:grid;gap:.45rem}
+.bar{display:grid;grid-template-columns:minmax(7rem,12rem) minmax(0,1fr) 5.5rem;gap:.6rem;align-items:center;font-size:.84rem}
+.bar .trk{height:.9rem;background:var(--sunk);border-radius:4px;position:relative}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0}
+.bar .rng{position:absolute;top:0;bottom:0;border-radius:4px;opacity:.55}
+.bar b{font-family:var(--f-mono);font-weight:500;font-size:.8rem;text-align:right}
+@media (max-width:520px){.bar{grid-template-columns:minmax(0,1fr) 4.6rem}.bar .trk{grid-column:1 / -1;order:3}}
+.cmap{overflow-x:auto}
+.cmap svg{min-width:640px}
+.cmap a text{cursor:pointer}
+.cmap a:hover rect,.cmap a:focus rect{stroke:var(--accent);stroke-width:2}
+</style>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <span class="brand">Balsara 聚合物电解质<small>学习站 · 2026.11</small></span>
+    <nav class="spine" aria-label="科学主线">
+      <a href="#ch1" data-s="struct">分子结构</a><i>→</i>
+      <a href="#ch2" data-s="solv">Li⁺ 溶剂化</a><i>→</i>
+      <a href="#ch6" data-s="corr">离子关联</a><i>→</i>
+      <a href="#ch4" data-s="tn">迁移数</a><i>→</i>
+      <a href="#ch3" data-s="v0">溶剂速度</a><i>→</i>
+      <a href="#ch5" data-s="pol">浓差极化</a><i>→</i>
+      <a href="#ch8" data-s="ilim">极限电流</a><i>→</i>
+      <a href="#ch10" data-s="cell">全电池</a>
+    </nav>
+    <div class="levels" role="group" aria-label="内容深度">
+      <button type="button" data-l="1" aria-pressed="false">入门</button>
+      <button type="button" data-l="2" aria-pressed="false">进阶</button>
+      <button type="button" data-l="3" aria-pressed="true">高级</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<aside class="rail" aria-label="章节目录">
+  <h4>开始</h4>
+  <ol><li><a href="#top"><span class="n">·</span>导读与五个问题</a></li></ol>
+  <h4>章节</h4>
+  <ol>
+    <li><a href="#ch1"><span class="n">01</span>聚合物电解质基础</a></li>
+    <li><a href="#ch2"><span class="n">02</span>Li⁺ 溶剂化动力学</a></li>
+    <li><a href="#ch3"><span class="n">03</span>中性聚合物的运动</a></li>
+    <li><a href="#ch4"><span class="n">04</span>离子速度与迁移数</a></li>
+    <li><a href="#ch5"><span class="n">05</span>实验技术与 Operando X 射线</a></li>
+    <li><a href="#ch6"><span class="n">06</span>分子动力学模拟</a></li>
+    <li><a href="#ch7"><span class="n">07</span>PPM 与 PEO</a></li>
+    <li><a href="#ch8"><span class="n">08</span>极限电流</a></li>
+    <li><a href="#ch9"><span class="n">09</span>交联聚合物电解质</a></li>
+    <li><a href="#ch10"><span class="n">10</span>超离子传导与全固态电池</a></li>
+  </ol>
+  <h4>参考</h4>
+  <ul>
+    <li><a href="#methods"><span class="n">T</span>实验技术对照表</a></li>
+    <li><a href="#map"><span class="n">M</span>概念图</a></li>
+    <li><a href="#answers"><span class="n">A</span>五个问题的回答</a></li>
+    <li><a href="#open"><span class="n">?</span>不确定性与开放问题</a></li>
+    <li><a href="#bibsec"><span class="n">B</span>注释文献</a></li>
+    <li><a href="#glossary"><span class="n">G</span>术语表</a></li>
+    <li><a href="#notes"><span class="n">N</span>对原始提纲的更正</a></li>
+  </ul>
+</aside>
+
+<main id="main">
+<div class="mobile-nav">
+  <label for="mnav" class="eyebrow">跳转到</label>
+  <select id="mnav">
+    <option value="top">导读与五个问题</option>
+    <option value="ch1">01 聚合物电解质基础</option>
+    <option value="ch2">02 Li⁺ 溶剂化动力学</option>
+    <option value="ch3">03 中性聚合物的运动</option>
+    <option value="ch4">04 离子速度与迁移数</option>
+    <option value="ch5">05 实验技术与 Operando X 射线</option>
+    <option value="ch6">06 分子动力学模拟</option>
+    <option value="ch7">07 PPM 与 PEO</option>
+    <option value="ch8">08 极限电流</option>
+    <option value="ch9">09 交联聚合物电解质</option>
+    <option value="ch10">10 超离子传导与全固态电池</option>
+    <option value="methods">实验技术对照表</option>
+    <option value="map">概念图</option>
+    <option value="answers">五个问题的回答</option>
+    <option value="open">不确定性与开放问题</option>
+    <option value="bibsec">注释文献</option>
+    <option value="glossary">术语表</option>
+    <option value="notes">对原始提纲的更正</option>
+  </select>
+</div>
+
+<section class="hero" id="top" data-spine="">
+  <div class="col">
+    <p class="eyebrow">Nitash P. Balsara · UC Berkeley · 研究导读</p>
+    <h1>从 <em>Li⁺</em> 溶剂化到聚合物漂移、迁移数与极限电流</h1>
+    <p class="lede">这是一份围绕 Balsara 课题组 2017–2026 年工作的交互式学习材料。它要回答的核心问题是：为什么不带电的聚合物会在电场下运动，这种运动如何改变离子传输，以及为什么总电导率更低的 PPM 在极限电流实验中能胜过 PEO。</p>
+    <nav class="chain" aria-label="贯穿全站的科学主线">
+      <a href="#ch1">分子结构</a><span>→</span><a href="#ch2">Li⁺ 溶剂化</a><span>→</span><a href="#ch6">离子关联运动</a><span>→</span><a href="#ch4">迁移数</a><span>→</span><a href="#ch3">溶剂速度</a><span>→</span><a href="#ch5">浓度极化</a><span>→</span><a href="#ch8">极限电流</a><span>→</span><a href="#ch10">全固态电池性能</a>
+    </nav>
+    <div class="qs">
+      <a href="#ans1"><b>Q1</b><span>为什么聚合物没有净电荷，却能在电场中以接近离子速度的量级移动？</span></a>
+      <a href="#ans2"><b>Q2</b><span>当 t₊⁰ &lt; 0 时，Li⁺ 在实验室参考系中究竟朝哪个方向移动？</span></a>
+      <a href="#ans3"><b>Q3</b><span>为什么 PPM 可以在总电导率较低的情况下表现出更高的极限电流？</span></a>
+      <a href="#ans4"><b>Q4</b><span>QENS 和 MD 测得的纳秒尺度局部动力学，如何联系到 X 射线实验中的长时间、大尺度聚合物运动？</span></a>
+      <a href="#ans5"><b>Q5</b><span>能否设计一种固态聚合物，使 Li⁺ 快速传输，同时抑制不必要的聚合物漂移和机械应力？</span></a>
+    </div>
+    <div class="callout" style="margin-top:1.6rem">
+      <h4>阅读约定</h4>
+      <p style="font-size:.9rem">每个数值和论断都标注了证据类型：<span class="ev m">实测</span> 指论文报告的实验数据；<span class="ev t">理论</span> 指连续介质理论或 MD 的结果；<span class="ev i">示意</span> 指本页为讲解而构造的模型或估算，不对应任何论文中的数据；<span class="ev u">存疑</span> 指来源之间有矛盾或未能核实。右上角的 <b>入门 / 进阶 / 高级</b> 控制显示深度，选“高级”时显示全部内容。引用标签如 <a class="cite" href="#b-mistry22">[Mistry 2022]</a> 链接到文献条目。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CH1 ===================== -->
+<section class="ch" id="ch1" data-spine="struct">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 01 · Polymer Electrolyte Fundamentals</span>
+    <h2>聚合物电解质基础</h2>
+    <p class="q">核心问题：为什么更高的总离子电导率 (Ionic Conductivity) 不一定意味着更好的电池性能？</p>
+  </div>
+
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>固态聚合物电解质 (Solid Polymer Electrolyte, SPE) 是把锂盐直接溶解在高分子里得到的材料，体系中没有小分子溶剂。高分子链上的极性氧原子取代了液态电解质中碳酸酯分子的作用，负责“溶解”Li⁺。因此在 Balsara 课题组的论文里，<b>溶剂 (solvent) 就是聚合物本身</b>。</p>
+    <ul>
+      <li><b>液态电解质</b>：盐 + 小分子溶剂（如碳酸酯、甘醇二甲醚 glyme）。溶剂分子可以自由扩散和流动。</li>
+      <li><b>凝胶电解质 (Gel Polymer Electrolyte)</b>：聚合物网络中吸收了液态电解质，离子主要在液相中传输。</li>
+      <li><b>固态（干）聚合物电解质</b>：只有聚合物和盐。离子传输依赖链段运动 (segmental motion)，因此通常要在 60–90 °C 下工作。本站讨论的 PEO/LiTFSI 与 PPM/LiTFSI 数据大多在 90 °C 测得。</li>
+    </ul>
+  </div>
+
+  <h3>三种主角分子</h3>
+  <div class="struct">
+    <div>
+      <b>PEO · Poly(ethylene oxide)</b>
+      <p class="mono" style="font-size:.95rem">–[CH₂–CH₂–<span class="po">O</span>]ₙ–</p>
+      <p style="font-size:.86rem;color:var(--muted)">配位基团是主链上的<span class="po">醚氧 (ether O)</span>。r = [Li⁺]/[EO]，每个重复单元 1 个氧。</p>
+    </div>
+    <div>
+      <b>PPM · Poly(pentyl malonate)</b>
+      <p class="mono" style="font-size:.95rem">–[C(=<span class="li">O</span>)–CH₂–C(=<span class="li">O</span>)–O–(CH₂)₅–O]ₙ–</p>
+      <p style="font-size:.86rem;color:var(--muted)">由丙二酸二甲酯与 1,5-戊二醇熔融缩聚得到。每个重复单元 4 个氧，r = [Li⁺]/[O] 按 4 个氧计。MD 显示 Li⁺ 主要由<span class="li">羰基氧 (carbonyl O)</span> 配位，酯基骨架氧的贡献可以忽略 <a class="cite" href="#b-shah24">[Shah 2024]</a>。</p>
+    </div>
+    <div>
+      <b>LiTFSI</b>
+      <p class="mono" style="font-size:.95rem"><span class="li">Li⁺</span> <span class="tf">N(SO₂CF₃)₂⁻</span></p>
+      <p style="font-size:.86rem;color:var(--muted)">Lithium bis(trifluoromethanesulfonyl)imide。阴离子 TFSI⁻ 体积大、电荷离域，容易溶解。它含 S 和 F，对 X 射线吸收强，这正是 operando X 射线透射成像能“看到”盐浓度的原因。</p>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:.9rem">
+    <p style="font-size:.9rem"><b>同一个 r，含义不同。</b>PEO 的 r 以每个 EO 单元计，PPM 的 r 以每个重复单元中的 4 个氧计。因此 “r = 0.08 下比较 PEO 与 PPM” 指的是每个氧原子分到的 Li⁺ 数相同，而不是质量分数或摩尔浓度相同。<span class="ev u">存疑</span> Jana 2026 正文中有一句把 r 写成 “氧原子数 / Li⁺”，与该组其他论文的 [Li⁺]/[O] 定义相反，本站按 [Li⁺]/[O] 理解。</p>
+  </div>
+
+  <h3>描述二元电解质需要哪几个量？</h3>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>对 “一种盐 + 一种溶剂” 的二元电解质 (binary electrolyte)，Newman 浓溶液理论 (Concentrated Solution Theory) 需要四个随浓度变化的性质：</p>
+    <ul>
+      <li><b>离子电导率 κ</b>（论文中也写作 σ）：均匀组成下电流与电场之比，用交流阻抗测。</li>
+      <li><b>盐扩散系数 D</b>：盐浓度梯度松弛的快慢，例如用 restricted diffusion 测。</li>
+      <li><b>阳离子迁移数 t₊⁰</b>：在没有浓度梯度时，<b>相对于溶剂</b>由阳离子携带的电流分数。</li>
+      <li><b>热力学因子 1 + d ln γ± / d ln m</b>：盐活度随浓度的变化，由浓差电池测得。</li>
+    </ul>
+    <p>κ 只是四个量中的一个。电池在大电流下能否稳定工作，还取决于盐浓度梯度能否被及时 “抹平”，而这由 D、t₊⁰ 和热力学因子共同决定。</p>
+  </div>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>以 Li 金属为参比电极测量电势 Φ 时，一维二元电解质的电流密度与盐质量守恒可写为 <span class="ev t">理论</span> <a class="cite" href="#b-newman">[Newman &amp; Balsara]</a> <a class="cite" href="#b-mistry22">[Mistry 2022]</a>：</p>
+    <div class="eq">\[ i=-\kappa\frac{\partial\Phi}{\partial x}+\frac{2\kappa RT}{F}\,(1-t_+^0)\Big(1+\frac{d\ln\gamma_\pm}{d\ln m}\Big)\frac{\partial\ln c}{\partial x} \]</div>
+    <div class="eq">\[ \frac{\partial c}{\partial t}=\frac{\partial}{\partial x}\Big[D\Big(1-\frac{d\ln c_0}{d\ln c}\Big)\frac{\partial c}{\partial x}\Big]-\frac{i}{\nu_+z_+F}\frac{\partial t_+^0}{\partial x}-\frac{\partial(c\,v_0)}{\partial x} \]</div>
+    <p class="eq-note">第一式中，第二项是浓度梯度带来的额外电势（扩散电势 + 电极的 Nernst 项）。第二式最后一项 \(\partial(c v_0)/\partial x\) 就是第 3 章要讨论的溶剂（聚合物）对流；\(c_0\) 是溶剂浓度。符号约定与正负号以 Newman 教材为准。</p>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span><b>Nernst–Einstein 近似为何失效。</b>如果离子彼此独立运动，电导率可以由自扩散系数算出：\(\kappa_{NE}=\dfrac{F^2c}{RT}(D_{Li}+D_{TFSI})\)，迁移数则近似为 \(t_{+,NMR}=D_{Li}/(D_{Li}+D_{TFSI})\)。PFG-NMR 测到的 \(t_{+,NMR}\) 在 PEO/LiTFSI 中约为 0.17–0.25，而由电化学方法得到的 t₊⁰ 在高浓度下可以为负 <span class="ev m">实测</span> <a class="cite" href="#b-pesko17">[Pesko 2017]</a>。差异来自离子间的关联运动：自扩散系数统计的是单个离子的随机运动，中性离子对也会贡献扩散，但不贡献电流；带负电的团簇（如 Li(TFSI)₂⁻）会把 Li⁺ 带向错误的方向。第 6 章会用 Onsager 系数把这一点说清楚。</p>
+  </div>
+
+  <figure class="fig" id="fig-peo">
+    <div class="fig-head"><b>PEO/LiTFSI 在 90 °C 的完整传输性质</b><span class="ev m">实测 · Pesko 2018 Table 2</span></div>
+    <div class="fig-body">
+      <div class="seg" id="peo-p" role="group" aria-label="选择性质">
+        <button type="button" data-v="t" aria-pressed="true">t₊⁰ 与 ρ₊</button>
+        <button type="button" data-v="s" aria-pressed="false">电导率 κ</button>
+        <button type="button" data-v="D" aria-pressed="false">扩散系数 D</button>
+        <button type="button" data-v="tdf" aria-pressed="false">热力学因子</button>
+      </div>
+      <div class="tipwrap"><svg id="peo-svg" role="img" aria-label="PEO/LiTFSI 传输性质随 r 的变化"></svg><div class="tip" id="peo-tip" hidden></div></div>
+      <div class="legend"><span><i style="background:var(--li)"></i>t₊⁰（误差棒为表中 ±）</span><span><i style="background:var(--tf)"></i>ρ₊ = t₊,ss（Bruce–Vincent 稳态电流分数）</span><span><i style="background:var(--accent)"></i>其他性质</span></div>
+    </div>
+    <figcaption>数据：5 kg/mol PEO/LiTFSI，90 °C，r = 0.01–0.30，来自 Pesko et al. 2018 Table 2 <a class="cite" href="#b-pesko18">[Pesko 2018]</a>。悬停或用 Tab 聚焦数据点可查看该浓度下的全部数值。注意 κ 在 r ≈ 0.08 达到峰值（2.2×10⁻³ S/cm），而 t₊⁰ 在 r = 0.14、0.16、0.30 为负，且随 r 不单调、误差较大。ρ₊ 始终为正，说明 Bruce–Vincent 电流分数不等于迁移数。</figcaption>
+  </figure>
+
+  <div class="callout key">
+    <h4>本章结论</h4>
+    <p>以 r = 0.08 的 Jana 2026 同条件数据为例，PEO 的 κ 约为 PPM 的 1.5 倍，但 PPM 的 ρ₊ 约为 PEO 的 8 倍，最终 PPM 的极限电流更高（第 7、8 章）<span class="ev m">实测</span> <a class="cite" href="#b-jana26">[Jana 2026]</a>。电导率只决定均匀组成下的欧姆损耗；一旦有直流电流通过，盐浓度梯度会累积，决定性能的就变成了整套传输性质。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. 在干聚合物电解质 PEO/LiTFSI 的 Balsara 组论文中，“溶剂速度 v₀” 指的是什么的速度？</p>
+      <div class="opts"><button type="button" data-k="a">残留的小分子溶剂（如乙腈）</button><button type="button" data-k="b">聚合物（PEO 链段）的平均速度</button><button type="button" data-k="c">TFSI⁻ 阴离子</button></div>
+      <p class="why" hidden>干聚合物电解质中没有液态溶剂，聚合物本身就是溶剂，v₀ 是聚合物链段的粗粒化平均速度。</p></div>
+    <div class="qq" data-a="c"><p>2. 下列哪一项<b>不是</b>浓溶液理论描述二元电解质所需的四个性质之一？</p>
+      <div class="opts"><button type="button" data-k="a">热力学因子</button><button type="button" data-k="b">盐扩散系数 D</button><button type="button" data-k="c">聚合物的拉伸模量</button><button type="button" data-k="d">阳离子迁移数 t₊⁰</button></div>
+      <p class="why" hidden>四个性质是 κ、D、t₊⁰ 与热力学因子。模量要到交联网络（第 9 章）才需要额外考虑。</p></div>
+    <div class="qq" data-a="a"><p>3. PFG-NMR 给出的 t₊,NMR = D_Li/(D_Li + D_TFSI) 为什么会高估真实的 t₊⁰？</p>
+      <div class="opts"><button type="button" data-k="a">它忽略了离子之间的关联运动，例如中性离子对和带负电的团簇</button><button type="button" data-k="b">NMR 无法检测 ⁷Li</button><button type="button" data-k="c">它是在实验室参考系中测得的</button></div>
+      <p class="why" hidden>自扩散系数只反映单粒子运动。中性离子对会扩散但不导电，负电团簇会携带 Li⁺ 向正极运动，这些关联效应只有 Onsager 交叉系数才能捕捉。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH2 ===================== -->
+<section class="ch" id="ch2" data-spine="solv">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 02 · Li⁺ Solvation Dynamics</span>
+    <h2>Li⁺ 溶剂化动力学</h2>
+    <p class="q">关键区别：溶剂化寿命、聚合物链段松弛时间与离子扩散时间不是同一个物理量。</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>Li⁺ 很小、电荷密度高，在聚合物中总是被若干个氧原子包围，形成溶剂化笼 (solvation cage)。Li⁺ 要移动，就得不断更换身边的氧原子。可以把它想象成在人群中传递的球：传递的方式和人群本身的流动共同决定球走多远。</p>
+  </div>
+
+  <h3>PEO 与 PPM 的溶剂化笼结构</h3>
+  <div class="prose">
+    <ul>
+      <li><b>PEO</b>：Li⁺ 处在类冠醚 (crown-ether-like) 构型中，配位链段基本来自<b>同一条链</b>；TFSI⁻ 被排斥在笼外 <span class="ev t">理论</span><span class="ev m">实测</span> <a class="cite" href="#b-fang23b">[Fang 2023b]</a> <a class="cite" href="#b-jana26">[Jana 2026]</a>。</li>
+      <li><b>PPM</b>：Li⁺ 处在由两到三条链构成的、结构较不规整的笼中，<b>TFSI⁻ 可以留在笼内</b>。r = 0.10 的 MD 中最常见的环境是“来自两条不同 PPM 链的羰基氧 + 一个阴离子”，第一壳层截断距离 0.34 nm <a class="cite" href="#b-shah24">[Shah 2024]</a> <a class="cite" href="#b-fang23b">[Fang 2023b]</a>。</li>
+      <li><b>WAXS 证据</b>：加盐后两种聚合物都在非晶峰的低角一侧出现新峰。PPM 中这个峰来自溶剂化笼与阴离子之间的长程电荷有序；PEO 中则主要来自围绕同一个笼的阴离子之间的关联 <span class="ev m">实测</span>+<span class="ev t">理论</span> <a class="cite" href="#b-fang23b">[Fang 2023b]</a>。</li>
+    </ul>
+  </div>
+
+  <figure class="fig" id="fig-hop">
+    <div class="fig-head"><b>溶剂化笼与 Li⁺ 迁移路径</b><span class="ev i">示意 · 卡通，非 MD 轨迹</span></div>
+    <div class="fig-body">
+      <div class="seg" id="hop-sys" role="group" aria-label="选择聚合物">
+        <button type="button" data-v="peo" aria-pressed="true">PEO：单链笼</button>
+        <button type="button" data-v="ppm" aria-pressed="false">PPM：多链笼</button>
+      </div>
+      <svg id="hop-svg" role="img" aria-label="Li⁺ 溶剂化笼示意"></svg>
+      <p id="hop-cap" style="font-size:.9rem;min-height:4.5rem"></p>
+      <div class="seg"><button type="button" id="hop-prev">← 上一步</button><button type="button" id="hop-next">下一步 →</button></div>
+      <div class="legend"><span><i style="background:var(--li)"></i>Li⁺（虚线 = 配位）</span><span><i style="background:var(--poly)"></i>聚合物链与配位氧</span><span><i style="background:var(--tf)"></i>TFSI⁻</span></div>
+    </div>
+    <figcaption>这是根据文献中的定性描述画的卡通图，用来区分四种过程：笼内配位重组、沿链迁移、链间转移、笼的链组成变化。原子位置、配位数和事件顺序都是虚构的，不代表任何 MD 轨迹；图中没有画出 PPM 的完整原子结构。</figcaption>
+  </figure>
+
+  <h3>纳秒尺度溶剂化动力学 (Shah, Fang et al. 2024)</h3>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>这篇 Nature Materials 论文把准弹性中子散射 (QENS) 与 MD 结合起来，研究 PPM/LiTFSI（Mₙ ≈ 12.4 kg/mol，r = 0–0.10）中聚合物氢原子的运动 <a class="cite" href="#b-shah24">[Shah 2024]</a>：</p>
+    <ul>
+      <li>QENS 在 SNS 的 BASIS 谱仪上于 363 K（90 °C）测量，时间窗口约 0.02–1 ns，分析时 Q = 0.5 Å⁻¹ <span class="ev m">实测</span>。MD 采用 OPLS-AA 力场，在 430 K 下运行，用来补偿模拟与实验之间的 Tg 差异 <span class="ev t">理论</span>。</li>
+      <li>不加盐时，Rouse 参数 \(\langle r^2\rangle/t^{1/2}\) 符合 Rouse 模型。r ≥ 0.04 时，约 0.4 ns 之后出现下降、平台（P1）再上升的特征，即<b>粘性 Rouse (sticky Rouse)</b> 行为：Li⁺ 充当了临时交联点。</li>
+      <li>MD 中单体停留在同一溶剂化结构内的平均寿命 τs 约等于平台起点 τ₁。摘要的结论是：实验和模拟给出的溶剂化动力学平均时间尺度都是<b>约 1 ns</b>。外推到单个单体约为 0.22 ns。</li>
+      <li>平台终点 τ₂ 接近但小于最快的 Rouse（链段）弛豫时间 τR,N。按链段时间约 1 ns 估算，整链 Rouse 时间约 5000 ns。</li>
+    </ul>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span>作者列出的局限：MD 与 QENS 在 t ≤ 0.2 ns 时不一致；MD 的平台时间偏长，可能因为力场没有极化项；τ₁、τ₂ 是否具有普适性还需要进一步工作。论文<b>没有</b>给出 PEO 的同类时间尺度对比，只是从结构上指出：PEO 的笼由单链构成，不应期待出现同样的临时交联特征。</p>
+  </div>
+
+  <figure class="fig" id="fig-ts">
+    <div class="fig-head"><b>时间尺度阶梯：从皮秒到小时</b><span class="ev m">实测</span> <span class="ev t">理论</span> <span class="ev i">估算</span></div>
+    <div class="fig-body">
+      <div style="overflow-x:auto"><svg id="ts-svg" role="img" aria-label="对数时间轴上的物理过程" style="min-width:600px"></svg></div>
+      <div class="legend"><span><i style="background:var(--meas)"></i>实测（或仪器窗口）</span><span><i style="background:var(--theo)"></i>理论 / 模型</span><span><i style="background:var(--illu)"></i>本页数量级估算</span></div>
+    </div>
+    <figcaption>把鼠标悬停在条带上可查看来源。溶剂化交换（~1 ns）与链段弛豫（~1 ns）在 PPM 中处于同一量级，说明 Li⁺ 运动与链段运动是<b>耦合</b>的。电场诱导的聚合物净漂移则要在分钟到小时尺度、微米到毫米距离上才能观测（第 3、5 章）。各条带的体系、温度并不完全相同，只能作量级比较。</figcaption>
+  </figure>
+
+  <div class="callout key">
+    <h4>三个时间，别混用</h4>
+    <ul style="margin:0;padding-left:1.2rem;display:grid;gap:.3rem;font-size:.92rem">
+      <li><b>溶剂化寿命 τs</b>：某个配位氧（或单体）留在给定 Li⁺ 笼中的时间。它描述的是“换伙伴”的速度。</li>
+      <li><b>链段弛豫时间 τseg</b>：聚合物局部构象松弛的时间，与 Tg 密切相关。加盐会使 Tg 升高、τseg 变长。</li>
+      <li><b>离子扩散时间</b>：离子移动给定距离 x 所需的时间，约为 x²/(2D)。它取决于每一步的步长和方向关联，只知道 τs 不足以推出 D。</li>
+    </ul>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. 根据 MD，PPM 中 Li⁺ 的主要配位原子是？</p>
+      <div class="opts"><button type="button" data-k="a">酯基骨架中的单键氧</button><button type="button" data-k="b">羰基氧</button><button type="button" data-k="c">TFSI⁻ 的氮原子</button></div>
+      <p class="why" hidden>Shah 2024 的 RDF 表明 Li⁺ 由羰基氧配位，骨架氧的贡献可忽略；第一壳层中通常还有一个阴离子（通过其氧原子配位）。</p></div>
+    <div class="qq" data-a="c"><p>2. QENS 中出现的“粘性 Rouse”平台说明了什么？</p>
+      <div class="opts"><button type="button" data-k="a">Li⁺ 的运动与链段运动完全解耦</button><button type="button" data-k="b">聚合物结晶</button><button type="button" data-k="c">Li⁺ 把多条链临时连接起来，局部链段运动在约 1 ns 尺度上受阻</button></div>
+      <p class="why" hidden>平台起点 τ₁ ≈ 溶剂化寿命 τs ≈ 1 ns，说明 Li⁺ 笼充当了寿命约 1 ns 的临时交联点。这是耦合而不是解耦。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH3 ===================== -->
+<section class="ch" id="ch3" data-spine="v0">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 03 · Field-Induced Motion of a Neutral Polymer</span>
+    <h2>中性聚合物的电场诱导运动</h2>
+    <p class="q">核心问题：为什么研究离子传输时不能总是假设 v₀ = 0？</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>聚合物链不带净电荷，电场不会直接推动它。但离子在链之间穿行时会与链产生摩擦 (frictional coupling)，就像人流穿过一片芦苇会把芦苇往前带。另外，盐和聚合物共同占据固定的体积：某处盐变多，聚合物就必须被挤开。这两点合在一起，使聚合物在通电时产生净漂移 (net drift)。Mistry 等人把它类比为电渗拖曳 (electro-osmotic drag)，并强调它不需要压力梯度或温度梯度，也与黏度无关 <span class="ev t">理论</span> <a class="cite" href="#b-mistry22">[Mistry 2022]</a>。</p>
+  </div>
+
+  <figure class="fig" id="fig-drift">
+    <div class="fig-head"><b>链段运动 vs 净漂移</b><span class="ev i">示意</span></div>
+    <div class="fig-body">
+      <canvas id="drift-cv" style="height:230px" aria-label="聚合物链段热运动与整体漂移的动画"></canvas>
+      <div class="ctrls">
+        <div class="ctrl"><label for="dr-v">净漂移速度（任意单位）<output id="dr-v-o"></output></label><input type="range" id="dr-v" min="0" max="1" step="0.01" value="0.35"></div>
+        <div class="ctrl"><label for="dr-a">链段热运动幅度<output id="dr-a-o"></output></label><input type="range" id="dr-a" min="0" max="1" step="0.01" value="0.7"></div>
+      </div>
+      <div class="seg"><button type="button" id="dr-play">播放</button></div>
+    </div>
+    <figcaption>把净漂移设为 0 时，链段仍在剧烈运动，但质心不动，这就是 QENS 看到的东西。把热运动幅度设为 0、只留净漂移时，看到的是 XPCS 或 X 射线成像测量的那一类运动。真实体系中，链段位移在纳秒内为 Å–nm 量级，净漂移速度为 nm/s 量级，两者在时间尺度上相差约 9 个数量级，动画为了可见性对二者都做了夸大。</figcaption>
+  </figure>
+
+  <h3>从守恒律出发</h3>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>溶剂（聚合物）的质量守恒与体积约束为 <span class="ev t">理论</span> <a class="cite" href="#b-mistry22">[Mistry 2022]</a>：</p>
+    <div class="eq">\[ \frac{\partial c_0}{\partial t}+\frac{\partial (c_0 v_0)}{\partial x}=0,\qquad c\,\bar V+c_0\bar V_0=1 \]</div>
+    <p>其中 \(\bar V\)、\(\bar V_0\) 分别是盐和溶剂的偏摩尔体积。结合盐的守恒方程，可以得到论文称为“重要新结果”的溶剂速度散度：</p>
+    <div class="eq">\[ \frac{\partial v_0}{\partial x}=\bar V\left(\frac{\partial}{\partial x}\Big[D\Big(1-\frac{d\ln c_0}{d\ln c}\Big)\frac{\partial c}{\partial x}\Big]-\frac{i}{\nu_+z_+F}\frac{\partial t_+^0}{\partial x}\right) \]</div>
+    <p>在固定于 Li 剥离界面的坐标系中，两端边界条件为 \(v_0(0)=v_0(L)=0\)。通电瞬间（组成仍均匀），电解质内部的溶剂速度为：</p>
+    <div class="eq">\[ v_0(0\lt x\lt L,\,t=0^+)=\bar V\,(1-t_+^0)\,\frac{i}{\nu_+z_+F} \]</div>
+    <p>只要 t₊⁰ &lt; 1，这个速度就为正，也就是聚合物沿电流方向、朝 Li 沉积电极移动，与阳离子迁移方向相同、与阴离子相反。随后它随浓度梯度建立而单调衰减，在稳态（500 μm、90 °C 的模型中约 2 h 之后）降为零。</p>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span><b>为什么量级与离子速度相当？</b>以 PEO/LiTFSI r = 0.08（c = 1.59 M）、i = 0.3 mA/cm² 为例，用页内的密度拟合 <a class="cite" href="#b-abdo25">[Abdo 2025]</a> 算得 \(\bar V\approx 140\ \mathrm{cm^3/mol}\)：</p>
+    <ul>
+      <li>离子相对溶剂的“特征速度” \(i/(Fc)\approx 20\) nm/s；Li⁺ 相对聚合物的速度 \(t_+^0\,i/(Fc)\approx 8\) nm/s（t₊⁰ = 0.43）。</li>
+      <li>聚合物速度 \(\bar V(1-t_+^0)i/F\approx 2.5\) nm/s。</li>
+    </ul>
+    <p>这些是本页根据论文公式代入表中参数的估算 <span class="ev i">示意</span>。实验上，Galluzzo 等人用 XPCS 在 SEO 嵌段共聚物电解质中测到聚合物速度约 4.5 nm/s（t = 0）并在 10 h 时降到 0.65 nm/s；Abdo 等人由 X 射线浓度图重建出的 SEO 中部速度约 1.08 → 0.61 nm/s <span class="ev m">实测</span> <a class="cite" href="#b-gall24">[Galluzzo 2024]</a> <a class="cite" href="#b-abdo25">[Abdo 2025]</a>。这两项实测都是嵌段共聚物，不是 PEO 均聚物。</p>
+  </div>
+
+  <div class="callout warn">
+    <h4>忽略 v₀ 会得到错误的符号</h4>
+    <p style="font-size:.92rem">在 2.58 M（r = 0.16，t₊⁰ ≈ −0.4）的 PEO/LiTFSI 模型中，如果强行令 v₀ = 0，Li⁺ 在电极参考系中的速度在前 13 min 为负，看起来像在“倒退”。计入溶剂运动后，Li⁺ 速度在所有时刻都为正。用作者的话说，考虑溶剂速度的散度会改变工作离子速度的符号 <span class="ev t">理论</span> <a class="cite" href="#b-mistry22">[Mistry 2022]</a>。</p>
+  </div>
+
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span><b>局部链段运动与净漂移的区别</b>（对应 Q4）：QENS 与 MD 测量的是 Li⁺ 附近链段在 0.02–几 ns、Å–nm 尺度上的往返运动，其平均位移为零；连续介质理论中的 v₀ 是这些运动在 μm 尺度上粗粒化后的<b>平均</b>速度。两者通过摩擦系数相联系：纳秒尺度的溶剂化交换和链段弛豫决定 Stefan–Maxwell 摩擦系数（因而决定 κ、D、t₊⁰），而这些宏观系数再通过上面的守恒方程决定 v₀。目前还没有一条从 QENS 时间常数直接定量算出 v₀ 的已发表链路，这是一个开放问题。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="a"><p>1. 在 Li|聚合物|Li 电池通电瞬间，t₊⁰ = 0.4 时聚合物朝哪个方向移动？</p>
+      <div class="opts"><button type="button" data-k="a">沿电流方向，朝 Li 沉积电极</button><button type="button" data-k="b">逆电流方向，朝 Li 剥离电极</button><button type="button" data-k="c">不动，因为聚合物不带电</button></div>
+      <p class="why" hidden>v₀(t=0⁺) = V̄(1 − t₊⁰)i/F &gt; 0，即沿电流方向。</p></div>
+    <div class="qq" data-a="c"><p>2. 浓差极化达到稳态后，模型预测的 v₀ 是多少？</p>
+      <div class="opts"><button type="button" data-k="a">等于初始值</button><button type="button" data-k="b">等于 Li⁺ 速度</button><button type="button" data-k="c">零</button></div>
+      <p class="why" hidden>稳态时 ∂c/∂t = 0，由连续性方程和两端零速边界条件得到 v₀ = 0。聚合物漂移是一个瞬态现象。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH4 ===================== -->
+<section class="ch" id="ch4" data-spine="tn">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 04 · Ion Velocities and Transference Numbers</span>
+    <h2>离子速度与负迁移数</h2>
+    <p class="q">核心问题：负迁移数是否代表 Li⁺ 真的朝电流反方向运动？</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>迁移数 (transference number) 回答的是“电流中有多大比例由 Li⁺ 携带”。理想情况下 0 &lt; t₊ &lt; 1。可是在 PEO/LiTFSI 的某些浓度下测得 t₊⁰ &lt; 0，好像 Li⁺ 在“帮倒忙”。要理解这一点，首先要问：<b>速度是相对于谁测的？</b></p>
+  </div>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>对一价二元盐，电流密度 \(i=Fc\,(v_+-v_-)\)。相对溶剂速度定义的迁移数为 <span class="ev t">理论</span> <a class="cite" href="#b-halat22">[Halat 2022]</a> <a class="cite" href="#b-gall24">[Galluzzo 2024]</a>：</p>
+    <div class="eq">\[ t_+^0=\frac{Fc\,(v_+-v_0)}{i}=\frac{v_+-v_0}{v_+-v_-} \]</div>
+    <p>分子与分母都是速度<b>差</b>，所以 t₊⁰ 与参考系无关，但它是“相对聚合物”的量。t₊⁰ &lt; 0 等价于 \(v_+-v_0\lt 0\)：<b>相对于聚合物</b>，Li⁺ 逆电流方向、朝 Li 剥离电极（正极）漂移。至于 Li⁺ 相对于电极怎么走，还要加上 v₀。</p>
+  </div>
+
+  <figure class="fig" id="fig-frames">
+    <div class="fig-head"><b>同一组离子运动，三种参考系</b><span class="ev t">理论</span> <span class="ev m">t₊⁰ 预设值为实测</span></div>
+    <div class="fig-body">
+      <div class="seg" id="fr-frame" role="group" aria-label="参考系">
+        <button type="button" data-v="s" aria-pressed="false">溶剂参考系 (v₀ = 0)</button>
+        <button type="button" data-v="e" aria-pressed="true">电极参考系（Mistry 2022）</button>
+        <button type="button" data-v="m" aria-pressed="false">质心参考系</button>
+      </div>
+      <svg id="frames-svg" role="img" aria-label="Li⁺、TFSI⁻ 与聚合物的速度矢量"></svg>
+      <div class="ctrls">
+        <div class="ctrl"><label for="fr-t">t₊⁰<output id="fr-t-o"></output></label><input type="range" id="fr-t" min="-1" max="0.95" step="0.01" value="-0.38"></div>
+        <div class="ctrl"><label for="fr-r">盐浓度 r = [Li⁺]/[EO]<output id="fr-r-o"></output></label><input type="range" id="fr-r" min="0.01" max="0.30" step="0.01" value="0.16"></div>
+        <div class="ctrl"><label for="fr-i">电流密度 i<output id="fr-i-o"></output></label><input type="range" id="fr-i" min="0.05" max="1" step="0.05" value="0.3"></div>
+      </div>
+      <div><p class="eyebrow" style="margin-bottom:.3rem">载入 PEO/LiTFSI 90 °C 实测 t₊⁰（Pesko 2018）</p><div class="seg" id="fr-pre"></div></div>
+      <div class="readout">
+        <div><span>Li⁺ 相对聚合物 v₊ − v₀</span><b id="fr-up"></b></div>
+        <div><span>Li⁺（所选参考系）</span><b id="fr-vli"></b></div>
+        <div><span>聚合物（所选参考系）</span><b id="fr-vpo"></b></div>
+        <div><span>盐偏摩尔体积 V̄</span><b id="fr-vb"></b></div>
+        <div><span>Li⁺ 在电极系中反向的条件：t₊⁰ &lt;</span><b id="fr-crit"></b></div>
+      </div>
+      <p id="fr-dir" style="font-weight:600"></p>
+    </div>
+    <figcaption>通电瞬间、组成均匀时的速度。溶剂参考系：\(v_\pm-v_0\) 由 t₊⁰ 与 i/(Fc) 给出。电极参考系：再加上 \(v_0=\bar V(1-t_+^0)i/F\)（Mistry 2022 式 20）。质心参考系：要求 \(\sum_i \rho_i v_i=0\)，用 Li、TFSI、EO 的摩尔质量计算。V̄ 和浓度由 PEO/LiTFSI 密度拟合 \(\rho=-2.572r^2+2.429r+1.129\ \mathrm{g/cm^3}\) <a class="cite" href="#b-abdo25">[Abdo 2025]</a> 推出。试试 r = 0.16、t₊⁰ = −0.38：溶剂系中 Li⁺ 逆电流运动，电极系中却顺电流运动。</figcaption>
+  </figure>
+
+  <h3>PEO/LiTFSI 的负迁移数 (Pesko 2017)</h3>
+  <div class="prose">
+    <ul>
+      <li>体系：5 kg/mol PEO/LiTFSI，90 °C，r = 0.01–0.30，Li|Li 对称电池 <span class="ev m">实测</span> <a class="cite" href="#b-pesko17">[Pesko 2017]</a>。</li>
+      <li>方法：交流阻抗测 κ，restricted diffusion 测 D，Bruce–Vincent 测稳态电流分数 \(t_{+,SS}\)，浓差电池测热力学因子，四者组合得到 t₊⁰（论文中记作 \(t_{+,Ne}\)）。</li>
+      <li>结果：t₊⁰ 随浓度不单调，在 r = 0.16 低至 −0.38；作者把负值归因于带电团簇，例如 Li(TFSI)₂⁻ 三重离子。</li>
+    </ul>
+    <p class="eq-note"><span class="ev u">存疑</span> Pesko 2017 正文称 t₊⁰ “在高盐浓度 (r ≥ 0.12) 时为负”，但同组 Pesko 2018 的汇总表中 r = 0.12 为 +0.08 ± 0.02，负值只出现在 r = 0.14（−0.08）、0.16（−0.38）和 0.30（−0.02）。Villaluenga 2018 则说负值出现在 m = 3.18 mol/kg（r = 0.14）附近。本站图表采用 Pesko 2018 的表值。</p>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span>由 Bruce–Vincent 电流分数推出 t₊⁰ 的关系为（a = 2）<a class="cite" href="#b-pesko17">[Pesko 2017]</a>：</p>
+    <div class="eq">\[ t_+^0=1-\Big(\frac{1}{t_{+,SS}}-1\Big)\frac{F^2Dc}{a\,\sigma RT}\Big/\Big(1+\frac{d\ln\gamma_\pm}{d\ln m}\Big) \]</div>
+    <p>由此可见 ρ₊ = t₊,SS 只有在理想稀溶液中才等于 t₊⁰。后续工作还发现了另一层复杂性：Villaluenga 2018 在同一套数据中得到了<b>负的 Stefan–Maxwell 扩散系数</b> D₋₀（m = 3.18–3.64 与 6.82 mol/kg）<a class="cite" href="#b-vill18">[Villaluenga 2018]</a>；Hickson &amp; Balsara 2025 在一个四甘醇二甲醚液态电解质中发现电化学法与 eNMR 给出的 t₊⁰ 不一致（−1.02 ± 1.11 对 0.25 ± 0.04）<a class="cite" href="#b-hick25">[Hickson 2025]</a>。</p>
+  </div>
+
+  <div class="callout key">
+    <h4>回答 Q2：t₊⁰ &lt; 0 时 Li⁺ 往哪走？</h4>
+    <p style="font-size:.92rem">要分参考系回答。<b>相对聚合物</b>：逆电流，朝 Li 剥离电极。<b>相对电极（实验室）</b>：由于聚合物本身沿电流方向漂移，Li⁺ 的速度为 \(v_+=\dfrac{t_+^0 i}{cF}+\bar V(1-t_+^0)\dfrac{i}{F}\)，只有当 \(t_+^0\lt -c\bar V/(c_0\bar V_0)\) 时才为负。Mistry 等人指出，这一条件对 PEO/LiTFSI “从未满足”；在 2.58 M 下需要 t₊⁰ &lt; −0.5 才会反向 <span class="ev t">理论</span> <a class="cite" href="#b-mistry22">[Mistry 2022]</a>。因此对 PEO/LiTFSI 而言，Li⁺ 在实验室参考系中仍沿电流方向移动。作者还特别提醒：不能直接用实验室参考系中的离子速度来估算 t₊⁰。</p>
+  </div>
+  <p class="eq-note">早期论文（如 Villaluenga 2018）曾假设高分子量聚合物“基本不动”，并据此说 t₊⁰ &lt; 0 时 Li⁺ 与 TFSI⁻ 都被驱向正极。2022 年的溶剂速度框架修正了这一假设。</p>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. eNMR 测得三种物种的速度 v₊、v₋、v₀。下列哪个表达式给出 t₊⁰？</p>
+      <div class="opts"><button type="button" data-k="a">v₊ / (v₊ − v₋)</button><button type="button" data-k="b">(v₊ − v₀) / (v₊ − v₋)</button><button type="button" data-k="c">v₊ / (v₊ + v₋)</button></div>
+      <p class="why" hidden>t₊⁰ 以溶剂速度为参考，分子是 Li⁺ 相对溶剂的速度；分母 v₊ − v₋ 与电流成正比。</p></div>
+    <div class="qq" data-a="c"><p>2. 在质心参考系里，TFSI⁻ 质量（≈280 g/mol）远大于 Li⁺（≈7 g/mol）。这会怎样影响聚合物的速度？</p>
+      <div class="opts"><button type="button" data-k="a">没有影响</button><button type="button" data-k="b">聚合物与 TFSI⁻ 同向运动</button><button type="button" data-k="c">为抵消阴离子的动量，聚合物与 TFSI⁻ 反向运动</button></div>
+      <p class="why" hidden>Σρᵢvᵢ = 0 要求重的阴离子向一侧运动时，其他组分（主要是聚合物）向另一侧运动。可以在上面的图中切换到质心参考系验证。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH5 ===================== -->
+<section class="ch" id="ch5" data-spine="pol">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 05 · Experimental Techniques &amp; Operando X-ray</span>
+    <h2>实验技术：每种方法究竟测到了什么</h2>
+    <p class="q">关键问题：各种技术实际测量的是什么，如何换算成速度或时间尺度，存在什么局限？</p>
+  </div>
+
+  <h3>eNMR · Electrophoretic NMR</h3>
+  <div class="prose">
+    <p>在脉冲场梯度 NMR 序列中，在两个梯度脉冲之间加上直流电场。沿电场漂移的核会积累一个与漂移速度成正比的相位：</p>
+    <div class="eq">\[ \phi=\gamma\,g\,\delta\,\Delta\,v \]</div>
+    <p>γ 为旋磁比，g 为梯度强度，δ 为梯度脉冲宽度，Δ 为漂移时间。分别观测 ⁷Li、¹⁹F、¹H 即可得到 Li⁺、TFSI⁻ 和溶剂的速度。Halat 等人在<b>液态</b> LiTFSI/四甘醇二甲醚 (tetraglyme) 中这样测到：溶剂与阳离子同向漂移；在 r ≈ 0.08 时 t₊⁰ ≈ 0，这时几乎所有溶剂都在阳离子的溶剂化壳层中 <span class="ev m">实测</span>+<span class="ev t">MD</span> <a class="cite" href="#b-halat22">[Halat 2022]</a>。</p>
+  </div>
+  <figure class="fig" id="fig-enmr">
+    <div class="fig-head"><b>eNMR：从相位到速度到 t₊⁰</b><span class="ev i">示意参数</span></div>
+    <div class="fig-body">
+      <svg id="enmr-svg" role="img" aria-label="eNMR 相位与电场关系"></svg>
+      <div class="ctrls">
+        <div class="ctrl"><label for="en-E">电场 E<output id="en-E-o"></output></label><input type="range" id="en-E" min="0" max="100" step="1" value="40"></div>
+        <div class="ctrl"><label for="en-t">真实 t₊⁰（输入）<output id="en-t-o"></output></label><input type="range" id="en-t" min="-0.6" max="0.9" step="0.01" value="0.43"></div>
+      </div>
+      <div class="readout">
+        <div><span>电流密度 i = κE</span><b id="en-i"></b></div>
+        <div><span>v(Li⁺)</span><b id="en-vli"></b></div>
+        <div><span>v(TFSI⁻)</span><b id="en-vf"></b></div>
+        <div><span>v(聚合物)</span><b id="en-vh"></b></div>
+        <div><span>由相位反推的 t₊⁰</span><b id="en-tp"></b></div>
+      </div>
+    </div>
+    <figcaption>本页模型：r = 0.08、κ = 2.2×10⁻³ S/cm（PEO/LiTFSI 90 °C 表值），g = 0.5 T/m，δ = 5 ms，Δ = 100 ms；速度按电极参考系、均匀组成计算（第 4 章公式）。这些仪器参数是为了讲解而选的，没有论文依据。相位与 E 成线性关系；三条直线的斜率给出三种淌度，反推的 t₊⁰ 与输入相同，说明 t₊⁰ 与测量参考系无关。实际聚合物 eNMR 还要处理焦耳热、对流和电极极化等问题。</figcaption>
+  </figure>
+
+  <h3>Operando X 射线透射成像</h3>
+  <div class="prose">
+    <p>TFSI⁻ 含 S 和 F，盐越多，X 射线衰减越强。按 Beer–Lambert 定律标定透射率与浓度的关系，就能在通电时以微米分辨率拍下 c(x, t)。例如 Abdo 2026 在 SSRL 17-2 线站用 15 keV 光束，空间分辨率 2 μm，约每 3.4 min 一帧 <a class="cite" href="#b-abdo26">[Abdo 2026]</a>。有了 c(x, t)，由体积约束可得 c₀(x, t)，再由溶剂连续性方程重建溶剂速度 <span class="ev m">实测</span> <a class="cite" href="#b-abdo25">[Abdo 2025]</a>：</p>
+    <div class="eq">\[ v_0(x_1)=-\frac{1}{c_0(x_1)}\int_0^{x_1}\frac{\partial c_0}{\partial t}\,dx,\qquad v_0(0)=0 \]</div>
+  </div>
+  <figure class="fig" id="fig-xray">
+    <div class="fig-head"><b>从浓度图重建聚合物速度</b><span class="ev i">示意 · 常物性模型</span></div>
+    <div class="fig-body">
+      <canvas id="xr-cv" style="height:340px" aria-label="模拟的 X 射线浓度图、浓度剖面和重建的聚合物速度"></canvas>
+      <div class="ctrls">
+        <div class="ctrl"><label for="xr-f">电流 i / i_lim,dilute<output id="xr-f-o"></output></label><input type="range" id="xr-f" min="0.1" max="1.2" step="0.05" value="0.5"></div>
+        <div class="ctrl"><label for="xr-t">观察时刻<output id="xr-t-o"></output></label><input type="range" id="xr-t" min="0.02" max="3.7" step="0.02" value="0.3"></div>
+      </div>
+      <div class="readout">
+        <div><span>电流密度 i</span><b id="xr-i"></b></div>
+        <div><span>中点 v₀（重建）</span><b id="xr-v0"></b></div>
+        <div><span>Mistry 式 20 的 v₀(t=0⁺)</span><b id="xr-v20"></b></div>
+        <div><span>c/c∞：沉积侧 / 剥离侧</span><b id="xr-cL"></b></div>
+        <div><span>状态</span><b id="xr-ss"></b></div>
+      </div>
+    </div>
+    <figcaption>本页用常数 D = 1.1×10⁻⁷ cm²/s、t₊⁰ = 0.43、c∞ = 1.59 M（PEO/LiTFSI r = 0.08，90 °C 表值）和 L = 500 μm 求解一维扩散方程，得到“合成”的浓度图，再用上式重建 v₀。为简化起见，模型忽略了对流项对 c 的反馈以及性质随浓度的变化。通电初期，中点的重建值与 Mistry 式 20 的解析预测几乎相同，这是对重建方法的一个自洽检查；随后 v₀ 衰减，稳态时为零。实测（SEO 体系）数值见第 3 章。</figcaption>
+  </figure>
+
+  <h3>XPCS · X-ray Photon Correlation Spectroscopy</h3>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>Galluzzo 等人在 APS 8-ID-I 用<b>外差 (heterodyne) XPCS</b> 测量 SEO 层状结构的漂移：参考信号来自静止样品，运动样品的散射与之干涉，强度自相关函数 g₂ 中出现振荡项 \(\cos(\omega\tau)\)，\(\omega=\mathbf q\cdot\mathbf v\) <a class="cite" href="#b-gall24">[Galluzzo 2024]</a>：</p>
+    <div class="eq">\[ g_2=1+\beta(1-h)^2+h^2\beta e^{-2(\tau/\tau_0)^\gamma}+2h(1-h)\beta\cos(\omega\tau)\,e^{-(\tau/\tau_0)^\gamma} \]</div>
+    <p>XPCS 只给出速度的<b>大小</b> |v|，不给方向。用它拟合得到的 t₊⁰ ≈ 0.7，而电化学方法给出的值 &lt; 0.3。作者认为原因是单溶剂近似对 SEO 不成立：与玻璃态 PS 的摩擦不能和橡胶态 PEO 合并处理，严格模型需要 6 个传输系数。</p>
+  </div>
+
+  <h3>QENS 与 WAXS/SAXS</h3>
+  <div class="prose">
+    <ul>
+      <li><b>QENS</b>：中子与氢原子的非相干散射，给出 ps–ns、Å–nm 尺度上的自关联运动，测的是<b>局部链段运动</b>，而不是净漂移（第 2 章）。</li>
+      <li><b>WAXS</b>：测局部结构关联，例如溶剂化笼与阴离子之间的电荷有序；需要 MD 把总强度分解到各组分对 <a class="cite" href="#b-fang23b">[Fang 2023b]</a>。</li>
+      <li><b>SAXS</b>：测嵌段共聚物等纳米相结构。Gido 2025 发现 SEO 在大电流下靠近正极的层状结构溶胀、靠近负极的去溶胀，浓溶液理论没有描述这一点 <a class="cite" href="#b-gido25">[Gido 2025]</a>。</li>
+    </ul>
+    <p>完整对比见 <a href="#methods">实验技术对照表</a>。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. Halat 2022 PRL 中用 eNMR 测到的“溶剂与阳离子同向漂移”，能否直接说明 PEO 聚合物的速度？</p>
+      <div class="opts"><button type="button" data-k="a">可以，物理是一样的</button><button type="button" data-k="b">不能，那是液态四甘醇二甲醚电解质，只能作为类比</button></div>
+      <p class="why" hidden>PRL 的体系是 LiTFSI/tetraglyme 液态电解质。PEO 聚合物中的溶剂运动由 Mistry 2022 的理论和 Steinrück 2020 等工作讨论，SEO 则由 XPCS 与 X 射线成像测量。</p></div>
+    <div class="qq" data-a="a"><p>2. 外差 XPCS 测量的是？</p>
+      <div class="opts"><button type="button" data-k="a">聚合物纳米结构整体漂移速度的大小</button><button type="button" data-k="b">Li⁺ 的溶剂化寿命</button><button type="button" data-k="c">盐浓度剖面</button></div>
+      <p class="why" hidden>g₂ 的振荡频率 ω = q·v，给出 |v|；方向需要另行推断。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH6 ===================== -->
+<section class="ch" id="ch6" data-spine="corr">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 06 · Molecular Dynamics</span>
+    <h2>分子动力学：从轨迹到迁移数</h2>
+    <p class="q">核心问题：如何从微观分子轨迹推导宏观迁移数和电导率？</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>MD 用经典力场让成千上万个原子按牛顿方程运动。分析轨迹可以得到：</p>
+    <ul>
+      <li><b>径向分布函数 g(r)</b>：在 Li⁺ 周围距离 r 处找到某种原子的相对概率。第一个峰对应第一溶剂化壳层。</li>
+      <li><b>配位数</b>：把 g(r) 积分到第一个极小值（如 PPM 中取 0.34 nm）得到的平均配位原子数。</li>
+      <li><b>均方位移 MSD</b>：\(\langle|\mathbf r(t)-\mathbf r(0)|^2\rangle\)，长时间斜率给出自扩散系数 \(D=\lim\,\mathrm{MSD}/(6t)\)。</li>
+    </ul>
+  </div>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span><b>Onsager 输运系数</b>用集体位移（同种所有离子位移之和）的关联来定义，从而保留离子之间的交叉关联：</p>
+    <div class="eq">\[ L^{ij}=\frac{1}{6k_BTV}\lim_{t\to\infty}\frac{d}{dt}\Big\langle\sum_{\alpha\in i}\Delta\mathbf r_\alpha(t)\cdot\sum_{\beta\in j}\Delta\mathbf r_\beta(t)\Big\rangle \]</div>
+    <p>等价的 Green–Kubo 形式是对速度时间关联函数积分。对一价二元盐 <a class="cite" href="#b-halat22">[Halat 2022]</a> <a class="cite" href="#b-fang23c">[Fang 2023 JACS Au]</a>：</p>
+    <div class="eq">\[ \kappa=F^2\big(L^{++}-2L^{+-}+L^{--}\big),\qquad t_+=\frac{L^{++}-L^{+-}}{L^{++}-2L^{+-}+L^{--}} \]</div>
+    <p class="eq-note">第二式给出的是所用参考系（如质心系）中的迁移数；要换算到溶剂参考系的 t₊⁰，还需要考虑各组分的质量分数。Fang 等人证明，两种参考系的 Onsager 结果在换算后定量一致。</p>
+    <p>若令交叉项 \(L^{+-}=0\) 并只保留自扩散部分，就退化为 Nernst–Einstein 近似。下图让你直接调节关联项，观察它们如何改变 κ 和 t₊。</p>
+  </div>
+
+  <figure class="fig" id="fig-ons">
+    <div class="fig-head"><b>关联如何改写 κ 与 t₊</b><span class="ev t">定义式</span> <span class="ev i">参数任意</span></div>
+    <div class="fig-body">
+      <div class="ctrls">
+        <div class="ctrl"><label for="on-pp">L⁺⁺（阳离子集体运动）<output id="on-pp-o"></output></label><input type="range" id="on-pp" min="0.1" max="2" step="0.01" value="0.6"></div>
+        <div class="ctrl"><label for="on-mm">L⁻⁻（阴离子集体运动）<output id="on-mm-o"></output></label><input type="range" id="on-mm" min="0.1" max="2" step="0.01" value="1.2"></div>
+        <div class="ctrl"><label for="on-pm">L⁺⁻（阳-阴交叉关联）<output id="on-pm-o"></output></label><input type="range" id="on-pm" min="-0.5" max="0.9" step="0.01" value="0.45"></div>
+      </div>
+      <div class="readout">
+        <div><span>κ / F²（含关联）</span><b id="on-k"></b></div>
+        <div><span>κ / F²（令 L⁺⁻ = 0）</span><b id="on-k0"></b></div>
+        <div><span>t₊（含关联）</span><b id="on-t"></b></div>
+        <div><span>t₊（令 L⁺⁻ = 0）</span><b id="on-t0"></b></div>
+      </div>
+      <p id="on-msg" style="font-size:.9rem"></p>
+    </div>
+    <figcaption>L⁺⁻ &gt; 0 表示阳离子与阴离子倾向于一起运动（离子对、团簇），它会降低 κ。当 L⁺⁻ &gt; L⁺⁺ 时 t₊ 变为负值：Li⁺ 更多地被阴离子拖着走，而不是自己顺着电场运动。数值是任意单位，仅用来演示定义式的结构。</figcaption>
+  </figure>
+
+  <h3>MD 告诉了我们什么</h3>
+  <div class="prose">
+    <ul>
+      <li><b>PEO vs PPM 的分子起源</b>：PEO 的溶剂化笼主要包含 1 条链，Li⁺ 与聚合物强关联；PPM 的笼包含多条链，Li⁺ 与聚合物关联弱，因此 PPM 阳离子迁移数高 <span class="ev t">理论</span> <a class="cite" href="#b-fang23a">[Fang 2023a]</a>。2026 年该组总结时写道：PEO 中 ρ₊ 低主要源于被溶剂化的聚合物链段在电场下的运动，而 PPM 中这种运动较小，因为溶剂化壳层由不止一条链构成 <a class="cite" href="#b-jana26">[Jana 2026]</a>。</li>
+      <li><b>方法学对比</b>（四甘醇二甲醚体系，350 K）：溶剂系与质心系的 Onsager 结果换算后一致；t₊⁰ 随浓度下降，在 r &gt; 0.20 时变负。团簇 Nernst–Einstein (CNE) 方法只在 r &lt; 0.10 时与 Onsager 结果一致；r = 0.24 时 CNE 给出 t₊ = +0.88，Onsager 方法给出 −0.10 <a class="cite" href="#b-fang23c">[Fang 2023 JACS Au]</a>。</li>
+      <li><b>交叉验证</b>：QENS 与 MD 的平台 P1 相差最多约 10% <a class="cite" href="#b-shah24">[Shah 2024]</a>；eNMR 与 MD 的 t₊⁰ 在液态电解质中定量一致 <a class="cite" href="#b-halat22">[Halat 2022]</a>；WAXS 新峰的归属依赖 MD 的分解 <a class="cite" href="#b-fang23b">[Fang 2023b]</a>。</li>
+    </ul>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span><b>非平衡 MD (NEMD)</b> 直接在模拟盒中施加电场，读出各物种的平均漂移速度，和 eNMR 实验最接近。它的困难在于：为了在有限时间内得到可分辨的漂移，所需场强往往远大于实验值，必须检查线性响应是否成立。本站阅读到的 Balsara 组论文以平衡 MD + Onsager 分析为主，没有核实到系统的 NEMD 结果。MD 的常见局限：力场缺少极化项（Shah 2024 认为这使平台时间偏长）；为补偿 Tg 差异需要提高模拟温度（PPM 用 430 K）；高浓度下电导率与实验偏差变大（Halat 2022 讨论了电荷缩放）。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="a"><p>1. 为什么不能只用每个离子的 MSD（自扩散）来计算电导率？</p>
+      <div class="opts"><button type="button" data-k="a">电导率取决于所有离子集体位移的关联，包括不同离子之间的交叉项</button><button type="button" data-k="b">MSD 无法从 MD 中计算</button><button type="button" data-k="c">MSD 只适用于液体</button></div>
+      <p class="why" hidden>κ = F²(L⁺⁺ − 2L⁺⁻ + L⁻⁻)，其中 L⁺⁺、L⁻⁻ 也包含同种离子之间的“distinct”关联。只用自扩散就是 Nernst–Einstein 近似。</p></div>
+    <div class="qq" data-a="c"><p>2. 在 Fang 2023 JACS Au 的高浓度四甘醇二甲醚体系中，团簇 Nernst–Einstein 方法的问题是？</p>
+      <div class="opts"><button type="button" data-k="a">高估了电导率</button><button type="button" data-k="b">与 Onsager 方法完全一致</button><button type="button" data-k="c">低估电导率 2–3 倍，并使 t₊ 偏正（r = 0.24 时 +0.88 对 −0.10）</button></div>
+      <p class="why" hidden>CNE 只在 r &lt; 0.10 时可靠；作者建议严格计算 t₊⁰ 时使用 Onsager 方法。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH7 ===================== -->
+<section class="ch" id="ch7" data-spine="struct ilim">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 07 · PPM versus PEO</span>
+    <h2>PPM 与 PEO：一次以极限电流为准的比较</h2>
+    <p class="q">核心问题：选择更好的电解质，究竟应该优化哪一个传输参数？</p>
+  </div>
+
+  <h3>同条件下的性质对比</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>性质（r = 0.08，90 °C）</th><th>PPM/LiTFSI</th><th>PEO/LiTFSI</th><th>来源与说明</th></tr></thead>
+      <tbody>
+        <tr><td>样品 Mₙ</td><td class="num">7.32 kDa</td><td class="num">5.0 kDa</td><td>Jana 2026 Table 1 <span class="ev m">实测</span></td></tr>
+        <tr><td>T_g</td><td class="num">−18 °C</td><td class="num">−23 °C</td><td>同上；加盐后 PPM 的 Tg 升高更明显</td></tr>
+        <tr><td>电导率 κ</td><td class="num">(6 ± 0.1)×10⁻⁴ S/cm</td><td class="num">(9 ± 0.1)×10⁻⁴ S/cm</td><td>同上。<span class="ev u">存疑</span> Pesko 2018 同为 5 kg/mol、90 °C、r = 0.08 的 PEO 给出 2.2×10⁻³ S/cm，两者相差约 2.4 倍；比较时只用同一研究内的数据</td></tr>
+        <tr><td>电流分数 ρ₊（Bruce–Vincent）</td><td class="num">0.57 ± 0.03</td><td class="num">0.07 ± 0.001</td><td>同上。注意 ρ₊ 不是 t₊⁰</td></tr>
+        <tr><td>Li⁺ 配位原子</td><td>羰基氧，2–3 条链 + 笼内阴离子</td><td>醚氧，单链类冠醚，阴离子在笼外</td><td>Shah 2024；Fang 2023b <span class="ev t">MD</span>+<span class="ev m">WAXS</span></td></tr>
+        <tr><td>电化学稳定性</td><td>相对 Li⁺/Li 可达 5 V</td><td>较低</td><td>Yu 2022 摘要 <span class="ev m">实测</span></td></tr>
+        <tr><td>对 Li 金属</td><td colspan="2">在大电流下两者都会生长枝晶，因此极限电流测量改用 Li–In 合金电极</td><td>Jana 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>极限电流对比面板</h3>
+  <figure class="fig" id="fig-dash">
+    <div class="fig-head"><b>长度归一化极限电流 i_lim·L</b><span class="ev m">实测 · 均为 90 °C</span></div>
+    <div class="fig-body">
+      <div class="bars" role="list">
+        <div class="bar" role="listitem" title="Lee 2025：PPM/LiTFSI 在 r = 0.08 处达到最大值；Li–In 对称电池"><span>PPM · r=0.08 最大值<br><small style="color:var(--muted)">Lee 2025 · Li–In</small></span><div class="trk"><div class="fill" style="width:94.4%;background:var(--li)"></div></div><b>0.085</b></div>
+        <div class="bar" role="listitem" title="Lee 2024/2025：275 kg/mol PEO/LiTFSI 在 r = 0.14 处达到最大值；Li–In 对称电池"><span>PEO · r=0.14 最大值<br><small style="color:var(--muted)">Lee 2024/2025 · Li–In</small></span><div class="trk"><div class="fill" style="width:55.6%;background:var(--poly)"></div></div><b>0.050</b></div>
+        <div class="bar" role="listitem" title="Shah 2024 Nat. Mater. SI：r = 0.063，Li/聚合物/Li 电池"><span>PPM · r=0.063<br><small style="color:var(--muted)">Shah 2024 SI · Li–Li</small></span><div class="trk"><div class="fill" style="width:77.8%;background:var(--li)"></div></div><b>0.07</b></div>
+        <div class="bar" role="listitem" title="Shah 2024 Nat. Mater. SI：r = 0.063，Li/聚合物/Li 电池"><span>PEO · r=0.063<br><small style="color:var(--muted)">Shah 2024 SI · Li–Li</small></span><div class="trk"><div class="fill" style="width:33.3%;background:var(--poly)"></div></div><b>0.03</b></div>
+        <div class="bar" role="listitem" title="Jana 2026：r = 0.08；Li–In 电池"><span>PPM · r=0.08<br><small style="color:var(--muted)">Jana 2026</small></span><div class="trk"><div class="fill" style="width:88.9%;background:var(--li)"></div></div><b>0.08</b></div>
+        <div class="bar" role="listitem" title="Jana 2026：超支化 b-PPM-Pr，r = 0.08；Li–Li 电池"><span>b-PPM-Pr · r=0.08<br><small style="color:var(--muted)">Jana 2026 · Li–Li</small></span><div class="trk"><div class="fill" style="width:77.8%;background:var(--accent)"></div></div><b>0.07</b></div>
+        <div class="bar" role="listitem" title="Jana 2026：PEO、b-PPM-Me、PPM-O 三者落在 0.03–0.04 mA/cm 范围"><span>PEO / b-PPM-Me / PPM-O<br><small style="color:var(--muted)">Jana 2026 · 范围</small></span><div class="trk"><div class="rng" style="left:33.3%;width:11.1%;background:var(--muted)"></div></div><b>0.03–0.04</b></div>
+        <div class="bar" role="listitem" title="Jana 2026：带 EO 侧链的 PPM-EO，r = 0.08；Li–In 电池"><span>PPM-EO · r=0.08<br><small style="color:var(--muted)">Jana 2026 · Li–In</small></span><div class="trk"><div class="fill" style="width:17.8%;background:var(--accent)"></div></div><b>0.016</b></div>
+      </div>
+      <p class="eq-note">单位 mA/cm，条形长度按 0–0.09 mA/cm 线性绘制。悬停条形可查看条件。Lee 2025 的 PEO 为 275 kg/mol，Jana 2026 的 PEO 为 5 kg/mol，电极类型也不全相同。</p>
+    </div>
+    <figcaption>在各自最优浓度下，PPM 的 i_lim·L 是 PEO 的 1.7 倍，对应的长度归一化电势降低 1.6 倍，稳态 Li⁺ 速度约为 PEO 的 3 倍 <a class="cite" href="#b-lee25">[Lee 2025]</a>。r &gt; 0.15 时两者的极限电流在误差内一致。Yu 2022 报告的“约 2.8 倍”是另一组条件（同 r、同温度，Li–Li 电池；摘要未给出具体 r）下的比较，不应与 1.7 倍混用 <a class="cite" href="#b-yu22">[Yu 2022]</a>。</figcaption>
+  </figure>
+
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span><b>Lee 2025 的分析逻辑。</b>作者把 κ、ρ₊、D 和浓差电池电势 U(ln m) 拟合成浓度的函数（r ≤ 0.15），代入浓溶液理论的积分形式，由函数 J₁(r)、J₂(r) 预测浓度剖面 r(x) 与电势剖面 Φ(x) <span class="ev t">理论</span> <a class="cite" href="#b-lee25">[Lee 2025]</a>。模型预测（r = 0.04，L = 500 μm）：</p>
+    <ul>
+      <li>i_lim：PPM 0.80 mA/cm²，PEO 0.35 mA/cm²。</li>
+      <li>0.30 mA/cm² 时 x = 0 处的 Φ：PPM 46.5 mV，PEO 98.7 mV。</li>
+    </ul>
+    <p>尽管 PPM 的电导率更低，它的 J₁(r) 却更大。作者把原因归于 PPM 更高的 ρ₊ 和 dU/d ln m，这两项足以抵消电导率的劣势，使 PPM 中形成的浓度梯度更小。理论与实验对两种聚合物都定量吻合。</p>
+  </div>
+  <div class="callout key">
+    <h4>回答 Q3：低电导率为什么能换来高极限电流？</h4>
+    <p style="font-size:.92rem">直流下，限制电流的是阴离子在电极处的堆积和耗尽。Li⁺ 承担的电流比例越高（PPM 的 ρ₊ = 0.57 对 PEO 的 0.07），需要靠扩散抹平的盐通量 \(i(1-t_+)/F\) 就越小，浓度梯度就越平缓。分子层面上，PPM 的多链溶剂化笼削弱了 Li⁺ 与单条链的运动关联，减少了“被溶剂化的链段带着 Li⁺ 在电场中逆向运动”的情况 <a class="cite" href="#b-fang23a">[Fang 2023a]</a> <a class="cite" href="#b-jana26">[Jana 2026]</a>。代价是 Li⁺ 充当临时交联点、使 Tg 升高，这解释了 PPM 电导率较低的原因。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. Lee 2025 提出用什么图来评价聚合物电解质？</p>
+      <div class="opts"><button type="button" data-k="a">κ 对温度的 Arrhenius 图</button><button type="button" data-k="b">i_lim·L 对 Φ_lim/L 作图，越靠左上角越好</button><button type="button" data-k="c">t₊⁰ 对 r 作图</button></div>
+      <p class="why" hidden>最好的电解质应在最小的长度归一化电势降下给出最大的长度归一化极限电流。</p></div>
+    <div class="qq" data-a="a"><p>2. “PPM 的极限电流是 PEO 的 1.7 倍”这一结论需要配上哪些条件？</p>
+      <div class="opts"><button type="button" data-k="a">90 °C；两者各自的最优浓度（PPM r = 0.08，PEO r = 0.14）；Li–In 对称电池</button><button type="button" data-k="b">室温、相同 r</button><button type="button" data-k="c">不需要条件，它是材料常数</button></div>
+      <p class="why" hidden>比较的是最大值，两者所在浓度不同；在 r &gt; 0.15 时两者差异在误差范围内。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH8 ===================== -->
+<section class="ch" id="ch8" data-spine="ilim pol">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 08 · Limiting Current</span>
+    <h2>极限电流：盐耗尽，还是电导率塌缩？</h2>
+    <p class="q">关键：电导率 κ、扩散系数 D、热力学因子与迁移数如何共同决定传输性能。</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>在 Li|电解质|Li 对称电池中，左电极溶出 Li⁺，右电极消耗 Li⁺。阴离子不参与电极反应，于是在左侧堆积、在右侧耗尽，这就是浓差极化 (concentration polarization)。电流越大，梯度越陡。超过某个电流，电池就无法达到稳态，这个电流称为<b>极限电流 i_lim</b>。实验上把它取为在长时间下仍能得到稳定电压的最大电流密度 <a class="cite" href="#b-lee25">[Lee 2025]</a>。</p>
+  </div>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>假设所有性质为常数，稳态浓度剖面是直线，斜率为 \(-i(1-\rho_+)/(FD)\)。当沉积侧浓度降为零时：</p>
+    <div class="eq">\[ i_L=\frac{2FDc}{(1-\rho_+)\,L},\qquad t_{\mathrm{Sand}}=\pi D\Big(\frac{Fc}{2i(1-\rho_+)}\Big)^2\ \ (i\gt i_L) \]</div>
+    <p class="eq-note">这是 Balsara 组书写的常物性表达式（Hoffman 2023 式 1–2）；ρ₊ 在无限稀释时等于 t₊⁰，教材中常写作 t₊ <a class="cite" href="#b-hoff23">[Hoffman 2023]</a>。i_L ∝ 1/L，因此不同厚度的结果用 i_lim·L 比较。</p>
+  </div>
+
+  <figure class="fig" id="fig-ilim">
+    <div class="fig-head"><b>对称电池中的浓差极化</b><span class="ev i">示意 · 常物性稀溶液模型</span></div>
+    <div class="fig-body">
+      <div class="seg" id="il-k" role="group" aria-label="电导率模型">
+        <button type="button" data-v="ideal" aria-pressed="true">κ ∝ c（盐耗尽主导）</button>
+        <button type="button" data-v="collapse" aria-pressed="false">κ 在高浓度塌缩（示意）</button>
+      </div>
+      <svg id="ilim-svg" role="img" aria-label="稳态浓度剖面与电势-电流曲线"></svg>
+      <div class="ctrls">
+        <div class="ctrl"><label for="il-f">i / i_lim,dilute<output id="il-f-o"></output></label><input type="range" id="il-f" min="0" max="0.99" step="0.01" value="0.6"></div>
+        <div class="ctrl"><label for="il-c">平均浓度 c∞<output id="il-c-o"></output></label><input type="range" id="il-c" min="0.2" max="3" step="0.05" value="1.6"></div>
+        <div class="ctrl"><label for="il-L">电解质厚度 L<output id="il-L-o"></output></label><input type="range" id="il-L" min="20" max="1000" step="10" value="500"></div>
+        <div class="ctrl"><label for="il-D">log₁₀ D<output id="il-D-o"></output></label><input type="range" id="il-D" min="-8" max="-6" step="0.05" value="-6.95"></div>
+        <div class="ctrl"><label for="il-t">t₊（或 ρ₊）<output id="il-t-o"></output></label><input type="range" id="il-t" min="-0.5" max="0.9" step="0.01" value="0.1"></div>
+        <div class="ctrl"><label for="il-T">温度（仅进入 RT/F）<output id="il-T-o"></output></label><input type="range" id="il-T" min="40" max="120" step="1" value="90"></div>
+      </div>
+      <div class="readout">
+        <div><span>i_lim（稀溶液式）</span><b id="il-ilim"></b></div>
+        <div><span>i_lim·L</span><b id="il-iL"></b></div>
+        <div><span>当前 i</span><b id="il-i"></b></div>
+        <div><span>稳态电势降</span><b id="il-V"></b></div>
+        <div><span>沉积侧 / 剥离侧 c</span><b id="il-cL"></b></div>
+      </div>
+    </div>
+    <figcaption>左：稳态盐浓度剖面；右：稳态电势降随 i/i_lim 的变化（欧姆项 ∫ i/κ dx 加上理想稀溶液的浓度项 2RT(1−t₊)/F·ln(c₀/c_L)）。“κ 在高浓度塌缩”模式中，本页人为设定 κ(c) 在 c* = 2c∞ 处降到零，用来说明 Abdo 2026 提出的机制：剥离侧盐堆积使电导率骤降，欧姆项先于盐耗尽发散，此时实际 i_lim 低于稀溶液式。默认参数接近 PEO/LiTFSI r = 0.08、90 °C（D = 1.1×10⁻⁷ cm²/s），但 ρ₊ 取 0.1，κ∞ 取任意值 10⁻³ S/cm。温度滑块只改变 RT/F，真实体系中 κ 与 D 随温度强烈变化，本模型没有包含这一点。</figcaption>
+  </figure>
+
+  <h3>浓溶液理论下的三个新发现</h3>
+  <div class="prose">
+    <ol>
+      <li><b>PEO/LiTFSI 存在尖锐最大值。</b>Li–In 对称电池从稀极限测到溶解度极限，在 r ≈ 0.14 处 i_lim·L 达到 0.05 mA/cm，与浓溶液理论一致 <span class="ev m">实测</span> <a class="cite" href="#b-lee24">[Lee 2024]</a>。更早的 Gribble 2019 在 Li–Li 电池中也做到了不含可调参数的吻合 <a class="cite" href="#b-grib19">[Gribble 2019]</a>。</li>
+      <li><b>电导率驱动的极限电流。</b>Abdo 2026 在 PEO(275 kg/mol)/LiTFSI，c = 2.98 M（r = 0.20），90 °C，Li–In 电池中以 1.18 mA/cm²（约 2.1 倍 i_lim）通电，用 operando X 射线成像跟踪 32 min：剥离侧浓度超过 4.2 M，沉积侧低于 2.3 M，沉积侧并没有耗尽。把电势拆成欧姆项与浓差项后，欧姆项在 20.6–27.5 min 之间翻倍，到 30.9 min 再翻倍，约 29 min 时超过浓差项；浓差项稳步上升但不发散。结论是：电势发散由剥离电极处电导率的骤降驱动，而不是热力学溶解度极限。X 射线数据中没有看到晶体，尽管平衡时 3.62 M 以上会出现结晶络合物 <span class="ev m">实测</span> <a class="cite" href="#b-abdo26">[Abdo 2026]</a>。</li>
+      <li><b>普适关系。</b>Jana 2026 对 7 种聚合物（PEO、PPM、PPM-O、PPM-EO 和三种超支化 PPM，r = 0.08，90 °C）发现：i_lim·L 与 κρ₊ <b>没有</b>相关性；在 i_lim 以下 i 与 Φ_plateau/L 呈线性关系，斜率记为 σ；i_lim·L 与 σ 成正比，等价于 7 种电解质的 Φ_lim 都约为 0.304 ± 0.031 V <span class="ev m">实测</span> <a class="cite" href="#b-jana26">[Jana 2026]</a>。这一常数的起源尚未解释。</li>
+    </ol>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span><b>不同机制并存。</b>Abdo 2025 JPCC 在同一种 PEO/LiTFSI（r = 0.20）中以约 50% i_lim（0.29 mA/cm²）通电，稳态时浓差过电势是欧姆项的 7 倍 <a class="cite" href="#b-abdo25b">[Abdo 2025 JPCC]</a>，可见欧姆项只在接近 i_lim 时才变成主导。Shah 2019 在 C8-DMC/LiFSI 液态电解质中发现 i_lim 随浓度不单调：0.88 mol/kg 以下由沉积侧浓度归零限制，以上则由剥离侧达到溶解度极限（2.03 mol/kg）限制 <a class="cite" href="#b-shah19">[Shah 2019]</a>。Abdo 2026 本身是单个浓度、单个电池的结果，作者也承认某些体系中仍可能是溶解度或耗尽机制。</p>
+    <p><b>数量级核对</b> <span class="ev i">估算</span>：用 Pesko 2018 表中 r = 0.08 的值（c = 1.59 M，D = 1.1×10⁻⁷ cm²/s），常物性式给出 i_lim·L ≈ 0.059 mA/cm（取 t₊⁰ = 0.43）或 0.038 mA/cm（取 ρ₊ = 0.10）。实测的 PEO 最大值 0.05 mA/cm 落在这两者之间。这只是量级比较，不能代替浓溶液计算。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="c"><p>1. 常物性稀溶液式 i_L = 2FDc/[(1 − ρ₊)L] 中没有出现 κ。这意味着？</p>
+      <div class="opts"><button type="button" data-k="a">κ 对电池性能完全无关</button><button type="button" data-k="b">κ 越大 i_lim 越小</button><button type="button" data-k="c">在该近似下 i_lim 由盐的输运决定；κ 只影响到达 i_lim 前的欧姆电势降。浓溶液中 κ(c) 的形状可以重新变得关键</button></div>
+      <p class="why" hidden>Abdo 2026 就是一个反例：浓度依赖的 κ 在剥离侧骤降，使欧姆项主导了电势发散。</p></div>
+    <div class="qq" data-a="b"><p>2. 电解质厚度 L 减半，常物性模型中的 i_lim 如何变化？</p>
+      <div class="opts"><button type="button" data-k="a">减半</button><button type="button" data-k="b">加倍</button><button type="button" data-k="c">不变</button></div>
+      <p class="why" hidden>i_L ∝ 1/L，因此用 i_lim·L 比较不同厚度的样品。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH9 ===================== -->
+<section class="ch" id="ch9" data-spine="v0 ilim">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 09 · Crosslinked Polymer Electrolytes</span>
+    <h2>交联聚合物电解质与机械应力</h2>
+    <p class="q">核心：离子迁移如何在网络中引起应力，应力又如何反过来阻碍离子运动。</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>线性聚合物熔体可以整体流动，所以第 3 章的聚合物漂移不受约束。交联网络被化学键钉住，链不能长距离迁移。离子拖拽网络、浓度变化使网络局部溶胀或收缩时，网络只能发生弹性形变，并储存应力。</p>
+  </div>
+  <figure class="fig" id="fig-xlink">
+    <div class="fig-head"><b>线性链 vs 交联网络</b><span class="ev i">示意</span></div>
+    <div class="fig-body">
+      <div class="seg" id="xl-m" role="group" aria-label="网络类型">
+        <button type="button" data-v="x" aria-pressed="true">交联网络</button>
+        <button type="button" data-v="l" aria-pressed="false">线性链熔体</button>
+      </div>
+      <canvas id="xl-cv" style="height:220px" aria-label="交联网络形变动画"></canvas>
+      <div class="ctrls">
+        <div class="ctrl"><label for="xl-d">离子拖拽 / 电流（任意单位）<output id="xl-d-o"></output></label><input type="range" id="xl-d" min="0" max="1" step="0.01" value="0.5"></div>
+        <div class="ctrl"><label for="xl-k">网络刚度（交联密度）<output id="xl-k-o"></output></label><input type="range" id="xl-k" min="0.3" max="2" step="0.01" value="1"></div>
+      </div>
+      <div class="readout"><div><span>最大位移</span><b id="xl-u"></b></div></div>
+    </div>
+    <figcaption>交联网络中，两端锚定的网络在均匀体力作用下的位移呈抛物线分布（类似受均布载荷的弦），中部位移最大，正比于 拖拽 / 刚度。这是线弹性的卡通模型，并不对应 Patel 2025 中的 Gent 有限弹性模型，只用来说明“漂移受限 → 形变与应力”。</figcaption>
+  </figure>
+
+  <h3>Patel et al. 2025：把应变写进化学势</h3>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>体系：PEGDA（700 g/mol）经 UV 交联，加入 LiTFSI（xPEO/LiTFSI），膜厚约 250 μm，Li–Li 对称电池，60 °C <a class="cite" href="#b-patel25">[Patel 2025]</a>。模型在 Newman 浓溶液理论的盐化学势中加入了来自 Gent 有限弹性理论的应变项，引入两个参数：每个网络链段的单体数 𝒩（由 PEGDA 分子量估计为 16），以及网络能承受的最大应变 λ_crit = 1 ± Δ（作者假设 Δ = 0.06）。</p>
+    <ul>
+      <li>r_avg = 0.08 时，J₁(r) 在 r = 0.03 与 0.13 处发散，分别对应 λ = 0.94 与 1.06，也就是网络收缩与伸长的极限 <span class="ev t">理论</span>。</li>
+      <li>电极附近出现浓度平台，网络弹性带来额外的<b>应变过电势</b>；电流越高，应变项越大，而混合项基本不变。</li>
+      <li>实测 i_lim·L = 3.2×10⁻⁴ mA/cm，对应 Δφ_lim/L = 24 V/cm <span class="ev m">实测</span>。不含网络弹性的基线模型预测可以稳定工作到 i·L = 5.0×10⁻⁴ mA/cm，与实验不符；交联模型在 i·L &gt; 2.0×10⁻⁴ mA/cm、Δφ/L &gt; 10 V/cm 时的陡升与数据一致。</li>
+    </ul>
+  </div>
+  <div data-level="3" class="prose">
+    <p><span class="lvl-tag">高级</span>局限：𝒩 与 λ_crit 没有被测量（实验室缺少能在干燥气氛中工作的流变仪），作者称计算是“粗略的一阶近似”；浓度平台使极限电流难以严格定义；两种模型都不能定量预测直到 i_lim 的稳态电势；单凭电流–电压数据无法区分两种模型，需要同时测量 Δr 和 Δφ。相关现象：Galluzzo 2024 认为在大电场下，应力和缓慢的链重排抑制了 SEO 中的聚合物流动 <a class="cite" href="#b-gall24">[Galluzzo 2024]</a>。</p>
+    <p><b>交联与 PPM 的组合。</b>Gido 2026 把 PPM 灌入交联 PEO 中，与 Li 金属配对：循环时可承受的电流是“灌入 PEO 的交联 PEO”的 20 倍、普通交联 PEO 的 4 倍；单向沉积可持续 140 h，而另外两者在约 4 h 内失效 <span class="ev m">实测</span> <a class="cite" href="#b-gido26">[Gido 2026]</a>。</p>
+  </div>
+  <div class="callout key"><h4>权衡</h4><p style="font-size:.92rem">交联可以提供机械强度、抑制宏观流动和枝晶，但它把原本可以自由发生的聚合物漂移转化为弹性应力，又通过化学势反过来增加过电势，使 xPEO 的 i_lim·L 比线性 PEO 低两个数量级（注意温度不同：60 °C 对 90 °C）。</p></div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="a"><p>1. Patel 2025 中 J₁(r) 的发散点对应什么物理极限？</p>
+      <div class="opts"><button type="button" data-k="a">网络能承受的最大收缩与伸长（λ = 0.94 与 1.06）</button><button type="button" data-k="b">盐的溶解度极限</button><button type="button" data-k="c">电极钝化</button></div>
+      <p class="why" hidden>浓度变化伴随网络局部体积变化，当所需应变超过 λ_crit 时，浓溶液理论加弹性项的解发散。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== CH10 ===================== -->
+<section class="ch" id="ch10" data-spine="cell">
+<div class="col">
+  <div class="ch-head">
+    <span class="k">Chapter 10 · Superionic Conduction &amp; All-Solid-State Batteries</span>
+    <h2>超离子传导与全固态电池</h2>
+    <p class="q">需要区分：PPM 优异的传输性能，不等于已证明它是严格意义上的超离子导体。</p>
+  </div>
+  <div data-level="1" class="prose">
+    <p><span class="lvl-tag">入门</span>超离子导体 (superionic conductor) 一词通常指无机固体，例如 Li₁₀GeP₂S₁₂ 等硫化物或石榴石氧化物。在这类材料中，可移动离子在一个基本刚性的骨架中穿行，室温电导率可接近液态电解质（约 10⁻³–10⁻² S/cm）。离子运动与骨架的结构弛豫是<b>解耦 (decoupled)</b> 的。</p>
+  </div>
+  <div data-level="2" class="prose">
+    <p><span class="lvl-tag">进阶</span>Angell 用解耦指数 \(R_\tau=\tau_s/\tau_\sigma\) 描述这种分离，即结构（或链段）弛豫时间与电导弛豫时间之比。传统聚合物电解质中 R_τ 接近 1，Li⁺ 的运动依赖链段运动，所以必须在 Tg 以上工作。</p>
+    <p><b>PPM 的证据指向耦合，而不是解耦。</b></p>
+    <ul>
+      <li>QENS 与 MD 显示溶剂化寿命 τs ≈ 1 ns，与链段（Rouse）时间处于同一量级，Li⁺ 充当临时交联点（粘性 Rouse）<a class="cite" href="#b-shah24">[Shah 2024]</a>。</li>
+      <li>加盐使 PPM 的 Tg 升高得比 PEO 更明显，这解释了 PPM 电导率较低的原因 <a class="cite" href="#b-jana26">[Jana 2026]</a>。</li>
+      <li>PPM 在 90 °C、r = 0.08 时 κ = 6×10⁻⁴ S/cm，远低于无机超离子导体的室温值。</li>
+      <li>对 Nature Materials 论文及其 SI、JACS Au、2025 ACS Energy Lett. 和 2026 Macromolecules 全文的检索中，“superionic”和“decoupling”都没有被用来描述 PPM。2022、2023 两篇论文本站只读到摘要，无法完全排除。</li>
+    </ul>
+    <p>结论：现有文献不支持把 PPM 归为超离子导体。它的优势在于<b>高阳离子电流分数</b>，而不在于电导率或解耦。</p>
+  </div>
+
+  <h3>从对称电池到全电池</h3>
+  <div class="prose">
+    <ul>
+      <li><b>Li 金属界面</b>：线性 PPM 和 PEO 在大电流下对 Li 都会生长枝晶，因此 Jana 2026 改用 Li–In 电极；超支化 PPM 则能抵抗枝晶 <a class="cite" href="#b-jana26">[Jana 2026]</a>。把电流逐步升到 i_lim 可以让聚合物/Li–In 界面电阻从约 15 Ω·cm² 永久降到约 1 Ω·cm²，PEO 与 PPM 都是如此 <a class="cite" href="#b-lee26">[Lee 2026]</a>。</li>
+      <li><b>κ 与 ρ₊ 的权衡</b>：He &amp; Balsara 2025 拟合 30 种 Li 与 Na 聚合物电解质，提出“Newman 上界” κ = 2.0(1/ρ₊ − 1)（κ 以 mS/cm 计）<a class="cite" href="#b-he25">[He 2025]</a>。线性聚合物中高 κ 往往伴随低 ρ₊；超支化 PPM 系列中 ρ₊ 随端基变长而升高，κ 却没有下降 <a class="cite" href="#b-jana26">[Jana 2026]</a>，提示这一权衡可以被分子设计部分打破。</li>
+      <li><b>极限电流与充电倍率</b> <span class="ev i">估算</span>：若把 PPM 的 i_lim·L = 0.085 mA/cm（90 °C）直接套到 20 μm 厚的隔膜，得到约 43 mA/cm²，远高于 3 mAh/cm² 正极 1C 充电所需的 3 mA/cm²。但这种外推忽略了多孔复合正极中的传输、界面电阻、温度和循环中的枝晶，只能说明对称电池指标与倍率之间的数量级关系，不能当作电池性能预测。</li>
+      <li><b>商业化背景</b>：PEO 基 Li 金属聚合物电池已经在 60–80 °C 运行的商用系统中使用（例如 Bolloré/Blue Solutions）。Balsara 参与创立的 Seeo 公司开发了基于嵌段共聚物电解质的电池，后被 Bosch 收购。这些是公开背景信息，本站没有从论文中逐条核对。</li>
+    </ul>
+  </div>
+
+  <div class="callout key">
+    <h4>回答 Q5：能否兼得快速 Li⁺ 传输、低聚合物漂移与低应力？</h4>
+    <p style="font-size:.92rem">文献给出的设计线索是：(1) 让 Li⁺ 由多条链共同溶剂化，降低 Li⁺–聚合物关联，从而提高 ρ₊，减小浓度梯度。浓度梯度越小，第 3 章中由体积约束驱动的 v₀ 也越小，因为 \(v_0\propto\bar V(1-t_+^0)\)。(2) 用超支化结构在不牺牲 κ 的前提下提高 ρ₊。(3) 用交联提供机械稳定性，但要意识到网络会把漂移转化为应力和应变过电势；“交联骨架 + 可流动的高 ρ₊ 组分”（如灌入 PPM 的交联 PEO）是一种折中。是否存在同时满足三者的单一材料，目前没有定论。</p>
+  </div>
+
+  <div class="quiz">
+    <h4>章节小测</h4>
+    <div class="qq" data-a="b"><p>1. 下面哪个说法与 Balsara 组的 PPM 文献一致？</p>
+      <div class="opts"><button type="button" data-k="a">PPM 是 Li⁺ 运动与链段运动解耦的超离子聚合物</button><button type="button" data-k="b">PPM 中 Li⁺ 运动与链段运动耦合；它的优势来自高阳离子电流分数</button><button type="button" data-k="c">PPM 的电导率高于 PEO</button></div>
+      <p class="why" hidden>τs ≈ τseg ≈ 1 ns，加盐使 Tg 升高，κ 低于 PEO，ρ₊ 远高于 PEO。</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== METHODS TABLE ===================== -->
+<section class="ch" id="methods" data-spine="">
+<div class="ch-head"><span class="k">Reference · Techniques</span><h2>实验技术对照表</h2></div>
+<div class="tbl">
+<table>
+<thead><tr><th>技术</th><th>直接测量的量</th><th>换算得到</th><th>时间 / 长度尺度</th><th>主要局限</th><th>本站相关文献</th></tr></thead>
+<tbody>
+<tr><td><b>eNMR</b></td><td>电场下各核（⁷Li、¹⁹F、¹H）的相位偏移 φ = γgδΔv</td><td>各物种漂移速度；t₊⁰ = (v₊−v₀)/(v₊−v₋)</td><td>Δ 约数十–数百 ms；样品尺度 mm–cm</td><td>焦耳热与对流；需要可检测的溶剂信号；聚合物中信号弱、场强受限；与电化学法可能不一致</td><td>Halat 2022（液态）；Hickson 2025</td></tr>
+<tr><td><b>PFG-NMR</b></td><td>无电场时的信号衰减</td><td>自扩散系数 D_Li、D_TFSI；t₊,NMR</td><td>ms；μm</td><td>不含离子间关联，t₊,NMR 不等于 t₊⁰</td><td>Pesko 2017</td></tr>
+<tr><td><b>电化学组合</b>（阻抗、restricted diffusion、Bruce–Vincent、浓差电池）</td><td>阻抗、弛豫电压、稳态电流、开路电势</td><td>κ、D、ρ₊、热力学因子 → t₊⁰</td><td>s–h；整个电池</td><td>t₊⁰ 由四个量组合得到，误差会传递；界面 SEI 可能影响浓差电池</td><td>Pesko 2017/2018；Villaluenga 2018</td></tr>
+<tr><td><b>Operando X 射线透射成像</b></td><td>透射强度的空间分布</td><td>c(x,t)；再由连续性方程得到 c₀(x,t) 与 v₀(x,t)；电势分解</td><td>帧间隔约 3.4 min；分辨率 2 μm</td><td>需要浓度标定与密度关系；早期变化小时不确定度大；单一电池</td><td>Abdo 2025、2026；Galluzzo 2024</td></tr>
+<tr><td><b>外差 XPCS</b></td><td>强度自相关 g₂ 的振荡频率 ω = q·v</td><td>纳米结构（层状）的整体漂移速率 |v|</td><td>s–h；散射体积 ~μm</td><td>只得到大小不得到方向；需要有散射衬度的结构，如嵌段共聚物</td><td>Galluzzo 2024</td></tr>
+<tr><td><b>QENS</b></td><td>中子准弹性展宽 S(Q, ω)</td><td>H 原子自关联运动、Rouse 参数、溶剂化相关时间</td><td>约 0.02–1 ns（BASIS）；Å–nm</td><td>只测局部运动，不测净漂移；需要 MD 来解释</td><td>Shah 2024</td></tr>
+<tr><td><b>WAXS</b></td><td>大角散射强度 I(q)</td><td>溶剂化笼与离子的局部有序</td><td>静态；0.3–2 nm</td><td>总强度需要 MD 分解到各组分</td><td>Fang 2023b</td></tr>
+<tr><td><b>SAXS</b></td><td>小角散射</td><td>嵌段共聚物纳米相结构、通电时的溶胀/去溶胀</td><td>静态或 operando；5–100 nm</td><td>对均聚物信息有限</td><td>Gido 2025</td></tr>
+<tr><td><b>MD</b></td><td>原子轨迹</td><td>RDF、配位数、MSD、Onsager Lᵢⱼ、κ、t₊、τs</td><td>ps–μs；nm</td><td>力场（缺少极化）；常需升温补偿 Tg；高浓度下 κ 偏差</td><td>Fang 2023a/b/JACS Au；Shah 2024；Halat 2022</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<!-- ===================== CONCEPT MAP ===================== -->
+<section class="ch" id="map" data-spine="">
+<div class="ch-head"><span class="k">Reference · Concept Map</span><h2>概念图：从分子到全电池</h2><p class="q">点击节点跳转到对应章节。实线是主线上的因果关系，虚线是实验或模拟如何“看见”这一环。</p></div>
+<div class="cmap">
+<svg viewBox="0 0 780 360" role="img" aria-label="概念图：分子结构到全电池性能的因果链">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--muted)"/></marker></defs>
+  <g style="stroke:var(--muted);stroke-width:1.6;fill:none">
+    <path d="M150 85 H203" marker-end="url(#ah)"/><path d="M355 85 H408" marker-end="url(#ah)"/><path d="M560 85 H613" marker-end="url(#ah)"/>
+    <path d="M690 110 V163" marker-end="url(#ah)"/>
+    <path d="M640 110 L545 163" marker-end="url(#ah)"/>
+    <path d="M615 190 H562" marker-end="url(#ah)"/><path d="M410 190 H357" marker-end="url(#ah)"/>
+    <path d="M150 190 H203" marker-end="url(#ah)"/>
+    <path d="M280 215 V298" marker-end="url(#ah)"/>
+    <path d="M410 325 H357" marker-end="url(#ah)"/>
+  </g>
+  <g style="stroke:var(--muted);stroke-width:1.2;fill:none;stroke-dasharray:4 4">
+    <path d="M280 38 V60"/><path d="M485 38 V60"/><path d="M690 38 V60"/>
+    <path d="M485 240 V215"/><path d="M690 240 V215"/><path d="M170 255 L215 215"/>
+  </g>
+  <g font-size="13">
+    <a href="#ch1"><rect x="0" y="60" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="75" y="82" text-anchor="middle" style="fill:var(--ink)" font-weight="600">分子结构</text><text x="75" y="99" text-anchor="middle" font-size="11" style="fill:var(--muted)">醚氧 vs 羰基氧</text></a>
+    <a href="#ch2"><rect x="205" y="60" width="150" height="50" rx="8" style="fill:var(--li-soft);stroke:var(--rule)"/><text x="280" y="82" text-anchor="middle" style="fill:var(--ink)" font-weight="600">Li⁺ 溶剂化笼</text><text x="280" y="99" text-anchor="middle" font-size="11" style="fill:var(--muted)">单链 / 多链 · τs≈1 ns</text></a>
+    <a href="#ch6"><rect x="410" y="60" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="485" y="82" text-anchor="middle" style="fill:var(--ink)" font-weight="600">离子关联运动</text><text x="485" y="99" text-anchor="middle" font-size="11" style="fill:var(--muted)">Onsager Lᵢⱼ</text></a>
+    <a href="#ch4"><rect x="615" y="60" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="690" y="82" text-anchor="middle" style="fill:var(--ink)" font-weight="600">迁移数 t₊⁰ · ρ₊</text><text x="690" y="99" text-anchor="middle" font-size="11" style="fill:var(--muted)">可为负</text></a>
+    <a href="#ch3"><rect x="615" y="165" width="150" height="50" rx="8" style="fill:var(--poly-soft);stroke:var(--rule)"/><text x="690" y="187" text-anchor="middle" style="fill:var(--ink)" font-weight="600">溶剂速度 v₀</text><text x="690" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">V̄(1−t₊⁰)i/F</text></a>
+    <a href="#ch5"><rect x="410" y="165" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="485" y="187" text-anchor="middle" style="fill:var(--ink)" font-weight="600">浓度极化 c(x,t)</text><text x="485" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">D · 热力学因子</text></a>
+    <a href="#ch8"><rect x="205" y="165" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="280" y="187" text-anchor="middle" style="fill:var(--ink)" font-weight="600">极限电流 i_lim</text><text x="280" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">耗尽 / κ 塌缩</text></a>
+    <a href="#ch9"><rect x="0" y="165" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--rule)"/><text x="75" y="187" text-anchor="middle" style="fill:var(--ink)" font-weight="600">网络应力</text><text x="75" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">交联时出现</text></a>
+    <a href="#ch10"><rect x="205" y="300" width="150" height="50" rx="8" style="fill:var(--accent-soft);stroke:var(--accent)"/><text x="280" y="322" text-anchor="middle" style="fill:var(--ink)" font-weight="600">全固态电池性能</text><text x="280" y="339" text-anchor="middle" font-size="11" style="fill:var(--muted)">倍率 · 枝晶 · 界面</text></a>
+    <a href="#ch7"><rect x="410" y="300" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--li)"/><text x="485" y="322" text-anchor="middle" style="fill:var(--ink)" font-weight="600">案例：PPM vs PEO</text><text x="485" y="339" text-anchor="middle" font-size="11" style="fill:var(--muted)">1.7× i_lim·L</text></a>
+  </g>
+  <g font-size="11.5">
+    <a href="#ch2"><rect x="215" y="8" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="280" y="27" text-anchor="middle" style="fill:var(--ink)">QENS · WAXS</text></a>
+    <a href="#ch6"><rect x="420" y="8" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="485" y="27" text-anchor="middle" style="fill:var(--ink)">MD · Onsager</text></a>
+    <a href="#ch5"><rect x="625" y="8" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="690" y="27" text-anchor="middle" style="fill:var(--ink)">eNMR · 电化学</text></a>
+    <a href="#ch5"><rect x="420" y="240" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="485" y="259" text-anchor="middle" style="fill:var(--ink)">X 射线透射成像</text></a>
+    <a href="#ch5"><rect x="625" y="240" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="690" y="259" text-anchor="middle" style="fill:var(--ink)">XPCS · 连续性重建</text></a>
+    <a href="#ch8"><rect x="40" y="240" width="130" height="30" rx="15" style="fill:var(--bg);stroke:var(--rule)"/><text x="105" y="259" text-anchor="middle" style="fill:var(--ink)">i–V · 极限电流测量</text></a>
+  </g>
+</svg>
+</div>
+</section>
+
+<!-- ===================== ANSWERS ===================== -->
+<section class="ch" id="answers" data-spine="">
+<div class="col">
+<div class="ch-head"><span class="k">Reference · Five Questions</span><h2>五个问题的回答</h2></div>
+<div class="answers">
+  <details id="ans1" open><summary>Q1 · 聚合物没有净电荷，为什么能以接近离子速度的量级移动？</summary>
+    <div class="prose"><p>两个原因叠加。(1) 离子与聚合物之间的 Stefan–Maxwell 摩擦把动量传给聚合物，效果类似电渗拖曳。(2) 盐和聚合物共同占据固定体积，盐通量的变化必须由聚合物的流动来补偿。连续介质理论给出通电瞬间 v₀ = V̄(1 − t₊⁰)i/F <a class="cite" href="#b-mistry22">[Mistry 2022]</a>。由于盐的偏摩尔体积 V̄ 约为 130–140 cm³/mol，这个速度与离子相对速度 i/(Fc) 只差 c V̄ 这一因子（约 0.2–0.3），所以是同一量级。实测聚合物速度为 1–5 nm/s 量级（SEO 体系）<a class="cite" href="#b-gall24">[Galluzzo 2024]</a> <a class="cite" href="#b-abdo25">[Abdo 2025]</a>。这是一个瞬态现象，稳态时降为零。</p></div></details>
+  <details id="ans2" open><summary>Q2 · 当 t₊⁰ &lt; 0 时，Li⁺ 在实验室参考系中朝哪个方向移动？</summary>
+    <div class="prose"><p>相对于聚合物，Li⁺ 逆电流运动（朝 Li 剥离电极）。相对于电极，还要加上沿电流方向的 v₀。对 PEO/LiTFSI，反向所需的条件 t₊⁰ &lt; −cV̄/(c₀V̄₀) 从未满足，因此 Li⁺ 在实验室参考系中仍沿电流方向运动 <a class="cite" href="#b-mistry22">[Mistry 2022]</a>。在第 4 章的图中选择 r = 0.16、t₊⁰ = −0.38，然后切换参考系即可看到这一点。</p></div></details>
+  <details id="ans3" open><summary>Q3 · 为什么 PPM 电导率更低，极限电流却更高？</summary>
+    <div class="prose"><p>极限电流由阴离子堆积/耗尽决定，盐需要扩散抹平的通量正比于 (1 − ρ₊)。PPM 的 ρ₊（0.57）远高于 PEO（0.07），浓度梯度更平缓，再加上更有利的 dU/d ln m，足以抵消约 1.5 倍的电导率差距 <a class="cite" href="#b-lee25">[Lee 2025]</a> <a class="cite" href="#b-jana26">[Jana 2026]</a>。分子起源是多链溶剂化笼使 Li⁺ 与聚合物关联弱 <a class="cite" href="#b-fang23a">[Fang 2023a]</a>。注意 Jana 2026 也发现 i_lim·L 与 κρ₊ 的乘积不相关，单一组合参数并不能代替完整的浓溶液分析。</p></div></details>
+  <details id="ans4" open><summary>Q4 · 纳秒尺度的局部动力学如何联系到长时间、大尺度的聚合物运动？</summary>
+    <div class="prose"><p>通过“摩擦系数 → 宏观传输性质 → 守恒方程”这条链。纳秒尺度的溶剂化交换和链段弛豫决定 Li⁺、TFSI⁻、聚合物之间的摩擦，也就是 Onsager/Stefan–Maxwell 系数。它们表现为 κ、D、t₊⁰ 和热力学因子，再代入盐与溶剂的守恒方程，给出分钟到小时、微米到毫米尺度上的 c(x,t) 和 v₀(x,t)。QENS 看到的是平均位移为零的往返运动，X 射线看到的是这些运动在大尺度上残留的非零平均值。目前还没有一项工作从 QENS 的时间常数出发定量预测 v₀，这条链路的中间环节依赖 MD 与电化学测量。</p></div></details>
+  <details id="ans5" open><summary>Q5 · 能否同时实现快速 Li⁺ 传输、低漂移和低应力？</summary>
+    <div class="prose"><p>见第 10 章。可行的方向包括多链溶剂化（高 ρ₊、弱 Li⁺–聚合物关联）、超支化结构（在不损失 κ 的情况下提高 ρ₊），以及“交联骨架 + 高 ρ₊ 可流动组分”的复合设计。交联会把漂移转化为应力和应变过电势，因此“抑制漂移”与“低应力”之间存在内在冲突；更现实的目标是降低驱动漂移的浓度梯度本身。</p></div></details>
+</div>
+</div>
+</section>
+
+<!-- ===================== OPEN QUESTIONS ===================== -->
+<section class="ch" id="open" data-spine="">
+<div class="col">
+<div class="ch-head"><span class="k">Reference · Uncertainty</span><h2>不确定性与开放问题</h2></div>
+<div class="prose">
+<ol>
+  <li><b>t₊⁰ 的数值本身很不确定。</b>PEO/LiTFSI 中 t₊⁰ 随 r 不单调，误差棒常与数值同量级（如 r = 0.08 时 0.43 ± 0.17）。Pesko 2017 正文与 Pesko 2018 表格对“从哪个浓度开始为负”的描述不一致。</li>
+  <li><b>不同方法给出的 t₊⁰ 冲突。</b>SEO 中 XPCS 拟合约 0.7，电化学法 &lt; 0.3 <a class="cite" href="#b-gall24">[Galluzzo 2024]</a>；X 射线重建只有取 t₊⁰ = 0.05 才能同时拟合 c 与 v₀，而电化学值为 0.17 ± 0.06 <a class="cite" href="#b-abdo25">[Abdo 2025]</a>；四甘醇二甲醚中电化学法与 eNMR 不一致 <a class="cite" href="#b-hick25">[Hickson 2025]</a>。原因可能包括单溶剂近似失效、性质随浓度变化、界面效应等，目前没有定论。</li>
+  <li><b>同一材料在不同研究中的 κ 不同。</b>r = 0.08、90 °C 的 5 kg/mol PEO/LiTFSI：Pesko 2018 为 2.2×10⁻³ S/cm，Jana 2026 为 9×10⁻⁴ S/cm。本站阅读的资料没有解释这一差异。</li>
+  <li><b>极限电流的机制可能因体系而异。</b>盐耗尽、溶解度极限（Shah 2019）和电导率塌缩（Abdo 2026）都有实例；Abdo 2026 只研究了一个浓度、一个电池；结晶可能因成核势垒而被抑制。</li>
+  <li><b>Φ_lim ≈ 0.30 V 的普适性</b>只在 r = 0.08、90 °C 的 7 种聚合物中得到验证，物理起源不清楚 <a class="cite" href="#b-jana26">[Jana 2026]</a>。</li>
+  <li><b>嵌段共聚物需要更多传输系数。</b>SEO 中 PS 与 PEO 的摩擦不能合并，严格模型需要 6 个系数；Gido 2025 观察到的层状结构溶胀超出了浓溶液理论的描述范围。</li>
+  <li><b>交联模型的参数未经测量。</b>Patel 2025 的 𝒩 与 λ_crit 是估计或假设值。</li>
+  <li><b>MD 的定量性。</b>缺少极化的力场、升温模拟，以及高浓度下电导率的偏差，都限制了 MD 对 t₊⁰ 的定量预测。分子层面的迁移数起源被 Fang 等人称为“尚未解决的挑战”。</li>
+  <li><b>本站的可访问性限制。</b>Yu 2022、Fang 2023a、Fang 2023b 三篇只读到摘要，其中的配位数、t₊ 数值和具体条件未能核实，因此本站没有引用它们的具体数值。</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- ===================== BIBLIOGRAPHY ===================== -->
+<section class="ch" id="bibsec" data-spine="">
+<div class="col">
+<div class="ch-head"><span class="k">Reference · Annotated Bibliography</span><h2>注释文献</h2><p class="q">所有 DOI 都通过 Crossref 解析核对过。“全文”表示本站读过开放获取的接收稿或出版稿；“摘要”表示只读到摘要和二手转述。</p></div>
+<label for="bibq" class="eyebrow">搜索作者、题目、关键词（当前 <span id="bibq-n"></span> 条）</label>
+<input id="bibq" class="search" type="search" placeholder="例如：XPCS、Mistry、limiting current、PPM">
+<div class="bib" id="bib">
+<article id="b-mistry22"><p class="meta"><span class="pill p0">P0</span><span class="pill">全文</span>2022 · J. Electrochem. Soc. 169, 040524</p><p class="t">Effect of Solvent Motion on Ion Transport in Electrolytes</p><p class="meta">A. Mistry, L. S. Grundy, D. M. Halat, J. Newman, N. P. Balsara, V. Srinivasan · <a href="https://doi.org/10.1149/1945-7111/ac6329">10.1149/1945-7111/ac6329</a></p><p class="ann">纯理论与数值工作。推导了溶剂速度散度方程、通电瞬间的 v₀ 表达式，以及 Li⁺ 在电极系中反向的判据。在 PEO/LiTFSI（90 °C，500 μm，0.3 mA/cm²，1.00 M 与 2.58 M）模型中证明，忽略 v₀ 会改变 Li⁺ 速度的符号。第 3、4 章的主要依据。</p></article>
+<article id="b-gall24"><p class="meta"><span class="pill p0">P0</span><span class="pill">全文</span>2024 · Cell Rep. Phys. Sci. 5, 101766</p><p class="t">Probing transference and field-induced polymer velocity in block copolymer electrolytes</p><p class="meta">M. D. Galluzzo, H.-G. Steinrück, C. J. Takacs, A. Mistry, L. S. Grundy, C. Cao, S. Narayanan, E. M. Dufresne, Q. Zhang, V. Srinivasan, M. F. Toney, N. P. Balsara · <a href="https://doi.org/10.1016/j.xcrp.2023.101766">10.1016/j.xcrp.2023.101766</a></p><p class="ann"><b>体系是 SEO 嵌段共聚物</b>（19–20 kg/mol，r = 0.08，90 °C），不是 PEO 均聚物。用外差 XPCS 测得聚合物速度从约 4.5 nm/s 衰减到 10 h 时的 0.65 nm/s；拟合 t₊⁰ ≈ 0.7，与电化学值（&lt; 0.3）不一致，作者归因于单溶剂近似失效。原文电场单位的提取不确定，本站未引用其场强数值。</p></article>
+<article id="b-abdo25"><p class="meta"><span class="pill p0">P0</span><span class="pill">全文</span>2025 · J. Electrochem. Soc. 172, 020510</p><p class="t">Mapping Spatiotemporal Solvent Velocity from Measured Concentration Gradients in a Polarized Electrolyte</p><p class="meta">E. E. Abdo, V. Patel（共同一作）, A. Mistry, C. J. Takacs, N. P. Balsara · <a href="https://doi.org/10.1149/1945-7111/adacb0">10.1149/1945-7111/adacb0</a></p><p class="ann"><b>SEO</b>(5.1–12.8 kg/mol)/LiTFSI，r = 0.04，90 °C，L = 2.08 mm，i = 0.058 mA/cm²。由 operando X 射线浓度图经溶剂连续性方程重建 v₀，中部从 1.08 降到 0.61 nm/s。只有取 t₊⁰ = 0.05 才能同时拟合 c 与 v₀。文中给出 PEO/LiTFSI 密度拟合式，本站据此计算 V̄。</p></article>
+<article id="b-lee25"><p class="meta"><span class="pill p0">P0</span><span class="pill">全文</span>2025 · ACS Energy Lett. 10, 831–836</p><p class="t">Toward Optimization of Polymer Electrolytes by Electrochemical Characterization: Poly(pentyl malonate) versus Poly(ethylene oxide)</p><p class="meta">J. Lee, Z. J. Hoffman（共同一作）, S. Chakraborty, V. Patel, N. P. Balsara · <a href="https://doi.org/10.1021/acsenergylett.4c03525">10.1021/acsenergylett.4c03525</a></p><p class="ann">90 °C，Li–In 对称电池，PEO 为 275 kg/mol。PPM 最大 i_lim·L = 0.085 mA/cm（r = 0.08），PEO 为 0.050 mA/cm（r = 0.14）：1.7 倍极限电流、1.6 倍更低的电势降、约 3 倍的稳态 Li⁺ 速度。提出以 i_lim·L 对 Φ_lim/L 作图作为评价标准。</p></article>
+<article id="b-pesko17"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文</span>2017 · J. Electrochem. Soc. 164, E3569–E3575</p><p class="t">Negative Transference Numbers in Poly(ethylene oxide)-Based Electrolytes</p><p class="meta">D. M. Pesko, K. Timachova, R. Bhattacharya, M. C. Smith, I. Villaluenga, J. Newman, N. P. Balsara · <a href="https://doi.org/10.1149/2.0581711jes">10.1149/2.0581711jes</a></p><p class="ann">5 kg/mol PEO/LiTFSI，90 °C，r = 0.01–0.30。组合四种电化学测量得到 t₊⁰，r = 0.16 时低至 −0.38；t₊,NMR 为 0.17–0.25。把负值归因于 Li(TFSI)₂⁻ 等带电团簇。</p></article>
+<article id="b-pesko18"><p class="meta"><span class="pill">补充</span><span class="pill">全文</span>2018 · J. Electrochem. Soc. 165, A3186–A3194</p><p class="t">Comparing Cycling Characteristics of Symmetric Lithium-Polymer-Lithium Cells with Theoretical Predictions</p><p class="meta">D. M. Pesko, Z. Feng, S. Sawhney, J. Newman, V. Srinivasan, N. P. Balsara · <a href="https://doi.org/10.1149/2.0921813jes">10.1149/2.0921813jes</a></p><p class="ann">Table 2 汇总了 14 个浓度下 5 kg/mol PEO/LiTFSI（90 °C）的 c、D、κ、t₊⁰、热力学因子与 t₊,ss，是第 1 章数据图和第 4 章预设值的来源。</p></article>
+<article id="b-vill18"><p class="meta"><span class="pill">补充</span><span class="pill">全文</span>2018 · J. Electrochem. Soc. 165, A2766–A2773</p><p class="t">Negative Stefan-Maxwell Diffusion Coefficients and Complete Electrochemical Transport Characterization of Homopolymer and Block Copolymer Electrolytes</p><p class="meta">I. Villaluenga, D. M. Pesko, K. Timachova, Z. Feng, J. Newman, V. Srinivasan, N. P. Balsara · <a href="https://doi.org/10.1149/2.0641811jes">10.1149/2.0641811jes</a></p><p class="ann">给出 PEO 与 SEO 的完整传输表征和 Stefan–Maxwell 扩散系数，D₋₀ 在部分浓度下为负。文中仍假设高分子量聚合物基本不动，这一假设后来被 2022 年的溶剂速度框架修正。</p></article>
+<article id="b-halat22"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文</span>2022 · Phys. Rev. Lett. 128, 198002</p><p class="t">Electric-Field-Induced Spatially Dynamic Heterogeneity of Solvent Motion and Cation Transference in Electrolytes</p><p class="meta">D. M. Halat, C. Fang（共同一作）, D. Hickson, A. Mistry, J. A. Reimer, N. P. Balsara, R. Wang · <a href="https://doi.org/10.1103/PhysRevLett.128.198002">10.1103/PhysRevLett.128.198002</a></p><p class="ann"><b>液态</b> LiTFSI/四甘醇二甲醚，30 °C。eNMR 测得溶剂与阳离子同向漂移；r ≈ 0.08 时 t₊⁰ ≈ 0；eNMR 与 MD 的 t₊⁰ 定量一致。不能直接用来推断聚合物的速度。</p></article>
+<article id="b-yu22"><p class="meta"><span class="pill p1">P1</span><span class="pill">摘要</span>2022 · ACS Energy Lett. 7, 3791–3797</p><p class="t">A Practical Polymer Electrolyte for Lithium and Sodium Batteries: Poly(pentyl malonate)</p><p class="meta">X. Yu, Z. J. Hoffman, J. Lee, C. Fang, L. A. Gido, V. Patel, H. B. Eitouni, R. Wang, N. P. Balsara · <a href="https://doi.org/10.1021/acsenergylett.2c02128">10.1021/acsenergylett.2c02128</a></p><p class="ann">首次报道 PPM。摘要：在相同盐浓度和温度下，Li 对称电池中 PPM/LiTFSI 的长度归一化极限电流约为 PEO/LiTFSI 的 2.8 倍；相对 Li⁺/Li 稳定到 5 V；有 Na 对称电池的初步数据。其中的电导率与 t₊ 数值本站未能核实。</p></article>
+<article id="b-fang23a"><p class="meta"><span class="pill p1">P1</span><span class="pill">摘要</span>2023 · ACS Macro Lett. 12, 612–618</p><p class="t">Molecular Origin of High Cation Transference in Mixtures of Poly(pentyl malonate) and Lithium Salt</p><p class="meta">C. Fang, X. Yu, S. Chakraborty, N. P. Balsara, R. Wang · <a href="https://doi.org/10.1021/acsmacrolett.3c00041">10.1021/acsmacrolett.3c00041</a></p><p class="ann">MD：PEO 的溶剂化笼主要含 1 条链，Li⁺–聚合物强关联；PPM 的笼含多条链，关联弱，因此阳离子迁移数高。文中还提出了一种假想的、可能优于两者的溶剂化笼。</p></article>
+<article id="b-fang23b"><p class="meta"><span class="pill p1">P1</span><span class="pill">摘要</span>2023 · ACS Macro Lett. 12, 1244–1250</p><p class="t">Ion Solvation Cage Structure in Polymer Electrolytes Determined by Combining X-ray Scattering and Simulations</p><p class="meta">C. Fang, S. Chakraborty, Y. Li, J. Lee, N. P. Balsara, R. Wang · <a href="https://doi.org/10.1021/acsmacrolett.3c00430">10.1021/acsmacrolett.3c00430</a></p><p class="ann">WAXS + MD：加盐后出现新的低角峰。PPM 中它来自笼与阴离子的长程电荷有序，PEO 中来自同一个笼周围阴离子之间的关联。TFSI⁻ 存在于 PPM 笼中，但被 PEO 笼排斥。</p></article>
+<article id="b-fang23c"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文</span>2023 · JACS Au 3, 306–315</p><p class="t">Elucidating the Molecular Origins of the Transference Number in Battery Electrolytes Using Computer Simulations</p><p class="meta">C. Fang, A. Mistry, V. Srinivasan, N. P. Balsara, R. Wang · <a href="https://doi.org/10.1021/jacsau.2c00590">10.1021/jacsau.2c00590</a></p><p class="ann"><b>Perspective，体系为 LiTFSI/四甘醇二甲醚</b>，不涉及 PPM。比较溶剂系 Onsager、质心系 Onsager 与团簇 Nernst–Einstein 三种方法：前两者换算后一致；CNE 在 r &gt; 0.10 失效。</p></article>
+<article id="b-shah24"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文 + SI</span>2024 · Nat. Mater. 23, 664–669</p><p class="t">Nanosecond solvation dynamics in a polymer electrolyte for lithium batteries</p><p class="meta">N. J. Shah, C. Fang（共同一作）, N. C. Osti, E. Mamontov, X. Yu, J. Lee, H. Watanabe, R. Wang, N. P. Balsara · <a href="https://doi.org/10.1038/s41563-024-01834-y">10.1038/s41563-024-01834-y</a></p><p class="ann">PPM/LiTFSI 的 QENS（BASIS，363 K）+ MD（OPLS-AA，430 K）。溶剂化平均时间约 1 ns，表现为粘性 Rouse 平台；Li⁺ 由来自两条链的羰基氧加一个阴离子配位。SI 给出 r = 0.063 时的 i_lim·L：PPM 0.07、PEO 0.03 mA/cm，并给出 PPM 的合成方法。</p></article>
+<article id="b-patel25"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文</span>2025 · J. Electrochem. Soc. 172, 120517</p><p class="t">Ion Transport in Concentrated Crosslinked Solid Polymer Electrolytes</p><p class="meta">V. Patel, O. Lee, S. Makkar, N. P. Balsara · <a href="https://doi.org/10.1149/1945-7111/ae285f">10.1149/1945-7111/ae285f</a> · eScholarship 9h442843</p><p class="ann">期刊论文（不是学位论文）。xPEO（PEGDA 700）/LiTFSI，60 °C，Li–Li 电池。在浓溶液理论中加入 Gent 弹性项后，能解释实测 i_lim·L = 3.2×10⁻⁴ mA/cm 处的电势陡升。</p></article>
+<article id="b-abdo26"><p class="meta"><span class="pill p1">P1</span><span class="pill">全文（接收稿）</span>2026 · ACS Energy Lett. 11, 3464–3470</p><p class="t">Conductivity-Driven Origin of the Limiting Current in Concentrated Electrolytes</p><p class="meta">E. E. Abdo, S. A. Hesse, A. V. Dudchenko, R. J. Arthur, C. J. Takacs, N. P. Balsara · <a href="https://doi.org/10.1021/acsenergylett.6c00220">10.1021/acsenergylett.6c00220</a></p><p class="ann">PEO(275 kg/mol)/LiTFSI，2.98 M，90 °C，Li–In，1.18 mA/cm²。Operando X 射线显示电势发散来自剥离侧电导率骤降，欧姆项约 29 min 后超过浓差项；没有观察到结晶。</p></article>
+<article id="b-jana26"><p class="meta"><span class="pill">P2</span><span class="pill">全文</span>2026 · Macromolecules 59, 8234–8242</p><p class="t">Universal Relationship between Limiting Current and Electrochemical Transport Properties in Malonate-Based Polymer Electrolytes</p><p class="meta">R. Jana, L. A. Gido, V. Patel, E. E. Abdo, S. Makkar, M. S. Bowen, N. P. Balsara · <a href="https://doi.org/10.1021/acs.macromol.6c00686">10.1021/acs.macromol.6c00686</a></p><p class="ann">7 种聚合物，r = 0.08，90 °C。i_lim·L 与 κρ₊ 不相关，而与 i–Φ 线性段的斜率 σ 成正比；Φ_lim ≈ 0.304 ± 0.031 V。提供 PPM 与 PEO 同条件的 κ、ρ₊、Tg。</p></article>
+<article id="b-lee24"><p class="meta"><span class="pill">补充</span><span class="pill">元数据</span>2024 · ACS Energy Lett. 9, 1796–1802</p><p class="t">Lee, Kim, Hoffman, Chen, Balsara：PEO/LiTFSI 从稀极限到溶解度极限的极限电流</p><p class="meta"><a href="https://doi.org/10.1021/acsenergylett.4c00480">10.1021/acsenergylett.4c00480</a></p><p class="ann">Li–In 电池；i_lim·L 在 r ≈ 0.14 处有尖锐最大值 0.05 mA/cm，与浓溶液理论一致。题目以 Crossref 为准，本站未读全文。</p></article>
+<article id="b-hoff23"><p class="meta"><span class="pill">补充</span><span class="pill">全文</span>2023 · J. Electrochem. Soc. 170, 120524</p><p class="t">Hoffman, Mistry, Srinivasan, Balsara：实测 Sand 时间与浓溶液理论预测的比较</p><p class="meta"><a href="https://doi.org/10.1149/1945-7111/ad1470">10.1149/1945-7111/ad1470</a></p><p class="ann">给出常物性的 i_L 与 Sand 时间公式（第 8 章），以及在 i_L 处发散的广义 Sand 时间；体系为 0.47 M PEO/LiTFSI，90 °C。</p></article>
+<article id="b-grib19"><p class="meta"><span class="pill">补充</span><span class="pill">元数据</span>2019 · J. Electrochem. Soc. 166, A3228–A3234</p><p class="t">Gribble et al.：PEO/LiTFSI 极限电流与浓溶液理论（无可调参数）</p><p class="meta"><a href="https://doi.org/10.1149/2.0391914jes">10.1149/2.0391914jes</a></p><p class="ann">Li–Li 电池，90 °C。</p></article>
+<article id="b-shah19"><p class="meta"><span class="pill">补充</span><span class="pill">元数据</span>2019 · J. Phys. Chem. C 123, 23872–23881</p><p class="t">Shah, Kim, Nguyen, Srinivasan, Balsara：C8-DMC/LiFSI 的非单调极限电流</p><p class="meta"><a href="https://doi.org/10.1021/acs.jpcc.9b07121">10.1021/acs.jpcc.9b07121</a></p><p class="ann">低浓度由耗尽限制，高浓度由溶解度极限（2.03 mol/kg）限制。</p></article>
+<article id="b-abdo25b"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2025 · J. Phys. Chem. C 129, 20112–20122</p><p class="t">Abdo et al.：r = 0.20 PEO/LiTFSI 在约 50% i_lim 下的电势分解</p><p class="meta"><a href="https://doi.org/10.1021/acs.jpcc.5c05969">10.1021/acs.jpcc.5c05969</a></p><p class="ann">0.29 mA/cm²（i_lim ≈ 0.55 mA/cm²）时稳态浓差过电势是欧姆项的 7 倍。</p></article>
+<article id="b-hick25"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2025 · J. Electrochem. Soc. 172, 040528</p><p class="t">Hickson &amp; Balsara：四甘醇二甲醚电解质中电化学法与 eNMR 的 t₊⁰ 对比</p><p class="meta"><a href="https://doi.org/10.1149/1945-7111/adca04">10.1149/1945-7111/adca04</a></p><p class="ann">30 °C：−1.02 ± 1.11 对 0.25 ± 0.04，但两者预测的电流–电压曲线相近。</p></article>
+<article id="b-he25"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2025 · ACS Appl. Polym. Mater. 7, 5960–5968</p><p class="t">He &amp; Balsara：聚合物电解质电导率与电流分数的“Newman 上界”</p><p class="meta"><a href="https://doi.org/10.1021/acsapm.5c00288">10.1021/acsapm.5c00288</a></p><p class="ann">κ = 2.0(1/ρ₊ − 1)（mS/cm），由 30 种 Li、Na 聚合物电解质拟合。</p></article>
+<article id="b-lee26"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2026 · ACS Energy Lett. 11, 1618–1622</p><p class="t">Lee, Srinivasan, Balsara：电流升至极限电流可永久降低界面电阻</p><p class="meta"><a href="https://doi.org/10.1021/acsenergylett.5c02421">10.1021/acsenergylett.5c02421</a></p><p class="ann">聚合物/Li–In 界面电阻从约 15 降到约 1 Ω·cm²，PEO 与 PPM（r = 0.08）均适用。</p></article>
+<article id="b-gido25"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2025 · Macromolecules 58, 6555–6562</p><p class="t">Gido, Schaible, Zhu, Balsara：SEO/LiTFSI 从 r = 0.01 到 0.50 的极限电流</p><p class="meta"><a href="https://doi.org/10.1021/acs.macromol.5c00929">10.1021/acs.macromol.5c00929</a></p><p class="ann">层状结构在正极附近溶胀、负极附近去溶胀，浓溶液理论无法描述。</p></article>
+<article id="b-gido26"><p class="meta"><span class="pill">补充</span><span class="pill">摘要</span>2026 · ACS Appl. Energy Mater. 9, 10749–10757</p><p class="t">Gido et al.：灌入 PPM 的交联 PEO 与 Li 金属</p><p class="meta"><a href="https://doi.org/10.1021/acsaem.6c00856">10.1021/acsaem.6c00856</a></p><p class="ann">循环电流是对照组的 4–20 倍；单向沉积 140 h 不失效。</p></article>
+<article id="b-newman"><p class="meta"><span class="pill">教材</span>2021 · Wiley, 4th ed.</p><p class="t">Electrochemical Systems</p><p class="meta">J. Newman, N. P. Balsara</p><p class="ann">浓溶液理论、迁移数、参考系与极限电流的标准教材（第 4 版由 Newman 与 Balsara 合著）。第 1、4、8 章的方程以它为准。</p></article>
+<article id="b-stein20"><p class="meta"><span class="pill">补充</span><span class="pill">仅引用信息</span>2020 · Energy Environ. Sci. 13, 4312</p><p class="t">Steinrück et al.：PEO/LiTFSI 的 XPCS 聚合物速度</p><p class="meta"><a href="https://doi.org/10.1039/d0ee02193h">10.1039/d0ee02193h</a></p><p class="ann">据 Galluzzo 2024 转述：在 PEO/LiTFSI 中，测得的 PEO 速度与电化学迁移数没有显著矛盾。本站未读原文。</p></article>
+</div>
+</div>
+</section>
+
+<!-- ===================== GLOSSARY ===================== -->
+<section class="ch" id="glossary" data-spine="">
+<div class="col">
+<div class="ch-head"><span class="k">Reference · Glossary</span><h2>术语表</h2></div>
+<label for="glq" class="eyebrow">搜索术语（当前 <span id="glq-n"></span> 条）</label>
+<input id="glq" class="search" type="search" placeholder="例如：迁移数、Rouse、Bruce–Vincent">
+<dl class="gloss" id="gl">
+<dt>迁移数 t₊⁰<small>Transference number (solvent frame)</small></dt><dd>没有浓度梯度时，相对溶剂速度由阳离子携带的电流分数，t₊⁰ = (v₊ − v₀)/(v₊ − v₋)。可以为负。</dd>
+<dt>电流分数 ρ₊<small>Current fraction (Bruce–Vincent, t₊,ss)</small></dt><dd>直流极化稳态电流与初始电流之比（经界面电阻校正）。只有在理想稀溶液中才等于 t₊⁰。</dd>
+<dt>热力学因子<small>Thermodynamic factor, 1 + d ln γ± / d ln m</small></dt><dd>描述盐活度系数随浓度的变化，由浓差电池测得。</dd>
+<dt>溶剂速度 v₀<small>Solvent velocity</small></dt><dd>在干聚合物电解质中指聚合物链段的粗粒化平均速度。</dd>
+<dt>偏摩尔体积 V̄<small>Partial molar volume</small></dt><dd>恒温恒压下加入 1 mol 盐时体积的增量；与 V̄₀ 一起满足 cV̄ + c₀V̄₀ = 1。</dd>
+<dt>参考系<small>Reference frame</small></dt><dd>定义速度的基准：溶剂系（v₀ = 0）、电极/实验室系、质心系（Σρᵢvᵢ = 0）、体积平均系等。</dd>
+<dt>浓差极化<small>Concentration polarization</small></dt><dd>直流下由于阴离子不参与电极反应，在电极附近形成的盐浓度梯度。</dd>
+<dt>极限电流<small>Limiting current, i_lim</small></dt><dd>仍能达到稳态电压的最大电流密度。常用 i_lim·L 比较不同厚度的样品。</dd>
+<dt>Sand 时间<small>Sand's time</small></dt><dd>电流高于 i_lim 时，电极处浓度降为零所需的时间。</dd>
+<dt>溶剂化笼<small>Solvation cage / shell</small></dt><dd>Li⁺ 第一配位壳层中的原子集合。PEO：单链醚氧；PPM：多链羰基氧加阴离子。</dd>
+<dt>溶剂化寿命 τs<small>Solvation lifetime</small></dt><dd>某个配位单体留在给定 Li⁺ 笼中的平均时间，PPM 中约 1 ns。</dd>
+<dt>链段弛豫<small>Segmental relaxation</small></dt><dd>聚合物局部构象的松弛，受 Tg 控制。</dd>
+<dt>Rouse 模型 / 粘性 Rouse<small>Rouse / sticky Rouse</small></dt><dd>非缠结链的珠簧模型；“粘性”版本中临时交联点（这里是 Li⁺）在其寿命内阻碍链段运动。</dd>
+<dt>QENS<small>Quasielastic neutron scattering</small></dt><dd>测量 ps–ns、Å–nm 尺度上原子（主要是 H）运动的中子散射技术。</dd>
+<dt>XPCS<small>X-ray photon correlation spectroscopy</small></dt><dd>用相干 X 射线散射的强度涨落测动力学；外差模式可测漂移速度大小。</dd>
+<dt>eNMR<small>Electrophoretic NMR</small></dt><dd>在 PFG-NMR 中加直流电场，由相位偏移测各物种的漂移速度。</dd>
+<dt>PFG-NMR<small>Pulsed-field-gradient NMR</small></dt><dd>测自扩散系数。</dd>
+<dt>WAXS / SAXS<small>Wide- / small-angle X-ray scattering</small></dt><dd>分别测 Å–nm 局部结构和 nm–100 nm 的相结构。</dd>
+<dt>Onsager 输运系数<small>Onsager transport coefficients, Lᵢⱼ</small></dt><dd>由集体位移关联定义的系数，包含离子间的交叉关联；κ = F²(L⁺⁺ − 2L⁺⁻ + L⁻⁻)。</dd>
+<dt>Green–Kubo 关系<small>Green–Kubo relation</small></dt><dd>把输运系数写成平衡态时间关联函数的积分。</dd>
+<dt>Nernst–Einstein 近似<small>Nernst–Einstein approximation</small></dt><dd>假设离子独立运动，由自扩散系数计算电导率；忽略关联。</dd>
+<dt>RDF 与配位数<small>Radial distribution function, coordination number</small></dt><dd>g(r) 描述距离分布；把 g(r) 积分到第一个极小值得到配位数。</dd>
+<dt>MSD<small>Mean squared displacement</small></dt><dd>⟨|r(t) − r(0)|²⟩，长时斜率 / 6 = 自扩散系数。</dd>
+<dt>Stefan–Maxwell 扩散系数<small>Stefan–Maxwell diffusivities, D₊₀ D₋₀ D₊₋</small></dt><dd>描述物种对之间摩擦的系数，与 κ、D、t₊⁰ 一一对应；可以为负。</dd>
+<dt>解耦指数<small>Decoupling index, R_τ</small></dt><dd>Angell 定义的结构弛豫时间与电导弛豫时间之比，用于判断离子运动是否与基体解耦。</dd>
+<dt>超离子导体<small>Superionic conductor</small></dt><dd>离子电导率接近液体、离子运动与骨架解耦的固体，通常是无机材料。</dd>
+<dt>交联网络<small>Crosslinked network</small></dt><dd>通过化学键连成整体的聚合物，不能长程流动，形变储存为弹性应力。</dd>
+<dt>Li–In 合金电极<small>Lithium–indium alloy electrode</small></dt><dd>在极限电流测量中替代 Li 金属以抑制枝晶。</dd>
+<dt>SEO<small>Polystyrene-b-poly(ethylene oxide)</small></dt><dd>PS 与 PEO 的嵌段共聚物，PS 提供机械强度，PEO 导离子。</dd>
+<dt>PEGDA / xPEO<small>Poly(ethylene glycol) diacrylate / crosslinked PEO</small></dt><dd>UV 交联得到的 PEO 网络。</dd>
+</dl>
+</div>
+</section>
+
+<!-- ===================== NOTES ===================== -->
+<section class="ch" id="notes" data-spine="">
+<div class="col">
+<div class="ch-head"><span class="k">Reference · Corrections</span><h2>对原始学习提纲的更正与补充</h2><p class="q">核对文献时发现，原始提纲中有几处表述需要修正。</p></div>
+<div class="prose">
+<ol>
+  <li><b>2024 Cell Rep. Phys. Sci.（XPCS）与 2025 JES（速度场重建）研究的是 SEO 嵌段共聚物</b>，不是 PEO 均聚物。它们的聚合物速度数值不能直接当作 PEO/LiTFSI 的数据。</li>
+  <li><b>2022 PRL（eNMR + MD）研究的是液态 LiTFSI/四甘醇二甲醚</b>，提纲中“不要假设液态电解质的 eNMR 结果确立了聚合物速度”的提醒正是针对这一篇。</li>
+  <li><b>2023 JACS Au 是一篇 Perspective，案例是四甘醇二甲醚</b>，不涉及 PPM。</li>
+  <li><b>“Ion Transport in Concentrated Crosslinked Solid Polymer Electrolytes” 是 2025 年的 JES 期刊论文</b>（DOI 10.1149/1945-7111/ae285f），eScholarship 9h442843 是它的开放获取版本，不是学位论文。</li>
+  <li><b>1.7 倍 / 1.6 倍</b>的结论已核实，但需要补充条件：90 °C，比较的是两者各自的最优浓度（PPM r = 0.08、PEO r = 0.14），使用 Li–In 合金对称电池，PEO 为 275 kg/mol。2022 年论文的“约 2.8 倍”是另一组条件下的比较。</li>
+  <li><b>负迁移数的浓度范围</b>：提纲引用的 2017 年论文正文写的是 r ≥ 0.12，但同组 2018 年的汇总表在 r = 0.12 给出正值。</li>
+  <li><b>Li⁺ 在 t₊⁰ &lt; 0 时的方向</b>：对 PEO/LiTFSI，计入聚合物运动后 Li⁺ 在实验室参考系中仍沿电流方向运动（Mistry 2022）。</li>
+  <li><b>PPM 的超离子分类</b>：本站检索到的全文没有这样描述 PPM；现有证据（τs ≈ 链段时间，加盐升高 Tg）指向耦合传输。</li>
+  <li><b>2026 年极限电流论文</b>（Abdo et al.）的结论已核实：电势急剧上升与剥离电极附近的电导率下降有关，而不是达到盐溶解度极限。补充一点：该实验也使用 Li–In 电极，只研究了 r = 0.20 一个浓度。</li>
+</ol>
+</div>
+</div>
+</section>
+
+<footer><div class="col"><p>本站为学习用途整理，2026 年 11 月编写。所有实测数值均注明了来源与条件；标为“示意”的图形是讲解用模型，不是论文数据。文献可访问性有限（部分 ACS 论文只读到摘要），使用具体数值前请回到原文核对。</p></div></footer>
+</main>
+</div>
+
+<script>
+/* Time-scale ladder. k: m = measured (or measured window), t = theory/model value, i = order-of-magnitude estimate made on this page */
+window.TS_DATA=[
+ {label:'水溶液中溶剂化交换（对照）',lo:1e-12,hi:1e-11,k:'m',note:'Shah, Fang et al. 2024 Nat. Mater. 文中引用的水溶液溶剂化时间尺度：约 1–10 ps'},
+ {label:'QENS (BASIS) 可观测窗口',lo:2e-11,hi:1e-9,k:'m',note:'BASIS 背散射谱仪 ±100 μeV、分辨率 3.6 μeV，约对应 0.02–1 ns（Nat. Mater. 2024 SI）'},
+ {label:'PPM 中 Li⁺ 溶剂化寿命 τs',lo:7e-10,hi:1.4e-9,k:'m',note:'QENS（363 K）与 MD（430 K）一致给出平均约 1 ns；分布较宽，可达数 ns；外推到单个单体约 0.22 ns'},
+ {label:'PPM 最快 Rouse（链段）弛豫',lo:1e-9,hi:2e-9,k:'m',note:'τ₂（粘性平台结束）接近但小于 τR,N；作者取链段时间约 1 ns 量级'},
+ {label:'PPM 整链 Rouse 时间（估算）',lo:3e-6,hi:7e-6,k:'t',note:'作者按链段时间约 1 ns 估算整链 Rouse 时间约 5000 ns'},
+ {label:'扩散 1 nm（D≈10⁻⁷ cm²/s）',lo:3e-8,hi:8e-8,k:'i',note:'本页估算 t ≈ x²/(2D)，D 取 PEO/LiTFSI 盐扩散系数量级；仅示意'},
+ {label:'eNMR 漂移观测时间 Δ',lo:2e-2,hi:2e-1,k:'m',note:'eNMR 在数十到数百 ms 内累积漂移相位；Halat et al. 2022 PRL 使用 50 ms 双极脉冲'},
+ {label:'X 射线透射成像帧间隔',lo:1.5e2,hi:2.5e2,k:'m',note:'Abdo et al. 2026 ACS Energy Lett.：约每 3.4 min 一帧，空间分辨率 2 μm'},
+ {label:'500 μm PEO 电池中浓差极化达稳态',lo:2e3,hi:7.2e3,k:'t',note:'Mistry et al. 2022 JES 模型：v₀ 在约 2 h 后趋近于 0（90 °C，L = 500 μm）'},
+ {label:'XPCS 跟踪聚合物速度（SEO）',lo:1e3,hi:3.6e4,k:'m',note:'Galluzzo et al. 2024：聚合物速度从约 4.5 nm/s 降到 10 h 时的 0.65 nm/s（SEO/LiTFSI，r=0.08，90 °C）'},
+ {label:'扩散穿越 L = 500 μm',lo:1.5e4,hi:3e4,k:'i',note:'本页估算 L²/D，D ≈ 1×10⁻⁷ cm²/s；仅示意'}
+];
+/* Cartoon coordination states (NOT molecular-dynamics trajectories) */
+window.HOP={
+ peo:{
+  chains:[{name:'PEO 链 A',pts:[[40,200],[100,175],[150,190],[180,150],[210,110],[250,98],[292,118],[312,160],[300,205],[350,232],[400,222],[460,205],[520,182],[600,170]]},
+          {name:'PEO 链 B',pts:[[40,55],[120,38],[200,48],[300,40],[380,70],[440,108],[500,92],[600,60]]}],
+  O:[[180,150],[210,110],[250,98],[292,118],[312,160],[150,190],[400,222],[460,205],[520,182],[380,70],[440,108],[500,92]],
+  tfsi:[[575,240]],
+  steps:[
+   {t:'单链“类冠醚”溶剂化笼',li:[246,148],coord:[0,1,2,3,4],d:'Li⁺ 被同一条 PEO 链上的多个醚氧包围（Fang et al. 2023 ACS Macro Lett. 与 2026 Macromolecules 的描述）；TFSI⁻ 被排斥在笼外。图中氧原子个数只是示意。'},
+   {t:'笼内配位重组',li:[238,140],coord:[5,0,1,2,3],d:'一个醚氧离开、同一条链上相邻的醚氧补位。Li⁺ 的局部环境改变，但仍属于同一条链。'},
+   {t:'沿链迁移',li:[455,170],coord:[6,7,8],d:'通过连续的局部重组，Li⁺ 可沿链移动。由于笼基本只由一条链构成，Li⁺ 与这条链的运动强关联。'},
+   {t:'链间转移',li:[470,140],coord:[7,10,11],d:'Li⁺ 转到另一条链的醚氧上。MD 研究认为 PEO 中单链笼导致 Li⁺–聚合物强关联，这是 PEO 阳离子迁移数偏低的分子来源之一。'}]},
+ ppm:{
+  chains:[{name:'PPM 链 A',pts:[[30,240],[120,228],[200,196],[250,178],[300,214],[380,244],[620,250]]},
+          {name:'PPM 链 B',pts:[[30,40],[150,58],[240,78],[300,74],[360,70],[470,64],[620,40]]},
+          {name:'PPM 链 C',pts:[[620,140],[520,186],[420,196],[370,176],[350,232],[300,262],[120,268]]}],
+  O:[[252,152],[232,206],[284,100],[334,96],[356,154],[402,212],[150,222],[470,88],[530,208],[190,88]],
+  steps:[
+   {t:'多链溶剂化笼',li:[296,134],coord:[0,2,3,4],tfsi:[[300,190]],d:'Li⁺ 主要由羰基氧配位，酯基骨架氧的贡献可忽略；最常见的环境是来自两条不同 PPM 链的氧加一个阴离子（Shah, Fang et al. 2024 Nat. Mater.，r = 0.10 的 MD）。'},
+   {t:'笼交换（约 1 ns）',li:[306,142],coord:[0,2,4,5],tfsi:[[300,196]],d:'一个羰基氧离开、另一个加入。MD 中单体在同一溶剂化结构内的平均停留时间约 1 ns，与 QENS 观测到的“粘性 Rouse”平台起点 τ₁ 吻合。'},
+   {t:'临时交联',li:[306,142],coord:[0,2,4,5],tfsi:[[300,196]],d:'一个 Li⁺ 同时连接多条链，相当于临时交联点。它使链段运动变慢（盐使 Tg 升高），这也是 PPM 电导率低于 PEO 的原因之一。'},
+   {t:'换链伙伴',li:[340,150],coord:[3,4,5],tfsi:[[420,120]],d:'笼的链组成不断变化，Li⁺ 不长期“绑定”于任何一条链，因此 Li⁺ 与聚合物的运动关联弱，阳离子迁移数高（Fang et al. 2023 ACS Macro Lett.）。'}]}
+};
+</script>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS='http://www.w3.org/2000/svg';
+function S(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+const redraw=[];const onTheme=f=>redraw.push(f);
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>redraw.forEach(f=>f()));}catch(e){}
+new MutationObserver(()=>redraw.forEach(f=>f())).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const v=id=>parseFloat($('#'+id).value);
+const setO=(id,t)=>{const o=$('#'+id+'-o');if(o)o.textContent=t;};
+function bind(ids,fn){ids.forEach(id=>{const e=$('#'+id);if(e)e.addEventListener('input',fn);});fn();}
+function seg(groupSel,fn){const g=$(groupSel);if(!g)return;g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',g).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));fn(b.dataset.v);});}
+const segVal=sel=>{const b=$(sel+' button[aria-pressed="true"]');return b?b.dataset.v:null;};
+function fmtSpeed(cms){ // cm/s -> readable
+  const a=Math.abs(cms);
+  if(a===0)return '0';
+  if(a<1e-4)return (cms*1e7).toFixed(a*1e7<10?2:1)+' nm/s';
+  return (cms*1e4).toFixed(a*1e4<10?2:1)+' μm/s';
+}
+function fit(canvas){const r=canvas.getBoundingClientRect();const d=window.devicePixelRatio||1;canvas.width=Math.max(1,Math.round(r.width*d));canvas.height=Math.max(1,Math.round(r.height*d));const c=canvas.getContext('2d');c.setTransform(d,0,0,d,0,0);return {c,w:r.width,h:r.height};}
+
+/* ================= level switch ================= */
+const lvBtns=$$('.levels button');
+function setLevel(l){document.body.dataset.maxLevel=l;lvBtns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l?'true':'false'));try{localStorage.setItem('bpe-level',l);}catch(e){}}
+lvBtns.forEach(b=>b.addEventListener('click',()=>setLevel(b.dataset.l)));
+let saved=null;try{saved=localStorage.getItem('bpe-level');}catch(e){}
+setLevel(saved||'3');
+
+/* ================= nav highlight ================= */
+const secs=$$('main section[id]');
+const railLinks=$$('.rail a');const spineLinks=$$('.spine a');
+const msel=$('#mnav');
+if(msel)msel.addEventListener('change',()=>{location.hash=msel.value;});
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(!e.isIntersecting)return;const id=e.target.id;
+    railLinks.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+    const sp=e.target.dataset.spine;
+    spineLinks.forEach(a=>a.classList.toggle('on',sp&&a.dataset.s&&sp.split(' ').includes(a.dataset.s)));
+    if(msel&&[...msel.options].some(o=>o.value===id))msel.value=id;
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+
+/* ================= quizzes ================= */
+$$('.quiz .qq').forEach(q=>{
+  const ans=q.dataset.a;const why=$('.why',q);
+  $$('.opts button',q).forEach(b=>b.addEventListener('click',()=>{
+    $$('.opts button',q).forEach(x=>x.classList.remove('right','wrong'));
+    b.classList.add(b.dataset.k===ans?'right':'wrong');
+    if(b.dataset.k!==ans){const r=$('.opts button[data-k="'+ans+'"]',q);if(r)r.classList.add('right');}
+    if(why)why.hidden=false;
+  }));
+});
+
+/* ================= search filters ================= */
+function filter(inputId,itemsSel){const inp=$('#'+inputId);if(!inp)return;const cnt=$('#'+inputId+'-n');
+  const run=()=>{const q=inp.value.trim().toLowerCase();let n=0;$$(itemsSel).forEach(it=>{const hit=!q||it.textContent.toLowerCase().includes(q);it.classList.toggle('hide',!hit);
+      const dd=it.tagName==='DT'?it.nextElementSibling:null;if(dd)dd.classList.toggle('hide',!hit);if(hit)n++;});if(cnt)cnt.textContent=n;};
+  inp.addEventListener('input',run);run();}
+filter('bibq','#bib article');
+filter('glq','#gl dt');
+
+/* ================= constants ================= */
+const F=96485.33, R=8.314462;
+const M_LI=6.94, M_TFSI=280.15, M_EO=44.05, M_SALT=287.09;
+
+/* species velocities in solvent frame (cm/s) */
+function solventFrame(i_Acm2,c_molcm3,tp){const U=i_Acm2/(F*c_molcm3);return {up:tp*U,um:-(1-tp)*U,U};}
+/* PEO/LiTFSI density fit quoted in Abdo et al. JES 2025: rho = -2.572 r^2 + 2.429 r + 1.129 (g/cm3) */
+function vols(r){const rho=-2.572*r*r+2.429*r+1.129, drho=-5.144*r+2.429, m=M_EO+r*M_SALT;
+  const Vm=m/rho;                       // cm3 per mol EO
+  const Vbar=M_SALT/rho-m*drho/(rho*rho); // partial molar volume of salt, cm3/mol
+  const c=r/Vm, c0=1/Vm, V0bar=(1-c*Vbar)/c0;
+  return {rho,c,c0,Vbar,V0bar};}
+/* velocities at t = 0+ (uniform composition) in three frames */
+function velocities(tp,r,i){const P=vols(r);const {up,um}=solventFrame(i,P.c,tp);
+  const v0e=P.Vbar*(1-tp)*i/F; // Mistry et al. 2022 eq. 20 (electrode frame, nu+=z+=1)
+  const vcm=(P.c*M_LI*up+P.c*M_TFSI*um)/P.rho;
+  return {P,up,um,
+    s:{li:up,tf:um,po:0},
+    e:{li:up+v0e,tf:um+v0e,po:v0e},
+    m:{li:up-vcm,tf:um-vcm,po:-vcm}};}
+/* Pesko et al. JES 2018 Table 2 — 5 kg/mol PEO/LiTFSI, 90 °C (measured) */
+const PEO=[
+ {r:.01,c:2.47e-4,D:6.0e-8,s:2.7e-4,t:.07,te:.02,tdf:.43,tss:.18},
+ {r:.02,c:4.73e-4,D:7.8e-8,s:7.5e-4,t:.23,te:.03,tdf:.69,tss:.16},
+ {r:.04,c:8.71e-4,D:1.0e-7,s:1.8e-3,t:.40,te:.13,tdf:1.70,tss:.11},
+ {r:.06,c:1.20e-3,D:1.3e-7,s:2.0e-3,t:.33,te:.11,tdf:2.23,tss:.11},
+ {r:.08,c:1.59e-3,D:1.1e-7,s:2.2e-3,t:.43,te:.17,tdf:3.33,tss:.10},
+ {r:.10,c:1.87e-3,D:8.4e-8,s:1.3e-3,t:.20,te:.05,tdf:2.82,tss:.09},
+ {r:.12,c:2.11e-3,D:7.0e-8,s:1.1e-3,t:.08,te:.02,tdf:2.78,tss:.08},
+ {r:.14,c:2.38e-3,D:5.8e-8,s:9.9e-4,t:-.08,te:.02,tdf:2.66,tss:.07},
+ {r:.16,c:2.58e-3,D:9.4e-8,s:1.3e-3,t:-.38,te:.13,tdf:2.27,tss:.06},
+ {r:.18,c:2.76e-3,D:9.0e-8,s:1.6e-3,t:.10,te:.04,tdf:3.74,tss:.07},
+ {r:.21,c:3.05e-3,D:6.5e-8,s:1.2e-3,t:.41,te:.16,tdf:6.32,tss:.10},
+ {r:.24,c:3.36e-3,D:6.3e-8,s:6.4e-4,t:.33,te:.13,tdf:6.00,tss:.16},
+ {r:.27,c:3.49e-3,D:5.9e-8,s:4.0e-4,t:.18,te:.06,tdf:5.24,tss:.18},
+ {r:.30,c:3.78e-3,D:4.2e-8,s:1.5e-4,t:-.02,te:.00,tdf:4.49,tss:.26}];
+
+/* ================= FIG: reference frames ================= */
+(function(){
+  const svg=$('#frames-svg');if(!svg)return;
+  const pre=$('#fr-pre');
+  if(pre){PEO.forEach(d=>{const b=document.createElement('button');b.type='button';b.textContent='r='+d.r.toFixed(2)+' · t₊⁰='+d.t.toFixed(2);b.addEventListener('click',()=>{$('#fr-r').value=d.r;$('#fr-t').value=d.t;draw();});pre.appendChild(b);});}
+  function draw(){
+    const tp=v('fr-t'), r=v('fr-r'), i=v('fr-i')*1e-3;
+    setO('fr-t',tp.toFixed(2));setO('fr-r',r.toFixed(2));setO('fr-i',v('fr-i').toFixed(2)+' mA/cm²');
+    const frame=segVal('#fr-frame')||'e';
+    const all=velocities(tp,r,i);const V=all[frame];const P=all.P;
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=640,H=270;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    S('rect',{x:0,y:0,width:26,height:H,fill:css('--sunk')},svg);S('rect',{x:W-26,y:0,width:26,height:H,fill:css('--sunk')},svg);
+    const tl=S('text',{x:13,y:H/2,'text-anchor':'middle',transform:'rotate(-90 13 '+H/2+')','font-size':11,fill:css('--muted')},svg);tl.textContent='Li 剥离 · 阳极 (+)';
+    const tr=S('text',{x:W-13,y:H/2,'text-anchor':'middle',transform:'rotate(90 '+(W-13)+' '+H/2+')','font-size':11,fill:css('--muted')},svg);tr.textContent='Li 沉积 · 阴极 (−)';
+    const top=S('text',{x:W/2,y:18,'text-anchor':'middle','font-size':12,fill:css('--muted')},svg);top.textContent='电流 i 与电场 E 方向 →';
+    const mx=Math.max(Math.abs(V.li),Math.abs(V.tf),Math.abs(V.po),1e-30);const scale=230/mx;const cx=W/2;
+    const rows=[['li','Li⁺',css('--li'),V.li,60],['tf','TFSI⁻',css('--tf'),V.tf,130],['po','聚合物 (溶剂)',css('--poly'),V.po,200]];
+    S('line',{x1:cx,y1:34,x2:cx,y2:H-14,stroke:css('--rule'),'stroke-dasharray':'4 4'},svg);
+    rows.forEach(([k,lab,col,vel,y])=>{
+      S('circle',{cx:cx,cy:y,r:9,fill:col},svg);
+      const L=vel*scale;
+      if(Math.abs(L)>2){const x2=cx+L;S('line',{x1:cx,y1:y,x2:x2-Math.sign(L)*8,y2:y,stroke:col,'stroke-width':5,'stroke-linecap':'round'},svg);
+        S('path',{d:'M'+x2+' '+y+' l'+(-Math.sign(L)*12)+' -8 l0 16 z',fill:col},svg);}
+      const t=S('text',{x:L>=0?cx-16:cx+16,y:y+4,'text-anchor':L>=0?'end':'start','font-size':12,fill:css('--ink'),'font-weight':600},svg);t.textContent=lab;
+      const t2=S('text',{x:cx+L+(L>=0?14:-14),y:y-12,'text-anchor':L>=0?'start':'end','font-size':11,fill:css('--muted'),'font-family':'JetBrains Mono, monospace'},svg);t2.textContent=fmtSpeed(vel);
+    });
+    $('#fr-up').textContent=fmtSpeed(all.up);
+    $('#fr-vli').textContent=fmtSpeed(V.li);
+    $('#fr-vpo').textContent=fmtSpeed(V.po);
+    $('#fr-crit').textContent=(-P.c*P.Vbar/(P.c0*P.V0bar)).toFixed(2);
+    $('#fr-vb').textContent=P.Vbar.toFixed(0)+' cm³/mol';
+    const dir=$('#fr-dir');
+    const s=V.li>0?'朝 Li 沉积电极（与电流同向）':V.li<0?'朝 Li 剥离电极（逆电流方向）':'静止';
+    dir.textContent={s:'溶剂参考系',e:'电极参考系',m:'质心参考系'}[frame]+'中 Li⁺ '+s;
+  }
+  bind(['fr-t','fr-r','fr-i'],draw);seg('#fr-frame',draw);onTheme(draw);
+})();
+
+/* ================= FIG: eNMR ================= */
+(function(){
+  const svg=$('#enmr-svg');if(!svg)return;
+  const G={li:1.0396e8, f:2.5181e8, h:2.6752e8}; // rad s^-1 T^-1
+  const g=0.5, delta=5e-3, Delta=0.1, kappa=2.2e-3, r=0.08;
+  function vel(E,tp){const i=kappa*E;const e=velocities(tp,r,i).e;return {li:e.li,f:e.tf,h:e.po,i};}
+  function phase(nuc,vcms){return G[nuc]*g*delta*Delta*(vcms*1e-2)*180/Math.PI;}
+  function draw(){
+    const E=v('en-E'),tp=v('en-t');setO('en-E',E.toFixed(0)+' V/cm');setO('en-t',tp.toFixed(2));
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=640,H=260;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    const nucs=[['li','⁷Li → Li⁺',css('--li')],['f','¹⁹F → TFSI⁻',css('--tf')],['h','¹H → 聚合物',css('--poly')]];
+    const V=vel(E,tp);
+    // dials
+    nucs.forEach(([k,lab,col],j)=>{const cx=70,cy=48+j*80,rr=30;
+      S('circle',{cx,cy,r:rr,fill:'none',stroke:css('--rule'),'stroke-width':2},svg);
+      S('line',{x1:cx,y1:cy,x2:cx+rr,y2:cy,stroke:css('--rule'),'stroke-dasharray':'3 3'},svg);
+      const ph=phase(k,V[k]);const a=-ph*Math.PI/180;
+      S('line',{x1:cx,y1:cy,x2:cx+rr*Math.cos(a),y2:cy+rr*Math.sin(a),stroke:col,'stroke-width':3,'stroke-linecap':'round'},svg);
+      const t=S('text',{x:cx+42,y:cy-4,'font-size':12,fill:css('--ink'),'font-weight':600},svg);t.textContent=lab;
+      const t2=S('text',{x:cx+42,y:cy+13,'font-size':11,fill:css('--muted'),'font-family':'JetBrains Mono, monospace'},svg);t2.textContent='φ = '+ph.toFixed(1)+'°';
+    });
+    // phase vs E plot
+    const x0=330,x1=620,y0=230,y1=20;const Emax=100;
+    let pm=1;nucs.forEach(([k])=>{pm=Math.max(pm,Math.abs(phase(k,vel(Emax,tp)[k])));});pm=Math.ceil(pm/10)*10;
+    const X=e=>x0+(x1-x0)*e/Emax, Y=p=>(y0+y1)/2-(y0-y1)/2*p/pm;
+    S('line',{x1:x0,y1:Y(0),x2:x1,y2:Y(0),stroke:css('--rule')},svg);S('line',{x1:x0,y1:y0,x2:x0,y2:y1,stroke:css('--rule')},svg);
+    [0,25,50,75,100].forEach(e=>{const t=S('text',{x:X(e),y:Y(0)+14,'text-anchor':'middle','font-size':10,fill:css('--muted')},svg);t.textContent=e;});
+    [-pm,pm].forEach(p=>{const t=S('text',{x:x0-4,y:Y(p)+4,'text-anchor':'end','font-size':10,fill:css('--muted')},svg);t.textContent=(p>0?'+':'')+p+'°';});
+    const xl=S('text',{x:x1,y:y0+16,'text-anchor':'end','font-size':10,fill:css('--muted')},svg);xl.textContent='E (V/cm)';
+    nucs.forEach(([k,lab,col])=>{const p2=phase(k,vel(Emax,tp)[k]);S('line',{x1:X(0),y1:Y(0),x2:X(Emax),y2:Y(p2),stroke:col,'stroke-width':2},svg);
+      S('circle',{cx:X(E),cy:Y(phase(k,V[k])),r:5,fill:col},svg);});
+    const tin=(V.li-V.h)/(V.li-V.f);
+    $('#en-i').textContent=(V.i*1e3).toFixed(0)+' mA/cm²';
+    $('#en-vli').textContent=fmtSpeed(V.li);$('#en-vf').textContent=fmtSpeed(V.f);$('#en-vh').textContent=fmtSpeed(V.h);
+    $('#en-tp').textContent=isFinite(tin)?tin.toFixed(2):'—';
+  }
+  bind(['en-E','en-t'],draw);onTheme(draw);
+})();
+
+/* ================= FIG: segmental vs drift ================= */
+(function(){
+  const cv=$('#drift-cv');if(!cv)return;
+  let ctx,W,H;const N=16;let t=0,raf=null,noise=new Array(N).fill(0).map(()=>[0,0]);let trail=[],comTrail=[];let x0=0;
+  function size(){({c:ctx,w:W,h:H}=fit(cv));}
+  function gauss(){let u=0,v2=0;while(u===0)u=Math.random();while(v2===0)v2=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v2);}
+  function step(){
+    const vd=v('dr-v'),amp=v('dr-a');setO('dr-v',vd.toFixed(2));setO('dr-a',amp.toFixed(2));
+    for(const n of noise){n[0]=n[0]*0.9+gauss()*0.45*amp;n[1]=n[1]*0.9+gauss()*0.45*amp;}
+    x0+=vd*0.35;t++;
+    const dx=(W-120)/N;const base=40;
+    if(x0>dx*3){x0-=dx*3;trail=trail.map(p=>[p[0]-dx*3,p[1]]);comTrail=comTrail.map(p=>[p[0]-dx*3,p[1]]);}
+    const pts=[];for(let k=0;k<N;k++){const bx=base+x0+k*dx, by=H*0.42+Math.sin(k*0.9)*H*0.12;pts.push([bx+noise[k][0]*9,by+noise[k][1]*9]);}
+    trail.push(pts[5].slice());if(trail.length>140)trail.shift();
+    const com=[pts.reduce((s,p)=>s+p[0],0)/N,H*0.86];comTrail.push(com);if(comTrail.length>140)comTrail.shift();
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle=css('--rule');ctx.lineWidth=1;for(let gx=0;gx<W;gx+=dx){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+    ctx.strokeStyle=css('--poly');ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,j)=>j?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();
+    pts.forEach((p,j)=>{ctx.fillStyle=j===5?css('--li'):css('--poly');ctx.beginPath();ctx.arc(p[0],p[1],j===5?6:4,0,7);ctx.fill();});
+    ctx.strokeStyle=css('--li');ctx.globalAlpha=.55;ctx.lineWidth=1.5;ctx.beginPath();trail.forEach((p,j)=>j?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();ctx.globalAlpha=1;
+    ctx.strokeStyle=css('--accent');ctx.lineWidth=2;ctx.beginPath();comTrail.forEach((p,j)=>j?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();
+    ctx.fillStyle=css('--accent');ctx.beginPath();ctx.arc(com[0],com[1],6,0,7);ctx.fill();
+    ctx.fillStyle=css('--muted');ctx.font='12px "IBM Plex Sans","Noto Sans SC",sans-serif';
+    ctx.fillText('标记链段的轨迹（红）：快速、往返、无方向',10,18);ctx.fillText('链质心（蓝）：慢、单向累积 = 净漂移',10,H-8);
+  }
+  function loop(){step();raf=requestAnimationFrame(loop);}
+  size();window.addEventListener('resize',size);
+  const btn=$('#dr-play');
+  function play(on){if(on){if(!raf)loop();btn.textContent='暂停';}else{cancelAnimationFrame(raf);raf=null;btn.textContent='播放';}}
+  btn.addEventListener('click',()=>play(!raf));
+  ['dr-v','dr-a'].forEach(id=>$('#'+id).addEventListener('input',()=>{if(!raf)step();}));
+  for(let k=0;k<60;k++)step();
+  const vis=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)play(false);else if(!RM)play(true);}));vis.observe(cv);
+  onTheme(()=>{if(!raf)step();});
+})();
+
+/* ================= FIG: steady-state limiting current ================= */
+(function(){
+  const svg=$('#ilim-svg');if(!svg)return;
+  function kap(cc,cinf,mode,cstar){ // relative conductivity kappa/kappa_inf
+    if(mode==='ideal')return Math.max(cc,1e-9)/cinf;
+    const f=c=>Math.max(c,1e-9)*Math.pow(Math.max(cstar-c,0)/cstar,1.5);
+    return f(cc)/f(cinf);
+  }
+  function calc(){
+    const cM=v('il-c'),L=v('il-L')*1e-4,D=Math.pow(10,v('il-D')),tp=v('il-t'),f=v('il-f'),T=v('il-T')+273.15;
+    const mode=segVal('#il-k')||'ideal';
+    const c=cM*1e-3;const ilim=2*F*c*D/((1-tp)*L);const i=f*ilim;
+    const cstar=2.0*c; // collapse concentration for the illustrative kappa(c)
+    const kinf=1e-3; // S/cm, illustrative
+    function V(ff){const ii=ff*ilim;const d=ii*(1-tp)*L/(F*D); // c(0)-c(L)
+      const c0=c+d/2,cL=c-d/2;if(cL<=0)return Infinity;if(mode!=='ideal'&&c0>=cstar)return Infinity;
+      let ohm=0;const n=200;for(let k=0;k<n;k++){const x=(k+.5)/n;const cc=c0-(c0-cL)*x;const kk=kap(cc,c,mode,cstar)*kinf;if(kk<=1e-12)return Infinity;ohm+=ii/kk*L/n;}
+      const conc=2*R*T/F*(1-tp)*Math.log(c0/cL);return {ohm,conc,tot:ohm+conc,c0,cL};}
+    return {cM,L,D,tp,f,T,mode,c,ilim,i,V,cstar};
+  }
+  function draw(){
+    const P=calc();
+    setO('il-c',P.cM.toFixed(2)+' M');setO('il-L',(P.L*1e4).toFixed(0)+' μm');setO('il-D',P.D.toExponential(1)+' cm²/s');setO('il-t',P.tp.toFixed(2));setO('il-f',P.f.toFixed(2));setO('il-T',(P.T-273.15).toFixed(0)+' °C');
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=640,H=250;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    // left: profile
+    const ax={x0:46,x1:300,y0:210,y1:24};
+    S('rect',{x:ax.x0,y:ax.y1,width:ax.x1-ax.x0,height:ax.y0-ax.y1,fill:css('--bg')},svg);
+    const cmax=2.2*P.c;const Y=cc=>ax.y0-(ax.y0-ax.y1)*cc/cmax;const X=x=>ax.x0+(ax.x1-ax.x0)*x;
+    S('line',{x1:ax.x0,y1:Y(P.c),x2:ax.x1,y2:Y(P.c),stroke:css('--rule'),'stroke-dasharray':'4 3'},svg);
+    if(P.mode!=='ideal'){S('line',{x1:ax.x0,y1:Y(P.cstar),x2:ax.x1,y2:Y(P.cstar),stroke:css('--li'),'stroke-dasharray':'2 3'},svg);const tt=S('text',{x:ax.x1-4,y:Y(P.cstar)-4,'text-anchor':'end','font-size':10,fill:css('--li')},svg);tt.textContent='κ → 0 (示意 c*)';}
+    const res=P.V(P.f);
+    const d=P.i*(1-P.tp)*P.L/(F*P.D);const c0=P.c+d/2,cL=P.c-d/2;
+    S('line',{x1:X(0),y1:Y(c0),x2:X(1),y2:Y(Math.max(cL,0)),stroke:css('--accent'),'stroke-width':3},svg);
+    [['0',X(0)],['L',X(1)]].forEach(([s,x])=>{const t=S('text',{x,y:ax.y0+14,'text-anchor':'middle','font-size':11,fill:css('--muted')},svg);t.textContent=s;});
+    const t1=S('text',{x:ax.x0,y:14,'font-size':11,fill:css('--muted')},svg);t1.textContent='稳态盐浓度 c(x)';
+    const t2=S('text',{x:ax.x0+4,y:Y(P.c)-5,'font-size':10,fill:css('--muted')},svg);t2.textContent='c∞';
+    const ta=S('text',{x:X(0)+4,y:ax.y0-6,'font-size':10,fill:css('--muted')},svg);ta.textContent='Li 剥离';
+    const tb=S('text',{x:X(1)-4,y:ax.y0-6,'text-anchor':'end','font-size':10,fill:css('--muted')},svg);tb.textContent='Li 沉积';
+    // right: V vs i/ilim
+    const bx={x0:360,x1:620,y0:210,y1:24};
+    S('rect',{x:bx.x0,y:bx.y1,width:bx.x1-bx.x0,height:bx.y0-bx.y1,fill:css('--bg')},svg);
+    const pts=[];let vmax=0;for(let k=0;k<=120;k++){const ff=k/120*0.995;const r=P.V(ff);if(r===Infinity||!isFinite(r.tot))break;pts.push([ff,r.tot]);}
+    const vcap=Math.max(0.05,Math.min(1.5,(res!==Infinity?res.tot:0)*2.2||0.5));
+    pts.forEach(p=>vmax=Math.max(vmax,p[1]));const vm=Math.min(Math.max(vmax,vcap),1.5);
+    const XX=ff=>bx.x0+(bx.x1-bx.x0)*ff,YY=V=>bx.y0-(bx.y0-bx.y1)*Math.min(V,vm)/vm;
+    let dpath='';pts.forEach((p,j)=>{dpath+=(j?'L':'M')+XX(p[0]).toFixed(1)+' '+YY(p[1]).toFixed(1);});
+    S('path',{d:dpath,fill:'none',stroke:css('--li'),'stroke-width':2.5},svg);
+    S('line',{x1:XX(1),y1:bx.y0,x2:XX(1),y2:bx.y1,stroke:css('--rule'),'stroke-dasharray':'4 3'},svg);
+    if(res!==Infinity)S('circle',{cx:XX(P.f),cy:YY(res.tot),r:5,fill:css('--li')},svg);
+    const t3=S('text',{x:bx.x0,y:14,'font-size':11,fill:css('--muted')},svg);t3.textContent='稳态电势降 ΔV（0 – '+(vm*1000).toFixed(0)+' mV）';
+    [['0',XX(0)],['0.5',XX(.5)],['1 = i/i_lim,dilute',XX(1)]].forEach(([s,x],j)=>{const t=S('text',{x,y:bx.y0+14,'text-anchor':j===2?'end':'middle','font-size':10,fill:css('--muted')},svg);t.textContent=s;});
+    $('#il-ilim').textContent=(P.ilim*1e3).toFixed(3)+' mA/cm²';
+    $('#il-iL').textContent=(P.ilim*P.L*1e3).toExponential(2)+' mA/cm';
+    $('#il-i').textContent=(P.i*1e3).toFixed(3)+' mA/cm²';
+    $('#il-V').textContent=res===Infinity?'发散（无稳态）':(res.tot*1e3).toFixed(1)+' mV';
+    $('#il-cL').textContent=(Math.max(cL,0)*1e3).toFixed(2)+' / '+(c0*1e3).toFixed(2)+' M';
+  }
+  bind(['il-c','il-L','il-D','il-t','il-f','il-T'],draw);seg('#il-k',draw);onTheme(draw);
+})();
+
+/* ================= FIG: transient polarization + solvent velocity (X-ray) ================= */
+(function(){
+  const cv=$('#xr-cv');if(!cv)return;
+  let ctx,W,H,cache=null;
+  const L=0.05, D=1.1e-7, r=0.08, tp=0.43; // PEO/LiTFSI r=0.08, 90 °C (Pesko 2018 Table 2), L = 500 μm
+  const P=vols(r), cinf=P.c, T0=L*L/D, TAUMAX=0.6;
+  const ilim=2*F*cinf*D/((1-tp)*L);
+  function solve(beta){
+    const N=60,dx=1/N,dt=0.4*dx*dx;const steps=Math.ceil(TAUMAX/dt);const snaps=[];let c=new Float64Array(N).fill(1),nc=new Float64Array(N);
+    const every=Math.max(1,Math.floor(steps/150));
+    for(let s=0;s<=steps;s++){
+      if(s%every===0)snaps.push({tau:s*dt,c:Array.from(c)});
+      for(let j=0;j<N;j++){const a=j===0?c[0]+beta*dx:c[j-1];const b=j===N-1?c[N-1]-beta*dx:c[j+1];nc[j]=Math.max(0,c[j]+dt/(dx*dx)*(a-2*c[j]+b));}
+      [c,nc]=[nc,c];
+    }
+    return snaps;
+  }
+  function size(){({c:ctx,w:W,h:H}=fit(cv));draw();}
+  function draw(){
+    if(!ctx)return;
+    const f=v('xr-f'),th=v('xr-t');setO('xr-f',f.toFixed(2));setO('xr-t',th.toFixed(2)+' h');
+    const beta=2*f;
+    if(!cache||cache.f!==f)cache={f,snaps:solve(beta)};
+    const snaps=cache.snaps,nT=snaps.length,N=snaps[0].c.length;
+    const tau=Math.min(TAUMAX,th*3600/T0);
+    const k=Math.max(1,Math.min(nT-2,Math.round(tau/TAUMAX*(nT-1))));
+    ctx.clearRect(0,0,W,H);
+    const narrow=W<560;
+    const hx0=narrow?44:56,hx1=narrow?W-10:W*0.48,hy0=26,hy1=narrow?H*0.42:H-30;
+    const ink=css('--ink'),mut=css('--muted'),rule=css('--rule');
+    // heatmap (grayscale ~ X-ray attenuation, darker = more salt)
+    const dark=document.documentElement.getAttribute('data-theme')==='dark'||(!document.documentElement.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+    function col(cc){const t=Math.min(1,Math.max(0,cc/2));let g=dark?Math.round(30+t*200):Math.round(245-t*215);return 'rgb('+g+','+g+','+Math.min(255,g+6)+')';}
+    const cw=(hx1-hx0)/N,chh=(hy1-hy0)/nT;
+    snaps.forEach((s,ti)=>s.c.forEach((cc,j)=>{ctx.fillStyle=col(cc);ctx.fillRect(hx0+j*cw,hy0+ti*chh,cw+0.6,chh+0.6);}));
+    const ty=hy0+(hy1-hy0)*tau/TAUMAX;ctx.strokeStyle=css('--li');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(hx0,ty);ctx.lineTo(hx1,ty);ctx.stroke();
+    ctx.fillStyle=mut;ctx.font='11px "IBM Plex Sans","Noto Sans SC",sans-serif';
+    ctx.fillText('模拟“透射图”：'+(dark?'亮':'深')+' = 盐浓度高',hx0,16);
+    ctx.fillText('剥离 x=0',hx0,hy1+14);ctx.textAlign='right';ctx.fillText('x=L 沉积',hx1,hy1+14);ctx.textAlign='left';
+    ctx.save();ctx.translate(14,(hy0+hy1)/2+28);ctx.rotate(-Math.PI/2);ctx.fillText('时间 ↓ (0–'+(TAUMAX*T0/3600).toFixed(1)+' h)',0,0);ctx.restore();
+    // panels
+    const px0=narrow?44:W*0.56,px1=W-12;
+    const p1y1=narrow?hy1+40:26,p1y0=narrow?p1y1+(H-hy1-80)/2-10:H*0.5-14;
+    const p2y1=p1y0+34,p2y0=narrow?H-22:H-30;
+    // concentration profile
+    ctx.strokeStyle=rule;ctx.lineWidth=1;ctx.strokeRect(px0,p1y1,px1-px0,p1y0-p1y1);
+    const PX=x=>px0+(px1-px0)*x,PY=cc=>p1y0-(p1y0-p1y1)*cc/2;
+    ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(px0,PY(1));ctx.lineTo(px1,PY(1));ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle=mut;ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(PX(0),PY(Math.min(2,1+beta/2)));ctx.lineTo(PX(1),PY(Math.max(1-beta/2,0)));ctx.stroke();ctx.setLineDash([]);
+    const ss=snaps[k];
+    ctx.strokeStyle=css('--accent');ctx.lineWidth=2.5;ctx.beginPath();ss.c.forEach((cc,j)=>{const x=PX((j+.5)/N),y=PY(Math.min(cc,2));j?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();
+    ctx.fillStyle=mut;ctx.fillText('盐浓度 c/c∞（实线：所选时刻；虚线：稳态）',px0,p1y1-8);
+    ctx.fillText('2',px0-12,p1y1+9);ctx.fillText('1',px0-12,PY(1)+4);ctx.fillText('0',px0-12,p1y0);
+    // solvent velocity from continuity
+    const dcdt=new Array(N);for(let j=0;j<N;j++)dcdt[j]=(snaps[k+1].c[j]-snaps[k-1].c[j])/(snaps[k+1].tau-snaps[k-1].tau);
+    const v0=new Array(N);let I=0;for(let j=0;j<N;j++){I+=dcdt[j]/N;const cl=cinf*ss.c[j];const c0V0=1-cl*P.Vbar;v0[j]=P.Vbar*cinf*D/L*I/c0V0;}
+    const vmax=Math.max(1e-12,...v0.map(Math.abs));const vn=v0.map(x=>x*1e7);
+    const top=Math.max(1,Math.ceil(P.Vbar*(1-tp)*f*ilim/F*1e7*1.25));
+    ctx.strokeStyle=rule;ctx.strokeRect(px0,p2y1,px1-px0,p2y0-p2y1);
+    const QY=x=>p2y0-(p2y0-p2y1)*Math.max(-0.1*top,Math.min(top,x))/top;
+    ctx.beginPath();ctx.moveTo(px0,QY(0));ctx.lineTo(px1,QY(0));ctx.stroke();
+    ctx.strokeStyle=css('--poly');ctx.lineWidth=2.5;ctx.beginPath();vn.forEach((x,j)=>{const X=PX((j+.5)/N),Y=QY(x);j?ctx.lineTo(X,Y):ctx.moveTo(X,Y);});ctx.stroke();
+    ctx.fillStyle=mut;ctx.fillText('聚合物速度 v₀(x)，由连续性方程重建（0–'+top+' nm/s）',px0,p2y1-8);
+    const mid=vn[Math.floor(N/2)];
+    $('#xr-i').textContent=(f*ilim*1e3).toFixed(2)+' mA/cm²';
+    $('#xr-v0').textContent=mid.toFixed(2)+' nm/s';
+    $('#xr-v20').textContent=(P.Vbar*(1-tp)*f*ilim/F*1e7).toFixed(2)+' nm/s';
+    $('#xr-cL').textContent=ss.c[N-1].toFixed(2)+' / '+ss.c[0].toFixed(2);
+    $('#xr-ss').textContent=f>=1?'阴极侧盐耗尽：此常物性模型不再有稳态':'可达到稳态（v₀ → 0）';
+  }
+  window.addEventListener('resize',size);
+  ['xr-f','xr-t'].forEach(id=>$('#'+id).addEventListener('input',draw));
+  size();onTheme(draw);
+})();
+
+/* ================= FIG: measured PEO/LiTFSI dataset (Pesko 2018 Table 2) ================= */
+(function(){
+  const svg=$('#peo-svg');if(!svg)return;const tip=$('#peo-tip');
+  const props={
+    s:{lab:'电导率 κ (S/cm)',log:true,get:d=>d.s,fmt:x=>x.toExponential(1)},
+    D:{lab:'盐扩散系数 D (cm²/s)',log:true,get:d=>d.D,fmt:x=>x.toExponential(1)},
+    t:{lab:'迁移数 t₊⁰ 与电流分数 ρ₊ (= t₊,ss)',log:false,get:d=>d.t,fmt:x=>x.toFixed(2)},
+    tdf:{lab:'热力学因子 1 + dlnγ±/dlnm',log:false,get:d=>d.tdf,fmt:x=>x.toFixed(2)}};
+  function draw(){
+    const key=segVal('#peo-p')||'t';const P=props[key];
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=640,H=300,x0=62,x1=622,y0=262,y1=24;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    const X=r=>x0+(x1-x0)*r/0.31;
+    let lo,hi;
+    if(P.log){lo=Math.floor(Math.log10(Math.min(...PEO.map(P.get))));hi=Math.ceil(Math.log10(Math.max(...PEO.map(P.get))));}
+    else if(key==='t'){lo=-0.6;hi=0.7;}else{lo=0;hi=7;}
+    const Y=val=>{const u=P.log?Math.log10(val):val;return y0-(y0-y1)*(u-lo)/(hi-lo);};
+    const ticks=[];if(P.log){for(let e=lo;e<=hi;e++)ticks.push([Math.pow(10,e),'10^'+e]);}else if(key==='t'){[-0.6,-0.4,-0.2,0,0.2,0.4,0.6].forEach(t=>ticks.push([t,t.toFixed(1)]));}else{[0,1,2,3,4,5,6,7].forEach(t=>ticks.push([t,String(t)]));}
+    ticks.forEach(([t,l])=>{S('line',{x1:x0,y1:Y(t),x2:x1,y2:Y(t),stroke:css('--rule'),'stroke-width':(key==='t'&&t===0)?1.5:.6},svg);const tx=S('text',{x:x0-6,y:Y(t)+4,'text-anchor':'end','font-size':10,fill:css('--muted'),'font-family':'JetBrains Mono, monospace'},svg);tx.textContent=l;});
+    [0,0.05,0.1,0.15,0.2,0.25,0.3].forEach(r=>{const tx=S('text',{x:X(r),y:y0+16,'text-anchor':'middle','font-size':10,fill:css('--muted'),'font-family':'JetBrains Mono, monospace'},svg);tx.textContent=r.toFixed(2);});
+    const xl=S('text',{x:x1,y:H-4,'text-anchor':'end','font-size':11,fill:css('--muted')},svg);xl.textContent='r = [Li⁺]/[EO]';
+    const yl=S('text',{x:x0,y:14,'font-size':11,fill:css('--muted')},svg);yl.textContent=P.lab;
+    if(key==='t'){ // shade negative region
+      S('rect',{x:x0,y:Y(0),width:x1-x0,height:y0-Y(0),fill:css('--li-soft'),opacity:.6},svg);
+      const nt=S('text',{x:x1-4,y:y0-6,'text-anchor':'end','font-size':10,fill:css('--li')},svg);nt.textContent='t₊⁰ < 0 区域';
+    }
+    const series=[[P.get,key==='t'?css('--li'):css('--accent'),'main']];
+    if(key==='t')series.push([d=>d.tss,css('--tf'),'tss']);
+    series.forEach(([g,col,id])=>{let d='';PEO.forEach((p,j)=>{d+=(j?'L':'M')+X(p.r).toFixed(1)+' '+Y(g(p)).toFixed(1);});S('path',{d,fill:'none',stroke:col,'stroke-width':2,opacity:.55},svg);
+      PEO.forEach(p=>{if(id==='main'&&key==='t'){S('line',{x1:X(p.r),y1:Y(p.t-p.te),x2:X(p.r),y2:Y(p.t+p.te),stroke:col,'stroke-width':1.5},svg);}
+        const c=S('circle',{cx:X(p.r),cy:Y(g(p)),r:5,fill:col,stroke:css('--surface'),'stroke-width':2},svg);
+        const hit=S('circle',{cx:X(p.r),cy:Y(g(p)),r:12,fill:'transparent',tabindex:0},svg);
+        const show=()=>{tip.hidden=false;tip.innerHTML='<b>r = '+p.r.toFixed(2)+'</b> · c = '+(p.c*1e3).toFixed(2)+' M<br>κ = '+p.s.toExponential(1)+' S/cm<br>D = '+p.D.toExponential(1)+' cm²/s<br>t₊⁰ = '+p.t.toFixed(2)+' ± '+p.te.toFixed(2)+'<br>ρ₊ (t₊,ss) = '+p.tss.toFixed(2)+'<br>热力学因子 = '+p.tdf.toFixed(2);
+          const bb=svg.getBoundingClientRect(),sx=bb.width/W;let lx=X(p.r)*sx+12;if(lx>bb.width-170)lx=X(p.r)*sx-180;tip.style.left=lx+'px';tip.style.top=(Y(g(p))*sx-10)+'px';};
+        hit.addEventListener('mouseenter',show);hit.addEventListener('focus',show);hit.addEventListener('mouseleave',()=>tip.hidden=true);hit.addEventListener('blur',()=>tip.hidden=true);});});
+  }
+  seg('#peo-p',draw);draw();onTheme(draw);
+})();
+
+/* ================= FIG: Onsager correlation toy ================= */
+(function(){
+  if(!$('#on-pp'))return;
+  function draw(){
+    const pp=v('on-pp'),mm=v('on-mm'),pm=v('on-pm');
+    setO('on-pp',pp.toFixed(2));setO('on-mm',mm.toFixed(2));setO('on-pm',pm.toFixed(2));
+    const k=pp-2*pm+mm,k0=pp+mm;
+    const msg=$('#on-msg');
+    if(k<=0){$('#on-k').textContent='≤ 0（非物理）';$('#on-t').textContent='—';msg.textContent='这组参数使 κ ≤ 0，违反了 Onsager 矩阵的正定性要求（L⁺⁻² < L⁺⁺L⁻⁻ 且 κ > 0）。请减小 L⁺⁻。';}
+    else{const t=(pp-pm)/k;$('#on-k').textContent=k.toFixed(2);$('#on-t').textContent=t.toFixed(2);
+      msg.textContent=t<0?'L⁺⁻ > L⁺⁺：阳离子被阴离子拖着走，t₊ 为负。':(pm>0?'正的阳-阴关联降低了 κ，并使 t₊ 偏离无关联时的值。':'负的交叉关联（离子反向运动倾向）提高了 κ。');}
+    $('#on-k0').textContent=k0.toFixed(2);$('#on-t0').textContent=(pp/k0).toFixed(2);
+    if(pm*pm>=pp*mm){msg.textContent='注意：L⁺⁻² ≥ L⁺⁺L⁻⁻，Onsager 矩阵不再正定，这在物理上不允许。';}
+  }
+  bind(['on-pp','on-mm','on-pm'],draw);
+})();
+
+/* ================= FIG: crosslinked network ================= */
+(function(){
+  const cv=$('#xl-cv');if(!cv)return;let ctx,W,H,raf=null,ph=0,shift=0;
+  function size(){({c:ctx,w:W,h:H}=fit(cv));draw();}
+  function draw(){
+    if(!ctx)return;const drive=v('xl-d'),k=v('xl-k');setO('xl-d',drive.toFixed(2));setO('xl-k',k.toFixed(2));
+    const mode=segVal('#xl-m')||'x';
+    ctx.clearRect(0,0,W,H);
+    const nx=11,ny=5,x0=40,x1=W-40,y0=30,y1=H-30;const dx=(x1-x0)/(nx-1),dy=(y1-y0)/(ny-1);
+    ctx.fillStyle=css('--sunk');ctx.fillRect(0,0,28,H);ctx.fillRect(W-28,0,28,H);
+    const P=[];for(let j=0;j<ny;j++){P.push([]);for(let i=0;i<nx;i++){const s=i/(nx-1);let u;
+      if(mode==='x'){u=drive/k*4*s*(1-s)*dx*1.6;}else{u=((shift)%dx);}
+      const jig=Math.sin(ph*2+i*1.3+j*2.1)*2.5;P[j].push([x0+i*dx+u+jig,y0+j*dy+Math.cos(ph*2.3+i*.7+j)*2.5,u]);}}
+    const strainCol=e=>{const t=Math.min(1,Math.abs(e)/(dx*0.5));return t;};
+    for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const p=P[j][i];
+      if(i<nx-1){const q=P[j][i+1];const e=(q[0]-p[0])-dx;const t=mode==='x'?strainCol(e):0;ctx.strokeStyle=t>0.05?mix(t):css('--poly');ctx.lineWidth=2+t*2;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();}
+      if(j<ny-1&&(mode==='x'||i%2===0)){const q=P[j+1][i];ctx.strokeStyle=css('--poly');ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();}
+    }
+    for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const p=P[j][i];ctx.fillStyle=(mode==='x'&&(i===0||i===nx-1))?css('--ink'):css('--poly');ctx.beginPath();ctx.arc(p[0],p[1],mode==='x'?4.5:3.5,0,7);ctx.fill();}
+    function mix(t){return t>0.5?css('--li'):css('--poly');}
+    ctx.fillStyle=css('--muted');ctx.font='11px "IBM Plex Sans","Noto Sans SC",sans-serif';
+    ctx.fillText(mode==='x'?'交联网络：两端锚定 → 弹性位移与应力（红 = 拉伸较大）':'线性链熔体：可整体漂移（周期性边界示意）',36,16);
+    const umax=mode==='x'?drive/k*dx*1.6:0;$('#xl-u').textContent=mode==='x'?(umax/dx).toFixed(2)+' 个网格间距':'无界（随时间增长）';
+  }
+  function loop(){ph+=0.03;shift+=v('xl-d')*0.6;draw();raf=requestAnimationFrame(loop);}
+  window.addEventListener('resize',size);['xl-d','xl-k'].forEach(id=>$('#'+id).addEventListener('input',draw));seg('#xl-m',draw);
+  size();
+  const vis=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!RM){if(!raf)loop();}else{cancelAnimationFrame(raf);raf=null;}}));vis.observe(cv);
+  onTheme(draw);
+})();
+
+/* ================= FIG: timescale ladder ================= */
+(function(){
+  const svg=$('#ts-svg');if(!svg||!window.TS_DATA)return;
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=680,rows=window.TS_DATA.length,H=56+rows*30;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    const lo=-13,hi=5,x0=230,x1=W-16;const X=e=>x0+(x1-x0)*(e-lo)/(hi-lo);
+    for(let e=lo;e<=hi;e++){S('line',{x1:X(e),y1:30,x2:X(e),y2:H-10,stroke:css('--rule'),'stroke-width':e%3===0?1:.4},svg);
+      if(e%3===0){const t=S('text',{x:X(e),y:22,'text-anchor':'middle','font-size':10,fill:css('--muted'),'font-family':'JetBrains Mono, monospace'},svg);t.textContent='10^'+e+' s';}}
+    const lab={ps:[-12,'ps'],ns:[-9,'ns'],us:[-6,'μs'],ms:[-3,'ms'],s:[0,'s'],h:[Math.log10(3600),'h']};
+    window.TS_DATA.forEach((d,j)=>{const y=48+j*30;
+      const col=d.k==='m'?css('--meas'):d.k==='t'?css('--theo'):css('--illu');
+      const t=S('text',{x:x0-8,y:y+4,'text-anchor':'end','font-size':11.5,fill:css('--ink')},svg);t.textContent=d.label;
+      const a=X(Math.log10(d.lo)),b=X(Math.log10(d.hi));
+      S('rect',{x:a,y:y-7,width:Math.max(b-a,6),height:14,rx:7,fill:col,opacity:.85},svg);
+      const ti=S('title',{},svg.lastChild);ti.textContent=d.note;
+    });
+  }
+  draw();onTheme(draw);
+})();
+
+/* ================= FIG: coordination / hopping stepper ================= */
+(function(){
+  const svg=$('#hop-svg');if(!svg||!window.HOP)return;let st=0,sys='peo',timer=null;
+  function draw(){
+    const D=window.HOP[sys];const s=D.steps[st];
+    while(svg.firstChild)svg.removeChild(svg.firstChild);svg.setAttribute('viewBox','0 0 640 280');
+    D.chains.forEach(ch=>{let d='';ch.pts.forEach((p,j)=>d+=(j?'L':'M')+p[0]+' '+p[1]);S('path',{d,fill:'none',stroke:css('--poly'),'stroke-width':4,'stroke-linecap':'round','stroke-linejoin':'round',opacity:.85},svg);
+      const t=S('text',{x:ch.pts[0][0],y:ch.pts[0][1]-16,'font-size':11,fill:css('--poly')},svg);t.textContent=ch.name;});
+    D.O.forEach((o,j)=>{const on=s.coord.includes(j);
+      if(on)S('line',{x1:s.li[0],y1:s.li[1],x2:o[0],y2:o[1],stroke:css('--li'),'stroke-width':1.6,'stroke-dasharray':'3 2'},svg);
+      S('circle',{cx:o[0],cy:o[1],r:on?6.5:5,fill:on?css('--li-soft'):css('--surface'),stroke:css('--poly'),'stroke-width':2},svg);});
+    (s.tfsi||D.tfsi||[]).forEach(p=>{S('ellipse',{cx:p[0],cy:p[1],rx:18,ry:11,fill:css('--tf'),opacity:.85},svg);const t=S('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':9,fill:css('--surface')},svg);t.textContent='TFSI⁻';});
+    S('circle',{cx:s.li[0],cy:s.li[1],r:11,fill:css('--li')},svg);const lt=S('text',{x:s.li[0],y:s.li[1]+4,'text-anchor':'middle','font-size':10,fill:css('--surface'),'font-weight':700},svg);lt.textContent='Li⁺';
+    $('#hop-cap').innerHTML='<b>'+(st+1)+' / '+D.steps.length+' · '+s.t+'</b><br>'+s.d;
+  }
+  $('#hop-next').addEventListener('click',()=>{st=(st+1)%window.HOP[sys].steps.length;draw();});
+  $('#hop-prev').addEventListener('click',()=>{const n=window.HOP[sys].steps.length;st=(st-1+n)%n;draw();});
+  seg('#hop-sys',x=>{sys=x;st=0;draw();});
+  draw();onTheme(draw);
+})();
+
+})();
+</script>
+
