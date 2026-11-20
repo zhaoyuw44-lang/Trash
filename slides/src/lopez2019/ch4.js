@@ -71,8 +71,8 @@ async function build(outFile, figDir) {
   // ---------------- 5. Conjugation ----------------
   s = d.slide("CONTENT");
   s.addText("共轭：能级越来越密，连成能带", { placeholder: "title" });
-  d.fig(s, "conjugation", { x: 0.5, y: 1.25, w: 6.6, h: 4.55 });
-  d.caption(s, "据原文 Fig. 5a 重绘（示意）", { x: 0.6, y: 5.85, w: 6.5 });
+  d.fig(s, "conjugation", { x: 0.5, y: 1.25, w: 6.6, h: 4.4 });
+  d.caption(s, "据原文 Fig. 5a 重绘（示意）", { x: 0.6, y: 5.72, w: 6.5 });
   d.quote(s, { x: 0.6, y: 6.15, w: 6.5, en: "Conventional polymer materials are electronically insulating.", zh: "常规高分子材料是电子绝缘体。" });
   d.column(s, 7.4, 1.35, 5.35, [
     { kind: "hist", body: "1928 年 Bloch 的能带理论说明晶体中的能级会连成“带”；1931 年 Hückel 算出共轭分子的 π 能级。1955 年 Peierls 指出一维链会出现单双键交替，所以聚乙炔仍留有能隙。" },
@@ -221,13 +221,13 @@ async function build(outFile, figDir) {
   // ---------------- 17. Processing ----------------
   s = d.slide("CONTENT");
   s.addText("加工技巧与短板：导电高分子“粘不住”", { placeholder: "title" });
-  d.fig(s, "processing", { x: 0.5, y: 1.25, w: 7.0, h: 3.15 });
-  d.quote(s, { x: 0.6, y: 4.6, w: 6.9, en: "conventionally, the mechanical properties of conducting polymers are not sufficient to hold the S electrodes together.", zh: "通常，导电高分子的力学性能不足以把 S 电极粘结在一起。" });
-  d.block(s, { x: 0.6, y: 5.8, w: 6.9, kind: "matters", tint: true, body: "所以很多研究在导电高分子之外仍加了 PVDF。但 PEDOT 直接作粘结剂时，对 S 微米颗粒效果好于 PVDF，因为它与 S 物种亲和力更强。" });
+  d.fig(s, "processing", { x: 0.5, y: 1.3, w: 7.0, h: 3.15 });
+  d.quote(s, { x: 0.6, y: 4.9, w: 6.9, en: "conventionally, the mechanical properties of conducting polymers are not sufficient to hold the S electrodes together.", zh: "通常，导电高分子的力学性能不足以把 S 电极粘结在一起。" });
   d.column(s, 7.85, 1.35, 4.9, [
     { kind: "hist", body: "1990 年代 MacDiarmid 与 Epstein 提出“二次掺杂”：间甲酚使 PANi 链由卷曲变舒展，电导大增。2014 年 Wang、Liu 等用 PEDOT 作 S 微米颗粒的粘结剂；2017 年 Tsao 等（Bao 组）用含吡啶的异靛蓝导电高分子做出 S 含量 90 wt% 的电极。" },
     { kind: "why", body: "导电高分子刚而难溶，不易均匀分散。打断部分共轭（吡啶）或溶胀链段（间甲酚），能提高溶解性和分散性，用很少的高分子就形成连续网络，电荷转移电阻也更低。" },
-  ]);
+    { kind: "matters", body: "所以很多研究仍另加 PVDF。不过 PEDOT 与 S 物种亲和力强，直接作粘结剂时对 S 微米颗粒效果好于 PVDF。" },
+  ], 0.18);
   s.addNotes("原文：间甲酚溶胀 PANi 后再与电极活性物质混合，PANi 能与 C–S 混合物充分分散，电荷转移电阻更低，电池性能优于 PVDF、PTFE 等不导电粘结剂。异靛蓝高分子的高电导和高溶解性使电极中的高分子用量可以降到最低。");
 
   // ---------------- 18. Design map ----------------
@@ -248,8 +248,9 @@ async function build(outFile, figDir) {
   s.addText("阅读校注：本节的几处细节", { placeholder: "title" });
   d.block(s, { x: 0.6, y: 1.35, w: 5.95, kind: "note", tint: true, size: 13, head: "① 第 9 页：“so that is remains n-doped”", body: "笔误，应为 “so that it remains n-doped”（使它保持 n 掺杂）。" });
   d.block(s, { x: 6.8, y: 1.35, w: 5.95, kind: "note", tint: true, size: 13, head: "② 第 9 页：“LUMOs above these potentials”", body: "这里把能级（eV）和电位（V）混在一起比较。能量越高对应电位越负，读的时候应理解为：LUMO 不够低、n 掺杂电位低于 Si 工作区的高分子，在 Si 工作时会去掺杂。" });
-  d.block(s, { x: 0.6, y: 3.6, w: 5.95, kind: "note", tint: true, size: 13, head: "③ 第 9 页：“over the past 50 years”", body: "若从 1977 年掺杂聚乙炔算起，到 2019 年约 40 年；从 1963 年碘掺杂聚吡咯算起约 55 年。“50 年”是约数。" });
-  d.block(s, { x: 6.8, y: 3.6, w: 5.95, kind: "note", tint: true, size: 13, head: "④ 第 10–11 页：Fig. 5f 的语境", body: "正文把 Fig. 5f 放在“PEDOT 直接作粘结剂”之后；但据我们所知，参考文献 144 中三种高分子是包覆在空心 S 纳米球上的涂层，而非粘结剂。另外原图横轴倍率间距不均匀。" });
+  d.block(s, { x: 0.6, y: 3.3, w: 5.95, kind: "note", tint: true, size: 13, head: "③ 第 9 页：“over the past 50 years”", body: "若从 1977 年掺杂聚乙炔算起，到 2019 年约 40 年；从 1963 年碘掺杂聚吡咯算起约 55 年。“50 年”是约数。" });
+  d.block(s, { x: 6.8, y: 3.3, w: 5.95, kind: "note", tint: true, size: 13, head: "④ 第 10–11 页：Fig. 5f 的语境", body: "正文把 Fig. 5f 放在“PEDOT 直接作粘结剂”之后；但据我们所知，参考文献 144 中三种高分子是包覆在空心 S 纳米球上的涂层，而非粘结剂。另外原图横轴倍率间距不均匀。" });
+  d.block(s, { x: 0.6, y: 5.2, w: 12.15, kind: "def", tint: true, head: "补充：能量与电位怎样换算", body: "电子能量（相对真空，eV）≈ −4.44 − U（vs SHE）≈ −1.4 − U（vs Li/Li⁺）。所以 Si 的 0.01–1 V 约对应 −1.4 至 −2.4 eV，S 的 2–3 V 约对应 −3.4 至 −4.4 eV。电位越高，能量越低。" });
   s.addNotes("这几处都不影响原文结论，主要是帮助准确理解。第④条建议对照参考文献 144（Li et al., Nano Lett. 2013）核实。");
 
   // ---------------- 20. Summary ----------------

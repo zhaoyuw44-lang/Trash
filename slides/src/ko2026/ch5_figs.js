@@ -74,8 +74,8 @@ figs.fig5c = () => {
   };
   b += panel(20, "溶剂衍生、富有机 SEI", COL.teal, "#9CC9E0", "#56636F", "石墨", "SSSA", [[1, "Li⁺ 传输快"], [1, "表面覆盖均匀"], [0, "怕体积变化"], [0, "容易被溶剂渗透"]]);
   b += panel(600, "阴离子衍生、富无机 SEI", COL.red, COL.redLight, "#7C8B99", "Li / Si", "AAWA", [[1, "化学与电化学稳定性高"], [1, "耐体积变化"], [1, "抑制枝晶和溶剂渗透"], [0, "较难均匀形成"]]);
-  b += text(400, 110, "强配位溶剂", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
-  b += text(980, 110, "阴离子 + 弱配位溶剂", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
+  b += text(360, 205, "强配位溶剂", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
+  b += text(940, 205, "阴离子 + 弱配位溶剂", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
   return svg(W, H, b);
 };
 
@@ -83,7 +83,7 @@ figs.fig5c = () => {
 figs.anion_path = () => {
   const W = 1180, H = 300;
   let b = "";
-  b += flow(10, 30, 210, 110, 34, [
+  b += flow(10, 30, 200, 110, 32, [
     { t: ["减少配位 Li⁺ 的", "溶剂分子"], c: COL.teal },
     { t: ["阴离子进入", "溶剂化层"], c: COL.purple },
     { t: ["Li⁺–阴离子络合", "阴离子还原电位↑"], c: COL.amber },
@@ -119,13 +119,13 @@ figs.bilayer = () => {
   b += path("M40,190 C100,160 140,215 200,185 C260,160 300,215 360,185 C420,160 460,215 520,185 C560,170 590,200 620,188", COL.sei, 3);
   b += rect(30, 60, 600, 90, COL.electrolyte);
   b += text(330, 112, "电解液", { size: 18, anchor: "middle", weight: "bold", fill: "#3A7CA5" });
-  b += text(640, 195, "外层：富有机", { size: 16, anchor: "end", weight: "bold", fill: COL.sei });
-  b += text(640, 270, "内层：富无机", { size: 16, anchor: "end", weight: "bold", fill: "#FFFFFF" });
+  b += text(45, 222, "外层：富有机", { size: 16, weight: "bold", fill: COL.sei });
+  b += pill(40, 250, 140, 30, COL.ink, "内层：富无机", { size: 16 });
   comps.forEach(([t, c], i) => {
     const x = 50 + i * 120;
     b += rect(x, 385, 14, 14, c, { rx: 2 }) + text(x + 22, 398, t, { size: 16, weight: "bold" });
   });
-  b += text(330, 40, "内层无机：稳定、调匀 Li⁺ 通量；外层有机：导离子、像“粘结剂”、抑制溶解", { size: 15, anchor: "middle", fill: COL.text2 });
+  b += text(330, 40, "内层：稳定、调匀 Li⁺ 通量；外层：导离子、抑制溶解", { size: 16, anchor: "middle", fill: COL.text2 });
   return svg(W, H, b);
 };
 
@@ -239,7 +239,7 @@ figs.runaway = () => {
   b += `<g transform="translate(26 ${(Y0 + Y1) / 2}) rotate(-90)">` + text(0, 0, "升温速率（°C/min）", { size: 17, anchor: "middle", weight: "bold" }) + `</g>`;
   const pts = [[100, 0.04], [115, 0.05], [130, 0.1], [145, 0.22], [152, 0.32], [165, 0.6], [180, 1.2], [200, 3], [212, 6], [222, 12], [228, 35], [232, 150], [236, 500], [245, 900], [270, 1400], [300, 2000]];
   b += `<polyline points="${pts.map(([t, r]) => `${xT(t).toFixed(1)},${yR(r).toFixed(1)}`).join(" ")}" fill="none" stroke="${COL.ink}" stroke-width="4" stroke-linejoin="round"/>`;
-  const zone = (t0, t1, c, n, label) => rect(xT(t0), Y1, xT(t1) - xT(t0), Y0 - Y1, c, { opacity: 0.18 }) + pill(xT((t0 + t1) / 2) - 18, Y0 - 44, 36, 30, c, n, { size: 17 }) + lines(xT((t0 + t1) / 2), Y1 + 24, label, { size: 15, anchor: "middle", weight: "bold", fill: c, lh: 20 });
+  const zone = (t0, t1, c, n, label) => rect(xT(t0), Y1, xT(t1) - xT(t0), Y0 - Y1, c, { opacity: 0.18 }) + pill(xT((t0 + t1) / 2) - 18, Y0 - 44, 36, 30, c, n, { size: 17 }) + lines(xT((t0 + t1) / 2), Y1 + 24, label, { size: 16, anchor: "middle", weight: "bold", fill: c, lh: 20 });
   b += zone(100, 150, COL.sei, "1", ["SEI", "分解"]);
   b += zone(150, 205, COL.purple, "2", ["负极与", "电解液反应"]);
   b += zone(205, 230, COL.red, "3", ["正极", "放氧", "串扰"]);
@@ -256,12 +256,12 @@ figs.arc_scale = () => {
   b += rect(20, 40, 190, 300, COL.light, { rx: 14, stroke: COL.siDark, sw: 3 });
   for (let i = 0; i < 9; i++) b += circle(35, 60 + i * 32, 5, COL.siDark) + circle(195, 60 + i * 32, 5, COL.siDark);
   b += rect(85, 140, 60, 140, COL.ink, { rx: 10 }) + text(115, 215, "电池", { size: 16, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
-  b += line(150, 60, 150, 160, COL.red, 3) + text(160, 90, "热电偶", { size: 15, fill: COL.red, weight: "bold" });
+  b += line(150, 60, 150, 160, COL.red, 3) + text(108, 110, "热电偶", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
   b += text(115, 370, "绝热条件 ARC", { size: 17, anchor: "middle", weight: "bold" });
   // comparison bars (log scale)
   const X0 = 270;
   b += text(X0, 40, "ARC 测试需要的电池容量（对数示意）", { size: 16, weight: "bold" });
-  const bar = (y, w, c, t, s) => rect(X0, y, w, 46, c, { rx: 8 }) + text(X0 + 12, y + 30, t, { size: 17, weight: "bold", fill: "#FFFFFF" }) + text(X0, y + 72, s, { size: 15, fill: COL.text2 });
+  const bar = (y, w, c, t, s) => rect(X0, y, w, 46, c, { rx: 8 }) + text(X0 + 12, y + 30, t, { size: 17, weight: "bold", fill: "#FFFFFF" }) + text(X0, y + 72, s, { size: 16, fill: COL.text2 });
   b += bar(70, 360, COL.ink, "常规大电池 ~1–3 Ah", "正极材料 4–15 g，制造成本高");
   b += bar(190, 150, COL.red, "≥20 mAh", "圆柱软包小电池：正极 < 1 g");
   b += text(X0, 330, "Ah 级 → mAh 级：用量降一个数量级以上", { size: 17, weight: "bold", fill: COL.teal });
@@ -270,7 +270,7 @@ figs.arc_scale = () => {
 
 // ---------- Safety beyond nonflammability ----------
 figs.safety_layers = () => {
-  const W = 1180, H = 260;
+  const W = 1180, H = 175;
   let b = "";
   const items = [
     { t: "挥发与可燃性", s: ["LiPF₆/环状碳酸酯", "易燃"], c: COL.amber },
@@ -278,7 +278,7 @@ figs.safety_layers = () => {
     { t: "反应性气体与酸", s: ["跨电极迁移", "引发对侧放热"], c: COL.purple },
     { t: "固态也不自动安全", s: ["接触失效、化学机械", "降解、气相串扰"], c: COL.red },
   ];
-  items.forEach((it, i) => (b += card(20 + i * 290, 10, 270, 220, it.t, it.s, it.c, { bs: 18, th: 46, ts: 20 })));
+  items.forEach((it, i) => (b += card(20 + i * 290, 10, 270, 155, it.t, it.s, it.c, { bs: 18, th: 46, ts: 20 })));
   return svg(W, H, b);
 };
 

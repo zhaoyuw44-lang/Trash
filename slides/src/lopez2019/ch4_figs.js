@@ -97,7 +97,7 @@ figs.title_motif = () => {
   const W = 520, H = 520;
   let b = "";
   for (let r = 0; r < 3; r++) b += conj(40, 160 + r * 120, 16, 27, 22, r === 1 ? COL.amberLight : COL.tealLight);
-  [[120, 268], [250, 262], [380, 268]].forEach(([x, y]) => (b += electron(x, y - 16, 16)));
+  [[120, 268], [250, 262], [380, 268]].forEach(([x, y]) => (b += electron(x, y - 18, 18)));
   b += arrow(150, 236, 220, 236, { color: COL.amber, width: 4, head: 14 }) + arrow(280, 236, 350, 236, { color: COL.amber, width: 4, head: 14 });
   return svg(W, H, b);
 };
@@ -134,19 +134,19 @@ figs.conjugation = () => {
   b += rect(cx[2] - 50, 100, 100, 56, COL.tealLight, { rx: 4 }) + rect(cx[2] - 50, 184, 100, 56, COL.purpleLight, { rx: 4 });
   b += text(cx[2] + 60, 134, "导带", { size: 16, weight: "bold", fill: COL.teal });
   b += text(cx[2] + 60, 218, "价带", { size: 16, weight: "bold", fill: COL.purple });
-  b += text(cx[0] - 46, 76, "LUMO", { size: 15, anchor: "end", fill: COL.teal, weight: "bold" });
-  b += text(cx[0] - 46, 276, "HOMO", { size: 15, anchor: "end", fill: COL.purple, weight: "bold" });
+  b += text(cx[0], 58, "LUMO", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
+  b += text(cx[0], 294, "HOMO", { size: 16, anchor: "middle", fill: COL.purple, weight: "bold" });
   // gaps
   [[cx[0] + 56, 74, 266], [cx[1] + 56, 104, 236], [cx[2] - 66, 160, 180]].forEach(([x, y1, y2]) => {
     b += arrow(x, y1, x, y2, { color: COL.red, width: 2, head: 8 }) + arrow(x, y2, x, y1, { color: COL.red, width: 2, head: 8 });
   });
-  b += text(cx[0] + 64, 175, "大", { size: 15, fill: COL.red, weight: "bold" });
-  b += text(cx[1] + 64, 175, "变小", { size: 15, fill: COL.red, weight: "bold" });
-  b += text(cx[2], 176, "最小", { size: 15, anchor: "middle", fill: COL.red, weight: "bold" });
+  b += text(cx[0] + 64, 175, "大", { size: 16, fill: COL.red, weight: "bold" });
+  b += text(cx[1] + 64, 175, "变小", { size: 16, fill: COL.red, weight: "bold" });
+  b += text(cx[2], 176, "最小", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
   // structures
   b += conj(cx[0] - 13, 320, 1, 26, 14);
   b += conj(cx[1] - 65, 320, 5, 26, 14);
-  b += bracket(cx[2] - 66, 296, 330, true) + conj(cx[2] - 52, 320, 4, 26, 14) + bracket(cx[2] + 66, 296, 330, false) + text(cx[2] + 74, 336, "n", { size: 15, fill: COL.ink, italic: true });
+  b += bracket(cx[2] - 66, 296, 330, true) + conj(cx[2] - 52, 320, 4, 26, 14) + bracket(cx[2] + 66, 296, 330, false) + text(cx[2] + 74, 336, "n", { size: 16, fill: COL.ink, italic: true });
   b += text(cx[0], 372, "乙烯", { size: 17, anchor: "middle", weight: "bold" });
   b += text(cx[1], 372, "己三烯（3 个 C=C）", { size: 17, anchor: "middle", weight: "bold" });
   b += text(cx[2], 372, "聚乙炔（n 很大）", { size: 17, anchor: "middle", weight: "bold" });
@@ -161,26 +161,26 @@ figs.doping = () => {
   const col = (x0, title, sub, mode) => {
     let s = rect(x0, 10, 210, 300, "#F7F9FB", { rx: 14 });
     s += rect(x0 + 50, 50, 110, 46, COL.tealLight, { rx: 4 }) + rect(x0 + 50, 190, 110, 46, COL.purpleLight, { rx: 4 });
-    s += text(x0 + 105, 80, "LUMO / 导带", { size: 15, anchor: "middle", fill: COL.teal, weight: "bold" });
-    s += text(x0 + 105, 262, "HOMO / 价带", { size: 15, anchor: "middle", fill: COL.purple, weight: "bold" });
+    s += text(x0 + 105, 80, "LUMO / 导带", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
+    s += text(x0 + 105, 262, "HOMO / 价带", { size: 16, anchor: "middle", fill: COL.purple, weight: "bold" });
     // electrons in HOMO
     const nh = mode === "p" ? 3 : 4;
     for (let k = 0; k < 4; k++) {
       const x = x0 + 66 + k * 26;
       if (k < nh) s += circ(x, 213, 8, COL.amber);
-      else s += `<circle cx="${x}" cy="213" r="8" fill="#FFFFFF" stroke="${COL.red}" stroke-width="2.5"/>` + text(x, 219, "+", { size: 15, anchor: "middle", fill: COL.red, weight: "bold" });
+      else s += `<circle cx="${x}" cy="213" r="8" fill="#FFFFFF" stroke="${COL.red}" stroke-width="2.5"/>` + text(x, 219, "+", { size: 16, anchor: "middle", fill: COL.red, weight: "bold" });
     }
     if (mode === "n") s += circ(x0 + 80, 64, 8, COL.amber);
     if (mode === "p") s += arrow(x0 + 144, 200, x0 + 185, 150, { color: COL.red, width: 3, head: 11 }) + ion(x0 + 182, 128, { r: 15, fill: COL.red, label: "−" });
     if (mode === "n") s += arrow(x0 + 185, 30, x0 + 98, 58, { color: COL.amber, width: 3, head: 11 }) + ion(x0 + 182, 140, { r: 15, fill: COL.purple, label: "+" });
     s += text(x0 + 105, 340, title, { size: 18, anchor: "middle", weight: "bold" });
-    s += text(x0 + 105, 366, sub, { size: 15, anchor: "middle", fill: COL.text2 });
+    s += text(x0 + 105, 366, sub, { size: 16, anchor: "middle", fill: COL.text2 });
     return s;
   };
   b += col(10, "中性", "能隙中没有载流子", "0");
   b += col(235, "p 型掺杂 = 氧化", "取走电子，留下空穴", "p");
   b += col(460, "n 型掺杂 = 还原", "塞进电子", "n");
-  b += text(340, 394, "红色 − = 平衡电荷的阴离子；紫色 + = Li^{+} 等阳离子", { size: 15, anchor: "middle", fill: COL.muted });
+  b += text(340, 394, "红色 − = 平衡电荷的阴离子；紫色 + = Li^{+} 等阳离子", { size: 16, anchor: "middle", fill: COL.muted });
   return svg(W, H, b);
 };
 
@@ -188,7 +188,7 @@ figs.doping = () => {
 figs.cp_structures = () => {
   const W = 680, H = 470;
   let b = "";
-  const card = (x, y, name, use, col) => rect(x, y, 330, 225, "#F7F9FB", { rx: 14 }) + text(x + 165, y + 190, name, { size: 18, anchor: "middle", weight: "bold", fill: col }) + text(x + 165, y + 213, use, { size: 15, anchor: "middle", fill: COL.text2 });
+  const card = (x, y, name, use, col) => rect(x, y, 330, 225, "#F7F9FB", { rx: 14 }) + text(x + 165, y + 190, name, { size: 18, anchor: "middle", weight: "bold", fill: col }) + text(x + 165, y + 213, use, { size: 16, anchor: "middle", fill: COL.text2 });
   b += card(5, 5, "聚芴 Polyfluorene", "用于 Si", COL.teal);
   b += card(345, 5, "PEDOT", "用于 Si 或 S", COL.purple);
   b += card(5, 240, "聚苯胺 PANi", "用于 S", "#A35A12");
@@ -203,9 +203,9 @@ figs.cp_structures = () => {
     const c9 = [cx, cy - 0.5 * r - 0.866 * r];
     b += line(Lh[1][0], Lh[1][1], c9[0], c9[1], COL.ink, 3) + line(Rh[5][0], Rh[5][1], c9[0], c9[1], COL.ink, 3) + line(Lh[2][0], Lh[2][1], Rh[4][0], Rh[4][1], COL.ink, 3);
     b += line(c9[0], c9[1], c9[0] - 18, c9[1] - 20, COL.ink, 2.5) + line(c9[0], c9[1], c9[0] + 18, c9[1] - 20, COL.ink, 2.5);
-    b += text(c9[0] - 24, c9[1] - 24, "R", { size: 15, anchor: "end", weight: "bold", fill: COL.teal }) + text(c9[0] + 24, c9[1] - 24, "R", { size: 15, weight: "bold", fill: COL.teal });
+    b += text(c9[0] - 24, c9[1] - 24, "R", { size: 16, anchor: "end", weight: "bold", fill: COL.teal }) + text(c9[0] + 24, c9[1] - 24, "R", { size: 16, weight: "bold", fill: COL.teal });
     b += line(Lh[4][0], Lh[4][1], Lh[4][0] - 30, Lh[4][1] + 12, COL.ink, 3) + line(Rh[2][0], Rh[2][1], Rh[2][0] + 30, Rh[2][1] + 12, COL.ink, 3);
-    b += bracket(Lh[4][0] - 22, 70, 160, true) + bracket(Rh[2][0] + 22, 70, 160, false) + text(Rh[2][0] + 30, 166, "n", { size: 15, italic: true });
+    b += bracket(Lh[4][0] - 22, 70, 160, true) + bracket(Rh[2][0] + 22, 70, 160, false) + text(Rh[2][0] + 30, 166, "n", { size: 16, italic: true });
   }
   // PEDOT
   {
@@ -218,7 +218,7 @@ figs.cp_structures = () => {
     b += line(O1[0], O1[1], O1[0] + 10, O1[1] - 30, COL.ink, 3) + line(O2[0], O2[1], O2[0] - 10, O2[1] - 30, COL.ink, 3) + line(O1[0] + 10, O1[1] - 30, O2[0] - 10, O2[1] - 30, COL.ink, 3);
     b += atom(O1[0], O1[1], "O", COL.red) + atom(O2[0], O2[1], "O", COL.red) + atom(P[0][0], P[0][1], "S", COL.sulfur);
     b += line(P[1][0], P[1][1], P[1][0] - 34, P[1][1] + 6, COL.ink, 3) + line(P[4][0], P[4][1], P[4][0] + 34, P[4][1] + 6, COL.ink, 3);
-    b += bracket(P[1][0] - 26, 50, 165, true) + bracket(P[4][0] + 26, 50, 165, false) + text(P[4][0] + 34, 171, "n", { size: 15, italic: true });
+    b += bracket(P[1][0] - 26, 50, 165, true) + bracket(P[4][0] + 26, 50, 165, false) + text(P[4][0] + 34, 171, "n", { size: 16, italic: true });
   }
   // PANi
   {
@@ -227,18 +227,18 @@ figs.cp_structures = () => {
     b += ringPath(Hx) + dbl(Hx, 0, cx, cy) + dbl(Hx, 2, cx, cy) + dbl(Hx, 4, cx, cy);
     b += line(Hx[3][0], Hx[3][1], Hx[3][0] - 34, cy, COL.ink, 3);
     b += line(Hx[0][0], Hx[0][1], Hx[0][0] + 34, cy, COL.ink, 3);
-    b += atom(Hx[0][0] + 46, cy, "N", "#3A62B5") + text(Hx[0][0] + 46, cy - 18, "H", { size: 15, anchor: "middle", fill: COL.text2 });
+    b += atom(Hx[0][0] + 46, cy, "N", "#3A62B5") + text(Hx[0][0] + 46, cy - 18, "H", { size: 16, anchor: "middle", fill: COL.text2 });
     b += line(Hx[0][0] + 58, cy, Hx[0][0] + 84, cy, COL.ink, 3);
-    b += bracket(Hx[3][0] - 26, 300, 400, true) + bracket(Hx[0][0] + 78, 300, 400, false) + text(Hx[0][0] + 86, 406, "n", { size: 15, italic: true });
+    b += bracket(Hx[3][0] - 26, 300, 400, true) + bracket(Hx[0][0] + 78, 300, 400, false) + text(Hx[0][0] + 86, 406, "n", { size: 16, italic: true });
   }
   // PPy
   {
     const cx = 510, cy = 340, r = 28;
     const P = poly(cx, cy, r, 5, 90);
     b += ringPath(P) + dbl(P, 1, cx, cy) + dbl(P, 3, cx, cy);
-    b += atom(P[0][0], P[0][1], "N", "#3A62B5") + text(P[0][0], P[0][1] + 30, "H", { size: 15, anchor: "middle", fill: COL.text2 });
+    b += atom(P[0][0], P[0][1], "N", "#3A62B5") + text(P[0][0], P[0][1] + 30, "H", { size: 16, anchor: "middle", fill: COL.text2 });
     b += line(P[1][0], P[1][1], P[1][0] - 40, P[1][1] + 6, COL.ink, 3) + line(P[4][0], P[4][1], P[4][0] + 40, P[4][1] + 6, COL.ink, 3);
-    b += bracket(P[1][0] - 32, 290, 400, true) + bracket(P[4][0] + 32, 290, 400, false) + text(P[4][0] + 40, 406, "n", { size: 15, italic: true });
+    b += bracket(P[1][0] - 32, 290, 400, true) + bracket(P[4][0] + 32, 290, 400, false) + text(P[4][0] + 40, 406, "n", { size: 16, italic: true });
   }
   return svg(W, H, b);
 };
@@ -358,11 +358,11 @@ figs.level_align = () => {
   const Y = (v) => 440 - v * 85; // potential vs Li, 0..4 V upward
   b += line(150, Y(0) + 10, 150, Y(4.3), COL.ink, 3) + head(150, Y(4.3) - 8, -Math.PI / 2, COL.ink, 13);
   for (let v = 0; v <= 4; v++) {
-    b += line(142, Y(v), 150, Y(v), COL.ink, 2) + text(136, Y(v) + 6, `${v} V`, { size: 16, anchor: "end", fill: COL.text2 });
-    b += text(70, Y(v) + 6, `${(-1.4 - v).toFixed(1)}`, { size: 16, anchor: "end", fill: COL.muted });
+    b += line(142, Y(v), 150, Y(v), COL.ink, 2) + text(136, Y(v) + 6, `${v} V`, { size: 17, anchor: "end", fill: COL.text2 });
+    b += text(70, Y(v) + 6, `${(-1.4 - v).toFixed(1)}`, { size: 17, anchor: "end", fill: COL.muted });
   }
-  b += text(150, 34, "电位 vs Li/Li^{+}", { size: 16, anchor: "middle", weight: "bold" });
-  b += text(48, 34, "能量 / eV", { size: 15, anchor: "middle", fill: COL.muted, weight: "bold" });
+  b += text(150, 34, "电位 vs Li/Li^{+}", { size: 17, anchor: "middle", weight: "bold" });
+  b += text(48, 34, "能量 / eV", { size: 17, anchor: "middle", fill: COL.muted, weight: "bold" });
   // zones
   b += rect(170, Y(1), 200, Y(0.01) - Y(1), "#DCE3E9", { rx: 6 });
   b += text(270, Y(0.5) + 6, "Si 工作区 0.01–1 V", { size: 17, anchor: "middle", weight: "bold", fill: COL.siDark });
@@ -370,11 +370,11 @@ figs.level_align = () => {
   b += text(270, Y(2.5) + 6, "S 工作区 2–3 V", { size: 17, anchor: "middle", weight: "bold", fill: "#8A6A00" });
   // polymer requirement
   b += line(390, Y(1.15), 600, Y(1.15), COL.purple, 4, "8 6");
-  b += lines(395, Y(1.15) - 36, ["理想 Si 粘结剂：在约 1 V 以上", "就被 n 掺杂（LUMO 足够低）"], { size: 16, fill: COL.purple, weight: "bold", lh: 21 });
+  b += lines(395, Y(1.15) - 36, ["理想 Si 粘结剂：在约 1 V 以上", "就被 n 掺杂（LUMO 足够低）"], { size: 17, fill: COL.purple, weight: "bold", lh: 21 });
   b += arrow(495, Y(1.15) + 8, 495, Y(0.15), { color: COL.purple, width: 3, head: 12 });
-  b += lines(505, Y(0.6), ["整个 Si 工作区", "保持导电"], { size: 15, fill: COL.purple, lh: 19 });
-  b += lines(395, Y(3.55), ["S 正极：电位高，", "对能级的要求不同"], { size: 16, fill: "#8A6A00", weight: "bold", lh: 21 });
-  b += text(320, 488, "左列能量以真空为 0：电位越高 ↔ 电子能量越低", { size: 15, anchor: "middle", fill: COL.muted });
+  b += lines(505, Y(0.6), ["整个 Si 工作区", "保持导电"], { size: 17, fill: COL.purple, lh: 19 });
+  b += lines(395, Y(3.55), ["S 正极：电位高，", "对能级的要求不同"], { size: 17, fill: "#8A6A00", weight: "bold", lh: 21 });
+  b += text(320, 488, "左列能量以真空为 0：电位越高 ↔ 电子能量越低", { size: 17, anchor: "middle", fill: COL.muted });
   return svg(W, H, b);
 };
 
@@ -390,7 +390,7 @@ figs.s_coating = () => {
   const R = 136;
   [200, 240, 280, 320].forEach((deg, i) => {
     const a = (deg * Math.PI) / 180;
-    b += electron(230 + R * Math.cos(a), 190 + R * Math.sin(a), 12);
+    b += electron(230 + R * Math.cos(a), 190 + R * Math.sin(a), 14);
   });
   b += `<path d="M ${230 + R * Math.cos(3.3)} ${190 + R * Math.sin(3.3)} A ${R} ${R} 0 0 1 ${230 + R * Math.cos(5.8)} ${190 + R * Math.sin(5.8)}" fill="none" stroke="${COL.amber}" stroke-width="3" stroke-dasharray="6 6"/>`;
   // polysulfide trying to escape
@@ -409,22 +409,22 @@ figs.processing = () => {
   b += text(190, 36, "① 吡啶“拐点”打断共轭", { size: 18, anchor: "middle", weight: "bold", fill: COL.teal });
   // straight rigid chain of rings
   for (let k = 0; k < 5; k++) b += ringPath(poly(55 + k * 62, 90, 22, 6, 0), COL.siDark, 3) + (k < 4 ? line(77 + k * 62, 90, 95 + k * 62, 90, COL.siDark, 3) : "");
-  b += text(190, 135, "全共轭：刚、难溶", { size: 16, anchor: "middle", fill: COL.text2 });
+  b += text(190, 135, "全共轭：刚、难溶", { size: 17, anchor: "middle", fill: COL.text2 });
   // kinked chain
   const pts = [[60, 215], [118, 200], [176, 223], [234, 175], [292, 200]];
   pts.forEach(([x, y], k) => {
     b += ringPath(poly(x, y, 22, 6, 0), k === 2 ? COL.teal : COL.siDark, 3);
-    if (k === 2) b += atom(x + 11, y + 19, "N", "#3A62B5", 15);
+    if (k === 2) b += atom(x + 11, y + 19, "N", "#3A62B5", 17);
     if (k < 4) b += line(x + 20, y + (pts[k + 1][1] - y) * 0.2, pts[k + 1][0] - 20, pts[k + 1][1] - (pts[k + 1][1] - y) * 0.2, COL.siDark, 3);
   });
-  b += text(190, 274, "加入吡啶：更柔、更易溶", { size: 16, anchor: "middle", fill: COL.teal, weight: "bold" });
+  b += text(190, 274, "加入吡啶：更柔、更易溶", { size: 17, anchor: "middle", fill: COL.teal, weight: "bold" });
   // m-cresol swelling
   b += text(570, 36, "② 间甲酚溶胀 PANi", { size: 18, anchor: "middle", weight: "bold", fill: "#A35A12" });
   b += `<path d="${smooth([[420, 150], [450, 100], [490, 140], [455, 175], [430, 130], [470, 110], [500, 160], [470, 190]])}" fill="none" stroke="#A35A12" stroke-width="4"/>`;
-  b += text(460, 230, "卷曲的链", { size: 16, anchor: "middle", fill: COL.text2 });
-  b += arrow(530, 145, 590, 145, { color: COL.ink, width: 3, head: 12 }) + text(560, 128, "m-cresol", { size: 15, anchor: "middle", fill: COL.text2 });
+  b += text(460, 230, "卷曲的链", { size: 17, anchor: "middle", fill: COL.text2 });
+  b += arrow(530, 145, 590, 145, { color: COL.ink, width: 3, head: 12 }) + text(560, 128, "m-cresol", { size: 17, anchor: "middle", fill: COL.text2 });
   b += wig(605, 120, 735, 175, { seed: 5, amp: 6, n: 8, waves: 3, color: "#A35A12", w: 4 });
-  b += lines(670, 220, ["舒展的链", "与 C–S 混合更均匀"], { size: 16, anchor: "middle", fill: "#A35A12", weight: "bold", lh: 21 });
+  b += lines(660, 220, ["舒展的链", "更易与 C–S 混匀"], { size: 17, anchor: "middle", fill: "#A35A12", weight: "bold", lh: 21 });
   b += text(380, 325, "目的相同：让导电高分子用得更少、分散得更好", { size: 17, anchor: "middle", weight: "bold" });
   return svg(W, H, b);
 };
