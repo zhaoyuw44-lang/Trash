@@ -159,7 +159,7 @@ figs.screening = () => {
   });
   b += `<rect x="${W / 2 - 90}" y="338" width="180" height="46" rx="23" fill="${COL.amber}"/>`;
   b += text(W / 2, 368, "少数候选 → 实验", { size: 17, anchor: "middle", weight: "bold", fill: "#FFFFFF" });
-  b += text(W / 2, 418, "计算的价值：快速“排除”，缩小实验范围", { size: 15, anchor: "middle", fill: COL.text2 });
+  b += text(W / 2, 418, "计算的价值：快速“排除”，缩小实验范围", { size: 16, anchor: "middle", fill: COL.text2 });
   return svg(W, H, b);
 };
 

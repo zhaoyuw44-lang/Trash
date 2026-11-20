@@ -100,13 +100,13 @@ async function build(outFile, figDir) {
   // ---------------- 6. Screening ----------------
   s = d.slide("CONTENT");
   s.addText("策略①  计算筛选：先在电脑里“排除”", { placeholder: "title" });
-  d.fig(s, "screening", { x: 0.45, y: 1.2, w: 6.45, h: 4.5 });
+  d.fig(s, "screening", { x: 0.45, y: 1.15, w: 6.45, h: 4.18 });
   d.column(s, 7.15, 1.3, 5.6, [
     { kind: "hist", body: "2017 年 Sendek 等对 12 000 多种含 Li 晶体做整体筛选；2018 年 Muy 等用晶格动力学描述符平衡稳定性与迁移率；2019 年 Xiong 等在计算指导下发现榍石型 LiTaSiO₅ 导体。" },
     { kind: "why", body: "以前一种一种地合成、测量，速度慢。高通量计算先排除大量“不可能”的化合物，把实验集中到少数候选上。" },
     { kind: "matters", body: "计算和实验仍会有出入（如第 4 章的稳定窗口），所以计算是“筛子”，不是“裁判”。" },
   ]);
-  d.block(s, { x: 0.6, y: 5.85, w: 6.3, kind: "def", tint: true, head: "例：橄榄石结构", size: 14, body: "计算显示其 Li 能带中心低、阴离子能带中心高，有望摆脱“稳定性 vs 迁移率”的此消彼长。" });
+  d.block(s, { x: 0.6, y: 5.48, w: 6.3, kind: "def", tint: true, head: "例：橄榄石结构", size: 14, body: "计算显示其 Li 能带中心低、阴离子能带中心高，有望摆脱“稳定性 vs 迁移率”的此消彼长。" });
   s.addNotes("原文的例子：橄榄石结构被算出具有低的 Li 能带中心和高的阴离子能带中心，有望克服稳定性与离子迁移率之间的权衡；计算指导设计的 Zr 掺杂 LiTaSiO5 开辟了“榍石型超离子导体”新家族，沿一个方向扩散快，还能跨通道迁移。");
 
   // ---------------- 7. SPE: Venn ----------------

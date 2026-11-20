@@ -62,8 +62,8 @@ async function build(outFile, figDir) {
   // ---------------- 3. Six-chapter map ----------------
   s = d.slide("CONTENT");
   s.addText("这篇综述讲什么：六章地图", { placeholder: "title" });
-  fig(s, "chapter_map", { x: 0.5, y: 1.15, w: 12.3, h: 4.95 });
-  d.block(s, { x: 0.6, y: 6.05, w: 12.15, kind: "def", head: "一句话概括全文", tint: true, size: 14, body: "先讲固态电解质（材料、机理、性能），再讲它们“使能”(enable) 的新电池：全固态锂离子、Li–空气 / Li–S / Li–Br₂、介体离子水系电池。" });
+  fig(s, "chapter_map", { x: 0.5, y: 1.12, w: 12.3, h: 4.35 });
+  chk("ch3 def", d.block(s, { x: 0.6, y: 5.58, w: 12.15, kind: "def", head: "一句话概括全文", tint: true, size: 14, body: "先讲固态电解质（材料、机理、性能），再讲它们“使能”(enable) 的新电池：全固态锂离子、Li–空气 / Li–S / Li–Br₂、介体离子水系电池。" }));
   s.addNotes("标题里的 enabled by 是关键：作者的主张不是“用固态电解质替换液体”这么简单，而是固态电解质让一些原本做不成的电池化学成为可能。第 5、6 章就是这个主张的证据。");
 
   // ---------------- 4. Demand ----------------
