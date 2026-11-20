@@ -116,7 +116,7 @@ async function build(outFile, figDir) {
   // ---------------- 10. Quasi reference trap ----------------
   s = d.slide("CONTENT");
   s.addText("Li 准参比的陷阱：尺子自己在动", { placeholder: "title" });
-  d.fig(s, "ref_compare", { x: 0.45, y: 1.25, w: 6.6, h: 4.17 });
+  d.fig(s, "ref_compare", { x: 0.45, y: 1.18, w: 6.6, h: 3.82 });
   d.column(s, 7.35, 1.35, 5.4, [
     { kind: "hist", body: "20 世纪初电化学界约定标准氢电极 SHE 为 0 V；锂电研究为了方便，普遍直接用 Li 金属当参比（V vs Li⁺/Li）。1986 年 IUPAC 发表 Trasatti 的“绝对电极电位”说明（ref. 18）。" },
     { kind: "why", body: "用 Li 当参比，测到的是“正极相对 Li 的差”。换电解液时 Li 和正极一起移动，差值不变，于是电位移动被掩盖了。" },

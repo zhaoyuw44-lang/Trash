@@ -221,13 +221,13 @@ async function build(outFile, figDir) {
   // ---------------- 17. Processing ----------------
   s = d.slide("CONTENT");
   s.addText("加工技巧与短板：导电高分子“粘不住”", { placeholder: "title" });
-  d.fig(s, "processing", { x: 0.5, y: 1.25, w: 7.0, h: 3.15 });
-  d.quote(s, { x: 0.6, y: 4.6, w: 6.9, en: "conventionally, the mechanical properties of conducting polymers are not sufficient to hold the S electrodes together.", zh: "通常，导电高分子的力学性能不足以把 S 电极粘结在一起。" });
-  d.block(s, { x: 0.6, y: 5.8, w: 6.9, kind: "matters", tint: true, body: "所以很多研究在导电高分子之外仍加了 PVDF。但 PEDOT 直接作粘结剂时，对 S 微米颗粒效果好于 PVDF，因为它与 S 物种亲和力更强。" });
-  d.column(s, 7.85, 1.35, 4.9, [
+  d.fig(s, "processing", { x: 0.5, y: 1.25, w: 7.0, h: 3.4 });
+  d.quote(s, { x: 0.6, y: 5.0, w: 6.9, bottom: 6.8, en: "conventionally, the mechanical properties of conducting polymers are not sufficient to hold the S electrodes together.", zh: "通常，导电高分子的力学性能不足以把 S 电极粘结在一起。" });
+  d.column(s, 7.85, 1.32, 4.9, [
     { kind: "hist", body: "1990 年代 MacDiarmid 与 Epstein 提出“二次掺杂”：间甲酚使 PANi 链由卷曲变舒展，电导大增。2014 年 Wang、Liu 等用 PEDOT 作 S 微米颗粒的粘结剂；2017 年 Tsao 等（Bao 组）用含吡啶的异靛蓝导电高分子做出 S 含量 90 wt% 的电极。" },
     { kind: "why", body: "导电高分子刚而难溶，不易均匀分散。打断部分共轭（吡啶）或溶胀链段（间甲酚），能提高溶解性和分散性，用很少的高分子就形成连续网络，电荷转移电阻也更低。" },
-  ]);
+    { kind: "matters", body: "所以很多研究在导电高分子之外仍加了 PVDF。但 PEDOT 直接作粘结剂时，对 S 微米颗粒效果好于 PVDF，因为它与 S 物种亲和力更强。" },
+  ], 0.16);
   s.addNotes("原文：间甲酚溶胀 PANi 后再与电极活性物质混合，PANi 能与 C–S 混合物充分分散，电荷转移电阻更低，电池性能优于 PVDF、PTFE 等不导电粘结剂。异靛蓝高分子的高电导和高溶解性使电极中的高分子用量可以降到最低。");
 
   // ---------------- 18. Design map ----------------

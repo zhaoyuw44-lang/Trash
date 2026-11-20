@@ -105,17 +105,17 @@ figs.ref_compare = () => {
     return s;
   };
   b += beaker(20, "电位 vs Li^{+}/Li");
-  b += rect(70, 110, 24, 180, COL.siDark) + text(82, 312, "正极", { size: 16, anchor: "middle", weight: "bold" });
-  b += rect(220, 110, 24, 180, COL.sulfur) + text(232, 312, "Li", { size: 16, anchor: "middle", weight: "bold" });
+  b += rect(70, 110, 24, 180, COL.siDark) + text(82, 312, "正极", { size: 18, anchor: "middle", weight: "bold" });
+  b += rect(220, 110, 24, 180, COL.sulfur) + text(232, 312, "Li", { size: 18, anchor: "middle", weight: "bold" });
   b += arrow(100, 190, 212, 190, { color: COL.purple, width: 3, head: 11 }) + arrow(212, 215, 100, 215, { color: COL.purple, width: 3, head: 11 });
-  b += text(155, 180, "Li⁺", { size: 16, anchor: "middle", weight: "bold", fill: COL.purple });
+  b += text(155, 180, "Li⁺", { size: 18, anchor: "middle", weight: "bold", fill: COL.purple });
   b += beaker(390, "E_{Li⁺/Li} vs Fc^{+}/Fc");
-  b += rect(440, 110, 24, 180, COL.alu) + text(452, 312, "Pt", { size: 16, anchor: "middle", weight: "bold" });
-  b += rect(590, 110, 24, 180, COL.sulfur) + text(602, 312, "Li", { size: 16, anchor: "middle", weight: "bold" });
-  b += pill(487, 165, 80, 30, COL.amber, "Fc", { size: 16 }) + pill(487, 225, 80, 30, COL.red, "Fc⁺", { size: 16 });
+  b += rect(440, 110, 24, 180, COL.alu) + text(452, 312, "Pt", { size: 18, anchor: "middle", weight: "bold" });
+  b += rect(590, 110, 24, 180, COL.sulfur) + text(602, 312, "Li", { size: 18, anchor: "middle", weight: "bold" });
+  b += pill(487, 165, 80, 30, COL.amber, "Fc", { size: 18 }) + pill(487, 225, 80, 30, COL.red, "Fc⁺", { size: 18 });
   b += arrow(510, 198, 510, 222, { color: COL.ink, width: 2.5, head: 9 }) + arrow(545, 222, 545, 198, { color: COL.ink, width: 2.5, head: 9 });
-  b += lines(155, 380, ["a 准参比：Li 本身会随", "电解液移动 → 看不出"], { size: 16, anchor: "middle", weight: "bold", fill: COL.red, lh: 24 });
-  b += lines(525, 380, ["b 内标：Fc⁺/Fc 几乎不随", "电解液变 → 可当“尺子”"], { size: 16, anchor: "middle", weight: "bold", fill: COL.teal, lh: 24 });
+  b += lines(155, 380, ["a 准参比：Li 本身会随", "电解液移动 → 看不出"], { size: 18, anchor: "middle", weight: "bold", fill: COL.red, lh: 24 });
+  b += lines(525, 380, ["b 内标：Fc⁺/Fc 几乎不随", "电解液变 → 可当“尺子”"], { size: 18, anchor: "middle", weight: "bold", fill: COL.teal, lh: 24 });
   return svg(W, H, b);
 };
 
