@@ -192,7 +192,7 @@ async function build(outFile, figDir) {
   });
 
   // ---------------- 16. FR examples ----------------
-  concept("四个阻燃例子（原文 Fig. 8d）", "fr_examples", { x: 0.5, y: 1.2, w: 6.6, h: 4.3 }, 7.45, 5.3, [
+  concept("四个阻燃例子（原文 Fig. 8d）", "fr_examples", { x: 0.5, y: 1.2, w: 6.6, h: 4.05 }, 7.45, 5.3, [
     { kind: "hist", body: "2014 年 Wong 等：PFPE 电解液；2017 年 Liu、Cui 等：核壳纤维隔膜；2018 年 Stalin、Archer 等：含磷交联凝胶；2018 年 Zhou 等：APP 粘结剂。" },
     { kind: "why", body: "以前把阻燃剂直接加进电解液，会损害电化学性能。现在：把阻燃基团接到高分子主链上，或包在壳里、受热才释放。" },
     { kind: "matters", body: "原文：目前还难以兼顾阻燃与性能，但没有原理上的障碍。" },

@@ -154,8 +154,8 @@ figs.trilayer = () => {
     const lx = x + 60, ex = x + 145;
     const ok = (xx, pass, col) => (pass ? arrow(xx, sy + 100, xx, sy - 50, { color: col, width: 3.5, head: 13 }) : arrow(xx, sy + 100, xx, sy + 40, { color: col, width: 3.5, head: 13 }) + cross(xx, sy + 28, 10));
     b += ok(lx, k !== 1, COL.purple) + ok(ex, k === 2, COL.amber);
-    b += ion(lx, sy + 120, { r: 14 });
-    b += electron(ex, sy + 120, 14);
+    b += ion(lx, sy + 120, { r: 15 });
+    b += electron(ex, sy + 120, 17);
     b += text(x + cw / 2, top + 330, name, { size: 19, anchor: "middle", weight: "bold", fill: c });
   });
   b += text(x0, H - 50, "紫 / 白 / 紫 = PP / PE / PP；橙 = 熔化的 PE（堵孔）；粉 = 熔化的 PP", { size: 17, fill: COL.text2 });
@@ -212,19 +212,19 @@ figs.ptc_switch = () => {
   b += text(600, 26, "受热膨胀：颗粒被拉开", { size: 18, anchor: "middle", weight: "bold", fill: COL.red });
   b += panel(10, false) + panel(450, true);
   b += arrow(325, 120, 430, 120, { color: COL.ink, width: 3, head: 12 }) + arrow(430, 160, 325, 160, { color: COL.ink, width: 3, head: 12 });
-  b += text(378, 106, "加热", { size: 17, anchor: "middle", weight: "bold", fill: COL.red });
-  b += text(378, 190, "冷却恢复", { size: 17, anchor: "middle", weight: "bold", fill: COL.teal });
+  b += text(378, 106, "加热", { size: 18, anchor: "middle", weight: "bold", fill: COL.red });
+  b += text(378, 190, "冷却恢复", { size: 18, anchor: "middle", weight: "bold", fill: COL.teal });
   // R-T curve
   const gx = 90, gy = 470, gw = 600, gh = 170;
   b += `<line x1="${gx}" y1="${gy}" x2="${gx + gw}" y2="${gy}" stroke="${COL.ink}" stroke-width="3"/>` + head(gx + gw + 10, gy, 0, COL.ink, 12);
   b += `<line x1="${gx}" y1="${gy}" x2="${gx}" y2="${gy - gh}" stroke="${COL.ink}" stroke-width="3"/>` + head(gx, gy - gh - 10, -Math.PI / 2, COL.ink, 12);
-  b += `<g transform="translate(${gx - 18} ${gy - gh / 2}) rotate(-90)">` + text(0, 0, "电阻", { size: 17, anchor: "middle", weight: "bold" }) + `</g>`;
-  b += text(gx + gw, gy + 26, "温度", { size: 17, anchor: "end", weight: "bold" });
+  b += `<g transform="translate(${gx - 18} ${gy - gh / 2}) rotate(-90)">` + text(0, 0, "电阻", { size: 18, anchor: "middle", weight: "bold" }) + `</g>`;
+  b += text(gx + gw, gy + 26, "温度", { size: 18, anchor: "end", weight: "bold" });
   const curve = (T, c, da) => `<polyline points="${gx + 10},${gy - 20} ${T - 6},${gy - 20} ${T + 6},${gy - gh + 20} ${gx + gw - 10},${gy - gh + 20}" fill="none" stroke="${c}" stroke-width="4"${da ? ` stroke-dasharray="${da}"` : ""}/>`;
   b += curve(gx + 180, COL.amber, "8 6") + curve(gx + 300, COL.red) + curve(gx + 420, COL.purple, "8 6");
-  b += text(gx + 170, gy - gh + 10, "Ni 少：关断早", { size: 17, anchor: "end", fill: COL.amber, weight: "bold" });
-  b += text(gx + 430, gy - 34, "Ni 多：关断晚", { size: 17, fill: COL.purple, weight: "bold" });
-  b += text(gx + 300, gy + 26, "T_{shutdown}", { size: 17, anchor: "middle", fill: COL.red, weight: "bold" });
+  b += text(gx + 170, gy - gh + 10, "Ni 少：关断早", { size: 18, anchor: "end", fill: COL.amber, weight: "bold" });
+  b += text(gx + 430, gy - 34, "Ni 多：关断晚", { size: 18, fill: COL.purple, weight: "bold" });
+  b += text(gx + 300, gy + 26, "T_{shutdown}", { size: 18, anchor: "middle", fill: COL.red, weight: "bold" });
   return svg(W, H, b);
 };
 
@@ -378,13 +378,13 @@ figs.fr_examples = () => {
     b += `<rect x="${x}" y="${yy + 30}" width="355" height="24" fill="${col}"/>`;
     b += text(x + 20, yy + 36, n, { size: 19, weight: "bold", fill: "#FFFFFF" });
     b += text(x + 335, yy + 36, y, { size: 18, anchor: "end", weight: "bold", fill: "#FFFFFF" });
-    b += text(x + 20, yy + 104, a, { size: 18, weight: "bold" });
-    b += text(x + 20, yy + 146, c, { size: 17, fill: COL.text2 });
+    b += text(x + 20, yy + 104, a, { size: 19, weight: "bold" });
+    b += text(x + 20, yy + 146, c, { size: 18, fill: COL.text2 });
   });
   // core-shell icon on card 3
   const cx = 290, cy = 420;
   b += `<circle cx="${cx}" cy="${cy}" r="30" fill="${COL.purpleLight}"/><circle cx="${cx}" cy="${cy}" r="15" fill="${COL.amber}"/>`;
-  b += text(cx - 42, cy + 6, "壳", { size: 17, anchor: "end", fill: COL.purple, weight: "bold" });
+  b += text(cx - 42, cy + 6, "壳", { size: 18, anchor: "end", fill: COL.purple, weight: "bold" });
   // flame + phosphorus icon on card 4
   b += flame(660, 445, 50);
   b += cross(660, 418, 18, COL.ink, 5);
@@ -461,7 +461,7 @@ figs.outlook = () => {
     const y = 60 + i * 89;
     b += `<rect x="570" y="${y}" width="660" height="78" rx="14" fill="#E8F4F3"/>`;
     b += text(592, y + 32, h, { size: 19, weight: "bold", fill: COL.teal });
-    b += text(592, y + 62, s, { size: 17, fill: COL.text2 });
+    b += text(592, y + 62, s, { size: 18, fill: COL.text2 });
   });
   b += arrow(400, 210, 550, 210, { color: COL.ink, width: 5, head: 20 });
   b += text(475, 190, "启发", { size: 18, anchor: "middle", weight: "bold" });
