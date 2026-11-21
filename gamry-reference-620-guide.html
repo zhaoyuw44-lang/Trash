@@ -1,0 +1,1400 @@
+<meta charset="utf-8">
+<title>Reference 620 上手指南</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: an instrument datasheet column (max 1040px) under a sticky section index; every section pairs short reading text with one working tool (mode switch, feasibility check, install checklist + figures, lead map, LED decoder, hazard filter). Cell-cable lead colours are the page's signature palette. */
+:root{
+  --bg:#ECEFF2; --surface:#FFFFFF; --sunk:#E2E7EC; --ink:#131C26; --muted:#56616E; --rule:#C9D1DA;
+  --accent:#1E5BA8; --accent-soft:#DCE7F5; --accent-ink:#FFFFFF;
+  --danger:#B42318; --danger-soft:#F8E1DE; --warn:#965800; --warn-soft:#F6EAD3; --ok:#2B7346; --ok-soft:#DDEFE3;
+  --lead-we:#2E9A55; --lead-ws:#2F6FD6; --lead-re:#F4F4F0; --lead-ce:#D3342C; --lead-cs:#EE7B1A; --lead-gnd:#1D1F22; --wire-outline:#3A4450;
+  --panel:#2A3139; --panel-edge:#151A1F; --panel-ink:#E7ECF1; --led-off:#4A535D;
+  --solution:#D4E6F2; --electrode:#8C96A1; --cage:#7F8B97;
+  --f-display:"Barlow Semi Condensed","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"IBM Plex Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1318; --surface:#151C23; --sunk:#1C252E; --ink:#E4E9EE; --muted:#9AA6B3; --rule:#2C3742;
+    --accent:#7AAEEE; --accent-soft:#1A2B40; --accent-ink:#0E1318;
+    --danger:#F28B7F; --danger-soft:#3A1D1A; --warn:#E6AE55; --warn-soft:#352812; --ok:#72C793; --ok-soft:#16301F;
+    --lead-we:#3DB46A; --lead-ws:#4F8BEA; --lead-re:#F4F4F0; --lead-ce:#E5544B; --lead-cs:#F38C34; --lead-gnd:#1D1F22; --wire-outline:#AEB9C4;
+    --panel:#232A31; --panel-edge:#0A0D10; --panel-ink:#E7ECF1; --led-off:#3E4650;
+    --solution:#1D3446; --electrode:#7C8792; --cage:#6C7884;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1318; --surface:#151C23; --sunk:#1C252E; --ink:#E4E9EE; --muted:#9AA6B3; --rule:#2C3742;
+  --accent:#7AAEEE; --accent-soft:#1A2B40; --accent-ink:#0E1318;
+  --danger:#F28B7F; --danger-soft:#3A1D1A; --warn:#E6AE55; --warn-soft:#352812; --ok:#72C793; --ok-soft:#16301F;
+  --lead-we:#3DB46A; --lead-ws:#4F8BEA; --lead-re:#F4F4F0; --lead-ce:#E5544B; --lead-cs:#F38C34; --lead-gnd:#1D1F22; --wire-outline:#AEB9C4;
+  --panel:#232A31; --panel-edge:#0A0D10; --panel-ink:#E7ECF1; --led-off:#3E4650;
+  --solution:#1D3446; --electrode:#7C8792; --cage:#6C7884;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent);text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.num{font-variant-numeric:tabular-nums}
+
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- hero ---------- */
+.hero{background:var(--surface);border-bottom:1px solid var(--rule)}
+.hero .wrap{padding-block:40px 28px;display:grid;gap:22px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(44px,8vw,76px);line-height:.95;letter-spacing:-.01em;margin:6px 0 0;text-wrap:balance;color:var(--accent)}
+.hero .modes{font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.6vw,24px);margin:10px 0 0;color:var(--ink)}
+.hero .modes span{color:var(--muted);font-weight:500}
+.hero .modes .nw{white-space:nowrap;font-weight:inherit}
+.lede{max-width:68ch;margin:0;color:var(--muted)}
+.leadbar{display:flex;height:6px;border-radius:3px;overflow:hidden;max-width:320px}
+.leadbar i{flex:1;display:block}
+.specstrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--rule);gap:1px;margin:0}
+.specstrip div{background:var(--surface);padding:12px 14px;min-width:0}
+.specstrip dt{font-size:12px;color:var(--muted);margin:0}
+.specstrip dd{margin:2px 0 0;font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
+.unofficial{font-size:13px;color:var(--muted);margin:0}
+
+/* ---------- sticky nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:8px}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--sunk)}
+.nav a.on{color:var(--accent-ink);background:var(--accent)}
+
+/* ---------- sections ---------- */
+main section{padding-block:48px 8px}
+.sec-head{display:grid;gap:6px;margin-bottom:22px}
+.sec-head .eyebrow{color:var(--accent)}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4vw,38px);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:21px;line-height:1.25;margin:0;text-wrap:balance}
+.sec-head p{margin:0;max-width:68ch;color:var(--muted)}
+.block{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px}
+.stack{display:grid;gap:18px}
+.label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.note{font-size:13.5px;color:var(--muted)}
+.src{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;padding:1px 7px;border-radius:999px;border:1px solid var(--rule);color:var(--muted);vertical-align:2px;white-space:nowrap}
+.src.gen{border-style:dashed}
+
+/* segmented controls & chips */
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.chip{font:inherit;font-size:14px;font-weight:500;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button:hover,.chip:hover{border-color:var(--accent)}
+.seg button[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.presets .chip{font-size:13px;padding:5px 11px}
+
+/* ---------- capabilities ---------- */
+.mode-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;margin-top:16px;align-items:start}
+.mode-panel h3{margin-bottom:6px}
+.mode-panel p{margin:0}
+.io{display:grid;gap:10px}
+.io div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:baseline;padding:10px 12px;border-radius:8px;background:var(--sunk)}
+.io b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tech-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.tech{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;display:grid;gap:6px;align-content:start;transition:opacity .2s,border-color .2s}
+.tech h3{font-size:18px}
+.tech p{margin:0;font-size:14.5px}
+.tech .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tech .tags span{font-size:11.5px;color:var(--muted);background:var(--sunk);padding:1px 8px;border-radius:999px}
+.tech.dim{opacity:.32}
+.tech.hit{border-color:var(--accent)}
+
+/* ---------- specs ---------- */
+.spec-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.tablewrap{overflow-x:auto}
+table.spec{width:100%;border-collapse:collapse;font-size:14px}
+table.spec th,table.spec td{text-align:left;vertical-align:top;padding:7px 10px;border-bottom:1px solid var(--rule)}
+table.spec th{font-weight:500;color:var(--muted);width:40%}
+table.spec td{font-variant-numeric:tabular-nums}
+table.spec tr.grp td{padding-top:16px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600;border-bottom-color:var(--accent-soft)}
+.flag{color:var(--warn);font-size:12.5px;display:block}
+.calc-col{display:grid;gap:18px;align-content:start}
+.calc{display:grid;gap:16px}
+.calc .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:grid;gap:4px;min-width:0}
+.field label{font-size:13px;color:var(--muted)}
+.field .row{display:flex;gap:6px}
+.field input,.field select{font:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;width:100%;min-width:0;padding:7px 9px;border:1px solid var(--rule);border-radius:7px;background:var(--bg);color:var(--ink)}
+.field select{width:auto;flex:none}
+.results{display:grid;gap:10px}
+.res{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding:10px 12px;border-radius:8px;border:1px solid var(--rule);background:var(--bg)}
+.res .pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.res.ok .pill{background:var(--ok-soft);color:var(--ok)}
+.res.warn .pill{background:var(--warn-soft);color:var(--warn)}
+.res.bad .pill{background:var(--danger-soft);color:var(--danger)}
+.res.info .pill{background:var(--accent-soft);color:var(--accent)}
+.res p{margin:0;font-size:14px}
+.res strong{font-variant-numeric:tabular-nums}
+.ladder{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:3px;margin-top:6px}
+.ladder span{font-family:var(--f-mono);font-size:10px;text-align:center;padding:5px 0;border-radius:4px;background:var(--sunk);color:var(--muted);line-height:1.2;overflow:hidden;border:1px solid transparent}
+.ladder span.virt{border-style:dashed;border-color:var(--rule);background:transparent}
+.ladder span.sel{background:var(--accent);color:var(--accent-ink);font-weight:500;border-color:var(--accent)}
+.ladder span.over{background:var(--danger-soft);color:var(--danger)}
+.meter{position:relative;height:10px;border-radius:5px;background:var(--sunk);margin-top:8px;overflow:hidden}
+.meter i{position:absolute;inset:0 auto 0 0;border-radius:5px;background:var(--ok)}
+.meter b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink)}
+.res.warn .meter i{background:var(--warn)}
+.res.bad .meter i{background:var(--danger)}
+
+/* ---------- figure viewers ---------- */
+.figviewer{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+.figviewer.sticky{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px)}
+.figtabs{display:flex;flex-wrap:wrap;gap:6px}
+.figtabs button{font:inherit;font-size:13.5px;font-weight:500;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+.figtabs button:hover{border-color:var(--accent)}
+.figtabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.fig{margin:0;display:grid;gap:8px;min-width:0}
+.figsvg{overflow-x:auto;border-radius:8px}
+.figsvg svg{display:block;width:100%;height:auto}
+#useViewer .figsvg svg,.ground-fig .figsvg svg{max-width:780px;margin-inline:auto}
+.fig figcaption{font-size:13.5px;color:var(--muted);max-width:68ch}
+.fignav{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.figcount{font-size:13px;color:var(--muted)}
+.ground-fig{grid-column:1 / -1;border-top:1px solid var(--rule);padding-top:16px}
+.swipe{display:none;font-size:12px;color:var(--muted);margin:6px 0 0}
+.install-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
+
+/* ---------- install ---------- */
+.progress{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.progress .bar{flex:1;min-width:160px;height:8px;border-radius:4px;background:var(--sunk);overflow:hidden}
+.progress .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.progress .count{font-variant-numeric:tabular-nums;font-weight:600}
+.btn-quiet{font:inherit;font-size:13px;border:1px solid var(--rule);background:transparent;color:var(--muted);padding:5px 12px;border-radius:999px;cursor:pointer}
+.btn-quiet:hover{color:var(--ink);border-color:var(--ink)}
+.phase{display:grid;gap:8px}
+.phase>h3{display:flex;gap:10px;align-items:baseline}
+.phase>h3 small{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.step{border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.step summary{list-style:none;display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 14px;cursor:pointer}
+.step summary::-webkit-details-marker{display:none}
+.step summary .n{font-family:var(--f-mono);font-size:12px;color:var(--muted);width:2.2em}
+.step summary .t{font-weight:500}
+.step summary .chev{color:var(--muted);transition:transform .2s;font-size:12px}
+.step[open] summary .chev{transform:rotate(90deg)}
+.step input[type=checkbox]{width:18px;height:18px;accent-color:var(--ok);margin:0;cursor:pointer}
+.step.done summary .t{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
+.step .body{padding:0 14px 14px 58px;font-size:14.5px}
+.step .body p{margin:0 0 8px}
+.step .body ul,.step .body ol{margin:0 0 8px;padding-left:20px}
+.step .body li{margin:2px 0}
+.callout{border-radius:8px;padding:9px 12px;font-size:14px;margin-top:6px}
+.callout.danger{background:var(--danger-soft);color:var(--ink);border-left:3px solid var(--danger)}
+.callout.warn{background:var(--warn-soft);color:var(--ink);border-left:3px solid var(--warn)}
+.callout.info{background:var(--accent-soft);color:var(--ink);border-left:3px solid var(--accent)}
+
+/* ---------- lead map ---------- */
+.leadmap-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--accent);margin:0}
+.leadmap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:16px}
+.svgbox{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--bg)}
+.svgbox svg{display:block;width:100%;min-width:520px;height:auto}
+.svgbox text{font-family:var(--f-body);fill:var(--ink)}
+.svgbox .mut{fill:var(--muted)}
+.wire{transition:opacity .2s}
+.wires.focus .wire{opacity:.18}
+.wires.focus .wire.on{opacity:1}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.legend li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;padding:8px 10px;border-radius:8px;border:1px solid transparent;cursor:pointer}
+.legend li:hover,.legend li.on{border-color:var(--rule);background:var(--surface)}
+.legend .sw{width:18px;height:18px;border-radius:50%;border:2px solid var(--wire-outline);margin-top:3px}
+.legend .nm{font-weight:500;font-size:14.5px}
+.legend .fn{font-size:13px;color:var(--muted)}
+.legend .to{font-size:13px;font-weight:600;color:var(--accent)}
+.legend .to.none{color:var(--muted);font-weight:500}
+.cfgnote{margin-top:12px}
+
+.workflow{counter-reset:wf;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.workflow li{counter-increment:wf;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.workflow li::before{content:counter(wf);font-family:var(--f-display);font-weight:700;font-size:18px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.workflow p{margin:0}
+.workflow .sub{font-size:13.5px;color:var(--muted)}
+.params{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.params code{background:var(--sunk);padding:1px 7px;border-radius:5px}
+.tips{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
+
+/* LED decoder: front panel drawn from the manual photo */
+.ledgrid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:start}
+.fp{background:var(--panel);border:8px solid var(--panel-edge);border-radius:14px;padding:16px 14px;color:var(--panel-ink);display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand brand" "left right";gap:18px;min-height:380px}
+.fp-brand{grid-area:brand;font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1.1}
+.fp-brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:11px;opacity:.75;margin-top:2px}
+.fp-left{grid-area:left;align-self:end;display:grid;gap:6px;justify-items:start}
+.fp-right{grid-area:right;display:grid;gap:6px;justify-items:end;align-content:start;padding-top:24px}
+.fp-serial{font-size:11px;font-weight:700;background:var(--accent);color:var(--accent-ink);padding:1px 10px;border-radius:3px;margin-bottom:4px}
+.ledbtn{font:inherit;font-size:12.5px;background:transparent;border:1px solid transparent;border-radius:8px;color:var(--panel-ink);display:inline-flex;align-items:center;gap:8px;padding:5px 8px;cursor:pointer}
+.ledbtn:hover{border-color:#5B6672}
+.ledbtn[aria-pressed="true"]{border-color:var(--panel-ink)}
+.ledbtn .dot{width:13px;height:13px;border-radius:50%;background:var(--led-off);box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.ledbtn[aria-pressed="true"] .dot{background:var(--c);box-shadow:0 0 10px 2px var(--c)}
+.dsub-v{width:28px;height:130px;border-radius:8px;background:#11161B;border:2px solid #6A747F;display:grid;grid-template-columns:repeat(2,4px);justify-content:center;align-content:center;gap:5px 6px;margin:10px 8px 0 0}
+.dsub-v i{width:4px;height:4px;border-radius:50%;background:#9AA4AE}
+.dsub-cap{font-size:11px;opacity:.75;margin-right:6px}
+.ledinfo h3{display:flex;gap:10px;align-items:center}
+.ledinfo h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none}
+.states{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.states li{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:12px;padding:9px 12px;border-radius:8px;background:var(--sunk);font-size:14px}
+.states li b{font-weight:600}
+.states li.bad{background:var(--danger-soft)}
+
+/* ---------- hazards ---------- */
+.ground{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.q{display:grid;gap:6px;margin-bottom:12px}
+.q p{margin:0;font-weight:500;font-size:14.5px}
+.verdict{border-radius:10px;padding:14px 16px;font-size:14.5px}
+.verdict h3{font-size:18px;margin-bottom:6px}
+.verdict ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.verdict.danger{background:var(--danger-soft);border:1px solid var(--danger)}
+.verdict.warn{background:var(--warn-soft);border:1px solid var(--warn)}
+.verdict.ok{background:var(--ok-soft);border:1px solid var(--ok)}
+.verdict.idle{background:var(--sunk);border:1px dashed var(--rule)}
+.hz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.hz{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:6px;align-content:start;border-top:4px solid var(--sev)}
+.hz[data-sev="high"]{--sev:var(--danger)}
+.hz[data-sev="mid"]{--sev:var(--warn)}
+.hz[data-sev="low"]{--sev:var(--accent)}
+.hz .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.hz .sev{font-size:12px;font-weight:600;padding:1px 9px;border-radius:999px;background:var(--sunk);color:var(--sev)}
+.hz .cat{font-size:12px;color:var(--muted)}
+.hz h3{font-size:17.5px}
+.hz p{margin:0;font-size:14.5px}
+.hz .do{font-size:14px;padding:8px 10px;border-radius:7px;background:var(--sunk)}
+.hz .do b{color:var(--ink)}
+
+/* ---------- sources ---------- */
+.srclist{margin:0;padding-left:20px;font-size:14.5px;display:grid;gap:6px}
+.srclist li{overflow-wrap:anywhere}
+footer{padding-block:28px 48px;color:var(--muted);font-size:13px}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .specstrip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tech-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spec-layout,.leadmap,.ledgrid,.ground,.mode-panel,.install-grid{grid-template-columns:minmax(0,1fr)}
+  .figviewer.sticky{position:static}
+  .fp{max-width:320px}
+}
+@media (max-width:560px){
+  body{font-size:15px}
+  .tech-grid,.hz-grid{grid-template-columns:minmax(0,1fr)}
+  .calc .fields{grid-template-columns:minmax(0,1fr)}
+  .step .body{padding-left:14px}
+  .states li{grid-template-columns:minmax(0,1fr);gap:2px}
+  .ladder{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .specstrip dd{font-size:19px}
+  .svgbox svg{min-width:460px}
+  .swipe{display:block}
+  .figsvg svg{min-width:500px}
+}
+</style>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Gamry Instruments · 电化学工作站 (Electrochemical Workstation)</div>
+      <h1>Reference 620</h1>
+      <p class="modes"><b class="nw">恒电位仪 <span>Potentiostat</span></b> · <b class="nw">恒电流仪 <span>Galvanostat</span></b> · <b class="nw">零阻电流计 <span>ZRA</span></b></p>
+    </div>
+    <div class="leadbar" aria-hidden="true">
+      <i style="background:var(--lead-we)"></i><i style="background:var(--lead-ws)"></i><i style="background:var(--lead-re);box-shadow:inset 0 0 0 1px var(--rule)"></i><i style="background:var(--lead-ce)"></i><i style="background:var(--lead-cs)"></i><i style="background:var(--lead-gnd);box-shadow:inset 0 0 0 1px var(--rule)"></i>
+    </div>
+    <p class="lede">一台研究级电化学工作站，小巧的机箱里装着 3000 多个元件。它可以作恒电位仪、恒电流仪或零阻电流计使用：电流 11 个十进制量程自动切换，阻抗测量最高 5 MHz，采集速率最高每秒 30 万点。电路与大地隔离（浮地），所以能直接测高压釜、管道这类本身接地的体系。必须连接 Windows 电脑并运行 Gamry Framework 才能使用。</p>
+    <dl class="specstrip">
+      <div><dt>最大电流 Output current</dt><dd>±600 mA</dd></div>
+      <div><dt>顺从电压 Compliance</dt><dd>±22 V</dd></div>
+      <div><dt>施加电位 Applied voltage</dt><dd>±11 V</dd></div>
+      <div><dt>EIS 上限</dt><dd>5 MHz</dd></div>
+      <div><dt>最小量程（硬件 / 增益后）</dt><dd>60 pA / 600 fA</dd></div>
+      <div><dt>噪声（1 Hz–1 kHz）</dt><dd>10 µV rms</dd></div>
+      <div><dt>快速 CV</dt><dd>1500 V/s</dd></div>
+      <div><dt>尺寸 · 重量（最大）</dt><dd>10×20×30 cm · 2.5 kg</dd></div>
+    </dl>
+    <p class="unofficial">非官方学习笔记，内容依据 Gamry《Reference 620 Potentiostat/Galvanostat/ZRA Operator's Manual》（988-00086，Revision 1.5.0，2025-08-04）和《Calibration Quick-Start Guide》（988-00046，Rev 2.0）。每条信息旁标注了出处章节；与产品网页不一致的数值以手册为准，并在文中注明。</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="页面目录">
+  <div class="wrap">
+    <a href="#can">能做什么</a>
+    <a href="#spec">规格与可行性</a>
+    <a href="#install">安装</a>
+    <a href="#use">使用</a>
+    <a href="#danger">危险与注意</a>
+    <a href="#sources">资料来源</a>
+  </div>
+</nav>
+
+<main>
+<!-- ====================== CAPABILITIES ====================== -->
+<section id="can">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 · Capabilities</div>
+      <h2>它能做什么</h2>
+      <p>三种工作模式的区别在于反馈信号：控制放大器根据哪个信号调节输出。先选一种模式，再按研究方向筛选下面的功能。</p>
+    </div>
+
+    <div class="block">
+      <div class="seg" role="group" aria-label="工作模式">
+        <button type="button" data-mode="pstat" aria-pressed="true">恒电位 Potentiostat</button>
+        <button type="button" data-mode="gstat" aria-pressed="false">恒电流 Galvanostat</button>
+        <button type="button" data-mode="zra" aria-pressed="false">零阻电流计 ZRA</button>
+      </div>
+      <div class="mode-panel">
+        <div>
+          <h3 id="modeTitle">恒电位模式 (Potentiostatic)</h3>
+          <p id="modeDesc">反馈信号 Esig 是参比线（白）与工作感应线（蓝）之间的电压。控制放大器调节对电极（红）的输出，使 Esig 等于设定值，同时测量流过工作电极线（绿）的电流。</p>
+        </div>
+        <div class="io">
+          <div><b>控制</b><span id="modeCtl">WE 相对 RE 的电位，±11 V</span></div>
+          <div><b>测量</b><span id="modeMeas">电流，11 档 60 pA – 600 mA 自动换档</span></div>
+          <div><b>典型实验</b><span id="modeUse">CV、线性扫描、计时电流、恒电位 EIS、极化曲线</span></div>
+        </div>
+      </div>
+      <p class="note" style="margin:12px 0 0">反馈信号说明见手册第 3 章图 3-1 注释。<span class="src">手册 Ch 3</span></p>
+    </div>
+
+    <div class="presets" role="group" aria-label="按研究方向筛选" style="margin-top:24px">
+      <span class="label" style="margin-right:6px">我的方向</span>
+      <button type="button" class="chip" data-tag="all" aria-pressed="true">全部</button>
+      <button type="button" class="chip" data-tag="phys" aria-pressed="false">物理电化学</button>
+      <button type="button" class="chip" data-tag="sensor" aria-pressed="false">传感器</button>
+      <button type="button" class="chip" data-tag="coat" aria-pressed="false">涂层</button>
+      <button type="button" class="chip" data-tag="corr" aria-pressed="false">腐蚀</button>
+      <button type="button" class="chip" data-tag="energy" aria-pressed="false">能源与电池</button>
+    </div>
+
+    <div class="tech-grid" id="techGrid">
+      <article class="tech" data-tags="phys sensor energy">
+        <h3>循环伏安 · 快速 CV</h3>
+        <p>采集速率最高每秒 300 000 点，所以 CV 可以做到 <strong>1500 V/s</strong>、每点 5 mV。适合研究快速电子转移和吸附过程。<span class="src">手册 Ch 2</span></p>
+        <div class="tags"><span>物理电化学</span><span>传感器</span><span>能源</span></div>
+      </article>
+      <article class="tech" data-tags="phys sensor energy">
+        <h3>计时电流 / 计时电位</h3>
+        <p>Chronoamperometry / Chronopotentiometry：阶跃电位测电流，或阶跃电流测电位。阶跃时短暂亮起的 Overload 灯通常是正常的。<span class="src">手册 Ch 7</span></p>
+        <div class="tags"><span>物理电化学</span><span>传感器</span><span>能源</span></div>
+      </article>
+      <article class="tech" data-tags="phys sensor">
+        <h3>脉冲伏安</h3>
+        <p>差分脉冲 (DPV)、方波 (SWV) 等脉冲技术由 Gamry 应用软件提供，用于电分析和传感器。需要相应的软件授权。</p>
+        <div class="tags"><span>传感器</span><span>物理电化学</span></div>
+      </article>
+      <article class="tech" data-tags="coat corr energy sensor phys">
+        <h3>电化学阻抗谱 EIS</h3>
+        <p>内置正弦信号发生器，阻抗测量最高 <strong>5 MHz</strong>；20 Hz 以下改用扫描 DAC 产生正弦。仪器识别所接电缆型号并补偿其特性。高阻样品按经验规则 |Z|·f &lt; 10<sup>9</sup> Ω·Hz。<span class="src">手册 Ch 2、3、9</span></p>
+        <div class="tags"><span>涂层</span><span>腐蚀</span><span>能源</span><span>传感器</span></div>
+      </article>
+      <article class="tech" data-tags="corr">
+        <h3>直流腐蚀测试</h3>
+        <p>Tafel、线性极化、动电位与循环极化等由 Gamry 腐蚀软件提供。手册指出，多数腐蚀实验的电流远大于 pA 级偏置，不受其影响。<span class="src">手册 Ch 5</span></p>
+        <div class="tags"><span>腐蚀</span></div>
+      </article>
+      <article class="tech" data-tags="corr coat">
+        <h3>ZRA · 电偶电流</h3>
+        <p>精密零阻电流计：让两块金属保持同电位并测量它们之间的电流，同时可经参比电极测电位。橙色对电极感应线必须接。<span class="src">手册 Ch 6</span></p>
+        <div class="tags"><span>腐蚀</span><span>涂层</span></div>
+      </article>
+      <article class="tech" data-tags="energy corr phys">
+        <h3>温度测量</h3>
+        <p>后面板 K 型热电偶输入（热电偶需自备，接头为黄色），校准后精度 ±4 °C。手册举例：电池充电末期温升、腐蚀测量前的环境温度、CV 动力学计算前的池温。<span class="src">手册 Ch 7</span></p>
+        <div class="tags"><span>能源</span><span>腐蚀</span><span>物理电化学</span></div>
+      </article>
+      <article class="tech" data-tags="sensor coat">
+        <h3>超低电流测量</h3>
+        <p>硬件最小量程 60 pA，×10、×100 增益后有 6 pA 和 600 fA 两个虚拟量程，理论上可分辨 1 fA。输入放大器约有 1 pA 输入电流，所以 pA 级绝对电流需要 Low I DC 校准，差值和交流电流通常仍可测到 1 pA 以下。<span class="src">手册 Ch 5、9</span></p>
+        <div class="tags"><span>传感器</span><span>涂层</span></div>
+      </article>
+      <article class="tech" data-tags="corr energy">
+        <h3>浮地测量</h3>
+        <p>电路和机壳都不接大地，能测含接地导体的体系：高压釜、金相应力装置、毛细管电泳检测器、管道、储罐和许多燃料电池系统。浮地时性能会下降，规格只适用于接地参考的隔离电解池。<span class="src">手册 Ch 1、9</span></p>
+        <div class="tags"><span>腐蚀</span><span>能源</span></div>
+      </article>
+      <article class="tech" data-tags="phys energy corr">
+        <h3>iR 补偿与降噪</h3>
+        <p>支持电流中断 (current-interrupt) 和正反馈 (positive feedback) 两种 iR 补偿，以及模拟与数字滤波。DSP 采集模式可抑制来自仪器、电解池和环境的噪声。电缆超过 5 m 时不要用电流中断补偿。<span class="src">手册 Ch 2、3、9</span></p>
+        <div class="tags"><span>物理电化学</span><span>能源</span><span>腐蚀</span></div>
+      </article>
+      <article class="tech" data-tags="phys sensor">
+        <h3>控制外部设备</h3>
+        <p>后面板 Misc I/O：4 路数字输出（可控制搅拌、除氧通气、汞滴电极）、4 路数字输入、12 位 D/A（如旋转圆盘电极转速）、+5 V 50 mA 电源，以及让多台仪器共用采集时钟的 Sync In/Out。<span class="src">手册 Ch 7、附录 C</span></p>
+        <div class="tags"><span>物理电化学</span><span>传感器</span></div>
+      </article>
+      <article class="tech" data-tags="energy phys">
+        <h3>多台并行</h3>
+        <p>一台电脑最多同时控制 16 台 Gamry 恒电位仪。前面板可换标签纸；在 GIM 里点 Blink，对应仪器的电源灯闪 5 次，便于辨认。手册以电池批量测试为例。<span class="src">手册 Ch 2、4</span></p>
+        <div class="tags"><span>能源</span><span>物理电化学</span></div>
+      </article>
+    </div>
+    <p class="note" style="margin-top:14px">具体实验技术由 Gamry 应用软件提供，需要对应授权。授权可在 Gamry Instrument Manager (GIM) 里用 Change Tier 按钮输入 10 位授权码升级。<span class="src">手册 Ch 4</span></p>
+  </div>
+</section>
+
+<!-- ====================== SPECS ====================== -->
+<section id="spec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 · Specifications</div>
+      <h2>规格与可行性检查</h2>
+      <p>左边是手册附录 A 的规格（25 °C、随机电源、60 cm 标准屏蔽电缆、电解池置于法拉第屏蔽中、软件校准后）。右边输入实验条件，按这些规格做快速判断。</p>
+    </div>
+    <div class="spec-layout">
+      <div class="block tablewrap">
+        <table class="spec">
+          <tbody>
+            <tr class="grp"><td colspan="2">控制放大器 Control Amplifier</td></tr>
+            <tr><th>顺从电压 Compliance</th><td>≥ ±22 V</td></tr>
+            <tr><th>输出电流</th><td>≥ ±600 mA</td></tr>
+            <tr><th>单位增益带宽（5 档速度）</th><td>980 / 260 / 40 / 4.0 / 0.4 kHz</td></tr>
+            <tr><th>压摆率 Slew rate</th><td>10 / 4.5 / 0.6 / 0.06 / 0.006 V/µs</td></tr>
+            <tr class="grp"><td colspan="2">差分静电计 Differential Electrometer</td></tr>
+            <tr><th>最大输入电压</th><td>±9 V</td></tr>
+            <tr><th>输入电流</th><td>≤ 10 pA（输入 ≤ 2 V 时）</td></tr>
+            <tr><th>输入电阻</th><td>100 TΩ 差分 · 1 TΩ 共模</td></tr>
+            <tr><th>输入电容</th><td>0.2 pF 差分 · 12 pF 共模</td></tr>
+            <tr><th>带宽 (−3 dB)</th><td>≥ 15 MHz</td></tr>
+            <tr><th>CMRR</th><td>≥ 80（DC–100 kHz）· ≥ 60（100 kHz–1 MHz）</td></tr>
+            <tr class="grp"><td colspan="2">电压测量 Voltage Measurement</td></tr>
+            <tr><th>A/D 满量程</th><td>±12 V / ±3 V</td></tr>
+            <tr><th>分辨率</th><td>23 / 6 µV/bit</td></tr>
+            <tr><th>误差</th><td>零点 ≤ ±1 mV；增益 ≤ 0.2 %</td></tr>
+            <tr class="grp"><td colspan="2">电流测量 Current</td></tr>
+            <tr><th>满量程</th><td>600 mA 至 60 pA，11 档十进制；×10、×100 增益另有 6 pA、600 fA 两个虚拟量程</td></tr>
+            <tr><th>分辨率</th><td>0.00020 % 满量程/bit</td></tr>
+            <tr><th>输入偏置电流</th><td>≤ 10 pA</td></tr>
+            <tr><th>量程零点偏置</th><td>≤ 0.05 % 量程</td></tr>
+            <tr><th>增益容差</th><td>0.2 %（600 mA–6 nA）· 0.75 %（600 pA）· 1.5 %（60 pA）</td></tr>
+            <tr><th>零点漂移</th><td>0.03 % 满量程/°C</td></tr>
+            <tr><th>I/E 带宽</th><td>&gt; 10 MHz（600 mA–600 µA）· &gt; 1.5 MHz（60 µA）· &gt; 0.15 MHz（6 µA）</td></tr>
+            <tr class="grp"><td colspan="2">恒电位 / 恒电流 Modes</td></tr>
+            <tr><th>施加电压范围</th><td>±11 V</td></tr>
+            <tr><th>电位精度</th><td>±1 mV ± 0.2 % 设定值</td></tr>
+            <tr><th>DC 偏置 · 扫描 DAC</th><td>±8 V · 20 bit，±6.4 / ±1.6 / ±0.4 V</td></tr>
+            <tr><th>漂移</th><td>&lt; 20 µV/°C</td></tr>
+            <tr><th>噪声与纹波</th><td>10 µV rms（1 Hz–1 kHz）· 20 µV rms（1 Hz–200 kHz）<span class="flag">产品网页写 &lt; 2 µV rms，与手册不同</span></td></tr>
+            <tr><th>恒电流满量程</th><td>600 mA 至 60 pA</td></tr>
+            <tr class="grp"><td colspan="2">速度与阻抗 Speed &amp; EIS</td></tr>
+            <tr><th>EIS 频率</th><td>最高 5 MHz<span class="flag">手册未写下限；产品网页标注 10 µHz – 5 MHz</span></td></tr>
+            <tr><th>正弦信号源 (DDS)</th><td>1 mHz – 5 MHz；EIS 在 20 Hz 以下改用扫描 DAC</td></tr>
+            <tr><th>采集速率</th><td>最高 300 000 点/秒；3.333 µs 整数倍时与电源同步，噪声最低</td></tr>
+            <tr><th>快速 CV</th><td>1500 V/s（5 mV/点）</td></tr>
+            <tr class="grp"><td colspan="2">辅助接口 Auxiliary</td></tr>
+            <tr><th>Aux In BNC</th><td>差分 ±3 V；输入阻抗约 100 kΩ（出厂）或 10 GΩ（高阻）；超过 ±5 V 可能损坏</td></tr>
+            <tr><th>Aux D/A 输出</th><td>0–4.096 V，1 mV 分辨率（Misc I/O）</td></tr>
+            <tr><th>Monitor BNC</th><td>I Monitor（满量程 3 V）、E Monitor；带宽约 3 MHz，输出阻抗约 200 Ω ∥ 220 pF</td></tr>
+            <tr><th>热电偶</th><td>K 型；校准后 ±4 °C；满量程 ±300 °C</td></tr>
+            <tr class="grp"><td colspan="2">环境 Environmental</td></tr>
+            <tr><th>工作环境</th><td>0–45 °C，室内；相对湿度 ≤ 90 %，不凝露</td></tr>
+            <tr><th>存储与运输</th><td>−25 至 75 °C；加速度 ≤ 30 G<span class="flag">手册第 1 章写 −40 至 +75 °C</span></td></tr>
+            <tr class="grp"><td colspan="2">通用 General</td></tr>
+            <tr><th>电源</th><td>22–26 V DC，≤ 50 W，输入电流 &lt; 3 A；随机适配器 100–240 VAC、47–63 Hz → 24 V DC</td></tr>
+            <tr><th>浮地漏电流</th><td>1 nA（工作电极接大地时）</td></tr>
+            <tr><th>尺寸 · 重量</th><td>≤ 10 × 20 × 30 cm · ≤ 2.5 kg（不含适配器与线缆）<span class="flag">产品网页写 9 × 19 × 27 cm、3 kg</span></td></tr>
+            <tr><th>电源适配器</th><td>≤ 7.5 × 3.5 × 15 cm，≤ 400 g</td></tr>
+            <tr><th>电脑</th><td>Windows 10 或更高（仅 64 位）；USB 2.0 高速（兼容 1.1）；一台电脑最多 16 台</td></tr>
+            <tr><th>安全与认证</th><td>EN 61010-1（Category II）、EN 61326、FCC Part 18；CE、UKCA、RoHS</td></tr>
+            <tr><th>保修</th><td>自原始发货日起 2 年</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin:10px 0 0">规格可能变更，恕不另行通知。<span class="src">手册 附录 A</span></p>
+      </div>
+
+      <div class="calc-col">
+      <div class="block calc" aria-labelledby="calcTitle">
+        <div>
+          <h3 id="calcTitle">实验可行性检查</h3>
+          <p class="note" style="margin:4px 0 0">按手册规格做的粗略估算，用于实验前快速判断。</p>
+        </div>
+        <div class="presets" role="group" aria-label="示例条件">
+          <span class="label">示例</span>
+          <button type="button" class="chip" data-preset="cv">水溶液 CV</button>
+          <button type="button" class="chip" data-preset="coat">涂层 EIS</button>
+          <button type="button" class="chip" data-preset="umE">微电极快速 CV</button>
+          <button type="button" class="chip" data-preset="big">大电流电解</button>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <label for="cI">预计最大电流</label>
+            <div class="row"><input id="cI" type="number" step="any" min="0" value="2"><select id="cIu" aria-label="电流单位"><option value="1e-15">fA</option><option value="1e-12">pA</option><option value="1e-9">nA</option><option value="1e-6">µA</option><option value="1e-3" selected>mA</option><option value="1">A</option></select></div>
+          </div>
+          <div class="field">
+            <label for="cE">最大施加电位 (V vs RE)</label>
+            <input id="cE" type="number" step="any" value="1.0">
+          </div>
+          <div class="field">
+            <label for="cR">对电极–工作电极间电阻 (Ω)</label>
+            <input id="cR" type="number" step="any" min="0" value="50">
+          </div>
+          <div class="field">
+            <label for="cEta">对电极过电位余量 (V)</label>
+            <input id="cEta" type="number" step="any" min="0" value="1.0">
+          </div>
+          <div class="field">
+            <label for="cRef">参比电极阻抗 (Ω)</label>
+            <input id="cRef" type="number" step="any" min="0" value="1000">
+          </div>
+          <div class="field">
+            <label for="cV">扫描速率 (V/s)</label>
+            <input id="cV" type="number" step="any" min="0" value="0.1">
+          </div>
+          <div class="field">
+            <label for="cF1">EIS 最低频率 (Hz)</label>
+            <input id="cF1" type="number" step="any" min="0" value="0.1">
+          </div>
+          <div class="field">
+            <label for="cF2">EIS 最高频率 (Hz)</label>
+            <input id="cF2" type="number" step="any" min="0" value="100000">
+          </div>
+          <div class="field">
+            <label for="cZ">最高频率处的 |Z| (Ω)</label>
+            <input id="cZ" type="number" step="any" min="0" value="1000">
+          </div>
+        </div>
+        <div class="results" id="calcOut" aria-live="polite"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== INSTALL ====================== -->
+<section id="install">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 · Installation</div>
+      <h2>安装步骤</h2>
+      <p>按手册第 4、5 章的顺序：开箱 → 摆放 → 装软件 → 接电源并自检 → 接 USB 和电缆 → 校准。左边是图解，右边是可勾选的清单；点开某一步，左边会切换到对应的图。勾选状态只保存在你自己的浏览器里。</p>
+    </div>
+
+    <div class="install-grid">
+    <div class="figviewer sticky" id="instViewer">
+      <div class="figtabs" role="group" aria-label="安装图解"><button type="button" data-fig="0" aria-pressed="true">1 开箱</button><button type="button" data-fig="1" aria-pressed="false">2 摆放</button><button type="button" data-fig="2" aria-pressed="false">3 软件</button><button type="button" data-fig="3" aria-pressed="false">4 电源</button><button type="button" data-fig="4" aria-pressed="false">5 自检</button><button type="button" data-fig="5" aria-pressed="false">6 连接</button><button type="button" data-fig="6" aria-pressed="false">7 校准</button></div>
+      <figure class="fig" data-fig="0">
+        <div class="figsvg"><!--SVG:install-01-inspect--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" width="600" height="330" role="img" aria-label="开箱检查：有运输损坏就不上电，通知 Gamry 和承运人并保留包装箱；没有损坏但从低温处运来的仪器，先在室温放置至少 1 小时。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>开箱检查：有运输损坏就不上电，通知 Gamry 和承运人并保留包装箱；没有损坏但从低温处运来的仪器，先在室温放置至少 1 小时。</title><defs><marker id="install-01-inspect-ah-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--ink,#131C26)"/></marker><marker id="install-01-inspect-ah-danger" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--danger,#B42318)"/></marker></defs><rect x="0" y="0" width="600" height="330" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="40" width="140" height="110" rx="10" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><path d="M60 70 L90 58 L120 70 L120 108 L90 120 L60 108 Z" style="fill:var(--accent-soft,#DCE7F5);stroke:var(--ink,#131C26);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M60 70 L90 82 L120 70 M90 82 V120" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><text x="90" y="138" style="fill:var(--ink,#131C26);font-size:13px;font-weight:600" text-anchor="middle">开箱检查外观</text><text x="20" y="178" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">随机配件（以装箱单为准）</text><text x="28" y="198" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· 主机、电源适配器 + 电源线</text><text x="28" y="218" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· USB A/B 线</text><text x="28" y="238" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· 60 cm 屏蔽电解池电缆</text><text x="28" y="258" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· 200 Ω 与 20 kΩ 校准池</text><text x="28" y="278" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· 1.2 m 黑色接地线</text><text x="28" y="298" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">· 配件包、标签纸</text><path d="M160 95 H218" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-01-inspect-ah-ink)"/><polygon points="222,95 300,45 378,95 300,145" style="fill:var(--accent-soft,#DCE7F5);stroke:var(--accent,#1E5BA8);stroke-width:1.5;stroke-linejoin:round"/><text x="300" y="91" style="fill:var(--ink,#131C26);font-size:13px;font-weight:600" text-anchor="middle">有运输损坏</text><text x="300" y="110" style="fill:var(--ink,#131C26);font-size:13px;font-weight:600" text-anchor="middle">或其他异常？</text><path d="M378 95 H436" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-01-inspect-ah-ink)"/><text x="407" y="86" style="fill:var(--ok,#2B7346);font-size:12.5px;font-weight:700" text-anchor="middle">否</text><rect x="440" y="45" width="140" height="100" rx="10" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="510" y="74" style="fill:var(--ink,#131C26);font-size:12.5px;font-weight:600" text-anchor="middle">从低温处运来？</text><text x="510" y="103" style="fill:var(--accent,#1E5BA8);font-size:17px;font-weight:700" text-anchor="middle">回温 ≥ 1 小时</text><text x="510" y="128" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="middle">防止内部凝露</text><path d="M510 145 V192" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-01-inspect-ah-ink)"/><text x="518" y="173" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">回温后</text><rect x="440" y="196" width="140" height="64" rx="10" style="fill:var(--ok-soft,#DDEFE3);stroke:var(--ok,#2B7346);stroke-width:1.5"/><text x="510" y="222" style="fill:var(--ok,#2B7346);font-size:13px;font-weight:700" text-anchor="middle">可以开始安装</text><text x="510" y="243" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="middle">下一步：摆放</text><path d="M300 145 V192" style="fill:none;stroke:var(--danger,#B42318);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-01-inspect-ah-danger)"/><text x="308" y="174" style="fill:var(--danger,#B42318);font-size:12.5px;font-weight:700" text-anchor="start">是</text><rect x="210" y="196" width="190" height="122" rx="10" style="fill:var(--danger-soft,#F8E1DE);stroke:var(--danger,#B42318);stroke-width:1.5"/><text x="305" y="220" style="fill:var(--danger,#B42318);font-size:15px;font-weight:700" text-anchor="middle">不要上电</text><text x="305" y="242" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="middle">通知 Gamry 和承运人</text><text x="305" y="261" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="middle">保留包装箱供检查</text><text x="305" y="280" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="middle">贴上“安全隐患”标签</text><text x="305" y="304" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">须经合格技术人员确认安全</text></svg><!--/SVG--></div>
+        <figcaption>开箱先检查外观。有运输损坏就不上电，通知 Gamry 和承运人并保留包装箱；没有损坏、但从低温处运来的仪器，先在室温下放置至少 1 小时。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="1" hidden>
+        <div class="figsvg"><!--SVG:install-02-placement--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="600" height="300" role="img" aria-label="摆放：空气从机箱两侧靠近前面板的槽口进入，从后部两只风扇排出；背面要留出接线和出风空间；工作环境 0–45 °C、相对湿度不超过 90 % 且不凝露，仅限室内。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>摆放：空气从机箱两侧靠近前面板的槽口进入，从后部两只风扇排出；背面要留出接线和出风空间；工作环境 0–45 °C、相对湿度不超过 90 % 且不凝露，仅限室内。</title><defs><marker id="install-02-placement-ah-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--accent,#1E5BA8)"/></marker><marker id="install-02-placement-ah-warn" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--warn,#965800)"/></marker></defs><rect x="0" y="0" width="600" height="300" style="fill:var(--surface,#FFFFFF)"/><text x="20" y="30" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">俯视示意（仪器通常直立放置）</text><text x="140" y="76" style="fill:var(--accent,#1E5BA8);font-size:12px;font-weight:700" text-anchor="start">进风：两侧靠近前面板的槽口</text><path d="M92 62 V104" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-accent)"/><path d="M92 238 V196" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-accent)"/><path d="M118 62 V104" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-accent)"/><path d="M118 238 V196" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-accent)"/><rect x="70" y="110" width="180" height="80" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><path d="M82 110 H128 M82 190 H128" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:4;stroke-linecap:butt;stroke-linejoin:round"/><text x="150" y="154" style="fill:var(--panel-ink,#E7ECF1);font-size:13px;font-weight:700" text-anchor="middle">Reference 620</text><text x="64" y="154" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:600" text-anchor="end">前面板</text><circle cx="230" cy="132" r="12" style="fill:none;stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="230" cy="132" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><path d="M252 132 H304" style="fill:none;stroke:var(--warn,#965800);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-warn)"/><circle cx="230" cy="168" r="12" style="fill:none;stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="230" cy="168" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><path d="M252 168 H304" style="fill:none;stroke:var(--warn,#965800);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-02-placement-ah-warn)"/><text x="256" y="118" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:600" text-anchor="start">后面板</text><text x="256" y="214" style="fill:var(--warn,#965800);font-size:12px;font-weight:700" text-anchor="start">出风：后部两只风扇</text><text x="256" y="230" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">背面还要留出接线空间</text><rect x="20" y="252" width="118" height="30" rx="15" style="fill:var(--sunk,#E2E7EC)"/><text x="79.0" y="272" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">0–45 °C</text><rect x="148" y="252" width="150" height="30" rx="15" style="fill:var(--sunk,#E2E7EC)"/><text x="223.0" y="272" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">RH ≤ 90 % 不凝露</text><rect x="308" y="252" width="92" height="30" rx="15" style="fill:var(--sunk,#E2E7EC)"/><text x="354.0" y="272" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">仅限室内</text><rect x="420" y="40" width="160" height="110" rx="10" style="fill:var(--danger-soft,#F8E1DE);stroke:var(--danger,#B42318);stroke-width:1.5"/><circle cx="438" cy="62" r="9" style="fill:var(--danger,#B42318)"/><path d="M434.5 58.5 L441.5 65.5 M441.5 58.5 L434.5 65.5" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><text x="454" y="67" style="fill:var(--danger,#B42318);font-size:13px;font-weight:700" text-anchor="start">风口被挡住</text><text x="434" y="92" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">外壳可能烫手，</text><text x="434" y="110" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">缩短电路寿命</text><text x="434" y="134" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">过热时电路会关断</text><rect x="420" y="166" width="160" height="116" rx="10" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1.5"/><circle cx="438" cy="188" r="9" style="fill:var(--warn,#965800)"/><path d="M438 183.5 V189" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><circle cx="438" cy="192.2" r="1.3" style="fill:var(--surface,#FFFFFF)"/><text x="454" y="193" style="fill:var(--warn,#965800);font-size:13px;font-weight:700" text-anchor="start">放进机柜时</text><text x="434" y="218" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">柜内也不能超过 45 °C；</text><text x="434" y="236" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">和电脑同柜要特别注意，</text><text x="434" y="254" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">必要时加通风孔</text><text x="434" y="272" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">或强制风冷</text></svg><!--/SVG--></div>
+        <figcaption>空气从机箱两侧靠近前面板的槽口进入，从后部两只风扇排出。背面要能接线，进出风口都不能挡。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="2" hidden>
+        <div class="figsvg"><!--SVG:install-03-software--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 286" width="600" height="286" role="img" aria-label="软件：先确认电脑为 64 位 Windows 10 或更高，从 Gamry Client Portal 下载安装 Gamry 软件并重启，等驱动加载后再接仪器。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>软件：先确认电脑为 64 位 Windows 10 或更高，从 Gamry Client Portal 下载安装 Gamry 软件并重启，等驱动加载后再接仪器。</title><defs><marker id="install-03-software-ah-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--ink,#131C26)"/></marker><marker id="install-03-software-ah-danger" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--danger,#B42318)"/></marker></defs><rect x="0" y="0" width="600" height="286" style="fill:var(--surface,#FFFFFF)"/><circle cx="28" cy="30" r="9" style="fill:var(--ok,#2B7346)"/><path d="M24 30 L27 33.5 L32.5 26.5" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><text x="44" y="35" style="fill:var(--ok,#2B7346);font-size:13px;font-weight:700" text-anchor="start">正确顺序</text><rect x="20" y="52" width="110" height="108" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><path d="M130 106 H166" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-03-software-ah-ink)"/><rect x="170" y="52" width="110" height="108" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><path d="M280 106 H316" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-03-software-ah-ink)"/><rect x="320" y="52" width="110" height="108" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><path d="M430 106 H466" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-03-software-ah-ink)"/><rect x="470" y="52" width="110" height="108" rx="8" style="fill:var(--ok-soft,#DDEFE3);stroke:var(--ok,#2B7346);stroke-width:1.5"/><circle cx="24" cy="56" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="24" y="60.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">1</text><circle cx="174" cy="56" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="174" y="60.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">2</text><circle cx="324" cy="56" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="324" y="60.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">3</text><circle cx="474" cy="56" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="474" y="60.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">4</text><text x="75" y="84" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">检查电脑</text><text x="75" y="106" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">Windows 10+</text><text x="75" y="124" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">仅 64 位 · x86</text><text x="75" y="142" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">USB 2.0 / 1.1</text><text x="225" y="84" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">下载并安装</text><text x="225" y="106" style="fill:var(--accent,#1E5BA8);font-size:11px;font-weight:400;font-family:var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)" text-anchor="middle">Client Portal</text><text x="225" y="124" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">注册仪器后下载</text><text x="225" y="142" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400;font-family:var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)" text-anchor="middle">.exe 或 .iso</text><text x="375" y="84" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">重启电脑</text><text x="375" y="106" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">桌面出现后</text><text x="375" y="124" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">驱动可能还要</text><text x="375" y="142" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">1 分钟以上</text><text x="525" y="84" style="fill:var(--ok,#2B7346);font-size:13px;font-weight:700" text-anchor="middle">再接仪器</text><text x="525" y="106" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">即插即用</text><text x="525" y="124" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400;font-family:var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)" text-anchor="middle">Framework</text><text x="525" y="142" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">7.9 或更高</text><circle cx="28" cy="200" r="9" style="fill:var(--danger,#B42318)"/><path d="M24.5 196.5 L31.5 203.5 M31.5 196.5 L24.5 203.5" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><text x="44" y="205" style="fill:var(--danger,#B42318);font-size:13px;font-weight:700" text-anchor="start">顺序反了</text><rect x="20" y="220" width="170" height="50" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="105" y="250" style="fill:var(--ink,#131C26);font-size:12.5px;font-weight:600" text-anchor="middle">先接仪器、后装软件</text><path d="M190 245 H226" style="fill:none;stroke:var(--danger,#B42318);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-03-software-ah-danger)"/><rect x="230" y="220" width="350" height="50" rx="8" style="fill:var(--danger-soft,#F8E1DE);stroke:var(--danger,#B42318);stroke-width:1.5"/><text x="405" y="242" style="fill:var(--danger,#B42318);font-size:12.5px;font-weight:700" text-anchor="middle">Windows 可能无法正确识别仪器</text><text x="405" y="260" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="middle">手册：即插即用设备最好先装软件</text></svg><!--/SVG--></div>
+        <figcaption>先确认电脑满足要求，从 Gamry Client Portal 下载安装软件并重启，等驱动加载后再接仪器。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="3" hidden>
+        <div class="figsvg"><!--SVG:install-04-power--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="600" height="420" role="img" aria-label="接电源：电源适配器把 100–240 VAC 转成 24 V DC，接后面板 Power In 插孔，再打开插孔下方的电源开关；此时先不要接 USB 和电解池电缆。图中同时标出后面板的全部接口。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>接电源：电源适配器把 100–240 VAC 转成 24 V DC，接后面板 Power In 插孔，再打开插孔下方的电源开关；此时先不要接 USB 和电解池电缆。图中同时标出后面板的全部接口。</title><rect x="0" y="0" width="600" height="420" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="30" width="200" height="330" rx="12" style="fill:var(--panel-edge,#151A1F)"/><rect x="28" y="38" width="184" height="314" rx="6" style="fill:var(--panel,#2A3139)"/><rect x="38" y="48" width="62" height="36" rx="3" style="fill:var(--accent-soft,#DCE7F5)"/><text x="69" y="70" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">勿自行维修</text><rect x="112" y="50" width="16" height="26" rx="2" style="fill:#E2B93B;stroke:var(--ink,#131C26);stroke-width:1"/><rect x="170" y="52" width="20" height="18" rx="2" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1"/><circle cx="74" cy="128" r="36" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="74" cy="128" r="24" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1"/><circle cx="74" cy="128" r="9" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="166" cy="128" r="36" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="166" cy="128" r="24" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1"/><circle cx="166" cy="128" r="9" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="52" cy="196" r="12" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="52" cy="196" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="52" cy="252" r="12" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="52" cy="252" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="110" cy="188" r="12" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="110" cy="188" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="110" cy="226" r="12" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="110" cy="226" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><circle cx="110" cy="264" r="12" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="110" cy="264" r="4" style="fill:var(--panel-ink,#E7ECF1)"/><polygon points="176,166 187,186 165,186" style="fill:#F5C531;stroke:var(--ink,#131C26);stroke-width:1;stroke-linejoin:round"/><text x="176" y="183" style="fill:var(--ink,#131C26);font-size:11px;font-weight:700" text-anchor="middle">!</text><circle cx="176" cy="212" r="7" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:2"/><circle cx="176" cy="212" r="2.5" style="fill:var(--ink,#131C26)"/><rect x="166" y="244" width="20" height="16" rx="3" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><circle cx="176" cy="252" r="3" style="fill:var(--panel-ink,#E7ECF1)"/><rect x="166" y="292" width="20" height="30" rx="3" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><rect x="170" y="296" width="12" height="12" rx="1" style="fill:var(--ok,#2B7346)"/><path d="M96 302 H124 L120 330 H100 Z" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><rect x="36" y="288" width="48" height="54" rx="3" style="fill:var(--accent-soft,#DCE7F5)"/><polygon points="60,296 69,312 51,312" style="fill:#F5C531;stroke:var(--ink,#131C26);stroke-width:1;stroke-linejoin:round"/><text x="60" y="332" style="fill:var(--ink,#131C26);font-size:9px;font-weight:700" text-anchor="middle">触电危险</text><circle cx="180" cy="86" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="180" y="89.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">1</text><circle cx="140" cy="63" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="140" y="66.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">2</text><circle cx="120" cy="128" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="120" y="131.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">3</text><circle cx="78" cy="196" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="78" y="199.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">4</text><circle cx="78" cy="252" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="78" y="255.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">5</text><circle cx="138" cy="188" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="138" y="191.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">6</text><circle cx="138" cy="226" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="138" y="229.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">7</text><circle cx="138" cy="264" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="138" y="267.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">8</text><circle cx="138" cy="316" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="138" y="319.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">9</text><circle cx="198" cy="212" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="198" y="215.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">10</text><circle cx="176" cy="232" r="8" style="fill:var(--ok,#2B7346)"/><text x="176" y="235.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">11</text><circle cx="200" cy="307" r="8" style="fill:var(--ok,#2B7346)"/><text x="200" y="310.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">12</text><text x="240" y="44" style="fill:var(--muted,#56616E);font-size:12px;font-weight:700" text-anchor="start">后面板（按手册照片简化绘制）</text><circle cx="248" cy="68" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="71.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">1</text><text x="262" y="72" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">USB 端口（B 型）</text><circle cx="248" cy="92" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="95.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">2</text><text x="262" y="96" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">K 型热电偶输入</text><circle cx="248" cy="116" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="119.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">3</text><text x="262" y="120" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">出风风扇 ×2</text><circle cx="248" cy="140" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="143.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">4</text><text x="262" y="144" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">I Monitor BNC</text><circle cx="248" cy="164" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="167.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">5</text><text x="262" y="168" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">E Monitor BNC</text><circle cx="248" cy="188" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="248" y="191.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">6</text><text x="262" y="192" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">Aux In BNC（±3 V）</text><circle cx="428" cy="68" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="428" y="71.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">7</text><text x="442" y="72" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">Sig Gen Out BNC</text><circle cx="428" cy="92" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="428" y="95.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">8</text><text x="442" y="96" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">Ext Sig In BNC</text><circle cx="428" cy="116" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="428" y="119.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">9</text><text x="442" y="120" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">Misc I/O（15 针）</text><circle cx="428" cy="140" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="428" y="143.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">10</text><text x="442" y="144" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">Chassis Ground 接地柱</text><circle cx="428" cy="164" r="8" style="fill:var(--ok,#2B7346)"/><text x="428" y="167.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">11</text><text x="442" y="168" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="start">Power In（22–26 V DC）</text><circle cx="428" cy="188" r="8" style="fill:var(--ok,#2B7346)"/><text x="428" y="191.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">12</text><text x="442" y="192" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="start">Power 电源开关</text><text x="240" y="226" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">4–8 号 BNC 的外壳都接仪器浮地，</text><text x="240" y="242" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">接到示波器等接地设备会让仪器失去浮地。</text><text x="435" y="284" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">输入 100–240 VAC · 47–63 Hz</text><rect x="380" y="296" width="110" height="60" rx="8" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><text x="435" y="321" style="fill:var(--panel-ink,#E7ECF1);font-size:12px;font-weight:700" text-anchor="middle">电源适配器</text><text x="435" y="340" style="fill:var(--panel-ink,#E7ECF1);font-size:11px;font-weight:400" text-anchor="middle">输出 24 V DC</text><rect x="536" y="298" width="44" height="52" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><rect x="548" y="314" width="5" height="14" rx="1" style="fill:var(--ink,#131C26)"/><rect x="563" y="314" width="5" height="14" rx="1" style="fill:var(--ink,#131C26)"/><text x="558" y="368" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">墙插</text><path d="M536 324 H490" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><text x="513" y="316" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">电源线</text><text x="513" y="342" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">IEC C13</text><path d="M380 326 C 300 326, 250 252, 188 252" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><text x="318" y="336" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">24 V DC</text><text x="20" y="390" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">上电顺序：适配器接 Power In → 电源线接墙插 → 打开电源开关。先不要接 USB 和电解池电缆。</text><text x="20" y="410" style="fill:var(--danger,#B42318);font-size:11.5px;font-weight:700" text-anchor="start">只用随机适配器；输入低于 20 V 或高于 32 V 会损坏仪器电源。</text></svg><!--/SVG--></div>
+        <figcaption>后面板全部接口（按手册照片简化绘制）。上电时只接电源：适配器接 Power In，再打开下方的电源开关。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="4" hidden>
+        <div class="figsvg"><!--SVG:install-05-selftest--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 322" width="600" height="322" role="img" aria-label="上电自检：打开电源开关后 Power 灯亮一两秒、闪 3 次、然后常亮为正常；亮后熄灭不再亮或出现两段闪码表示故障；运行中在 GIM 点 Blink 会让它闪 5 次。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>上电自检：打开电源开关后 Power 灯亮一两秒、闪 3 次、然后常亮为正常；亮后熄灭不再亮或出现两段闪码表示故障；运行中在 GIM 点 Blink 会让它闪 5 次。</title><defs><marker id="install-05-selftest-ah-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--ink,#131C26)"/></marker></defs><rect x="0" y="0" width="600" height="322" style="fill:var(--surface,#FFFFFF)"/><path d="M150 30 V262" style="fill:none;stroke:var(--muted,#56616E);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:4 4"/><text x="20" y="60" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="start">Power 灯</text><text x="20" y="77" style="fill:var(--ok,#2B7346);font-size:11.5px;font-weight:600" text-anchor="start">正常</text><path d="M150 72 H570" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><text x="20" y="120" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="start">Power 灯</text><text x="20" y="137" style="fill:var(--danger,#B42318);font-size:11.5px;font-weight:600" text-anchor="start">未正常工作</text><path d="M150 132 H570" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><text x="20" y="180" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="start">Power 灯</text><text x="20" y="197" style="fill:var(--danger,#B42318);font-size:11.5px;font-weight:600" text-anchor="start">故障闪码</text><path d="M150 192 H570" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><text x="20" y="240" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="start">Power 灯</text><text x="20" y="257" style="fill:var(--accent,#1E5BA8);font-size:11.5px;font-weight:600" text-anchor="start">运行中按 Blink</text><path d="M150 252 H570" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/><rect x="150" y="48" width="80" height="24" rx="2" style="fill:#3C8CFF"/><rect x="250" y="48" width="20" height="24" rx="2" style="fill:#3C8CFF"/><rect x="290" y="48" width="20" height="24" rx="2" style="fill:#3C8CFF"/><rect x="330" y="48" width="20" height="24" rx="2" style="fill:#3C8CFF"/><rect x="370" y="48" width="200" height="24" rx="2" style="fill:#3C8CFF"/><text x="190" y="41" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">亮一两秒</text><text x="300" y="41" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">闪 3 次</text><text x="470" y="41" style="fill:var(--ok,#2B7346);font-size:11.5px;font-weight:700" text-anchor="middle">常亮 = 自检通过</text><rect x="150" y="108" width="80" height="24" rx="2" style="fill:#3C8CFF"/><text x="400" y="125" style="fill:var(--danger,#B42318);font-size:12px;font-weight:700" text-anchor="middle">亮后熄灭、不再亮 → 联系 Gamry</text><rect x="150" y="168" width="80" height="24" rx="2" style="fill:#3C8CFF"/><rect x="246" y="168" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="270" y="168" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="306" y="168" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="330" y="168" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="354" y="168" width="12" height="24" rx="2" style="fill:#3C8CFF"/><text x="264" y="162" style="fill:var(--muted,#56616E);font-size:10px;font-weight:400" text-anchor="middle">2 次</text><text x="336" y="162" style="fill:var(--muted,#56616E);font-size:10px;font-weight:400" text-anchor="middle">3 次</text><text x="478" y="185" style="fill:var(--danger,#B42318);font-size:11.5px;font-weight:700" text-anchor="middle">两段闪码 = 模块故障，联系 Gamry</text><rect x="150" y="228" width="100" height="24" rx="2" style="fill:#3C8CFF"/><rect x="262" y="228" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="286" y="228" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="310" y="228" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="334" y="228" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="358" y="228" width="12" height="24" rx="2" style="fill:#3C8CFF"/><rect x="382" y="228" width="28" height="24" rx="2" style="fill:#3C8CFF"/><text x="316" y="222" style="fill:var(--muted,#56616E);font-size:10px;font-weight:400" text-anchor="middle">闪 5 次</text><text x="495" y="245" style="fill:var(--accent,#1E5BA8);font-size:11.5px;font-weight:600" text-anchor="middle">GIM 中点 Blink：闪 5 次</text><path d="M150 272 H574" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-05-selftest-ah-ink)"/><text x="156" y="290" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:600" text-anchor="start">打开电源开关</text><text x="574" y="290" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="end">时间</text><text x="20" y="312" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">第 4 行发生在正常运行期间。时间比例为示意；完整闪码表见手册附录 E。</text></svg><!--/SVG--></div>
+        <figcaption>前面板左下的蓝色 Power 灯显示自检结果。正常顺序是亮一两秒、闪 3 次、常亮。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="5" hidden>
+        <div class="figsvg"><!--SVG:install-06-connect--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 416" width="600" height="416" role="img" aria-label="连接：USB A/B 线方口接后面板 USB 口，电解池电缆插前面板 Cell Cable 接口并拧紧两颗滚花螺丝；Framework 设备状态栏绿灯表示可用，USB 灯常红时是在更新固件，不能断电。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>连接：USB A/B 线方口接后面板 USB 口，电解池电缆插前面板 Cell Cable 接口并拧紧两颗滚花螺丝；Framework 设备状态栏绿灯表示可用，USB 灯常红时是在更新固件，不能断电。</title><rect x="0" y="0" width="600" height="416" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="30" width="150" height="300" rx="10" style="fill:var(--panel-edge,#151A1F)"/><rect x="28" y="38" width="134" height="284" rx="6" style="fill:var(--panel,#2A3139)"/><text x="95" y="66" style="fill:var(--panel-ink,#E7ECF1);font-size:12.5px;font-weight:700" text-anchor="middle">Reference 620</text><text x="95" y="80" style="fill:var(--panel-ink,#E7ECF1);font-size:7.5px;font-weight:400" text-anchor="middle">Potentiostat/Galvanostat/ZRA</text><text x="122" y="124" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="end">Cell On</text><circle cx="134" cy="121" r="4" style="fill:var(--led-off,#4A535D)"/><text x="122" y="142" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="end">Overload</text><circle cx="134" cy="139" r="4" style="fill:var(--led-off,#4A535D)"/><rect x="127" y="162" width="14" height="84" rx="4" style="fill:var(--panel-edge,#151A1F);stroke:var(--panel-ink,#E7ECF1);stroke-width:1.5"/><text x="120" y="208" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="end">Cell Cable</text><circle cx="134" cy="155" r="3.5" style="fill:var(--surface,#FFFFFF);stroke:var(--accent,#1E5BA8);stroke-width:1.8"/><circle cx="134" cy="253" r="3.5" style="fill:var(--surface,#FFFFFF);stroke:var(--accent,#1E5BA8);stroke-width:1.8"/><rect x="38" y="264" width="50" height="16" rx="2" style="fill:var(--accent,#1E5BA8)"/><text x="63" y="276" style="fill:var(--accent-ink,#FFFFFF);font-size:9px;font-weight:700" text-anchor="middle">序列号</text><circle cx="44" cy="296" r="4" style="fill:#3C8CFF"/><text x="54" y="299.5" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="start">Power</text><circle cx="44" cy="312" r="4" style="fill:#37C66B"/><text x="54" y="315.5" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="start">USB</text><text x="95" y="346" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:600" text-anchor="middle">前面板</text><path d="M138 151 L176 130" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round"/><text x="178" y="126" style="fill:var(--accent,#1E5BA8);font-size:12px;font-weight:700" text-anchor="start">拧紧两颗滚花螺丝</text><path d="M141 204 H206" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:8;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 156, 262 156" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 156, 262 156" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="152" width="10" height="8" rx="2" style="fill:var(--lead-we,#2E9A55);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="160" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">WE 绿</text><path d="M206 204 C 230 204, 236 174, 262 174" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 174, 262 174" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="170" width="10" height="8" rx="2" style="fill:var(--lead-ws,#2F6FD6);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="178" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">WS 蓝</text><path d="M206 204 C 230 204, 236 192, 262 192" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 192, 262 192" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="188" width="10" height="8" rx="2" style="fill:var(--lead-re,#F4F4F0);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="196" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">RE 白</text><path d="M206 204 C 230 204, 236 210, 262 210" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 210, 262 210" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="206" width="10" height="8" rx="2" style="fill:var(--lead-ce,#D3342C);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="214" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">CE 红</text><path d="M206 204 C 230 204, 236 228, 262 228" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 228, 262 228" style="fill:none;stroke:var(--lead-cs,#EE7B1A);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="224" width="10" height="8" rx="2" style="fill:var(--lead-cs,#EE7B1A);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="232" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">CS 橙</text><path d="M206 204 C 230 204, 236 246, 262 246" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M206 204 C 230 204, 236 246, 262 246" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="262" y="242" width="10" height="8" rx="2" style="fill:var(--lead-gnd,#1D1F22);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="278" y="250" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">地 黑</text><circle cx="176" cy="204" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="176" y="208.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">2</text><text x="290" y="34" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">后面板顶部</text><rect x="220" y="40" width="140" height="66" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><rect x="228" y="48" width="40" height="26" rx="2" style="fill:var(--accent-soft,#DCE7F5)"/><rect x="282" y="50" width="12" height="20" rx="2" style="fill:#E2B93B;stroke:var(--ink,#131C26);stroke-width:1"/><text x="288" y="94" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="middle">T/C</text><rect x="326" y="52" width="20" height="16" rx="2" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1"/><text x="336" y="94" style="fill:var(--panel-ink,#E7ECF1);font-size:9.5px;font-weight:400" text-anchor="middle">USB</text><rect x="400" y="40" width="180" height="112" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><rect x="408" y="48" width="164" height="92" rx="4" style="fill:var(--surface,#FFFFFF)"/><text x="416" y="66" style="fill:var(--ink,#131C26);font-size:11px;font-weight:700" text-anchor="start">设备状态栏</text><text x="566" y="66" style="fill:var(--muted,#56616E);font-size:9.5px;font-weight:400;font-family:var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)" text-anchor="end">Framework</text><circle cx="422" cy="86" r="5" style="fill:#37C66B;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="432" y="90" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">绿：可用</text><circle cx="422" cy="106" r="5" style="fill:#F08A24;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="432" y="110" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">橙：正在运行实验</text><circle cx="422" cy="126" r="5" style="fill:var(--surface,#FFFFFF);stroke:var(--wire-outline,#3A4450);stroke-width:1.2"/><text x="432" y="130" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">白：已连接但不可用</text><rect x="482" y="152" width="16" height="10" rx="0" style="fill:var(--rule,#C9D1DA)"/><rect x="460" y="162" width="60" height="5" rx="2" style="fill:var(--rule,#C9D1DA)"/><path d="M400 100 C 375 100, 362 60, 348 60" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><circle cx="370" cy="80" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="370" y="84.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">1</text><circle cx="400" cy="40" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="400" y="44.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">3</text><text x="490" y="186" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">USB A/B 线：方口端接仪器</text><rect x="380" y="200" width="200" height="124" rx="8" style="fill:var(--sunk,#E2E7EC)"/><text x="392" y="222" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="start">前面板 USB 灯</text><circle cx="398" cy="240" r="5" style="fill:#37C66B;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="410" y="244" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">常绿：连接正常</text><circle cx="398" cy="262" r="5" style="fill:#F08A24;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="410" y="266" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">闪烁：正在收发数据</text><circle cx="398" cy="284" r="5" style="fill:#E5484D;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="410" y="288" style="fill:var(--danger,#B42318);font-size:11.5px;font-weight:700" text-anchor="start">常红：固件更新，勿断电</text><circle cx="398" cy="306" r="5" style="fill:var(--led-off,#4A535D);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="410" y="310" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">不亮：未供电或未连接</text><circle cx="28" cy="364" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="367.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">1</text><text x="42" y="368" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">USB 线接后面板 USB 口（可热插拔）</text><circle cx="28" cy="385" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="388.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">2</text><text x="42" y="389" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">电解池电缆插前面板，拧紧两颗滚花螺丝</text><circle cx="28" cy="406" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="409.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">3</text><text x="42" y="410" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">打开 Framework：GIM 自动弹出，状态灯为绿即可用</text></svg><!--/SVG--></div>
+        <figcaption>自检通过后再接 USB 和电解池电缆。前面板布局按手册照片简化绘制。</figcaption>
+      </figure>
+      <figure class="fig" data-fig="6" hidden>
+        <div class="figsvg"><!--SVG:install-07-calibration--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 468" width="600" height="468" role="img" aria-label="Calibrate Instrument：尽可能把后面板 Chassis Ground 接可靠大地，电缆按颜色接 200 Ω 校准池上标注的插孔，放进校准屏蔽盒盖好，黑线接盒上接地柱，再从 Framework 的 Experiment › Utilities 启动；出现警告先复查接线并 Retry，仍失败就把摘要文件附在技术支持表单中。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>Calibrate Instrument：尽可能把后面板 Chassis Ground 接可靠大地，电缆按颜色接 200 Ω 校准池上标注的插孔，放进校准屏蔽盒盖好，黑线接盒上接地柱，再从 Framework 的 Experiment › Utilities 启动；出现警告先复查接线并 Retry，仍失败就把摘要文件附在技术支持表单中。</title><defs><marker id="install-07-calibration-ah-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--ink,#131C26)"/></marker></defs><rect x="0" y="0" width="600" height="468" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="92" width="84" height="72" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><text x="62" y="126" style="fill:var(--panel-ink,#E7ECF1);font-size:13px;font-weight:700" text-anchor="middle">R620</text><text x="62" y="146" style="fill:var(--panel-ink,#E7ECF1);font-size:10px;font-weight:400" text-anchor="middle">后面板</text><path d="M36 164 V176" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><circle cx="36" cy="182" r="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:2"/><path d="M36 188 V224" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.0;stroke-linecap:round;stroke-linejoin:round"/><path d="M36 188 V224" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M22 228 H50 M27 234 H45 M32 240 H40" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><text x="56" y="240" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">可靠大地</text><circle cx="60" cy="196" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="60" y="200.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">1</text><path d="M104 128 H140" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:7;stroke-linecap:round;stroke-linejoin:round"/><rect x="182" y="54" width="186" height="10" rx="3" style="fill:var(--ink,#131C26)"/><text x="275" y="44" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="middle">盖好屏蔽盒盖</text><rect x="188" y="64" width="174" height="148" rx="4" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:2"/><rect x="198" y="94" width="158" height="100" rx="6" style="fill:var(--surface,#FFFFFF);stroke:var(--accent,#1E5BA8);stroke-width:2"/><text x="277" y="116" style="fill:var(--accent,#1E5BA8);font-size:12.5px;font-weight:700" text-anchor="middle">200 Ω 校准池</text><path d="M140 128 C 175 128, 212 100, 212 144" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 212 100, 212 144" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 238 100, 238 144" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 238 100, 238 144" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 277 100, 277 144" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 277 100, 277 144" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 314 100, 314 144" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 314 100, 314 144" style="fill:none;stroke:var(--lead-cs,#EE7B1A);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 340 100, 340 144" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 175 128, 340 100, 340 144" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><circle cx="212" cy="152" r="8" style="fill:var(--wire-outline,#3A4450)"/><circle cx="212" cy="152" r="5.5" style="fill:var(--lead-we,#2E9A55)"/><text x="212" y="178" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">WE</text><circle cx="238" cy="152" r="8" style="fill:var(--wire-outline,#3A4450)"/><circle cx="238" cy="152" r="5.5" style="fill:var(--lead-ws,#2F6FD6)"/><text x="238" y="178" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">WS</text><circle cx="277" cy="152" r="8" style="fill:var(--wire-outline,#3A4450)"/><circle cx="277" cy="152" r="5.5" style="fill:var(--lead-re,#F4F4F0)"/><text x="277" y="178" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">RE</text><circle cx="314" cy="152" r="8" style="fill:var(--wire-outline,#3A4450)"/><circle cx="314" cy="152" r="5.5" style="fill:var(--lead-cs,#EE7B1A)"/><text x="314" y="178" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">CS</text><circle cx="340" cy="152" r="8" style="fill:var(--wire-outline,#3A4450)"/><circle cx="340" cy="152" r="5.5" style="fill:var(--lead-ce,#D3342C)"/><text x="340" y="178" style="fill:var(--ink,#131C26);font-size:9.5px;font-weight:700" text-anchor="middle">CE</text><path d="M182 196 H188" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><circle cx="176" cy="196" r="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:2"/><path d="M140 128 C 150 176, 156 196, 170 196" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.0;stroke-linecap:round;stroke-linejoin:round"/><path d="M140 128 C 150 176, 156 196, 170 196" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><text x="168" y="224" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="end">黑线接盒上接地柱</text><text x="275" y="234" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">校准屏蔽盒</text><text x="275" y="250" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">Calibration Shield</text><circle cx="198" cy="94" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="198" y="98.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">2</text><circle cx="372" cy="59" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="372" y="63.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">3</text><text x="400" y="40" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">Framework：Experiment › Utilities</text><rect x="400" y="56" width="190" height="32" rx="6" style="fill:var(--accent-soft,#DCE7F5);stroke:var(--accent,#1E5BA8);stroke-width:1.2"/><text x="495" y="77" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700;font-family:var(--f-mono,'JetBrains Mono',ui-monospace,Menlo,monospace)" text-anchor="middle">Calibrate Instrument</text><path d="M495 88 V98" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-07-calibration-ah-ink)"/><rect x="400" y="100" width="190" height="32" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="495" y="121" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:500" text-anchor="middle">Performance Tips → OK</text><path d="M495 132 V142" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-07-calibration-ah-ink)"/><rect x="400" y="144" width="190" height="32" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="495" y="165" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:500" text-anchor="middle">Cell Required → OK</text><path d="M495 176 V186" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-07-calibration-ah-ink)"/><rect x="400" y="188" width="190" height="32" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="495" y="209" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:500" text-anchor="middle">自动运行，提示是否成功</text><path d="M495 220 V230" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-07-calibration-ah-ink)"/><rect x="400" y="232" width="190" height="32" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="495" y="253" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:500" text-anchor="middle">Save：Yes 新数据 / No 原数据</text><circle cx="400" cy="56" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="400" y="60.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">4</text><circle cx="400" cy="100" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="400" y="104.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">5</text><path d="M495 264 V274" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#install-07-calibration-ah-ink)"/><rect x="400" y="276" width="190" height="24" rx="5" style="fill:var(--sunk,#E2E7EC)"/><text x="408" y="292" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:400" text-anchor="start">.CalData 备份 → CalBackup</text><rect x="400" y="304" width="190" height="24" rx="5" style="fill:var(--sunk,#E2E7EC)"/><text x="408" y="320" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:400" text-anchor="start">摘要 .txt → My Gamry Data</text><text x="400" y="344" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="start">成功或失败都会生成摘要文件</text><circle cx="28" cy="280" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="283.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">1</text><text x="42" y="284" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">尽可能把后面板 Chassis Ground 接可靠大地</text><circle cx="28" cy="300" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="303.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">2</text><text x="42" y="304" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">电缆按颜色接 200 Ω 校准池对应插孔</text><circle cx="28" cy="320" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="323.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">3</text><text x="42" y="324" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">放入屏蔽盒并盖好；黑线接盒上接地柱</text><circle cx="28" cy="340" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="343.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">4</text><text x="42" y="344" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">Experiment › Utilities › Calibrate Instrument</text><circle cx="28" cy="360" r="8" style="fill:var(--accent,#1E5BA8)"/><text x="28" y="363.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">5</text><text x="42" y="364" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">确认提示后自动运行；结果选 Save</text><text x="20" y="396" style="fill:var(--muted,#56616E);font-size:12px;font-weight:700" text-anchor="start">出现警告或失败时（警告不一定是严重故障）</text><rect x="20" y="406" width="184" height="52" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><circle cx="38" cy="424" r="8" style="fill:var(--warn,#965800)"/><text x="38" y="427.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">1</text><text x="52" y="428" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="start">复查接线</text><text x="32" y="448" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="start">200 Ω 池、黑线、机壳接地</text><rect x="213" y="406" width="184" height="52" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><circle cx="231" cy="424" r="8" style="fill:var(--warn,#965800)"/><text x="231" y="427.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">2</text><text x="245" y="428" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="start">点 Retry</text><text x="225" y="448" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="start">重跑剩余部分；其他警告 Ignore</text><rect x="406" y="406" width="184" height="52" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><circle cx="424" cy="424" r="8" style="fill:var(--warn,#965800)"/><text x="424" y="427.36" style="fill:var(--accent-ink,#FFFFFF);font-size:9.2px;font-weight:700" text-anchor="middle">3</text><text x="438" y="428" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="start">仍失败</text><text x="418" y="448" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="start">摘要文件附在技术支持表单中</text></svg><!--/SVG--></div>
+        <figcaption>Calibrate Instrument 的接线、软件步骤与失败排查。校准池插孔标注按 Calibration Quick-Start Guide 的照片绘制。</figcaption>
+      </figure>
+      <p class="swipe">图可左右滑动查看</p>
+      <div class="fignav"><button type="button" class="btn-quiet" data-step="-1">← 上一张</button><span class="figcount num">1 / 7</span><button type="button" class="btn-quiet" data-step="1">下一张 →</button></div>
+    </div>
+
+    <div class="block stack">
+      <div class="progress">
+        <span class="label">进度</span>
+        <div class="bar" aria-hidden="true"><i id="progBar"></i></div>
+        <span class="count" id="progCount">0 / 15</span>
+        <button type="button" class="btn-quiet" id="progReset">清除勾选</button>
+      </div>
+
+      <div class="phase">
+        <h3>开箱 <small>Unpack</small></h3>
+        <details class="step" data-id="s1" data-fig="0"><summary><input type="checkbox" aria-label="完成：检查运输损坏"><span class="n">01</span><span class="t">检查运输损坏</span><span class="chev">▶</span></summary>
+          <div class="body"><p>取出后检查外观。发现损坏，立即通知 Gamry 和承运人，并保留包装箱供承运人检查。</p>
+          <div class="callout danger">运输损坏可能使防止接触内部危险电压的加强绝缘 (reinforced insulation) 失效。在合格技术人员确认安全之前不要使用，并贴标签标明可能有安全隐患。<span class="src">手册 Ch 1、4</span></div>
+          <p style="margin-top:8px">以下情况也要把仪器当作可能有危险：有可见损坏、工作不正常、长期在不良条件下存放、跌落或运输冲击严重、受过腐蚀性气氛或火灾等环境应力。<span class="src">手册 Ch 1</span></p></div></details>
+        <details class="step" data-id="s2" data-fig="0"><summary><input type="checkbox" aria-label="完成：回温"><span class="n">02</span><span class="t">冷机先回温至少 1 小时</span><span class="chev">▶</span></summary>
+          <div class="body"><p>从寒冷处（如冬季室外）搬到温暖潮湿的房间，内部冷表面可能凝露，同样会让加强绝缘失效。给“冷”仪器接电源前，先在室温下放置至少 1 小时。<span class="src">手册 Ch 4</span></p></div></details>
+        <details class="step" data-id="s3" data-fig="0"><summary><input type="checkbox" aria-label="完成：核对配件"><span class="n">03</span><span class="t">核对随机配件</span><span class="chev">▶</span></summary>
+          <div class="body"><p>手册中提到随仪器提供的物品（以装箱单为准）：</p>
+          <ul>
+            <li>外置电源适配器和美标电源线</li>
+            <li>USB 2.0 A/B 线</li>
+            <li>60 cm 标准屏蔽电解池电缆（985-00151）：5 个 2 mm 香蕉插头、1 个针式插孔，各配可拆鳄鱼夹</li>
+            <li>200 Ω 校准池（0.02 %）和 20 kΩ 校准池（0.05 %）</li>
+            <li>1.2 m 黑色香蕉线，用于把机壳接大地</li>
+            <li>配件包：内含把参比电极针式插头转成香蕉插座的转接头</li>
+            <li>标签纸，以及《Quick-start Installation Guide – USB Potentiostat》</li>
+          </ul><span class="src">手册 Ch 1、4、5、6</span></div></details>
+      </div>
+
+      <div class="phase">
+        <h3>摆放 <small>Placement</small></h3>
+        <details class="step" data-id="s4" data-fig="1"><summary><input type="checkbox" aria-label="完成：摆放"><span class="n">04</span><span class="t">放在平稳台面上，保证通风</span><span class="chev">▶</span></summary>
+          <div class="body"><ul>
+            <li>通常直立放在平稳工作台上。多数接线在后面板，背面要留出空间。其他朝向也可以，只要不妨碍机箱通风。</li>
+            <li>空气从机箱两侧靠近前面板的槽口进入，从后部两只风扇排出。进出风口都不要挡住。</li>
+            <li>工作环境 0–45 °C、相对湿度 ≤ 90 % 且不凝露，仅限室内。</li>
+            <li>放进机柜等封闭空间时，柜内温度也不能超过 45 °C；和电脑等发热设备同柜要特别注意，必要时加通风孔或强制风冷。</li>
+          </ul><span class="src">手册 Ch 1、4</span></div></details>
+      </div>
+
+      <div class="phase">
+        <h3>电脑与软件 <small>Software</small></h3>
+        <details class="step" data-id="s5" data-fig="2"><summary><input type="checkbox" aria-label="完成：电脑要求"><span class="n">05</span><span class="t">确认电脑满足要求</span><span class="chev">▶</span></summary>
+          <div class="body"><ul>
+            <li>x86 系列（Intel 或完全兼容）处理器</li>
+            <li>Windows 10 或更高版本，仅支持 64 位（Framework 7.9.1 及以上）</li>
+            <li>支持 USB 2.0 高速（480 Mbit/s）或 USB 1.1 全速（12 Mbit/s）的 USB 口</li>
+          </ul><span class="src">手册 Ch 4</span></div></details>
+        <details class="step" data-id="s6" data-fig="2"><summary><input type="checkbox" aria-label="完成：安装软件"><span class="n">06</span><span class="t">先装软件，再接硬件</span><span class="chev">▶</span></summary>
+          <div class="body"><p>Gamry 软件不再随 DVD 提供。在 Gamry Client Portal 注册账号并登记仪器后，下载 .exe 或 .iso 文件，运行后会自动解压并开始安装。</p>
+          <p>Reference 620 是即插即用 (Plug &amp; Play) 设备，和多数即插即用硬件一样，最好先装软件再接仪器。手册以 Gamry Framework 7.9 或更高版本为准。<span class="src">手册 Ch 2、4</span></p></div></details>
+        <details class="step" data-id="s7" data-fig="2"><summary><input type="checkbox" aria-label="完成：重启"><span class="n">07</span><span class="t">重启电脑，等驱动加载</span><span class="chev">▶</span></summary>
+          <div class="body"><p>安装程序结束后重启电脑。USB 驱动通常在 Windows 启动时加载，驱动加载前可能无法使用仪器。桌面出现后，驱动安装可能还要一分钟以上；电脑慢或运行程序多时更久。<span class="src">手册 Ch 4</span></p></div></details>
+      </div>
+
+      <div class="phase">
+        <h3>上电自检 <small>Power-up</small></h3>
+        <details class="step" data-id="s8" data-fig="3"><summary><input type="checkbox" aria-label="完成：接电源"><span class="n">08</span><span class="t">连接电源适配器</span><span class="chev">▶</span></summary>
+          <div class="body"><p>仪器不直接接市电：外置适配器把 100–240 VAC、47–63 Hz 转成稳压 24 V DC，接到后面板的 Power In 插孔。随机电源线是美标的；其他国家要换成本国认证、器具端为 IEC 320 C13 的电源线。</p>
+          <div class="callout warn">只用随机适配器（EN 60950 认证）。别的电源可能破坏仪器的性能和安全特性。不要把 Reference 620 的小适配器用在 Reference 3000 上。万一必须用其他电源：须稳压、输出 22–26 V、能提供 3 A；输入低于 20 V 或高于 32 V 会损坏仪器电源。<span class="src">手册 Ch 1、4、7</span></div></div></details>
+        <details class="step" data-id="s9" data-fig="4"><summary><input type="checkbox" aria-label="完成：上电自检"><span class="n">09</span><span class="t">打开电源开关，做上电自检</span><span class="chev">▶</span></summary>
+          <div class="body"><p>在接任何其他线之前先做这一步。打开后面板电源开关（在 Power In 插孔下方），看前面板左下的蓝色 Power 灯：亮一两秒 → 闪 3 次 → 常亮，表示自检通过。此时其他指示灯的状态不重要。</p>
+          <div class="callout danger">亮后熄灭并一直不亮，说明仪器工作不正常，请尽快联系 Gamry。闪烁超过 5 次或出现两段式闪码，表示某个电子模块故障（闪码表见手册附录 E）。<span class="src">手册 Ch 4、附录 E</span></div></div></details>
+      </div>
+
+      <div class="phase">
+        <h3>连接 <small>Connect</small></h3>
+        <details class="step" data-id="s10" data-fig="5"><summary><input type="checkbox" aria-label="完成：接 USB"><span class="n">10</span><span class="t">连接 USB</span><span class="chev">▶</span></summary>
+          <div class="body"><p>用标准 USB 2.0 高速 A/B 线：扁的 A 口接电脑，近方形的 B 口接后面板 USB 口。USB 可以热插拔，电脑和仪器都开着时也能接；但采集数据或实验进行中拔线会造成问题。</p>
+          <p>用集线器扩展时，必须用外接电源的集线器，不要用总线供电的集线器。接好后前面板 USB 灯应为常绿。<span class="src">手册 Ch 4、7</span></p></div></details>
+        <details class="step" data-id="s11" data-fig="5"><summary><input type="checkbox" aria-label="完成：接电解池电缆"><span class="n">11</span><span class="t">接上电解池电缆并拧紧</span><span class="chev">▶</span></summary>
+          <div class="body"><p>25 针电缆插在前面板 Cell Cable 接口，用电缆上的滚花螺丝固定，防止脱落。实验中电缆脱落可能造成严重后果。仪器能通过 5 个针脚识别 Gamry 电缆型号，软件据此补偿电缆特性（对 EIS 尤其重要）。<span class="src">手册 Ch 4、6、7</span></p>
+          <div class="callout warn">只用 Gamry 提供的电缆：它由多根独立屏蔽线外加总屏蔽构成。多数电缆内含保险丝，在意外接地形成放电回路时保护仪器；保险丝熔断后需更换才能正常工作。电缆超过 1 m 会增加噪声、降低稳定性。<span class="src">手册 Ch 1、9</span></div></div></details>
+        <details class="step" data-id="s12" data-fig="5"><summary><input type="checkbox" aria-label="完成：运行 Framework"><span class="n">12</span><span class="t">运行 Framework，确认仪器可用</span><span class="chev">▶</span></summary>
+          <div class="body"><p>新仪器接入时，Gamry Instrument Manager (GIM) 会自动弹出；以后可从 Framework 的 <code>Options › Instrument Manager…</code> 打开，用来改名、校准、管理固件和授权软件。</p>
+          <p>Framework 主菜单下的设备状态栏：<strong>绿</strong> = 可用，<strong>橙</strong> = 正在运行实验，<strong>白</strong> = 已连接但不可用（多为固件与软件不匹配，用 GIM 的 Auto Update All 修复）。<span class="src">手册 Ch 4</span></p>
+          <div class="callout danger">更新固件时 USB 灯为常红：不要关机、拔 USB 或关闭电脑。中断更新可能使仪器无法使用，只能返厂重新编程。<span class="src">手册 Ch 4、7</span></div></div></details>
+      </div>
+
+      <div class="phase">
+        <h3>校准 <small>Calibrate</small></h3>
+        <details class="step" data-id="s13" data-fig="6"><summary><input type="checkbox" aria-label="完成：Calibrate Instrument"><span class="n">13</span><span class="t">运行 Calibrate Instrument</span><span class="chev">▶</span></summary>
+          <div class="body"><ol>
+            <li>尽可能把后面板 Chassis Ground 接到已知可靠的大地。</li>
+            <li>电缆按颜色接 200 Ω 校准池（P/N 961-00001）上标注的插孔：绿 → Work，蓝 → Work Sense，白 → Reference，橙 → Counter Sense，红 → Counter。</li>
+            <li>把校准池放进校准屏蔽盒 (Calibration Shield)，盖好盖子；黑色浮地线接到屏蔽盒的接地柱。</li>
+            <li>Framework 中选 <code>Experiment › Utilities › Calibrate Instrument</code>。</li>
+            <li>选择要校准的仪器，点 OK。</li>
+            <li>Performance Tips 窗口：逐条确认后点 OK。</li>
+            <li>Cell Required 窗口：确认接的是 200 Ω 校准池，点 OK。校准自动进行，结束时提示是否成功。</li>
+            <li>有数值超出规格会弹出警告，可选 Abort、Retry 或 Ignore（处理方法见下方）。</li>
+            <li>结果窗口选择是否 Save：Yes 使用新数据并覆盖原文件，No 放弃新数据、保留原校准。</li>
+            <li>出现 Done 窗口，点 OK 完成。</li>
+          </ol>
+          <p>无论成功与否，<code>My Gamry Data</code> 中都会生成摘要文件（如 <code>Calibration Results PC5-#####.txt</code>）；另有 .CalData 备份在 <code>C:\ProgramData\Gamry Instruments\Framework\CalBackup\</code>。校准数据存在仪器内，换电脑后仍然有效。<span class="src">手册 Ch 3、5</span><span class="src">校准 QSG</span></p>
+          <div class="callout warn"><strong>出现警告或失败时：</strong>警告不一定代表严重故障，校准同时检查仪器健康状况，并让各电路在当前环境下“归零”。① 复查：常规导线接在 200 Ω 校准池上，黑色浮地线接在屏蔽盒上，尽可能把 Chassis Ground 接可靠大地。② 在错误对话框中点 Retry 重新运行剩余部分；之后的其他警告点 Ignore 继续。③ 仍失败：在 My Gamry Data 找到摘要文件，填写 <a href="https://www.gamry.com/support-2/contact-technical-support/" target="_blank" rel="noopener">Gamry 技术支持表单</a>并附上该文件，或在 GIM 中点 Email Results to Gamry Support。<span class="src">校准 QSG</span></div>
+          <div class="callout info">建议至少每年做一次用户校准；维修后、数据出现断点、或使用环境变化很大（例如 15 °C 校准、30 °C 使用）时也要重新校准。找不到校准池时，可用精度在 0.2 %（0.4 Ω）以内的任意 200 Ω 电阻。出厂校准可溯源至 NIST，要保持溯源需每一到两年返回 Gamry 校准。<span class="src">手册 Ch 5</span></div></div></details>
+        <details class="step" data-id="s14" data-fig="6"><summary><input type="checkbox" aria-label="完成：Low I DC 校准"><span class="n">14</span><span class="t">pA 级测量前：Low I DC 校准</span><span class="chev">▶</span></summary>
+          <div class="body"><p>在 60 pA 和 600 pA 量程上，电解池开、关时测到的电流最多可差 8 pA（通常 1–2 pA）。受影响的主要是小电极物理电化学和高阻涂层 EIS；多数腐蚀实验和宏观电极测量不受影响。</p>
+          <p>校准脚本会让你从校准池上断开参比（白）、对电极（红）和对电极感应（橙）线，重新测量这两个量程的偏置，替换完整校准中的数值。必须先在<strong>同一类型电缆</strong>上完成完整 DC 校准。需要 pA 级绝对电流时，建议每天或每周做一次。<span class="src">手册 Ch 5</span></p></div></details>
+        <details class="step" data-id="s15" data-fig="6"><summary><input type="checkbox" aria-label="完成：其他校准"><span class="n">15</span><span class="t">按需：电缆电容与温度校准</span><span class="chev">▶</span></summary>
+          <div class="body"><p><strong>电缆电容 (Calibrate Cable Capacitance)</strong>：高阻抗样品的 EIS 出现明显相位毛刺时使用。接 20 kΩ 校准池（不是 200 Ω），同样放进屏蔽盒、黑线接接地柱，在 <code>Experiment › Utilities › Calibrate Cable Capacitance</code> 中给电缆起一个 Cable Tag 名称后选 Cal Cable。</p>
+          <p><strong>温度 (Calibrate Temperature Measurement)</strong>：K 型热电偶用冰水和沸水做两点校准，校准后精度 ±4 °C。<span class="src">手册 Ch 5、7</span></p></div></details>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== USE ====================== -->
+<section id="use">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 · Operation</div>
+      <h2>使用方法</h2>
+      <p>标准电缆有 5 个香蕉插头和 1 个针式插孔，按颜色区分。选一种接法看每根线接哪里（手册表 6-1 至 6-3）；点右侧图例可单独高亮某根线。</p>
+    </div>
+
+    <div class="block">
+      <div class="leadmap-head">
+        <div class="seg" role="group" aria-label="电极配置">
+          <button type="button" data-cfg="three" aria-pressed="true">三电极</button>
+          <button type="button" data-cfg="two" aria-pressed="false">两电极</button>
+          <button type="button" data-cfg="membrane" aria-pressed="false">膜电池</button>
+          <button type="button" data-cfg="zra" aria-pressed="false">ZRA</button>
+        </div>
+        <label class="toggle"><input type="checkbox" id="cageToggle"> 接法拉第屏蔽</label>
+      </div>
+      <div class="leadmap">
+        <div>
+          <div class="svgbox" id="svgBox"><svg id="leadSvg" viewBox="0 0 700 330" role="img" aria-labelledby="leadSvgTitle"><title id="leadSvgTitle">电解池电缆接线示意图</title></svg></div>
+          <p class="swipe">示意图可左右滑动查看</p>
+          <div class="callout info cfgnote" id="cfgNote"></div>
+        </div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+    <div class="figviewer" id="useViewer">
+      <div class="figtabs" role="group" aria-label="使用图解"><button type="button" data-fig="0" aria-pressed="true">三电极原理</button><button type="button" data-fig="1" aria-pressed="false">CV 流程</button><button type="button" data-fig="2" aria-pressed="false">ZRA</button><button type="button" data-fig="3" aria-pressed="false">低电流与屏蔽</button><button type="button" data-fig="4" aria-pressed="false">振荡对策</button></div>
+      <figure class="fig" data-fig="0">
+        <div class="figsvg"><!--SVG:use-01-three-electrode--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 362" width="600" height="362" role="img" aria-label="三电极原理：电流经绿线、溶液和红线流过工作电极与对电极；蓝线和白线只感应电压，静电计测得的 E 反馈给控制放大器。橙线只在 ZRA 模式起作用，黑线是仪器浮地。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>三电极原理：电流经绿线、溶液和红线流过工作电极与对电极；蓝线和白线只感应电压，静电计测得的 E 反馈给控制放大器。橙线只在 ZRA 模式起作用，黑线是仪器浮地。</title><defs><marker id="use-01-three-electrode-ah-accent" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--accent,#1E5BA8)"/></marker><marker id="use-01-three-electrode-ah-warn" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--warn,#965800)"/></marker></defs><rect x="0" y="0" width="600" height="362" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="36" width="200" height="268" rx="8" style="fill:none;stroke:var(--muted,#56616E);stroke-width:1.5;stroke-dasharray:6 5"/><text x="32" y="56" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">Reference 620 内部（简化）</text><rect x="36" y="72" width="160" height="56" rx="6" style="fill:var(--accent-soft,#DCE7F5);stroke:var(--accent,#1E5BA8);stroke-width:1.5"/><text x="116" y="95" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">差分静电计</text><text x="116" y="115" style="fill:var(--accent,#1E5BA8);font-size:11.5px;font-weight:600" text-anchor="middle">E = 蓝、白之间电压</text><path d="M116 128 V146" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-01-three-electrode-ah-accent)"/><text x="124" y="142" style="fill:var(--accent,#1E5BA8);font-size:10.5px;font-weight:600" text-anchor="start">反馈</text><rect x="36" y="148" width="160" height="56" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.2"/><text x="116" y="171" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">控制放大器</text><text x="116" y="191" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">输出经红线到对电极</text><rect x="36" y="224" width="160" height="56" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.2"/><text x="116" y="247" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="middle">电流测量 I/E</text><text x="116" y="267" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">测流过绿线的电流 i</text><rect x="332" y="150" width="246" height="144" rx="0" style="fill:var(--solution,#D4E6F2)"/><path d="M330 96 V284 Q330 296 342 296 H568 Q580 296 580 284 V96" style="fill:none;stroke:var(--muted,#56616E);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><rect x="385" y="74" width="10" height="170" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="390" y="264" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">工作电极</text><text x="390" y="280" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">WE</text><rect x="457" y="74" width="10" height="170" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="462" y="264" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">参比电极</text><text x="462" y="280" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">RE</text><rect x="533" y="74" width="10" height="170" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="538" y="264" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">对电极</text><text x="538" y="280" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">CE</text><path d="M196 92 C 290 92, 386 40, 386 74" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 92 C 290 92, 386 40, 386 74" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 110 C 310 110, 462 30, 462 74" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 110 C 310 110, 462 30, 462 74" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 176 C 330 176, 534 18, 534 74" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 176 C 330 176, 534 18, 534 74" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 196 C 340 196, 543 8, 543 74" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:4.9;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 196 C 340 196, 543 8, 543 74" style="fill:none;stroke:var(--lead-cs,#EE7B1A);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 252 C 300 252, 394 30, 394 74" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 252 C 300 252, 394 30, 394 74" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 272 H258" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M196 272 H258" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><circle cx="263" cy="272" r="4" style="fill:var(--surface,#FFFFFF);stroke:var(--wire-outline,#3A4450);stroke-width:1.5"/><text x="272" y="276" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="start">悬空</text><path d="M398 168 H454" style="fill:none;stroke:var(--accent,#1E5BA8);stroke-width:2;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-01-three-electrode-ah-accent)" marker-start="url(#use-01-three-electrode-ah-accent)"/><text x="426" y="162" style="fill:var(--accent,#1E5BA8);font-size:13px;font-weight:700" text-anchor="middle">E</text><path d="M398 220 H530" style="fill:none;stroke:var(--warn,#965800);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-01-three-electrode-ah-warn)" marker-start="url(#use-01-three-electrode-ah-warn)"/><text x="500" y="212" style="fill:var(--warn,#965800);font-size:12px;font-weight:700" text-anchor="middle">电流 i</text><path d="M20 326 H42" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M20 326 H42" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M48 326 H70" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M48 326 H70" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><text x="78" y="330" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">绿 WE、红 CE：承载电流</text><path d="M300 326 H322" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M300 326 H322" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M328 326 H350" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M328 326 H350" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><text x="358" y="330" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">蓝 WS、白 RE：只感应电压</text><path d="M20 348 H42" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M20 348 H42" style="fill:none;stroke:var(--lead-cs,#EE7B1A);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><text x="50" y="352" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">橙 CS：仅 ZRA 需要，常规可接 CE</text><path d="M300 348 H322" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:6;stroke-linecap:round;stroke-linejoin:round"/><path d="M300 348 H322" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><text x="330" y="352" style="fill:var(--ink,#131C26);font-size:12px;font-weight:400" text-anchor="start">黑：浮地，悬空或接法拉第屏蔽</text></svg><!--/SVG--></div>
+        <figcaption>绿线承载电流，蓝线感应工作电极电压；报告的电位是蓝线与白线之差。红线是功率放大器的输出。工作电极可比仪器浮地高出最多约 150 mV。（手册第 3、6 章）</figcaption>
+      </figure>
+      <figure class="fig" data-fig="1" hidden>
+        <div class="figsvg"><!--SVG:use-02-cv-workflow--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 318" width="600" height="318" role="img" aria-label="CV 实验流程：准备、接线、选实验、设参数和测开路电位时 Cell On 黄灯熄灭；极化扫描时黄灯亮；结束灯灭后再拆线，最后用 Echem Analyst 2 分析。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>CV 实验流程：准备、接线、选实验、设参数和测开路电位时 Cell On 黄灯熄灭；极化扫描时黄灯亮；结束灯灭后再拆线，最后用 Echem Analyst 2 分析。</title><defs><marker id="use-02-cv-workflow-ah-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--ink,#131C26)"/></marker></defs><rect x="0" y="0" width="600" height="318" style="fill:var(--surface,#FFFFFF)"/><circle cx="26" cy="20" r="5" style="fill:#F5C531;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="38" y="24" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">圆点 = 前面板 Cell On 黄灯状态</text><rect x="20" y="40" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="75" y="70" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">准备电解池</text><text x="75" y="90" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">低电流用法拉第屏蔽</text><rect x="20" y="112" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="33" cy="123" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="82" y="127" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭</text><rect x="170" y="40" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="225" y="70" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">按配置接线</text><text x="225" y="90" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">参比靠近 WE</text><rect x="170" y="112" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="183" cy="123" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="232" y="127" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭 · 可接线</text><rect x="320" y="40" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="375" y="70" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">选择 CV 实验</text><text x="375" y="90" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">在 Framework 中</text><rect x="320" y="112" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="333" cy="123" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="382" y="127" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭</text><rect x="470" y="40" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="525" y="70" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">设置参数</text><text x="525" y="90" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">Scan Rate 等</text><rect x="470" y="112" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="483" cy="123" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="532" y="127" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭</text><rect x="20" y="170" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="75" y="200" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">测开路电位</text><text x="75" y="220" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">OCP 阶段</text><rect x="20" y="242" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="33" cy="253" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="82" y="257" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭</text><rect x="170" y="170" width="110" height="64" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1.5"/><text x="225" y="200" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">极化扫描</text><text x="225" y="220" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">留意 Overload 灯</text><rect x="170" y="242" width="110" height="22" rx="11" style="fill:var(--warn-soft,#F6EAD3)"/><circle cx="183" cy="253" r="5" style="fill:#F5C531;stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="232" y="257" style="fill:var(--warn,#965800);font-size:11px;font-weight:700" text-anchor="middle">亮 · 勿触碰</text><rect x="320" y="170" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="375" y="200" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">结束后拆线</text><text x="375" y="220" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">等黄灯熄灭</text><rect x="320" y="242" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="333" cy="253" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="382" y="257" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭 · 可拆线</text><rect x="470" y="170" width="110" height="64" rx="8" style="fill:var(--sunk,#E2E7EC);stroke:var(--rule,#C9D1DA);stroke-width:1.5"/><text x="525" y="200" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">分析数据</text><text x="525" y="220" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">Echem Analyst 2</text><rect x="470" y="242" width="110" height="22" rx="11" style="fill:var(--sunk,#E2E7EC)"/><circle cx="483" cy="253" r="5" style="fill:var(--rule,#C9D1DA);stroke:var(--wire-outline,#3A4450);stroke-width:1"/><text x="532" y="257" style="fill:var(--muted,#56616E);font-size:11px;font-weight:500" text-anchor="middle">灭</text><circle cx="22" cy="42" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="22" y="46.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">1</text><circle cx="172" cy="42" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="172" y="46.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">2</text><circle cx="322" cy="42" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="322" y="46.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">3</text><circle cx="472" cy="42" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="472" y="46.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">4</text><circle cx="22" cy="172" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="22" y="176.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">5</text><circle cx="172" cy="172" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="172" y="176.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">6</text><circle cx="322" cy="172" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="322" y="176.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">7</text><circle cx="472" cy="172" r="10" style="fill:var(--accent,#1E5BA8)"/><text x="472" y="176.2" style="fill:var(--accent-ink,#FFFFFF);font-size:11.5px;font-weight:700" text-anchor="middle">8</text><path d="M130 72 H166" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M130 202 H166" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M280 72 H316" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M280 202 H316" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M430 72 H466" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M430 202 H466" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><path d="M525 134 V150 H75 V166" style="fill:none;stroke:var(--ink,#131C26);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-02-cv-workflow-ah-ink)"/><text x="20" y="290" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">黄灯亮表示电解池正在被极化，不代表危险电压；触碰导线会影响数据。</text><text x="20" y="308" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="start">改接线请在两次实验之间、黄灯熄灭时进行。</text></svg><!--/SVG--></div>
+        <figcaption>两次实验之间和测开路电位时 Cell On 黄灯熄灭，电解池被极化时亮。（手册第 7 章）</figcaption>
+      </figure>
+      <figure class="fig" data-fig="2" hidden>
+        <div class="figsvg"><!--SVG:use-03-zra--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340" role="img" aria-label="ZRA 电偶测量：仪器保持蓝线与橙线之间为 0 V，使两块金属同电位，并测量它们之间的电偶电流 Ig；白线接参比电极记录电位。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>ZRA 电偶测量：仪器保持蓝线与橙线之间为 0 V，使两块金属同电位，并测量它们之间的电偶电流 Ig；白线接参比电极记录电位。</title><defs><marker id="use-03-zra-ah-warn" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--warn,#965800)"/></marker></defs><rect x="0" y="0" width="600" height="340" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="40" width="200" height="206" rx="8" style="fill:none;stroke:var(--muted,#56616E);stroke-width:1.5;stroke-dasharray:6 5"/><text x="32" y="60" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">Reference 620（ZRA 模式）</text><rect x="36" y="74" width="168" height="110" rx="6" style="fill:var(--accent-soft,#DCE7F5);stroke:var(--accent,#1E5BA8);stroke-width:1.5"/><text x="120" y="100" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">零阻电流计 ZRA</text><text x="120" y="122" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="middle">反馈 Zsig = 橙 − 蓝</text><text x="120" y="144" style="fill:var(--accent,#1E5BA8);font-size:13px;font-weight:700" text-anchor="middle">保持为 0 V</text><text x="120" y="168" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="middle">测量电偶电流 I<tspan dy="3" style="font-size:9px">g</tspan></text><rect x="36" y="198" width="168" height="34" rx="6" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.2"/><text x="120" y="220" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="middle">静电计：参比与蓝线之间</text><rect x="332" y="150" width="246" height="128" rx="0" style="fill:var(--solution,#D4E6F2)"/><path d="M330 104 V268 Q330 280 342 280 H568 Q580 280 580 268 V104" style="fill:none;stroke:var(--muted,#56616E);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><rect x="372" y="84" width="16" height="150" rx="2" style="fill:var(--electrode,#8C96A1)"/><rect x="445" y="84" width="10" height="140" rx="2" style="fill:var(--electrode,#8C96A1)"/><rect x="512" y="84" width="16" height="150" rx="2" style="fill:var(--electrode,#8C96A1)"/><path d="M204 92 C 290 92, 376 44, 376 84" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 92 C 290 92, 376 44, 376 84" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 110 C 300 110, 384 50, 384 84" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 110 C 300 110, 384 50, 384 84" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 215 C 320 215, 450 36, 450 84" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 215 C 320 215, 450 36, 450 84" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 140 C 320 140, 516 24, 516 84" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 140 C 320 140, 516 24, 516 84" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 160 C 330 160, 524 14, 524 84" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round"/><path d="M204 160 C 330 160, 524 14, 524 84" style="fill:none;stroke:var(--lead-cs,#EE7B1A);stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M392 200 H508" style="fill:none;stroke:var(--warn,#965800);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#use-03-zra-ah-warn)" marker-start="url(#use-03-zra-ah-warn)"/><text x="380" y="258" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">金属 1</text><text x="450" y="258" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">参比</text><text x="520" y="258" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:700" text-anchor="middle">金属 2</text><text x="455" y="302" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="middle">I<tspan dy="3" style="font-size:9px">g</tspan><tspan dy="-3">：在仪器内被测量，在溶液中以离子电流流动</tspan></text><text x="32" y="270" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">绿 + 蓝 → 金属 1</text><text x="32" y="288" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">红 + 橙 → 金属 2（橙线必须接）</text><text x="32" y="306" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">白 → 参比电极</text><text x="32" y="330" style="fill:var(--accent,#1E5BA8);font-size:11.5px;font-weight:600" text-anchor="start">没有参比电极时：白线接金属 1，读数接近 0。</text></svg><!--/SVG--></div>
+        <figcaption>ZRA 模式用第二块金属代替对电极。反馈信号 Zsig 是对电极感应线（橙）减工作感应线（蓝）的电压，仪器把它保持为 0 V。（手册第 3、6 章）</figcaption>
+      </figure>
+      <figure class="fig" data-fig="3" hidden>
+        <div class="figsvg"><!--SVG:use-04-low-current--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 364" width="600" height="364" role="img" aria-label="低电流测量：法拉第屏蔽是连续导体，完全包住电解池并接黑色浮地线；电解池与大地隔离时，屏蔽和浮地还可再接大地；电缆尽量短，导线分开且实验中不要移动。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>低电流测量：法拉第屏蔽是连续导体，完全包住电解池并接黑色浮地线；电解池与大地隔离时，屏蔽和浮地还可再接大地；电缆尽量短，导线分开且实验中不要移动。</title><rect x="0" y="0" width="600" height="364" style="fill:var(--surface,#FFFFFF)"/><rect x="20" y="128" width="70" height="70" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><text x="55" y="167" style="fill:var(--panel-ink,#E7ECF1);font-size:12.5px;font-weight:700" text-anchor="middle">R620</text><path d="M90 163 H150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:7;stroke-linecap:round;stroke-linejoin:round"/><text x="120" y="150" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">电缆 ≤ 1 m</text><rect x="150" y="40" width="250" height="250" rx="6" style="fill:none;stroke:var(--cage,#7F8B97);stroke-width:3"/><rect x="146" y="150" width="8" height="26" rx="0" style="fill:var(--surface,#FFFFFF)"/><text x="162" y="60" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">法拉第屏蔽：连续导体，上下也包住</text><rect x="222" y="150" width="126" height="116" rx="0" style="fill:var(--solution,#D4E6F2)"/><path d="M220 120 V258 Q220 270 232 270 H338 Q350 270 350 258 V120" style="fill:none;stroke:var(--muted,#56616E);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><rect x="246" y="96" width="8" height="144" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="250" y="258" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">WE</text><rect x="286" y="96" width="8" height="144" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="290" y="258" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">RE</text><rect x="326" y="96" width="8" height="144" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="330" y="258" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">CE</text><path d="M152 158 C 196 158, 246 112, 246 96" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 158 C 196 158, 246 112, 246 96" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 162 C 200 162, 254 116, 254 96" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 162 C 200 162, 254 116, 254 96" style="fill:none;stroke:var(--lead-ws,#2F6FD6);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 166 C 210 166, 290 92, 290 96" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 166 C 210 166, 290 92, 290 96" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 170 C 230 170, 328 80, 328 96" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 170 C 230 170, 328 80, 328 96" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 174 C 160 230, 166 280, 176 280" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M152 174 C 160 230, 166 280, 176 280" style="fill:none;stroke:var(--lead-gnd,#1D1F22);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><circle cx="180" cy="280" r="5" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:2"/><text x="190" y="284" style="fill:var(--ink,#131C26);font-size:11px;font-weight:600" text-anchor="start">黑线接屏蔽</text><path d="M400 290 V312" style="fill:none;stroke:var(--warn,#965800);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 4"/><path d="M386 314 H414 M391 320 H409 M396 326 H404" style="fill:none;stroke:var(--warn,#965800);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><text x="390" y="342" style="fill:var(--warn,#965800);font-size:11px;font-weight:700" text-anchor="end">可选：屏蔽和浮地再接大地</text><text x="390" y="358" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="end">仅当电解池与大地隔离（如玻璃池）</text><text x="420" y="58" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="start">低电流要点</text><text x="420" y="84" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· 屏蔽连续、完全包住</text><text x="420" y="106" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· WE/WS 与 CE/RE 导线分开</text><text x="420" y="128" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· 实验中不要移动导线</text><text x="420" y="150" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· 远离日光灯、电机、</text><text x="430" y="172" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">无线电发射机、电脑显示器</text><text x="420" y="194" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· 参比电极阻抗要低</text><text x="420" y="216" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· 测前做 Low I DC 校准</text><text x="420" y="238" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:400" text-anchor="start">· EIS：|Z|·f &lt; 10<tspan dy="-4" style="font-size:8px">9</tspan><tspan dy="4"> Ω·Hz</tspan></text></svg><!--/SVG--></div>
+        <figcaption>极低电流测量必须用法拉第屏蔽，屏蔽必须接黑色浮地线。只有当电解池所有导电部件都与大地隔离时，才把屏蔽和浮地再接大地。（手册第 6、9 章）</figcaption>
+      </figure>
+      <figure class="fig" data-fig="4" hidden>
+        <div class="figsvg"><!--SVG:use-05-stability--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" width="600" height="330" role="img" aria-label="振荡对策：先在软件中降低控制放大器速度、提高 I/E 稳定性设置；仍振荡时，可加快速组合参比电极、在红白线之间加高频旁路电容，或在对电极线上串电阻。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>振荡对策：先在软件中降低控制放大器速度、提高 I/E 稳定性设置；仍振荡时，可加快速组合参比电极、在红白线之间加高频旁路电容，或在对电极线上串电阻。</title><rect x="0" y="0" width="600" height="330" style="fill:var(--surface,#FFFFFF)"/><text x="20" y="24" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">先在软件中降低控制放大器速度、提高 I/E 稳定性；仍振荡再试以下接法（手册第 8 章）</text><rect x="10" y="38" width="186" height="252" rx="10" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="103" y="60" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">快速组合参比电极</text><rect x="32" y="160" width="142" height="50" rx="4" style="fill:var(--solution,#D4E6F2)"/><rect x="207" y="38" width="186" height="252" rx="10" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="300" y="60" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">高频旁路电容</text><rect x="229" y="160" width="142" height="50" rx="4" style="fill:var(--solution,#D4E6F2)"/><rect x="404" y="38" width="186" height="252" rx="10" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><text x="497" y="60" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">对电极线串电阻</text><rect x="426" y="160" width="142" height="50" rx="4" style="fill:var(--solution,#D4E6F2)"/><path d="M30 86 H102" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M30 86 H102" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><path d="M102 86 H80 V120" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><rect x="72" y="120" width="16" height="80" rx="4" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.2"/><text x="80" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">SCE</text><path d="M102 86 H121.0 M127.0 86 H146" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M121.0 77 V95 M127.0 77 V95" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><path d="M146 86 V120" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M146 120 V200" style="fill:none;stroke:var(--electrode,#8C96A1);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round"/><text x="146" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">Pt 丝</text><text x="124" y="72" style="fill:var(--accent,#1E5BA8);font-size:10px;font-weight:700" text-anchor="middle">100 pF–10 nF</text><text x="24" y="246" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">直流电位来自 SCE，</text><text x="24" y="262" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">交流反馈来自 Pt 丝</text><path d="M257 74 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M257 74 V150" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="253" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="257" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">WE</text><path d="M307 74 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M307 74 V150" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="303" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="307" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">RE</text><path d="M357 74 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M357 74 V150" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="353" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="357" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">CE</text><path d="M307 104 H329.0 M335.0 104 H357" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M329.0 95 V113 M335.0 95 V113" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"/><text x="332" y="92" style="fill:var(--accent,#1E5BA8);font-size:10px;font-weight:700" text-anchor="middle">1 nF 起试</text><text x="221" y="246" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">电容跨接红线与白线，</text><text x="221" y="262" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">100 pF–10 nF</text><path d="M454 74 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M454 74 V150" style="fill:none;stroke:var(--lead-we,#2E9A55);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="450" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="454" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">WE</text><path d="M504 74 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M504 74 V150" style="fill:none;stroke:var(--lead-re,#F4F4F0);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="500" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="504" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">RE</text><path d="M554 74 V90" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M554 74 V90" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="547" y="90" width="14" height="36" rx="2" style="fill:var(--surface,#FFFFFF);stroke:var(--ink,#131C26);stroke-width:1.6"/><path d="M554 126 V150" style="fill:none;stroke:var(--wire-outline,#3A4450);stroke-width:5.1;stroke-linecap:round;stroke-linejoin:round"/><path d="M554 126 V150" style="fill:none;stroke:var(--lead-ce,#D3342C);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/><rect x="550" y="150" width="8" height="50" rx="2" style="fill:var(--electrode,#8C96A1)"/><text x="554" y="222" style="fill:var(--ink,#131C26);font-size:10.5px;font-weight:700" text-anchor="middle">CE</text><text x="568" y="112" style="fill:var(--accent,#1E5BA8);font-size:12px;font-weight:700" text-anchor="start">R</text><text x="418" y="246" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">R ≈ 1 V ÷ 最大电流</text><text x="418" y="262" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">例：1 mA → 1 kΩ</text><text x="418" y="278" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="start">快速 CV、EIS 慎用</text><text x="20" y="314" style="fill:var(--muted,#56616E);font-size:11.5px;font-weight:400" text-anchor="start">参比电极阻抗超过 20 kΩ 更易振荡；避免细口或 Vycor 头鲁金毛细管、双盐桥参比。</text></svg><!--/SVG--></div>
+        <figcaption>几乎所有电解池都有双电层电容，可能让恒电位仪振荡。电流曲线出现突变时就要怀疑振荡。电容值通常要反复试验确定。（手册第 8 章）</figcaption>
+      </figure>
+      <p class="swipe">图可左右滑动查看</p>
+      <div class="fignav"><button type="button" class="btn-quiet" data-step="-1">← 上一张</button><span class="figcount num">1 / 5</span><button type="button" class="btn-quiet" data-step="1">下一张 →</button></div>
+    </div>
+    </div>
+
+    <div class="block" style="margin-top:18px">
+      <h3>一次 CV 实验的流程</h3>
+      <p class="note" style="margin:4px 0 14px">以循环伏安为例；其他技术只在第 3 步选不同的实验。</p>
+      <ol class="workflow">
+        <li><div><p>准备电解池。nA 以下的电流或高阻抗测量，把电解池放进法拉第屏蔽，屏蔽接黑色浮地线。</p></div></li>
+        <li><div><p>确认 Cell On 黄灯熄灭，再按上面的接线图接线。</p><p class="sub">参比电极阻抗要低；工作/工作感应线与对电极/参比线分开走。</p></div></li>
+        <li><div><p>打开 Gamry Framework，在 <code>Experiment</code> 菜单中选择循环伏安 (Cyclic Voltammetry)。</p></div></li>
+        <li><div><p>填写参数，电位可设为相对参比 (vs E<sub>ref</sub>) 或相对开路电位 (vs E<sub>oc</sub>)：</p>
+          <div class="params"><code>Initial E</code><code>Scan Limit 1</code><code>Scan Limit 2</code><code>Final E</code><code>Scan Rate</code><code>Step Size</code><code>Cycles</code><code>Max Current</code><code>I/E Range Mode</code><code>IR Comp</code></div>
+          <p class="sub">Max Current 可用上面的可行性检查估算；不确定时 I/E Range Mode 选 Auto。</p></div></li>
+        <li><div><p>运行。开路电位 (OCP) 阶段黄灯熄灭；开始极化后黄灯亮，此时不要碰导线，留意红色 Overload 灯。</p></div></li>
+        <li><div><p>实验结束、黄灯熄灭后再拆线或换样品。</p></div></li>
+        <li><div><p>数据保存为 <code>.DTA</code> 文件（如 <code>C:\MYGAMRYDATA\CV.DTA</code>），用 Echem Analyst 2 打开分析。</p></div></li>
+      </ol>
+    </div>
+
+    <div class="block" style="margin-top:18px">
+      <h3>指示灯解读</h3>
+      <p class="note" style="margin:4px 0 14px">点面板上的指示灯查看各状态的含义。面板按手册照片简化绘制：Cell On 和 Overload 在右侧，Power 和 USB 在左下。</p>
+      <div class="ledgrid">
+        <div class="fp" role="group" aria-label="前面板指示灯">
+          <div class="fp-brand">Reference 620<small>Potentiostat/Galvanostat/ZRA</small></div>
+          <div class="fp-left">
+            <span class="fp-serial">序列号</span>
+            <button type="button" class="ledbtn" data-led="power" aria-pressed="true" style="--c:#3C8CFF"><span class="dot"></span>Power</button>
+            <button type="button" class="ledbtn" data-led="usb" aria-pressed="false" style="--c:#37C66B"><span class="dot"></span>USB</button>
+          </div>
+          <div class="fp-right">
+            <button type="button" class="ledbtn" data-led="cell" aria-pressed="false" style="--c:#F5C531">Cell On<span class="dot"></span></button>
+            <button type="button" class="ledbtn" data-led="over" aria-pressed="false" style="--c:#FF4A3D">Overload<span class="dot"></span></button>
+            <div class="dsub-v" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="dsub-cap">Cell Cable</span>
+          </div>
+        </div>
+        <div class="ledinfo" id="ledInfo" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="block" style="margin-top:18px">
+      <h3>测得准的习惯</h3>
+      <ul class="tips">
+        <li>极低电流测量必须用法拉第屏蔽：连续导体，完全包住电解池（包括上下），接黑色浮地线。<span class="src">手册 Ch 9</span></li>
+        <li>电缆尽量短：超过 1 m 噪声增加、稳定性下降；超过 5 m 不要用电流中断 iR 补偿。<span class="src">手册 Ch 9</span></li>
+        <li>工作/工作感应线与对电极/对电极感应/参比线分开，从不同方向接近电解池；鳄鱼夹并排时互电容可达 10 pF 以上。<span class="src">手册 Ch 9</span></li>
+        <li>测小电流时实验中不要移动导线，颤噪和摩擦起电效应会产生假信号。<span class="src">手册 Ch 9</span></li>
+        <li>参比电极阻抗要低，超过 20 kΩ 时可能振荡。避免堵塞的盐桥、细口或 Vycor 头鲁金毛细管、石棉纤维和双盐桥参比；高氯酸盐溶液中不要用饱和 KCl 参比。<span class="src">手册 Ch 8、9</span></li>
+        <li>EIS 用样品能承受的最大激励（涂层能承受 100 mV 就别用 10 mV）；避开有大直流电流的电位，1 mA 直流上测不出 1 pA 交流。<span class="src">手册 Ch 9</span></li>
+        <li>不要把电流表、电压表直接接在电解池导线上。<span class="src">手册 Ch 9</span></li>
+        <li>电解池材料优先用玻璃和 PTFE，湿玻璃也可能漏电；电极的非工作部分尽量小，测高阻抗时电极不要靠得太近或平行放置。<span class="src">手册 Ch 9</span></li>
+        <li>远离日光灯、电机、无线电发射机、电脑和显示器；屏蔽内不要放交流供电或带电脑的设备。<span class="src">手册 Ch 9</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== HAZARDS ====================== -->
+<section id="danger">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 · Hazards</div>
+      <h2>危险与注意事项</h2>
+      <p>Reference 620 符合 EN 61010（Category II），多数电路电压不超过 42 V DC，输入输出一般限制在 36 V 以内。真正的风险集中在接地、储能电解池、机箱进水和拆机。先回答两个问题，再看完整清单。<span class="src">手册 Ch 1</span></p>
+    </div>
+
+    <div class="block ground">
+      <div>
+        <h3 style="margin-bottom:12px">接地检查</h3>
+        <div class="q" role="radiogroup" aria-labelledby="q1t">
+          <p id="q1t">电解池中是否有任何电极或导体接大地？例如高压釜、应力装置、管道、储罐、现场测量。</p>
+          <div class="seg"><button type="button" data-q="q1" data-v="yes" aria-pressed="false">是</button><button type="button" data-q="q1" data-v="no" aria-pressed="false">否（如玻璃池）</button></div>
+        </div>
+        <div class="q" role="radiogroup" aria-labelledby="q2t">
+          <p id="q2t">是否有其他设备连在仪器上？例如 Monitor BNC 接示波器、Misc I/O 接外部设备、热电偶。</p>
+          <div class="seg"><button type="button" data-q="q2" data-v="yes" aria-pressed="false">是</button><button type="button" data-q="q2" data-v="no" aria-pressed="false">否</button></div>
+        </div>
+      </div>
+      <div id="groundOut" aria-live="polite"></div>
+      <figure class="fig ground-fig">
+        <div class="figsvg"><!--SVG:hazard-grounding--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 404" width="600" height="404" role="img" aria-label="接地对比：样品已接地时，仪器保持浮地就没有回路；机壳也接大地时，大地把回路闭合，电解池经仪器放电，电缆保险丝熔断。辅助设备也可能把仪器意外接地。" style="font-family:var(--f-body,'IBM Plex Sans','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif)"><title>接地对比：样品已接地时，仪器保持浮地就没有回路；机壳也接大地时，大地把回路闭合，电解池经仪器放电，电缆保险丝熔断。辅助设备也可能把仪器意外接地。</title><defs><marker id="hazard-grounding-ah-danger" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--danger,#B42318)"/></marker></defs><rect x="0" y="0" width="600" height="404" style="fill:var(--surface,#FFFFFF)"/><rect x="10" y="18" width="285" height="302" rx="10" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><circle cx="34" cy="44" r="9" style="fill:var(--ok,#2B7346)"/><path d="M30 44 L33 47.5 L38.5 40.5" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><text x="50" y="49" style="fill:var(--ok,#2B7346);font-size:14px;font-weight:700" text-anchor="start">仪器保持浮地</text><rect x="30" y="96" width="90" height="64" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><text x="75" y="133" style="fill:var(--panel-ink,#E7ECF1);font-size:13px;font-weight:700" text-anchor="middle">R620</text><rect x="170" y="80" width="104" height="112" rx="10" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.5"/><text x="222" y="118" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">高压釜</text><text x="222" y="138" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">金属釜体</text><text x="222" y="156" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">样品与釜体相连</text><path d="M120 128 H170" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"/><text x="145" y="120" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">电极线</text><path d="M222 192 V230" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M208 230 H236 M213 236 H231 M218 242 H226" style="fill:none;stroke:var(--ink,#131C26);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><text x="242" y="242" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">大地</text><path d="M75 160 V204" style="fill:none;stroke:var(--muted,#56616E);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:4 4"/><text x="75" y="222" style="fill:var(--ok,#2B7346);font-size:11.5px;font-weight:700" text-anchor="middle">机壳不接大地</text><rect x="24" y="262" width="257" height="46" rx="8" style="fill:var(--ok-soft,#DDEFE3);stroke:var(--ok,#2B7346);stroke-width:1.5"/><text x="152" y="282" style="fill:var(--ok,#2B7346);font-size:12.5px;font-weight:700" text-anchor="middle">没有闭合回路</text><text x="152" y="300" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="middle">浮地设计就是为这类电解池准备的</text><rect x="305" y="18" width="285" height="302" rx="10" style="fill:none;stroke:var(--rule,#C9D1DA);stroke-width:1.2"/><circle cx="329" cy="44" r="9" style="fill:var(--danger,#B42318)"/><path d="M325.5 40.5 L332.5 47.5 M332.5 40.5 L325.5 47.5" style="fill:none;stroke:var(--surface,#FFFFFF);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"/><text x="345" y="49" style="fill:var(--danger,#B42318);font-size:14px;font-weight:700" text-anchor="start">机壳也接了大地</text><rect x="325" y="96" width="90" height="64" rx="6" style="fill:var(--panel,#2A3139);stroke:var(--panel-edge,#151A1F);stroke-width:1.5"/><text x="370" y="133" style="fill:var(--panel-ink,#E7ECF1);font-size:13px;font-weight:700" text-anchor="middle">R620</text><rect x="465" y="80" width="104" height="112" rx="10" style="fill:var(--sunk,#E2E7EC);stroke:var(--ink,#131C26);stroke-width:1.5"/><text x="517" y="118" style="fill:var(--ink,#131C26);font-size:13px;font-weight:700" text-anchor="middle">高压釜</text><text x="517" y="138" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">金属釜体</text><text x="517" y="156" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="middle">样品与釜体相连</text><path d="M415 128 H463" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#hazard-grounding-ah-danger)"/><text x="440" y="120" style="fill:var(--muted,#56616E);font-size:10.5px;font-weight:400" text-anchor="middle">电极线</text><path d="M517 192 V230" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M503 230 H531 M508 236 H526 M513 242 H521" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><text x="537" y="242" style="fill:var(--muted,#56616E);font-size:11px;font-weight:400" text-anchor="start">大地</text><path d="M370 160 V230" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><path d="M356 230 H384 M361 236 H379 M366 242 H374" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/><text x="378" y="200" style="fill:var(--danger,#B42318);font-size:10px;font-weight:400" text-anchor="start">Chassis Ground</text><path d="M370 252 H517" style="fill:none;stroke:var(--danger,#B42318);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:6 4"/><text x="443" y="247" style="fill:var(--danger,#B42318);font-size:11px;font-weight:700" text-anchor="middle">经大地连通</text><rect x="319" y="262" width="257" height="46" rx="8" style="fill:var(--danger-soft,#F8E1DE);stroke:var(--danger,#B42318);stroke-width:1.5"/><text x="447" y="282" style="fill:var(--danger,#B42318);font-size:12.5px;font-weight:700" text-anchor="middle">形成低阻抗回路</text><text x="447" y="300" style="fill:var(--ink,#131C26);font-size:11px;font-weight:400" text-anchor="middle">电解池经仪器放电，电缆保险丝熔断</text><text x="10" y="342" style="fill:var(--ink,#131C26);font-size:12px;font-weight:700" text-anchor="start">这些连接也会把仪器意外接地：</text><rect x="10" y="354" width="186" height="34" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><text x="103.0" y="376" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:600" text-anchor="middle">Monitor BNC 接示波器</text><rect x="206" y="354" width="190" height="34" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><text x="301.0" y="376" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:600" text-anchor="middle">Misc I/O 用标准 15 针屏蔽线</text><rect x="406" y="354" width="184" height="34" rx="8" style="fill:var(--warn-soft,#F6EAD3);stroke:var(--warn,#965800);stroke-width:1"/><text x="498.0" y="376" style="fill:var(--ink,#131C26);font-size:11.5px;font-weight:600" text-anchor="middle">未绝缘热电偶浸入电解池</text></svg><!--/SVG--></div>
+        <p class="swipe">图可左右滑动查看</p>
+        <figcaption>样品已接地时，仪器保持浮地就没有回路；如果机壳也接了大地，大地把回路闭合，电解池会经仪器放电，电缆保险丝熔断。（手册第 1、6、7 章）</figcaption>
+      </figure>
+    </div>
+
+    <div class="presets" role="group" aria-label="按类别筛选" style="margin-top:22px">
+      <span class="label" style="margin-right:6px">类别</span>
+      <button type="button" class="chip" data-hz="all" aria-pressed="true">全部</button>
+      <button type="button" class="chip" data-hz="ground" aria-pressed="false">接地</button>
+      <button type="button" class="chip" data-hz="elec" aria-pressed="false">电气</button>
+      <button type="button" class="chip" data-hz="conn" aria-pressed="false">连接</button>
+      <button type="button" class="chip" data-hz="env" aria-pressed="false">环境</button>
+      <button type="button" class="chip" data-hz="maint" aria-pressed="false">维护</button>
+      <button type="button" class="chip" data-hz="chem" aria-pressed="false">实验化学</button>
+    </div>
+
+    <div class="hz-grid" id="hzGrid">
+      <article class="hz" data-sev="high" data-cat="ground elec">
+        <div class="meta"><span class="sev">高</span><span class="cat">接地</span><span class="src">手册 Ch 1、6</span></div>
+        <h3>电解池接地时，仪器绝不能接大地</h3>
+        <p>电解池有任何接地连接时，不要把 Reference 620 接大地。电解池可能经仪器电路放电，即使电解池开关 (cell switch) 断开也会发生。电解池能输出大量能量时尤其危险。</p>
+        <p class="do"><b>做法：</b>断开后面板 Chassis Ground 与大地的连接，保持浮地；法拉第屏蔽只接黑色浮地线。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="elec ground">
+        <div class="meta"><span class="sev">高</span><span class="cat">电气</span><span class="src">手册 Ch 1、6</span></div>
+        <h3>接地柱只能接大地</h3>
+        <p>后面板 Chassis Ground 接线柱只有一个用途：电解池与大地隔离时接大地以降低噪声。接到任何其他电压都可能造成人身伤害甚至死亡。</p>
+        <p class="do"><b>做法：</b>只接合格的大地（如金属水管、接地设备的机壳、电源插头的保护地端子）；不确定时先咨询电工。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="elec conn">
+        <div class="meta"><span class="sev">高</span><span class="cat">储能电解池</span><span class="src">手册 Ch 1</span></div>
+        <h3>储能器件可经仪器放电</h3>
+        <p>电池、燃料电池、超级电容和光伏电池都能输出足以构成危险的能量。多数电缆内的保险丝会在接地形成低阻抗放电回路时熔断，保护仪器；熔断后仪器无法正常工作，直到更换保险丝。</p>
+        <p class="do"><b>做法：</b>测储能器件前先做接地检查；只用含保险丝的 Gamry 电缆。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="env elec">
+        <div class="meta"><span class="sev">高</span><span class="cat">环境</span><span class="src">手册 Ch 1、4</span></div>
+        <h3>机箱进水或凝露</h3>
+        <p>仪器不能在液态水可能进入机箱、或机箱内可能凝露的条件下使用。机箱内有水时运行可能造成人身伤害甚至死亡。</p>
+        <p class="do"><b>做法：</b>相对湿度 ≤ 90 % 且不凝露；冷机回温至少 1 小时；溶液不要放在仪器上方。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="maint elec">
+        <div class="meta"><span class="sev">高</span><span class="cat">维护</span><span class="src">手册 Ch 1</span></div>
+        <h3>不要打开机箱</h3>
+        <p>机内没有用户可维修的部件，包括电路板走线在内的多处可能有危险电压。任何盖板打开时都不得运行。</p>
+        <p class="do"><b>做法：</b>维修交给合格技术人员；开箱前先拔掉电源。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="elec">
+        <div class="meta"><span class="sev">高</span><span class="cat">电气</span><span class="src">手册 Ch 1、7</span></div>
+        <h3>只用随机电源适配器</h3>
+        <p>随机适配器经 EN 60950 认证。其他直流电源可能破坏仪器的性能和安全特性；输入低于 20 V 或高于 32 V 会损坏仪器电源。</p>
+        <p class="do"><b>做法：</b>不要混用 Reference 3000 的适配器；电源线器具端为 IEC 320 C13 且经本国认证。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="elec">
+        <div class="meta"><span class="sev">高</span><span class="cat">电气</span><span class="src">手册 Ch 1、4</span></div>
+        <h3>受损或异常的仪器</h3>
+        <p>有可见损坏、工作不正常、长期在不良条件下存放、跌落或运输冲击、受过腐蚀性气氛或火灾等应力时，都应视为可能有危险。</p>
+        <p class="do"><b>做法：</b>停止使用，贴标签，交合格人员检查。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="ground conn">
+        <div class="meta"><span class="sev">中</span><span class="cat">接地</span><span class="src">手册 Ch 1、7、9</span></div>
+        <h3>辅助设备会让仪器失去浮地</h3>
+        <p>四个信号 BNC（I Monitor、E Monitor、Sig Gen Out、Ext Sig In）的外壳都接仪器浮地，接到示波器等接地设备会把仪器接地。热电偶一端接浮地，浸在电解池里的未绝缘热电偶会破坏浮地并导致读数错误。</p>
+        <p class="do"><b>做法：</b>浮地测量时所有外接仪表都要隔离；Misc I/O 不要用标准 15 针屏蔽线，屏蔽层应接第 6 脚。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="conn">
+        <div class="meta"><span class="sev">中</span><span class="cat">连接</span><span class="src">手册 Ch 4、7</span></div>
+        <h3>固件更新时不能中断</h3>
+        <p>USB 灯常红表示正在下载固件。此时关机、拔 USB 或关闭电脑可能导致灾难性故障，仪器需返厂重新编程。</p>
+        <p class="do"><b>做法：</b>等 GIM 提示完成；更新被中断时，先联系 Gamry 再安排返修。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="env">
+        <div class="meta"><span class="sev">中</span><span class="cat">环境</span><span class="src">手册 Ch 1、4</span></div>
+        <h3>过热</h3>
+        <p>仪器靠风扇强制风冷。风口被挡住时外壳可能烫手，会缩短部分电路的寿命；温度过高时电路应在损坏前关断。</p>
+        <p class="do"><b>做法：</b>两侧进风槽和后部风扇都留空；环境 0–45 °C；封闭空间内同样不超过 45 °C。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="conn">
+        <div class="meta"><span class="sev">中</span><span class="cat">连接</span><span class="src">手册 Ch 6、9</span></div>
+        <h3>电缆脱落与第三方电缆</h3>
+        <p>实验中电缆脱落可能造成严重后果。Gamry 电缆由多根独立屏蔽线外加总屏蔽构成，并对屏蔽隔离、绝缘电阻和电容有专门要求，Gamry 不建议自制电缆。</p>
+        <p class="do"><b>做法：</b>拧紧滚花螺丝；只用 Gamry 电缆，特殊需求联系 Gamry 定制。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="elec">
+        <div class="meta"><span class="sev">中</span><span class="cat">电气</span><span class="src">手册 Ch 7</span></div>
+        <h3>Power 灯不能当电源指示</h3>
+        <p>Power 灯同时表示供电和自检结果，因此不能可靠反映仪器是否带电。</p>
+        <p class="do"><b>做法：</b>怀疑仪器故障时，拔掉后面板 DC Power In 插头。</p>
+      </article>
+      <article class="hz" data-sev="low" data-cat="elec">
+        <div class="meta"><span class="sev">提示</span><span class="cat">电气</span><span class="src">手册 Ch 1、7</span></div>
+        <h3>电解池通电时避免触碰导线</h3>
+        <p>Cell On 黄灯亮不代表危险：仪器输出一般被认为是安全电压。但触碰导线会影响实验数据。</p>
+        <p class="do"><b>做法：</b>改接线放在两次实验之间、黄灯熄灭时。</p>
+      </article>
+      <article class="hz" data-sev="low" data-cat="env">
+        <div class="meta"><span class="sev">提示</span><span class="cat">环境</span><span class="src">手册 Ch 1</span></div>
+        <h3>静电与电源瞬变</h3>
+        <p>静电放电 (ESD) 一般不会造成永久损坏，但仪器可能停止正常工作，直到断电重启。机内的 TVS 二极管把机壳与大地之间的电压限制在约 28 V，用于防静电和浪涌，不属于安全保护。</p>
+        <p class="do"><b>做法：</b>用防静电台垫或地垫，BNC 不用时盖上橡胶护帽，加离子风机或加湿；电源瞬变时换一路供电或加浪涌保护器。</p>
+      </article>
+      <article class="hz" data-sev="low" data-cat="maint">
+        <div class="meta"><span class="sev">提示</span><span class="cat">维护</span><span class="src">手册 Ch 1</span></div>
+        <h3>清洁</h3>
+        <p>清洁前断开全部电源。用蘸清水或温和清洁剂的微湿布，或异丙醇擦拭外壳。</p>
+        <p class="do"><b>做法：</b>不要用湿抹布、不要浸泡、不要用研磨型清洁剂，不要让液体进入机箱。</p>
+      </article>
+      <article class="hz" data-sev="low" data-cat="env">
+        <div class="meta"><span class="sev">提示</span><span class="cat">环境</span><span class="src">手册 Ch 1</span></div>
+        <h3>射频辐射</h3>
+        <p>仪器会产生并辐射少量射频能量，已按 FCC Part 18 和 EN 61326 测试，一般实验室中不会造成干扰。</p>
+        <p class="do"><b>做法：</b>低电流测量时反过来注意外部干扰：用法拉第屏蔽，远离电机和无线电发射机。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="chem">
+        <div class="meta"><span class="sev">高</span><span class="cat">实验化学</span><span class="src gen">通用实验室规范</span></div>
+        <h3>电解产气</h3>
+        <p>大电流下电极会析出 H<sub>2</sub> 和 O<sub>2</sub>；含氯电解液可能产生 Cl<sub>2</sub>。密闭电解池中气体会积聚，H<sub>2</sub>/O<sub>2</sub> 混合气可燃爆。气泡挡住电极也会让 Overload 灯常亮。</p>
+        <p class="do"><b>做法：</b>在通风橱中操作，密闭池留出排气通道，远离火源。</p>
+      </article>
+      <article class="hz" data-sev="high" data-cat="chem">
+        <div class="meta"><span class="sev">高</span><span class="cat">实验化学</span><span class="src gen">通用实验室规范</span></div>
+        <h3>电池与储能器件测试</h3>
+        <p>锂电池等储能器件在短路、过充、过放时可能热失控 (thermal runaway)。</p>
+        <p class="do"><b>做法：</b>设置电压、电流限值；接线前检查极性；高能量器件不要无人值守长时间测试。</p>
+      </article>
+      <article class="hz" data-sev="mid" data-cat="chem">
+        <div class="meta"><span class="sev">中</span><span class="cat">实验化学</span><span class="src gen">通用实验室规范</span></div>
+        <h3>电解液与溶剂</h3>
+        <p>强酸、强碱、含氟或有毒电解液，以及乙腈等易燃有机溶剂，都有各自的化学危险。</p>
+        <p class="do"><b>做法：</b>按安全技术说明书 (SDS) 穿戴防护装备。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SOURCES ====================== -->
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">06 · Sources</div>
+      <h2>资料来源</h2>
+      <p>标注“手册 Ch X”的内容出自操作手册对应章节；标注“通用实验室规范”的是一般安全常识，不出自 Gamry 文档。没有标注的软件操作细节（如 CV 参数名）来自 Gamry Framework 本身。</p>
+    </div>
+    <div class="block">
+      <ol class="srclist">
+        <li><strong>Gamry Instruments.</strong> Reference 620 Potentiostat/Galvanostat/ZRA Operator's Manual, 988-00086, Revision 1.5.0, August 4, 2025.（用户提供的 PDF；最新版见 <a href="https://www.gamry.com/support-2/documentation-downloads/" target="_blank" rel="noopener">Gamry 文档下载页</a>）</li>
+        <li><strong>Gamry Instruments.</strong> Reference 620 Quick-Start Guide #2: Potentiostat Calibration, 988-00046, Rev. 2.0, 2025.（用户提供的 PDF）失败时使用 <a href="https://www.gamry.com/support-2/contact-technical-support/" target="_blank" rel="noopener">技术支持表单</a>。</li>
+        <li><a href="https://www.gamry.com/potentiostats/reference/reference-620/" target="_blank" rel="noopener">Reference 620 产品页 · gamry.com</a>：仅用于标出与手册不一致的数值（EIS 下限、噪声、尺寸重量）。</li>
+        <li><a href="https://www.gamry.com/client-portal/my-account/" target="_blank" rel="noopener">Gamry Client Portal</a>：软件下载（手册第 4 章）。</li>
+        <li><a href="https://www.gamry.com/support-2/software-updates-3/" target="_blank" rel="noopener">Gamry 软件与固件更新</a>（手册第 4 章）。</li>
+        <li><a href="https://www.gamry.com/support-2/" target="_blank" rel="noopener">Gamry 技术支持</a>：电话 (215) 682-9330，美国东部时间 9:00–17:00；美国和加拿大免费电话 (877) 367-4267。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">非官方学习笔记，与 Gamry Instruments 无关联。规格可能随时变更，操作前请对照随机附带的最新版手册。</div>
+</footer>
+
+<script>
+(function(){
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const press = (group, btn) => group.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  const store = {
+    get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  };
+
+  /* ---------- modes ---------- */
+  const MODES = {
+    pstat:{t:'恒电位模式 (Potentiostatic)', d:'反馈信号 Esig 是参比线（白）与工作感应线（蓝）之间的电压。控制放大器调节对电极（红）的输出，使 Esig 等于设定值，同时测量流过工作电极线（绿）的电流。', c:'WE 相对 RE 的电位，±11 V', m:'电流，11 档 60 pA – 600 mA 自动换档', u:'CV、线性扫描、计时电流、恒电位 EIS、极化曲线'},
+    gstat:{t:'恒电流模式 (Galvanostatic)', d:'反馈信号改为电流信号 Isig：仪器控制流过电解池的电流，测量工作电极相对参比电极的电位。信号发生器 3.0 V 对应满量程电流。', c:'电解池电流，满量程 60 pA – 600 mA', m:'WE 相对 RE 的电位（±12 V 测量量程）', u:'计时电位、恒电流 EIS、恒电流极化'},
+    zra:{t:'零阻电流计模式 (ZRA)', d:'反馈信号 Zsig 是对电极感应线（橙）减工作感应线（蓝）的电压，仪器把它保持为 0 V，使两块金属处于同一电位，并测量它们之间流过的电流。', c:'两块金属间电压 = 0 V', m:'电偶电流；可同时经参比电极测电位', u:'电偶腐蚀、电化学噪声、涂层评估'}
+  };
+  const modeBtns = $$('[data-mode]');
+  modeBtns.forEach(b => b.addEventListener('click', () => {
+    press(modeBtns, b);
+    const m = MODES[b.dataset.mode];
+    $('#modeTitle').textContent = m.t; $('#modeDesc').textContent = m.d;
+    $('#modeCtl').textContent = m.c; $('#modeMeas').textContent = m.m; $('#modeUse').textContent = m.u;
+  }));
+
+  /* ---------- technique filter ---------- */
+  const tagBtns = $$('[data-tag]');
+  const techs = $$('#techGrid .tech');
+  tagBtns.forEach(b => b.addEventListener('click', () => {
+    press(tagBtns, b);
+    const t = b.dataset.tag;
+    techs.forEach(c => {
+      const has = t === 'all' || c.dataset.tags.split(' ').includes(t);
+      c.classList.toggle('dim', !has);
+      c.classList.toggle('hit', has && t !== 'all');
+    });
+  }));
+
+  /* ---------- feasibility calculator (manual Appendix A) ---------- */
+  const RANGES = [600e-15,6e-12,60e-12,600e-12,6e-9,60e-9,600e-9,6e-6,60e-6,600e-6,6e-3,60e-3,600e-3];
+  const VIRTUAL = 2; // first two are virtual ranges (x100, x10 gain)
+  const trim = v => { const a = Math.abs(v); const s = a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2); return s.includes('.') ? s.replace(/\.?0+$/,'') : s; };
+  const fmtA = x => {
+    if (!isFinite(x)) return '—';
+    if (x === 0) return '0 A';
+    const u = [['A',1],['mA',1e-3],['µA',1e-6],['nA',1e-9],['pA',1e-12],['fA',1e-15],['aA',1e-18]];
+    for (const [n,s] of u){ if (Math.abs(x) >= s*0.9999) return trim(x/s) + ' ' + n; }
+    return trim(x/1e-18) + ' aA';
+  };
+  const fmtV = v => trim(v) + ' V';
+  const fmtSmallV = v => v >= 1 ? trim(v)+' V' : v >= 1e-3 ? trim(v*1e3)+' mV' : v >= 1e-6 ? trim(v*1e6)+' µV' : trim(v*1e9)+' nV';
+  const fmtT = s => s < 60 ? trim(s)+' 秒' : s < 3600 ? trim(s/60)+' 分钟' : s < 86400*2 ? trim(s/3600)+' 小时' : trim(s/86400)+' 天';
+  const fmtHz = f => f >= 1e6 ? trim(f/1e6)+' MHz' : f >= 1e3 ? trim(f/1e3)+' kHz' : f >= 1 ? trim(f)+' Hz' : f >= 1e-3 ? trim(f*1e3)+' mHz' : trim(f*1e6)+' µHz';
+  const fmtOhm = r => r >= 1e9 ? trim(r/1e9)+' GΩ' : r >= 1e6 ? trim(r/1e6)+' MΩ' : r >= 1e3 ? trim(r/1e3)+' kΩ' : trim(r)+' Ω';
+  const sci = x => { const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e); return `${trim(m)} × 10<sup>${e}</sup>`; };
+
+  const PRESETS = {
+    cv:{I:2,u:'1e-3',E:1.0,R:50,eta:1.0,ref:1000,v:0.1,f1:0.1,f2:100000,Z:1000},
+    coat:{I:5,u:'1e-9',E:0.6,R:1000,eta:0.5,ref:5000,v:0.01,f1:0.01,f2:100000,Z:16000},
+    umE:{I:50,u:'1e-9',E:0.8,R:10000,eta:0.5,ref:2000,v:1000,f1:1,f2:1000000,Z:500},
+    big:{I:0.8,u:'1',E:1.5,R:20,eta:2.0,ref:500,v:0.05,f1:0.1,f2:10000,Z:1}
+  };
+  const ids = ['cI','cIu','cE','cR','cEta','cRef','cV','cF1','cF2','cZ'];
+  const presetBtns = $$('[data-preset]');
+  presetBtns.forEach(b => b.addEventListener('click', () => {
+    const p = PRESETS[b.dataset.preset];
+    $('#cI').value = p.I; $('#cIu').value = p.u; $('#cE').value = p.E; $('#cR').value = p.R; $('#cEta').value = p.eta;
+    $('#cRef').value = p.ref; $('#cV').value = p.v; $('#cF1').value = p.f1; $('#cF2').value = p.f2; $('#cZ').value = p.Z;
+    press(presetBtns, b); calc();
+  }));
+  ids.forEach(id => $('#'+id).addEventListener('input', () => { presetBtns.forEach(x => x.setAttribute('aria-pressed','false')); calc(); }));
+
+  const res = (kind, label, html) => `<div class="res ${kind}"><span class="pill">${label}</span><div>${html}</div></div>`;
+  function calc(){
+    const num = id => { const v = parseFloat($('#'+id).value); return isFinite(v) ? v : NaN; };
+    const I = Math.abs(num('cI') * parseFloat($('#cIu').value));
+    const E = Math.abs(num('cE')), R = Math.abs(num('cR')), eta = Math.abs(num('cEta')), Rref = Math.abs(num('cRef'));
+    const v = Math.abs(num('cV')), f1 = num('cF1'), f2 = num('cF2'), Z = Math.abs(num('cZ'));
+    let out = '';
+
+    if (isFinite(I)){
+      const idx = RANGES.findIndex(r => I <= r);
+      const ladder = RANGES.map((r,i) => `<span class="${i < VIRTUAL ? 'virt ' : ''}${idx === -1 ? 'over' : (i === idx ? 'sel' : '')}">${fmtA(r).replace(' ','<br>')}</span>`).join('');
+      if (idx === -1){
+        out += res('bad','超出', `<p>预计电流 <strong>${fmtA(I)}</strong> 超过最大输出电流 <strong>±600 mA</strong>。会触发 Control Overload。需要电流更大的仪器，或减小电极面积。</p><div class="ladder" aria-hidden="true">${ladder}</div>`);
+      } else {
+        const tip = I / RANGES[idx] > 0.9 ? '，接近满量程，建议 I/E Range Mode 选 Auto 或留出余量' : '';
+        const virt = idx < VIRTUAL ? '（虚拟量程：60 pA 硬件量程加 ' + (idx === 0 ? '×100' : '×10') + ' 增益）' : '';
+        out += res('ok','量程', `<p>预计电流 <strong>${fmtA(I)}</strong>，可用的最小量程为 <strong>${fmtA(RANGES[idx])}</strong>${virt}${tip}。虚线框为虚拟量程。</p><div class="ladder" aria-hidden="true">${ladder}</div>`);
+      }
+      if (I > 0 && I < 1e-9){
+        out += res('info','低电流', `<p>nA 以下：用法拉第屏蔽，并在完整 DC 校准之后做 Low I DC 校准。输入放大器约 1 pA 的输入电流限制了 pA 级绝对电流的准确度；差值和交流电流通常仍可测到 1 pA 以下。</p>`);
+      }
+    }
+
+    if (isFinite(E)){
+      out += E <= 10 ? res('ok','电位', `<p>施加电位 <strong>${fmtV(E)}</strong> 在范围内。</p>`)
+           : E <= 11 ? res('warn','电位', `<p><strong>${fmtV(E)}</strong> 未超出 ±11 V 施加范围，但工作与参比之间电压超过 10 V 会触发 E Overload。</p>`)
+           : res('bad','电位', `<p><strong>${fmtV(E)}</strong> 超出 ±11 V 施加电压范围。</p>`);
+    }
+
+    if (isFinite(I) && isFinite(E) && isFinite(R) && isFinite(eta)){
+      const need = E + I*R + eta;
+      const scale = Math.max(need, 22) * 1.08;
+      const kind = need > 22 ? 'bad' : need > 0.8*22 ? 'warn' : 'ok';
+      const word = need > 22 ? '超出' : need > 0.8*22 ? '紧张' : '足够';
+      out += res(kind, '顺从电压', `<p>估算需要 ≈ <strong>${fmtV(need)}</strong>（= ${fmtV(E)} + ${fmtA(I)} × ${trim(R)} Ω + ${fmtV(eta)}），仪器最少 ±22 V：<strong>${word}</strong>。${need > 22 ? '对电极电压试图超过 ±22 V 会触发 Control Overload。可减小电流、降低溶液电阻或缩短电极间距。' : ''}</p><div class="meter" role="img" aria-label="所需电压占顺从电压的比例"><i style="width:${Math.min(100, need/scale*100).toFixed(1)}%"></i><b style="left:${(22/scale*100).toFixed(1)}%"></b></div>`);
+    }
+
+    if (isFinite(Rref)){
+      out += Rref <= 20000 ? res('ok','稳定性', `<p>参比电极阻抗 <strong>${fmtOhm(Rref)}</strong> ≤ 20 kΩ。手册测试中，除最快的控制放大器速度外，这种情况下对 10 pF–0.1 F 的电容性电解池都稳定。</p>`)
+        : res('warn','稳定性', `<p>参比电极阻抗 <strong>${fmtOhm(Rref)}</strong> 超过 20 kΩ，恒电位仪可能振荡。检查盐桥是否堵塞，或见“使用 › 振荡对策”。</p>`);
+    }
+
+    if (isFinite(v) && v > 0){
+      const step = v / 300000;
+      out += v <= 1500
+        ? res('ok','扫描速率', `<p><strong>${trim(v)} V/s</strong> 在 1500 V/s 以内。按最高 300 000 点/秒推算，每点电位步长至少 ≈ <strong>${fmtSmallV(step)}</strong>。</p>`)
+        : res('bad','扫描速率', `<p><strong>${trim(v)} V/s</strong> 超过手册给出的 1500 V/s（5 mV/点）。</p>`);
+    }
+
+    if (isFinite(f1) && isFinite(f2) && f1 > 0 && f2 > 0){
+      if (f1 >= f2){
+        out += res('warn','EIS', `<p>最低频率应小于最高频率。</p>`);
+      } else {
+        const ok = f2 <= 5e6 && f1 >= 1e-5;
+        const low = f1 < 1e-5 ? '低于产品网页标注的 10 µHz 下限' : '';
+        out += res(ok ? 'ok' : 'bad', 'EIS 频率', `<p>${fmtHz(f1)} – ${fmtHz(f2)}${f2 > 5e6 ? '：最高频率超过 5 MHz' : ''}${low ? '：' + low : (f2 > 5e6 ? '' : '：在范围内')}。最低频率每测一个周期约需 <strong>${fmtT(1/f1)}</strong>${1/f1 > 3600 ? '，整谱会很耗时' : ''}。</p>`);
+        if (isFinite(Z) && Z > 0){
+          const p = Z * f2;
+          out += p < 1e9 ? res('ok','|Z|·f', `<p>${sci(p)} Ω·Hz，低于手册经验上限 10<sup>9</sup> Ω·Hz。</p>`)
+            : res('warn','|Z|·f', `<p>${sci(p)} Ω·Hz，超过手册经验上限 10<sup>9</sup> Ω·Hz：高频端数据可能不准。降低最高频率，或接受高频段误差。</p>`);
+        }
+      }
+    }
+    $('#calcOut').innerHTML = out || res('info','提示','<p>输入实验条件后显示结果。</p>');
+  }
+  press(presetBtns, presetBtns[0]);
+  calc();
+
+  /* ---------- figure viewers ---------- */
+  function makeViewer(root){
+    const tabs = $$('.figtabs button', root), figs = $$('.fig', root), count = $('.figcount', root);
+    let cur = 0;
+    function show(i){
+      cur = (i + figs.length) % figs.length;
+      figs.forEach((f, j) => { f.hidden = j !== cur; });
+      press(tabs, tabs[cur]);
+      count.textContent = `${cur + 1} / ${figs.length}`;
+    }
+    tabs.forEach((b, i) => b.addEventListener('click', () => show(i)));
+    $$('[data-step]', root).forEach(b => b.addEventListener('click', () => show(cur + Number(b.dataset.step))));
+    return { show };
+  }
+  const instViewer = makeViewer($('#instViewer'));
+  makeViewer($('#useViewer'));
+
+  /* ---------- install checklist ---------- */
+  const KEY = 'r620-install-v2';
+  const steps = $$('.step');
+  const saved = new Set(store.get(KEY) || []);
+  function syncProgress(){
+    const done = steps.filter(s => s.querySelector('input').checked).length;
+    $('#progCount').textContent = `${done} / ${steps.length}`;
+    $('#progBar').style.width = (done/steps.length*100) + '%';
+  }
+  steps.forEach(s => {
+    const cb = s.querySelector('input');
+    cb.checked = saved.has(s.dataset.id);
+    s.classList.toggle('done', cb.checked);
+    cb.addEventListener('click', e => e.stopPropagation());
+    s.addEventListener('toggle', () => { if (s.open) instViewer.show(Number(s.dataset.fig)); });
+    cb.addEventListener('change', () => {
+      s.classList.toggle('done', cb.checked);
+      cb.checked ? saved.add(s.dataset.id) : saved.delete(s.dataset.id);
+      store.set(KEY, [...saved]); syncProgress();
+    });
+  });
+  $('#progReset').addEventListener('click', () => {
+    saved.clear(); store.set(KEY, []);
+    steps.forEach(s => { s.querySelector('input').checked = false; s.classList.remove('done'); });
+    syncProgress();
+  });
+  syncProgress();
+
+  /* ---------- lead map (manual Tables 6-1, 6-2, 6-3) ---------- */
+  const LEADS = [
+    {k:'we', c:'--lead-we', nm:'绿 · 工作电极 Working Electrode', fn:'香蕉插头；承载电解池电流'},
+    {k:'ws', c:'--lead-ws', nm:'蓝 · 工作感应 Working Sense', fn:'感应工作电极电压；报告的电位是蓝与白之差'},
+    {k:'re', c:'--lead-re', nm:'白 · 参比 Reference', fn:'接参比电极（SCE、Ag/AgCl 等）'},
+    {k:'ce', c:'--lead-ce', nm:'红 · 对电极 Counter Electrode', fn:'功率放大器输出，承载电流'},
+    {k:'cs', c:'--lead-cs', nm:'橙 · 对电极感应 Counter Sense', fn:'只在 ZRA 模式起作用；不用时可悬空，但不能碰到其他电极'},
+    {k:'fg', c:'--lead-gnd', nm:'黑 · 浮地 Floating Ground', fn:'针式插孔，仪器模拟电路地；多数情况悬空（金属头勿碰其他接线），或接法拉第屏蔽'}
+  ];
+  const CFG = {
+    three:{ el:[{id:'WE',x:430,a:'工作电极',b:'WE'},{id:'RE',x:520,a:'参比电极',b:'RE'},{id:'CE',x:610,a:'对电极',b:'CE'}],
+      map:{we:'WE',ws:'WE',re:'RE',ce:'CE',cs:'CE'},
+      note:'手册表 6-1 的标准接法：蓝 + 绿接工作电极，白接参比，红接对电极。橙线标准接法是接对电极（接上后可自动切换到 ZRA 模式），也可以悬空。' },
+    two:{ el:[{id:'E1',x:460,a:'工作电极',b:'WE'},{id:'E2',x:590,a:'对电极',b:'(CE + RE)'}],
+      map:{we:'E1',ws:'E1',re:'E2',ce:'E2',cs:null},
+      note:'没有参比电极时，把白色参比线接到对电极，恒电位和恒电流模式都适用。测得的电位是对电极与工作电极之间的电位差。' },
+    membrane:{ el:[{id:'C1',x:415,a:'对电极 1',b:''},{id:'R1',x:480,a:'参比 1',b:''},{id:'R2',x:560,a:'参比 2',b:''},{id:'C2',x:625,a:'对电极 2',b:''}],
+      map:{we:'C1',ws:'R1',re:'R2',ce:'C2',cs:null}, membrane:520,
+      note:'手册表 6-3：膜把两种电解液隔开，两侧各有一支参比电极和一支对电极，仪器控制跨膜电位。参比 1 和对电极 1 必须在膜的同一侧，参比 2 和对电极 2 在另一侧。' },
+    zra:{ el:[{id:'MA',x:430,a:'金属 1',b:''},{id:'RE',x:520,a:'参比电极',b:'RE'},{id:'MB',x:610,a:'金属 2',b:''}],
+      map:{we:'MA',ws:'MA',re:'RE',ce:'MB',cs:'MB'},
+      note:'手册表 6-2：第二块金属代替对电极，橙线必须接。仪器保持蓝线与橙线之间为 0 V，测量两块金属之间的电流；白线接参比电极，报告参比与蓝线之间的电位。没有参比电极时，把白线接到工作电极（金属 1）。' }
+  };
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = $('#leadSvg');
+  let cfgKey = 'three', focusLead = null;
+  const cageToggle = $('#cageToggle');
+  const LY = i => 80 + i*34;
+  function el(tag, attrs, parent){ const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; }
+  function text(x, y, str, attrs, parent){ const t = el('text', Object.assign({x, y}, attrs||{}), parent); t.textContent = str; return t; }
+
+  function drawLeads(){
+    const cfg = CFG[cfgKey];
+    const cage = cageToggle.checked;
+    const map = Object.assign({}, cfg.map, {fg: cage ? 'CAGE' : null});
+    while (svg.childNodes.length > 1) svg.removeChild(svg.lastChild);
+    if (cage){
+      el('rect',{x:360,y:22,width:328,height:278,rx:8,fill:'none',stroke:'var(--cage)','stroke-width':2.5},svg);
+      text(372,40,'法拉第屏蔽 Faraday shield',{'font-size':12,class:'mut'},svg);
+    }
+    el('rect',{x:392,y:150,width:268,height:120,rx:4,fill:'var(--solution)'},svg);
+    el('path',{d:'M388 104 V262 Q388 274 400 274 H652 Q664 274 664 262 V104',fill:'none',stroke:'var(--muted)','stroke-width':2},svg);
+    if (cfg.membrane){
+      el('line',{x1:cfg.membrane,y1:118,x2:cfg.membrane,y2:272,stroke:'var(--muted)','stroke-width':2,'stroke-dasharray':'3 3'},svg);
+      text(cfg.membrane,114,'膜',{'font-size':11,'text-anchor':'middle',class:'mut'},svg);
+    }
+    const pos = {};
+    cfg.el.forEach(e => {
+      pos[e.id] = e.x;
+      el('rect',{x:e.x-5,y:70,width:10,height:150,rx:2,fill:'var(--electrode)'},svg);
+      text(e.x,240,e.a,{'font-size':12,'text-anchor':'middle','font-weight':600},svg);
+      if (e.b) text(e.x,256,e.b,{'font-size':11,'text-anchor':'middle',class:'mut'},svg);
+    });
+    el('rect',{x:16,y:56,width:96,height:210,rx:10,fill:'var(--surface)',stroke:'var(--muted)','stroke-width':1.5},svg);
+    text(64,46,'电解池电缆',{'font-size':12,'text-anchor':'middle',class:'mut'},svg);
+    text(64,288,'25-pin D',{'font-size':11,'text-anchor':'middle',class:'mut'},svg);
+    const groups = {};
+    LEADS.forEach(L => { const t = map[L.k]; if (t && t !== 'CAGE'){ (groups[t] = groups[t] || []).push(L.k); } });
+    const g = el('g',{class:'wires' + (focusLead ? ' focus' : '')},svg);
+    LEADS.forEach((L,i) => {
+      const y = LY(i), t = map[L.k];
+      const w = el('g',{class:'wire' + (focusLead === L.k ? ' on' : ''),'data-k':L.k},g);
+      text(30,y+4,L.nm.split(' · ')[0],{'font-size':12,'font-weight':600},w);
+      let d, tx;
+      if (!t){
+        d = `M112 ${y} H196`;
+      } else if (t === 'CAGE'){
+        d = `M112 ${y} H180 C 270 ${y}, 300 262, 360 262`;
+      } else {
+        const list = groups[t], j = list.indexOf(L.k);
+        tx = pos[t] + (j - (list.length-1)/2) * 8;
+        d = `M112 ${y} H150 C 250 ${y}, ${tx} 8, ${tx} 66`;
+      }
+      el('path',{d,fill:'none',stroke:'var(--wire-outline)','stroke-width':6,'stroke-linecap':'round'},w);
+      el('path',{d,fill:'none',stroke:`var(${L.c})`,'stroke-width':3.5,'stroke-linecap':'round'},w);
+      if (!t){
+        el('circle',{cx:202,cy:y,r:5,fill:'var(--surface)',stroke:'var(--wire-outline)','stroke-width':1.5},w);
+        text(212,y+4,'悬空',{'font-size':11,class:'mut'},w);
+      } else if (t === 'CAGE'){
+        el('circle',{cx:360,cy:262,r:4,fill:'var(--cage)'},w);
+      } else {
+        el('circle',{cx:tx,cy:68,r:4,fill:`var(${L.c})`,stroke:'var(--wire-outline)','stroke-width':1.2},w);
+      }
+    });
+    const nameOf = id => { if (id === 'CAGE') return '法拉第屏蔽'; const e = cfg.el.find(x => x.id === id); return e ? e.a + (e.b && e.b.startsWith('(') ? ' ' + e.b : '') : id; };
+    $('#legend').innerHTML = LEADS.map(L => {
+      const t = map[L.k];
+      return `<li data-k="${L.k}" class="${focusLead === L.k ? 'on' : ''}" tabindex="0" role="button" aria-pressed="${focusLead === L.k}"><span class="sw" style="background:var(${L.c})"></span><div><div class="nm">${L.nm}</div><div class="fn">${L.fn}</div><div class="to ${t ? '' : 'none'}">${t ? '接到 → ' + nameOf(t) : '悬空，不接'}</div></div></li>`;
+    }).join('');
+    $('#cfgNote').textContent = cfg.note + (cage ? '屏蔽必须接黑色浮地线；只有电解池与大地隔离时，屏蔽和浮地才可再接大地。' : '黑线多数情况下悬空；低电流测量时勾选“接法拉第屏蔽”。');
+  }
+  const cfgBtns = $$('[data-cfg]');
+  cfgBtns.forEach(b => b.addEventListener('click', () => { press(cfgBtns, b); cfgKey = b.dataset.cfg; drawLeads(); }));
+  cageToggle.addEventListener('change', drawLeads);
+  function toggleLead(k){ focusLead = focusLead === k ? null : k; drawLeads(); }
+  $('#legend').addEventListener('click', e => { const li = e.target.closest('li[data-k]'); if (li) toggleLead(li.dataset.k); });
+  $('#legend').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ const li = e.target.closest('li[data-k]'); if (li){ e.preventDefault(); toggleLead(li.dataset.k); const n = $(`#legend li[data-k="${li.dataset.k}"]`); n && n.focus(); } } });
+  drawLeads();
+  const box = $('#svgBox');
+  if (box.scrollWidth > box.clientWidth) box.scrollLeft = box.scrollWidth - box.clientWidth;
+
+  /* ---------- LED decoder (manual Ch 4, Ch 7, Appendix E) ---------- */
+  const LED = {
+    power:{n:'Power 电源灯（蓝，左下）', c:'#3C8CFF', s:[
+      ['开机：亮一两秒 → 闪 3 次 → 常亮','每闪一次代表 Power PC 自检的一部分通过。'],
+      ['常亮','仪器已开机并通过简单自检。'],
+      ['闪 5 次','在 GIM 中点了 Blink（或选中该仪器），用来辨认是哪一台。'],
+      ['不亮','电源开关关闭、Power In 没有 24 V、外置电源无输入或故障，或自检某部分失败。',1],
+      ['闪超过 5 次或两段闪码','某电子模块故障，例如“闪 2 次再闪 3 次”= ROM 校验错误。联系 Gamry 维修。',1],
+      ['注意','Power 灯同时表示供电和自检结果，不能当作可靠的电源指示。怀疑故障时拔掉 DC Power In。']]},
+    usb:{n:'USB 灯（三色，Power 下方）', c:'#37C66B', s:[
+      ['常绿','USB 连接有效，通讯处理器经 USB 线供电。'],
+      ['闪橙（第 4 章表格写作闪黄）','正在与电脑收发 USB 消息；只在 Gamry 软件运行时出现。发给其他设备的消息不会让它闪。'],
+      ['常红','正在下载固件（第 4 章也列出 USB 通讯错误）。不要关机、拔 USB 或关闭电脑。',1],
+      ['不亮','仪器未供电、USB 线没插好或未供电，或电脑禁用了该 USB 口。']]},
+    cell:{n:'Cell On 灯（黄，右侧）', c:'#F5C531', s:[
+      ['亮','仪器正在向电解池施加电压或电流（电解池被极化）。这不是危险信号，但触碰导线会影响数据。'],
+      ['灭','两次实验之间和测开路电位 (OCP) 时熄灭。改接线请在此时进行。']]},
+    over:{n:'Overload 过载灯（红，Cell On 下方）', c:'#FF4A3D', s:[
+      ['熄灭','正常状态。'],
+      ['阶跃或扫描中短暂亮','通常正常：例如电位阶跃给双电层充电时的瞬时电流尖峰，读数前尖峰一般已衰减。'],
+      ['接线、拆线时亮','常见，通常不代表问题；电解池关闭时某根导线断开也会亮。'],
+      ['E Overload','差分静电计输出（工作与参比之间的电压）绝对值超过 10 V。'],
+      ['Control Overload','控制放大器失去控制：电流试图超过 ±600 mA，或对电极电压试图超过 ±22 V。'],
+      ['I Overload','电流超过当前量程的满量程。'],
+      ['实验中持续常亮','很可能有问题：最常见是导线断开，也可能是气泡挡住电极，或恒电位仪在振荡。',1]]}
+  };
+  const ledBtns = $$('[data-led]');
+  function showLed(k){
+    const L = LED[k];
+    $('#ledInfo').innerHTML = `<h3><span class="dot" style="--c:${L.c}"></span>${L.n}</h3><ul class="states">${L.s.map(s => `<li class="${s[2] ? 'bad' : ''}"><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}</ul><p class="note" style="margin:10px 0 0"><span class="src">手册 Ch 4、7、附录 E</span></p>`;
+  }
+  ledBtns.forEach(b => b.addEventListener('click', () => { press(ledBtns, b); showLed(b.dataset.led); }));
+  showLed('power');
+
+  /* ---------- grounding helper (manual Ch 1, 6, 7, 9) ---------- */
+  const ans = {q1:null,q2:null};
+  const qBtns = $$('[data-q]');
+  function verdict(){
+    const o = $('#groundOut');
+    if (ans.q1 === null || ans.q2 === null){
+      o.innerHTML = `<div class="verdict idle"><h3>等待回答</h3><p style="margin:0">回答左边两个问题后，这里显示手册给出的接地建议。</p></div>`;
+      return;
+    }
+    const items = [];
+    let kind, title;
+    if (ans.q1 === 'yes'){
+      kind = 'danger'; title = '必须保持仪器浮地';
+      items.push('<strong>不要</strong>把后面板 Chassis Ground 接大地。电解池能输出大量能量时尤其危险，即使电解池开关断开，它也可能经仪器电路放电。');
+      items.push('法拉第屏蔽只接黑色浮地线，不要接大地。');
+      items.push('多数电缆内含保险丝，意外形成放电回路时会熔断；熔断后需更换才能工作。');
+      items.push('浮地时仪器性能会明显下降；手册规格只适用于接地参考、与大地隔离的电解池。');
+    } else {
+      kind = 'ok'; title = '可以接地降噪';
+      items.push('电解池（如普通玻璃池）与大地隔离时，可用随机的黑色导线把后面板 Chassis Ground 接到可靠大地，可能降低噪声。接之前先和电气专业人员确认接地方案。');
+      items.push('用法拉第屏蔽时，通常把屏蔽同时接黑色浮地线和大地。');
+      items.push('接地柱只能接大地，不能接任何其他电压。');
+    }
+    if (ans.q2 === 'yes'){
+      if (kind === 'ok'){ kind = 'warn'; title = '可以接地降噪，并检查辅助设备'; }
+      items.push('I Monitor、E Monitor、Sig Gen Out、Ext Sig In 四个 BNC 的外壳接仪器浮地；接到示波器等接地设备会把仪器接地。');
+      items.push('Misc I/O 不要用标准 15 针屏蔽线；用屏蔽层接第 6 脚的定制线，电解池接地时这是必须的。');
+      items.push('热电偶一端接浮地；浸在电解池里的未绝缘热电偶会破坏浮地并导致读数错误。');
+      if (ans.q1 === 'yes') items.push('外接电压表、电流表、FRA 等设备都必须与大地隔离。');
+    }
+    o.innerHTML = `<div class="verdict ${kind}"><h3>${title}</h3><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
+  }
+  qBtns.forEach(b => b.addEventListener('click', () => {
+    const grp = qBtns.filter(x => x.dataset.q === b.dataset.q);
+    press(grp, b); ans[b.dataset.q] = b.dataset.v; verdict();
+  }));
+  verdict();
+
+  /* ---------- hazard filter ---------- */
+  const hzBtns = $$('[data-hz]');
+  const hzs = $$('#hzGrid .hz');
+  hzBtns.forEach(b => b.addEventListener('click', () => {
+    press(hzBtns, b);
+    const c = b.dataset.hz;
+    hzs.forEach(h => { h.hidden = !(c === 'all' || h.dataset.cat.split(' ').includes(c)); });
+  }));
+
+  /* ---------- nav scrollspy ---------- */
+  const links = $$('.nav a');
+  const secs = links.map(a => $(a.getAttribute('href')));
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting){ links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); } });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(s => s && io.observe(s));
+  }
+})();
+</script>
