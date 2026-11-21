@@ -1,0 +1,23 @@
+{
+ "rhind": {
+  "file": "rhind.jpg",
+  "alt": "莱因德数学纸草书（局部）",
+  "credit": "莱因德数学纸草书局部，大英博物馆藏（EA 10057/10058）。图片：Wikimedia Commons，公有领域。",
+  "w": 750,
+  "h": 449
+ },
+ "ybc": {
+  "file": "ybc7289.jpg",
+  "alt": "YBC 7289 泥板正反面",
+  "credit": "YBC 7289 正反面，耶鲁巴比伦藏品。摄影 A. Urcia（Yale Peabody Museum），Wikimedia Commons，CC0。",
+  "w": 960,
+  "h": 1332
+ },
+ "plimpton": {
+  "file": "plimpton322.jpg",
+  "alt": "Plimpton 322 泥板",
+  "credit": "Plimpton 322，哥伦比亚大学善本与手稿图书馆藏。图片：Wikimedia Commons（标为公有领域，摄影者不详）。",
+  "w": 1246,
+  "h": 863
+ }
+}

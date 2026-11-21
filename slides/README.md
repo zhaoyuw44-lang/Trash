@@ -11,6 +11,14 @@
 | Zhao et al. 2020, *Designing solid-state electrolytes for safe, energy-dense batteries* | 1 引言与固态电解质发展史 (23) · 2 离子传输机理与路径 (22) · 3 锂/钠与多价离子固态电解质 (24) · 4 失效模式 (23) · 5 设计策略 (21) · 6 高能量密度电池体系与展望 (22) | `decks/zhao2020/` |
 | Ko et al. 2026, *Electrolyte design for future batteries* | 1 引言：电解质不只是传导离子 (20) · 2 电极电位的大幅移动 (24) · 3 计算预测 (22) · 4 界面相：概念演变与动力学 (22) · 5 理性界面设计、挑战与结论 (23) | `decks/ko2026/` |
 
+## 数学发展史（按时代分 7 章，进行中）
+
+同一套主题和规范，按 `math-history-timeline.svg` 的 7 个时代各做一章。没有单一“原书”，“引”取自原始文献的权威英译本；每章另有少量实物照片（Wikimedia Commons，许可证写在图注里）。
+
+| 章节（页数） | 目录 |
+|---|---|
+| 1 古代文明：埃及与美索不达米亚 (24) | `decks/mathhist/` |
+
 原文笔误、存疑之处和把握较低的历史条目见 `REVIEW_NOTES.md`。
 
 ## 每页的四种阅读标签

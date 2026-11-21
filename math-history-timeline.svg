@@ -105,10 +105,10 @@
 <text x="72.0" y="378" font-size="12.5" fill="#2D3748">土地与建造金字塔</text>
 <g filter="url(#sh)"><rect x="58.0" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
 <rect x="58.0" y="407" width="4" height="91" rx="2" fill="#B7791F"/>
-<text x="72.0" y="422" font-size="13" font-weight="700" fill="#B7791F">c. 1800 BCE</text>
+<text x="72.0" y="422" font-size="13" font-weight="700" fill="#B7791F">c. 2100 BCE</text>
 <text x="72.0" y="442" font-size="15" font-weight="700" fill="#1A202C">巴比伦六十进制</text>
 <text x="72.0" y="459" font-size="11.5" font-style="italic" fill="#718096">Babylonian sexagesimal</text>
-<text x="72.0" y="476" font-size="12.5" fill="#2D3748">位值制雏形；今天的</text>
+<text x="72.0" y="476" font-size="12.5" fill="#2D3748">开始用位值制计算；</text>
 <text x="72.0" y="493" font-size="12.5" fill="#2D3748">60 分 / 360° 由此而来</text>
 <g filter="url(#sh)"><rect x="58.0" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
 <rect x="58.0" y="522" width="4" height="91" rx="2" fill="#B7791F"/>
@@ -126,7 +126,7 @@
 <text x="72.0" y="723" font-size="12.5" fill="#2D3748">约 6 位小数</text>
 <g filter="url(#sh)"><rect x="58.0" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
 <rect x="58.0" y="752" width="4" height="91" rx="2" fill="#B7791F"/>
-<text x="72.0" y="767" font-size="13" font-weight="700" fill="#B7791F">c. 1650 BCE</text>
+<text x="72.0" y="767" font-size="13" font-weight="700" fill="#B7791F">c. 1550 BCE</text>
 <text x="72.0" y="787" font-size="15" font-weight="700" fill="#1A202C">莱因德纸草书</text>
 <text x="72.0" y="804" font-size="11.5" font-style="italic" fill="#718096">Rhind Papyrus</text>
 <text x="72.0" y="821" font-size="12.5" fill="#2D3748">分数、面积、体积与</text>
