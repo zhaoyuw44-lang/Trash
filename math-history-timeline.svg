@@ -1,0 +1,418 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1637" width="1800" height="1637" font-family="'Noto Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Zen Hei',sans-serif">
+<title>数学发展史 · A History of Mathematics</title>
+<defs>
+<filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#1a202c" flood-opacity="0.10"/></filter>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4A5568"/></marker>
+<linearGradient id="axis" x1="0" x2="1" y1="0" y2="0"><stop offset="0.000" stop-color="#B7791F"/><stop offset="0.167" stop-color="#2B6CB0"/><stop offset="0.333" stop-color="#C53030"/><stop offset="0.500" stop-color="#2F855A"/><stop offset="0.667" stop-color="#6B46C1"/><stop offset="0.833" stop-color="#B83280"/><stop offset="1.000" stop-color="#2C7A7B"/></linearGradient>
+<linearGradient id="f0" x1="0" x2="1"><stop offset="0" stop-color="#B7791F"/><stop offset="1" stop-color="#B7791F" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f1" x1="0" x2="1"><stop offset="0" stop-color="#2B6CB0"/><stop offset="1" stop-color="#2B6CB0" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f2" x1="0" x2="1"><stop offset="0" stop-color="#C53030"/><stop offset="1" stop-color="#C53030" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f3" x1="0" x2="1"><stop offset="0" stop-color="#2F855A"/><stop offset="1" stop-color="#2F855A" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f4" x1="0" x2="1"><stop offset="0" stop-color="#6B46C1"/><stop offset="1" stop-color="#6B46C1" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f5" x1="0" x2="1"><stop offset="0" stop-color="#B83280"/><stop offset="1" stop-color="#B83280" stop-opacity="0.25"/></linearGradient>
+<linearGradient id="f6" x1="0" x2="1"><stop offset="0" stop-color="#2C7A7B"/><stop offset="1" stop-color="#2C7A7B" stop-opacity="0.25"/></linearGradient>
+</defs>
+<rect width="1800" height="1637" fill="#FAFAF7"/>
+<text x="900.0" y="62" text-anchor="middle" font-size="40" font-weight="700" fill="#1A202C">数学发展史</text>
+<text x="900.0" y="96" text-anchor="middle" font-size="18" fill="#4A5568" letter-spacing="3">A HISTORY OF MATHEMATICS · 从计数到证明的五千年</text>
+<rect x="50.0" y="150" width="234.28571428571428" height="917" rx="12" fill="#FDF3E1"/>
+<rect x="50.0" y="150" width="234.28571428571428" height="78" rx="12" fill="#B7791F"/>
+<rect x="50.0" y="216" width="234.28571428571428" height="12" fill="#B7791F"/>
+<text x="167.14285714285714" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">古代文明</text>
+<text x="167.14285714285714" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">Ancient Civilizations</text>
+<text x="167.14285714285714" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">c. 3000 – 600 BCE</text>
+<rect x="294.2857142857143" y="150" width="234.28571428571428" height="917" rx="12" fill="#E6F0FA"/>
+<rect x="294.2857142857143" y="150" width="234.28571428571428" height="78" rx="12" fill="#2B6CB0"/>
+<rect x="294.2857142857143" y="216" width="234.28571428571428" height="12" fill="#2B6CB0"/>
+<text x="411.42857142857144" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">古希腊</text>
+<text x="411.42857142857144" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">Classical Greece</text>
+<text x="411.42857142857144" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">600 BCE – 500 CE</text>
+<rect x="538.5714285714286" y="150" width="234.28571428571428" height="917" rx="12" fill="#FCE8E8"/>
+<rect x="538.5714285714286" y="150" width="234.28571428571428" height="78" rx="12" fill="#C53030"/>
+<rect x="538.5714285714286" y="216" width="234.28571428571428" height="12" fill="#C53030"/>
+<text x="655.7142857142857" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">中国与印度</text>
+<text x="655.7142857142857" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">China &amp; India</text>
+<text x="655.7142857142857" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">200 BCE – 1200 CE</text>
+<rect x="782.8571428571429" y="150" width="234.28571428571428" height="917" rx="12" fill="#E5F4EC"/>
+<rect x="782.8571428571429" y="150" width="234.28571428571428" height="78" rx="12" fill="#2F855A"/>
+<rect x="782.8571428571429" y="216" width="234.28571428571428" height="12" fill="#2F855A"/>
+<text x="900.0" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">伊斯兰黄金时代</text>
+<text x="900.0" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">Islamic Golden Age</text>
+<text x="900.0" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">800 – 1400</text>
+<rect x="1027.142857142857" y="150" width="234.28571428571428" height="917" rx="12" fill="#EFE9FB"/>
+<rect x="1027.142857142857" y="150" width="234.28571428571428" height="78" rx="12" fill="#6B46C1"/>
+<rect x="1027.142857142857" y="216" width="234.28571428571428" height="12" fill="#6B46C1"/>
+<text x="1144.2857142857142" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">文艺复兴与科学革命</text>
+<text x="1144.2857142857142" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">Renaissance &amp; Sci. Revolution</text>
+<text x="1144.2857142857142" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">1500 – 1700</text>
+<rect x="1271.4285714285713" y="150" width="234.28571428571428" height="917" rx="12" fill="#FBE7F2"/>
+<rect x="1271.4285714285713" y="150" width="234.28571428571428" height="78" rx="12" fill="#B83280"/>
+<rect x="1271.4285714285713" y="216" width="234.28571428571428" height="12" fill="#B83280"/>
+<text x="1388.5714285714284" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">18–19 世纪</text>
+<text x="1388.5714285714284" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">18th – 19th Century</text>
+<text x="1388.5714285714284" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">1700 – 1900</text>
+<rect x="1515.7142857142858" y="150" width="234.28571428571428" height="917" rx="12" fill="#E2F4F4"/>
+<rect x="1515.7142857142858" y="150" width="234.28571428571428" height="78" rx="12" fill="#2C7A7B"/>
+<rect x="1515.7142857142858" y="216" width="234.28571428571428" height="12" fill="#2C7A7B"/>
+<text x="1632.857142857143" y="180" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">现代数学</text>
+<text x="1632.857142857143" y="200" text-anchor="middle" font-size="12" fill="#fff" fill-opacity="0.9">Modern Era</text>
+<text x="1632.857142857143" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" fill-opacity="0.95">1900 – 至今</text>
+<rect x="54" y="255.5" width="1692" height="5" rx="2.5" fill="url(#axis)"/>
+<circle cx="66.0" cy="258" r="5" fill="#fff" stroke="#B7791F" stroke-width="2.5"/>
+<circle cx="116.6" cy="258" r="5" fill="#fff" stroke="#B7791F" stroke-width="2.5"/>
+<circle cx="167.1" cy="258" r="5" fill="#fff" stroke="#B7791F" stroke-width="2.5"/>
+<circle cx="217.7" cy="258" r="5" fill="#fff" stroke="#B7791F" stroke-width="2.5"/>
+<circle cx="268.3" cy="258" r="5" fill="#fff" stroke="#B7791F" stroke-width="2.5"/>
+<circle cx="310.3" cy="258" r="5" fill="#fff" stroke="#2B6CB0" stroke-width="2.5"/>
+<circle cx="360.9" cy="258" r="5" fill="#fff" stroke="#2B6CB0" stroke-width="2.5"/>
+<circle cx="411.4" cy="258" r="5" fill="#fff" stroke="#2B6CB0" stroke-width="2.5"/>
+<circle cx="462.0" cy="258" r="5" fill="#fff" stroke="#2B6CB0" stroke-width="2.5"/>
+<circle cx="512.6" cy="258" r="5" fill="#fff" stroke="#2B6CB0" stroke-width="2.5"/>
+<circle cx="554.6" cy="258" r="5" fill="#fff" stroke="#C53030" stroke-width="2.5"/>
+<circle cx="605.1" cy="258" r="5" fill="#fff" stroke="#C53030" stroke-width="2.5"/>
+<circle cx="655.7" cy="258" r="5" fill="#fff" stroke="#C53030" stroke-width="2.5"/>
+<circle cx="706.3" cy="258" r="5" fill="#fff" stroke="#C53030" stroke-width="2.5"/>
+<circle cx="756.9" cy="258" r="5" fill="#fff" stroke="#C53030" stroke-width="2.5"/>
+<circle cx="798.9" cy="258" r="5" fill="#fff" stroke="#2F855A" stroke-width="2.5"/>
+<circle cx="849.4" cy="258" r="5" fill="#fff" stroke="#2F855A" stroke-width="2.5"/>
+<circle cx="900.0" cy="258" r="5" fill="#fff" stroke="#2F855A" stroke-width="2.5"/>
+<circle cx="950.6" cy="258" r="5" fill="#fff" stroke="#2F855A" stroke-width="2.5"/>
+<circle cx="1001.1" cy="258" r="5" fill="#fff" stroke="#2F855A" stroke-width="2.5"/>
+<circle cx="1043.1" cy="258" r="5" fill="#fff" stroke="#6B46C1" stroke-width="2.5"/>
+<circle cx="1093.7" cy="258" r="5" fill="#fff" stroke="#6B46C1" stroke-width="2.5"/>
+<circle cx="1144.3" cy="258" r="5" fill="#fff" stroke="#6B46C1" stroke-width="2.5"/>
+<circle cx="1194.9" cy="258" r="5" fill="#fff" stroke="#6B46C1" stroke-width="2.5"/>
+<circle cx="1245.4" cy="258" r="5" fill="#fff" stroke="#6B46C1" stroke-width="2.5"/>
+<circle cx="1287.4" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1327.9" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1368.3" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1408.8" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1449.3" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1489.7" cy="258" r="5" fill="#fff" stroke="#B83280" stroke-width="2.5"/>
+<circle cx="1531.7" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1565.4" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1599.1" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1632.9" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1666.6" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1700.3" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<circle cx="1734.0" cy="258" r="5" fill="#fff" stroke="#2C7A7B" stroke-width="2.5"/>
+<g filter="url(#sh)"><rect x="58.0" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="58.0" y="292" width="4" height="91" rx="2" fill="#B7791F"/>
+<text x="72.0" y="307" font-size="13" font-weight="700" fill="#B7791F">c. 3000 BCE</text>
+<text x="72.0" y="327" font-size="15" font-weight="700" fill="#1A202C">埃及象形数字</text>
+<text x="72.0" y="344" font-size="11.5" font-style="italic" fill="#718096">Egyptian numerals</text>
+<text x="72.0" y="361" font-size="12.5" fill="#2D3748">十进制计数，用于丈量</text>
+<text x="72.0" y="378" font-size="12.5" fill="#2D3748">土地与建造金字塔</text>
+<g filter="url(#sh)"><rect x="58.0" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="58.0" y="407" width="4" height="91" rx="2" fill="#B7791F"/>
+<text x="72.0" y="422" font-size="13" font-weight="700" fill="#B7791F">c. 1800 BCE</text>
+<text x="72.0" y="442" font-size="15" font-weight="700" fill="#1A202C">巴比伦六十进制</text>
+<text x="72.0" y="459" font-size="11.5" font-style="italic" fill="#718096">Babylonian sexagesimal</text>
+<text x="72.0" y="476" font-size="12.5" fill="#2D3748">位值制雏形；今天的</text>
+<text x="72.0" y="493" font-size="12.5" fill="#2D3748">60 分 / 360° 由此而来</text>
+<g filter="url(#sh)"><rect x="58.0" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="58.0" y="522" width="4" height="91" rx="2" fill="#B7791F"/>
+<text x="72.0" y="537" font-size="13" font-weight="700" fill="#B7791F">c. 1800 BCE</text>
+<text x="72.0" y="557" font-size="15" font-weight="700" fill="#1A202C">Plimpton 322 泥板</text>
+<text x="72.0" y="574" font-size="11.5" font-style="italic" fill="#718096">Pythagorean triples</text>
+<text x="72.0" y="591" font-size="12.5" fill="#2D3748">刻有勾股数，早于</text>
+<text x="72.0" y="608" font-size="12.5" fill="#2D3748">毕达哥拉斯千余年</text>
+<g filter="url(#sh)"><rect x="58.0" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="58.0" y="637" width="4" height="91" rx="2" fill="#B7791F"/>
+<text x="72.0" y="652" font-size="13" font-weight="700" fill="#B7791F">c. 1800 BCE</text>
+<text x="72.0" y="672" font-size="15" font-weight="700" fill="#1A202C">YBC 7289 泥板</text>
+<text x="72.0" y="689" font-size="11.5" font-style="italic" fill="#718096">√2 ≈ 1.414213</text>
+<text x="72.0" y="706" font-size="12.5" fill="#2D3748">六十进制下精确到</text>
+<text x="72.0" y="723" font-size="12.5" fill="#2D3748">约 6 位小数</text>
+<g filter="url(#sh)"><rect x="58.0" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="58.0" y="752" width="4" height="91" rx="2" fill="#B7791F"/>
+<text x="72.0" y="767" font-size="13" font-weight="700" fill="#B7791F">c. 1650 BCE</text>
+<text x="72.0" y="787" font-size="15" font-weight="700" fill="#1A202C">莱因德纸草书</text>
+<text x="72.0" y="804" font-size="11.5" font-style="italic" fill="#718096">Rhind Papyrus</text>
+<text x="72.0" y="821" font-size="12.5" fill="#2D3748">分数、面积、体积与</text>
+<text x="72.0" y="838" font-size="12.5" fill="#2D3748">线性方程的实用算法</text>
+<g filter="url(#sh)"><rect x="302.2857142857143" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="302.2857142857143" y="292" width="4" height="91" rx="2" fill="#2B6CB0"/>
+<text x="316.2857142857143" y="307" font-size="13" font-weight="700" fill="#2B6CB0">c. 570 BCE</text>
+<text x="316.2857142857143" y="327" font-size="15" font-weight="700" fill="#1A202C">毕达哥拉斯学派</text>
+<text x="316.2857142857143" y="344" font-size="11.5" font-style="italic" fill="#718096">Pythagoreans</text>
+<text x="316.2857142857143" y="361" font-size="12.5" fill="#2D3748">“万物皆数”；发现</text>
+<text x="316.2857142857143" y="378" font-size="12.5" fill="#2D3748">不可公度量 (无理数)</text>
+<g filter="url(#sh)"><rect x="302.2857142857143" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="302.2857142857143" y="407" width="4" height="91" rx="2" fill="#2B6CB0"/>
+<text x="316.2857142857143" y="422" font-size="13" font-weight="700" fill="#2B6CB0">c. 300 BCE</text>
+<text x="316.2857142857143" y="442" font-size="15" font-weight="700" fill="#1A202C">欧几里得《几何原本》</text>
+<text x="316.2857142857143" y="459" font-size="11.5" font-style="italic" fill="#718096">Euclid's Elements</text>
+<text x="316.2857142857143" y="476" font-size="12.5" fill="#2D3748">公理化方法 (Axiomatic</text>
+<text x="316.2857142857143" y="493" font-size="12.5" fill="#2D3748">Method) 的典范</text>
+<g filter="url(#sh)"><rect x="302.2857142857143" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="302.2857142857143" y="522" width="4" height="91" rx="2" fill="#2B6CB0"/>
+<text x="316.2857142857143" y="537" font-size="13" font-weight="700" fill="#2B6CB0">c. 250 BCE</text>
+<text x="316.2857142857143" y="557" font-size="15" font-weight="700" fill="#1A202C">阿基米德</text>
+<text x="316.2857142857143" y="574" font-size="11.5" font-style="italic" fill="#718096">Archimedes</text>
+<text x="316.2857142857143" y="591" font-size="12.5" fill="#2D3748">穷竭法 (Exhaustion)</text>
+<text x="316.2857142857143" y="608" font-size="12.5" fill="#2D3748">求面积；估算 π</text>
+<g filter="url(#sh)"><rect x="302.2857142857143" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="302.2857142857143" y="637" width="4" height="91" rx="2" fill="#2B6CB0"/>
+<text x="316.2857142857143" y="652" font-size="13" font-weight="700" fill="#2B6CB0">c. 240 BCE</text>
+<text x="316.2857142857143" y="672" font-size="15" font-weight="700" fill="#1A202C">埃拉托色尼筛法</text>
+<text x="316.2857142857143" y="689" font-size="11.5" font-style="italic" fill="#718096">Sieve of Eratosthenes</text>
+<text x="316.2857142857143" y="706" font-size="12.5" fill="#2D3748">筛选素数；并测算</text>
+<text x="316.2857142857143" y="723" font-size="12.5" fill="#2D3748">地球周长</text>
+<g filter="url(#sh)"><rect x="302.2857142857143" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="302.2857142857143" y="752" width="4" height="91" rx="2" fill="#2B6CB0"/>
+<text x="316.2857142857143" y="767" font-size="13" font-weight="700" fill="#2B6CB0">c. 250 CE</text>
+<text x="316.2857142857143" y="787" font-size="15" font-weight="700" fill="#1A202C">丢番图《算术》</text>
+<text x="316.2857142857143" y="804" font-size="11.5" font-style="italic" fill="#718096">Diophantus, Arithmetica</text>
+<text x="316.2857142857143" y="821" font-size="12.5" fill="#2D3748">符号代数萌芽；</text>
+<text x="316.2857142857143" y="838" font-size="12.5" fill="#2D3748">不定方程</text>
+<g filter="url(#sh)"><rect x="546.5714285714286" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="546.5714285714286" y="292" width="4" height="91" rx="2" fill="#C53030"/>
+<text x="560.5714285714286" y="307" font-size="13" font-weight="700" fill="#C53030">c. 100 BCE</text>
+<text x="560.5714285714286" y="327" font-size="15" font-weight="700" fill="#1A202C">《九章算术》</text>
+<text x="560.5714285714286" y="344" font-size="11.5" font-style="italic" fill="#718096">Nine Chapters</text>
+<text x="560.5714285714286" y="361" font-size="12.5" fill="#2D3748">负数运算；“方程”术</text>
+<text x="560.5714285714286" y="378" font-size="12.5" fill="#2D3748">≈ 高斯消元法</text>
+<g filter="url(#sh)"><rect x="546.5714285714286" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="546.5714285714286" y="407" width="4" height="91" rx="2" fill="#C53030"/>
+<text x="560.5714285714286" y="422" font-size="13" font-weight="700" fill="#C53030">263</text>
+<text x="560.5714285714286" y="442" font-size="15" font-weight="700" fill="#1A202C">刘徽 割圆术</text>
+<text x="560.5714285714286" y="459" font-size="11.5" font-style="italic" fill="#718096">Liu Hui</text>
+<text x="560.5714285714286" y="476" font-size="12.5" fill="#2D3748">以内接多边形逼近</text>
+<text x="560.5714285714286" y="493" font-size="12.5" fill="#2D3748">圆，π ≈ 3.1416</text>
+<g filter="url(#sh)"><rect x="546.5714285714286" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="546.5714285714286" y="522" width="4" height="91" rx="2" fill="#C53030"/>
+<text x="560.5714285714286" y="537" font-size="13" font-weight="700" fill="#C53030">c. 480</text>
+<text x="560.5714285714286" y="557" font-size="15" font-weight="700" fill="#1A202C">祖冲之</text>
+<text x="560.5714285714286" y="574" font-size="11.5" font-style="italic" fill="#718096">Zu Chongzhi</text>
+<text x="560.5714285714286" y="591" font-size="12.5" fill="#2D3748">3.1415926 &lt; π &lt;</text>
+<text x="560.5714285714286" y="608" font-size="12.5" fill="#2D3748">3.1415927</text>
+<g filter="url(#sh)"><rect x="546.5714285714286" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="546.5714285714286" y="637" width="4" height="91" rx="2" fill="#C53030"/>
+<text x="560.5714285714286" y="652" font-size="13" font-weight="700" fill="#C53030">499</text>
+<text x="560.5714285714286" y="672" font-size="15" font-weight="700" fill="#1A202C">阿耶波多</text>
+<text x="560.5714285714286" y="689" font-size="11.5" font-style="italic" fill="#718096">Aryabhata</text>
+<text x="560.5714285714286" y="706" font-size="12.5" fill="#2D3748">正弦表 (Sine Table)；</text>
+<text x="560.5714285714286" y="723" font-size="12.5" fill="#2D3748">位值制计数</text>
+<g filter="url(#sh)"><rect x="546.5714285714286" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="546.5714285714286" y="752" width="4" height="91" rx="2" fill="#C53030"/>
+<text x="560.5714285714286" y="767" font-size="13" font-weight="700" fill="#C53030">628</text>
+<text x="560.5714285714286" y="787" font-size="15" font-weight="700" fill="#1A202C">婆罗摩笈多</text>
+<text x="560.5714285714286" y="804" font-size="11.5" font-style="italic" fill="#718096">Brahmagupta</text>
+<text x="560.5714285714286" y="821" font-size="12.5" fill="#2D3748">首次给出“零”(Zero)</text>
+<text x="560.5714285714286" y="838" font-size="12.5" fill="#2D3748">的运算规则</text>
+<g filter="url(#sh)"><rect x="790.8571428571429" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="790.8571428571429" y="292" width="4" height="91" rx="2" fill="#2F855A"/>
+<text x="804.8571428571429" y="307" font-size="13" font-weight="700" fill="#2F855A">c. 820</text>
+<text x="804.8571428571429" y="327" font-size="15" font-weight="700" fill="#1A202C">花拉子米《代数学》</text>
+<text x="804.8571428571429" y="344" font-size="11.5" font-style="italic" fill="#718096">al-Khwarizmi</text>
+<text x="804.8571428571429" y="361" font-size="12.5" fill="#2D3748">al-jabr → Algebra；</text>
+<text x="804.8571428571429" y="378" font-size="12.5" fill="#2D3748">其名 → Algorithm</text>
+<g filter="url(#sh)"><rect x="790.8571428571429" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="790.8571428571429" y="407" width="4" height="91" rx="2" fill="#2F855A"/>
+<text x="804.8571428571429" y="422" font-size="13" font-weight="700" fill="#2F855A">c. 1000</text>
+<text x="804.8571428571429" y="442" font-size="15" font-weight="700" fill="#1A202C">卡拉吉</text>
+<text x="804.8571428571429" y="459" font-size="11.5" font-style="italic" fill="#718096">al-Karaji</text>
+<text x="804.8571428571429" y="476" font-size="12.5" fill="#2D3748">多项式代数；</text>
+<text x="804.8571428571429" y="493" font-size="12.5" fill="#2D3748">数学归纳法雏形</text>
+<g filter="url(#sh)"><rect x="790.8571428571429" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="790.8571428571429" y="522" width="4" height="91" rx="2" fill="#2F855A"/>
+<text x="804.8571428571429" y="537" font-size="13" font-weight="700" fill="#2F855A">c. 1070</text>
+<text x="804.8571428571429" y="557" font-size="15" font-weight="700" fill="#1A202C">欧玛尔·海亚姆</text>
+<text x="804.8571428571429" y="574" font-size="11.5" font-style="italic" fill="#718096">Omar Khayyam</text>
+<text x="804.8571428571429" y="591" font-size="12.5" fill="#2D3748">用圆锥曲线几何地</text>
+<text x="804.8571428571429" y="608" font-size="12.5" fill="#2D3748">求解三次方程</text>
+<g filter="url(#sh)"><rect x="790.8571428571429" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="790.8571428571429" y="637" width="4" height="91" rx="2" fill="#2F855A"/>
+<text x="804.8571428571429" y="652" font-size="13" font-weight="700" fill="#2F855A">1202</text>
+<text x="804.8571428571429" y="672" font-size="15" font-weight="700" fill="#1A202C">斐波那契《计算之书》</text>
+<text x="804.8571428571429" y="689" font-size="11.5" font-style="italic" fill="#718096">Fibonacci, Liber Abaci</text>
+<text x="804.8571428571429" y="706" font-size="12.5" fill="#2D3748">将印度-阿拉伯数字</text>
+<text x="804.8571428571429" y="723" font-size="12.5" fill="#2D3748">传入欧洲</text>
+<g filter="url(#sh)"><rect x="790.8571428571429" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="790.8571428571429" y="752" width="4" height="91" rx="2" fill="#2F855A"/>
+<text x="804.8571428571429" y="767" font-size="13" font-weight="700" fill="#2F855A">c. 1260</text>
+<text x="804.8571428571429" y="787" font-size="15" font-weight="700" fill="#1A202C">纳西尔丁·图西</text>
+<text x="804.8571428571429" y="804" font-size="11.5" font-style="italic" fill="#718096">Nasir al-Din al-Tusi</text>
+<text x="804.8571428571429" y="821" font-size="12.5" fill="#2D3748">使三角学成为独立</text>
+<text x="804.8571428571429" y="838" font-size="12.5" fill="#2D3748">学科</text>
+<g filter="url(#sh)"><rect x="1035.142857142857" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1035.142857142857" y="292" width="4" height="91" rx="2" fill="#6B46C1"/>
+<text x="1049.142857142857" y="307" font-size="13" font-weight="700" fill="#6B46C1">1545</text>
+<text x="1049.142857142857" y="327" font-size="15" font-weight="700" fill="#1A202C">卡尔达诺《大术》</text>
+<text x="1049.142857142857" y="344" font-size="11.5" font-style="italic" fill="#718096">Cardano, Ars Magna</text>
+<text x="1049.142857142857" y="361" font-size="12.5" fill="#2D3748">三次、四次方程的</text>
+<text x="1049.142857142857" y="378" font-size="12.5" fill="#2D3748">根式解</text>
+<g filter="url(#sh)"><rect x="1035.142857142857" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1035.142857142857" y="407" width="4" height="91" rx="2" fill="#6B46C1"/>
+<text x="1049.142857142857" y="422" font-size="13" font-weight="700" fill="#6B46C1">1614</text>
+<text x="1049.142857142857" y="442" font-size="15" font-weight="700" fill="#1A202C">纳皮尔 对数</text>
+<text x="1049.142857142857" y="459" font-size="11.5" font-style="italic" fill="#718096">Napier, Logarithms</text>
+<text x="1049.142857142857" y="476" font-size="12.5" fill="#2D3748">化乘为加，极大简化</text>
+<text x="1049.142857142857" y="493" font-size="12.5" fill="#2D3748">天文计算</text>
+<g filter="url(#sh)"><rect x="1035.142857142857" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1035.142857142857" y="522" width="4" height="91" rx="2" fill="#6B46C1"/>
+<text x="1049.142857142857" y="537" font-size="13" font-weight="700" fill="#6B46C1">1637</text>
+<text x="1049.142857142857" y="557" font-size="15" font-weight="700" fill="#1A202C">笛卡尔 解析几何</text>
+<text x="1049.142857142857" y="574" font-size="11.5" font-style="italic" fill="#718096">Descartes, Analytic Geom.</text>
+<text x="1049.142857142857" y="591" font-size="12.5" fill="#2D3748">坐标系统一了代数</text>
+<text x="1049.142857142857" y="608" font-size="12.5" fill="#2D3748">与几何</text>
+<g filter="url(#sh)"><rect x="1035.142857142857" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1035.142857142857" y="637" width="4" height="91" rx="2" fill="#6B46C1"/>
+<text x="1049.142857142857" y="652" font-size="13" font-weight="700" fill="#6B46C1">1654</text>
+<text x="1049.142857142857" y="672" font-size="15" font-weight="700" fill="#1A202C">帕斯卡与费马</text>
+<text x="1049.142857142857" y="689" font-size="11.5" font-style="italic" fill="#718096">Pascal &amp; Fermat</text>
+<text x="1049.142857142857" y="706" font-size="12.5" fill="#2D3748">通信奠定概率论</text>
+<text x="1049.142857142857" y="723" font-size="12.5" fill="#2D3748">(Probability)</text>
+<g filter="url(#sh)"><rect x="1035.142857142857" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1035.142857142857" y="752" width="4" height="91" rx="2" fill="#6B46C1"/>
+<text x="1049.142857142857" y="767" font-size="13" font-weight="700" fill="#6B46C1">1665–1684</text>
+<text x="1049.142857142857" y="787" font-size="15" font-weight="700" fill="#1A202C">牛顿与莱布尼茨</text>
+<text x="1049.142857142857" y="804" font-size="11.5" font-style="italic" fill="#718096">Newton &amp; Leibniz</text>
+<text x="1049.142857142857" y="821" font-size="12.5" fill="#2D3748">各自独立创立</text>
+<text x="1049.142857142857" y="838" font-size="12.5" fill="#2D3748">微积分 (Calculus)</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="292" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="307" font-size="13" font-weight="700" fill="#B83280">1748</text>
+<text x="1293.4285714285713" y="327" font-size="15" font-weight="700" fill="#1A202C">欧拉</text>
+<text x="1293.4285714285713" y="344" font-size="11.5" font-style="italic" fill="#718096">Euler</text>
+<text x="1293.4285714285713" y="361" font-size="12.5" fill="#2D3748">e<tspan dy="-5" font-size="9.5">ix</tspan><tspan dy="5"> = cos x + i sin x；</tspan></text>
+<text x="1293.4285714285713" y="378" font-size="12.5" fill="#2D3748">函数概念系统化</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="407" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="422" font-size="13" font-weight="700" fill="#B83280">1801</text>
+<text x="1293.4285714285713" y="442" font-size="15" font-weight="700" fill="#1A202C">高斯《算术研究》</text>
+<text x="1293.4285714285713" y="459" font-size="11.5" font-style="italic" fill="#718096">Disquisitiones Arithmeticae</text>
+<text x="1293.4285714285713" y="476" font-size="12.5" fill="#2D3748">现代数论 (Number</text>
+<text x="1293.4285714285713" y="493" font-size="12.5" fill="#2D3748">Theory) 奠基</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="522" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="537" font-size="13" font-weight="700" fill="#B83280">1829–1832</text>
+<text x="1293.4285714285713" y="557" font-size="15" font-weight="700" fill="#1A202C">非欧几何</text>
+<text x="1293.4285714285713" y="574" font-size="11.5" font-style="italic" fill="#718096">Lobachevsky &amp; Bolyai</text>
+<text x="1293.4285714285713" y="591" font-size="12.5" fill="#2D3748">否定平行公设，几何</text>
+<text x="1293.4285714285713" y="608" font-size="12.5" fill="#2D3748">不再唯一</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="629" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="637" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="652" font-size="13" font-weight="700" fill="#B83280">1832</text>
+<text x="1293.4285714285713" y="672" font-size="15" font-weight="700" fill="#1A202C">伽罗瓦</text>
+<text x="1293.4285714285713" y="689" font-size="11.5" font-style="italic" fill="#718096">Galois</text>
+<text x="1293.4285714285713" y="706" font-size="12.5" fill="#2D3748">群论 (Group Theory)；</text>
+<text x="1293.4285714285713" y="723" font-size="12.5" fill="#2D3748">五次方程无根式解</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="744" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="752" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="767" font-size="13" font-weight="700" fill="#B83280">1854</text>
+<text x="1293.4285714285713" y="787" font-size="15" font-weight="700" fill="#1A202C">黎曼</text>
+<text x="1293.4285714285713" y="804" font-size="11.5" font-style="italic" fill="#718096">Riemann</text>
+<text x="1293.4285714285713" y="821" font-size="12.5" fill="#2D3748">黎曼几何；1859 年</text>
+<text x="1293.4285714285713" y="838" font-size="12.5" fill="#2D3748">提出黎曼猜想</text>
+<g filter="url(#sh)"><rect x="1279.4285714285713" y="859" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1279.4285714285713" y="867" width="4" height="91" rx="2" fill="#B83280"/>
+<text x="1293.4285714285713" y="882" font-size="13" font-weight="700" fill="#B83280">1874</text>
+<text x="1293.4285714285713" y="902" font-size="15" font-weight="700" fill="#1A202C">康托尔 集合论</text>
+<text x="1293.4285714285713" y="919" font-size="11.5" font-style="italic" fill="#718096">Cantor, Set Theory</text>
+<text x="1293.4285714285713" y="936" font-size="12.5" fill="#2D3748">无穷也有大小：</text>
+<text x="1293.4285714285713" y="953" font-size="12.5" fill="#2D3748">可数与不可数</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="284" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="292" width="4" height="91" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="307" font-size="13" font-weight="700" fill="#2C7A7B">1900</text>
+<text x="1537.7142857142858" y="327" font-size="15" font-weight="700" fill="#1A202C">希尔伯特 23 问题</text>
+<text x="1537.7142857142858" y="344" font-size="11.5" font-style="italic" fill="#718096">Hilbert's Problems</text>
+<text x="1537.7142857142858" y="361" font-size="12.5" fill="#2D3748">规划了 20 世纪数学</text>
+<text x="1537.7142857142858" y="378" font-size="12.5" fill="#2D3748">的研究方向</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="399" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="407" width="4" height="91" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="422" font-size="13" font-weight="700" fill="#2C7A7B">1931</text>
+<text x="1537.7142857142858" y="442" font-size="15" font-weight="700" fill="#1A202C">哥德尔不完备定理</text>
+<text x="1537.7142857142858" y="459" font-size="11.5" font-style="italic" fill="#718096">Gödel, Incompleteness</text>
+<text x="1537.7142857142858" y="476" font-size="12.5" fill="#2D3748">足够强的形式系统</text>
+<text x="1537.7142857142858" y="493" font-size="12.5" fill="#2D3748">无法自证完备与一致</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="514" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="522" width="4" height="91" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="537" font-size="13" font-weight="700" fill="#2C7A7B">1936</text>
+<text x="1537.7142857142858" y="557" font-size="15" font-weight="700" fill="#1A202C">图灵机</text>
+<text x="1537.7142857142858" y="574" font-size="11.5" font-style="italic" fill="#718096">Turing, Computability</text>
+<text x="1537.7142857142858" y="591" font-size="12.5" fill="#2D3748">可计算性理论；</text>
+<text x="1537.7142857142858" y="608" font-size="12.5" fill="#2D3748">计算机科学的基础</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="629" width="218.28571428571428" height="90" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="637" width="4" height="74" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="652" font-size="13" font-weight="700" fill="#2C7A7B">1948</text>
+<text x="1537.7142857142858" y="672" font-size="15" font-weight="700" fill="#1A202C">香农 信息论</text>
+<text x="1537.7142857142858" y="689" font-size="11.5" font-style="italic" fill="#718096">Shannon, Information Theory</text>
+<text x="1537.7142857142858" y="706" font-size="12.5" fill="#2D3748">以“比特”度量信息</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="727" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="735" width="4" height="91" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="750" font-size="13" font-weight="700" fill="#2C7A7B">1976</text>
+<text x="1537.7142857142858" y="770" font-size="15" font-weight="700" fill="#1A202C">四色定理</text>
+<text x="1537.7142857142858" y="787" font-size="11.5" font-style="italic" fill="#718096">Appel &amp; Haken</text>
+<text x="1537.7142857142858" y="804" font-size="12.5" fill="#2D3748">第一个依赖计算机</text>
+<text x="1537.7142857142858" y="821" font-size="12.5" fill="#2D3748">完成的重大证明</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="842" width="218.28571428571428" height="90" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="850" width="4" height="74" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="865" font-size="13" font-weight="700" fill="#2C7A7B">1995</text>
+<text x="1537.7142857142858" y="885" font-size="15" font-weight="700" fill="#1A202C">费马大定理</text>
+<text x="1537.7142857142858" y="902" font-size="11.5" font-style="italic" fill="#718096">Wiles, Fermat's Last Theorem</text>
+<text x="1537.7142857142858" y="919" font-size="12.5" fill="#2D3748">历经 358 年终获证明</text>
+<g filter="url(#sh)"><rect x="1523.7142857142858" y="940" width="218.28571428571428" height="107" rx="8" fill="#fff"/></g>
+<rect x="1523.7142857142858" y="948" width="4" height="91" rx="2" fill="#2C7A7B"/>
+<text x="1537.7142857142858" y="963" font-size="13" font-weight="700" fill="#2C7A7B">2003</text>
+<text x="1537.7142857142858" y="983" font-size="15" font-weight="700" fill="#1A202C">庞加莱猜想</text>
+<text x="1537.7142857142858" y="1000" font-size="11.5" font-style="italic" fill="#718096">Perelman, Poincaré Conj.</text>
+<text x="1537.7142857142858" y="1017" font-size="12.5" fill="#2D3748">千禧年难题中唯一</text>
+<text x="1537.7142857142858" y="1034" font-size="12.5" fill="#2D3748">已解决者</text>
+<text x="50" y="1125" font-size="22" font-weight="700" fill="#1A202C">主要分支的兴起</text>
+<text x="222" y="1125" font-size="14" fill="#718096">Emergence of Major Branches — 各分支自起源延续至今</text>
+<rect x="50.0" y="1143" width="234.28571428571428" height="434" rx="8" fill="#FDF3E1" fill-opacity="0.7"/>
+<rect x="294.2857142857143" y="1143" width="234.28571428571428" height="434" rx="8" fill="#E6F0FA" fill-opacity="0.7"/>
+<rect x="538.5714285714286" y="1143" width="234.28571428571428" height="434" rx="8" fill="#FCE8E8" fill-opacity="0.7"/>
+<rect x="782.8571428571429" y="1143" width="234.28571428571428" height="434" rx="8" fill="#E5F4EC" fill-opacity="0.7"/>
+<rect x="1027.142857142857" y="1143" width="234.28571428571428" height="434" rx="8" fill="#EFE9FB" fill-opacity="0.7"/>
+<rect x="1271.4285714285713" y="1143" width="234.28571428571428" height="434" rx="8" fill="#FBE7F2" fill-opacity="0.7"/>
+<rect x="1515.7142857142858" y="1143" width="234.28571428571428" height="434" rx="8" fill="#E2F4F4" fill-opacity="0.7"/>
+<rect x="85.1" y="1171" width="1650.9" height="8" rx="4" fill="url(#f0)"/>
+<path d="M1734,1166 L1746,1175 L1734,1184 z" fill="#B7791F" fill-opacity="0.35"/>
+<circle cx="85.1" cy="1175" r="7" fill="#B7791F" stroke="#fff" stroke-width="2"/>
+<text x="81.1" y="1163" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">算术 <tspan font-size="11.5" font-style="italic" fill="#718096">Arithmetic</tspan></text>
+<rect x="167.1" y="1209" width="1568.9" height="8" rx="4" fill="url(#f1)"/>
+<path d="M1734,1204 L1746,1213 L1734,1222 z" fill="#2B6CB0" fill-opacity="0.35"/>
+<circle cx="167.1" cy="1213" r="7" fill="#2B6CB0" stroke="#fff" stroke-width="2"/>
+<text x="163.1" y="1201" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">几何 <tspan font-size="11.5" font-style="italic" fill="#718096">Geometry</tspan></text>
+<rect x="341.1" y="1247" width="1394.9" height="8" rx="4" fill="url(#f1)"/>
+<path d="M1734,1242 L1746,1251 L1734,1260 z" fill="#2B6CB0" fill-opacity="0.35"/>
+<circle cx="341.1" cy="1251" r="7" fill="#2B6CB0" stroke="#fff" stroke-width="2"/>
+<text x="337.1" y="1239" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">数论 <tspan font-size="11.5" font-style="italic" fill="#718096">Number Theory</tspan></text>
+<rect x="679.1" y="1285" width="1056.9" height="8" rx="4" fill="url(#f2)"/>
+<path d="M1734,1280 L1746,1289 L1734,1298 z" fill="#C53030" fill-opacity="0.35"/>
+<circle cx="679.1" cy="1289" r="7" fill="#C53030" stroke="#fff" stroke-width="2"/>
+<text x="675.1" y="1277" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">三角学 <tspan font-size="11.5" font-style="italic" fill="#718096">Trigonometry</tspan></text>
+<rect x="818.0" y="1323" width="918.0" height="8" rx="4" fill="url(#f3)"/>
+<path d="M1734,1318 L1746,1327 L1734,1336 z" fill="#2F855A" fill-opacity="0.35"/>
+<circle cx="818.0" cy="1327" r="7" fill="#2F855A" stroke="#fff" stroke-width="2"/>
+<text x="814.0" y="1315" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">代数 <tspan font-size="11.5" font-style="italic" fill="#718096">Algebra</tspan></text>
+<rect x="1202.9" y="1361" width="533.1" height="8" rx="4" fill="url(#f4)"/>
+<path d="M1734,1356 L1746,1365 L1734,1374 z" fill="#6B46C1" fill-opacity="0.35"/>
+<circle cx="1202.9" cy="1365" r="7" fill="#6B46C1" stroke="#fff" stroke-width="2"/>
+<text x="1198.9" y="1353" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">微积分与分析 <tspan font-size="11.5" font-style="italic" fill="#718096">Calculus &amp; Analysis</tspan></text>
+<rect x="1167.7" y="1399" width="568.3" height="8" rx="4" fill="url(#f4)"/>
+<path d="M1734,1394 L1746,1403 L1734,1412 z" fill="#6B46C1" fill-opacity="0.35"/>
+<circle cx="1167.7" cy="1403" r="7" fill="#6B46C1" stroke="#fff" stroke-width="2"/>
+<text x="1163.7" y="1391" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">概率与统计 <tspan font-size="11.5" font-style="italic" fill="#718096">Probability &amp; Statistics</tspan></text>
+<rect x="1376.9" y="1437" width="359.1" height="8" rx="4" fill="url(#f5)"/>
+<path d="M1734,1432 L1746,1441 L1734,1450 z" fill="#B83280" fill-opacity="0.35"/>
+<circle cx="1376.9" cy="1441" r="7" fill="#B83280" stroke="#fff" stroke-width="2"/>
+<text x="1372.9" y="1429" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">抽象代数 <tspan font-size="11.5" font-style="italic" fill="#718096">Abstract Algebra</tspan></text>
+<rect x="1470.6" y="1475" width="265.4" height="8" rx="4" fill="url(#f5)"/>
+<path d="M1734,1470 L1746,1479 L1734,1488 z" fill="#B83280" fill-opacity="0.35"/>
+<circle cx="1470.6" cy="1479" r="7" fill="#B83280" stroke="#fff" stroke-width="2"/>
+<text x="1466.6" y="1467" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">集合论与数理逻辑 <tspan font-size="11.5" font-style="italic" fill="#718096">Set Theory &amp; Logic</tspan></text>
+<rect x="1482.3" y="1513" width="253.7" height="8" rx="4" fill="url(#f5)"/>
+<path d="M1734,1508 L1746,1517 L1734,1526 z" fill="#B83280" fill-opacity="0.35"/>
+<circle cx="1482.3" cy="1517" r="7" fill="#B83280" stroke="#fff" stroke-width="2"/>
+<text x="1478.3" y="1505" text-anchor="start" font-size="13.5" font-weight="700" fill="#1A202C">拓扑学 <tspan font-size="11.5" font-style="italic" fill="#718096">Topology</tspan></text>
+<rect x="1574.3" y="1551" width="161.7" height="8" rx="4" fill="url(#f6)"/>
+<path d="M1734,1546 L1746,1555 L1734,1564 z" fill="#2C7A7B" fill-opacity="0.35"/>
+<circle cx="1574.3" cy="1555" r="7" fill="#2C7A7B" stroke="#fff" stroke-width="2"/>
+<text x="1578.3" y="1543" text-anchor="end" font-size="13.5" font-weight="700" fill="#1A202C">计算理论 <tspan font-size="11.5" font-style="italic" fill="#718096">Theory of Computation</tspan></text>
+<text x="50" y="1613" font-size="12.5" fill="#718096">注：各时代列宽相等，为非线性时间轴 (non-linear time scale)；“c.” = circa，表示约数年份。</text>
+<text x="1750" y="1613" text-anchor="end" font-size="12.5" fill="#A0AEC0">BCE = 公元前 · CE = 公元</text>
+</svg>
