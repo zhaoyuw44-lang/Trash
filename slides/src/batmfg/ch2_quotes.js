@@ -44,7 +44,7 @@ module.exports = {
     recipe: "2016 年 Stein 等在 JoVE 上用文字加视频公开了 Texas A&M 的全套做法，配方是 NMC : 炭黑 : PVDF = 70 : 20 : 10。Li 等 2022 写到，工业电极的活性物质可做到 96 wt% 以上。",
     carbon: "乙炔黑在 20 世纪初开始工业生产，很早就用在干电池里。1991 年饭岛澄男 (Iijima) 报道碳纳米管，2004 年 Geim 与 Novoselov 剥离出石墨烯。2010 年代起，CNT 导电浆逐渐进入动力电池。",
     binder: "1938 年 DuPont 的 Plunkett 意外得到 PTFE（Teflon）。PVDF 在 1940 年代合成，1960 年代起以 Kynar 等牌号商品化。1991 年 Sony 的锂离子电池用 PVDF/NMP 浆料涂布电极，此后成为正极标准。",
-    water: "CMC 在 1918 年首次制得，原本用于食品、造纸和洗涤剂。SBR 是 1929 年德国 IG Farben 开发的合成橡胶 (Buna S)。2000 年代起，石墨负极普遍改用 CMC/SBR 水系。2018 年欧盟 REACH 法规限制 NMP，2020 年生效。",
+    water: "CMC 在 1918 年首次制得，原用于食品和造纸；SBR 是 1929 年 IG Farben 开发的合成橡胶。2000 年代起石墨负极普遍改用水系。欧盟 2018 年限制 NMP（2020 年生效）。",
     stokes: "1851 年 Stokes 推导出小球在粘性液体中下沉的速度（Stokes 定律）。Li 等 2022 把“沉降要比生产节拍慢得多”列为混合的两大目标之一。",
     stein: "Stein 等 2016 来自 Texas A&M 的 ETSL 实验室和 Texas State University。他们特意写出常被省略的细节：怎么洗铝箔、加多少 NMP、浆料放久了要重混。",
     mixers: "行星式搅拌来自食品工业，1900 年代 Hobart 已推出电动立式搅拌机。双螺杆挤出机在食品、制药业连续生产已用了几十年；Li 等 2022 引用 Bühler 公司的电池浆料连续混合方案。",

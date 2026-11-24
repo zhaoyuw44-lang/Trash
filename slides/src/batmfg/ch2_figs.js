@@ -114,8 +114,8 @@ figs.electrode_cross = () => {
   CROSS_P.forEach(([x, y, r]) => { b += particle(x, y, r); });
   b += rect(30, 432, 530, 22, AL, { rx: 3 });
   // electron path: particle 7 -> 3 -> foil
-  b += arrow(352, 330, 396, 372, { color: COL.amber, width: 4, head: 13, dash: "8 6" });
-  b += arrow(420, 425, 420, 470, { color: COL.amber, width: 4, head: 13 });
+  b += arrow(398, 374, 360, 334, { color: COL.amber, width: 4, head: 13, dash: "8 6" });
+  b += arrow(420, 478, 420, 436, { color: COL.amber, width: 4, head: 13 });
   b += electron(445, 486, 13);
   // ion path through pore
   b += ion(298, 92, { r: 15, fill: COL.purple, label: "+" }) + text(320, 99, "Li^{+}", { size: 20, fill: COL.purple, weight: "bold" });
@@ -135,7 +135,7 @@ figs.electrode_cross = () => {
     b += text(x, y + 25, d, { size: 19, fill: COL.text2 });
   });
   b += circ(548, 236, 6, CB) + line(536, 330, 552, 330, BIND, 7);
-  b += text(30, 520, "橙：电子路径　紫：Li^{+} 路径", { size: 19, fill: COL.text2 });
+  b += text(30, 520, "放电时：电子从箔进来（橙），Li^{+} 从孔进来（紫）", { size: 19, fill: COL.text2 });
   return svg(W, H, b);
 };
 

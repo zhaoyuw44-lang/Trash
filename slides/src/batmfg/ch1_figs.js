@@ -146,10 +146,9 @@ figs.anatomy = () => {
     b += rect(xx, 50, w, 200, c, c === SEP ? { stroke: COL.line, sw: 2, dash: "6 5" } : {});
     xx += w;
   });
-  b += arrow(x2 + 160, 120, x2 + 70, 120, { color: COL.purple, width: 3.5, head: 13 });
-  b += text(x2 + 118, 108, "Li^{+}", { size: 18, anchor: "middle", weight: "bold", fill: COL.purple });
-  b += text(x2 + 88, 225, "隔膜", { size: 17, anchor: "middle", fill: COL.text2 });
-  const lab2 = [["Al", x2 + 6, COL.text2], ["正极", x2 + 47, CATH], ["负极", x2 + 139, ANODE], ["Cu", x2 + 175, CU]];
+  b += arrow(x2 + 160, 150, x2 + 60, 150, { color: COL.white, width: 4, head: 14 });
+  b += rect(x2 + 66, 96, 52, 28, COL.white, { rx: 8 }) + text(x2 + 92, 117, "Li^{+}", { size: 18, anchor: "middle", weight: "bold", fill: COL.purple });
+  const lab2 = [["Al", x2 + 6, COL.text2], ["正极", x2 + 44, CATH], ["隔膜", x2 + 95, COL.text2], ["负极", x2 + 146, ANODE], ["Cu", x2 + 186, CU]];
   lab2.forEach(([t, x, c]) => (b += text(x, 282, t, { size: 18, anchor: "middle", weight: "bold", fill: c })));
   b += text(x2 + 92, 308, "放电时 Li^{+} 从负极游向正极", { size: 17, anchor: "middle", fill: COL.text2 });
   b += arrow(560, 150, 610, 150, { color: COL.muted, width: 3 });
@@ -242,10 +241,10 @@ figs.electrode_line = () => {
   b += text(x + 66, 28, "NMP", { size: 17, fill: COL.purple, weight: "bold" });
   // 4 calender
   x = cx(3);
-  b += circ(x, 82, 40, "#AEB8C2", { stroke: COL.muted, sw: 2 }) + circ(x, 82, 8, COL.white);
-  b += line(x - 90, 132, x - 30, 128, CATH, 10) + line(x + 30, 130, x + 90, 130, CATH, 5);
-  b += circ(x, 172, 40, "#AEB8C2", { stroke: COL.muted, sw: 2 });
-  b += arrow(x, 20, x, 38, { color: COL.ink, width: 3 });
+  b += circ(x, 72, 34, "#AEB8C2", { stroke: COL.muted, sw: 2 }) + circ(x, 72, 7, COL.white);
+  b += circ(x, 148, 34, "#AEB8C2", { stroke: COL.muted, sw: 2 }) + circ(x, 148, 7, COL.white);
+  b += line(x - 90, 110, x - 30, 110, CATH, 12) + line(x + 30, 110, x + 90, 110, CATH, 5);
+  b += arrow(x, 14, x, 34, { color: COL.ink, width: 3 });
   // 5 slitting
   x = cx(4);
   b += rect(x - 80, 110, 160, 34, CATH, { rx: 3 });
@@ -301,11 +300,11 @@ figs.assembly = () => {
   b += text(c3, 320, "Z 形折叠 Z-folding", { size: 21, anchor: "middle", weight: "bold" });
   b += lines(c3, 352, ["隔膜连续折成 Z 形", "电极逐片插入"], { size: 19, anchor: "middle", fill: COL.text2, lh: 28 });
   // overhang rule
-  b += rect(20, 418, 780, 108, COL.light, { rx: 14 });
-  b += rect(52, 438, 150, 70, ANODE, { rx: 4 }) + rect(66, 450, 122, 46, CATH, { rx: 3 });
-  b += text(230, 462, "负极要比正极大一圈，把正极完全盖住", { size: 20, weight: "bold" });
-  b += text(230, 494, "否则正极边缘的锂离子没处去，会析出金属锂", { size: 19, fill: COL.text2 });
-  b += pill(20, 380, 150, 28, CATH, "正极", { size: 19 }) + pill(185, 380, 150, 28, ANODE, "负极", { size: 19 });
+  b += rect(20, 438, 780, 96, COL.light, { rx: 14 });
+  b += rect(44, 452, 150, 68, ANODE, { rx: 4 }) + rect(58, 464, 122, 44, CATH, { rx: 3 });
+  b += text(216, 478, "负极要比正极大一圈，把正极完全盖住", { size: 20, weight: "bold" });
+  b += text(216, 510, "否则正极边缘的锂没处去，会析出金属锂", { size: 19, fill: COL.text2 });
+  b += pill(250, 396, 150, 32, CATH, "正极", { size: 19 }) + pill(420, 396, 150, 32, ANODE, "负极", { size: 19 });
   return svg(W, H, b);
 };
 
@@ -316,7 +315,7 @@ figs.formation = () => {
   const x0 = 80, x1 = 790, y0 = 280, yTop = 40;
   const V = (v) => y0 - (v / 4.4) * (y0 - yTop);
   b += line(x0, y0, x1, y0, COL.ink, 3) + line(x0, y0, x0, yTop - 10, COL.ink, 3);
-  b += text(x0 - 12, yTop + 4, "V", { size: 20, anchor: "end", weight: "bold" });
+  b += text(x0, yTop - 18, "电压 V", { size: 19, anchor: "middle", weight: "bold" });
   b += text(x1, y0 + 30, "时间 →", { size: 19, anchor: "end", fill: COL.text2 });
   [[1.5, "1.5"], [4.2, "4.2"]].forEach(([v, t]) => {
     b += line(x0 - 6, V(v), x0, V(v), COL.ink, 2);
@@ -328,11 +327,11 @@ figs.formation = () => {
   b += line(600, V(3.8) - 14, 590, V(3.8) + 14, COL.white, 8) + line(612, V(3.8) - 14, 602, V(3.8) + 14, COL.white, 8);
   b += line(598, V(3.8) - 14, 588, V(3.8) + 14, COL.ink, 2) + line(614, V(3.8) - 14, 604, V(3.8) + 14, COL.ink, 2);
   const lab = (n, x, y, t, c = COL.ink) => circ(x, y, 15, c) + text(x, y + 7, n, { size: 19, anchor: "middle", weight: "bold", fill: COL.white }) + text(x + 22, y + 7, t, { size: 19, fill: c, weight: "bold" });
-  b += lab("1", 112, V(1.5) + 40, "预充约 1.5 V", COL.teal);
-  b += lab("2", 160, V(1.5) - 34, "静置浸润", COL.teal);
-  b += lab("3", 210, V(4.2) - 6, "小电流 C/20，长 SEI", COL.amber);
-  b += lab("4", 520, V(3.8) + 46, "排气", COL.purple);
-  b += lab("5", 640, V(3.8) - 30, "老化", COL.red);
+  b += lab("1", 128, 244, "预充约 1.5 V", COL.teal);
+  b += lab("2", 102, 160, "静置浸润", COL.teal);
+  b += lab("3", 262, 168, "小电流 C/20，长 SEI", COL.amber);
+  b += lab("4", 530, 128, "排气", COL.purple);
+  b += lab("5", 680, 42, "老化", COL.red);
   // bubbles for degassing
   [[505, V(3.8) - 22, 6], [515, V(3.8) - 40, 8], [500, V(3.8) - 58, 5]].forEach(([x, y, r]) => (b += circ(x, y, r, "none", { stroke: COL.purple, sw: 2.5 })));
   // bottom: SEI on graphite + time bars
@@ -406,10 +405,10 @@ figs.cyl_sizes = () => {
   const s = 4; // px per mm
   const base = 380;
   const cells = [
-    ["CR2032", 60, 20, 3.2, "Ø20 × 3.2 mm", "约 0.2 Ah*", COL.text2],
-    ["18650", 210, 18, 65, "Ø18 × 65 mm", "约 3 Ah", COL.amber],
-    ["21700", 340, 21, 70, "Ø21 × 70 mm", "约 5 Ah", COL.amber],
-    ["4680", 560, 46, 80, "Ø46 × 80 mm", "20 Ah 以上", COL.red],
+    ["CR2032", 85, 20, 3.2, "Ø20 × 3.2 mm", "约 0.2 Ah*", COL.text2],
+    ["18650", 222, 18, 65, "Ø18 × 65 mm", "约 3 Ah", COL.amber],
+    ["21700", 345, 21, 70, "Ø21 × 70 mm", "约 5 Ah", COL.amber],
+    ["4680", 530, 46, 80, "Ø46 × 80 mm", "20 Ah 以上", COL.red],
   ];
   b += line(20, base, 800, base, COL.line, 2);
   cells.forEach(([n, cx, d, h, dim, cap, c]) => {
@@ -452,7 +451,7 @@ figs.scales = () => {
   b += rect(x + 40, 120, 150, 8, CATH);
   b += rect(x + 190, 80, 46, 46, COL.amber, { rx: 4 });
   b += path(`M${x + 238},126 q20,-14 40,0 z`, CATH);
-  b += arrow(x + 200, 70, x + 150, 70, { color: COL.ink, width: 3 });
+  b += arrow(x + 190, 68, x + 250, 68, { color: COL.ink, width: 3 });
   b += text(x + cw / 2, 182, "刮刀涂膜：手工、一张张", { size: 18, anchor: "middle", fill: COL.text2 });
   // pilot electrode: small roll-to-roll
   x = colX[1];
