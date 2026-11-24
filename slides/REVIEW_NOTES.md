@@ -209,6 +209,26 @@
 - 1930 年 Wagner & Schottky 空位缺陷；PEO 的 Tg ≈ −60 °C、Tm ≈ 65 °C（后者与 Fenton 原文“~65 °C”一致）；Shannon 离子半径 0.76/1.02/1.38 Å。
 - “1990 年代起凝胶聚合物电解质”、LiTFSI 由 Armand 设计（只写“后来”）。
 
+### 第 4 章：原文与常见说法的出入（Mizushima et al., Mater. Res. Bull. 15, 783 (1980)；Yazami & Touzain, J. Power Sources 9, 365 (1983)；Yoshino et al., US 4,668,595 (1987)）
+- **常见说法“吉野彰 1985 年用石油焦”**：专利 Example 1 用蒽油 1200 °C 碳化物，Example 11（第一个“碳 | LiCoO₂”实施例）用气相生长碳纤维 VGCF（claim 5）；石油焦只是 claim 8（needle coke）与 Examples 33–37 之一。
+- **专利 Fig. 8、9 不是锂离子电池**：来自 Example 42，负极是 “a lithium piece”（col. 25, ll. 46–48）。
+- **专利数字前后不一**：claim 1 写 BET 0.2 < A < 100 m²/g，发明概要（col. 3）和 claims 19、20 写 0.1；Example 24 能量密度 “121.6 Whr/kg” 疑为 1216；Example 18 “alumina foil”“discharge stop voltage 27 V” 应为铝箔、2.7 V；Examples 45–47 称复合氧化物为 “carbonaceous material”；Example 45 写 “0.082 mol of stannic oxide”，Example 42 实为 0.084 mol。
+- **专利对石墨失败的解释**（col. 6：结晶度过高）只在 PC 电解液中成立；石墨在 PC 中共嵌入、剥离（专利自己引用了 Dey 1970）。商品石墨 Comparative 9 “incapable of discharging”。
+- **Mizushima 1980**：标题/摘要 0 < x ≤ 1、正文“可逆抽到 x = 0.067”，但可逆性只测了 x = 0.99–0.5（p. 786），结论只说 “at least to x = 0.5”；结论写 “4–5 V”，Fig. 3 实测约 3.87–4.71 V。
+- **Yazami 1983**：“does not solvate the Li⁺ ions” 不严谨，PEO 正是靠醚氧配位 Li⁺；关键是高分子链进不了石墨。340 Ah/kg 按 LiC₆ 质量（按碳为 372 mAh/g）。由 ΔG 算出的台阶电位约 0.72/0.50/0.33 V（60 °C、PEO），明显高于今天液态电解液室温的 0.1–0.2 V；原文在测试电池中称石墨为“正极”。
+
+### 第 4 章：读图数据
+- Mizushima Fig. 3（开路电压 vs x，10 点）和专利 Fig. 2（Example 1 充放电电压 vs 利用系数，7 点）为读图近似值；热处理温度图数据直接取自专利 Table 4、5。
+- 电压预算图中 TiS₂ ≈ 2.1 V、LiAl ≈ 0.4 V、碳 0.1–0.8 V 为常见近似值（非原文）；能带图能级位置为示意。
+
+### 第 4 章：把握较低的历史条目（未逐条查原始文献）
+- 吉野彰 1981 年开始聚乙炔、1983 年聚乙炔 + LiCoO₂ 原型、1986 年重铁块撞击安全试验：据本人回忆与旭化成介绍。
+- Armand 摇椅设想“1980 年前后”；Lazzari & Scrosati 1980 用 LiₓWO₂ 负极（Yazami 原文 ref. 6 印证了 LiₓWO₂ 出自该文，正极未写）。
+- Hérold 学派 1950 年代起研究碱金属–石墨化合物；GIC 最早发现写作“1840 年代”（Schafhäutl）。
+- Dey & Sullivan 1970（PC 在石墨上分解，专利引用其 JES 117, 222）；Besenhard 1974 起的溶剂共嵌入工作。
+- Goodenough 生平：1952–1976 MIT 林肯实验室、1976 NASICON（与 Hong 等）、1976 到 Oxford、1986 到 UT Austin；水岛公一为访问学者、P. C. Jones 为本科生（据原文 ref. 10 “Part II Thesis” 推断）。
+- 能带式解释写作“后来在综述中系统讲清（如 Goodenough & Kim 2010 Chem. Mater.）”。
+
 ### 第 5 章：原文与常见说法的出入（Fong, von Sacken & Dahn, J. Electrochem. Soc. 137, 2009 (1990)）
 - **常见说法**：“Sony 1991 年首代锂离子电池用石墨负极”不对。首代是焦炭类无序碳（软碳），随后改硬碳；石墨（MCMB 等）1990 年代中后期才成为主流。与本文一致：PC 会使石墨剥离（p. 2012），无序碳在 PC 中照样可用（Fig. 5）。
 - **p. 2011 与 Fig. 4 图注图号写错**：“not included in Fig. 4b … labeled E in Fig. 3b” 应为 Fig. 3b 与 Fig. 2b（Fig. 4 没有 (b) 分图，E 标在 Fig. 2b；Table II 脚注写的是 Fig. 3b）。Fig. 4 图注 “E in Fig. 3(b)” 同样应为 Fig. 2(b)。
