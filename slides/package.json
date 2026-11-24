@@ -1,0 +1,8 @@
+{
+  "name": "battery-review-slides",
+  "private": true,
+  "description": "Chapter-by-chapter Chinese teaching decks for battery review papers",
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}
