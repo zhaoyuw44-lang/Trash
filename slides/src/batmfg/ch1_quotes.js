@@ -6,7 +6,7 @@
 module.exports = {
   liuNotKnow: {
     en: "Many battery researchers may not know exactly how LIBs are being manufactured and how different steps impact the cost, energy consumption, and throughput, which prevents innovations in battery manufacturing.",
-    zh: "很多电池研究者并不确切知道锂离子电池是怎么造出来的，也不清楚各个步骤怎样影响成本、能耗和产能，这妨碍了电池制造的创新。",
+    zh: "很多电池研究者并不确切知道锂离子电池是怎么造的，也不清楚各步骤怎样影响成本、能耗和产能，这妨碍了制造创新。",
     ref: "Liu 2021, p. 1",
   },
   kwade1990s: {
@@ -58,7 +58,7 @@ module.exports = {
 
   corrections: [
     { head: "Kwade 2018 p. 298：“maximum tortuosity” 应为最小", body: "原文说用磁场把石墨片竖起来，“achieves maximum tortuosity”，结果离子电导“excellent”。竖排石墨是为了缩短离子路径，即降低曲折度 (tortuosity)；同文 p. 293 也把“low tortuosity”列为质量目标。" },
-    { head: "Kwade 2018 p. 298：ED 铜箔不是“电泳沉积”", body: "原文写 “electrophoretic deposit (ED) copper foils”。ED 铜箔是电解铜箔 (electrodeposited)，靠电镀长成；电泳沉积 (electrophoretic deposition) 是另一种沉积颗粒的工艺。Xiao 2023 p. 333 写的是“rolling or electrodeposition”。" },
+    { head: "Kwade 2018 p. 298：ED 铜箔不是“电泳沉积”", body: "原文写 “electrophoretic deposit (ED) copper foils”。ED 指电解铜箔 (electrodeposited)，靠电镀长成；电泳沉积 (electrophoretic deposition) 是沉积颗粒的另一种工艺。Xiao 2023 p. 333 写的是“rolling or electrodeposition”。" },
     { head: "Liu 2021 p. 11：32.16% 应为 32.61%", body: "结论部分写化成与老化占制造成本 “32.16%”，同文 Table 1 是 32.61%，p. 9 写约 32%。应是两位数字颠倒。全表十项相加正好 100.00%，可作验证。" },
     { head: "Liu 2021 p. 3：SEI 的 I 是 interphase", body: "原文写 “solid-electrolyte interface (SEI)”。Peled 1979 提出的原词是 solid electrolyte interphase（界面相），强调它是一层有厚度、有结构的膜，而不只是一个“界面”。Kwade 2018 p. 292 用的是 interphase。" },
     { head: "常见误解：扣式循环 1000 圈 = 实用电池也行", body: "扣式半电池的锂片和电解液都大量过量，副反应消耗的锂和电解液随时有补充，衰减被掩盖了。Xiao 2023 p. 331 也指出低载量电极暴露不出真正的难题。详见第 5 章。" },

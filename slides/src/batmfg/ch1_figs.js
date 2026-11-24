@@ -345,7 +345,7 @@ figs.formation = () => {
   b += text(430, 414, "化成约 1 天", { size: 19, weight: "bold", fill: COL.amber });
   b += rect(390, 440, 392, 34, COL.red, { rx: 4, opacity: 0.85 });
   b += text(586, 464, "老化 2–3 周", { size: 19, anchor: "middle", weight: "bold", fill: COL.white });
-  b += text(390, 508, "每格 ≈ 1 天，按比例画", { size: 19, fill: COL.text2 });
+  b += text(390, 508, "两条按比例画：1 天 vs 2 周", { size: 19, fill: COL.text2 });
   return svg(W, H, b);
 };
 
@@ -405,10 +405,10 @@ figs.cyl_sizes = () => {
   const s = 4; // px per mm
   const base = 380;
   const cells = [
-    ["CR2032", 85, 20, 3.2, "Ø20 × 3.2 mm", "约 0.2 Ah*", COL.text2],
-    ["18650", 222, 18, 65, "Ø18 × 65 mm", "约 3 Ah", COL.amber],
-    ["21700", 345, 21, 70, "Ø21 × 70 mm", "约 5 Ah", COL.amber],
-    ["4680", 530, 46, 80, "Ø46 × 80 mm", "20 Ah 以上", COL.red],
+    ["CR2032", 85, 20, 3.2, "20 × 3.2", "约 0.2 Ah*", COL.text2],
+    ["18650", 222, 18, 65, "18 × 65", "约 3 Ah", COL.amber],
+    ["21700", 345, 21, 70, "21 × 70", "约 5 Ah", COL.amber],
+    ["4680", 530, 46, 80, "46 × 80", "20 Ah 以上", COL.red],
   ];
   b += line(20, base, 800, base, COL.line, 2);
   cells.forEach(([n, cx, d, h, dim, cap, c]) => {
@@ -420,7 +420,7 @@ figs.cyl_sizes = () => {
     b += text(cx, base + 62, dim, { size: 19, anchor: "middle", fill: COL.text2 });
     b += text(cx, base - hh - 22, cap, { size: 19, anchor: "middle", weight: "bold", fill: COL.ink });
   });
-  b += text(20, 40, "按同一比例画（1 mm = 4 px）", { size: 19, fill: COL.text2 });
+  b += text(20, 40, "按同一比例画；尺寸为 直径 × 高 (mm)", { size: 19, fill: COL.text2 });
   b += rect(660, 90, 150, 200, COL.light, { rx: 12 });
   b += lines(735, 128, ["体积比", "18650 : 21700", ": 4680", "≈ 1 : 1.5 : 8"], { size: 19, anchor: "middle", lh: 30, fill: COL.ink });
   b += text(735, 262, "按尺寸计算", { size: 19, anchor: "middle", fill: COL.text2 });

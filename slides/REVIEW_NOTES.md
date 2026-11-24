@@ -317,3 +317,29 @@
 - Celgard 源自 1970 年代 Celanese 干法拉伸；PP/PE/PP 三层关断膜 1990 年代。
 - Tarascon & Guyomard（Bellcore）1990 年代初的 LiPF₆/EC-DMC 配方。
 - C 倍率记法源自铅酸电池 20 小时率（C₂₀）。
+
+### 第 1 章：原文笔误与不一致（Kwade et al., Nat. Energy 3, 290 (2018)；Liu et al., iScience 24, 102332 (2021)；Xiao et al., Nat. Energy 8, 329 (2023)）
+- **Kwade p. 298**：石墨颗粒磁场竖排“achieves maximum tortuosity”，应为最小（低）曲折度；同文 p. 293 把 low tortuosity 列为质量目标。
+- **Kwade p. 298**：“electrophoretic deposit (ED) copper foils”，ED 铜箔是电解铜箔 (electrodeposited)，不是电泳沉积。
+- **Kwade p. 294**：“Formatting and aging” 应为 formation（讲稿注明）。
+- **Liu p. 11**：化成与老化 “32.16%”，Table 1 为 32.61%（p. 9 写约 32%），数字颠倒。
+- **Liu p. 3**：SEI 写作 solid-electrolyte interface，原词是 interphase（Peled 1979）。
+- **Liu Table 1**：成本列是 BatPaC 模型 67 Ah NMC622 电芯，能耗列是中试线实测 32 Ah LMO 电芯，两列不是同一电芯（读表注意）。
+
+### 第 1 章：补充计算与典型值（非原文数据）
+- 正极约占电芯成本 0.495 × 0.749 ≈ 37%，正负极合计 ≈ 48%（与 Xiao 2023 “约 50%” 对照）。
+- Kwade Fig. 1b 按层级合并：电池包结构 34.4、模组 10.0、正极 20.3、负极 17.4、电芯外壳 5.8、电解液隔膜等 12.1（%）。
+- Kwade Fig. 5b 读图：到化成累计成本约 97%（约值）。
+- 圆柱电芯体积按尺寸计算：18650 ≈ 16.5、21700 ≈ 24.2、4680 ≈ 133 cm³；容量 18650 约 3 Ah、21700 约 5 Ah、4680 “20 Ah 以上”、CR2032 约 0.2 Ah，均为典型值。
+- 实验室 vs 工厂表中的“80 : 10 : 10”“约 3–4 mAh/cm²”“常不辊压”为常见值。
+
+### 第 1 章：把握较低的历史条目（未逐条查原始文献）
+- 1950 年代胶片厂发展狭缝涂布（未写 Beguin/Kodak 专利号）；Sony 1950 年代起自产录音磁带，1991 年借用磁带涂布经验。
+- 时间轴：2000 年代韩国（LG 化学、三星 SDI）、中国（比亚迪、ATL）扩产，只写到年代；2014 年超级工厂开工、2017 年量产 21700。
+- 卷绕结构先用于圆柱镍镉电池和电容器（未写年份）。
+- “化成”一词来自 Planté 铅酸电池的极板化成（19 世纪）。
+- BatPaC 模型“2010 年代初起”公开。
+- Six Sigma 1986 年 Motorola 提出，3.4 个缺陷/百万次机会。
+- 流延法 (tape casting)：1947 年 Howatt 等，陶瓷电容器薄片。
+- 高镍 NMC811 “2010 年代后期”进入量产。
+- CR2032 的 IEC 命名含义；18650 在 1990 年代成为笔记本标准尺寸。

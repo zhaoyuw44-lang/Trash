@@ -319,10 +319,10 @@ async function build(outFile, figDir) {
   // ---------------- 21. Lab vs factory ----------------
   s = d.slide("CONTENT");
   s.addText("实验室 vs 工厂：同叫“电池”，差别有多大", { placeholder: "title" });
-  d.fig(s, "lab_vs_fab", { x: 0.95, y: 1.05, w: 11.4, h: 3.1 });
-  d.caption(s, "工厂一列据 Kwade 2018 与 Xiao 2023；实验室面载量据 Xiao 2023 p. 331；标“典型”的为常见值，非原文数据。", { x: 0.6, y: 4.17, w: 12.1, h: 0.3 });
-  d.block(s, { x: 0.6, y: 4.5, w: 5.9, kind: "why", tint: true, size: 13, body: "实验室想测材料本身的极限，所以用薄电极、富液、大量锂；工厂要整块电芯的能量和寿命，样样都得省。" });
-  d.block(s, { x: 6.8, y: 4.5, w: 5.9, kind: "matters", tint: true, size: 13, body: "薄电极、富液、锂过量会把问题藏起来。第 5 章讲怎样把扣式电池设计得更接近实用。" });
+  d.fig(s, "lab_vs_fab", { x: 0.95, y: 1.05, w: 11.4, h: 2.95 });
+  d.caption(s, "工厂一列据 Kwade 2018 与 Xiao 2023；实验室面载量据 Xiao 2023 p. 331；标“典型”的为常见值，非原文数据。", { x: 0.95, y: 4.0, w: 11.4, h: 0.3 });
+  d.block(s, { x: 0.6, y: 4.35, w: 5.9, kind: "why", tint: true, size: 13, body: "实验室想测材料本身的极限，所以用薄电极、富液、大量锂；工厂要整块电芯的能量和寿命，样样都得省。" });
+  d.block(s, { x: 6.8, y: 4.35, w: 5.9, kind: "matters", tint: true, size: 13, body: "薄电极、富液、锂过量会把问题藏起来。第 5 章讲怎样把扣式电池设计得更接近实用。" });
   d.quote(s, Q.xiaoDoctorBlade);
   s.addNotes("面载量 (areal loading) 指每平方厘米涂了多少毫克活性物质，乘以比容量就是面容量 (mAh/cm²)。实验室常见配方“活性物质 : 导电碳 : 粘结剂 = 80 : 10 : 10”，而工业正极导电碳和粘结剂各只有约 2%（Xiao 2023）。富液 (flooded) 指电解液远远多于需要；贫液 (lean) 指只加刚好够的电解液。");
 
@@ -345,7 +345,7 @@ async function build(outFile, figDir) {
   s.addText("阅读校注：原文的笔误与读表注意", { placeholder: "title" });
   Q.corrections.forEach((n, i) => {
     const colI = i % 2, row = Math.floor(i / 2);
-    d.block(s, { x: colI ? 6.8 : 0.6, y: 1.25 + row * 1.85, w: 5.9, kind: "note", tint: true, size: 13, head: n.head, body: n.body });
+    d.block(s, { x: colI ? 6.8 : 0.6, y: 1.2 + row * 1.9, w: 5.9, kind: "note", tint: true, size: 13, head: n.head, body: n.body });
   });
   s.addNotes("另有一处小问题：Kwade 2018 p. 294 写“Formatting and aging”，应为 formation。最后一条是实验室常见的误解，第 5 章会用数据详细讨论。读综述时，把正文数字和表格对一对，往往能发现这类问题。");
 
