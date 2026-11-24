@@ -60,7 +60,7 @@ async function build(outFile, figDir) {
   card(s, 7.4, 1.4, 5.3, 2.45, "F1ECF8");
   s.addText("上一章回顾", { x: 7.65, y: 1.52, w: 4.9, h: 0.42, fontSize: 18, bold: true, color: C.accent3, margin: 0, isTextBox: true });
   s.addText([
-    { text: "扣式数据的波动来自载量、对齐、电解液量、压力", options: { bullet: true, breakLine: true } },
+    { text: "扣式数据波动：载量、对齐、电解液量、压力", options: { bullet: true, breakLine: true } },
     { text: "要报告：载量 mg/cm²、N/P、E/C (g/Ah)", options: { bullet: true, breakLine: true } },
     { text: "过量锂片 + 泛滥电解液会“美化”寿命", options: { bullet: true } },
   ], { x: 7.65, y: 2.0, w: 4.9, h: 1.75, fontSize: 15, color: C.text1, margin: 0, valign: "top", paraSpaceAfter: 6, isTextBox: true });
@@ -159,13 +159,13 @@ async function build(outFile, figDir) {
     { name: "累计材料成本", labels: costLabels, values: [38.0, 46.1, 46.1, 58.8, 68.9, 72.4, 72.4, 72.4, 72.4, 72.4] },
     { name: "累计工序增值", labels: costLabels, values: [0.8, 6.8, 13.5, 18.8, 19.3, 21.4, 24.0, 24.8, 26.1, 27.6] },
   ], {
-    x: 0.6, y: 1.25, w: 6.6, h: 4.3, barDir: "bar", barGrouping: "stacked",
+    x: 0.6, y: 1.25, w: 6.6, h: 4.0, barDir: "bar", barGrouping: "stacked",
     chartColors: [HEX.accent6, HEX.accent1], ...chartText,
     catAxisOrientation: "maxMin", valAxisMinVal: 0, valAxisMaxVal: 100, valAxisMajorUnit: 20, valGridLine: { color: "E3E8ED", size: 0.75 }, catGridLine: { style: "none" },
     showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt",
     showTitle: true, title: "走到这一步，已花掉总制造成本的百分之几", showValue: false,
   });
-  d.caption(s, "据 Kwade 2018 Fig. 5b 读图（近似，选取部分工序）；原数据为 37 Ah 石墨/NMC 车用电芯的成本模型。", { x: 0.6, y: 5.6, w: 6.6, h: 0.45 });
+  d.caption(s, "据 Kwade 2018 Fig. 5b 读图（近似，选取部分工序）；原数据为 37 Ah 石墨/NMC 车用电芯的成本模型。", { x: 0.6, y: 5.3, w: 6.6, h: 0.45 });
   col(s, 7.75, 1.35, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.aging },
     { kind: "why", size: 13, body: "老化就是“等”：在设定温度下放置，看电压掉多少（自放电），挑出微短路的电芯。慢充要时间，等也要时间，都占设备和厂房。" },
@@ -178,7 +178,7 @@ async function build(outFile, figDir) {
   d.section("2 N/P 配比与追溯");
   s = d.slide("DARK_SECTION");
   s.addText("2  N/P 配比与追溯", { placeholder: "title" });
-  s.addText("N/P 是什么 · 太低会析锂 · Sommer：给每片电极发“身份证” · 逐层算 N/P · 一片超载拖垮一只电池", { placeholder: "body" });
+  s.addText("N/P 是什么 · 析锂 · 给每片电极发“身份证” · 逐层算 N/P · 一片超载的后果", { placeholder: "body" });
   s.addNotes("这一节是本章的核心，也是 Sommer 论文的主体。我们先讲 N/P 的定义和它为什么重要，再看他们怎样用追溯系统，把每一片电极的载量对应到电芯里的每一层。");
 
   // ---------------- 12. N/P definition ----------------
@@ -244,13 +244,13 @@ async function build(outFile, figDir) {
     { name: "Man 2", labels: cyc, values: m2 },
     { name: "Man 3", labels: cyc, values: m3 },
   ], {
-    x: 0.6, y: 1.25, w: 6.6, h: 4.3, chartColors: [HEX.accent2, HEX.accent5, HEX.accent1, HEX.accent4], lineSize: 3, lineDataSymbol: "circle", lineDataSymbolSize: 5, ...chartText,
+    x: 0.6, y: 1.2, w: 6.6, h: 3.95, chartColors: [HEX.accent2, HEX.accent5, HEX.accent1, HEX.accent4], lineSize: 3, lineDataSymbol: "circle", lineDataSymbolSize: 5, ...chartText,
     valAxisMinVal: 0, valAxisMaxVal: 100, valAxisMajorUnit: 20, valGridLine: { color: "E3E8ED", size: 0.75 }, catGridLine: { style: "none" },
-    catAxisLabelFrequency: 4, showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt",
+    catAxisLabelFrequency: 4, catAxisLabelRotate: 0, showLegend: true, legendPos: "b", legendFontSize: 13, legendFontFace: "+mn-lt",
     showCatAxisTitle: true, catAxisTitle: "循环圈数", catAxisTitleFontSize: 12, showValAxisTitle: true, valAxisTitle: "健康度 SOH（%）", valAxisTitleFontSize: 12,
     showTitle: true, title: "每 50 圈 0.1 C 体检时的容量（1 C 循环）",
   });
-  d.caption(s, "据 Sommer 2024 Fig. 8a 读图（近似，体检点）。原文：1002 圈后 Ref 约 81%，Man 平均约 35%。", { x: 0.6, y: 5.6, w: 6.6, h: 0.3 });
+  d.caption(s, "据 Sommer 2024 Fig. 8a 读图（近似，0.1 C 体检点）。原文：1002 圈后 Ref 约 81%，Man 平均约 35%。", { x: 0.6, y: 5.2, w: 6.6, h: 0.45 });
   col(s, 7.75, 1.35, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.results },
     { kind: "why", size: 13, body: "算出的容量与实测吻合（Ref 1.953 vs 1.955 Ah）。Man 算出多 4%，实测只多 2.6%：超载正极多出的锂，对面负极“接不住”。" },
@@ -294,13 +294,13 @@ async function build(outFile, figDir) {
   // ---------------- 20. Xiao scale-up ----------------
   s = d.slide("CONTENT");
   s.addText("1 g 和 1 kg 不是一回事", { placeholder: "title" });
-  d.fig(s, "xiao_cycles", { x: 0.5, y: 1.2, w: 6.9, h: 4.55 });
+  d.fig(s, "xiao_cycles", { x: 0.5, y: 1.15, w: 6.9, h: 4.3 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.xiao },
     { kind: "why", size: 13, body: "放大不是等比例放大：混料均匀性、炉温分布、杂质、湿度都变了。实验室稀浆料、低载量 (1–10 mg/cm²) 的电极，暴露不出真问题。" },
     { kind: "matters", size: 13, body: "Kwade：25 道工序各 99.5% 良率，总良率只有 88.2%。所以要在线检测、及早剔除。" },
   ], 0.14, 5.75, "xiao");
-  d.caption(s, "左图据 Xiao 2023 Fig. 1 重绘（示意）。", { x: 0.6, y: 5.75, w: 6.8, h: 0.3 });
+  d.caption(s, "左图据 Xiao 2023 Fig. 1 重绘（示意）。", { x: 0.6, y: 5.5, w: 6.8, h: 0.3 });
   d.quote(s, Q.insurmountable);
   s.addNotes("Xiao 举的例子：NMC811 表面残锂会让 PVDF 浆料凝胶，小批量刮刀涂布时问题不明显，大规模涂布时就卡住了。良率的算法很简单：0.995 的 25 次方约等于 0.882。线速度超过 60 m/min 时，1 毫米电极只在传感器下停留不到 1 毫秒，所以在线检测本身就是放大的瓶颈之一。");
 
@@ -322,7 +322,7 @@ async function build(outFile, figDir) {
     "记录一切：批次、载量、注液量、封装和化成参数",
   ];
   s.addText(todo.map((t, i) => ({ text: t, options: { bullet: { type: "number" }, breakLine: i < todo.length - 1 } })),
-    { x: 0.85, y: 1.92, w: 5.75, h: 4.8, fontSize: 14, color: C.text1, margin: 0, valign: "top", paraSpaceAfter: 7, isTextBox: true });
+    { x: 0.85, y: 1.98, w: 5.7, h: 4.7, fontSize: 15, color: C.text1, margin: 0, valign: "top", paraSpaceAfter: 12, isTextBox: true });
   card(s, 6.95, 1.3, 5.75, 5.5, "FBEDEC");
   s.addText("常见错误 → 后果", { x: 7.2, y: 1.42, w: 5.3, h: 0.42, fontSize: 18, bold: true, color: C.accent4, margin: 0, isTextBox: true });
   const errs = [
