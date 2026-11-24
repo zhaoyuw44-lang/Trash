@@ -392,3 +392,25 @@
 - Tesla 2021 年前后出售 Maxwell 超级电容业务；干法正极量产进展慢于预期（讲稿中标为公开报道）。
 - 2013 年 MIT Chiang 组定向孔/低曲折度电极（Bae et al., Adv. Mater.）。
 - KIT（Jaiser、Scharfer、Schabel）2010 年代系统研究粘结剂迁移。
+
+### 第 6 章：原文笔误与不一致（Sommer et al., Batteries & Supercaps 7, e202400127 (2024)；Kwade et al., Nat. Energy 3, 290 (2018)；Xiao et al., Nat. Energy 8, 329 (2023)）
+- Sommer p. 5：负极超声焊夹紧力写作 “172 kHz”，应为 172 kPa（正极同句为 97 kPa；焊接频率两者均为 20 kHz）。
+- Sommer p. 6：先说刮刀涂布偏差大、推荐狭缝涂布，又写 “for the used research production line, however, slot die coating is preferred due to the lower material consumption”；实际所用为刮刀涂布，此处应为 doctor blade。
+- Sommer 式 (2)：求和下标 “i = n” 应为 “i = 1”（10 个正极涂层）。用 Fig. 6 Ref 1 验算：Σ面容量 26.95 mAh/cm² × 73.73 cm² ≈ 1.99 Ah，与 Fig. 7 一致。
+- Sommer p. 9、11：把 C3 对面 N/P < 1 也称为 “overbalancing”，与 p. 6 “overbalancing of the anodes”（N/P > 1）相反；应为正极超载、负极配量不足。
+- Kwade p. 294：“Formatting and aging” 中 Formatting 即同段的 formation（化成）。
+- 常见误区：“N/P 越大越安全”——负极多配降低析锂风险，但增重、多耗锂；Sommer 的 N/P 为用标称比容量（163、355 mAh/g）算出的设计值。
+
+### 第 6 章：读图与补充计算（非原文数据）
+- Kwade Fig. 5b 累计成本按图读值（近似）：混合 39%、涂布+干燥 53%、最终干燥 60%、封装 ESA 78%、装壳 88%、注液 94%、化成 96%、老化 97%、质检 98.5%、出厂 100%；材料部分约 72%（与 Fig. 5a 的 74.9% 略有出入，属读图/模型口径差异，未列入校注）。
+- Sommer Fig. 8a 体检点为读图近似值（Ref 平均 91→81%；Man 1/2/3 在 1000 圈约 42/36/28%，均值约 35%，与原文一致）。
+- 设计 N/P ≈ 1.25：9.79 × 0.94 × 355 = 3.27 mAh/cm²；16.76 × 0.955 × 163 = 2.61 mAh/cm²。注液量 5.6 mL / 1.955 Ah ≈ 2.9 mL/Ah。扣式“约 1.5 cm²、约 4 mAh”“面积约 ×500”为典型值估算。
+- 析锂、负极比正极每边大 1–2 mm、石墨 N/P 1.1–1.2、化成 C/10–C/20 均标为典型值。
+
+### 第 6 章：把握较低的历史条目（未逐条查原始文献）
+- 1947 年 Neumann 密封镍镉电池“负极多配”（年份按常见说法）。
+- 1996 年 Bellcore PLiON 用铝塑复合膜封装；“1990 年代末起软包进入手机”；铝塑膜借鉴食品软包装。
+- 卷绕结构在锂离子之前用于圆柱镍镉、镍氢电池（未给年份）。
+- “死亡之谷”一词“1990 年代末起在美国科技政策中流行”。
+- ISO/IEC 16022 首版 2000 年；1981 年起 17 位 VIN。
+- “化成”一词源自 Planté 铅酸极板的反复充放电成形（1859 年后）。

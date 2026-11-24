@@ -318,7 +318,7 @@ async function build(outFile, figDir) {
     "叠片对齐，隔膜盖过负极；叠完用胶带固定",
     "极耳超声焊后测电阻；极耳胶要落在封边里",
     "先封三边；按容量定量注液，抽真空、静置浸润",
-    "化成用小电流（C/10–C/20）并加压；化成后除气、再封口",
+    "化成用小电流（C/10–C/20）并加压；之后除气、再封口",
     "记录一切：批次、载量、注液量、封装和化成参数",
   ];
   s.addText(todo.map((t, i) => ({ text: t, options: { bullet: { type: "number" }, breakLine: i < todo.length - 1 } })),
