@@ -276,3 +276,6 @@
 - 干法电极：Tesla 2019 年收购 Maxwell、2020 年 Battery Day；欧盟《电池法规》2023 年。
 - Bolloré 锂金属聚合物电池用于巴黎 Autolib'（2011 年起）。
 - Goodenough 的尖晶石 LiMn₂O₄（与 Thackeray 等，1983 年前后，讲稿）。
+
+
+## 锂电池制造
