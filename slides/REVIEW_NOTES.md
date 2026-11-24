@@ -189,3 +189,70 @@
 - 1970 年代锂在 PC 中循环效率低、长枝晶的研究（没有写具体论文）；Exxon 后来改用 LiAl 合金负极。
 - 1973 年石油危机后“油价约涨到 4 倍”。
 - TiS₂ 层间距 5.70 Å → LiTiS₂ 6.19 Å（补充的文献值，凭记忆）。
+
+### 第 3 章：原文与常见说法的出入（Fenton, Parker & Wright, Polymer 14, 589 (1973)；Peled, J. Electrochem. Soc. 126, 2047 (1979)）
+- **常见说法**：“Fenton/Parker/Wright 1973 提出聚合物电解质用于电池”不对。短信全文无“battery”，电导只有一句定性描述（KSCN 络合物，无数值）；电导数据见 Wright, Br. Polym. J. 7, 319 (1975)；提出用于锂电池的是 Armand, Chabagno & Duclot（1978 年 St Andrews 会议报告，1979 年 North-Holland 文集发表）。
+- **Fenton 1973**：晶态络合物只有 NaI、NaSCN、KSCN；锂只提到 LiI 出现球晶、“its nature is yet to be ascertained”，LiBr 仅在溶液中相互作用。“1973 年发现 Li–PEO 导电”不准确。
+- **Fenton 1973 参考文献 6**：“Pederson” 应为 Pedersen（J. Am. Chem. Soc. 89, 7017 (1967)）。
+- **Peled 1979, p. 2047**：作者自己引用 Dey (1970 年 ECS 会议报告) 与 Rauh & Brummer (Electrochim. Acta 22, 75 (1977)) 已提出 Li⁺ 导电膜；Peled 的贡献是命名与动力学模型。对象是 Li、Ca、Mg 金属负极（多为 SOCl₂ 一次电池），不是石墨。
+- **Peled 1979, p. 2051**：文末注明为 1977 年 10 月 ECS Atlanta 会议 Paper 4，1978-12-27 投稿，1979 年 12 月发表。
+- **Peled 1979 符号**：αa（p. 2047、2049，阳极传递系数）与式 [30] 的 α（厚度增长指数）同一符号不同含义；式 [11] 小写 z 即前文 Z。小笔误：p. 2047 “principle difference”（应为 principal）、p. 2050 “higher valance cations”（应为 valence），幻灯片未涉及。
+- **复算**：式 [11] b ≈ 60L/(aZ) mV，L = 20 Å、a = 3 Å 得 400 mV，与原文一致；式 [12]、[16]、[17]、[26]、[29] 由式 [3]/[24] 推导一致。由 Scarr 电容 2.4/5 µF/cm²、ε = 10 得 L ≈ 37/18 Å，与原文“约 40 Å / 20 Å”一致。
+- **补充数据**：电导率柱状图（液体约 10 mS/cm；PEO–锂盐 80 °C 约 1、60 °C 约 0.1、25 °C 约 0.001 mS/cm）是典型数量级，非某篇论文实测；SEI 生长曲线按式 [30] 示意画出（起点 20 Å）。
+
+### 第 3 章：把握较低的历史条目（未逐条查原始文献）
+- Armand 1978 年起初设想离子沿结晶 PEO 螺旋“隧道”传导（通行说法）；Berthier 等 1983 (Solid State Ionics 11, 91) 的结论据二手资料概述为“离子主要在无定形区运动、与链运动耦合”。
+- Armand 当时在 Grenoble（INP Grenoble 的 LIES 实验室）；Chabagno、Duclot 的单位未写。
+- Hydro-Québec、CNRS、Elf Aquitaine 合作“1980 年前后”（资料有 1979、1980 两种说法）；Bolloré LMP 电池用于 2011 年起的 Autolib' Bluecar（只写在讲稿）。
+- 摇椅电池：Armand 的提出写作“1970 年代末”（发表于 1980 年 Plenum 文集）；Lazzari & Scrosati 1980 (JES 127, 773) 所用电极材料（常引作 LiₓWO₂ / TiS₂）未核实，幻灯片未写。
+- 1967 年 Yao & Kummer（Ford）β-氧化铝 Na⁺ 导电与钠硫电池；RbAg₄I₅ 同期发现。
+- 1930 年 Wagner & Schottky 空位缺陷；PEO 的 Tg ≈ −60 °C、Tm ≈ 65 °C（后者与 Fenton 原文“~65 °C”一致）；Shannon 离子半径 0.76/1.02/1.38 Å。
+- “1990 年代起凝胶聚合物电解质”、LiTFSI 由 Armand 设计（只写“后来”）。
+
+### 第 5 章：原文与常见说法的出入（Fong, von Sacken & Dahn, J. Electrochem. Soc. 137, 2009 (1990)）
+- **常见说法**：“Sony 1991 年首代锂离子电池用石墨负极”不对。首代是焦炭类无序碳（软碳），随后改硬碳；石墨（MCMB 等）1990 年代中后期才成为主流。与本文一致：PC 会使石墨剥离（p. 2012），无序碳在 PC 中照样可用（Fig. 5）。
+- **p. 2011 与 Fig. 4 图注图号写错**：“not included in Fig. 4b … labeled E in Fig. 3b” 应为 Fig. 3b 与 Fig. 2b（Fig. 4 没有 (b) 分图，E 标在 Fig. 2b；Table II 脚注写的是 Fig. 3b）。Fig. 4 图注 “E in Fig. 3(b)” 同样应为 Fig. 2(b)。
+- **p. 2012**：剥离平台写作 “near 0.6V”，而 p. 2011、p. 2013、Fig. 4 均为 “near 0.8V”，Fig. 2b 中也在约 0.8 V。
+- **摘要与 p. 2013 “without (any) capacity loss” 说得过满**：Fig. 7a 石油焦 100 圈后约 0.94（读图）；石墨只测了 20 圈。p. 2013 的 “equal within 2%” 指充放电容量相等，不等于不衰减；结论部分 “without significant loss” 更准确。
+- **术语**：半电池中碳称 cathode，“discharge” 指锂嵌入碳；在全电池中碳是负极、这一步是充电。
+- **小笔误**：Fig. 3 纵轴 “IRREVEVERSIBLE”；p. 2009 “in a variety to forms”。
+- **复算**：0.003 Ah/m² 按反应 [1] 与 Li₂CO₃ 摩尔体积 35 cm³/mol 得约 19.6 Å，与原文 21 ± 5 Å 一致；0.007 Ah/m² 得约 46 Å（原文 45 ± 5 Å）。
+
+### 第 5 章：读图数据
+- Fig. 2、Fig. 3、Fig. 7、Fig. 8b 均为手工读图近似（幻灯片图注已注明）；Fig. 3 横坐标取 Table II 的比表面积。Fig. 4 的样品表面积（约 5.5–12 m²/g）与 Table II 中三种石墨（15.1–22.5 m²/g）不对应，可能是研磨后的另一批样品，原文未说明，幻灯片未涉及。
+- 能量密度柱状图（NiCd 45、NiMH 60、Sony 1991 锂离子 80、今天高能量型 250 Wh/kg）是典型近似值，已标注。
+
+### 第 5 章：把握较低的历史条目（未逐条查原始文献）
+- Moli Energy 1977 年成立、技术来自 UBC Haering 研究组；1978 年 Haering 等 Li/MoS₂ 专利（据专利检索摘要）；Molicel 上市年份只写“1980 年代后期”。
+- 1989 年事故：只写“手机电池起火 → 停售召回 → 破产接管 → 约 1990 年被日本企业财团收购”。常见说法（事故发生在日本、NTT 手机、NEC 与三井收购）未核实，未写入。
+- Dahn 1982 年 UBC 博士、导师 Haering；讲稿称 Moli 研究人员后来用量热比较循环锂与嵌锂碳的热稳定性（von Sacken 等，1990 年代中期）。
+- Sony 首代产品为 CCD-TR1 摄像机（多个二手来源一致，但也有“最早用于京瓷手机”的说法）；首代负极为“焦炭类软碳”（多数史料如此，个别回忆称硬碳）；首代电解液以 PC 为主（凭通行资料）。
+- 首代 80 Wh/kg、200 Wh/L；A&T Battery（旭化成 + 东芝）1992 年成立。
+- 摇椅电池由 Armand 于 1970 年代末–1980 年提出、Scrosati 等在 1980 年代推广；“lithium-ion” 由 Sony 1990–1991 年命名。
+- Besenhard 1970 年代溶剂共嵌入；Rüdorff & Hofmann 1938 年“阶”的概念；Dahn 1991 年 LixC6 相图。
+- Tarascon & Guyomard（Bellcore）EC + DMC 写作“1990 年代初”；成膜添加剂写作“1990 年代末起”；硬碳写作“1990 年代前中期”。
+
+### 第 6 章：原文与常见说法的出入（Padhi, Nanjundaswamy & Goodenough, J. Electrochem. Soc. 144, 1188 (1997)）
+- **常见说法**：把 LFP 的高倍率/快充归功于 1997 年论文。原文只用 0.05 mA/cm²（2 mA/g ≈ C/85），只用到约 0.6 Li，作者自称适合 “low-power” 电池；电极已含 25 wt% 乙炔黑。高倍率来自后来的碳包覆（Ravet、Armand 等 1999–2001）与纳米化。
+- **p. 1191 与 Table I**：正文“体积缩小 6.81%、密度增加 2.59%”与 Table I 晶胞体积（291.392 → 272.357 Å³）不符；按表计算为 6.53% 与约 2.3%。
+- **p. 1190 与 Fig. 2**：“约 0.6 Li（100–110 mAh/g）”是平台结束处；Fig. 2 放电曲线延伸到 y ≈ 0.75（约 127 mAh/g，截止 2.0 V）。图内标 2.1 mA/g，图注写 2.0 mA/g；Fig. 5 图内 1.85 mA/g，图注 2.0 mA/g。
+- **“3.5 V”**：为闭路电压；Fig. 2 充电平台约 3.45 V、放电约 3.4 V，今公认平衡电位约 3.43 V。
+- **Table I**：标 Pbnm、正文说锂链平行于 c 轴，但 a = 6.008、c = 4.693 Å 的取法与 Pbnm 不对应（链方向应为约 6.0 Å 的轴）。今通用 Pnma：a = 10.33、b = 6.01、c = 4.69 Å。
+- **p. 1190**：“Gibb's phase rule” 应为 Gibbs。
+- **安全**：原文只做了 FePO₄ 粉末的 TGA/DSC（500 °C 失重 1.6%，作者疑为残留 LiBr），并未做整电池安全测试；“LFP 不放氧所以电池不会起火”是过度引申。
+
+### 第 6 章：把握较低的历史条目（未逐条查原始文献）
+- Manthiram & Goodenough NASICON 型 Fe₂(SO₄)₃ 等工作写作“1987–1989 年”。
+- Ravet、Armand 等碳包覆：1999 年 ECS 会议摘要、2001 年 J. Power Sources 论文；Yamada 等 2001 年颗粒尺寸优化。
+- Chiang 小组 2002 年掺杂（约 10⁸ 倍）与 Nazar 小组 2004 年的反驳（磷化铁杂相）；A123 Systems 创办于 2001 年。
+- “1990 年代初 Dahn 等研究 LiNiO₂”；NCA 中 Co/Al 取代的具体年份未写。
+- Ohzuku & Makimura（Chem. Lett. 2001）、Lu & Dahn 等（Electrochem. Solid-State Lett. 2001）。
+- 电池包价格（BloombergNEF）：2010 ≈ 1,100、2013 ≈ 650、2016 ≈ 300、2019 ≈ 160、2021 ≈ 140、2023 ≈ 140、2024 ≈ 115 美元/kWh，均为凭记忆的约值。
+- Roadster 约 6,800 节 18650、约 53 kWh；Leaf 24 kWh、LMO 为主（AESC）；Model S 2012 用 Panasonic NCA。
+- CATL CTP 2019、BYD 刀片电池 2020；“2021 年前后中国装机中 LFP 重新超过三元”。
+- 钴价 2017–2018 年大涨；约七成钴矿产量来自刚果（金）（USGS，约值）。
+- 固体电解质电导率：LiPON 约 2×10⁻⁶、LLZO 约 3×10⁻⁴、LGPS 1.2×10⁻² S/cm（数量级）；Bates 等 1992、Murugan 等 2007、Kamaya 等 2011。
+- 硅：Cui 小组 2008 年硅纳米线；Li₁₅Si₄ 体积约 ×3.8。
+- 干法电极：Tesla 2019 年收购 Maxwell、2020 年 Battery Day；欧盟《电池法规》2023 年。
+- Bolloré 锂金属聚合物电池用于巴黎 Autolib'（2011 年起）。
+- Goodenough 的尖晶石 LiMn₂O₄（与 Thackeray 等，1983 年前后，讲稿）。
