@@ -194,8 +194,7 @@ async function build(outFile, figDir) {
   // ---------------- 13. Mixers ----------------
   s = d.slide("CONTENT");
   s.addText("搅拌设备：从研钵到行星搅拌机，再到双螺杆", { placeholder: "title" });
-  d.fig(s, "mixers", { x: 0.5, y: 1.2, w: 6.9, h: 4.55 });
-  d.caption(s, "上：据原文 Fig. 7 重绘；下：据原文 Fig. 24a 简化重绘。", { x: 0.6, y: 5.75, w: 6.8, h: 0.3 });
+  d.fig(s, "mixers", { x: 0.5, y: 1.1, w: 6.9, h: 4.35 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.mixers },
     { kind: "why", size: 13, body: "批次式一锅混 2–6 h，再脱泡 1–2 h，每锅略有不同。35 GWh 工厂约需 24 台行星机，改连续混合只需 5 条线（Li p. 936）。" },
@@ -220,8 +219,8 @@ async function build(outFile, figDir) {
   // ---------------- 15. Shear thinning ----------------
   s = d.slide("CONTENT");
   s.addText("剪切变稀：静置时稠，涂布时稀", { placeholder: "title" });
-  d.fig(s, "shear_thinning", { x: 0.5, y: 1.2, w: 6.9, h: 4.3 });
-  d.caption(s, "据原文 Fig. 15 重绘（读图，近似）。原图为三种正负极浆料，未注明成分；颜色有改动。", { x: 0.6, y: 5.5, w: 6.8, h: 0.35 });
+  d.fig(s, "shear_thinning", { x: 0.5, y: 1.12, w: 6.9, h: 4.45 });
+  d.caption(s, "据原文 Fig. 15 重绘（读图，近似）。原图为三种正负极浆料，未注明成分；颜色有改动。", { x: 0.6, y: 5.58, w: 6.8, h: 0.35 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.thinning },
     { kind: "why", size: 13, body: "静置时要像酸奶，颗粒不沉、边缘不塌；进模头时要像牛奶，才铺得开。狭缝里 γ̇ ≈ 6Q ÷ (b h²)：Q 流量，b 宽度，h 缝高。" },
@@ -238,9 +237,9 @@ async function build(outFile, figDir) {
     chartColors: [HEX.dk1, HEX.accent6, HEX.accent6],
     showValue: true, dataLabelFormatCode: "0.0", dataLabelPosition: "outEnd", ...chartText,
     valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 5.2, valGridLine: { style: "none" }, catGridLine: { style: "none" },
-    showTitle: true, title: "每克干粉所需 NMP（ml）；配方 = NMC : 炭黑 : PVDF", showLegend: false,
+    showTitle: true, title: "每克干粉所需 NMP（ml）", showLegend: false,
   });
-  d.caption(s, "Stein 2016：70:20:10 为 5.5 ml ÷ 1.25 g（不含 PVDF 溶液中的 NMP）；另两项为原文 p. 8 给出的 1 g 干粉用量。", { x: 0.6, y: 4.38, w: 5.8, h: 0.45 });
+  d.caption(s, "横轴为 NMC : 炭黑 : PVDF。Stein 2016：70:20:10 为 5.5 ml ÷ 1.25 g（不含 PVDF 溶液中的 NMP）；另两项为原文 p. 8 给出的 1 g 干粉用量。", { x: 0.6, y: 4.38, w: 5.8, h: 0.45 });
   d.fig(s, "slurry_checks", { x: 6.7, y: 1.1, w: 6.0, h: 3.55 });
   row3(s, 4.95, [
     { kind: "hist", body: Q.facts.checks },
@@ -272,8 +271,8 @@ async function build(outFile, figDir) {
   // ---------------- 19. Slot-die ----------------
   s = d.slide("CONTENT");
   s.addText("狭缝涂布 (slot-die)：工厂的主力", { placeholder: "title" });
-  d.fig(s, "slot_die", { x: 0.5, y: 1.2, w: 6.9, h: 4.3 });
-  d.caption(s, "据原文 Fig. 8 重绘（改为剖面示意，未按比例）。", { x: 0.6, y: 5.5, w: 6.8, h: 0.3 });
+  d.fig(s, "slot_die", { x: 0.5, y: 1.12, w: 6.9, h: 4.5 });
+  d.caption(s, "据原文 Fig. 8 重绘（改为剖面示意，未按比例）。", { x: 0.6, y: 5.62, w: 6.8, h: 0.3 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.slot },
     { kind: "why", size: 13, body: "刮刀靠“刮掉多余的”定厚度，浆料一变稠就变厚。狭缝靠泵“定量送出”：湿膜厚度 ≈ 流量 ÷ (宽度 × 走带速度)。" },
@@ -298,7 +297,7 @@ async function build(outFile, figDir) {
   s.addText("面密度 (mass loading)：每平方厘米有多少活性物质", { placeholder: "title" });
   d.fig(s, "loading_calc", { x: 0.5, y: 1.2, w: 6.9, h: 4.55 });
   d.stat(s, { x: 7.75, y: 1.2, w: 2.4, value: "1.99", unit: "mg/cm²", label: "Stein 示例（补算）", color: "accent2" });
-  d.stat(s, { x: 10.3, y: 1.2, w: 2.5, value: "100→500", unit: "g/m²", label: "20 年前常见 → 今天的厚电极", color: "accent1" });
+  d.stat(s, { x: 10.3, y: 1.2, w: 2.5, value: "500", unit: "g/m²", label: "今天的厚电极；20 年前常见约 100", color: "accent1" });
   col(s, 7.75, 2.75, 5.0, [
     { kind: "hist", size: 13, body: Q.facts.loading },
     { kind: "why", size: 13, body: "以前论文只报 mAh/g。但 mAh/g 看不出电极有多厚；同一材料，厚电极的倍率差很多。所以现在要同时报 mg/cm² 和 mAh/cm²。" },
@@ -315,9 +314,9 @@ async function build(outFile, figDir) {
     chartColors: [HEX.accent6, HEX.accent1],
     showValue: true, dataLabelFormatCode: "0", dataLabelPosition: "outEnd", ...chartText,
     catAxisOrientation: "maxMin", valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 6.5, valGridLine: { style: "none" }, catGridLine: { style: "none" },
-    showTitle: true, title: "同为 ±2% 时的绝对偏差（±g/m²，Li p. 922）", showLegend: false,
+    showTitle: true, title: "±2% 对应的绝对偏差（g/m²）", showLegend: false,
   });
-  d.block(s, { x: 5.15, y: 4.68, w: 3.6, kind: "hist", tint: true, size: 13, body: "15 年前涂布量波动 ±5% 很常见，如今目标 ±1–2%（Li 等 2022）。" });
+  d.block(s, { x: 5.15, y: 4.68, w: 3.6, kind: "hist", tint: true, size: 13, body: "15 年前涂布量波动 ±5% 很常见，如今目标 ±1–2%。左图同为 ±2%，厚电极偏差大 2.5 倍（Li p. 922）。" });
   d.block(s, { x: 8.95, y: 4.68, w: 3.75, kind: "matters", tint: true, head: "涂之前、涂之后", size: 13, body: "① 箔擦净再涂；② 浆料无颗粒感、无气泡；③ 放久了重混；④ 每片称重，算面密度；⑤ 剪掉边缘不匀处。" });
   s.addNotes("左下的图说明一个容易忽略的事：同样是 ±2%，厚电极的绝对偏差更大。Li 等列出影响涂布均匀性的四个因素：浆料流变、箔的厚度与质量、泵和走带速度的控制、模头本身的加工精度。实验室最常见的是上面四种缺陷，原因和改法写在每张小图下面。");
 

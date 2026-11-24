@@ -323,51 +323,49 @@ figs.calender_rolls = () => {
 
 // ---------- 7. Porosity scale ----------
 figs.porosity_scale = () => {
-  const W = 1240, H = 330;
+  const W = 1240, H = 300;
   let b = "";
-  const X = (p) => 80 + ((60 - p) / 45) * 1080;
-  const axisY = 160;
+  const X = (p) => 90 + ((60 - p) / 45) * 1060;
+  const axisY = 140;
   b += line(X(60), axisY, X(15), axisY, COL.line, 6);
   b += head(X(15) + 22, axisY, 0, COL.line, 18);
   [60, 50, 40, 30, 20].forEach((p) => {
     b += line(X(p), axisY - 10, X(p), axisY + 10, COL.text2, 2.5);
-    b += text(X(p), axisY + 36, `${p}%`, { size: 19, anchor: "middle", fill: COL.text2 });
+    b += text(X(p), axisY + 38, `${p}%`, { size: 22, anchor: "middle", fill: COL.text2 });
   });
   const bands = [
-    [55, 45, COL.amber, "#FDF2E7", ["涂布后、未辊压", "约 50%（典型）"]],
-    [35, 30, COL.purple, "#F1ECF8", ["研究级电极", "30–35%（原文）"]],
-    [25, 20, COL.teal, "#E8F4F3", ["商用电极（原文）", "负极 ~20% · 正极 ~25%"]],
+    [55, 45, COL.amber, ["涂布后、未辊压", "约 50%（典型）"]],
+    [35, 30, COL.purple, ["研究级电极", "30–35%（原文）"]],
+    [25, 20, COL.teal, ["商用电极（原文）", "负极 ~20%，正极 ~25%"]],
   ];
-  bands.forEach(([a, z, c, tint, lab]) => {
+  bands.forEach(([a, z, c, lab]) => {
     b += rect(X(a), axisY - 16, X(z) - X(a), 32, c, { rx: 8, opacity: 0.85 });
     const mx = (X(a) + X(z)) / 2;
-    b += lines(mx, 60, lab, { size: 19, anchor: "middle", lh: 28, weight: "bold", fill: c });
-    b += line(mx, 104, mx, axisY - 20, c, 2, "4 4");
+    b += lines(mx, 34, lab, { size: 22, anchor: "middle", lh: 30, weight: "bold", fill: c });
+    b += line(mx, 76, mx, axisY - 20, c, 2, "4 4");
   });
-  // packing icons
   const icon = (cx, n, seed) => {
     const R = rng(seed);
-    let s = rect(cx - 70, 210, 140, 88, COL.light, { rx: 8 });
+    let s = rect(cx - 75, 195, 150, 96, COL.light, { rx: 8 });
     const pos = [];
     let tries = 0;
     while (pos.length < n && tries < 4000) {
       tries++;
-      const x = cx - 58 + R() * 116, y = 222 + R() * 64;
-      if (pos.every(([px, py]) => (px - x) ** 2 + (py - y) ** 2 > 17 * 17)) pos.push([x, y]);
+      const x = cx - 63 + R() * 126, y = 207 + R() * 72;
+      if (pos.every(([px, py]) => (px - x) ** 2 + (py - y) ** 2 > 18 * 18)) pos.push([x, y]);
     }
-    pos.forEach(([x, y]) => (s += circ(x.toFixed(1), y.toFixed(1), 9, AM)));
+    pos.forEach(([x, y]) => (s += circ(x.toFixed(1), y.toFixed(1), 10, AM)));
     return s;
   };
-  b += icon((X(55) + X(45)) / 2, 13, 3) + icon((X(35) + X(30)) / 2, 20, 4) + icon((X(25) + X(20)) / 2, 25, 5);
-  b += text(X(60) - 40, 262, "孔隙", { size: 19, fill: COL.text2 });
-  b += text(X(60) - 40, 288, "多", { size: 19, fill: COL.text2 });
-  b += text(X(15) + 12, 268, "越压越密 →", { size: 19, anchor: "end", fill: COL.ink, weight: "bold" });
+  b += icon((X(55) + X(45)) / 2, 13, 3) + icon((X(35) + X(30)) / 2, 21, 4) + icon((X(25) + X(20)) / 2, 26, 5);
+  b += text(20, 250, "孔多", { size: 22, fill: COL.text2 });
+  b += text(1225, 250, "越压越密 →", { size: 22, anchor: "end", fill: COL.ink, weight: "bold" });
   return svg(W, H, b);
 };
 
 // ---------- 8. Calendering microstructure & tortuosity (after Li Fig. 11a) ----------
 figs.calender_micro = () => {
-  const W = 820, H = 565;
+  const W = 820, H = 520;
   let b = "";
   const panel = (x0, parts, path, title, cap, ry) => {
     let s = rect(x0, 95, 370, 335, SOLV);
@@ -390,7 +388,6 @@ figs.calender_micro = () => {
   b += panel(20, loose, lp, "辊压前", ["孔多、路较直", "曲折度 τ 小"], 32);
   b += panel(430, dense, dp, "辊压后", ["孔少、路绕弯", "曲折度 τ 大"], 29);
   b += arrow(393, 262, 425, 262, { color: COL.ink, width: 4, head: 12 });
-  b += text(410, 552, "上方虚线 = 隔膜一侧；下方灰条 = 集流体；浅蓝 = 充满电解液的孔", { size: 19, anchor: "middle", fill: COL.muted });
   return svg(W, H, b);
 };
 

@@ -127,7 +127,7 @@ async function build(outFile, figDir) {
   ], {
     x: 0.5, y: 1.25, w: 6.7, h: 4.35, chartColors: [HEX.dk1, HEX.accent4, HEX.accent2], lineSize: 3, lineDataSymbol: "none",
     showTitle: true, title: "干燥炉内温度（°C）随位置（m）", ...chartText, showLegend: true, legendPos: "b", legendFontSize: 13,
-    valAxisMinVal: 0, valAxisMaxVal: 150, valAxisMajorUnit: 30, valGridLine: { color: "E5E9ED", size: 0.75 },
+    valAxisMinVal: 0, valAxisMaxVal: 150, valAxisMajorUnit: 30, catAxisMinVal: 0, catAxisMaxVal: 24, catAxisMajorUnit: 4, valGridLine: { color: "E5E9ED", size: 0.75 },
     showCatAxisTitle: true, catAxisTitle: "离干燥炉入口的距离（m）", catAxisTitleFontSize: 12, catAxisTitleColor: HEX.dk2,
   });
   d.caption(s, "据原文 Fig. 10 重绘（读图，近似）。三段各 8 m，风温 90、110、140 °C。原图还画了残余溶剂：水约在 18 m、NMP 约在 21 m 处降到零。", { x: 0.6, y: 5.65, w: 6.6, h: 0.6 });
@@ -156,17 +156,17 @@ async function build(outFile, figDir) {
   s = d.slide("CONTENT");
   s.addText("干燥是工厂里最大的“电老虎”", { placeholder: "title" });
   s.addChart(d.pres.charts.BAR, [{ name: "能耗占比", labels: ["干燥与溶剂回收", "干燥间 (dry room)", "叠片", "分切", "封装", "辊压", "焊接", "涂布", "搅拌", "化成/老化"], values: [46.84, 29.37, 5.8, 5.35, 5.2, 2.86, 1.88, 1.36, 0.83, 0.53] }], {
-    x: 0.5, y: 1.25, w: 6.6, h: 4.5, barDir: "bar",
+    x: 0.5, y: 1.2, w: 6.6, h: 4.2, barDir: "bar",
     chartColors: [HEX.accent1, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6, HEX.accent6],
     showValue: true, dataLabelFormatCode: "0.0", dataLabelPosition: "outEnd", ...chartText,
     catAxisOrientation: "maxMin", valAxisHidden: true, valAxisMaxVal: 58, valGridLine: { style: "none" }, catGridLine: { style: "none" },
     showTitle: true, title: "各工序能耗占比（%，Liu 表 1）", showLegend: false,
   });
-  d.caption(s, "数据：Liu p. 3 表 1，32 Ah LMO/石墨电芯的中试线实测（Yuan 等 2017）。", { x: 0.6, y: 5.75, w: 6.5, h: 0.3 });
+  d.caption(s, "数据：Liu p. 3 表 1，32 Ah LMO/石墨电芯的中试线实测（Yuan 等 2017）。", { x: 0.6, y: 5.42, w: 6.5, h: 0.3 });
   d.stat(s, { x: 7.5, y: 1.25, w: 2.5, value: "46.8", unit: "%", label: "干燥与溶剂回收", color: "accent1" });
   d.stat(s, { x: 10.2, y: 1.25, w: 2.5, value: "29.4", unit: "%", label: "干燥间（第 4、6 章）", color: "accent6" });
   col(s, 7.5, 2.75, 5.25, [
-    { kind: "hist", size: 13, body: "Liu 表 1 的能耗来自 2017 年 Yuan 等在 Johnson Controls 中试线上的实测；成本项来自 Argonne 的 BatPaC 模型。" },
+    { kind: "hist", size: 13, body: "2017 年 Yuan 等在 Johnson Controls 中试线实测能耗；成本项来自 Argonne 的 BatPaC 模型。" },
     { kind: "why", size: 13, body: "NMP 沸点高，要长时间加热；排出的热废气又要冷却回收，等于“先加热、再制冷”。" },
     { kind: "matters", size: 13, body: "降能耗最直接的办法是少用或不用 NMP——这正是第 3 节干法电极的动机。" },
   ], 0.13, 5.75, "energy");
@@ -214,22 +214,22 @@ async function build(outFile, figDir) {
     { kind: "def", head: "公式：ε = 1 − ρ涂层 ÷ ρ真", size: 13, body: "ε：孔隙率。ρ涂层 = 涂层面密度 ÷ 涂层厚度（扣掉箔）。ρ真：组分的平均真密度，1/ρ真 = Σ wᵢ/ρᵢ（wᵢ 质量分数，ρᵢ 真密度）。" },
     { kind: "def", head: "例题（补充计算）", size: 13, body: "NMC811:炭黑:PVDF = 95:2.5:2.5，真密度取 4.75/1.9/1.78 g/cm³ → ρ真 ≈ 4.40。涂层 20 mg/cm²：厚 95 μm → ε ≈ 52%；压到 70 μm → 35%；60 μm → 24%。" },
   ], 0.12, 6.85, "porosity-L");
-  col(s, 6.85, 3.75, 5.85, [
+  col(s, 6.85, 3.7, 5.85, [
     { kind: "hist", size: 13, body: Q.facts.porosity },
-    { kind: "why", size: 13, body: "以前实验室常不压。现在按目标孔隙率反推辊缝：厚度只差 10 μm，孔隙率就差约 10 个百分点。" },
-    { kind: "matters", size: 13, body: "孔隙率决定装多少电解液、离子走多顺、体积能量多高。发表时要写清楚（第 5 章）。" },
-  ], 0.12, 6.85, "porosity-R");
+    { kind: "why", size: 13, body: "以前实验室常不压。现在按目标孔隙率反推辊缝：厚度差 10 μm，孔隙率差约 10 个百分点。" },
+    { kind: "matters", size: 13, body: "孔隙率决定装多少电解液、离子走多顺、体积能量多高；发表要写明（第 5 章）。" },
+  ], 0.1, 6.85, "porosity-R");
   s.addNotes("算一遍例题：20 mg/cm² 就是 0.020 g/cm²，95 μm 是 0.0095 cm，相除得涂层密度 2.11 g/cm³；除以真密度 4.40，得 0.48，所以孔隙率约 52%。真密度是常见文献值，换材料时要换成你自己的数。压实密度 (compaction density) 就是这里的 ρ涂层，工厂常用它代替孔隙率来下指标。原文 p. 913：研究级电极常在 30–35%，商用负极约 20%、正极约 25%。");
 
   // ---------------- 14. Tortuosity ----------------
   s = d.slide("CONTENT");
   s.addText("曲折度 (tortuosity)：离子要绕多远的路", { placeholder: "title" });
   d.fig(s, "calender_micro", { x: 0.5, y: 1.2, w: 6.9, h: 4.6 });
-  d.caption(s, "据原文 Fig. 11a 重绘并加上离子路径（示意）。", { x: 0.6, y: 5.75, w: 6.8, h: 0.3 });
+  d.caption(s, "据原文 Fig. 11a 重绘并加上离子路径（示意）。上方虚线 = 隔膜一侧，灰条 = 集流体，浅蓝 = 充满电解液的孔。", { x: 0.6, y: 5.55, w: 6.8, h: 0.4 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "def", head: "定义：曲折度 τ", size: 13, body: "离子实际走的路 ÷ 电极厚度。像在人群里穿行：人越挤，绕得越远。" },
     { kind: "hist", size: 13, body: Q.facts.tortuosity },
-    { kind: "why", size: 13, body: "按 τ ≈ ε^−0.5 估算：ε 从 50% 降到 25%，有效离子通道 ε/τ 从约 0.35 降到 0.13，只剩三分之一多。" },
+    { kind: "why", size: 13, body: "按 τ ≈ 1/√ε 估算：ε 从 50% 降到 25%，有效离子通道 ε/τ 从约 0.35 降到 0.13，只剩三分之一多。" },
   ], 0.13, 5.75, "tortuosity");
   d.quote(s, Q.optimalPorosity);
   s.addNotes("为什么有“最佳孔隙率”？压得越密，电子路越通（颗粒接触好），离子路越堵（孔少、路绕）。薄电极里，慢的是锂在固体颗粒里的扩散；电极一厚，电解液里的离子传输就成了瓶颈（原文 p. 913）。注意 Bruggeman 关系是理想球形颗粒的近似，片状石墨这样的真实电极往往更“绕”。这就是“要”：同一份材料，孔隙率选错，倍率性能可以差一大截。");
@@ -249,12 +249,12 @@ async function build(outFile, figDir) {
   // ---------------- 16. Slitting ----------------
   s = d.slide("CONTENT");
   s.addText("分切 (slitting) 与模切：切出需要的形状", { placeholder: "title" });
-  d.fig(s, "slitting", { x: 0.6, y: 1.05, w: 12.1, h: 3.3 });
-  row3(s, 4.4, [
+  d.fig(s, "slitting", { x: 0.6, y: 1.0, w: 12.1, h: 3.1 });
+  row3(s, 4.15, [
     { kind: "hist", body: Q.facts.slitting },
-    { kind: "why", body: "卷绕电池只需切成长条；叠片软包要一片片切出极耳。刀具便宜但会磨出毛刺；激光切口干净，但设备贵，还可能溅出熔融金属（Liu p. 8）。" },
-    { kind: "matters", body: "负极要比正极大一圈（尺寸差约 2 mm）。这圈“悬空”负极会暂存锂，让库仑效率测出 >100%（原文 p. 915）。" },
-  ], 13, 5.85, "slitting");
+    { kind: "why", body: "卷绕电池只切长条；叠片要一片片切出极耳。刀具便宜但会磨出毛刺；激光切口干净，但设备贵、会溅金属（Liu p. 8）。" },
+    { kind: "matters", body: "负极要比正极大一圈（差约 2 mm）。这圈负极会暂存锂，让库仑效率测出 >100%（原文 p. 915）。" },
+  ], 13, 5.9, "slitting");
   d.quote(s, Q.edges);
   s.addNotes("分切成本低（Liu 表 1 约占 3%）、速度快（80–150 m/min），但切边质量关系到安全：边缘电场集中，一根毛刺就可能刺穿隔膜造成内短路。极耳位置最好在涂布时就留出空箔（间歇涂布，第 2 章），实在不行才用激光把涂层清掉。实验室冲片时也要注意：冲头钝了会产生毛刺，冲好的极片要检查边缘。");
 

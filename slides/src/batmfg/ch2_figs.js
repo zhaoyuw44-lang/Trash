@@ -387,7 +387,7 @@ figs.mixers = () => {
   b += arrow(684, 440, 740, 440, { color: COL.ink, width: 4, head: 14 });
   b += text(745, 432, "浆料", { size: 19, weight: "bold" });
   b += text(745, 458, "→ 涂布", { size: 19, fill: COL.text2 });
-  b += text(40, 530, "双螺杆连续混合：按配比连续加料，边混边出", { size: 19, fill: COL.text2 });
+  b += text(40, 530, "双螺杆连续混合：按配比连续加料，边混边出（据原文 Fig. 7、24a 重绘）", { size: 19, fill: COL.text2 });
   return svg(W, H, b);
 };
 
@@ -473,38 +473,37 @@ figs.shear_thinning = () => {
 figs.slurry_checks = () => {
   const W = 820, H = 540;
   let b = "";
-  // Hegman gauge top view
-  b += text(190, 34, "细度板 (Hegman gauge)", { size: 21, weight: "bold", anchor: "middle" });
-  b += rect(60, 56, 260, 400, COL.alu, { rx: 10 });
-  b += poly("110,80 270,80 205,430 175,430", "#8D9AA6");
-  b += `<path d="M112,82 L268,82 L240,230 L140,230 Z" fill="#56636F" opacity="0.85"/>`;
+  // Hegman gauge (fonts enlarged: figure is placed ~5.2 in wide)
+  b += text(170, 36, "细度板", { size: 28, weight: "bold", anchor: "middle" });
+  b += rect(50, 60, 240, 400, COL.alu, { rx: 10 });
+  b += poly("90,80 250,80 185,440 155,440", "#8D9AA6");
+  b += `<path d="M92,82 L248,82 L222,230 L118,230 Z" fill="#56636F" opacity="0.85"/>`;
   const R = rng(12);
-  for (let i = 0; i < 10; i++) b += circ((150 + R() * 80).toFixed(0), (240 + R() * 80).toFixed(0), 4, CB);
-  b += text(330, 92, "深 100 µm", { size: 19, fill: COL.text2 });
-  b += text(330, 430, "深 0", { size: 19, fill: COL.text2 });
-  b += line(296, 236, 400, 236, COL.red, 2, "6 5");
-  b += text(330, 268, "颗粒开始划出", { size: 19, fill: COL.red, weight: "bold" });
-  b += text(330, 296, "印子 → 读数", { size: 19, fill: COL.red });
-  b += text(190, 494, "槽越来越浅，大团聚体", { size: 19, anchor: "middle", fill: COL.text2 });
-  b += text(190, 522, "在哪儿被“卡住”就读几 µm", { size: 19, anchor: "middle", fill: COL.text2 });
+  for (let i = 0; i < 10; i++) b += circ((130 + R() * 80).toFixed(0), (240 + R() * 80).toFixed(0), 5, CB);
+  b += text(300, 98, "深 100 µm", { size: 25, fill: COL.text2 });
+  b += text(300, 440, "深 0", { size: 25, fill: COL.text2 });
+  b += line(276, 236, 300, 236, COL.red, 3);
+  b += text(300, 246, "出现颗粒", { size: 25, fill: COL.red, weight: "bold" });
+  b += text(300, 280, "= 读数", { size: 25, fill: COL.red, weight: "bold" });
+  b += text(170, 510, "量最大团聚体", { size: 25, anchor: "middle", fill: COL.text2 });
   // wetting
   const x0 = 500;
-  b += text(x0 + 150, 34, "润湿：接触角 θ", { size: 21, weight: "bold", anchor: "middle" });
+  b += text(x0 + 150, 36, "接触角 θ", { size: 28, weight: "bold", anchor: "middle" });
   const drop = (cx, by, r, deg, c) => {
     const t = (deg * Math.PI) / 180;
-    const half = r * Math.sin(t), h = r - r * Math.cos(t);
-    return `<path d="M${cx - half},${by} A${r},${r} 0 ${deg > 90 ? 1 : 0} 1 ${cx + half},${by} Z" fill="${c}"/>` + `<!-- h ${h} -->`;
+    const half = r * Math.sin(t);
+    return `<path d="M${cx - half},${by} A${r},${r} 0 ${deg > 90 ? 1 : 0} 1 ${cx + half},${by} Z" fill="${c}"/>`;
   };
-  b += rect(x0, 200, 300, 14, AL, { rx: 2 });
-  b += drop(x0 + 150, 200, 72, 90, "#9FC9E3");
-  b += line(x0 + 222, 200, x0 + 222, 130, COL.red, 3);
-  b += text(x0 + 150, 246, "纯水 θ ≈ 90°", { size: 19, anchor: "middle", weight: "bold" });
-  b += rect(x0, 400, 300, 14, AL, { rx: 2 });
-  b += drop(x0 + 150, 400, 150, 40, "#9FC9E3");
-  b += line(x0 + 246, 400, x0 + 296, 360, COL.teal, 3);
-  b += text(x0 + 150, 446, "水 : IPA = 4 : 1，θ ≈ 40°", { size: 19, anchor: "middle", weight: "bold" });
-  b += text(x0 + 150, 494, "θ 越小，铺得越开", { size: 19, anchor: "middle", fill: COL.text2 });
-  b += text(x0 + 150, 522, "（铝箔上，据 Li 等 p. 938）", { size: 19, anchor: "middle", fill: COL.text2 });
+  b += rect(x0, 190, 300, 14, AL, { rx: 2 });
+  b += drop(x0 + 150, 190, 72, 90, "#9FC9E3");
+  b += line(x0 + 222, 190, x0 + 222, 120, COL.red, 3);
+  b += text(x0 + 150, 240, "纯水 ≈ 90°", { size: 25, anchor: "middle", weight: "bold" });
+  b += rect(x0, 380, 300, 14, AL, { rx: 2 });
+  b += drop(x0 + 150, 380, 150, 40, "#9FC9E3");
+  b += line(x0 + 246, 380, x0 + 296, 340, COL.teal, 3);
+  b += text(x0 + 150, 430, "水 : IPA = 4 : 1", { size: 25, anchor: "middle", weight: "bold" });
+  b += text(x0 + 150, 464, "≈ 40°", { size: 25, anchor: "middle", weight: "bold" });
+  b += text(x0 + 150, 510, "θ 越小，铺得越开", { size: 25, anchor: "middle", fill: COL.text2 });
   return svg(W, H, b);
 };
 

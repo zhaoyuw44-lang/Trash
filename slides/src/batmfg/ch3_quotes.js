@@ -51,14 +51,14 @@ module.exports = {
     vacuum: "工厂做法：60–150 °C 真空烘 12 h 以上（Liu p. 8）。2019 年 Huttner 等发现：120 °C 长时间烘干水分最低，性能却最差；室温氩气吹扫 20 min 反而最好。",
     calender: "压延机 (calender) 来自造纸“压光”和金属轧制。1836 年美国人 Chaffee 用压延机把橡胶压成片。锂离子电池从 1991 年量产起就用对辊把电极压到目标厚度。",
     porosity: "1921 年 Washburn 推出毛细渗入方程；1945 年 Ritter 与 Drake 据此做出压汞孔隙率仪 (mercury porosimetry)。电池界更常用的是下面这个“称重 + 测厚”的简便算法。",
-    tortuosity: "1935 年 Bruggeman 提出多孔介质的有效介质公式，由此得到 τ ≈ ε^−0.5；1937 年 Carman 用“曲折度”描述流体在颗粒床里绕路。1993 年 Doyle、Fuller、Newman 的电池模型仍沿用这一关系。",
+    tortuosity: "1935 年 Bruggeman 提出多孔介质的有效介质公式，由此得到 τ ≈ 1/√ε；1937 年 Carman 用“曲折度”描述流体在颗粒床里绕路。1993 年 Doyle、Fuller、Newman 的电池模型仍沿用这一关系。",
     damage: "2019 年 Park 等用两步辊压把石墨负极 25 次循环后的膨胀率从 5% 降到 4.47%；同年 Meyer 等证明热辊能提高附着力；Sangrós Giménez 等的 DEM 模拟显示卸压后回弹可达 17%（Liu p. 7）。",
-    slitting: "分切来自造纸和薄膜加工的圆刀分条；模切来自冲压。1960 年代激光开始用于工业切割。Liu 引 Demir 2014：红外光纤激光 54 W 即可 30 m/min 切正负极。",
+    slitting: "分切沿用造纸和薄膜加工的圆刀分条，模切来自冲压。1960 年代激光进入工业切割；Liu 引 Demir 2014：54 W 光纤激光可 30 m/min 切极片。",
     thick: "原文 p. 921：约 20 年前，100 g/m²（10 mg/cm²）就算常规负载。2013 年 MIT Chiang 组用定向孔降低曲折度；2015 年 Singh 等算出电极从 70 μm 加厚到 320 μm，体积能量密度 337 → 412 Wh/L（Liu p. 7）。",
     ptfe: "1938 年 DuPont 的 Plunkett 意外发现 PTFE（Teflon）。1969 年 Gore 发现快速拉伸 PTFE 会形成微纤维网络（Gore-Tex）。1976 年 Whittingham 的 TiS₂ 电极就用 10% Teflon 粘结（发展史系列第 2 章）。",
     maxwell: "2000 年代 Maxwell Technologies（美国圣迭戈）用干法 PTFE 工艺量产超级电容电极。2019 年 Tesla 收购 Maxwell（Li p. 940；Liu p. 7）；2020 年 9 月 Tesla “电池日”把干法电极列为 4680 电池的降本手段。",
     esd: "静电粉末喷涂 1960 年代起用于金属涂装。2016 年起 WPI 的 Ludwig、Wang 等把它用于电池电极；ORNL 的 Du、Wood 等 2017–2020 年研究电子束 (EB) 固化电极（原文 refs. 416–424）。",
-    emerging: "红外干燥早已用于涂装、印刷，近年进入电池厂（原文 p. 942）；Pfleging 2018 年用激光辅助干燥。多层涂布源于胶片工业的高精度多层涂布，早期电池厂为求简单放弃了它（原文 p. 942）。",
+    emerging: "红外干燥早已用于涂装、印刷，近年进入电池厂；Pfleging 2018 年试激光辅助干燥。多层涂布是卷对卷涂布的老技术，早期电池厂为求简单放弃了它（原文 p. 942）。",
   },
 
   corrections: [
