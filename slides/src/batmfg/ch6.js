@@ -105,9 +105,9 @@ async function build(outFile, figDir) {
   // ---------------- 6. Winding / stacking / Z-folding ----------------
   s = d.slide("CONTENT");
   s.addText("卷绕、叠片与 Z 形叠片", { placeholder: "title" });
-  d.fig(s, "assembly_methods", { x: 0.6, y: 1.1, w: 12.1, h: 3.75 });
-  d.caption(s, "据 Kwade 2018 Fig. 4d–f、Fig. 6e 与 p. 294 文字重绘（示意）。", { x: 0.6, y: 4.85, w: 12.1, h: 0.3 });
-  row3(s, 5.2, [
+  d.fig(s, "assembly_methods", { x: 0.6, y: 1.05, w: 12.1, h: 3.55 });
+  d.caption(s, "据 Kwade 2018 Fig. 4d–f、Fig. 6e 与 p. 294 文字重绘（示意）。", { x: 0.6, y: 4.62, w: 12.1, h: 0.3 });
+  row3(s, 4.95, [
     { kind: "hist", body: Q.facts.winding },
     { kind: "why", body: "卷绕连续、快，但小半径处弯折会让厚电极开裂。叠片受力均匀，可用 >100 μm 的厚电极，但逐片取放慢。Z 形叠片让隔膜连续，减少错位短路。" },
     { kind: "matters", body: "叠片时每片的位置都已知。Sommer 正是靠 Z 形叠片机上的读码器，记下每片电极在第几层。" },
@@ -209,9 +209,9 @@ async function build(outFile, figDir) {
   // ---------------- 14. Tracking & tracing ----------------
   s = d.slide("CONTENT");
   s.addText("Sommer：给每片电极发“身份证” (tracking & tracing)", { placeholder: "title" });
-  d.fig(s, "traceability_chain", { x: 0.6, y: 1.1, w: 12.1, h: 3.75 });
-  d.caption(s, "据 Sommer 2024 Figs. 1、3、4 与 pp. 2–4 文字重绘（示意）。追溯单元：浆料 → 电极 → 电芯。", { x: 0.6, y: 4.85, w: 12.1, h: 0.3 });
-  row3(s, 5.2, [
+  d.fig(s, "traceability_chain", { x: 0.6, y: 1.05, w: 12.1, h: 3.55 });
+  d.caption(s, "据 Sommer 2024 Figs. 1、3、4 与 pp. 2–4 文字重绘（示意）。追溯单元：浆料 → 电极 → 电芯。", { x: 0.6, y: 4.62, w: 12.1, h: 0.3 });
+  row3(s, 4.95, [
     { kind: "hist", body: Q.facts.trace },
     { kind: "why", body: "以前按“卷”记数据：一卷切出几十片，坏片混在好片里分不出。给每片打码，数据就跟着电极走进电芯。" },
     { kind: "matters", body: "出了问题能倒查到哪一片、哪段涂布；叠片前就能把超差片挑出去（Sommer p. 11）。" },
@@ -221,9 +221,9 @@ async function build(outFile, figDir) {
   // ---------------- 15. Fig. 6 redraw ----------------
   s = d.slide("CONTENT");
   s.addText("虚拟电芯：逐层算出的 N/P", { placeholder: "title" });
-  d.fig(s, "fig6_redraw", { x: 0.6, y: 1.05, w: 12.1, h: 3.9 });
-  d.caption(s, "据 Sommer 2024 Fig. 6 重绘：原图竖排（位置 1 在底），此处横排。圆角框中的数字为相邻两面的局部 N/P，数值照录原图。", { x: 0.6, y: 4.95, w: 12.1, h: 0.3 });
-  row3(s, 5.3, [
+  d.fig(s, "fig6_redraw", { x: 0.6, y: 1.05, w: 12.1, h: 3.55 });
+  d.caption(s, "据 Sommer 2024 Fig. 6 重绘：原图竖排（位置 1 在底），此处横排。圆角框中的数字为相邻两面的局部 N/P，数值照录原图。", { x: 0.6, y: 4.62, w: 12.1, h: 0.3 });
+  row3(s, 4.95, [
     { kind: "hist", body: Q.facts.fig6 },
     { kind: "why", body: "Ref 1 各层 N/P 在 1.167–1.373 之间，全部 > 1。Man 1 的 C3 载量约 +20%，它两侧的 N/P 降到 1.001 和 0.910。" },
     { kind: "matters", body: "整只电池的平均 N/P 看着正常，局部一层 < 1 就可能析锂。只看平均值会漏掉。" },
@@ -282,9 +282,9 @@ async function build(outFile, figDir) {
   // ---------------- 19. Three scales ----------------
   s = d.slide("CONTENT");
   s.addText("三级放大：实验室、中试、量产", { placeholder: "title" });
-  d.fig(s, "three_scales", { x: 0.6, y: 1.1, w: 12.1, h: 3.75 });
-  d.caption(s, "据 Kwade 2018 Fig. 4 重绘（示意）。", { x: 0.6, y: 4.85, w: 12.1, h: 0.3 });
-  row3(s, 5.2, [
+  d.fig(s, "three_scales", { x: 0.6, y: 1.05, w: 12.1, h: 3.55 });
+  d.caption(s, "据 Kwade 2018 Fig. 4 重绘（示意）。", { x: 0.6, y: 4.62, w: 12.1, h: 0.3 });
+  row3(s, 4.95, [
     { kind: "hist", body: Q.facts.scales },
     { kind: "why", body: "实验室材料少、要筛的参数多，只能用扣式和单层电池；它既预测不了工艺参数，也预测不了全尺寸电芯的性能（Kwade p. 297）。" },
     { kind: "matters", body: "中试线是桥：多层、双面、接近真实尺寸。Sommer 的研究就在中试线上完成，这类问题扣式里根本测不出。" },

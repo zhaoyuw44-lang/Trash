@@ -224,12 +224,13 @@ async function build(outFile, figDir) {
   // ---------------- 14. Tortuosity ----------------
   s = d.slide("CONTENT");
   s.addText("曲折度 (tortuosity)：离子要绕多远的路", { placeholder: "title" });
-  d.fig(s, "calender_micro", { x: 0.5, y: 1.2, w: 6.9, h: 4.6 });
-  d.caption(s, "据原文 Fig. 11a 重绘并加上离子路径（示意）。上方虚线 = 隔膜一侧，灰条 = 集流体，浅蓝 = 充满电解液的孔。", { x: 0.6, y: 5.55, w: 6.8, h: 0.4 });
+  d.fig(s, "calender_micro", { x: 0.5, y: 1.2, w: 6.9, h: 4.38 });
+  d.caption(s, "据原文 Fig. 11a 重绘并加离子路径（示意）；浅蓝 = 充满电解液的孔。", { x: 0.6, y: 5.6, w: 6.8, h: 0.3 });
   col(s, 7.75, 1.3, 5.0, [
     { kind: "def", head: "定义：曲折度 τ", size: 13, body: "离子实际走的路 ÷ 电极厚度。像在人群里穿行：人越挤，绕得越远。" },
     { kind: "hist", size: 13, body: Q.facts.tortuosity },
     { kind: "why", size: 13, body: "按 τ ≈ 1/√ε 估算：ε 从 50% 降到 25%，有效离子通道 ε/τ 从约 0.35 降到 0.13，只剩三分之一多。" },
+    { kind: "matters", size: 13, body: "孔隙率选错，同一份材料的倍率性能会差一大截。" },
   ], 0.13, 5.75, "tortuosity");
   d.quote(s, Q.optimalPorosity);
   s.addNotes("为什么有“最佳孔隙率”？压得越密，电子路越通（颗粒接触好），离子路越堵（孔少、路绕）。薄电极里，慢的是锂在固体颗粒里的扩散；电极一厚，电解液里的离子传输就成了瓶颈（原文 p. 913）。注意 Bruggeman 关系是理想球形颗粒的近似，片状石墨这样的真实电极往往更“绕”。这就是“要”：同一份材料，孔隙率选错，倍率性能可以差一大截。");
