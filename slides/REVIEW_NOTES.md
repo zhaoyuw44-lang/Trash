@@ -297,3 +297,23 @@
 - Dahn 组高精度库仑测量“2010 年前后”起步。
 - Battery500 联盟 2016 年成立、PNNL 牵头；E/C 目标约 3 g/Ah、商品锂离子约 1.3 g/Ah（讲稿）。
 - Hooke 定律 1678 年发表。
+
+### 第 4 章：原文笔误与不一致（Kayyar 2012 JoVE；Stein 2016 JoVE；Luc 2022 Energies）
+- Luc p. 2、Table 5：“N/P ratio”实为面积比（1.3 = (16/14)²），原文 p. 6 另称 ACR；N/P 通常指容量比。
+- Kayyar p. 2：先定义 W_EO，公式中写 W_ED；按“理论比容量”定 C 倍率（LiCoO₂ 理论约 274 mAh/g，实用约 150）会使电流约大 1.8 倍。
+- Stein p. 2：LiNi₁/₃Mn₁/₃Co₁/₃O₂ 被称为 lithium-manganese-cobalt-oxide（漏 nickel）；p. 4 按 155 mAh/g 定电流，Fig. 6 图注写约 150 mAh/g。
+- Stein p. 1：“coin cells originally used for hearing aids in the 1970s”——汞纽扣电池 1950 年代已用于助听器；1970 年代新出现的是锂硬币电池。
+- 常见说法：电解液“photosensitive”（Kayyar p. 2、Stein p. 3）——LiPF₆ 电解液主要怕水和热（水解生成 HF）；“CR2032”的 C 指 Li/MnO₂，空壳宜称 2032/R2032。
+
+### 第 4 章：补充计算与典型值（非原文数据）
+- Stein 锂片（Ø14.3 mm × 0.75 mm）≈ 64 mg ≈ 248 mAh，对 0.39 mAh 正极约过量 600 倍。
+- Luc 孔体积：Ø14 正极 8.6 µL + Ø16 负极 13.3 µL + 隔膜 2.8 µL ≈ 25 µL，3 倍 ≈ 74 µL（原文 74.5 µL）。Murray 2019 的 38–42 mg 按 1.25 g/mL 换算约 32 µL。
+- Luc Table 5 合计 72/128 ≈ 56% 电池“functional”。Stein Fig. 6 数值为读图近似；保持率约 91% / 79% 为读图估算。
+- ppm 阶梯：1 ppm H₂O ≈ 露点 −76 °C，−40 °C ≈ 130 ppm，25 °C/50%RH ≈ 1.6 万 ppm（饱和蒸气压换算）；N/P 1.1–1.2 标为典型值。
+
+### 第 4 章：把握较低的历史条目
+- 手套箱：1940 年代核计划用于放射性物质；1960 年代起出现惰性气体循环净化型（写作年代）。
+- Ruben 与 Mallory 1940 年代汞电池、1950 年代纽扣形用于助听器/手表；Sanyo Li/MnO₂ 硬币电池在 1970 年代（未写具体年份）。
+- Celgard 源自 1970 年代 Celanese 干法拉伸；PP/PE/PP 三层关断膜 1990 年代。
+- Tarascon & Guyomard（Bellcore）1990 年代初的 LiPF₆/EC-DMC 配方。
+- C 倍率记法源自铅酸电池 20 小时率（C₂₀）。
