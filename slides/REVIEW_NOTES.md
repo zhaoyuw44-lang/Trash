@@ -367,3 +367,28 @@
 - “刮刀”一词源于印刷业；1947 年 Howatt 等流延成型。
 - 1950 年代胶片/磁带工业发展精密狭缝与挤压涂布（未写具体专利，如 Kodak Beguin 1954）；Sony 1950 年起生产磁带。
 - 逗号刮刀在日本涂布设备业发展、早期锂电产线常用（未查具体厂商与年份）。
+
+### 第 3 章：原文笔误与不一致（Li et al., Chem. Rev. 122, 903 (2022)；Liu et al., iScience 24, 102332 (2021)）
+- Li p. 939：PLD 写成“a laser containing the electrode components is focused on the current collector”；应为激光烧蚀由电极材料制成的靶，羽辉沉积到基底上。
+- Li p. 940 正文 ESD 最高约 0.4 m/min（ref. 416），表 9（p. 941）写 1.2 m/min（ref. 423），出处不同、数值不一致。
+- “三段干燥”：Li p. 912–913 指物理阶段（high-rate / constant-rate / low-rate，建议温度由低到高）；Liu p. 7 引 Jaiser 2017 指工艺设定（快–慢–快）。经典干燥理论只分恒速段、降速段。
+- Liu 表 1（p. 3）化成/老化 32.61%（可复算），结论（p. 11）写 32.16%。NMP 沸点 Li 204.3 °C、Liu 202 °C。
+- Li p. 914：“辊压在高于粘结剂 Tg 的温度下进行”——PVDF 的 Tg 约 −35 °C，热辊作用是软化半结晶 PVDF，不是越过 Tg。
+- Li Fig. 11 图注 “calendar”、p. 919 “calendaring” 为 calender 的误拼（在讲稿中提及）。
+- 实验室误区：未辊压电极与压实电极比较倍率（Li p. 939–940 自己也指出 ESD 对照组未辊压，孔隙率 50%）。
+
+### 第 3 章：补充计算与典型值（非原文数据）
+- 孔隙率例题：NMC811:炭黑:PVDF = 95:2.5:2.5，真密度取 4.75/1.9/1.78 g/cm³ → ρ真 ≈ 4.40 g/cm³；20 mg/cm² 涂层 95/70/60 μm → ε ≈ 52%/35%/24%。
+- Bruggeman τ ≈ 1/√ε：ε 50% → 25% 时 ε/τ ≈ 0.35 → 0.125。
+- 原文 Fig. 10 读图重绘（近似）为原生散点折线图。
+- LiPF₆ + H₂O → LiF + POF₃ + 2HF 为常见总式；实验室“80–120 °C 真空烘过夜”为常见经验值。
+
+### 第 3 章：把握较低的历史条目（未逐条查原始文献）
+- 1836 年 Edwin Chaffee 橡胶压延机（年份来自通行资料）。
+- 1929 年 Sherwood 固体干燥经典论文（Ind. Eng. Chem.）。
+- 1921 年 Washburn 方程；1945 年 Ritter & Drake 压汞孔隙率仪；1937 年 Carman 曲折度。
+- Maxwell 干法 PTFE 超级电容电极量产写作“2000 年代”（未查具体年份）。
+- 1969 年 Gore 拉伸 PTFE（Gore-Tex）；静电粉末喷涂“1960 年代起”用于金属涂装。
+- Tesla 2021 年前后出售 Maxwell 超级电容业务；干法正极量产进展慢于预期（讲稿中标为公开报道）。
+- 2013 年 MIT Chiang 组定向孔/低曲折度电极（Bae et al., Adv. Mater.）。
+- KIT（Jaiser、Scharfer、Schabel）2010 年代系统研究粘结剂迁移。
