@@ -961,4 +961,151 @@ figs.thickscale = () => {
 figs.ic_ruler = () => icon(`<rect x="18" y="46" width="84" height="28" rx="4" fill="#fff" stroke="${K.amber}" stroke-width="4"/>` + [28, 40, 52, 64, 76, 88].map((x, i) => line(x, 46, x, i % 2 ? 58 : 64, { color: K.amber, w: 3 })).join(""), K.amberL);
 figs.ic_cable = () => icon(path(`M18,80 C40,80 40,40 62,40 C84,40 84,80 102,80`, { color: K.slate, w: 5 }) + `<rect x="10" y="72" width="16" height="16" rx="3" fill="${K.slate}"/><rect x="94" y="72" width="16" height="16" rx="3" fill="${K.slate}"/>`, K.slateL);
 
+// multi-coloured text line: segs = [[text, colour, bold?], ...]
+function TS(x, y, segs, o = {}) {
+  const sp = segs.map(([t, c, bd]) => `<tspan fill="${c || K.text}"${bd ? ' font-weight="bold"' : ""}>${esc(t)}</tspan>`).join("");
+  return `<text x="${x}" y="${y}" font-family="${FONT}" font-size="${o.size || 20}" text-anchor="${o.anchor || "start"}">${sp}</text>`;
+}
+
+// 26. Li+ hop sequence along a PEO chain
+figs.hop = () => {
+  const W = 1180, H = 400;
+  let b = "";
+  const chain = (ox, y) => {
+    const pts = []; for (let x = 10; x <= 270; x += 20) pts.push([ox + x, +(y + 14 * Math.sin(x / 20)).toFixed(1)]);
+    return pts;
+  };
+  const Ox = [50, 90, 130, 170, 210, 250];
+  const frame = (k, title, l1, l2) => rect(10 + k * 292, 10, 278, 380, { fill: K.bg2, rx: 16 }) + T(149 + k * 292, 46, title, { size: 21, anchor: "middle", weight: "bold", fill: K.ink }) + T(149 + k * 292, 340, l1, { size: 17, anchor: "middle", fill: K.muted }) + T(149 + k * 292, 362, l2, { size: 17, anchor: "middle", fill: K.muted });
+  const drawChain = (ox, y, lift) => {
+    let st = path(smooth(chain(ox, y)), { color: K.teal, w: 7 });
+    const at = Ox.map((x, i) => [ox + x, y + 14 * Math.sin(x / 20) - (lift && lift[i] ? lift[i] : 0)]);
+    return { st, at };
+  };
+  // frame 1
+  b += frame(0, "① cage of O atoms", "Li⁺ bound to ~4–5 ether O", "(2-D sketch of a helical wrap)");
+  let c1 = drawChain(10, 240); b += c1.st;
+  [0, 1, 2, 3].forEach((i) => (b += line(c1.at[i][0], c1.at[i][1], 130, 150, { color: K.li, w: 2.5, dash: "5 4" })));
+  c1.at.forEach(([x, y], i) => (b += oat(x, y, 11, false)));
+  b += li(130, 150, 22);
+  // frame 2
+  const o2 = 292;
+  b += frame(1, "② segment moves", "chain twists: one O lets go,", "a new O swings in");
+  let c2 = drawChain(o2 + 10, 240); b += c2.st;
+  [1, 2, 3].forEach((i) => (b += line(c2.at[i][0], c2.at[i][1], o2 + 150, 150, { color: K.li, w: 2.5, dash: "5 4" })));
+  b += line(c2.at[0][0], c2.at[0][1], o2 + 150, 150, { color: K.o, w: 2, dash: "2 6" }) + T(c2.at[0][0] - 4, c2.at[0][1] - 28, "×", { size: 26, fill: K.o, weight: "bold" });
+  b += path(`M${c2.at[4][0] + 12},${c2.at[4][1] - 20} Q${o2 + 210},150 ${o2 + 178},${158}`, { color: K.amber, w: 3, marker: "ahA" });
+  c2.at.forEach(([x, y]) => (b += oat(x, y, 11, false)));
+  b += li(o2 + 150, 150, 22);
+  // frame 3
+  const o3 = 584;
+  b += frame(2, "③ new cage", "Li⁺ has shifted by", "about one EO unit");
+  let c3 = drawChain(o3 + 10, 240); b += c3.st;
+  [1, 2, 3, 4].forEach((i) => (b += line(c3.at[i][0], c3.at[i][1], o3 + 170, 150, { color: K.li, w: 2.5, dash: "5 4" })));
+  c3.at.forEach(([x, y]) => (b += oat(x, y, 11, false)));
+  b += `<circle cx="${o3 + 130}" cy="150" r="22" fill="none" stroke="${K.li}" stroke-width="2.5" stroke-dasharray="4 4"/>`;
+  b += li(o3 + 170, 150, 22) + line(o3 + 134, 112, o3 + 166, 112, { color: K.li, w: 3, marker: "ahL" });
+  // frame 4: many steps
+  const o4 = 876;
+  b += frame(3, "④ many steps", "slow drift along chains plus", "rare jumps to another chain");
+  b += path(smooth([[o4 + 20, 120], [o4 + 80, 100], [o4 + 140, 125], [o4 + 200, 100], [o4 + 260, 118]]), { color: K.teal, w: 6 });
+  b += path(smooth([[o4 + 20, 280], [o4 + 80, 260], [o4 + 140, 285], [o4 + 200, 262], [o4 + 260, 280]]), { color: "#2F9C8F", w: 6 });
+  const tr = [[40, 135], [52, 140], [48, 150], [62, 146], [70, 156], [84, 150], [96, 158], [104, 170], [112, 200], [122, 232], [134, 248], [150, 244], [164, 252], [178, 246], [192, 254], [208, 250], [224, 258]];
+  b += path("M" + tr.map(([x, y]) => `${o4 + x},${y}`).join(" L"), { color: K.li, w: 3 });
+  b += li(o4 + 224, 258, 14, "", false);
+  b += T(o4 + 140, 205, "hop", { size: 18, fill: K.li, weight: "bold" });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+// 27. Three transport worlds: liquid / polymer / ceramic
+figs.worlds = () => {
+  const W = 1180, H = 400;
+  let b = "";
+  const panel = (k, title, col, l1, l2, eq) => rect(10 + k * 392, 10, 376, 380, { fill: K.bg2, rx: 16 }) + T(198 + k * 392, 48, title, { size: 23, anchor: "middle", weight: "bold", fill: col }) + T(198 + k * 392, 300, l1, { size: 18, anchor: "middle", fill: K.text }) + T(198 + k * 392, 324, l2, { size: 18, anchor: "middle", fill: K.text }) + T(198 + k * 392, 366, eq, { size: 19, anchor: "middle", fill: col, weight: "bold" });
+  // liquid
+  b += panel(0, "Liquid: vehicle", K.o, "Li⁺ travels with its own", "solvent shell", "D ≈ kT / 6πηr");
+  for (let k = 0; k < 4; k++) { const a = (k / 4) * 2 * Math.PI + 0.4; b += `<ellipse cx="${170 + 52 * Math.cos(a)}" cy="${165 + 52 * Math.sin(a)}" rx="20" ry="12" fill="#9CCFE0" stroke="${K.slate}" stroke-width="2" transform="rotate(${(a * 180) / Math.PI} ${170 + 52 * Math.cos(a)} ${165 + 52 * Math.sin(a)})"/>`; }
+  b += li(170, 165, 22, "Li⁺", false) + line(240, 165, 320, 165, { color: K.o, w: 5, marker: "ahO" });
+  [[70, 90], [320, 250], [60, 250], [330, 90]].forEach(([x, y]) => (b += `<ellipse cx="${x}" cy="${y}" rx="18" ry="11" fill="#9CCFE0" opacity="0.6"/>`));
+  // polymer
+  const o = 392;
+  b += panel(1, "Polymer: segmental", K.teal, "Li⁺ swaps O ligands as", "chain segments move", "σ ∝ exp[−B/(T−T₀)]");
+  b += path(smooth([[o + 40, 210], [o + 100, 180], [o + 160, 215], [o + 220, 180], [o + 280, 210], [o + 340, 185]]), { color: K.teal, w: 7 });
+  b += path(smooth([[o + 40, 110], [o + 100, 140], [o + 160, 105], [o + 220, 140], [o + 280, 110], [o + 340, 135]]), { color: "#2F9C8F", w: 7 });
+  b += li(o + 190, 160, 20, "", false);
+  [[o + 160, 205], [o + 220, 183], [o + 160, 110], [o + 220, 137]].forEach(([x, y]) => (b += line(x, y, o + 190, 160, { color: K.li, w: 2, dash: "4 4" }) + oat(x, y, 9, false)));
+  b += path(`M${o + 60},240 c10,12 20,-12 30,0 c10,12 20,-12 30,0`, { color: K.muted, w: 2.5 }) + T(o + 130, 246, "chains wriggle", { size: 16, fill: K.muted });
+  // ceramic
+  const c = 784;
+  b += panel(2, "Ceramic: hopping", K.slate, "Li⁺ jumps between sites in", "a rigid lattice", "σT ∝ exp(−Eₐ/kT)");
+  for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) {
+    const x = c + 60 + i * 55, y = 90 + j * 50;
+    const vac = i === 3 && j === 1;
+    b += vac ? `<circle cx="${x}" cy="${y}" r="13" fill="none" stroke="${K.li}" stroke-width="2.5" stroke-dasharray="4 3"/>` : (i === 2 && j === 1 ? li(x, y, 13, "", false) : `<circle cx="${x}" cy="${y}" r="${(i + j) % 2 ? 13 : 9}" fill="${(i + j) % 2 ? "#AEB8C2" : K.li}" opacity="${(i + j) % 2 ? 1 : 0.55}"/>`);
+  }
+  b += path(`M${c + 172},${125} Q${c + 200},${110} ${c + 222},${130}`, { color: K.li, w: 3.5, marker: "ahL" });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+// 28. Gallery of alternative host polymers
+figs.hosts = () => {
+  const W = 1180, H = 480;
+  let b = "";
+  const F = { ether: K.teal, carb: "#B8651B", ester: K.amber, nit: K.slate, phos: K.li };
+  const tiles = [
+    ["PEO", "ether", [["–(CH₂–CH₂–"], ["O", K.o, 1], [")ₙ–"]], null, "reference; semicrystalline, Tm ≈ 65 °C"],
+    ["Comb polysiloxane", "ether side chains", [["–(Si(CH₃)–O)ₙ–"]], [["side: –(CH₂CH₂"], ["O", K.o, 1], [")ₘCH₃"]], "very flexible Si–O backbone"],
+    ["MEEP polyphosphazene", "ether side chains", [["–(N=P(OR)₂)ₙ–"]], [["R = (CH₂CH₂"], ["O", K.o, 1], [")₂CH₃"]], "Tg ≈ −84 °C; flows, needs x-linking"],
+    ["PDOL (in situ)", "ether / acetal", [["–(CH₂–"], ["O", K.o, 1], ["–CH₂CH₂–"], ["O", K.o, 1], [")ₙ–"]], null, "ring-opened DOL, made in the cell"],
+    ["PEC", "carbonate", [["–(CH₂CH₂–"], ["O–C(=O)–O", F.carb, 1], [")ₙ–"]], null, "σ rises with LiFSI content"],
+    ["PTMC", "carbonate", [["–((CH₂)₃–"], ["O–C(=O)–O", F.carb, 1], [")ₙ–"]], null, "amorphous, Tg ≈ −15 °C; high t₊"],
+    ["PCL", "ester", [["–((CH₂)₅–"], ["C(=O)–O", F.ester, 1], [")ₙ–"]], null, "semicrystalline; used in P(TMC-co-CL)"],
+    ["PAN", "nitrile", [["–(CH₂–CH("], ["C≡N", F.nit, 1], ["))ₙ–"]], null, "polar, oxidation-resistant; mostly gels"],
+  ];
+  const fam = { "ether": F.ether, "ether side chains": F.ether, "ether / acetal": F.ether, "carbonate": F.carb, "ester": F.ester, "nitrile": F.nit };
+  tiles.forEach(([name, family, f1, f2, note], i) => {
+    const x = 10 + (i % 4) * 292, y = 10 + Math.floor(i / 4) * 235;
+    b += rect(x, y, 278, 220, { fill: K.bg2, rx: 16 });
+    b += T(x + 18, y + 40, name, { size: 22, weight: "bold", fill: K.ink });
+    const col = name.startsWith("MEEP") ? F.phos : fam[family];
+    b += rect(x + 18, y + 54, Math.max(90, family.length * 10 + 24), 28, { fill: col, rx: 14 });
+    b += T(x + 30, y + 74, family, { size: 16, fill: "#fff", weight: "bold" });
+    b += TS(x + 18, y + 124, f1, { size: 21 });
+    if (f2) b += TS(x + 18, y + 154, f2, { size: 19 });
+    b += T(x + 18, y + 198, note, { size: 16, fill: K.muted });
+  });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+// 29. σ (RT) vs t+ map of host families
+figs.sigt = () => {
+  const W = 780, H = 520;
+  const x0 = 110, x1 = 750, y0 = 440, y1 = 30;
+  const X = (t) => x0 + t * (x1 - x0);
+  const Y = (s) => y0 - ((Math.log10(s) + 9) / 6) * (y0 - y1); // 1e-9..1e-3
+  let b = "";
+  for (let e = -9; e <= -3; e++) b += line(x0, Y(10 ** e), x1, Y(10 ** e), { color: "#E3E8EC", w: 1.5 }) + T(x0 - 10, Y(10 ** e) + 7, `10${{"-9":"⁻⁹","-8":"⁻⁸","-7":"⁻⁷","-6":"⁻⁶","-5":"⁻⁵","-4":"⁻⁴","-3":"⁻³"}[e]}`, { size: 19, anchor: "end", fill: K.muted });
+  [0, 0.25, 0.5, 0.75, 1].forEach((t) => (b += T(X(t), y0 + 30, String(t), { size: 19, anchor: "middle", fill: K.muted })));
+  b += line(x0, y0, x1, y0, { w: 3 }) + line(x0, y0, x0, y1, { w: 3 });
+  b += T((x0 + x1) / 2, y0 + 62, "Li⁺ transference number t₊", { size: 20, anchor: "middle" });
+  b += T(30, (y0 + y1) / 2, "σ at ~25 °C / S cm⁻¹", { size: 20, anchor: "middle", rotate: -90 });
+  // target zone
+  b += `<rect x="${X(0.5)}" y="${Y(1e-3)}" width="${X(1) - X(0.5)}" height="${Y(1e-4) - Y(1e-3)}" fill="${K.tealL}" stroke="${K.teal}" stroke-width="2.5" stroke-dasharray="8 6"/>`;
+  b += T(X(0.75), Y(1e-3) + 32, "target: σ ≥ 10⁻⁴, t₊ ≥ 0.5", { size: 18, anchor: "middle", fill: K.teal, weight: "bold" });
+  b += T(X(0.75), Y(1e-3) + 54, "still nearly empty", { size: 17, anchor: "middle", fill: K.teal });
+  const blob = (t0, t1, s0, s1, col, lab, lx, ly, anchor) => {
+    const cx = (X(t0) + X(t1)) / 2, cy = (Y(s0) + Y(s1)) / 2;
+    return `<ellipse cx="${cx}" cy="${cy}" rx="${(X(t1) - X(t0)) / 2}" ry="${(Y(s0) - Y(s1)) / 2}" fill="${col}" opacity="0.55"/>` + T(lx ?? cx, ly ?? cy + 6, lab, { size: 18, anchor: anchor || "middle", weight: "bold", fill: K.ink });
+  };
+  b += blob(0.08, 0.32, 1e-6, 1e-5, K.teal, "PEO–LiTFSI");
+  b += blob(0.08, 0.35, 2e-5, 2e-4, "#7FC4BE", "comb / MEEP", null, null);
+  b += blob(0.48, 0.84, 8e-6, 8e-5, K.amber, "P(TMC-co-CL)", X(0.64), Y(1.4e-5) + 6);
+  b += blob(0.55, 0.85, 3e-5, 1.2e-4, "#B8651B", "PEC + LiFSI", X(0.70), Y(6e-5) + 6);
+  b += blob(0.68, 0.86, 1e-9, 1e-7, "#B8651B", "PTMC", null, null);
+  b += blob(0.86, 0.99, 1e-7, 1e-5, K.li, "", null, null);
+  b += T(X(0.92), Y(1e-6) + 6, "single-ion", { size: 18, anchor: "middle", weight: "bold", fill: K.ink });
+  b += T(x1, 22, "schematic · ranges indicative", { size: 16, anchor: "end", fill: K.o, weight: "bold" });
+  return { w: W, h: H + 30, svg: wrap(W, H + 30, b) };
+};
+
 module.exports = { figs, K };

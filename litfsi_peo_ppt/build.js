@@ -94,6 +94,10 @@ const ALT = {
   eiscell: "Coin cell with stainless-steel blocking electrodes and an insulating ring around the polymer film",
   nyquist: "Schematic Nyquist plot with bulk semicircle, blocking spike and equivalent circuit",
   thickscale: "Typical film thickness ranges for separators, competitive cells, lab cells and EIS samples",
+  hop: "Four-frame sketch of Li+ stepping along a PEO chain by exchanging ether oxygen ligands",
+  worlds: "Vehicular transport in liquids, segmental transport in polymers and hopping in ceramics",
+  hosts: "Repeat units of eight host polymers with their Li+-coordinating groups highlighted",
+  sigt: "Schematic map of room-temperature conductivity versus Li+ transference number for host families",
   clean: "Eight-step PTFE mould cleaning routine: four steps after use and four before the next cast",
 };
 const tag = (slide, text) =>
@@ -155,7 +159,7 @@ pres.addSection({ title: "Overview" });
     ["ic_salt", "Components & history", "PEO, LiTFSI and 50 years of polymer electrolytes"],
     ["ic_md", "Dissolution & structure", "Thermodynamic cycle, Li⁺ solvation, crystal complexes"],
     ["ic_dsc", "Phase behaviour", "Phase diagram, DSC vs salt content, solubility limit"],
-    ["ic_eis", "Transport, limits & fixes", "Why PEO falls short and how to close the gap to liquids"],
+    ["ic_eis", "Transport, limits & alternatives", "How Li⁺ moves, why PEO falls short, fixes, other polymers"],
     ["ic_mould", "Casting good films", "PTFE-mould workflow, mould cleaning, sticky films"],
     ["ic_ruler", "Measuring films", "EIS conductivity and the ideal film thickness"],
   ];
@@ -378,6 +382,32 @@ pres.addSection({ title: "Transport" });
 {
   const s = newSlide("Transport");
   tag(s, "04 · TRANSPORT");
+  s.addText("Li⁺ moves by swapping its oxygen partners", { placeholder: "title" });
+  fig(s, "hop", 0.6, 1.45, 12.1);
+  card(s, 0.6, 5.7, 12.1, 0.85, C.text2);
+  s.addText([
+    { text: "The chain must move first. ", options: { bold: true, color: "F2C38B" } },
+    { text: "Li⁺ can only step when a segment rearranges its O cage, so Li⁺ motion follows PEO dynamics on the nanosecond scale [15, 18] — which is why Tg and VTF behaviour control σ." },
+  ], { x: 0.85, y: 5.72, w: 11.6, h: 0.8, fontSize: 15, color: C.background1, valign: "middle", margin: 0, isTextBox: true });
+  src(s, "Sources: [15] Mao et al., Nature 2000 · [18] Borodin & Smith 2006 · [19] Diddens et al. 2010. 2-D sketch of a 3-D helical coordination.");
+  s.addNotes("Step by step: Li+ sits in a cage of about four to five ether oxygens. Thermal motion of the segment breaks one Li–O contact and brings in a new oxygen further along the chain, so the cage — and Li+ — shifts by roughly one EO unit. Many such steps give slow, subdiffusive motion along the chain, occasionally interrupted by a jump to another chain. Borodin and Smith found motion along the chain and motion with the segment contribute about equally.");
+}
+{
+  const s = newSlide("Transport");
+  tag(s, "04 · TRANSPORT");
+  s.addText("Three ways ions move — and why PEO is slow", { placeholder: "title" });
+  fig(s, "worlds", 0.6, 1.45, 12.1);
+  card(s, 0.6, 5.7, 12.1, 0.85, C.background2);
+  s.addText([
+    { text: "Two ways to go faster: ", options: { bold: true, color: C.accent1 } },
+    { text: "speed up the host (lower Tg, plasticisers) or decouple Li⁺ from it — polymer-in-salt [34], crystalline P(EO)₆ tunnels [13], ceramic networks [36]." },
+  ], { x: 0.85, y: 5.72, w: 11.6, h: 0.8, fontSize: 15, color: C.text1, valign: "middle", margin: 0, isTextBox: true });
+  src(s, "Sources: [4] Ratner & Shriver 1988 · [13] Gadjourova 2001 · [34] Angell 1993 · [36] Fu 2016. Equations are the standard limiting forms.");
+  s.addNotes("In a liquid, Li+ moves together with its solvation shell and the speed is set by viscosity. In PEO, Li+ is bound to the host and moves only as fast as the chain segments rearrange — VTF behaviour. In a ceramic, Li+ hops between lattice sites while the framework stays still — Arrhenius behaviour, fully decoupled from structural relaxation. Polymer electrolytes sit in the middle and are limited by their own segmental motion.");
+}
+{
+  const s = newSlide("Transport");
+  tag(s, "04 · TRANSPORT");
   s.addText("Not every dissolved ion is a free ion", { placeholder: "title" });
   fig(s, "species", 0.6, 1.45, 12.1);
   fig(s, "band", 0.6, 4.4, 3.5);
@@ -564,11 +594,59 @@ const chartBase = () => ({
 }
 
 // ====================================================================
+// SECTION 6c — Beyond PEO
+pres.addSection({ title: "Beyond PEO" });
+{
+  const s = newSlide("Beyond PEO");
+  tag(s, "07 · BEYOND PEO");
+  s.addText("Other polymers that can host Li⁺", { placeholder: "title" });
+  fig(s, "hosts", 0.6, 1.4, 12.1);
+  src(s, "Sources: [24] Mindemark 2018 · [38] Zhao 2019 · [41] Blonsky 1984 · [42] Tominaga & Yamazaki 2014. Coloured atoms = Li⁺-coordinating group.");
+  s.addNotes("Hosts are grouped by the group that binds Li+: ethers (PEO, comb polysiloxanes, MEEP, poly-DOL), carbonates (PEC, PTMC), esters (PCL) and nitriles (PAN). Ether oxygens bind Li+ strongly; carbonyl oxygens bind it more weakly, which tends to raise the transference number but stiffen the chain.");
+}
+{
+  const s = newSlide("Beyond PEO");
+  tag(s, "07 · BEYOND PEO");
+  s.addText("How the alternatives compare", { placeholder: "title" });
+  const hdr = (t) => ({ text: t, options: { bold: true, color: C.background1, fill: { color: C.text2 }, fontSize: 13, align: "left", valign: "middle" } });
+  const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontSize: 12, color: C.text1, align: "left", valign: "middle" }, o) });
+  const b = (t) => c(t, { bold: true, color: C.text2 });
+  const rows = [
+    [hdr("Host"), hdr("Li⁺-binding group"), hdr("RT σ / S cm⁻¹"), hdr("t₊"), hdr("Strength"), hdr("Weakness")],
+    [b("PEO–LiTFSI"), c("ether O"), c("10⁻⁶–10⁻⁵"), c("0.1–0.3"), c("cheap, well understood, good Li contact"), c("crystallises; ~4 V; soft above Tm")],
+    [b("Comb polysiloxane / PEGMA"), c("ether O on side chains"), c("~10⁻⁴"), c("low (ether-like)"), c("very low Tg, fully amorphous"), c("weak; needs crosslinking or support")],
+    [b("MEEP polyphosphazene"), c("ether O on side chains"), c("~10⁻⁵"), c("—"), c("Tg ≈ −84 °C; ~2.5 decades above PEO [41]"), c("flows under pressure; needs crosslinking")],
+    [b("PEC + LiFSI"), c("carbonate C=O"), c("~10⁻⁵–10⁻⁴"), c("high (~0.5–0.8)"), c("σ rises with salt content [42]"), c("needs concentrated LiFSI; thermal stability")],
+    [b("PTMC"), c("carbonate C=O"), c("very low"), c("~0.7–0.8"), c("amorphous, high t₊, oxidation-resistant [24]"), c("slow segments (Tg ≈ −15 °C)")],
+    [b("P(TMC-co-CL)"), c("carbonate + ester"), c("~10⁻⁵–10⁻⁴"), c("~0.5–0.8"), c("room-temperature cycling reported [24]"), c("properties depend on composition")],
+    [b("PDOL (in situ)"), c("ether / acetal O"), c("up to ~10⁻³ *"), c("—"), c("made in the cell; good interfaces [38]"), c("residual liquid DOL; long-term stability")],
+    [b("PAN, PVDF-HFP"), c("nitrile / none"), c("~10⁻³ as gels"), c("—"), c("oxidation-resistant, strong matrices"), c("need liquid electrolyte → gels")],
+  ];
+  s.addTable(rows, { x: 0.6, y: 1.45, w: 12.1, colW: [2.15, 1.75, 1.45, 1.3, 2.8, 2.65], rowH: [0.42, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52], border: { type: "solid", pt: 0.75, color: HEX.line }, fill: { color: "FFFFFF" }, margin: [0.03, 0.08, 0.03, 0.08], objectName: "host-comparison-table" });
+  src(s, "Typical orders of magnitude; values depend strongly on salt, composition and thermal history. t₊ for PTMC and P(TMC-co-CL) from Brandell-group studies. *Partly from unpolymerised DOL. Sources: [24, 38, 41, 42].");
+  s.addNotes("Read the table as orders of magnitude. The general pattern: ether hosts give the fastest segments but bind Li+ tightly (low t+); carbonate and ester hosts bind Li+ more weakly (higher t+) but tend to have stiffer chains, so conductivity at room temperature is lower unless the salt content is high or the polymer is copolymerised.");
+}
+{
+  const s = newSlide("Beyond PEO");
+  tag(s, "07 · BEYOND PEO");
+  s.addText("No host yet reaches the target corner", { placeholder: "title" });
+  fig(s, "sigt", 0.5, 1.4, 6.6);
+  bullets(s, [
+    [{ text: "Ether hosts ", bold: true, color: C.accent1 }, { text: "(PEO, comb, MEEP): fast segments, but Li⁺ is held tightly → low t₊" }],
+    [{ text: "Carbonates & esters: ", bold: true, color: C.accent3 }, { text: "weaker Li⁺ binding → higher t₊, but stiffer chains → lower σ unless salt-rich or copolymerised" }],
+    [{ text: "Single-ion polymers: ", bold: true, color: C.accent2 }, { text: "t₊ near 1, but few mobile carriers [37]" }],
+    [{ text: "Most promising today: ", bold: true, color: C.accent4 }, { text: "carbonate copolymers, concentrated PEC, and composites or in-situ hosts" }],
+  ], 7.4, 1.6, 5.3, 4.9, { size: 16 });
+  src(s, "Schematic placement of typical room-temperature ranges from [24, 37, 41, 42] and the preceding table.");
+  s.addNotes("Plotting conductivity against transference number shows the core trade-off: strong Li+ binding gives good salt dissolution and fast host segments but traps Li+, while weak binding frees Li+ but usually comes with stiffer chains. The upper-right box, at least 1e-4 S/cm with t+ of at least 0.5 at room temperature, is still nearly empty.");
+}
+
+// ====================================================================
 // SECTION 7 — Casting
 pres.addSection({ title: "Casting films" });
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · CASTING IN PTFE MOULDS");
+  tag(s, "08 · CASTING IN PTFE MOULDS");
   s.addText("Solution casting a free-standing film, step by step", { placeholder: "title" });
   fig(s, "workflow", 0.6, 1.55, 12.1);
   const rules = [
@@ -587,7 +665,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · CASTING IN PTFE MOULDS");
+  tag(s, "08 · CASTING IN PTFE MOULDS");
   s.addText("Mould set-up and how much to weigh", { placeholder: "title" });
   fig(s, "mould", 0.4, 1.6, 5.7);
   const hdr = (t) => ({ text: t, options: { bold: true, color: C.background1, fill: { color: C.text2 }, fontSize: 14, align: "center", valign: "middle" } });
@@ -613,7 +691,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · CASTING IN PTFE MOULDS");
+  tag(s, "08 · CASTING IN PTFE MOULDS");
   s.addText("Cleaning the PTFE mould before and after each cast", { placeholder: "title" });
   fig(s, "clean", 0.6, 1.4, 12.1);
   const tips = [
@@ -635,7 +713,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · TROUBLESHOOTING");
+  tag(s, "08 · TROUBLESHOOTING");
   s.addText("Sticky film? Check composition and chemistry first", { placeholder: "title" });
   const C3 = [
     ["ic_salt", "Too much salt", [
@@ -662,7 +740,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · TROUBLESHOOTING");
+  tag(s, "08 · TROUBLESHOOTING");
   s.addText("Sticky film? Then check water, time and technique", { placeholder: "title" });
   const C3 = [
     ["ic_water", "Water uptake", [
@@ -689,7 +767,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · PLAN B");
+  tag(s, "08 · PLAN B");
   s.addText("If casting keeps failing: other ways to a usable film", { placeholder: "title" });
   const items = [
     ["ic_press", "Solvent-free hot pressing", [{ text: "Mix dry PEO and LiTFSI, press above Tm between PTFE or release sheets. No residual solvent." }]],
@@ -710,7 +788,7 @@ pres.addSection({ title: "Casting films" });
 pres.addSection({ title: "Measuring films" });
 {
   const s = newSlide("Measuring films");
-  tag(s, "08 · MEASURING FILMS");
+  tag(s, "09 · MEASURING FILMS");
   s.addText("Toolkit for checking your own PEO–LiTFSI films", { placeholder: "title" });
   const items = [
     ["ic_dsc", "DSC", "Tg, Tm, crystallinity, thermal history [16, 17, 26]"],
@@ -733,7 +811,7 @@ pres.addSection({ title: "Measuring films" });
 
 {
   const s = newSlide("Measuring films");
-  tag(s, "08 · MEASURING FILMS");
+  tag(s, "09 · MEASURING FILMS");
   s.addText("Measuring conductivity by EIS: cell and protocol", { placeholder: "title" });
   fig(s, "eiscell", 0.5, 1.5, 6.3);
   const steps = [
@@ -758,7 +836,7 @@ pres.addSection({ title: "Measuring films" });
 }
 {
   const s = newSlide("Measuring films");
-  tag(s, "08 · MEASURING FILMS");
+  tag(s, "09 · MEASURING FILMS");
   s.addText("Reading the Nyquist plot", { placeholder: "title" });
   fig(s, "nyquist", 0.5, 1.45, 6.6);
   card(s, 7.4, 1.5, 5.3, 1.95, C.background2);
@@ -777,7 +855,7 @@ pres.addSection({ title: "Measuring films" });
 }
 {
   const s = newSlide("Measuring films");
-  tag(s, "08 · MEASURING FILMS");
+  tag(s, "09 · MEASURING FILMS");
   s.addText("Getting EIS conductivity right", { placeholder: "title" });
   const items = [
     ["ic_ruler", "Thickness is the biggest error", [{ text: "σ ∝ L: ±5 µm on a 20 µm film is ±25%. Use a spacer and re-measure after heating — PEO creeps above Tm." }]],
@@ -796,7 +874,7 @@ pres.addSection({ title: "Measuring films" });
 }
 {
   const s = newSlide("Measuring films");
-  tag(s, "08 · MEASURING FILMS");
+  tag(s, "09 · MEASURING FILMS");
   s.addText("What is an ideal film thickness?", { placeholder: "title" });
   fig(s, "thickscale", 0.6, 1.4, 12.1);
   s.addText("Thickness that gives a target electrolyte ASR (L = ASR × σ)", { x: 0.6, y: 4.6, w: 6.4, h: 0.35, fontSize: 15, bold: true, color: C.text2, margin: 0, isTextBox: true });
@@ -828,8 +906,8 @@ pres.addSection({ title: "Wrap-up" });
     ["Why it dissolves", "~5 ether O per Li⁺ outweigh the small lattice energy of LiTFSI; entropy pushes back."],
     ["What forms", "6:1, 3:1 and 2:1 complexes; EO:Li ≈ 6–12 is often amorphous because crystallisation is slow."],
     ["How much", "One amorphous phase up to r ≈ 0.28; solubility limit r = 0.50 (EO:Li = 2)."],
-    ["Why it falls short", "Low RT σ, t₊ ≈ 0.1–0.3, soft above 65 °C, ~4 V oxidation, Al corrosion."],
-    ["Closing the gap", "Target ≥ 10⁻⁴ S cm⁻¹ at RT in a 10–20 µm film with higher t₊ — judge by ASR, not σ alone."],
+    ["Why it falls short", "Li⁺ moves only as fast as the chains; low RT σ, t₊ ≈ 0.1–0.3, soft above 65 °C, ~4 V."],
+    ["Closing the gap", "≥ 10⁻⁴ S cm⁻¹ at RT in 10–20 µm films; no host, PEO or other, yet pairs this with t₊ ≥ 0.5."],
     ["Good films", "High-Mw PEO, EO:Li 16–20, clean baked mould, dry everything, slow evaporation, age before peeling."],
     ["Measure right", "SS | SPE | SS, σ = L/(Rb·A) with 100–300 µm samples; battery films 10–20 µm, supported."],
   ];
@@ -884,6 +962,8 @@ const REFS = [
   "Zhao, Q.; Liu, X.; Stalin, S.; Khan, K.; Archer, L. A. Solid-state polymer electrolytes with in-built fast interfacial transport for secondary lithium batteries. Nat. Energy 2019, 4, 365–373.",
   "Wan, J.; Xie, J.; Kong, X.; et al.; Cui, Y. Ultrathin, flexible, solid polymer composite electrolyte enabled with aligned nanoporous host for lithium batteries. Nat. Nanotechnol. 2019, 14, 705–711.",
   "Irvine, J. T. S.; Sinclair, D. C.; West, A. R. Electroceramics: characterization by impedance spectroscopy. Adv. Mater. 1990, 2, 132–138.",
+  "Blonsky, P. M.; Shriver, D. F.; Austin, P.; Allcock, H. R. Polyphosphazene solid electrolytes. J. Am. Chem. Soc. 1984, 106, 6854–6855.",
+  "Tominaga, Y.; Yamazaki, K. Fast Li-ion conduction in poly(ethylene carbonate)-based electrolytes and composites filled with TiO₂ nanoparticles. Chem. Commun. 2014, 50, 4448–4450.",
 ];
 const per = Math.ceil(REFS.length / 3);
 [[0, per], [per, 2 * per], [2 * per, REFS.length]].forEach(([a, b], k) => {
