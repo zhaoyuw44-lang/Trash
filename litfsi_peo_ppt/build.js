@@ -89,6 +89,8 @@ const ALT = {
   transfer: "Li+ moves slowly and TFSI- quickly, causing concentration polarisation",
   workflow: "Seven-step solution-casting workflow",
   mould: "Cross-section of a levelled PTFE mould with lid ajar",
+  gapmap: "Room-temperature conductivity ranges of improvement routes from solid to liquid-like",
+  levers: "Thin scaffold-supported film and indicative gains from five levers",
 };
 const tag = (slide, text) =>
   slide.addText(text, { x: 0.6, y: 0.2, w: 4.5, h: 0.3, fontSize: 11, bold: true, color: C.accent1, charSpacing: 2, margin: 0, isTextBox: true, objectName: "section-tag" });
@@ -149,7 +151,7 @@ pres.addSection({ title: "Overview" });
     ["ic_salt", "Components & history", "PEO, LiTFSI and 50 years of polymer electrolytes"],
     ["ic_md", "Dissolution & structure", "Thermodynamic cycle, Li⁺ solvation, crystal complexes"],
     ["ic_dsc", "Phase behaviour", "Phase diagram, DSC vs salt content, solubility limit"],
-    ["ic_eis", "Transport & limits", "Tg, conductivity, transference — why PEO falls short"],
+    ["ic_eis", "Transport, limits & fixes", "Why PEO falls short and how to close the gap to liquids"],
     ["ic_mould", "Casting good films", "PTFE-mould workflow and fixing sticky films"],
   ];
   rows.forEach(([ic, t, d], i) => {
@@ -420,25 +422,148 @@ pres.addSection({ title: "Limitations" });
   src(s, "Sources: [20] Evans 1987 · [21] Timachova 2015 · [22] Pesko 2017 · [23] Xue 2015 · [28] Monroe & Newman 2005 · [29] Homann 2020 · [30] Krause 1997");
   s.addNotes("Main deficits: room-temperature conductivity, low transference number, poor mechanical strength at operating temperature, limited oxidative stability (and the debate in Homann et al. 2020 that rapid failure with NMC may come from cell setup rather than oxidation), Al corrosion from TFSI, and sensitivity to moisture.");
 }
+// ====================================================================
+// SECTION 6b — Closing the gap to liquid electrolytes
+pres.addSection({ title: "Closing the gap" });
+const chartBase = () => ({
+  catAxisLabelColor: HEX.muted, valAxisLabelColor: HEX.muted, catAxisLabelFontSize: 13, valAxisLabelFontSize: 12,
+  catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-lt", dataLabelFontFace: "+mn-lt", titleFontFace: "+mn-lt",
+  valGridLine: { color: "E3E8EC", size: 0.75 }, catGridLine: { style: "none" }, showLegend: false,
+  catAxisLineShow: false, titleColor: HEX.ink, titleFontSize: 14, showTitle: true,
+});
 {
-  const s = newSlide("Limitations");
-  tag(s, "05 · LIMITATIONS");
-  s.addText("Common strategies beyond plain PEO–LiTFSI", { placeholder: "title" });
-  const items = [
-    ["ic_net", "Crosslink or branch", [{ text: "Suppress crystallinity and add modulus while keeping mobile EO segments." }]],
-    ["ic_block", "Block copolymers", [{ text: "A glassy block (e.g. PS) gives stiffness, the PEO block conducts [31]." }]],
-    ["ic_single", "Single-ion conductors", [{ text: "Tether the anion to the backbone to push t₊ towards 1 [32]." }]],
-    ["ic_filler", "Fillers & new hosts", [{ text: "Ceramic fillers, or carbonate/ester-based hosts beyond PEO [24]." }]],
-  ];
-  items.forEach(([ic, t, b], i) => iconCard(s, 0.6 + i * 3.075, 1.6, 2.9, 3.3, ic, t, b, { size: 16, tsize: 16 }));
-  card(s, 0.6, 5.3, 12.1, 0.95, C.text2);
-  s.addText("Each fix trades against something else — usually conductivity, processability or cost.", { x: 0.9, y: 5.35, w: 11.5, h: 0.85, fontSize: 18, color: C.background1, bold: true, valign: "middle", margin: 0, isTextBox: true });
-  src(s, "Sources: [24] Mindemark 2018 · [31] Singh et al. 2007 · [32] Zhang et al. 2017");
-  s.addNotes("Pick strategies based on which limitation matters most for your cell: mechanics → block copolymers/crosslinking; polarisation → single-ion; RT conductivity → alternative hosts or composites.");
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("The gap: three to four decades at room temperature", { placeholder: "title" });
+  s.addChart(pres.charts.BAR, [{
+    name: "σ (S/cm)",
+    labels: ["PEO–LiTFSI, 25 °C · ~10⁻⁶", "SPE target, 25 °C · 10⁻⁴", "PEO–LiTFSI, 70 °C · 10⁻³", "Liquid, 25 °C · 10⁻²"],
+    values: [3e-6, 1e-4, 1e-3, 1e-2],
+  }], Object.assign(chartBase(), {
+    x: 0.6, y: 1.5, w: 7.3, h: 4.95, barDir: "bar", chartColors: ["1F7A7A"],
+    valAxisLogScaleBase: 10, valAxisMinVal: 1e-7, valAxisMaxVal: 1e-1, valAxisLabelFormatCode: "0E+0",
+    showValue: false,
+    title: "Ionic conductivity, S cm⁻¹ (log scale, typical values)", barGapWidthPct: 60, objectName: "chart-gap",
+  }));
+  stat(s, 8.3, 1.55, 4.4, "×1000–10000", "lower σ for semicrystalline PEO–LiTFSI than a liquid electrolyte at 25 °C", C.accent4);
+  stat(s, 8.3, 3.05, 4.4, "≈ 10⁻⁴ S cm⁻¹", "room-temperature σ usually quoted as the practical solid-state target", C.accent1);
+  card(s, 8.3, 4.6, 4.4, 1.9, C.background2);
+  s.addText([
+    { text: "Count only the Li⁺ part: σ·t₊", options: { bold: true, color: C.accent2, breakLine: true } },
+    { text: "liquid ≈ 10 × 0.35 ≈ 3.5 mS cm⁻¹; PEO at 70 °C ≈ 1 × 0.2 = 0.2 mS cm⁻¹. t₊ matters as much as σ." },
+  ], { x: 8.5, y: 4.7, w: 4.0, h: 1.7, fontSize: 14, color: C.text1, valign: "top", margin: 0, isTextBox: true });
+  src(s, "Typical magnitudes: liquid ≈ 10 mS cm⁻¹ for 1 M LiPF₆ in EC/DMC (vendor data); PEO values from [7, 16, 23]; t₊ from [20–22]. Bars are representative, not one data set.");
+  s.addNotes("Commercial liquid electrolytes reach about 10 mS/cm at room temperature. Semicrystalline PEO–LiTFSI is around 10^-6 to 10^-5 S/cm at 25 °C and about 10^-3 S/cm at 70 °C. The field generally treats 10^-4 S/cm at room temperature as the practical bar for solid polymer electrolytes. Also compare the Li+ conductivity, sigma times t+.");
 }
 {
-  const s = newSlide("Limitations");
-  tag(s, "05 · CHARACTERISATION");
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("What the cell feels is resistance, not conductivity", { placeholder: "title" });
+  s.addChart(pres.charts.BAR, [{
+    name: "ASR",
+    labels: ["Liquid in 20 µm separator, 25 °C", "PEO 20 µm, 70 °C (10⁻³)", "Target: 10 µm, 25 °C (10⁻⁴)", "PEO 20 µm, 25 °C (10⁻⁴)"],
+    values: [1.6, 2.0, 10, 20],
+  }], Object.assign(chartBase(), {
+    x: 0.6, y: 1.5, w: 7.3, h: 4.95, barDir: "bar", chartColors: ["3D5A80"],
+    valAxisMinVal: 0, valAxisMaxVal: 25, valAxisLabelFormatCode: "0",
+    showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0", dataLabelColor: HEX.ink, dataLabelFontSize: 13,
+    title: "Electrolyte area-specific resistance, Ω cm² (lower is better)", barGapWidthPct: 60, objectName: "chart-asr",
+  }));
+  card(s, 8.3, 1.55, 4.4, 2.15, C.background2);
+  s.addText([
+    { text: "ASR = L / σ_eff", options: { bold: true, fontFace: THEME.headFontFace, fontSize: 22, color: C.text2, breakLine: true, paraSpaceAfter: 6 } },
+    { text: "A liquid must sit in a porous separator, which cuts its effective σ several-fold (MacMullin number, typically ~5–10). Here σ_eff ≈ 10/8 ≈ 1.25 mS cm⁻¹." },
+  ], { x: 8.5, y: 1.65, w: 4.0, h: 1.95, fontSize: 14, color: C.text1, valign: "top", margin: 0, isTextBox: true });
+  bullets(s, [
+    [{ text: "At 60–70 °C ", bold: true, color: C.accent4 }, { text: "a 20 µm PEO film already matches a liquid cell" }],
+    [{ text: "At 25 °C ", bold: true, color: C.accent1 }, { text: "you need ≥ 10⁻⁴ S cm⁻¹ AND ≤ 10–20 µm" }],
+    [{ text: "A 50 µm film at 10⁻⁵ S cm⁻¹ ", bold: true }, { text: "gives ≈ 500 Ω cm² — off this chart" }],
+  ], 8.3, 3.95, 4.4, 2.6, { size: 15 });
+  src(s, "ASR = L/σ, calculated for the stated thickness and σ; liquid case assumes σ = 10 mS cm⁻¹ and a MacMullin number of 8 (assumption). Interfacial resistances not included.");
+  s.addNotes("Area-specific resistance is thickness divided by effective conductivity. 20 µm at 1e-3 S/cm is 2 ohm cm2; 20 µm at 1e-4 is 20; 10 µm at 1e-4 is 10. A liquid electrolyte of 10 mS/cm inside a separator with MacMullin number 8 gives about 1.6. This is why thin, supported films plus a modest temperature are the realistic way to compete.");
+}
+{
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("Every route trades solidity for speed", { placeholder: "title" });
+  fig(s, "gapmap", 0.6, 1.45, 12.1);
+  src(s, "Ranges are indicative room-temperature values from [23, 24, 33–38]; ● = specific reported value. *Part of the poly-DOL conductivity comes from unpolymerised DOL [38].");
+  s.addNotes("Read left to right: the further right, the more liquid-like the electrolyte and the higher the conductivity, but the less of the solid-state benefit remains. The sweet spot for most groups is in the middle: amorphous PEO, ceramic composites and plasticised systems around the 1e-4 S/cm line.");
+}
+{
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("Routes ①–③: stay fully solid", { placeholder: "title" });
+  const C3 = [
+    ["ic_net", "① Suppress crystallinity", [
+      { label: "How", text: "Comb/branched or crosslinked PEO, random copolymers, EO:Li inside the crystallinity gap." },
+      { label: "Gain", text: "RT σ from ~10⁻⁶ towards ~10⁻⁵–10⁻⁴ S cm⁻¹ [24]." },
+      { label: "Limit", text: "Still coupled to Tg; crosslinks slow segments.", color: C.accent4 },
+    ]],
+    ["ic_filler", "② Ceramic fillers & networks", [
+      { label: "How", text: "Nano TiO₂/Al₂O₃ act as solid plasticisers [33]; a continuous LLZO nanofibre network adds fast pathways [36]." },
+      { label: "Reported", text: "~10⁻⁴ S cm⁻¹ at 50 °C [33]; 2.5×10⁻⁴ S cm⁻¹ at RT [36]." },
+      { label: "Limit", text: "Dispersion, interfaces, processing.", color: C.accent4 },
+    ]],
+    ["ic_single", "③ Decouple or fix the carrier", [
+      { label: "How", text: "Polymer-in-salt [34]; single-ion block copolymers with the anion tethered [37]." },
+      { label: "Reported", text: "≈1.3×10⁻⁵ S cm⁻¹ at 60 °C with t₊ > 0.85 [37]." },
+      { label: "Limit", text: "σ usually lower; salt-rich PEO crystallises.", color: C.accent4 },
+    ]],
+  ];
+  C3.forEach(([ic, t, b], i) => iconCard(s, 0.6 + i * 4.1, 1.6, 3.9, 4.15, ic, t, b, { size: 15, tsize: 17 }));
+  card(s, 0.6, 5.9, 12.1, 0.65, C.text2);
+  s.addText("Solid routes keep the safety case, but rarely pass ~3×10⁻⁴ S cm⁻¹ at room temperature.", { x: 0.9, y: 5.92, w: 11.5, h: 0.6, fontSize: 16, bold: true, color: C.background1, valign: "middle", margin: 0, isTextBox: true });
+  src(s, "Sources: [24] Mindemark 2018 · [33] Croce 1998 · [34] Angell 1993 · [36] Fu 2016 · [37] Bouchet 2013");
+  s.addNotes("Croce et al. used PEO–LiClO4 with nanoscale TiO2 and Al2O3. Fu et al. used a 3D garnet LLZO nanofibre network in PEO. Bouchet et al. made BAB triblock copolymers with a PEO middle block and polyanionic TFSI-type outer blocks.");
+}
+{
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("Routes ④–⑥: add liquid-like mobility", { placeholder: "title" });
+  const C3 = [
+    ["ic_plast", "④ Plasticise", [
+      { label: "How", text: "Add an ionic liquid (e.g. Pyr₁₄TFSI) or a glyme to PEO–LiTFSI [35]." },
+      { label: "Reported", text: "Amorphous films with high conductivity even at RT, in the ~10⁻⁴ S cm⁻¹ range [35]." },
+      { label: "Limit", text: "Softer film; Li-metal and high-voltage stability.", color: C.accent4 },
+    ]],
+    ["ic_gel", "⑤ Gel it", [
+      { label: "How", text: "Swell the polymer with a carbonate liquid electrolyte." },
+      { label: "Reported", text: "~10⁻³ S cm⁻¹ at RT — close to liquid." },
+      { label: "Limit", text: "Liquid and flammability are back in the cell.", color: C.accent4 },
+    ]],
+    ["ic_dol", "⑥ New host, made in situ", [
+      { label: "How", text: "Ring-open DOL inside the cell with Al(OTf)₃ [38]; polycarbonate or polyester hosts [24]." },
+      { label: "Reported", text: "Up to ~10⁻³ S cm⁻¹ at RT, partly from residual unpolymerised DOL [38]." },
+      { label: "Limit", text: "Conversion control; long-term stability.", color: C.accent4 },
+    ]],
+  ];
+  C3.forEach(([ic, t, b], i) => iconCard(s, 0.6 + i * 4.1, 1.6, 3.9, 4.15, ic, t, b, { size: 15, tsize: 17 }));
+  card(s, 0.6, 5.9, 12.1, 0.65, C.text2);
+  s.addText("The closer σ gets to a liquid, the more of the solid-state advantage you give up.", { x: 0.9, y: 5.92, w: 11.5, h: 0.6, fontSize: 16, bold: true, color: C.background1, valign: "middle", margin: 0, isTextBox: true });
+  src(s, "Sources: [24] Mindemark 2018 · [35] Shin, Henderson & Passerini 2003 · [38] Zhao et al. 2019");
+  s.addNotes("In Zhao et al. (Nature Energy 2019) the conductivity depends strongly on the Al(OTf)3 level, and the higher values come with more unpolymerised DOL. Treat those numbers as a quasi-solid system.");
+}
+{
+  const s = newSlide("Closing the gap");
+  tag(s, "06 · CLOSING THE GAP");
+  s.addText("A realistic plan: stack several modest levers", { placeholder: "title" });
+  fig(s, "levers", 0.6, 1.45, 12.1);
+  card(s, 0.6, 5.75, 12.1, 0.8, C.background2);
+  s.addText([
+    { text: "Proof of concept: ", options: { bold: true, color: C.accent1 } },
+    { text: "an 8.6 µm nanoporous polyimide film filled with PEO/LiTFSI reached 2.3×10⁻⁴ S cm⁻¹ at 30 °C and survived bending, cutting and nail tests [39]." },
+  ], { x: 0.85, y: 5.8, w: 11.6, h: 0.7, fontSize: 15, color: C.text1, valign: "middle", margin: 0, isTextBox: true });
+  src(s, "Sources: [39] Wan et al. 2019; lever factors are illustrative orders of magnitude derived from the preceding slides.");
+  s.addNotes("No single trick closes the gap. Combine an amorphous host, a ceramic network or small amount of plasticiser, a thin supported film, a modest operating temperature, and a higher transference number. Together these can bring the electrolyte resistance close to a liquid cell while keeping most of the solid-state benefits.");
+}
+
+// ====================================================================
+// SECTION 7 — Casting
+pres.addSection({ title: "Casting films" });
+{
+  const s = newSlide("Casting films");
+  tag(s, "07 · CHARACTERISATION");
   s.addText("Toolkit for checking your own PEO–LiTFSI films", { placeholder: "title" });
   const items = [
     ["ic_dsc", "DSC", "Tg, Tm, crystallinity, thermal history [16, 17, 26]"],
@@ -459,12 +584,9 @@ pres.addSection({ title: "Limitations" });
   s.addNotes("Minimum set for a new film: DSC (state of the film), EIS (conductivity vs temperature), and either Bruce–Vincent or PFG-NMR for transference.");
 }
 
-// ====================================================================
-// SECTION 7 — Casting
-pres.addSection({ title: "Casting films" });
 {
   const s = newSlide("Casting films");
-  tag(s, "06 · CASTING IN PTFE MOULDS");
+  tag(s, "07 · CASTING IN PTFE MOULDS");
   s.addText("Solution casting a free-standing film, step by step", { placeholder: "title" });
   fig(s, "workflow", 0.6, 1.55, 12.1);
   const rules = [
@@ -483,7 +605,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "06 · CASTING IN PTFE MOULDS");
+  tag(s, "07 · CASTING IN PTFE MOULDS");
   s.addText("Mould set-up and how much to weigh", { placeholder: "title" });
   fig(s, "mould", 0.4, 1.6, 5.7);
   const hdr = (t) => ({ text: t, options: { bold: true, color: C.background1, fill: { color: C.text2 }, fontSize: 14, align: "center", valign: "middle" } });
@@ -509,7 +631,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "06 · TROUBLESHOOTING");
+  tag(s, "07 · TROUBLESHOOTING");
   s.addText("Sticky film? Check composition and chemistry first", { placeholder: "title" });
   const C3 = [
     ["ic_salt", "Too much salt", [
@@ -536,7 +658,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "06 · TROUBLESHOOTING");
+  tag(s, "07 · TROUBLESHOOTING");
   s.addText("Sticky film? Then check water, time and technique", { placeholder: "title" });
   const C3 = [
     ["ic_water", "Water uptake", [
@@ -563,7 +685,7 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
-  tag(s, "06 · PLAN B");
+  tag(s, "07 · PLAN B");
   s.addText("If casting keeps failing: other ways to a usable film", { placeholder: "title" });
   const items = [
     ["ic_press", "Solvent-free hot pressing", [{ text: "Mix dry PEO and LiTFSI, press above Tm between PTFE or release sheets. No residual solvent." }]],
@@ -590,11 +712,12 @@ pres.addSection({ title: "Wrap-up" });
     ["What forms", "6:1, 3:1 and 2:1 complexes; EO:Li ≈ 6–12 is often amorphous because crystallisation is slow."],
     ["How much", "One amorphous phase up to r ≈ 0.28; solubility limit r = 0.50 (EO:Li = 2)."],
     ["Why it falls short", "Low RT σ, t₊ ≈ 0.1–0.3, soft above 65 °C, ~4 V oxidation, Al corrosion."],
+    ["Closing the gap", "Target ≥ 10⁻⁴ S cm⁻¹ at RT in a 10–20 µm film with higher t₊ — judge by ASR, not σ alone."],
     ["Good films", "High-Mw PEO, EO:Li 16–20, dry everything, slow evaporation, vacuum-dry, age before peeling."],
   ];
   pts.forEach(([h, b], i) => {
-    const y = 1.6 + i * 1.0;
-    s.addShape(pres.shapes.OVAL, { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fill: { color: [C.accent1, C.accent2, C.accent3, C.accent4, C.accent5][i] }, line: { type: "none" } });
+    const y = 1.5 + i * 0.86;
+    s.addShape(pres.shapes.OVAL, { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fill: { color: [C.accent1, C.accent2, C.accent3, C.accent4, C.accent1, C.accent5][i] }, line: { type: "none" } });
     s.addText(String(i + 1), { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fontSize: 20, bold: true, color: C.background1, align: "center", valign: "middle", margin: 0, isTextBox: true });
     s.addText(h, { x: 1.45, y: y + 0.05, w: 3.3, h: 0.6, fontSize: 19, bold: true, color: C.background1, valign: "middle", margin: 0, isTextBox: true });
     s.addText(b, { x: 4.8, y: y + 0.05, w: 7.9, h: 0.6, fontSize: 16, color: "DCE5EF", valign: "middle", margin: 0, isTextBox: true });
@@ -635,14 +758,21 @@ const REFS = [
   "Krause, L. J.; Lamanna, W.; Summerfield, J.; Engle, M.; Korba, G.; Loch, R.; Atanasoski, R. Corrosion of aluminum at high voltages in non-aqueous electrolytes containing perfluoroalkylsulfonyl imides. J. Power Sources 1997, 68, 320–325.",
   "Singh, M.; Odusanya, O.; Wilmes, G. M.; et al.; Balsara, N. P. Effect of molecular weight on the mechanical and electrical properties of block copolymer electrolytes. Macromolecules 2007, 40, 4578–4585.",
   "Zhang, H.; Li, C.; Piszcz, M.; Coya, E.; Rojo, T.; Rodriguez-Martinez, L. M.; Armand, M.; Zhou, Z. Single lithium-ion conducting solid polymer electrolytes: advances and perspectives. Chem. Soc. Rev. 2017, 46, 797–815.",
+  "Croce, F.; Appetecchi, G. B.; Persi, L.; Scrosati, B. Nanocomposite polymer electrolytes for lithium batteries. Nature 1998, 394, 456–458.",
+  "Angell, C. A.; Liu, C.; Sanchez, E. Rubbery solid electrolytes with dominant cationic transport and high ambient conductivity. Nature 1993, 362, 137–139.",
+  "Shin, J.-H.; Henderson, W. A.; Passerini, S. Ionic liquids to the rescue? Overcoming the ionic conductivity limitations of polymer electrolytes. Electrochem. Commun. 2003, 5, 1016–1020.",
+  "Fu, K. K.; Gong, Y.; Dai, J.; et al.; Hu, L. Flexible, solid-state, ion-conducting membrane with 3D garnet nanofiber networks for lithium batteries. Proc. Natl. Acad. Sci. USA 2016, 113, 7094–7099.",
+  "Bouchet, R.; Maria, S.; Meziane, R.; et al.; Armand, M. Single-ion BAB triblock copolymers as highly efficient electrolytes for lithium-metal batteries. Nat. Mater. 2013, 12, 452–457.",
+  "Zhao, Q.; Liu, X.; Stalin, S.; Khan, K.; Archer, L. A. Solid-state polymer electrolytes with in-built fast interfacial transport for secondary lithium batteries. Nat. Energy 2019, 4, 365–373.",
+  "Wan, J.; Xie, J.; Kong, X.; et al.; Cui, Y. Ultrathin, flexible, solid polymer composite electrolyte enabled with aligned nanoporous host for lithium batteries. Nat. Nanotechnol. 2019, 14, 705–711.",
 ];
-const half = Math.ceil(REFS.length / 2);
-[[0, half], [half, REFS.length]].forEach(([a, b], k) => {
+const per = Math.ceil(REFS.length / 3);
+[[0, per], [per, 2 * per], [2 * per, REFS.length]].forEach(([a, b], k) => {
   const s = newSlide("Wrap-up");
   tag(s, "REFERENCES");
-  s.addText(`References (${k + 1}/2)`, { placeholder: "title" });
+  s.addText(`References (${k + 1}/3)`, { placeholder: "title" });
   const runs = REFS.slice(a, b).map((r, i) => ({ text: `[${a + i + 1}]  ${r}`, options: { breakLine: i < b - a - 1, paraSpaceAfter: 4 } }));
-  s.addText(runs, { x: 0.6, y: 1.45, w: 12.1, h: 5.45, fontSize: 10.5, color: C.text1, valign: "top", margin: 0, isTextBox: true, objectName: "reference-list" });
+  s.addText(runs, { x: 0.6, y: 1.45, w: 12.1, h: 5.45, fontSize: 12, color: C.text1, valign: "top", margin: 0, isTextBox: true, objectName: "reference-list" });
   s.addNotes("Full citation list. Schematic figures in this deck are redrawn qualitatively from the cited papers and are not to scale.");
 });
 

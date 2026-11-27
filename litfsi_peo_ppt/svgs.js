@@ -723,4 +723,92 @@ figs.ic_block = () => icon(path(`M18,60 C30,46 40,74 56,60`, { color: K.slate, w
 figs.ic_single = () => icon(path(`M18,74 C38,60 58,86 102,70`, { color: K.teal, w: 7 }) + line(46, 72, 46, 50, { color: K.amber, w: 4 }) + line(78, 74, 78, 52, { color: K.amber, w: 4 }) + anion(46, 42, 10, "") + anion(78, 44, 10, "") + li(64, 30, 9, "", false), K.amberL);
 figs.ic_filler = () => icon(`<rect x="20" y="28" width="80" height="64" rx="8" fill="${K.teal}" opacity="0.25"/>` + [[38, 46], [70, 40], [52, 70], [84, 74], [32, 80]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9" fill="${K.slate}"/>`).join(""), K.tealL);
 
+// 20. Conductivity vs "solid character" map of improvement routes (log σ, RT)
+figs.gapmap = () => {
+  const W = 1100, H = 470;
+  const x0 = 120, x1 = 1080, y0 = 330, y1 = 30;
+  const Y = (sig) => y0 - ((Math.log10(sig) + 7) / 6) * (y0 - y1); // 1e-7 .. 1e-1
+  let b = "";
+  // grid + axis
+  for (let e = -7; e <= -1; e++) {
+    const y = Y(10 ** e);
+    b += line(x0, y, x1, y, { color: "#E3E8EC", w: 1.5 });
+    b += T(x0 - 12, y + 7, `10${["⁻⁷","⁻⁶","⁻⁵","⁻⁴","⁻³","⁻²","⁻¹"][e + 7]}`, { size: 20, anchor: "end", fill: K.muted });
+  }
+  b += line(x0, y1, x0, y0, { w: 3 }) + line(x0, y0, x1, y0, { w: 3 });
+  b += T(30, (y0 + y1) / 2, "σ at ~25 °C / S cm⁻¹", { size: 20, anchor: "middle", rotate: -90 });
+  // reference lines
+  b += line(x0, Y(1e-4), x1, Y(1e-4), { color: K.teal, w: 2.5, dash: "8 6" }) + T(x0 + 8, Y(1e-4) - 8, "practical solid-state target ≈ 10⁻⁴", { size: 18, fill: K.teal, weight: "bold" });
+  b += line(x0, Y(1e-2), x1, Y(1e-2), { color: K.o, w: 2.5, dash: "8 6" }) + T(x0 + 8, Y(1e-2) - 8, "liquid 1 M LiPF₆ / EC–DMC ≈ 10⁻²", { size: 18, fill: K.o, weight: "bold" });
+  const routes = [
+    ["Plain", "PEO–LiTFSI", 1e-6, 1e-5, "#8FA3B0"],
+    ["Single-ion", "conductors", 1e-7, 1e-5, K.li],
+    ["Amorphous", "PEO", 1e-5, 1e-4, K.teal],
+    ["Ceramic", "composite", 1e-5, 3e-4, K.slate],
+    ["IL / glyme", "plasticised", 3e-5, 3e-4, K.amber],
+    ["In situ", "poly-DOL", 2e-5, 2e-3, "#B8651B"],
+    ["Gel", "(carbonate)", 1e-3, 6e-3, "#C2413F"],
+    ["Liquid", "electrolyte", 8e-3, 1.2e-2, K.o],
+  ];
+  const step = (x1 - x0 - 40) / routes.length;
+  routes.forEach(([a, c, lo, hi, col], i) => {
+    const x = x0 + 40 + step * (i + 0.5) - 10, yt = Y(hi), yb = Y(lo);
+    b += `<rect x="${x - 17}" y="${yt}" width="34" height="${Math.max(yb - yt, 14)}" rx="17" fill="${col}" opacity="0.9"/>`;
+    b += T(x, y0 + 34, a, { size: 18, anchor: "middle", weight: "bold", fill: K.ink });
+    b += T(x, y0 + 56, c, { size: 18, anchor: "middle", fill: K.muted });
+  });
+  // markers for specific reported values
+  const mark = (i, sig, lab) => {
+    const x = x0 + 40 + step * (i + 0.5) - 10, y = Y(sig);
+    return `<circle cx="${x}" cy="${y}" r="8" fill="#fff" stroke="${K.ink}" stroke-width="3"/>` + T(x + 14, y + 6, lab, { size: 17, fill: K.ink, weight: "bold" });
+  };
+  b += mark(3, 2.5e-4, "[36]");
+  b += mark(5, 1.1e-3, "[38]*");
+  // arrow along x
+  b += line(x0 + 40, y0 + 86, x1 - 10, y0 + 86, { w: 3, marker: "ah" });
+  b += T(x0 + 40, y0 + 116, "more solid, safer, stiffer", { size: 18, fill: K.teal, weight: "bold" });
+  b += T(x1 - 10, y0 + 116, "more liquid-like, faster", { size: 18, anchor: "end", fill: K.o, weight: "bold" });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+// 21. Levers to cut electrolyte resistance + scaffold film
+figs.levers = () => {
+  const W = 1180, H = 400;
+  let b = "";
+  // scaffold film (left)
+  b += T(170, 32, "thin film in a porous scaffold", { size: 20, anchor: "middle", weight: "bold", fill: K.ink });
+  b += rect(40, 70, 260, 40, { fill: "#B9C2CC", rx: 4 }) + T(170, 97, "cathode", { size: 18, anchor: "middle", fill: K.text });
+  b += rect(40, 250, 260, 40, { fill: "#9AA5B1", rx: 4 }) + T(170, 277, "Li metal", { size: 18, anchor: "middle", fill: "#fff", weight: "bold" });
+  b += rect(40, 115, 260, 130, { fill: K.tealL, rx: 0 });
+  for (let x = 52; x < 300; x += 30) b += `<rect x="${x}" y="115" width="10" height="130" fill="${K.slate}" opacity="0.75"/>`;
+  b += line(320, 115, 320, 245, { color: K.o, w: 3, marker: "ahO" }) + line(320, 245, 320, 115, { color: K.o, w: 3, marker: "ahO" });
+  b += T(332, 175, "10–20", { size: 18, fill: K.o, weight: "bold" }) + T(332, 197, "µm", { size: 18, fill: K.o, weight: "bold" });
+  b += T(170, 325, "vertical channels: PEO–LiTFSI", { size: 18, anchor: "middle", fill: K.teal });
+  b += T(170, 349, "scaffold: polyimide / ceramic", { size: 18, anchor: "middle", fill: K.slate });
+  // lever bars (right), length ∝ log10(factor)
+  const lv = [
+    ["Suppress crystallinity", "RT σ ~10⁻⁵ → ~10⁻⁴", 10, K.teal],
+    ["Thinner film", "50 → 10 µm", 5, K.slate],
+    ["Run warm", "25 → 50–60 °C", 10, K.o],
+    ["Ceramic network / IL plasticiser", "further ×2–3 in σ", 2.5, K.amber],
+    ["Raise t₊", "0.2 → 0.5: Li⁺ share of current", 2.5, K.li],
+  ];
+  const bx = 470, bw = 260; // width per decade
+  b += T(bx, 32, "lever", { size: 18, fill: K.muted, weight: "bold" }) + T(bx + 360, 32, "indicative gain (log scale)", { size: 18, fill: K.muted, weight: "bold" });
+  lv.forEach(([t, d, f, col], i) => {
+    const y = 60 + i * 64;
+    b += T(bx, y + 22, t, { size: 20, fill: K.ink, weight: "bold" });
+    b += T(bx, y + 46, d, { size: 17, fill: K.muted });
+    const L = Math.log10(f) * bw;
+    b += rect(bx + 360, y + 8, L, 32, { fill: col, rx: 6 });
+    b += T(bx + 368 + L, y + 32, `×${f}`, { size: 20, fill: col, weight: "bold" });
+  });
+  b += T(bx, 392, "Factors are order-of-magnitude illustrations, not additive guarantees.", { size: 17, fill: K.o, italic: true });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+figs.ic_plast = () => icon(path(smooth([[18, 76], [40, 56], [62, 78], [84, 58], [104, 74]]), { color: K.teal, w: 6 }) + path(`M62,18 C72,32 78,40 78,48 A16,16 0 0 1 46,48 C46,40 52,32 62,18 Z`, { color: K.amber, w: 3, fill: K.amberL }), K.amberL);
+figs.ic_gel = () => icon(path(`M34,26 L34,90 A8,8 0 0 0 42,98 L78,98 A8,8 0 0 0 86,90 L86,26`, { color: K.slate, w: 4, fill: "#fff" }) + `<rect x="38" y="52" width="44" height="42" fill="${K.o}" opacity="0.35"/>` + path(smooth([[40, 64], [52, 56], [64, 70], [80, 60]]), { color: K.teal, w: 4 }) + path(smooth([[40, 82], [54, 74], [66, 88], [80, 78]]), { color: K.teal, w: 4 }), K.oL);
+figs.ic_dol = () => icon(`<polygon points="40,40 60,28 76,44 68,66 46,64" fill="none" stroke="${K.slate}" stroke-width="4"/>` + oat(60, 28, 7, false) + oat(46, 64, 7, false) + line(74, 76, 96, 92, { color: K.text, w: 3, marker: "ah" }) + path(smooth([[20, 96], [36, 86], [52, 98], [70, 88]]), { color: K.teal, w: 5 }), K.slateL);
+
 module.exports = { figs, K };
