@@ -811,4 +811,52 @@ figs.ic_plast = () => icon(path(smooth([[18, 76], [40, 56], [62, 78], [84, 58], 
 figs.ic_gel = () => icon(path(`M34,26 L34,90 A8,8 0 0 0 42,98 L78,98 A8,8 0 0 0 86,90 L86,26`, { color: K.slate, w: 4, fill: "#fff" }) + `<rect x="38" y="52" width="44" height="42" fill="${K.o}" opacity="0.35"/>` + path(smooth([[40, 64], [52, 56], [64, 70], [80, 60]]), { color: K.teal, w: 4 }) + path(smooth([[40, 82], [54, 74], [66, 88], [80, 78]]), { color: K.teal, w: 4 }), K.oL);
 figs.ic_dol = () => icon(`<polygon points="40,40 60,28 76,44 68,66 46,64" fill="none" stroke="${K.slate}" stroke-width="4"/>` + oat(60, 28, 7, false) + oat(46, 64, 7, false) + line(74, 76, 96, 92, { color: K.text, w: 3, marker: "ah" }) + path(smooth([[20, 96], [36, 86], [52, 98], [70, 88]]), { color: K.teal, w: 5 }), K.slateL);
 
+// 22. PTFE mould cleaning: after use and before next use
+figs.clean = () => {
+  const W = 1220, H = 430;
+  let b = "";
+  const ic = {
+    scrape: (x, y) => path(`M${x - 30},${y + 22} L${x + 10},${y - 18}`, { color: K.slate, w: 7 }) + `<rect x="${x + 4}" y="${y - 30}" width="26" height="16" rx="3" transform="rotate(-45 ${x + 17} ${y - 22})" fill="${K.slate}"/>` + `<rect x="${x - 34}" y="${y + 24}" width="60" height="8" rx="3" fill="${K.teal}" opacity="0.6"/>`,
+    soak: (x, y) => path(`M${x - 26},${y - 28} L${x - 22},${y + 28} L${x + 22},${y + 28} L${x + 26},${y - 28}`, { color: K.slate, w: 4, fill: "#fff" }) + `<rect x="${x - 21}" y="${y - 6}" width="42" height="32" fill="#9CCFE0"/>` + path(`M${x - 12},${y - 12} c4,-8 -4,-12 0,-20 M${x + 2},${y - 12} c4,-8 -4,-12 0,-20 M${x + 16},${y - 12} c4,-8 -4,-12 0,-20`, { color: K.o, w: 2.5 }),
+    wash: (x, y) => `<rect x="${x - 30}" y="${y - 4}" width="60" height="30" rx="8" fill="${K.amber}"/><rect x="${x - 30}" y="${y - 4}" width="60" height="10" rx="5" fill="#6B8F3A"/>` + [[-18, -20, 7], [2, -26, 9], [20, -16, 6]].map(([dx, dy, r]) => `<circle cx="${x + dx}" cy="${y + dy}" r="${r}" fill="#fff" stroke="#9CCFE0" stroke-width="3"/>`).join(""),
+    bottle: (x, y, lab) => `<rect x="${x - 18}" y="${y - 14}" width="36" height="44" rx="8" fill="#fff" stroke="${K.slate}" stroke-width="4"/>` + path(`M${x},${y - 14} L${x},${y - 26} L${x + 22},${y - 34}`, { color: K.slate, w: 4 }) + T(x, y + 14, lab, { size: 13, anchor: "middle", fill: K.slate, weight: "bold" }),
+    inspect: (x, y) => `<circle cx="${x - 6}" cy="${y - 6}" r="20" fill="#fff" stroke="${K.slate}" stroke-width="5"/>` + line(x + 9, y + 9, x + 28, y + 28, { color: K.slate, w: 7, cap: true }) + line(x - 16, y - 2, x + 2, y - 12, { color: K.o, w: 2.5 }),
+    wipe: (x, y) => path(`M${x - 28},${y - 18} L${x + 22},${y - 26} L${x + 28},${y + 18} L${x - 22},${y + 26} Z`, { color: K.line, w: 3, fill: "#fff" }) + path(`M${x - 16},${y - 4} C${x - 6},${y - 12} ${x + 6},${y + 4} ${x + 16},${y - 4}`, { color: K.slate, w: 3 }),
+    bake: (x, y) => rect(x - 32, y - 28, 64, 56, { fill: "#fff", stroke: K.slate, sw: 4, rx: 6 }) + T(x, y + 7, "120°", { size: 18, anchor: "middle", fill: K.o, weight: "bold" }),
+    box: (x, y) => rect(x - 34, y - 24, 68, 48, { fill: "#fff", stroke: K.slate, sw: 4, rx: 6 }) + `<circle cx="${x - 14}" cy="${y + 2}" r="10" fill="${K.slateL}" stroke="${K.slate}" stroke-width="3"/><circle cx="${x + 14}" cy="${y + 2}" r="10" fill="${K.slateL}" stroke="${K.slate}" stroke-width="3"/>` + T(x, y - 30, "Ar", { size: 15, anchor: "middle", fill: K.teal, weight: "bold" }),
+  };
+  const rows = [
+    ["AFTER USE", "right after peeling", K.o, K.oL, [
+      ["scrape", "Scrape gently", "PTFE or plastic spatula;", "no metal, no scouring"],
+      ["soak", "Soak in warm water", "DI water, 40–60 °C, ~1 h:", "PEO and LiTFSI dissolve"],
+      ["wash", "Wash & rinse", "mild lab detergent, soft", "sponge; DI rinse ×3"],
+      ["bottle:IPA", "Solvent rinse", "IPA or ethanol; air-dry,", "store covered"],
+    ]],
+    ["BEFORE NEXT USE", "on casting day", K.teal, K.tealL, [
+      ["inspect", "Inspect", "scratches, stains, haze →", "replace if damaged"],
+      ["wipe", "Rinse & wipe", "acetone or IPA, lint-free", "wipe; touch edges only"],
+      ["bake", "Dry / bake", "100–120 °C, ≥ 2 h (vacuum", "ideal); never > 250 °C"],
+      ["box", "Transfer warm", "into antechamber, evacuate;", "cast inside the glovebox"],
+    ]],
+  ];
+  rows.forEach(([lab, sub, col, tint, steps], r) => {
+    const y = 70 + r * 210;
+    b += rect(10, y - 50, 170, 100, { fill: tint, rx: 14 });
+    b += T(95, y - 8, lab, { size: 20, anchor: "middle", weight: "bold", fill: col });
+    b += T(95, y + 20, sub, { size: 17, anchor: "middle", fill: K.muted });
+    steps.forEach(([ik, t, l1, l2], i) => {
+      const x = 300 + i * 260;
+      b += `<circle cx="${x}" cy="${y}" r="50" fill="${tint}"/>`;
+      const [name, arg] = ik.split(":");
+      b += ic[name](x, y, arg);
+      b += `<circle cx="${x - 40}" cy="${y - 40}" r="16" fill="${col}"/>` + T(x - 40, y - 34, String(r * 4 + i + 1), { size: 18, anchor: "middle", fill: "#fff", weight: "bold" });
+      if (i < 3) b += line(x + 62, y, x + 196, y, { color: K.line, w: 4, marker: "ah" });
+      b += T(x, y + 82, t, { size: 22, anchor: "middle", weight: "bold", fill: K.ink });
+      b += T(x, y + 108, l1, { size: 18, anchor: "middle", fill: K.muted });
+      b += T(x, y + 130, l2, { size: 18, anchor: "middle", fill: K.muted });
+    });
+  });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
 module.exports = { figs, K };

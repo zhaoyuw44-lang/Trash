@@ -91,6 +91,7 @@ const ALT = {
   mould: "Cross-section of a levelled PTFE mould with lid ajar",
   gapmap: "Room-temperature conductivity ranges of improvement routes from solid to liquid-like",
   levers: "Thin scaffold-supported film and indicative gains from five levers",
+  clean: "Eight-step PTFE mould cleaning routine: four steps after use and four before the next cast",
 };
 const tag = (slide, text) =>
   slide.addText(text, { x: 0.6, y: 0.2, w: 4.5, h: 0.3, fontSize: 11, bold: true, color: C.accent1, charSpacing: 2, margin: 0, isTextBox: true, objectName: "section-tag" });
@@ -631,6 +632,28 @@ pres.addSection({ title: "Casting films" });
 }
 {
   const s = newSlide("Casting films");
+  tag(s, "07 · CASTING IN PTFE MOULDS");
+  s.addText("Cleaning the PTFE mould before and after each cast", { placeholder: "title" });
+  fig(s, "clean", 0.6, 1.4, 12.1);
+  const tips = [
+    ["No metal tools or scouring pads", "scratches trap film and residue"],
+    ["Bake ≤ 250 °C", "PTFE service limit ~260 °C; overheating gives toxic fumes"],
+    ["Keep the casting face clean", "skin oil or silicone grease makes the solution dewet"],
+    ["Washings contain LiTFSI", "collect as fluorinated chemical waste"],
+  ];
+  tips.forEach(([h, d], i) => {
+    const x = 0.6 + i * 3.075;
+    card(s, x, 5.72, 2.9, 0.88, C.background2);
+    s.addText([
+      { text: h, options: { bold: true, color: C.accent4, breakLine: true } },
+      { text: d, options: { fontSize: 12, color: C.text1 } },
+    ], { x: x + 0.15, y: 5.75, w: 2.65, h: 0.82, fontSize: 14, valign: "middle", margin: 0, isTextBox: true });
+  });
+  src(s, "Common laboratory practice; follow your institution's waste rules. PTFE is resistant to these solvents and has a maximum service temperature of about 260 °C.");
+  s.addNotes("After use: remove the film, then soak the mould in warm DI water — both PEO and LiTFSI dissolve — wash with a mild detergent and a soft sponge, rinse three times with DI water, rinse with IPA or ethanol and let it dry covered. Before the next cast: inspect for scratches or haze, rinse with acetone or IPA, wipe with a lint-free tissue while touching only the edges, bake at 100–120 °C for at least two hours (vacuum oven ideal), and move it into the glovebox antechamber while still warm. Keep a dedicated mould for electrolytes. Never heat PTFE above about 250 °C.");
+}
+{
+  const s = newSlide("Casting films");
   tag(s, "07 · TROUBLESHOOTING");
   s.addText("Sticky film? Check composition and chemistry first", { placeholder: "title" });
   const C3 = [
@@ -713,7 +736,7 @@ pres.addSection({ title: "Wrap-up" });
     ["How much", "One amorphous phase up to r ≈ 0.28; solubility limit r = 0.50 (EO:Li = 2)."],
     ["Why it falls short", "Low RT σ, t₊ ≈ 0.1–0.3, soft above 65 °C, ~4 V oxidation, Al corrosion."],
     ["Closing the gap", "Target ≥ 10⁻⁴ S cm⁻¹ at RT in a 10–20 µm film with higher t₊ — judge by ASR, not σ alone."],
-    ["Good films", "High-Mw PEO, EO:Li 16–20, dry everything, slow evaporation, vacuum-dry, age before peeling."],
+    ["Good films", "High-Mw PEO, EO:Li 16–20, clean baked mould, dry everything, slow evaporation, age before peeling."],
   ];
   pts.forEach(([h, b], i) => {
     const y = 1.5 + i * 0.86;
