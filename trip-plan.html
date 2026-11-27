@@ -6,136 +6,150 @@
 <title>圣诞观赛之旅</title>
 <style>
 :root{
-  --bg:#f6f3ec; --card:#ffffff; --ink:#1b2333; --muted:#566070; --line:#e3ddd0;
-  --navy:#0b2545; --accent:#e9822f; --blue:#1d4ed8; --red:#d62839; --teal:#0f8b8d;
-  --boston:#2b59c3; --miami:#0f9d9a; --stl:#7a5c3e; --soft:#fff4d6; --softline:#f0d58a;
-  --chip:#eef2f8;
+  --bg:#f5f5f7; --card:#ffffff; --ink:#1d1d1f; --muted:#6e6e73; --line:rgba(0,0,0,.09);
+  --navy:#1d1d1f; --accent:#ff7a1a; --blue:#0071e3; --red:#e3243b; --teal:#0a9396;
+  --boston:#2b59c3; --miami:#0a9396; --stl:#8a6a4a; --soft:#eef5ff; --softline:transparent;
+  --chip:#f0f0f3; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.06);
+  --nav:rgba(251,251,253,.78);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#11161f; --card:#1a2130; --ink:#e7ebf2; --muted:#a3adbd; --line:#2c3547;
-    --navy:#9fb8e8; --accent:#f2a25c; --blue:#7aa2ff; --red:#ff6b7a; --teal:#4fd1c5;
-    --boston:#7a9cf0; --miami:#4fd1c5; --stl:#c9a27e; --soft:#2a2614; --softline:#5a4d20; --chip:#222b3d;
+    --bg:#000000; --card:#1c1c1e; --ink:#f5f5f7; --muted:#a1a1a6; --line:rgba(255,255,255,.12);
+    --navy:#f5f5f7; --accent:#ff9f45; --blue:#2997ff; --red:#ff5a6e; --teal:#40c8c8;
+    --boston:#6d93ff; --miami:#40c8c8; --stl:#c9a27e; --soft:#0b1f35; --softline:transparent;
+    --chip:#2c2c2e; --shadow:none; --nav:rgba(22,22,23,.78);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#11161f; --card:#1a2130; --ink:#e7ebf2; --muted:#a3adbd; --line:#2c3547;
-  --navy:#9fb8e8; --accent:#f2a25c; --blue:#7aa2ff; --red:#ff6b7a; --teal:#4fd1c5;
-  --boston:#7a9cf0; --miami:#4fd1c5; --stl:#c9a27e; --soft:#2a2614; --softline:#5a4d20; --chip:#222b3d;
+  --bg:#000000; --card:#1c1c1e; --ink:#f5f5f7; --muted:#a1a1a6; --line:rgba(255,255,255,.12);
+  --navy:#f5f5f7; --accent:#ff9f45; --blue:#2997ff; --red:#ff5a6e; --teal:#40c8c8;
+  --boston:#6d93ff; --miami:#40c8c8; --stl:#c9a27e; --soft:#0b1f35; --softline:transparent;
+  --chip:#2c2c2e; --shadow:none; --nav:rgba(22,22,23,.78);
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
-  line-height:1.6;font-size:16px}
-.wrap{max-width:920px;margin:0 auto;padding:0 16px 64px}
-header.hero{background:#0b2545;color:#fff;padding:36px 16px 28px;border-bottom:4px solid #e9822f}
-header.hero .wrap{padding-bottom:0}
-header.hero h1{margin:0 0 6px;font-size:30px;line-height:1.25}
-header.hero p{margin:0;color:#cfd8e3}
-nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
-nav.toc a{color:#fff;text-decoration:none;background:rgba(255,255,255,.12);padding:4px 12px;border-radius:999px;font-size:14px}
-h2{font-size:24px;margin:40px 0 12px;color:var(--navy);scroll-margin-top:12px}
-h3{font-size:18px;margin:20px 0 8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0}
-.note{background:var(--soft);border:1px solid var(--softline);border-radius:14px;padding:12px 16px;margin:12px 0}
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Helvetica Neue","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+  line-height:1.6;font-size:17px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px 96px}
+
+/* glass nav */
+.gnav{position:sticky;top:0;z-index:1000;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.gnav .in{max-width:980px;margin:0 auto;padding:0 22px;height:52px;display:flex;align-items:center;gap:22px}
+.gnav .brand{font-weight:600;font-size:17px;white-space:nowrap;color:var(--ink);text-decoration:none}
+.gnav nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent)}
+.gnav nav::-webkit-scrollbar{display:none}
+.gnav nav a{color:var(--ink);opacity:.8;text-decoration:none;font-size:13px;white-space:nowrap;padding:6px 0}
+.gnav nav a:hover{opacity:1;color:var(--blue)}
+
+/* hero */
+.hero{text-align:center;padding:84px 22px 56px}
+.hero .kicker{color:var(--accent);font-weight:600;font-size:19px;margin:0 0 10px}
+.hero h1{font-size:clamp(40px,8vw,80px);line-height:1.05;letter-spacing:-.035em;font-weight:700;margin:0 auto 18px;max-width:900px}
+.hero h1 .grad{background:linear-gradient(90deg,#2b59c3 0%,#7c3aed 45%,#0a9396 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(19px,2.6vw,24px);color:var(--muted);max-width:720px;margin:0 auto 30px;line-height:1.4}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;font-size:17px;text-decoration:none;font-weight:500}
+.btn.pri{background:var(--blue);color:#fff}
+.btn.sec{color:var(--blue);border:1px solid var(--blue)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:860px;margin:48px auto 0}
+.stats div{background:var(--card);border-radius:22px;padding:22px 10px;box-shadow:var(--shadow)}
+.stats b{display:block;font-size:40px;line-height:1;letter-spacing:-.03em;font-weight:700}
+.stats span{color:var(--muted);font-size:14px}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)} .hero{padding-top:56px}}
+
+/* section headings */
+.eyebrow{margin:104px 0 6px;color:var(--accent);font-weight:600;font-size:17px;letter-spacing:0}
+h2{font-size:clamp(30px,5vw,48px);line-height:1.1;letter-spacing:-.03em;font-weight:700;margin:0 0 22px;color:var(--ink);scroll-margin-top:110px}
+h3{font-size:21px;letter-spacing:-.02em;margin:36px 0 12px;font-weight:600}
+
+.card{background:var(--card);border:none;border-radius:22px;padding:22px 24px;margin:14px 0;box-shadow:var(--shadow)}
+.note{background:var(--soft);border:none;border-radius:18px;padding:16px 20px;margin:14px 0;font-size:16px}
 .muted{color:var(--muted)}
 .en{color:var(--blue);font-weight:600}
-a{color:var(--blue)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
 .card svg,.day svg{display:block;width:100%;height:auto}
-svg text{font-family:inherit}
+svg text{font-family:inherit;letter-spacing:0}
 .t-ink{fill:var(--ink)} .t-muted{fill:var(--muted)} .t-blue{fill:var(--blue)} .t-red{fill:var(--red)}
 .s-line{stroke:var(--line)} .f-card{fill:var(--card)} .f-bg{fill:var(--bg)}
 table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-weight:600;font-size:13px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .scroll{overflow-x:auto}
-.day{display:grid;grid-template-columns:74px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0;border-left:6px solid var(--boston)}
-.day.mia{border-left-color:var(--miami)} .day.trav{border-left-color:var(--accent)}
-.day .d{font-weight:700;font-size:20px;line-height:1.1}
-.day .w{color:var(--muted);font-size:13px}
-.day ul{margin:4px 0 0;padding-left:18px}
-.day li{margin:2px 0}
-.tag{display:inline-block;white-space:nowrap;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--chip);margin-right:4px;font-weight:600}
-.tag.game{background:#d62839;color:#fff} .tag.show{background:#7c3aed;color:#fff} .tag.fly{background:#e9822f;color:#fff}
+
+.day{display:grid;grid-template-columns:86px 1fr;gap:16px;background:var(--card);border:none;border-radius:22px;padding:22px 24px;margin:14px 0;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.day::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--boston)}
+.day.mia::before{background:var(--miami)} .day.trav::before{background:var(--accent)}
+.day .d{font-weight:700;font-size:28px;line-height:1;letter-spacing:-.03em}
+.day .w{color:var(--muted);font-size:14px;margin-top:4px}
+.day ul{margin:8px 0 0;padding-left:18px}
+.day li{margin:6px 0}
+.tag{display:inline-block;white-space:nowrap;font-size:12px;padding:3px 10px;border-radius:999px;background:var(--chip);margin-right:6px;font-weight:600;color:var(--ink)}
+.tag.game{background:rgba(227,36,59,.12);color:var(--red)} .tag.show{background:rgba(124,58,237,.12);color:#8b5cf6} .tag.fly{background:rgba(255,122,26,.14);color:var(--accent)}
 .check{list-style:none;padding:0;margin:0}
-.check li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
-.check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:#0f8b8d}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+.check li:last-child{border-bottom:none}
+.check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--blue)}
 .check label{flex:1;cursor:pointer}
 .check input:checked + label{color:var(--muted);text-decoration:line-through}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:640px){.grid2{grid-template-columns:1fr} header.hero h1{font-size:24px} .day{grid-template-columns:60px 1fr}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.grid2{grid-template-columns:1fr} .day{grid-template-columns:62px 1fr;padding:18px} .day .d{font-size:22px} .card{padding:18px} .eyebrow{margin-top:76px}}
 .strike{text-decoration:line-through;color:var(--muted)}
-.progress{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin:6px 0 2px}
-.progress i{display:block;height:100%;width:0;background:#0f8b8d;transition:width .3s}
+.progress{height:6px;background:var(--chip);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.progress i{display:block;height:100%;width:0;background:var(--blue);transition:width .4s}
 
-.maptabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-.maptabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
-.maptabs button.on{background:#0f8b8d;color:#fff;border-color:#0f8b8d}
-.livemap{height:420px;border-radius:16px;border:1px solid var(--line);overflow:hidden;background:var(--chip)}
-@media (max-width:640px){.livemap{height:360px}}
+.maptabs{display:inline-flex;gap:2px;flex-wrap:wrap;margin:10px 0 14px;background:var(--chip);padding:3px;border-radius:12px}
+.maptabs button{border:none;background:transparent;color:var(--ink);padding:7px 16px;border-radius:9px;font:inherit;font-size:14px;cursor:pointer}
+.maptabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15);font-weight:600}
+.livemap{height:460px;border-radius:22px;overflow:hidden;background:var(--chip);box-shadow:var(--shadow)}
+@media (max-width:640px){.livemap{height:380px}}
 .leaflet-container{font-family:inherit}
 .pin{display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-.lbl{background:rgba(255,255,255,.92);border:none;box-shadow:0 1px 3px rgba(0,0,0,.25);color:#1b2333;font-weight:700;font-size:12px;padding:2px 6px}
-footer{color:var(--muted);font-size:13px;margin-top:40px}
+.lbl{background:rgba(255,255,255,.95);border:none;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.2);color:#1d1d1f;font-weight:600;font-size:12px;padding:3px 8px}
+footer{color:var(--muted);font-size:13px;margin-top:80px;padding-top:20px;border-top:1px solid var(--line)}
+
+/* scroll reveal (only when JS adds .reveal) */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* wide diagrams: scroll sideways on phones instead of shrinking */
+@media (max-width:640px){
+  .card:has(> svg[viewBox^="0 0 7"]), .card:has(> svg[viewBox^="0 0 8"]), .card:has(> svg[viewBox^="0 0 9"]), .day > div:has(> svg){overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .card > svg[viewBox^="0 0 7"], .card > svg[viewBox^="0 0 8"], .card > svg[viewBox^="0 0 9"]{min-width:640px}
+  .day > div > svg{min-width:600px}
+  .card:has(> svg[viewBox^="0 0 7"])::after, .card:has(> svg[viewBox^="0 0 8"])::after, .card:has(> svg[viewBox^="0 0 9"])::after{content:"← 左右滑动查看 →";display:block;position:sticky;left:0;font-size:12px;color:var(--muted);margin-top:8px}
+}
 </style>
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <h1>圣诞观赛之旅 · STL → Boston → Miami → STL</h1>
-    <p>2026/12/22 – 12/29 · 7 晚 · 4 场比赛 + Inter Miami 两座球场 · 全程飞机 + Uber · 一个书包</p>
-    <nav class="toc">
-      <a href="#changes">改了什么</a><a href="#overview">总览</a><a href="#days">每日行程</a>
-      <a href="#culture">演出博物馆</a><a href="#tickets">买票</a><a href="#stay">住哪里</a><a href="#eat">吃什么</a><a href="#safe">安全</a><a href="#maps">地图</a><a href="#book">预订清单</a><a href="#pack">打包</a>
-      <a href="#shop">购物链接</a><a href="#games">看球速查</a>
-    </nav>
+<div class="gnav"><div class="in">
+  <a class="brand" href="#top">圣诞观赛之旅</a>
+  <nav aria-label="页面导航">
+    <a href="#overview">总览</a><a href="#days">每日行程</a><a href="#culture">演出博物馆</a><a href="#tickets">买票</a><a href="#stay">住哪里</a><a href="#eat">吃什么</a><a href="#safe">安全</a><a href="#maps">地图</a><a href="#book">预订清单</a><a href="#pack">打包</a><a href="#shop">购物</a><a href="#games">看球</a><a href="#changes">更新记录</a>
+  </nav>
+</div></div>
+<header class="hero" id="top">
+  <p class="kicker">2026 冬季 · 12/22 – 12/29</p>
+  <h1>Boston 到 Miami，<br><span class="grad">一场接一场。</span></h1>
+  <p class="sub">两场 Celtics、一场 Dolphins、一场 Panthers，再加 Inter Miami 两座球场。全程飞机加 Uber，只背一个书包。</p>
+  <div class="cta"><a class="btn pri" href="#days">查看每日行程</a><a class="btn sec" href="#book">预订清单 ›</a></div>
+  <div class="stats">
+    <div><b>7</b><span>晚</span></div>
+    <div><b>4</b><span>场比赛</span></div>
+    <div><b>3</b><span>段航班</span></div>
+    <div><b>1</b><span>个书包</span></div>
   </div>
 </header>
 
 <div class="wrap">
 
 <!-- ================= CHANGES ================= -->
-<h2 id="changes">这次改了什么</h2>
-<div class="card">
-  <svg viewBox="0 0 860 210" role="img" aria-label="新路线：12/22 STL 飞 Boston，12/26 Boston 飞 Miami，12/29 从 Fort Lauderdale 飞回 STL">
-    <defs>
-      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#e9822f"/></marker>
-    </defs>
-    <!-- nodes -->
-    <circle cx="110" cy="120" r="44" fill="#7a5c3e"/><text x="110" y="116" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">STL</text><text x="110" y="140" text-anchor="middle" fill="#fff" font-size="13">St. Louis</text>
-    <circle cx="430" cy="70" r="50" fill="#2b59c3"/><text x="430" y="66" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">BOS</text><text x="430" y="90" text-anchor="middle" fill="#fff" font-size="13">Boston · 4 晚</text>
-    <circle cx="750" cy="130" r="50" fill="#0f9d9a"/><text x="750" y="126" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">MIA</text><text x="750" y="150" text-anchor="middle" fill="#fff" font-size="13">南佛州 · 3 晚</text>
-    <!-- legs -->
-    <path d="M152,104 Q270,40 378,64" fill="none" stroke="#e9822f" stroke-width="4" marker-end="url(#arr)"/>
-    <text x="265" y="54" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">① 12/22 周二</text>
-    <path d="M478,86 Q610,70 700,112" fill="none" stroke="#e9822f" stroke-width="4" marker-end="url(#arr)"/>
-    <text x="600" y="70" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">② 12/26 周六</text>
-    <path d="M700,160 Q420,230 156,140" fill="none" stroke="#e9822f" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arr)"/>
-    <text x="430" y="205" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">③ 12/29 周二 飞回 STL（建议从 FLL 起飞）</text>
-  </svg>
-</div>
-<div class="grid2">
-  <div class="card">
-    <h3 style="margin-top:0">✅ 保留</h3>
-    <ul>
-      <li>Boston：Celtics × 2、Harvard、MIT、圣诞音乐会</li>
-      <li>Miami：Dolphins（12/27）、Panthers（12/28）</li>
-      <li>12/29 上午还能在 Fort Lauderdale 吃个早餐、看看海，再去机场</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3 style="margin-top:0">❌ 取消（已订的话记得退）</h3>
-    <ul>
-      <li class="strike">Nashville 酒店、FLL→BNA、BNA→STL 机票</li>
-      <li class="strike">Music City Bowl、Ryman、名人堂、Opry</li>
-      <li>第 8 张口号图（大学碗赛）也用不上了</li>
-    </ul>
-  </div>
-</div>
-<div class="note">机票 3 段，酒店共 <b>7 晚</b>（Boston 4 + Brickell 2 + Fort Lauderdale 1）。建议 <b>12/26 飞进 MIA，12/29 从 FLL 飞出</b>：12/28 看完冰球住 Fort Lauderdale，第二天离机场只有 15 分钟。</div>
-
-<!-- ================= OVERVIEW ================= -->
-<h2 id="overview">总览</h2>
+<p class="eyebrow">总览</p>
+<h2 id="overview">8 天，一眼看完。</h2>
 <div class="card">
   <svg viewBox="0 0 810 250" role="img" aria-label="8 天时间轴">
     <rect x="10" y="20" width="440" height="34" rx="8" fill="#2b59c3"/>
@@ -222,7 +236,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <!-- ================= DAYS ================= -->
-<h2 id="days">每日行程</h2>
+<p class="eyebrow">每日行程</p>
+<h2 id="days">每一天，都排好了。</h2>
 
 <div class="day trav"><div><div class="d">12/22</div><div class="w">周二</div></div><div>
   <span class="tag fly">✈ STL → BOS</span>
@@ -326,13 +341,15 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div></div>
 
 <!-- ================= CULTURE ================= -->
-<h2 id="culture">演出 &amp; 博物馆</h2>
+<p class="eyebrow">演出与博物馆</p>
+<h2 id="culture">球赛之外，还有这些。</h2>
 <p class="muted" style="margin-top:0">行程里已有的（玻璃花、Gardner、MFA、Holiday Pops）之外，又加了几个顺路的。★ 是最推荐、几乎不用改行程就能加的。12 月底很多场馆营业时间会变，去之前都查一下官网。</p><div class="card"><svg viewBox="0 0 900 230" role="img" aria-label="可加入的演出和博物馆时间表">
 <text x="20" y="28" class="t-ink" font-size="17" font-weight="700">可以加进行程的演出 &amp; 博物馆（★ = 最推荐）</text>
 <g transform="translate(20,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#2b59c3"/><rect y="18" width="100" height="12" fill="#2b59c3"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/22</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">★ Museum of</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">Science</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">或 Aquarium</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">晚：Pops /</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12">Revels</text></g><g transform="translate(130,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#2b59c3"/><rect y="18" width="100" height="12" fill="#2b59c3"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/23</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">★ 玻璃花</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">MIT Museum</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12"></text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">晚：Celtics</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12"></text></g><g transform="translate(240,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#2b59c3"/><rect y="18" width="100" height="12" fill="#2b59c3"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/24</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">Gardner</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">MFA</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">★ 15:00</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">Holiday Pops</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12"></text></g><g transform="translate(350,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#2b59c3"/><rect y="18" width="100" height="12" fill="#2b59c3"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/25</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">大多闭馆</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">Freedom Trail</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">（户外）</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">14:30 Celtics</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12"></text></g><g transform="translate(460,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#0f9d9a"/><rect y="18" width="100" height="12" fill="#0f9d9a"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/26</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">Wolfsonian</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">(South Beach)</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">★ 晚：Ball &amp;</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">Chain 现场</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12">拉丁乐</text></g><g transform="translate(570,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#0f9d9a"/><rect y="18" width="100" height="12" fill="#0f9d9a"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/27</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">13:00</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">Dolphins</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">加场：18:00</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">Heat vs</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12">Hornets</text></g><g transform="translate(680,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#0b7c79"/><rect y="18" width="100" height="12" fill="#0b7c79"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/28</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">Vizcaya</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">★ 15:00</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">Nutcracker!</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">19:00</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12">Panthers</text></g><g transform="translate(790,44)"><rect width="100" height="170" rx="12" class="f-card" stroke="var(--line)"/><rect width="100" height="30" rx="12" fill="#0b7c79"/><rect y="18" width="100" height="12" fill="#0b7c79"/><text x="50" y="21" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">12/29</text><text x="50" y="58" text-anchor="middle" class="t-ink" font-size="12">Chase</text><text x="50" y="84" text-anchor="middle" class="t-ink" font-size="12">Stadium</text><text x="50" y="110" text-anchor="middle" class="t-ink" font-size="12">参观</text><text x="50" y="136" text-anchor="middle" class="t-ink" font-size="12">→ 机场</text><text x="50" y="162" text-anchor="middle" class="t-ink" font-size="12"></text></g></svg></div><h3>Boston</h3><div class="card scroll"><table><tr><th>类型</th><th>名称</th><th>放在哪天</th><th>说明</th></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td>★ <a href="https://www.google.com/maps/search/?api=1&amp;query=Museum+of+Science+Boston" target="_blank" rel="noopener">Museum of Science</a></td><td>12/22 下午</td><td><b>离 citizenM 步行约 10–15 分钟</b>（在 Charles River 上），恐龙、闪电表演、天文馆。落地早就去</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=New+England+Aquarium+Boston" target="_blank" rel="noopener">New England Aquarium</a></td><td>12/22 下午（二选一）</td><td>在海边，离 North End 很近，有巨型海洋缸和企鹅</td></tr><tr><td><span class="tag show">演出</span></td><td>Holiday Pops / Midwinter Revels</td><td>12/22 晚</td><td>已在行程里；先确认当晚有没有场次</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td>★ Harvard Museum of Natural History · MIT Museum</td><td>12/23</td><td>已在行程里；玻璃花只有 23 号能看</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td>Gardner Museum · MFA Boston</td><td>12/24 上午</td><td>已在行程里</td></tr><tr><td><span class="tag show">演出</span></td><td>★ Holiday Pops 15:00</td><td>12/24 下午</td><td>已在行程里，Symphony Hall</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Boston+Tea+Party+Ships+and+Museum" target="_blank" rel="noopener">Boston Tea Party Ships &amp; Museum</a></td><td>可选</td><td>演员带着把“茶叶”扔进海里的互动博物馆；节日营业时间要查</td></tr></table></div><h3>🌊 Boston 看海</h3><div class="card scroll"><table><tr><th>地点</th><th>离 citizenM</th><th>放在哪天</th><th>说明</th></tr><tr><td>★ <a href="https://www.google.com/maps/search/?api=1&amp;query=Christopher+Columbus+Waterfront+Park+Boston" target="_blank" rel="noopener">Christopher Columbus Waterfront Park</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Long+Wharf+Boston" target="_blank" rel="noopener">Long Wharf</a></td><td>步行 10–15 分钟</td><td>12/22 晚</td><td>海港码头和夜景，旁边就是 New England Aquarium</td></tr><tr><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Boston+Harborwalk+Long+Wharf" target="_blank" rel="noopener">Boston Harborwalk</a></td><td>从 Long Wharf 往南</td><td>想多走走时</td><td>沿海港的步道，可以一直走到 Seaport</td></tr><tr><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Charlestown+Navy+Yard+USS+Constitution" target="_blank" rel="noopener">Charlestown Navy Yard</a> + 🚢 F4 渡轮</td><td>Freedom Trail 终点附近</td><td>12/25 上午</td><td>几分钟就到 Long Wharf，价格和坐地铁差不多；用 MBTA 的 mTicket app 或码头购票。节假日班次可能减少</td></tr><tr><td>★ <a href="https://www.google.com/maps/search/?api=1&amp;query=Castle+Island+Boston" target="_blank" rel="noopener">Castle Island</a></td><td>Uber 约 15 分钟</td><td>有空的半天（白天）</td><td>真正面对大海的开阔海景，老堡垒 + 绕 Pleasure Bay 一圈</td></tr><tr><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Revere+Beach" target="_blank" rel="noopener">Revere Beach</a></td><td>Blue Line 约 20 分钟</td><td>可选（白天）</td><td>美国第一个公共海滩，冬天几乎没人</td></tr></table></div><div class="note">海边风比市区大得多：羽绒服帽子、手套、脖套都要用上，最好贴一片暖手宝。日落约 16:15；Castle Island 和 Revere Beach 白天去，回程叫 Uber。冬天大部分观光游船停开。</div><h3>Miami</h3><div class="card scroll"><table><tr><th>类型</th><th>名称</th><th>放在哪天</th><th>说明</th></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Perez+Art+Museum+Miami" target="_blank" rel="noopener">Pérez Art Museum Miami (PAMM)</a></td><td>12/26 下午或 12/28 上午</td><td>在 Downtown 海边的现当代艺术馆，离 Brickell 约 10 分钟。<b>周二、周三闭馆</b></td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Phillip+and+Patricia+Frost+Museum+of+Science" target="_blank" rel="noopener">Frost Science Museum</a></td><td>同上（和 PAMM 隔壁）</td><td>科学馆 + 水族馆 + 天文馆，可以和 PAMM 一起逛</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Wolfsonian+FIU+Miami+Beach" target="_blank" rel="noopener">The Wolfsonian–FIU</a></td><td>12/26 傍晚（South Beach）</td><td>在 Art Deco 街区里的设计博物馆，规模小，看完正好逛 Ocean Drive</td></tr><tr><td><span class="tag show">演出</span></td><td>★ <a href="https://www.google.com/maps/search/?api=1&amp;query=Ball+and+Chain+Little+Havana" target="_blank" rel="noopener">Ball &amp; Chain</a></td><td>12/26 晚</td><td>小哈瓦那的老牌酒吧，<b>每晚有现场拉丁音乐</b>，和 Versailles 晚饭同一条街。晚上可能只让 21 岁以上进，带证件</td></tr><tr><td><span class="tag game">加场</span></td><td><a href="https://www.nba.com/heat/schedule" target="_blank" rel="noopener">Heat vs Hornets 18:00</a></td><td>12/27 晚（可选）</td><td>Kaseya Center 在 Downtown，离 Brickell 约 10 分钟。Dolphins 约 16:15 结束，坐 Uber Shuttle 回来<b>时间很紧</b>，想看要做好错过开场的准备。时间以 NBA 官网为准</td></tr></table></div><h3>Fort Lauderdale</h3><div class="card scroll"><table><tr><th>类型</th><th>名称</th><th>放在哪天</th><th>说明</th></tr><tr><td><span class="tag show">演出</span></td><td>★ <a href="https://www.browardcenter.org" target="_blank" rel="noopener">Nutcracker! Magical Christmas Ballet</a></td><td>12/28 15:00</td><td>Broward Center，在 Las Olas 旁边的 Riverwalk，<b>从酒店走路就到</b>。约 17:00 结束，回酒店休息后 18:15 去看 Panthers。只在官网或 Ticketmaster 买（转售网站列的是 15:00 和 19:00 两场）</td></tr><tr><td><span class="tag show">演出</span></td><td><a href="https://www.browardcenter.org/events/detail/jen-kramers-magical-holiday-show-2026" target="_blank" rel="noopener">Jen Kramer's Magical Holiday Show</a></td><td>12/28 15:00（二选一）</td><td>同一天同一个地方的魔术表演，偏家庭向</td></tr><tr><td><span class="tag show">演出</span></td><td><a href="https://www.ticketnews.com/2026/07/cirque-musica-holiday-wonderland-tickets-on-sale-in-fort-lauderdale/" target="_blank" rel="noopener">Cirque Musica Holiday Wonderland</a></td><td>12/27（只适合“全住 Fort Lauderdale”方案）</td><td>杂技 + 管弦乐，The Parker 剧院 14:00 / 19:00。住 Brickell 的话来回太远</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=NSU+Art+Museum+Fort+Lauderdale" target="_blank" rel="noopener">NSU Art Museum Fort Lauderdale</a></td><td>12/28 下午（可选）</td><td>在 Las Olas 附近；<b>周一可能闭馆</b>，去之前查</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">博物馆</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Museum+of+Discovery+and+Science+Fort+Lauderdale" target="_blank" rel="noopener">Museum of Discovery and Science</a></td><td>12/28 下午（可选）</td><td>也在 Riverwalk，有 IMAX</td></tr></table></div><div class="note">12/26–28 迈阿密几个大场馆（Kaseya Center、Fillmore、Arsht Center）我没查到演唱会，年底日程可能还会更新，12 月初再看一次。</div>
 
 <!-- ================= TICKETS ================= -->
-<h2 id="tickets">在哪里买票</h2>
+<p class="eyebrow">买票</p>
+<h2 id="tickets">票，在这里买。</h2>
 <p class="muted" style="margin-top:0">链接都指向官方或主流平台。价格随时变，圣诞场次越晚越贵，平日场次临近比赛有时会降价。</p><div class="card"><svg viewBox="0 0 860 190" role="img" aria-label="买票流程：先看官方，卖完或想要好位置再看二级市场，比较含费总价，只用正规平台">
 <defs><marker id="ta" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#e9822f"/></marker></defs>
 <g font-size="14">
@@ -345,7 +362,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </g></svg></div><h3>比赛</h3><div class="card scroll"><table><tr><th>场次</th><th>官方（首选）</th><th>二级市场（转售）</th><th>备注</th></tr><tr><td>12/23 19:30 Celtics vs Trail Blazers</td><td><a href="https://www.nba.com/celtics/tickets" target="_blank" rel="noopener">celtics.com 票务页</a> → <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td><a href="https://www.tickpick.com" target="_blank" rel="noopener">TickPick</a> · <a href="https://seatgeek.com" target="_blank" rel="noopener">SeatGeek</a> · <a href="https://www.stubhub.com" target="_blank" rel="noopener">StubHub</a> · <a href="https://www.vividseats.com" target="_blank" rel="noopener">Vivid Seats</a></td><td>平日对手，通常比圣诞场便宜很多</td></tr><tr><td>12/25 14:30 Celtics vs Heat</td><td><a href="https://www.nba.com/celtics/tickets" target="_blank" rel="noopener">celtics.com 票务页</a> → <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td><a href="https://www.tickpick.com" target="_blank" rel="noopener">TickPick</a> · <a href="https://seatgeek.com" target="_blank" rel="noopener">SeatGeek</a> · <a href="https://www.stubhub.com" target="_blank" rel="noopener">StubHub</a> · <a href="https://www.vividseats.com" target="_blank" rel="noopener">Vivid Seats</a></td><td>圣诞大战，最贵最抢手，<b>越早买越好</b></td></tr><tr><td>12/27 13:00 Dolphins vs Chargers</td><td><a href="https://www.miamidolphins.com/tickets/" target="_blank" rel="noopener">miamidolphins.com 票务页</a> → <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td><a href="https://www.tickpick.com" target="_blank" rel="noopener">TickPick</a> · <a href="https://seatgeek.com" target="_blank" rel="noopener">SeatGeek</a> · <a href="https://www.stubhub.com" target="_blank" rel="noopener">StubHub</a> · <a href="https://www.vividseats.com" target="_blank" rel="noopener">Vivid Seats</a></td><td>NFL 门票只有手机电子票，在 Ticketmaster app 里出示</td></tr><tr><td>12/27 18:00 Heat vs Hornets（可选）</td><td><a href="https://www.nba.com/heat/tickets" target="_blank" rel="noopener">Heat 票务页</a> → <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td><a href="https://www.tickpick.com" target="_blank" rel="noopener">TickPick</a> · <a href="https://seatgeek.com" target="_blank" rel="noopener">SeatGeek</a> · <a href="https://www.stubhub.com" target="_blank" rel="noopener">StubHub</a> · <a href="https://www.vividseats.com" target="_blank" rel="noopener">Vivid Seats</a></td><td>当天时间紧，可以等比赛日再买</td></tr><tr><td>12/28 19:00 Panthers vs Predators</td><td><a href="https://www.nhl.com/panthers/tickets" target="_blank" rel="noopener">Panthers 票务页</a> → <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td><a href="https://www.tickpick.com" target="_blank" rel="noopener">TickPick</a> · <a href="https://seatgeek.com" target="_blank" rel="noopener">SeatGeek</a> · <a href="https://www.stubhub.com" target="_blank" rel="noopener">StubHub</a> · <a href="https://www.vividseats.com" target="_blank" rel="noopener">Vivid Seats</a></td><td>主场常常卖得很好，别拖太久</td></tr></table></div><h3>演出</h3><div class="card scroll"><table><tr><th>场次</th><th>在哪买</th><th>备注</th></tr><tr><td>12/22 Holiday Pops / Midwinter Revels（可选）</td><td><a href="https://www.bso.org/seasons/2026-2027-pops" target="_blank" rel="noopener">bso.org</a> / <a href="https://revels.org/" target="_blank" rel="noopener">revels.org</a></td><td>先看当晚有没有场次</td></tr><tr><td>12/24 15:00 Holiday Pops</td><td><a href="https://www.bso.org/seasons/2026-2027-pops" target="_blank" rel="noopener">bso.org</a>，或电话 888-266-1200、Symphony Hall 售票处</td><td>只从官网买，转售网站常常加价很多</td></tr><tr><td>12/28 15:00 Nutcracker!</td><td><a href="https://www.browardcenter.org" target="_blank" rel="noopener">browardcenter.org</a> 或 <a href="https://www.ticketmaster.com" target="_blank" rel="noopener">Ticketmaster</a></td><td>Broward Center 说官方只有这两个渠道</td></tr><tr><td>12/26 晚 Ball &amp; Chain</td><td>不用买票，直接去</td><td>有些晚上可能收入场费 (cover)，带证件</td></tr></table></div><h3>博物馆 &amp; 参观</h3><div class="card scroll"><table><tr><th>地点</th><th>在哪买</th></tr><tr><td>12/22 Museum of Science</td><td><a href="https://www.mos.org" target="_blank" rel="noopener">mos.org</a></td></tr><tr><td>12/23 Harvard Museum of Natural History</td><td><a href="https://hmnh.harvard.edu/plan-your-visit" target="_blank" rel="noopener">hmnh.harvard.edu</a></td></tr><tr><td>12/23 MIT Museum</td><td><a href="https://mitmuseum.mit.edu" target="_blank" rel="noopener">mitmuseum.mit.edu</a></td></tr><tr><td>12/24 Isabella Stewart Gardner Museum</td><td><a href="https://www.gardnermuseum.org" target="_blank" rel="noopener">gardnermuseum.org</a>（分时段，<b>先订</b>）</td></tr><tr><td>12/24 MFA Boston</td><td><a href="https://www.mfa.org" target="_blank" rel="noopener">mfa.org</a></td></tr><tr><td>12/26 Nu Stadium 商店</td><td>不用买票</td></tr><tr><td>12/26 / 12/28 PAMM · Frost Science</td><td><a href="https://www.pamm.org" target="_blank" rel="noopener">pamm.org</a> · <a href="https://www.frostscience.org" target="_blank" rel="noopener">frostscience.org</a></td></tr><tr><td>12/28 Vizcaya</td><td><a href="https://vizcaya.org" target="_blank" rel="noopener">vizcaya.org</a></td></tr><tr><td>12/29 Chase Stadium 参观</td><td><a href="https://www.intermiamicf.com/tickets/tours" target="_blank" rel="noopener">intermiamicf.com</a>（整点开始，<b>先订</b>）</td></tr><tr><td>12/27 Dolphins 散场 Uber Shuttle</td><td>在 Uber app 里订</td></tr></table></div><div class="note"><b>买票小贴士：</b>① 先注册 Ticketmaster 账号并下载 app，比赛票都在里面；② 二级市场比价时看<b>最后结账页的总价</b>，很多平台到最后一步才加服务费；③ 二级市场选有“保证 (guarantee)”的平台，不要私下转账买票；④ 如果办了 Chase Freedom Flex，Q4 只有餐厅和超市是 5%，门票按普通 1% 算。</div>
 
 <!-- ================= STAY ================= -->
-<h2 id="stay">住哪里</h2>
+<p class="eyebrow">住宿</p>
+<h2 id="stay">住在离比赛最近的地方。</h2>
 <p class="muted" style="margin-top:0">三个住处都按“不开车、少叫车、离比赛近”来选。圣诞周房价高，<b>尽快订可免费取消的房价</b>。$ = 便宜，$$$ = 贵；具体价格以订房网站为准。</p>
 
 <div class="card">
@@ -431,7 +449,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <!-- ================= EAT ================= -->
-<h2 id="eat">吃什么</h2>
+<p class="eyebrow">美食</p>
+<h2 id="eat">龙虾卷、古巴三明治，和小笼包。</h2>
 <p class="muted" style="margin-top:0">每家都分了 <span class="tag" style="background:#0f8b8d;color:#fff">本地</span><span class="tag" style="background:#d62839;color:#fff">中餐</span><span class="tag" style="background:#e9822f;color:#fff">快餐</span>，名字链接到 Google Maps，可以看营业时间和评价。$ ≈ 人均 $15 以内，$$ ≈ $15–40，$$$ ≈ $40 以上（含税和小费前的大致范围）。</p>
 <div class="card">
 <svg viewBox="0 0 860 200" role="img" aria-label="必吃清单：龙虾卷、蛤蜊浓汤、意式奶油卷、古巴三明治、石蟹、青柠派、古巴咖啡、小笼包">
@@ -450,7 +469,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </table></div><h3>Boston</h3><div class="card scroll"><table><tr><th>类型</th><th>餐厅</th><th>价位</th><th>吃什么 / 为什么</th></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Neptune+Oyster+Boston" target="_blank" rel="noopener">Neptune Oyster</a></td><td>$$$</td><td>★ 热的黄油龙虾卷 (lobster roll)。<b>不接受订位</b>，开门前去排队</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Union+Oyster+House+Boston" target="_blank" rel="noopener">Union Oyster House</a></td><td>$$</td><td>1826 年开业，美国最老的餐厅之一，就在 Freedom Trail 边上。点蛤蜊浓汤 (clam chowder)</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Quincy+Market+Boston" target="_blank" rel="noopener">Quincy Market</a></td><td>$</td><td>室内美食街，面包碗装的 clam chowder、龙虾卷都有，便宜快</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Regina+Pizzeria+Thacher+Street+Boston" target="_blank" rel="noopener">Regina Pizzeria (North End)</a></td><td>$</td><td>1926 年的老店，North End 薄底披萨</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Mike%27s+Pastry+Boston" target="_blank" rel="noopener">Mike&#x27;s Pastry</a> / <a href="https://www.google.com/maps/search/?api=1&amp;query=Modern+Pastry+Boston" target="_blank" rel="noopener">Modern Pastry</a></td><td>$</td><td>意式奶油卷 (cannoli)，两家隔几步，本地人各有所爱</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Omni+Parker+House+Boston" target="_blank" rel="noopener">Omni Parker House</a></td><td>$$</td><td>波士顿奶油派 (Boston cream pie) 的发源地，也在 Freedom Trail 上</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Gourmet+Dumpling+House+Boston" target="_blank" rel="noopener">Gourmet Dumpling House</a></td><td>$</td><td>★ Chinatown 小笼包、葱油饼，排队常见</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Dumpling+Cafe+695+Washington+St+Boston" target="_blank" rel="noopener">Dumpling Cafe</a></td><td>$</td><td>往年<b>圣诞节有营业</b>，12/25 晚饭的稳妥选择（提前打电话确认）</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Q+Restaurant+Chinatown+Boston" target="_blank" rel="noopener">Q Restaurant</a></td><td>$$</td><td>火锅 (hot pot)，冬天很合适</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Sumiao+Hunan+Kitchen+Cambridge" target="_blank" rel="noopener">Sumiao Hunan Kitchen</a></td><td>$$</td><td>湘菜，在 MIT 旁边的 Kendall Square，12/23 午饭或晚饭</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Hub+Hall+Boston+food+hall" target="_blank" rel="noopener">Hub Hall</a></td><td>$</td><td>TD Garden 楼下的美食广场，看球前后最方便</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Felipe%27s+Taqueria+Cambridge" target="_blank" rel="noopener">Felipe&#x27;s Taqueria</a></td><td>$</td><td>Harvard Square 学生最爱的墨西哥卷饼</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Tasty+Burger+Boston" target="_blank" rel="noopener">Tasty Burger</a> · Shake Shack · Dunkin'</td><td>$</td><td>Dunkin' 甜甜圈和咖啡是波士顿起家的，早餐首选</td></tr></table></div><div class="note"><b>12/24 和 12/25 很多餐厅提前关门或不营业。</b>Chinatown 一般照常开，是圣诞节最稳的选择；去之前打电话或看 Google Maps 的节日营业时间。</div><h3>Miami（Brickell / Little Havana / Wynwood）</h3><div class="card scroll"><table><tr><th>类型</th><th>餐厅</th><th>价位</th><th>吃什么 / 为什么</th></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Versailles+Restaurant+Miami" target="_blank" rel="noopener">Versailles</a></td><td>$$</td><td>★ 小哈瓦那 (Little Havana) 最有名的古巴餐厅。旁边的窗口卖古巴咖啡 (cafecito)</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Sanguich+de+Miami+Calle+Ocho" target="_blank" rel="noopener">Sanguich de Miami</a></td><td>$</td><td>★ 古巴三明治 (Cuban sandwich)，Calle Ocho 街上</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Azucar+Ice+Cream+Company+Miami" target="_blank" rel="noopener">Azucar Ice Cream</a></td><td>$</td><td>古巴风味冰淇淋，和上面两家在同一条街</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Joe%27s+Stone+Crab+Miami+Beach" target="_blank" rel="noopener">Joe&#x27;s Stone Crab</a></td><td>$$$</td><td>石蟹 (stone crab) 和青柠派 (key lime pie)，正当季。贵、要排队；旁边的 Joe's Take Away 可以外带</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Coyo+Taco+Wynwood" target="_blank" rel="noopener">Coyo Taco</a></td><td>$</td><td>Wynwood 的墨西哥塔可</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Tropical+Chinese+Restaurant+Miami" target="_blank" rel="noopener">Tropical Chinese</a></td><td>$$</td><td>★ 迈阿密老牌粤式点心 (dim sum)，在西边，Uber 约 20–25 分钟</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Hutong+Miami+Brickell" target="_blank" rel="noopener">Hutong Miami</a></td><td>$$$</td><td>就在 Brickell，北方菜、烤鸭，偏高档</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=MIMI+Chinese+Miami" target="_blank" rel="noopener">MIMI Chinese</a></td><td>$$$</td><td>Downtown 的创意中餐，各种饺子</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Pollo+Tropical+Miami" target="_blank" rel="noopener">Pollo Tropical</a></td><td>$</td><td>★ 佛州本地连锁，加勒比风味烤鸡</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Pincho+Miami" target="_blank" rel="noopener">Pincho</a></td><td>$</td><td>迈阿密起家的汉堡和烤串</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Publix+Brickell" target="_blank" rel="noopener">Publix</a></td><td>$</td><td>★ 佛州超市的 <b>Pub Sub</b> 三明治，本地人公认的“佛州特产”；顺便买水和零食</td></tr></table></div><h3>Fort Lauderdale</h3><div class="card scroll"><table><tr><th>类型</th><th>餐厅</th><th>价位</th><th>吃什么 / 为什么</th></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Southport+Raw+Bar+Fort+Lauderdale" target="_blank" rel="noopener">Southport Raw Bar</a></td><td>$$</td><td>本地人常去的海鲜小馆，生蚝、炸虾</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Lester%27s+Diner+Fort+Lauderdale" target="_blank" rel="noopener">Lester&#x27;s Diner</a></td><td>$</td><td>24 小时营业的老式美国餐馆 (diner)，早餐或宵夜</td></tr><tr><td><span class="tag" style="background:#0f8b8d;color:#fff">本地</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Las+Olas+Boulevard+restaurants" target="_blank" rel="noopener">Las Olas Boulevard</a></td><td>$$</td><td>酒店门口这条街就有几十家餐厅，晚上走走挑一家</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Christina+Wan%27s+Mandarin+House+Fort+Lauderdale" target="_blank" rel="noopener">Christina Wan&#x27;s Mandarin House</a></td><td>$$</td><td>★ 从 1966 年起家的家族中餐馆，粤菜、点心、川菜</td></tr><tr><td><span class="tag" style="background:#d62839;color:#fff">中餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Hong+Kong+City+BBQ+Tamarac" target="_blank" rel="noopener">Hong Kong City BBQ</a></td><td>$</td><td>烧腊饭、炒面，Uber 约 20 分钟</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td><a href="https://www.google.com/maps/search/?api=1&amp;query=Sawgrass+Mills+food+court" target="_blank" rel="noopener">Sawgrass Mills</a></td><td>$</td><td>★ 就在 Panthers 球馆旁边的大型奥特莱斯，<b>看冰球前在美食广场吃</b>，顺便逛街</td></tr><tr><td><span class="tag" style="background:#e9822f;color:#fff">快餐</span></td><td>Pollo Tropical · Publix · Shake Shack</td><td>$</td><td>到处都有</td></tr></table></div><div class="note"><b>小费 (tip)：</b>坐下点菜的餐厅给 18–20%；柜台点餐的快餐可以不给。账单上已经有 “Service Charge” 或 “Gratuity” 就不用再给。</div>
 
 <!-- ================= SAFE ================= -->
-<h2 id="safe">安全：哪里放心、哪里要小心</h2>
+<p class="eyebrow">安全</p>
+<h2 id="safe">哪里放心，哪里小心。</h2>
 <p class="muted" style="margin-top:0">你住的、玩的地方基本都在“绿区”。下面的分区是概括，不代表“黄区”“红区”里每条街都危险；判断标准是游客在那里遇到麻烦的可能性。</p>
 <div class="card"><svg viewBox="0 0 900 470" role="img" aria-label="三座城市的安全分区：绿色放心，黄色注意时间，红色不要去"><text x="150" y="26" text-anchor="middle" class="t-ink" font-size="18" font-weight="700">Boston</text><rect x="10" y="42" width="280" height="58" rx="10" fill="#2e8b57"/><text x="22" y="67" fill="#fff" font-size="14.5" font-weight="700">North End · West End</text><text x="22" y="88" fill="#fff" font-size="11.5" fill-opacity=".92">住宿区 · 看球区</text><rect x="10" y="108" width="280" height="58" rx="10" fill="#2e8b57"/><text x="22" y="133" fill="#fff" font-size="14.5" font-weight="700">Harvard · MIT · Fenway</text><text x="22" y="154" fill="#fff" font-size="11.5" fill-opacity=".92">白天参观</text><rect x="10" y="174" width="280" height="58" rx="10" fill="#d99a1e"/><text x="22" y="199" fill="#fff" font-size="14.5" font-weight="700">Boston Common</text><text x="22" y="220" fill="#fff" font-size="11.5" fill-opacity=".92">白天走 Freedom Trail 可以</text><rect x="10" y="240" width="280" height="58" rx="10" fill="#d99a1e"/><text x="22" y="265" fill="#fff" font-size="14.5" font-weight="700">Downtown Crossing</text><text x="22" y="286" fill="#fff" font-size="11.5" fill-opacity=".92">晚上别穿行</text><rect x="10" y="306" width="280" height="58" rx="10" fill="#d99a1e"/><text x="22" y="331" fill="#fff" font-size="14.5" font-weight="700">Chinatown 外围</text><text x="22" y="352" fill="#fff" font-size="11.5" fill-opacity=".92">吃完叫 Uber 回</text><rect x="10" y="372" width="280" height="58" rx="10" fill="#c0392b"/><text x="22" y="397" fill="#fff" font-size="14.5" font-weight="700">Mass & Cass 一带</text><text x="22" y="418" fill="#fff" font-size="11.5" fill-opacity=".92">不要去</text><text x="450" y="26" text-anchor="middle" class="t-ink" font-size="18" font-weight="700">Miami</text><rect x="310" y="42" width="280" height="58" rx="10" fill="#2e8b57"/><text x="322" y="67" fill="#fff" font-size="14.5" font-weight="700">Brickell</text><text x="322" y="88" fill="#fff" font-size="11.5" fill-opacity=".92">住宿区，人多</text><rect x="310" y="108" width="280" height="58" rx="10" fill="#2e8b57"/><text x="322" y="133" fill="#fff" font-size="14.5" font-weight="700">Vizcaya · Coconut Grove</text><text x="322" y="154" fill="#fff" font-size="11.5" fill-opacity=".92">白天参观</text><rect x="310" y="174" width="280" height="58" rx="10" fill="#d99a1e"/><text x="322" y="199" fill="#fff" font-size="14.5" font-weight="700">South Beach</text><text x="322" y="220" fill="#fff" font-size="11.5" fill-opacity=".92">夜里人杂、小心扒窃</text><rect x="310" y="240" width="280" height="58" rx="10" fill="#d99a1e"/><text x="322" y="265" fill="#fff" font-size="14.5" font-weight="700">Wynwood · Little Havana</text><text x="322" y="286" fill="#fff" font-size="11.5" fill-opacity=".92">白天好，晚上叫车</text><rect x="310" y="306" width="280" height="58" rx="10" fill="#d99a1e"/><text x="322" y="331" fill="#fff" font-size="14.5" font-weight="700">Hard Rock 球场周边</text><text x="322" y="352" fill="#fff" font-size="11.5" fill-opacity=".92">跟着人流走</text><rect x="310" y="372" width="280" height="58" rx="10" fill="#c0392b"/><text x="322" y="397" fill="#fff" font-size="14.5" font-weight="700">Overtown · Liberty City</text><text x="322" y="418" fill="#fff" font-size="11.5" fill-opacity=".92">不要步行穿过</text><text x="750" y="26" text-anchor="middle" class="t-ink" font-size="18" font-weight="700">Fort Lauderdale</text><rect x="610" y="42" width="280" height="58" rx="10" fill="#2e8b57"/><text x="622" y="67" fill="#fff" font-size="14.5" font-weight="700">Las Olas Blvd</text><text x="622" y="88" fill="#fff" font-size="11.5" fill-opacity=".92">住宿区，晚上热闹</text><rect x="610" y="108" width="280" height="58" rx="10" fill="#2e8b57"/><text x="622" y="133" fill="#fff" font-size="14.5" font-weight="700">Fort Lauderdale Beach</text><text x="622" y="154" fill="#fff" font-size="11.5" fill-opacity=".92">白天、有救生员处</text><rect x="610" y="174" width="280" height="58" rx="10" fill="#2e8b57"/><text x="622" y="199" fill="#fff" font-size="14.5" font-weight="700">Sawgrass Mills / 球馆</text><text x="622" y="220" fill="#fff" font-size="11.5" fill-opacity=".92">人多</text><rect x="610" y="240" width="280" height="58" rx="10" fill="#d99a1e"/><text x="622" y="265" fill="#fff" font-size="14.5" font-weight="700">海滩夜里</text><text x="622" y="286" fill="#fff" font-size="11.5" fill-opacity=".92">不要独自去</text><rect x="610" y="306" width="280" height="58" rx="10" fill="#d99a1e"/><text x="622" y="331" fill="#fff" font-size="14.5" font-weight="700">downtown 以西</text><text x="622" y="352" fill="#fff" font-size="11.5" fill-opacity=".92">晚上别乱走</text><rect x="610" y="372" width="280" height="58" rx="10" fill="#d99a1e"/><text x="622" y="397" fill="#fff" font-size="14.5" font-weight="700">机场周边</text><text x="622" y="418" fill="#fff" font-size="11.5" fill-opacity=".92">叫车直达</text><g font-size="13" class="t-ink"><rect x="10" y="446" width="16" height="16" rx="4" fill="#2e8b57"/><text x="32" y="459">放心逛</text><rect x="120" y="446" width="16" height="16" rx="4" fill="#d99a1e"/><text x="142" y="459">注意时间 / 人多看好东西</text><rect x="340" y="446" width="16" height="16" rx="4" fill="#c0392b"/><text x="362" y="459">不要去 / 不要步行穿过</text></g></svg></div>
 <h3>Boston</h3>
@@ -494,7 +514,9 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 <a href="https://www.isitsafetovisit.com/cities/miami" target="_blank" rel="noopener">Is It Safe To Visit：Miami</a></p>
 
 <!-- ================= MAPS ================= -->
-<h2 id="maps">地图（示意图，不按比例）</h2>
+<p class="eyebrow">地图</p>
+<h2 id="maps">示意地图。</h2>
+<p class="muted" style="margin-top:-10px">不按比例，只看方位关系；可缩放的真实地图在“住宿”一节。</p>
 <h3>Boston</h3>
 <div class="card">
   <svg viewBox="0 0 680 430" role="img" aria-label="Boston 示意图：Harvard、MIT、TD Garden、Freedom Trail、Fenway 一带的博物馆和 Symphony Hall、Logan 机场">
@@ -560,7 +582,9 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <!-- ================= BOOKINGS ================= -->
-<h2 id="book">预订清单（可勾选，状态存在本机浏览器）</h2>
+<p class="eyebrow">清单</p>
+<h2 id="book">一项一项勾掉。</h2>
+<p class="muted" style="margin-top:-10px">勾选状态只保存在你这台设备的浏览器里。</p>
 <div class="progress" aria-hidden="true"><i id="bar"></i></div>
 <p class="muted" id="count" style="margin:0 0 8px;font-size:14px"></p>
 
@@ -598,7 +622,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <!-- ================= PACKING ================= -->
-<h2 id="pack">打包（一个书包）</h2>
+<p class="eyebrow">打包</p>
+<h2 id="pack">一个书包，全部装下。</h2>
 <div class="card">
   <svg viewBox="0 0 760 300" role="img" aria-label="打包示意：身上穿的和书包里装的">
     <!-- person -->
@@ -647,7 +672,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 <div class="note">因为不去 Nashville 了：<b>暖脚贴可以不买</b>（Boston 的比赛都在室内），暖手宝从 6 对减到 4 对，一次性内裤和袜子各少 1–2 件。</div>
 
 <!-- ================= SHOPPING ================= -->
-<h2 id="shop">购物链接</h2>
+<p class="eyebrow">购物</p>
+<h2 id="shop">要买的，都在这里。</h2>
 <div class="card scroll">
   <table>
     <tr><th>物品</th><th>推荐</th><th>备注</th></tr>
@@ -672,7 +698,8 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
 </div>
 
 <!-- ================= GAMES ================= -->
-<h2 id="games">看球速查</h2>
+<p class="eyebrow">看球速查</p>
+<h2 id="games">进场前，看这里。</h2>
 <div class="card">
   <svg viewBox="0 0 760 250" role="img" aria-label="橄榄球一分钟入门：4 次进攻推进 10 码，达阵 6 分">
     <text x="20" y="28" class="t-ink" font-size="17" font-weight="700">🏈 橄榄球 60 秒入门（12/27 Dolphins）</text>
@@ -713,6 +740,48 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
   </ul>
   <p class="muted" style="margin:6px 0 0;font-size:13px">来源：<a href="https://www.intermiamicf.com/news/inter-miami-cf-official-store-at-nu-stadium-now-open-seven-days-a-week" target="_blank" rel="noopener">Inter Miami：Nu Stadium 商店</a> · <a href="https://www.intermiamicf.com/tickets/imcf-stadium-tours" target="_blank" rel="noopener">Inter Miami：球场参观</a> · <a href="https://news.miami-airport.com/inter-miami-cf-touches-down-at-mia-with-new-official-store/" target="_blank" rel="noopener">MIA 机场商店</a></p>
 </div>
+
+<p class="eyebrow">更新记录</p>
+<h2 id="changes">这次改了什么。</h2>
+<div class="card">
+  <svg viewBox="0 0 860 210" role="img" aria-label="新路线：12/22 STL 飞 Boston，12/26 Boston 飞 Miami，12/29 从 Fort Lauderdale 飞回 STL">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#e9822f"/></marker>
+    </defs>
+    <!-- nodes -->
+    <circle cx="110" cy="120" r="44" fill="#7a5c3e"/><text x="110" y="116" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">STL</text><text x="110" y="140" text-anchor="middle" fill="#fff" font-size="13">St. Louis</text>
+    <circle cx="430" cy="70" r="50" fill="#2b59c3"/><text x="430" y="66" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">BOS</text><text x="430" y="90" text-anchor="middle" fill="#fff" font-size="13">Boston · 4 晚</text>
+    <circle cx="750" cy="130" r="50" fill="#0f9d9a"/><text x="750" y="126" text-anchor="middle" fill="#fff" font-size="22" font-weight="700">MIA</text><text x="750" y="150" text-anchor="middle" fill="#fff" font-size="13">南佛州 · 3 晚</text>
+    <!-- legs -->
+    <path d="M152,104 Q270,40 378,64" fill="none" stroke="#e9822f" stroke-width="4" marker-end="url(#arr)"/>
+    <text x="265" y="54" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">① 12/22 周二</text>
+    <path d="M478,86 Q610,70 700,112" fill="none" stroke="#e9822f" stroke-width="4" marker-end="url(#arr)"/>
+    <text x="600" y="70" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">② 12/26 周六</text>
+    <path d="M700,160 Q420,230 156,140" fill="none" stroke="#e9822f" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arr)"/>
+    <text x="430" y="205" text-anchor="middle" class="t-ink" font-size="16" font-weight="700">③ 12/29 周二 飞回 STL（建议从 FLL 起飞）</text>
+  </svg>
+</div>
+<div class="grid2">
+  <div class="card">
+    <h3 style="margin-top:0">✅ 保留</h3>
+    <ul>
+      <li>Boston：Celtics × 2、Harvard、MIT、圣诞音乐会</li>
+      <li>Miami：Dolphins（12/27）、Panthers（12/28）</li>
+      <li>12/29 上午还能在 Fort Lauderdale 吃个早餐、看看海，再去机场</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">❌ 取消（已订的话记得退）</h3>
+    <ul>
+      <li class="strike">Nashville 酒店、FLL→BNA、BNA→STL 机票</li>
+      <li class="strike">Music City Bowl、Ryman、名人堂、Opry</li>
+      <li>第 8 张口号图（大学碗赛）也用不上了</li>
+    </ul>
+  </div>
+</div>
+<div class="note">机票 3 段，酒店共 <b>7 晚</b>（Boston 4 + Brickell 2 + Fort Lauderdale 1）。建议 <b>12/26 飞进 MIA，12/29 从 FLL 飞出</b>：12/28 看完冰球住 Fort Lauderdale，第二天离机场只有 15 分钟。</div>
+
+<!-- ================= OVERVIEW ================= -->
 
 <footer>
   有些信息还需要确认：12/23 Celtics 对手、Holiday Pops 12/24 场次、Panthers 网约车上车点、Chase Stadium 和 Nu Stadium 商店的节日营业时间。比赛时间均为当地时间。
@@ -852,6 +921,22 @@ footer{color:var(--muted);font-size:13px;margin-top:40px}
   }
   document.querySelectorAll('.maptabs button').forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('data-city')); }); });
   show('bos');
+})();
+</script>
+
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('.card, .day, .note, .stats div');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if (r.top < innerHeight) return;
+    el.classList.add('reveal'); io.observe(el);
+  });
 })();
 </script>
 </body>
