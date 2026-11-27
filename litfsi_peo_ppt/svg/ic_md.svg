@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2937"/></marker>
+  <marker id="ahT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F7A7A"/></marker>
+  <marker id="ahO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D1495B"/></marker>
+  <marker id="ahL" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7B3FA0"/></marker>
+  <marker id="ahA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D98E2B"/></marker>
+  <marker id="ahW" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/></marker>
+  <radialGradient id="liGlow"><stop offset="0" stop-color="#7B3FA0" stop-opacity="0.45"/><stop offset="1" stop-color="#7B3FA0" stop-opacity="0"/></radialGradient>
+  <radialGradient id="anGlow"><stop offset="0" stop-color="#D98E2B" stop-opacity="0.35"/><stop offset="1" stop-color="#D98E2B" stop-opacity="0"/></radialGradient>
+  <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="10" stroke="#7B3FA0" stroke-width="2" stroke-opacity="0.35"/></pattern>
+</defs><circle cx="60" cy="60" r="58" fill="#D3EBE8"/><path d="M20,70 C23.3,66.7 33.3,51.0 40,50 C46.7,49.0 53.3,65.0 60,64 C66.7,63.0 73.3,45.0 80,44 C86.7,43.0 96.7,55.7 100,58" fill="none" stroke="#1F7A7A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="86" r="11" fill="#7B3FA0"/><circle cx="40" cy="50" r="7" fill="#D1495B" stroke="#FFFFFF" stroke-width="2"/><circle cx="80" cy="44" r="7" fill="#D1495B" stroke="#FFFFFF" stroke-width="2"/><line x1="60" y1="86" x2="40" y2="50" stroke="#7B3FA0" stroke-width="2" stroke-dasharray="3 3"/><line x1="60" y1="86" x2="80" y2="44" stroke="#7B3FA0" stroke-width="2" stroke-dasharray="3 3"/></svg>
