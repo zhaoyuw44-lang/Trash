@@ -91,6 +91,9 @@ const ALT = {
   mould: "Cross-section of a levelled PTFE mould with lid ajar",
   gapmap: "Room-temperature conductivity ranges of improvement routes from solid to liquid-like",
   levers: "Thin scaffold-supported film and indicative gains from five levers",
+  eiscell: "Coin cell with stainless-steel blocking electrodes and an insulating ring around the polymer film",
+  nyquist: "Schematic Nyquist plot with bulk semicircle, blocking spike and equivalent circuit",
+  thickscale: "Typical film thickness ranges for separators, competitive cells, lab cells and EIS samples",
   clean: "Eight-step PTFE mould cleaning routine: four steps after use and four before the next cast",
 };
 const tag = (slide, text) =>
@@ -143,7 +146,7 @@ pres.addSection({ title: "Overview" });
   const s = newSlide("Overview");
   tag(s, "THE SHORT ANSWER");
   s.addText("Why LiTFSI dissolves — and why that is half the story", { placeholder: "title" });
-  card(s, 0.6, 1.6, 5.6, 4.9, C.text2);
+  card(s, 0.6, 1.55, 5.6, 4.85, C.text2);
   s.addText([
     { text: "Ether oxygens chelate Li⁺ more strongly than the soft, charge-delocalised TFSI⁻ lattice holds it.", options: { breakLine: true, paraSpaceAfter: 14 } },
     { text: "But the same Li⁺–O bonds stiffen the chains, slow Li⁺ down and compete with PEO crystallisation.", options: { color: "F2C38B" } },
@@ -153,13 +156,14 @@ pres.addSection({ title: "Overview" });
     ["ic_md", "Dissolution & structure", "Thermodynamic cycle, Li⁺ solvation, crystal complexes"],
     ["ic_dsc", "Phase behaviour", "Phase diagram, DSC vs salt content, solubility limit"],
     ["ic_eis", "Transport, limits & fixes", "Why PEO falls short and how to close the gap to liquids"],
-    ["ic_mould", "Casting good films", "PTFE-mould workflow and fixing sticky films"],
+    ["ic_mould", "Casting good films", "PTFE-mould workflow, mould cleaning, sticky films"],
+    ["ic_ruler", "Measuring films", "EIS conductivity and the ideal film thickness"],
   ];
   rows.forEach(([ic, t, d], i) => {
-    const y = 1.6 + i * 0.99;
-    fig(s, ic, 6.7, y, 0.78, 0.78);
-    s.addText(t, { x: 7.65, y: y - 0.02, w: 5.0, h: 0.38, fontSize: 18, bold: true, color: C.text2, margin: 0, isTextBox: true });
-    s.addText(d, { x: 7.65, y: y + 0.37, w: 5.0, h: 0.38, fontSize: 14, color: C.accent6, margin: 0, isTextBox: true });
+    const y = 1.55 + i * 0.83;
+    fig(s, ic, 6.7, y, 0.7, 0.7);
+    s.addText(t, { x: 7.6, y: y - 0.04, w: 5.1, h: 0.38, fontSize: 18, bold: true, color: C.text2, margin: 0, isTextBox: true });
+    s.addText(d, { x: 7.6, y: y + 0.33, w: 5.1, h: 0.36, fontSize: 14, color: C.accent6, margin: 0, isTextBox: true });
   });
   s.addNotes("One-sentence answer first, then the roadmap. Keep returning to the trade-off: what helps dissolution (strong Li–O binding) also hurts mobility.");
 }
@@ -564,29 +568,6 @@ const chartBase = () => ({
 pres.addSection({ title: "Casting films" });
 {
   const s = newSlide("Casting films");
-  tag(s, "07 · CHARACTERISATION");
-  s.addText("Toolkit for checking your own PEO–LiTFSI films", { placeholder: "title" });
-  const items = [
-    ["ic_dsc", "DSC", "Tg, Tm, crystallinity, thermal history [16, 17, 26]"],
-    ["ic_eis", "Impedance (EIS)", "σ(T) with blocking electrodes; VTF fits [7]"],
-    ["ic_nmr", "PFG-NMR", "D(⁷Li), D(¹⁹F) → NMR transference number [8, 21]"],
-    ["ic_raman", "FTIR / Raman", "free vs paired TFSI⁻; Li⁺–O coordination [9]"],
-    ["ic_scatter", "Diffraction", "crystal and liquid structure [10, 12, 14]"],
-    ["ic_md", "MD simulation", "coordination and transport mechanisms [18, 19]"],
-  ];
-  items.forEach(([ic, t, d], i) => {
-    const x = 0.6 + (i % 3) * 4.1, y = 1.7 + Math.floor(i / 3) * 2.35;
-    card(s, x, y, 3.9, 2.05);
-    fig(s, ic, x + 0.25, y + 0.3, 1.0, 1.0);
-    s.addText(t, { x: x + 1.45, y: y + 0.3, w: 2.3, h: 0.5, fontSize: 18, bold: true, color: C.text2, margin: 0, isTextBox: true });
-    s.addText(d, { x: x + 1.45, y: y + 0.82, w: 2.3, h: 1.2, fontSize: 14, color: C.text1, margin: 0, isTextBox: true, valign: "top" });
-  });
-  src(s, "Sources: [7] Lascaud 1994 · [8] Gorecki 1995 · [9] Wen 1996 · [10] Andreev 1996 · [12] MacGlashan 1999 · [14] Mao 2000 · [16, 17] Edman 2000 · [18] Borodin 2006 · [19] Diddens 2010 · [21] Timachova 2015 · [26] Marzantowicz 2006");
-  s.addNotes("Minimum set for a new film: DSC (state of the film), EIS (conductivity vs temperature), and either Bruce–Vincent or PFG-NMR for transference.");
-}
-
-{
-  const s = newSlide("Casting films");
   tag(s, "07 · CASTING IN PTFE MOULDS");
   s.addText("Solution casting a free-standing film, step by step", { placeholder: "title" });
   fig(s, "workflow", 0.6, 1.55, 12.1);
@@ -725,6 +706,119 @@ pres.addSection({ title: "Casting films" });
 }
 
 // ====================================================================
+// SECTION 7b — Measuring films
+pres.addSection({ title: "Measuring films" });
+{
+  const s = newSlide("Measuring films");
+  tag(s, "08 · MEASURING FILMS");
+  s.addText("Toolkit for checking your own PEO–LiTFSI films", { placeholder: "title" });
+  const items = [
+    ["ic_dsc", "DSC", "Tg, Tm, crystallinity, thermal history [16, 17, 26]"],
+    ["ic_eis", "Impedance (EIS)", "σ(T) with blocking electrodes; VTF fits [7]"],
+    ["ic_nmr", "PFG-NMR", "D(⁷Li), D(¹⁹F) → NMR transference number [8, 21]"],
+    ["ic_raman", "FTIR / Raman", "free vs paired TFSI⁻; Li⁺–O coordination [9]"],
+    ["ic_scatter", "Diffraction", "crystal and liquid structure [10, 12, 14]"],
+    ["ic_md", "MD simulation", "coordination and transport mechanisms [18, 19]"],
+  ];
+  items.forEach(([ic, t, d], i) => {
+    const x = 0.6 + (i % 3) * 4.1, y = 1.7 + Math.floor(i / 3) * 2.35;
+    card(s, x, y, 3.9, 2.05);
+    fig(s, ic, x + 0.25, y + 0.3, 1.0, 1.0);
+    s.addText(t, { x: x + 1.45, y: y + 0.3, w: 2.3, h: 0.5, fontSize: 18, bold: true, color: C.text2, margin: 0, isTextBox: true });
+    s.addText(d, { x: x + 1.45, y: y + 0.82, w: 2.3, h: 1.2, fontSize: 14, color: C.text1, margin: 0, isTextBox: true, valign: "top" });
+  });
+  src(s, "Sources: [7] Lascaud 1994 · [8] Gorecki 1995 · [9] Wen 1996 · [10] Andreev 1996 · [12] MacGlashan 1999 · [14] Mao 2000 · [16, 17] Edman 2000 · [18] Borodin 2006 · [19] Diddens 2010 · [21] Timachova 2015 · [26] Marzantowicz 2006");
+  s.addNotes("Minimum set for a new film: DSC (state of the film), EIS (conductivity vs temperature), and either Bruce–Vincent or PFG-NMR for transference.");
+}
+
+{
+  const s = newSlide("Measuring films");
+  tag(s, "08 · MEASURING FILMS");
+  s.addText("Measuring conductivity by EIS: cell and protocol", { placeholder: "title" });
+  fig(s, "eiscell", 0.5, 1.5, 6.3);
+  const steps = [
+    ["Measure L", "micrometer at ≥ 5 points (± 1–2 µm), or set L with a spacer ring"],
+    ["Assemble in Ar", "SS | film in insulating ring | SS in a CR2032 cell; record contact area A"],
+    ["Condition", "hold ~1 h at 80 °C (above Tm) so the film wets the steel, then cool"],
+    ["Scan", "10 mV AC at open circuit, 1 MHz → 1 Hz; 30–60 min at each temperature"],
+    ["Sweep T", "e.g. 20 → 90 °C and back in 10 °C steps; keep heating and cooling apart"],
+    ["Fit & compute", "Rb from the equivalent-circuit fit → σ = L / (Rb · A)"],
+  ];
+  steps.forEach(([h, d], i) => {
+    const y = 1.5 + i * 0.83;
+    s.addShape(pres.shapes.OVAL, { x: 7.15, y: y + 0.04, w: 0.46, h: 0.46, fill: { color: C.accent1 }, line: { type: "none" } });
+    s.addText(String(i + 1), { x: 7.15, y: y + 0.04, w: 0.46, h: 0.46, fontSize: 16, bold: true, color: C.background1, align: "center", valign: "middle", margin: 0, isTextBox: true });
+    s.addText([
+      { text: h, options: { bold: true, color: C.text2, breakLine: true } },
+      { text: d, options: { fontSize: 14, color: C.text1 } },
+    ], { x: 7.8, y, w: 4.9, h: 0.78, fontSize: 16, valign: "top", margin: 0, isTextBox: true });
+  });
+  src(s, "Common practice for blocking-electrode measurements; Li | SPE | Li cells measure interfacial resistance, not bulk σ. Arrhenius/VTF analysis as in [7, 16].");
+  s.addNotes("Blocking electrodes such as stainless steel stop Li+ from crossing the interface, so the impedance shows a clean bulk semicircle followed by a capacitive spike. The insulating ring fixes both the area and the thickness, which are the two numbers that convert resistance into conductivity. Condition the cell above the PEO melting point first so the film makes good contact.");
+}
+{
+  const s = newSlide("Measuring films");
+  tag(s, "08 · MEASURING FILMS");
+  s.addText("Reading the Nyquist plot", { placeholder: "title" });
+  fig(s, "nyquist", 0.5, 1.45, 6.6);
+  card(s, 7.4, 1.5, 5.3, 1.95, C.background2);
+  s.addText([
+    { text: "σ = L / (Rb · A)", options: { bold: true, fontFace: THEME.headFontFace, fontSize: 24, color: C.text2, breakLine: true, paraSpaceAfter: 6 } },
+    { text: "Example: L = 150 µm, A = 2.01 cm² (Ø 16 mm), Rb = 75 Ω → σ = 0.015 / (75 × 2.01) ≈ 1.0 × 10⁻⁴ S cm⁻¹" },
+  ], { x: 7.6, y: 1.6, w: 4.9, h: 1.75, fontSize: 14, color: C.text1, valign: "top", margin: 0, isTextBox: true });
+  bullets(s, [
+    [{ text: "Rb ", bold: true, color: C.accent2 }, { text: "= low-frequency end of the arc, i.e. where the spike starts" }],
+    [{ text: "Hot or thin films: ", bold: true, color: C.accent1 }, { text: "the arc moves above 1 MHz; take the real-axis intercept of the spike" }],
+    [{ text: "Sanity check: ", bold: true, color: C.accent3 }, { text: "bulk capacitance ≈ ε₀εᵣA/L ≈ 10⁻¹¹–10⁻¹⁰ F; ~10⁻⁶ F means double layer, not bulk [40]" }],
+    [{ text: "A second arc ", bold: true, color: C.accent4 }, { text: "usually means poor contact or a resistive surface layer" }],
+  ], 7.4, 3.7, 5.3, 2.9, { size: 15 });
+  src(s, "Sources: [40] Irvine, Sinclair & West 1990 (capacitance ranges). Plot is schematic.");
+  s.addNotes("With blocking electrodes the equivalent circuit is a bulk resistance in parallel with a constant-phase element for the geometric capacitance, in series with a second constant-phase element for the electrode double layer. The bulk resistance is read where the semicircle meets the spike, or obtained from a fit. Check the fitted capacitance: for a 150 µm film of 2 cm², with relative permittivity about 8, it should be around 1e-10 F.");
+}
+{
+  const s = newSlide("Measuring films");
+  tag(s, "08 · MEASURING FILMS");
+  s.addText("Getting EIS conductivity right", { placeholder: "title" });
+  const items = [
+    ["ic_ruler", "Thickness is the biggest error", [{ text: "σ ∝ L: ±5 µm on a 20 µm film is ±25%. Use a spacer and re-measure after heating — PEO creeps above Tm." }]],
+    ["ic_press", "Contact and conditioning", [{ text: "Anneal ~1 h at 80 °C before the first scan; a second arc often means poor contact." }]],
+    ["ic_clock", "Thermal history", [{ text: "Hold 30–60 min per step; heating and cooling curves differ because PEO recrystallises slowly [17]." }]],
+    ["ic_cable", "Leads and instrument", [{ text: "Run short/open calibration; keep Rb well above lead resistance and away from MHz inductive artefacts." }]],
+    ["ic_water", "Moisture", [{ text: "Assemble and seal in Ar; absorbed water raises σ artificially." }]],
+    ["ic_eis", "Report it fully", [{ text: "≥ 3 cells; σ(T) as Arrhenius/VTF; state L, A, frequency range, amplitude and thermal protocol." }]],
+  ];
+  items.forEach(([ic, t, b], i) => {
+    const x = 0.6 + (i % 3) * 4.1, y = 1.55 + Math.floor(i / 3) * 2.55;
+    iconCard(s, x, y, 3.9, 2.35, ic, t, b, { size: 14, tsize: 16 });
+  });
+  src(s, "Common practice for blocking-electrode EIS of polymer electrolytes; [17] Edman, Ferry & Doeff 2000.");
+  s.addNotes("Most published conductivity scatter comes from thickness, contact and thermal history. For thin films, the bulk resistance can fall to around one ohm, which is comparable to lead and contact resistance — another reason to use thicker samples for conductivity.");
+}
+{
+  const s = newSlide("Measuring films");
+  tag(s, "08 · MEASURING FILMS");
+  s.addText("What is an ideal film thickness?", { placeholder: "title" });
+  fig(s, "thickscale", 0.6, 1.4, 12.1);
+  s.addText("Thickness that gives a target electrolyte ASR (L = ASR × σ)", { x: 0.6, y: 4.6, w: 6.4, h: 0.35, fontSize: 15, bold: true, color: C.text2, margin: 0, isTextBox: true });
+  const hdr = (t) => ({ text: t, options: { bold: true, color: C.background1, fill: { color: C.text2 }, fontSize: 14, align: "center", valign: "middle" } });
+  const cell = (t, o = {}) => ({ text: t, options: Object.assign({ fontSize: 14, color: C.text1, align: "center", valign: "middle" }, o) });
+  s.addTable([
+    [hdr("σ / S cm⁻¹"), hdr("ASR 2 Ω cm²"), hdr("ASR 10 Ω cm²"), hdr("ASR 50 Ω cm²")],
+    [cell("10⁻⁵"), cell("0.2 µm"), cell("1 µm"), cell("5 µm")],
+    [cell("10⁻⁴"), cell("2 µm"), cell("10 µm", { bold: true, color: C.accent1 }), cell("50 µm")],
+    [cell("10⁻³"), cell("20 µm", { bold: true, color: C.accent1 }), cell("100 µm"), cell("500 µm")],
+  ], { x: 0.6, y: 5.0, w: 6.4, colW: [1.6, 1.6, 1.6, 1.6], rowH: 0.38, border: { type: "solid", pt: 0.75, color: HEX.line }, fill: { color: "FFFFFF" }, margin: [0.02, 0.06, 0.02, 0.06], objectName: "thickness-table" });
+  bullets(s, [
+    [{ text: "No single answer: ", bold: true, color: C.accent2 }, { text: "choose by purpose" }],
+    [{ text: "Battery: ", bold: true, color: C.accent1 }, { text: "aim for 10–20 µm; free-standing PEO that thin usually needs a scaffold [39]" }],
+    [{ text: "Thinner is riskier: ", bold: true, color: C.accent4 }, { text: "pinholes, shorts and soft-film creep; membrane thickness affects rapid cell failure [29]" }],
+    [{ text: "For σ by EIS: ", bold: true, color: C.accent3 }, { text: "100–300 µm keeps thickness error ~1% and Rb well above lead resistance" }],
+  ], 7.4, 4.6, 5.3, 2.0, { size: 14 });
+  src(s, "Ranges are typical working values; ASR table computed from L = ASR·σ. Sources: [29] Homann 2020 · [39] Wan 2019.");
+  s.addNotes("A liquid cell with a separator has an electrolyte ASR of roughly 1–2 ohm cm2. To match that at room temperature with 1e-4 S/cm you would need about 2 µm, which is unrealistic, so practical solid cells either run warm (1e-3 S/cm, 20 µm gives 2 ohm cm2) or accept around 10 ohm cm2 with a 10 µm supported film. For conductivity measurements, use thick films so that thickness errors and lead resistance are small.");
+}
+
+// ====================================================================
 // SECTION 8 — Wrap-up
 pres.addSection({ title: "Wrap-up" });
 {
@@ -737,10 +831,11 @@ pres.addSection({ title: "Wrap-up" });
     ["Why it falls short", "Low RT σ, t₊ ≈ 0.1–0.3, soft above 65 °C, ~4 V oxidation, Al corrosion."],
     ["Closing the gap", "Target ≥ 10⁻⁴ S cm⁻¹ at RT in a 10–20 µm film with higher t₊ — judge by ASR, not σ alone."],
     ["Good films", "High-Mw PEO, EO:Li 16–20, clean baked mould, dry everything, slow evaporation, age before peeling."],
+    ["Measure right", "SS | SPE | SS, σ = L/(Rb·A) with 100–300 µm samples; battery films 10–20 µm, supported."],
   ];
   pts.forEach(([h, b], i) => {
-    const y = 1.5 + i * 0.86;
-    s.addShape(pres.shapes.OVAL, { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fill: { color: [C.accent1, C.accent2, C.accent3, C.accent4, C.accent1, C.accent5][i] }, line: { type: "none" } });
+    const y = 1.45 + i * 0.75;
+    s.addShape(pres.shapes.OVAL, { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fill: { color: [C.accent1, C.accent2, C.accent3, C.accent4, C.accent1, C.accent5, C.accent3][i] }, line: { type: "none" } });
     s.addText(String(i + 1), { x: 0.6, y: y + 0.05, w: 0.6, h: 0.6, fontSize: 20, bold: true, color: C.background1, align: "center", valign: "middle", margin: 0, isTextBox: true });
     s.addText(h, { x: 1.45, y: y + 0.05, w: 3.3, h: 0.6, fontSize: 19, bold: true, color: C.background1, valign: "middle", margin: 0, isTextBox: true });
     s.addText(b, { x: 4.8, y: y + 0.05, w: 7.9, h: 0.6, fontSize: 16, color: "DCE5EF", valign: "middle", margin: 0, isTextBox: true });
@@ -788,6 +883,7 @@ const REFS = [
   "Bouchet, R.; Maria, S.; Meziane, R.; et al.; Armand, M. Single-ion BAB triblock copolymers as highly efficient electrolytes for lithium-metal batteries. Nat. Mater. 2013, 12, 452–457.",
   "Zhao, Q.; Liu, X.; Stalin, S.; Khan, K.; Archer, L. A. Solid-state polymer electrolytes with in-built fast interfacial transport for secondary lithium batteries. Nat. Energy 2019, 4, 365–373.",
   "Wan, J.; Xie, J.; Kong, X.; et al.; Cui, Y. Ultrathin, flexible, solid polymer composite electrolyte enabled with aligned nanoporous host for lithium batteries. Nat. Nanotechnol. 2019, 14, 705–711.",
+  "Irvine, J. T. S.; Sinclair, D. C.; West, A. R. Electroceramics: characterization by impedance spectroscopy. Adv. Mater. 1990, 2, 132–138.",
 ];
 const per = Math.ceil(REFS.length / 3);
 [[0, per], [per, 2 * per], [2 * per, REFS.length]].forEach(([a, b], k) => {

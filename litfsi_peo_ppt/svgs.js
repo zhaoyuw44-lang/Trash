@@ -859,4 +859,106 @@ figs.clean = () => {
   return { w: W, h: H, svg: wrap(W, H, b) };
 };
 
+// 23. EIS blocking-electrode cell (coin cell cross-section)
+figs.eiscell = () => {
+  const W = 720, H = 430;
+  let b = "";
+  const cx = 230;
+  // case
+  b += path(`M60,300 L60,330 L400,330 L400,300`, { color: K.muted, w: 6 });
+  b += path(`M75,140 L75,120 L385,120 L385,140`, { color: K.muted, w: 6 });
+  // bottom SS
+  b += rect(90, 280, 280, 22, { fill: "#AEB8C2", rx: 3 });
+  // ring + film
+  b += rect(90, 262, 60, 18, { fill: "#F3F4F6", stroke: K.muted, sw: 2, rx: 2 }) + rect(310, 262, 60, 18, { fill: "#F3F4F6", stroke: K.muted, sw: 2, rx: 2 });
+  b += rect(150, 262, 160, 18, { fill: K.teal, rx: 0 });
+  // top SS
+  b += rect(90, 240, 280, 22, { fill: "#AEB8C2", rx: 3 });
+  // spring
+  let d = "M100,232"; for (let x = 100; x <= 360; x += 26) d += ` Q${x + 13},${(x / 26) % 2 ? 200 : 222} ${x + 26},232`;
+  b += path(d, { color: K.slate, w: 4 });
+  b += rect(90, 150, 280, 14, { fill: "#AEB8C2", rx: 3 });
+  // leader labels
+  const lab = (x1, y1, x2, y2, t, col) => line(x1, y1, x2, y2, { color: col || K.text, w: 1.8 }) + T(x2 + 6, y2 + 6, t, { size: 19, fill: col || K.text, weight: col ? "bold" : undefined });
+  b += lab(370, 250, 430, 250, "stainless-steel (blocking)");
+  b += lab(300, 271, 430, 290, "SPE film, thickness L", K.teal);
+  b += lab(340, 268, 430, 330, "insulating ring fixes A and L");
+  b += lab(360, 210, 430, 205, "spring / spacer");
+  b += lab(385, 128, 430, 150, "coin-cell case (CR2032)");
+  // dimensions
+  b += line(150, 360, 310, 360, { color: K.o, w: 2.5, marker: "ahO" }) + line(310, 360, 150, 360, { color: K.o, w: 2.5, marker: "ahO" });
+  b += T(230, 388, "contact area A", { size: 19, anchor: "middle", fill: K.o, weight: "bold" });
+  // analyser
+  b += rect(20, 20, 210, 70, { fill: K.slateL, stroke: K.slate, sw: 2, rx: 10 });
+  b += T(125, 50, "potentiostat + FRA", { size: 19, anchor: "middle", fill: K.slate, weight: "bold" });
+  b += T(125, 74, "10 mV AC, 1 MHz → 1 Hz", { size: 16, anchor: "middle", fill: K.slate });
+  b += path(`M60,90 L60,118`, { color: K.slate, w: 3 }) + path(`M200,90 L200,104 L40,104 L40,320 L60,320`, { color: K.slate, w: 3, dash: "6 4" });
+  b += T(20, 420, "assemble in Ar · temperature chamber 20–90 °C", { size: 18, fill: K.muted });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+// 24. Nyquist plot of a blocking-electrode SPE cell + equivalent circuit
+figs.nyquist = () => {
+  const W = 760, H = 470;
+  const x0 = 80, y0 = 380, sc = 1.0;
+  let b = "";
+  b += line(x0, y0, 730, y0, { w: 3, marker: "ah" }) + line(x0, y0, x0, 40, { w: 3, marker: "ah" });
+  b += T(720, y0 + 34, "Z′ / Ω", { size: 20, anchor: "end" });
+  b += T(40, 60, "−Z″ / Ω", { size: 20, anchor: "middle", rotate: -90 });
+  // depressed semicircle from x0+10 to Rb
+  const Rb = 420, r0 = x0 + 10, R = (Rb - r0) / 2, c = r0 + R;
+  const pts = [];
+  for (let k = 0; k <= 40; k++) { const a = Math.PI - (Math.PI * k) / 40; pts.push([+(c + R * Math.cos(a)).toFixed(1), +(y0 - 0.85 * R * Math.sin(a)).toFixed(1)]); }
+  b += path(smooth(pts), { color: K.li, w: 5 });
+  b += path(`M${Rb},${y0} L${Rb + 95},${y0 - 280}`, { color: K.amber, w: 5 });
+  // high-T dataset
+  b += path(`M${x0 + 40},${y0} L${x0 + 125},${y0 - 250}`, { color: K.teal, w: 4, dash: "9 7" });
+  b += T(x0 + 132, y0 - 252, "high T: arc above the", { size: 17, fill: K.teal }) + T(x0 + 132, y0 - 230, "window → use spike intercept", { size: 17, fill: K.teal });
+  // Rb marker
+  b += `<circle cx="${Rb}" cy="${y0}" r="9" fill="#fff" stroke="${K.ink}" stroke-width="3"/>`;
+  b += T(Rb + 2, y0 + 34, "Rb", { size: 22, anchor: "middle", weight: "bold", fill: K.ink });
+  b += T(c, y0 - 0.85 * R - 14, "bulk: Rb ‖ Cg", { size: 19, anchor: "middle", fill: K.li, weight: "bold" });
+  b += T(Rb + 105, y0 - 260, "blocking spike", { size: 19, fill: K.amber, weight: "bold" }) + T(Rb + 105, y0 - 238, "(double layer)", { size: 17, fill: K.amber });
+  // frequency arrow
+  b += path(`M${c + R * 0.35},${y0 - 0.85 * R - 24} C${c + R * 0.8},${y0 - 0.85 * R - 20} ${c + R + 2},${y0 - 0.85 * R * 0.6} ${c + R - 8},${y0 - 50}`, { color: K.muted, w: 2.5, marker: "ah" });
+  b += T(c + R * 0.55, y0 - 0.85 * R - 38, "f decreasing", { size: 17, fill: K.muted });
+  // equivalent circuit
+  const ey = 440;
+  b += line(110, ey, 160, ey, { w: 2.5 });
+  b += path(`M160,${ey} l8,-12 l12,24 l12,-24 l12,24 l12,-24 l8,12`, { color: K.text, w: 2.5 }) + line(224, ey, 300, ey, { w: 2.5 });
+  b += line(150, ey, 150, ey - 30, { w: 2.5 }) + line(150, ey - 30, 175, ey - 30, { w: 2.5 }) + line(175, ey - 42, 175, ey - 18, { w: 3 }) + line(186, ey - 42, 186, ey - 18, { w: 3 }) + line(186, ey - 30, 234, ey - 30, { w: 2.5 }) + line(234, ey - 30, 234, ey, { w: 2.5 });
+  b += line(300, ey - 12, 300, ey + 12, { w: 3 }) + line(311, ey - 12, 311, ey + 12, { w: 3 }) + line(311, ey, 360, ey, { w: 2.5 });
+  b += T(192, ey + 26, "Rb ‖ CPE(g)", { size: 16, anchor: "middle", fill: K.li }) + T(306, ey + 26, "CPE(dl)", { size: 16, anchor: "middle", fill: K.amber });
+  return { w: W, h: H + 20, svg: wrap(W, H + 20, b) };
+};
+
+// 25. Thickness scale: what each range is for
+figs.thickscale = () => {
+  const W = 1180, H = 300;
+  const x0 = 260, x1 = 1150;
+  const X = (um) => x0 + ((Math.log10(um) - Math.log10(3)) / (Math.log10(500) - Math.log10(3))) * (x1 - x0);
+  let b = "";
+  const rows = [
+    ["Commercial separator", "(for reference)", 10, 25, "#AEB8C2"],
+    ["Competitive SPE cell", "needs a scaffold / support", 10, 20, K.teal],
+    ["Lab free-standing film", "Li | SPE | cathode coin cells", 30, 100, K.slate],
+    ["Conductivity (EIS) sample", "SS | SPE | SS", 100, 300, K.amber],
+  ];
+  rows.forEach(([t, sub, a, z, col], i) => {
+    const y = 20 + i * 58;
+    b += T(x0 - 20, y + 24, t, { size: 20, anchor: "end", weight: "bold", fill: K.ink });
+    b += T(x0 - 20, y + 46, sub, { size: 16, anchor: "end", fill: K.muted });
+    b += rect(X(a), y + 6, X(z) - X(a), 36, { fill: col, rx: 18 });
+    b += T(X(z) + 12, y + 31, `${a}–${z} µm`, { size: 19, fill: col === "#AEB8C2" ? K.muted : col, weight: "bold" });
+  });
+  const ya = 262;
+  b += line(x0, ya, x1, ya, { w: 3 });
+  [5, 10, 20, 50, 100, 200, 500].forEach((u) => (b += line(X(u), ya, X(u), ya + 8, { w: 2 }) + T(X(u), ya + 32, String(u), { size: 18, anchor: "middle", fill: K.muted })));
+  b += T(x0 - 20, ya + 32, "thickness / µm (log)", { size: 17, anchor: "end", fill: K.text });
+  return { w: W, h: H, svg: wrap(W, H, b) };
+};
+
+figs.ic_ruler = () => icon(`<rect x="18" y="46" width="84" height="28" rx="4" fill="#fff" stroke="${K.amber}" stroke-width="4"/>` + [28, 40, 52, 64, 76, 88].map((x, i) => line(x, 46, x, i % 2 ? 58 : 64, { color: K.amber, w: 3 })).join(""), K.amberL);
+figs.ic_cable = () => icon(path(`M18,80 C40,80 40,40 62,40 C84,40 84,80 102,80`, { color: K.slate, w: 5 }) + `<rect x="10" y="72" width="16" height="16" rx="3" fill="${K.slate}"/><rect x="94" y="72" width="16" height="16" rx="3" fill="${K.slate}"/>`, K.slateL);
+
 module.exports = { figs, K };
